@@ -43,33 +43,32 @@ public class GuiChoosePokemon extends GuiScreen {
 	public void initGui() {
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
+		int i = 0;
 		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
 			PixelmonDataPacket[] pokemon = mod_Pixelmon.serverStorageDisplay.pokemon;
-			int i = 0;
 			for (PixelmonDataPacket p : pokemon) {
 				if (p != null) {
 					if (!p.isFainted && p.pokemonID != userPacket.pokemonID) {
-						controlList.add(new GuiButton(p.order, width / 2 - 100, height / 4 + i * 24 + 20 + 12, p.nickname));
+						controlList.add(new GuiButton(p.order, width / 2 - 100, height / 8 + i * 24 + 20 + 12, p.nickname));
 						i++;
 					}
 				}
 			}
 		} else {
 			NBTTagCompound[] pokemon = mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getList();
-			int i = 0;
 			for (NBTTagCompound p : pokemon) {
 				if (p != null) {
 					if (!p.getBoolean("IsFainted") && p.getInteger("pixelmonID") != currentPixelmon.getPokemonId()) {
 						if (!p.getString("Nickname").isEmpty())
-							controlList.add(new GuiButton(p.getInteger("PixelmonOrder"), width / 2 - 100, height / 4 + i * 24 + 20 + 12, p.getString("Nickname")));
+							controlList.add(new GuiButton(p.getInteger("PixelmonOrder"), width / 2 - 100, height / 8 + i * 24 + 20 + 12, p.getString("Nickname")));
 						else
-							controlList.add(new GuiButton(p.getInteger("PixelmonOrder"), width / 2 - 100, height / 4 + i * 24 + 20 + 12, p.getString("Name")));
+							controlList.add(new GuiButton(p.getInteger("PixelmonOrder"), width / 2 - 100, height / 8 + i * 24 + 20 + 12, p.getString("Name")));
 						i++;
 					}
 				}
 			}
 		}
-		controlList.add(new GuiButton(10, width / 2 - 100, height / 2 + 20, "Back"));
+		controlList.add(new GuiButton(10, width / 2 - 100, height / 8 + i * 24 + 20 + 12, "Back"));
 	}
 
 	public void onGuiClosed() {
