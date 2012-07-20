@@ -438,7 +438,7 @@ public class PixelmonEntityHelper {
 			EntityPlayer entity1 = (EntityPlayer) entity;
 			ItemStack itemstack = entity1.getCurrentEquippedItem();
 			if (itemstack == null){
-				if (getStats().BaseStats.IsRideable){
+				if (getStats().BaseStats.IsRideable && mod_Pixelmon.pokeballManager.getPlayerStorage(entity).isIn(this)){
 					entity.mountEntity((EntityLiving)pixelmon);
 					if (pixelmon instanceof BaseEntityPixelmon) ((BaseEntityPixelmon)pixelmon).resetAI();
 					return true;
