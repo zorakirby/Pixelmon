@@ -15,7 +15,6 @@ public class EntityCubone extends EntityGroundPixelmon
 	{
 		super(par1World);
 		init();
-		System.out.println("Cubone spawned");
 	}
 	 protected int getDropItemId()
 	    {
