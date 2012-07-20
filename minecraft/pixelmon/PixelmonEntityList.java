@@ -171,6 +171,7 @@ public class PixelmonEntityList {
 		addMapping(EntityCharizard.class, "Charizard", IDListPixelmon.charizardId, new RenderPixelmon(new ModelCharizard(), 0.8F), ClassType.Pixelmon);
 		addMapping(EntityCharmander.class, "Charmander", IDListPixelmon.charmanderId, new RenderPixelmon(new ModelCharmander(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityCharmeleon.class, "Charmeleon", IDListPixelmon.charmeleonId, new RenderPixelmon(new ModelCharmeleon(), 0.5F), ClassType.Pixelmon);
+		addMapping(EntityCubone.class, "Cubone", IDListPixelmon.cuboneId, new RenderPixelmon(new ModelCubone(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityDiglett.class, "Diglett", IDListPixelmon.diglettId, new RenderPixelmon(new ModelDiglett(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityDugtrio.class, "Dugtrio", IDListPixelmon.dugtrioId, new RenderPixelmon(new ModelDugtrio(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityEevee.class, "Eevee", IDListPixelmon.eeveeId, new RenderPixelmon(new ModelEevee(), 0.5F), ClassType.Pixelmon);
@@ -205,6 +206,7 @@ public class PixelmonEntityList {
 		addMapping(EntityPsyduck.class, "Psyduck", IDListPixelmon.psyduckId, new RenderPixelmon(new ModelPsyduck(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityRattata.class, "Rattata", IDListPixelmon.rattataId, new RenderPixelmon(new ModelRattata(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntitySeaking.class, "Seaking", IDListPixelmon.seakingId, new RenderFreeWaterPixelmon(new ModelSeaking(), 0.5F), ClassType.Pixelmon);
+		addMapping(EntityShellder.class, "Shellder", IDListPixelmon.shellderId, new RenderPixelmon(new ModelShellder(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntitySnorlax.class, "Snorlax", IDListPixelmon.snorlaxId, new RenderPixelmon(new ModelSnorlax(), 0.9F), ClassType.Pixelmon);
 		addMapping(EntitySquirtle.class, "Squirtle", IDListPixelmon.squirtleId, new RenderPixelmon(new ModelSquirtle(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityStaryu.class, "Staryu", IDListPixelmon.staryuId, new RenderFreeWaterPixelmon(new ModelStaryu(), 0.5F), ClassType.Pixelmon);
