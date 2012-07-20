@@ -78,7 +78,7 @@ public class ModelEkans extends ModelBase {
       BODY2.setRotationPoint(0F, 2F, 5F);
       setRotation(BODY2, 0F, 0F, 0F);
       BODY2.mirror = true;
-        ModelRenderer body2 = new ModelRenderer(this, 0, 62);
+        ModelRenderer body2 = new ModelRenderer(this, 16, 105);
         body2.addBox(-2F, 0F, 0F, 4, 4, 7);
         body2.setRotationPoint(0F, -2F, 0F);
         body2.setTextureSize(64, 128);
@@ -203,19 +203,19 @@ public class ModelEkans extends ModelBase {
   	float currentAngle = 0;
   	BODY2.rotateAngleY = ((float) Math.pow(dampingFactor, -5)) * TopAngle * (MathHelper.cos(animationSpeed * f + initialOffset));
   	currentAngle = BODY2.rotateAngleY;
-  	BODY3.rotateAngleY = ((float) Math.pow(dampingFactor, 2)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1f * offset + initialOffset))
+  	BODY3.rotateAngleY = ((float) Math.pow(dampingFactor, 2)) * TopAngle * (MathHelper.cos(animationSpeed * f + 0.5f * offset + initialOffset))
   			- currentAngle;
   	currentAngle = BODY2.rotateAngleY + BODY3.rotateAngleY;
   	BODY4.rotateAngleY = ((float) Math.pow(dampingFactor, 3)) * TopAngle
-  			* (MathHelper.cos(animationSpeed * f + 1.1f * 2 * offset + PI / 9 + initialOffset)) - currentAngle;
+  			* (MathHelper.cos(animationSpeed * f + 0.6f * 2 * offset + PI / 9 + initialOffset)) - currentAngle;
   	currentAngle = BODY2.rotateAngleY + BODY3.rotateAngleY + BODY4.rotateAngleY;
   	BODY5.rotateAngleY = ((float) Math.pow(dampingFactor, 5)) * TopAngle
-  			* (MathHelper.cos(animationSpeed * f + 1.2f * 3 * offset + 2 * PI / 9 + initialOffset)) - currentAngle;// -PI/6;
+  			* (MathHelper.cos(animationSpeed * f + 0.7f * 3 * offset + 2 * PI / 9 + initialOffset)) - currentAngle;// -PI/6;
   	currentAngle = BODY2.rotateAngleY + BODY3.rotateAngleY + BODY4.rotateAngleY + BODY5.rotateAngleY;
   	BODY6.rotateAngleY = ((float) Math.pow(dampingFactor, 6)) * TopAngle
-  			* (MathHelper.cos(animationSpeed * f + 1.3f * 4 * offset + PI / 9 + initialOffset)) - currentAngle;// -PI/7;
+  			* (MathHelper.cos(animationSpeed * f + 0.8f * 4 * offset + PI / 9 + initialOffset)) - currentAngle;// -PI/7;
   	currentAngle = currentAngle + BODY6.rotateAngleY;
-  	BODY7.rotateAngleY = ((float) Math.pow(dampingFactor, 7)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1.4f * 5 * offset + initialOffset))
+  	BODY7.rotateAngleY = ((float) Math.pow(dampingFactor, 7)) * TopAngle * (MathHelper.cos(animationSpeed * f + 0.9f * 5 * offset + initialOffset))
   			- currentAngle;// -PI/8;
   	currentAngle = currentAngle + BODY7.rotateAngleY;
     }
