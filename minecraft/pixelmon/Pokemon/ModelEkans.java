@@ -194,6 +194,30 @@ public class ModelEkans extends ModelBase {
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
     {
       super.setRotationAngles(f, f1, f2, f3, f4, f5);
+      float PI = (float) Math.PI;
+  	float TopAngle = 1 * PI / 4;
+  	float initialOffset = PI / 2;
+  	float offset = PI * 3 / 11;
+  	float animationSpeed = -0.35f;
+  	float dampingFactor = 0.99f;
+  	float currentAngle = 0;
+  	BODY2.rotateAngleY = ((float) Math.pow(dampingFactor, -5)) * TopAngle * (MathHelper.cos(animationSpeed * f + initialOffset));
+  	currentAngle = BODY2.rotateAngleY;
+  	BODY3.rotateAngleY = ((float) Math.pow(dampingFactor, 2)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1f * offset + initialOffset))
+  			- currentAngle;
+  	currentAngle = BODY2.rotateAngleY + BODY3.rotateAngleY;
+  	BODY4.rotateAngleY = ((float) Math.pow(dampingFactor, 3)) * TopAngle
+  			* (MathHelper.cos(animationSpeed * f + 1.1f * 2 * offset + PI / 9 + initialOffset)) - currentAngle;
+  	currentAngle = BODY2.rotateAngleY + BODY3.rotateAngleY + BODY4.rotateAngleY;
+  	BODY5.rotateAngleY = ((float) Math.pow(dampingFactor, 5)) * TopAngle
+  			* (MathHelper.cos(animationSpeed * f + 1.2f * 3 * offset + 2 * PI / 9 + initialOffset)) - currentAngle;// -PI/6;
+  	currentAngle = BODY2.rotateAngleY + BODY3.rotateAngleY + BODY4.rotateAngleY + BODY5.rotateAngleY;
+  	BODY6.rotateAngleY = ((float) Math.pow(dampingFactor, 6)) * TopAngle
+  			* (MathHelper.cos(animationSpeed * f + 1.3f * 4 * offset + PI / 9 + initialOffset)) - currentAngle;// -PI/7;
+  	currentAngle = currentAngle + BODY6.rotateAngleY;
+  	BODY7.rotateAngleY = ((float) Math.pow(dampingFactor, 7)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1.4f * 5 * offset + initialOffset))
+  			- currentAngle;// -PI/8;
+  	currentAngle = currentAngle + BODY7.rotateAngleY;
     }
 
   }
