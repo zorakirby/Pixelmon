@@ -2,6 +2,8 @@ package pixelmon.attacks;
 
 import java.util.ArrayList;
 
+import net.minecraft.src.EntityPlayer;
+
 public class BattleRegistry {
 	private ArrayList<BattleController> battleList;
 	
@@ -32,5 +34,20 @@ public class BattleRegistry {
 				return;
 			}
 		}
+	}
+	
+	public BattleController getBattle(EntityPlayer player) {
+		for (BattleController bc : battleList) {
+			if (bc.participant1 instanceof PlayerParticipant) {
+				if (((PlayerParticipant) bc.participant1).player == player) {
+					return bc;
+				}
+			} else if (bc.participant2 instanceof PlayerParticipant) {
+				if (((PlayerParticipant) bc.participant2).player == player) {
+					return bc;
+				}
+			}
+		}
+		return null;
 	}
 }
