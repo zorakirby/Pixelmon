@@ -10,7 +10,7 @@ import net.minecraft.src.mod_Pixelmon;
 
 import org.lwjgl.input.Keyboard;
 
-import pixelmon.attacks.BattleController;
+import pixelmon.battles.BattleController;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;

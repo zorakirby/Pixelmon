@@ -4,10 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import pixelmon.attacks.Type;
 import pixelmon.database.BaseStats;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.enums.EnumType;
 
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
@@ -33,8 +33,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public boolean isFainted;
 	public int order;
 	public int numMoves;
-	public Type type1;
-	public Type type2;
+	public EnumType type1;
+	public EnumType type2;
 	public int HP;
 	public int Speed;
 	public int Attack;
@@ -101,7 +101,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.getMoveset(),i);
 		}
 		type1 = p.getType().get(0);
-		if (p.getType().size()==1) type2 = Type.Mystery;
+		if (p.getType().size()==1) type2 = EnumType.Mystery;
 		else type2 = p.getType().get(1);
 		HP = p.getStats().HP;
 		Speed = p.getStats().Speed;
@@ -157,8 +157,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			moveset[i] = new PixelmonMovesetDataPacket();
 			moveset[i].readData(data);
 		}
-		type1 = Type.parseType(data.readShort());
-		type2 = Type.parseType(data.readShort());
+		type1 = EnumType.parseType(data.readShort());
+		type2 = EnumType.parseType(data.readShort());
 		HP = data.readShort();
 		Speed = data.readShort();
 		Attack = data.readShort();

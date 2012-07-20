@@ -10,7 +10,7 @@ import pixelmon.Pokemon.EntityBulbasaur;
 import pixelmon.Pokemon.EntityCharmander;
 import pixelmon.Pokemon.EntityEevee;
 import pixelmon.Pokemon.EntitySquirtle;
-import pixelmon.attacks.Attack;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 

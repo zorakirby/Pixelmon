@@ -2,7 +2,7 @@ package pixelmon.entities.pixelmon;
 
 import pixelmon.AI.EntityAINearestPixelmonTarget;
 import pixelmon.AI.EntityAIStartBattle;
-import pixelmon.attacks.BattleController;
+import pixelmon.battles.BattleController;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import net.minecraft.src.EntityAILookIdle;

@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import pixelmon.attacks.Type;
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumEvolutionStone;
+import pixelmon.enums.EnumType;
 
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.EnumCreatureType;
@@ -38,7 +38,7 @@ public class DatabaseStats {
 				stats.EvolveInto = rs.getString("EvolveInto");
 				stats.CanFly = rs.getInt("CanFly") == 1;
 				stats.Height = rs.getFloat("Height");
-				stats.Type1 = Type.parseType(rs.getString("Type1"));
+				stats.Type1 = EnumType.parseType(rs.getString("Type1"));
 				stats.BaseExp = rs.getInt("BaseExp");
 				stats.ExperienceGroup = ExperienceGroup.getExperienceGroup(rs.getString("ExperienceGroup"));
 				stats.nationalPokedexNumber = rs.getInt("NationalPokedexNumber");
@@ -47,7 +47,7 @@ public class DatabaseStats {
 				stats.IsRideable = rs.getBoolean("IsRideable");
 				rs.getString("Type2");
 				if (!rs.wasNull())
-					stats.Type2 = Type.parseType(rs.getString("Type2"));
+					stats.Type2 = EnumType.parseType(rs.getString("Type2"));
 			}
 			conn.close();
 			return stats;

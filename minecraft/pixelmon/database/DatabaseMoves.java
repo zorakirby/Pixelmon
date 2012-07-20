@@ -8,12 +8,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import pixelmon.attacks.*;
-import pixelmon.attacks.animations.AttackAnimationLeapForward;
-import pixelmon.attacks.animations.AttackAnimationParser;
-import pixelmon.attacks.animations.IAttackAnimation;
-import pixelmon.attacks.attackEffects.EffectBase;
+import pixelmon.battles.*;
+import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.attacks.animations.AttackAnimationLeapForward;
+import pixelmon.battles.attacks.animations.AttackAnimationParser;
+import pixelmon.battles.attacks.animations.IAttackAnimation;
+import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.comm.ChatHandler;
+import pixelmon.enums.EnumType;
 
 
 public class DatabaseMoves {
@@ -162,7 +164,7 @@ public class DatabaseMoves {
 				}
 				else
 					animations = AttackAnimationParser.GetAnimation(animationString); 
-				return new Attack(rs.getInt("MoveIndex"), rs.getString("Name"), Type.parseType(rs.getString("Type")), Attack.getAttackCategory(rs.getString("Category")),
+				return new Attack(rs.getInt("MoveIndex"), rs.getString("Name"), EnumType.parseType(rs.getString("Type")), Attack.getAttackCategory(rs.getString("Category")),
 						rs.getInt("Power"), rs.getInt("Accuracy"), rs.getInt("PP"), rs.getInt("PPMax"), false, rs.getInt("HMIndex")!=-1, effects , rs.getInt("MakesContact")==1, 
 						rs.getString("Description"), animations);
 			}
@@ -195,7 +197,7 @@ public class DatabaseMoves {
 				}
 				else
 					animations = AttackAnimationParser.GetAnimation(animationString); 
-				return new Attack(rs.getInt("MoveIndex"), rs.getString("Name"), Type.parseType(rs.getString("Type")), Attack.getAttackCategory(rs.getString("Category")),
+				return new Attack(rs.getInt("MoveIndex"), rs.getString("Name"), EnumType.parseType(rs.getString("Type")), Attack.getAttackCategory(rs.getString("Category")),
 						rs.getInt("Power"), rs.getInt("Accuracy"), rs.getInt("PP"), rs.getInt("PPMax"), false, rs.getInt("HMIndex")!=-1, effects , rs.getInt("MakesContact")==1, 
 						rs.getString("Description"), animations);
 			}

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import pixelmon.WorldHelper;
-import pixelmon.attacks.BattleController;
-import pixelmon.attacks.Moveset;
-import pixelmon.attacks.Type;
-import pixelmon.attacks.participants.IBattleParticipant;
-import pixelmon.attacks.participants.PlayerParticipant;
-import pixelmon.attacks.participants.TrainerParticipant;
-import pixelmon.attacks.participants.WildPixelmonParticipant;
-import pixelmon.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.BattleController;
+import pixelmon.battles.Moveset;
+import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.participants.IBattleParticipant;
+import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.battles.participants.TrainerParticipant;
+import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.BattleStats;
 import pixelmon.database.DatabaseMoves;
@@ -23,6 +22,7 @@ import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.LevelHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
+import pixelmon.enums.EnumType;
 import pixelmon.storage.PokeballManager;
 
 import net.minecraft.src.Block;
@@ -44,7 +44,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public float scale = 1F;
 	public float maxScale = 1.25F;
 	public LevelHelper lvl;
-	public ArrayList<Type> type = new ArrayList<Type>();
+	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public Moveset moveset = new Moveset();
 	public double caughtBall = 0;
 	public boolean isInBall = true;
@@ -85,7 +85,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		dataWatcher.addObject(18, "");
 		stats.BaseStats = DatabaseStats.GetBaseStats(name);
 		type.add(stats.BaseStats.Type1);
-		if (stats.BaseStats.Type2 != Type.Mystery)
+		if (stats.BaseStats.Type2 != EnumType.Mystery)
 			type.add(stats.BaseStats.Type2);
 		health = 10;
 		if (rand.nextInt(100) < stats.BaseStats.MalePercent)

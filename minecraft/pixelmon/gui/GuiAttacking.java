@@ -13,7 +13,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import pixelmon.attacks.BattleController;
+import pixelmon.battles.BattleController;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;

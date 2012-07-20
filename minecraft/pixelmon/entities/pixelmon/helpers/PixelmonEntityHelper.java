@@ -6,11 +6,10 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector3f;
 
 import pixelmon.PixelmonEntityList;
-import pixelmon.attacks.Attack;
-import pixelmon.attacks.BattleController;
-import pixelmon.attacks.Moveset;
-import pixelmon.attacks.Type;
-import pixelmon.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.BattleController;
+import pixelmon.battles.Moveset;
+import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.BattleStats;
 import pixelmon.database.DatabaseStats;
@@ -21,6 +20,7 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumType;
 import pixelmon.gui.GuiScreenPokeChecker;
 import pixelmon.gui.pokedex.GuiPokedex;
 import pixelmon.items.ItemEvolutionStone;
@@ -121,7 +121,7 @@ public class PixelmonEntityHelper {
 			((EntityWaterPixelmon) entity).setAttackTarget(entity);
 	}
 
-	public ArrayList<Type> getType() {
+	public ArrayList<EnumType> getType() {
 		if (pixelmon instanceof BaseEntityPixelmon)
 			return ((BaseEntityPixelmon) pixelmon).type;
 		else if (pixelmon instanceof EntityWaterPixelmon)

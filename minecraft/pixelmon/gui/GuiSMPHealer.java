@@ -1,11 +1,11 @@
 package pixelmon.gui;
 
-import pixelmon.attacks.Attack;
-import pixelmon.attacks.Type;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.enums.EnumType;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ModLoader;

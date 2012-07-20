@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import pixelmon.*;
-import pixelmon.attacks.*;
-import pixelmon.attacks.participants.IBattleParticipant;
-import pixelmon.attacks.participants.PlayerParticipant;
-import pixelmon.attacks.participants.TrainerParticipant;
-import pixelmon.attacks.participants.WildPixelmonParticipant;
-import pixelmon.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.*;
+import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.participants.IBattleParticipant;
+import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.battles.participants.TrainerParticipant;
+import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.*;
 import pixelmon.entities.EntityTrainer;
@@ -18,6 +19,7 @@ import pixelmon.entities.pixelmon.helpers.LevelHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumType;
 import pixelmon.gui.GuiHandler;
 import pixelmon.gui.GuiLearnMove;
 import pixelmon.gui.GuiScreenPokeChecker;
@@ -51,7 +53,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	public float scale = 1F;
 	public float maxScale = 1.25F;
 	public LevelHelper lvl;
-	public ArrayList<Type> type = new ArrayList<Type>();
+	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public Moveset moveset = new Moveset();
 	public double caughtBall = 0;
 	public boolean isInBall = true;
@@ -92,7 +94,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		else
 			isMale = false;
 		type.add(stats.BaseStats.Type1);
-		if (stats.BaseStats.Type2 != Type.Mystery)
+		if (stats.BaseStats.Type2 != EnumType.Mystery)
 			type.add(stats.BaseStats.Type2);
 
 		helper.getLvl();

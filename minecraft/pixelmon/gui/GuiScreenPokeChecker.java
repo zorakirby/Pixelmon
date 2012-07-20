@@ -1,10 +1,10 @@
 package pixelmon.gui;
 
-import pixelmon.attacks.Attack;
-import pixelmon.attacks.Type;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.enums.EnumType;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ModLoader;
@@ -65,9 +65,9 @@ public class GuiScreenPokeChecker extends GuiScreen {
 			this.drawHorizontalLine(width / 5, height / 7 + 20, width * 4 / 5, 0xffffff);
 			// STATS
 			drawCenteredString(fontRenderer, "Stats", width / 3, height / 7 + 25, 0xdddddd);
-			String s = (targetPacket.type2 == Type.Mystery ? "Type:" : "Types:");
+			String s = (targetPacket.type2 == EnumType.Mystery ? "Type:" : "Types:");
 			drawCenteredString(fontRenderer, s, width / 3, height / 7 + 40, 0xdddddd);
-			if (targetPacket.type2 == Type.Mystery) {
+			if (targetPacket.type2 == EnumType.Mystery) {
 				drawCenteredString(fontRenderer, targetPacket.type1.getName(), width / 3, height / 7 + 50, targetPacket.type1.getColor());
 			}
 			else{

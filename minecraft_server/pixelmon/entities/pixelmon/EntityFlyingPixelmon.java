@@ -4,7 +4,7 @@ import java.util.List;
 
 import pixelmon.AI.EntityAINearestPixelmonTarget;
 import pixelmon.AI.EntityAIStartBattle;
-import pixelmon.attacks.BattleController;
+import pixelmon.battles.BattleController;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 

@@ -1,6 +1,6 @@
 package pixelmon.database;
 
-import pixelmon.attacks.Type;
+import pixelmon.enums.EnumType;
 
 public class BaseStats {
 	public int SpDef;
@@ -10,8 +10,8 @@ public class BaseStats {
 	public int Attack;
 	public int HP;
 	public int EvolveLevel = -1;
-	public Type Type1;
-	public Type Type2 = Type.Mystery;
+	public EnumType Type1;
+	public EnumType Type2 = EnumType.Mystery;
 	public float Height = 1f;
 	public int CatchRate;
 	public int MalePercent;

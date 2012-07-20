@@ -1,8 +1,8 @@
 package pixelmon.gui;
 
 import pixelmon.StarterList;
-import pixelmon.attacks.BattleController;
-import pixelmon.attacks.BattleRegistry;
+import pixelmon.battles.BattleController;
+import pixelmon.battles.BattleRegistry;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;

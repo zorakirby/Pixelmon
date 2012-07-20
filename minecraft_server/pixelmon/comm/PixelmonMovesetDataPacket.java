@@ -6,12 +6,12 @@ import java.io.IOException;
 
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet;
-import pixelmon.attacks.Moveset;
-import pixelmon.attacks.Type;
+import pixelmon.battles.Moveset;
+import pixelmon.enums.EnumType;
 
 public class PixelmonMovesetDataPacket {
 	public String attackName;
-	public Type type;
+	public EnumType type;
 	public int pp;
 	public int ppBase;
 
@@ -31,7 +31,7 @@ public class PixelmonMovesetDataPacket {
 			return null;
 		PixelmonMovesetDataPacket p = new PixelmonMovesetDataPacket();
 		p.attackName = nbt.getString("PixelmonMoveName" + i);
-		p.type = Type.parseType(nbt.getInteger("PixelmonMoveType" + i));
+		p.type = EnumType.parseType(nbt.getInteger("PixelmonMoveType" + i));
 		p.pp = nbt.getInteger("PixelmonMovePP" + i);
 		p.ppBase = nbt.getInteger("PixelmonMovePPBase" + i);
 		return p;
@@ -46,7 +46,7 @@ public class PixelmonMovesetDataPacket {
 	
 	public void readData(DataInputStream data) throws IOException {
 		attackName = Packet.readString(data, 64);
-		type = Type.parseType(data.readShort());
+		type = EnumType.parseType(data.readShort());
 		pp = data.readShort();
 		ppBase = data.readShort();
 	}

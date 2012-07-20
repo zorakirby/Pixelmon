@@ -5,9 +5,9 @@ import java.util.Random;
 
 import pixelmon.PixelmonEntityList;
 import pixelmon.StarterList;
-import pixelmon.attacks.BattleController;
-import pixelmon.attacks.BattleRegistry;
-import pixelmon.attacks.participants.PlayerParticipant;
+import pixelmon.battles.BattleController;
+import pixelmon.battles.BattleRegistry;
+import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumGui;

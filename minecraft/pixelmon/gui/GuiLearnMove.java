@@ -1,6 +1,6 @@
 package pixelmon.gui;
 
-import pixelmon.attacks.Attack;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;

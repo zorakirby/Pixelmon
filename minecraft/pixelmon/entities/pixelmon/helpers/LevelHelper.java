@@ -2,7 +2,7 @@ package pixelmon.entities.pixelmon.helpers;
 
 import java.util.ArrayList;
 
-import pixelmon.attacks.Attack;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.ExperienceGroup;
