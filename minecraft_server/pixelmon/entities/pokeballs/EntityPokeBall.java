@@ -27,7 +27,11 @@ public class EntityPokeBall extends EntityThrowable {
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
 		if (movingobjectposition != null) {
 			if (pixelmon != null) {
-				pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
+				if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0)
+					pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
+				else
+					pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
+
 				pixelmon.setMotion(0, 0, 0);
 				pixelmon.releaseFromPokeball();
 				if (movingobjectposition.entityHit != null
