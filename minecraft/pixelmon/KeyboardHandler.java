@@ -61,6 +61,12 @@ public class KeyboardHandler {
 					if (pixelmon == null) {
 						return;
 					}
+					if (mod_Pixelmon.battleRegistry.getBattle(ModLoader.getMinecraftInstance().thePlayer).participant1.currentPokemon().getPokemonId() == pixelmon.getPokemonId() ||
+							mod_Pixelmon.battleRegistry.getBattle(ModLoader.getMinecraftInstance().thePlayer).participant2.currentPokemon().getPokemonId() == pixelmon.getPokemonId())
+					{
+						mc.ingameGUI.addChatMessage(pixelmon.getHelper().getName()+ " is in a battle!");
+						return;
+					}
 					if (pixelmon.getHelper().getOwner() == null)
 						pixelmon.unloadEntity();
 					else if (pixelmon.getHelper().getOwner() == ModLoader.getMinecraftInstance().thePlayer) {

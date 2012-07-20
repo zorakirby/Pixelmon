@@ -70,6 +70,13 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 					if (pixelmon == null) {
 						return;
 					}
+					if (mod_Pixelmon.battleRegistry.getBattle(player).participant1.currentPokemon().getPokemonId() == pixelmon.getPokemonId() ||
+							mod_Pixelmon.battleRegistry.getBattle(player).participant2.currentPokemon().getPokemonId() == pixelmon.getPokemonId())
+					{
+						ChatHandler.sendChat(player, pixelmon.getHelper().getName()+ " is in a battle!");
+						return;
+					}
+
 					if (pixelmon.getHelper().getOwner() == null)
 						pixelmon.unloadEntity();
 					else if (pixelmon.getHelper().getOwner() == player) {
