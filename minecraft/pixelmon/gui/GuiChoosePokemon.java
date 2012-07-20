@@ -50,6 +50,7 @@ public class GuiChoosePokemon extends GuiScreen {
 				if (p != null) {
 					if (!p.isFainted && p.pokemonID != userPacket.pokemonID) {
 						controlList.add(new GuiButton(p.order, width / 2 - 100, height / 4 + i * 24 + 20 + 12, p.nickname));
+						i++;
 					}
 				}
 			}

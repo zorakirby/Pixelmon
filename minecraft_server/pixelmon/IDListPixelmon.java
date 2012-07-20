@@ -13,6 +13,7 @@ public class IDListPixelmon {
 	public static int charizardId;
 	public static int charmanderId;
 	public static int charmeleonId;
+	public static int cuboneId;
 	public static int diglettId;
 	public static int dugtrioId;
 	public static int eeveeId;
@@ -51,6 +52,7 @@ public class IDListPixelmon {
 	public static int starmieId;
 	public static int krokorokId;
 	public static int squirtleId;
+	public static int shellderId;
 	public static int trapinchId;
 	public static int venusaurId;
 	public static int voltorbId;
@@ -69,8 +71,8 @@ public class IDListPixelmon {
 	public static int vaporeonId;
 	public static int gloomId;
 	
-	public static int i=0;
 	
+	public static int i=0;
 	public static void load(Configuration configuration) {
 		abraId = Integer.parseInt(configuration.getOrCreateIntProperty("Abra", "pokemon", i++).value);
 		arbokId = Integer.parseInt(configuration.getOrCreateIntProperty("Arbok", "pokemon", i++).value);
@@ -81,6 +83,7 @@ public class IDListPixelmon {
 		charizardId = Integer.parseInt(configuration.getOrCreateIntProperty("Charizard", "pokemon", i++).value);
 		charmanderId = Integer.parseInt(configuration.getOrCreateIntProperty("Charmander", "pokemon", i++).value);
 		charmeleonId = Integer.parseInt(configuration.getOrCreateIntProperty("Charmeleon", "pokemon", i++).value);
+		cuboneId = Integer.parseInt(configuration.getOrCreateIntProperty("Cubone", "pokemon", i++).value);
 		diglettId = Integer.parseInt(configuration.getOrCreateIntProperty("Diglett", "pokemon", i++).value);
 		dugtrioId = Integer.parseInt(configuration.getOrCreateIntProperty("Dugtrio", "pokemon", i++).value);
 		eeveeId = Integer.parseInt(configuration.getOrCreateIntProperty("Eevee", "pokemon", i++).value);
@@ -114,6 +117,7 @@ public class IDListPixelmon {
 		psyduckId = Integer.parseInt(configuration.getOrCreateIntProperty("Psyduck", "pokemon", i++).value);
 		rattataId = Integer.parseInt(configuration.getOrCreateIntProperty("Rattata", "pokemon", i++).value);
 		seakingId = Integer.parseInt(configuration.getOrCreateIntProperty("Seaking", "pokemon", i++).value);
+		shellderId = Integer.parseInt(configuration.getOrCreateIntProperty("Shellder", "pokemon", i++).value);
 		snorlaxId = Integer.parseInt(configuration.getOrCreateIntProperty("Snorlax", "pokemon", i++).value);
 		squirtleId = Integer.parseInt(configuration.getOrCreateIntProperty("Squirtle", "pokemon", i++).value);
 		staryuId = Integer.parseInt(configuration.getOrCreateIntProperty("Staryu", "pokemon", i++).value);
