@@ -29,8 +29,8 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 
 	static EntityPokeBall currentPokeball = null;
 	PacketPCClickHandler pcHandler;
-	
-	public PacketHandler(){
+
+	public PacketHandler() {
 		pcHandler = new PacketPCClickHandler();
 	}
 
@@ -70,10 +70,10 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 					if (pixelmon == null) {
 						return;
 					}
-					if (mod_Pixelmon.battleRegistry.getBattle(player).participant1.currentPokemon().getPokemonId() == pixelmon.getPokemonId() ||
-							mod_Pixelmon.battleRegistry.getBattle(player).participant2.currentPokemon().getPokemonId() == pixelmon.getPokemonId())
-					{
-						ChatHandler.sendChat(player, pixelmon.getHelper().getName()+ " is in a battle!");
+					if (mod_Pixelmon.battleRegistry.getBattle(player) != null
+							&& (mod_Pixelmon.battleRegistry.getBattle(player).participant1.currentPokemon().getPokemonId() == pixelmon.getPokemonId() || mod_Pixelmon.battleRegistry.getBattle(player).participant2
+									.currentPokemon().getPokemonId() == pixelmon.getPokemonId())) {
+						ChatHandler.sendChat(player, pixelmon.getHelper().getName() + " is in a battle!");
 						return;
 					}
 
@@ -110,7 +110,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 			} else if (packetID == EnumPackets.HealPokemon.getIndex()) {
 				EntityPlayer player = ((NetServerHandler) network.getNetHandler()).getPlayerEntity();
 				int index = dataStream.readInt();
-				if (index==-1)
+				if (index == -1)
 					mod_Pixelmon.pokeballManager.getPlayerStorage(player).healAllPokemon();
 				else
 					mod_Pixelmon.pokeballManager.getPlayerStorage(player).heal(index);
@@ -152,8 +152,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 					}
 				}
 				mod_Pixelmon.pokeballManager.save();
-			}
-			else if(packetID == EnumPackets.PCClick.getIndex()){
+			} else if (packetID == EnumPackets.PCClick.getIndex()) {
 				EntityPlayer player = ((NetServerHandler) network.getNetHandler()).getPlayerEntity();
 				pcHandler.handle(dataStream, player);
 			}
