@@ -1,9 +1,11 @@
-package pixelmon.attacks;
+package pixelmon.attacks.participants;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.mod_Pixelmon;
+import pixelmon.attacks.Attack;
+import pixelmon.attacks.BattleController;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;

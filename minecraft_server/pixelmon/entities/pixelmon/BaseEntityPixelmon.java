@@ -5,6 +5,10 @@ import java.util.Random;
 
 import pixelmon.*;
 import pixelmon.attacks.*;
+import pixelmon.attacks.participants.IBattleParticipant;
+import pixelmon.attacks.participants.PlayerParticipant;
+import pixelmon.attacks.participants.TrainerParticipant;
+import pixelmon.attacks.participants.WildPixelmonParticipant;
 import pixelmon.attacks.statusEffects.StatusEffectBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.*;

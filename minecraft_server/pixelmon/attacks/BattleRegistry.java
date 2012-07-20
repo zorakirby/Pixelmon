@@ -2,6 +2,8 @@ package pixelmon.attacks;
 
 import java.util.ArrayList;
 
+import pixelmon.attacks.participants.PlayerParticipant;
+
 import net.minecraft.src.EntityPlayer;
 
 public class BattleRegistry {

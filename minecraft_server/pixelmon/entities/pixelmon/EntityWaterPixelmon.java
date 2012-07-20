@@ -5,12 +5,12 @@ import java.util.Random;
 
 import pixelmon.WorldHelper;
 import pixelmon.attacks.BattleController;
-import pixelmon.attacks.IBattleParticipant;
 import pixelmon.attacks.Moveset;
-import pixelmon.attacks.PlayerParticipant;
-import pixelmon.attacks.TrainerParticipant;
 import pixelmon.attacks.Type;
-import pixelmon.attacks.WildPixelmonParticipant;
+import pixelmon.attacks.participants.IBattleParticipant;
+import pixelmon.attacks.participants.PlayerParticipant;
+import pixelmon.attacks.participants.TrainerParticipant;
+import pixelmon.attacks.participants.WildPixelmonParticipant;
 import pixelmon.attacks.statusEffects.StatusEffectBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.BattleStats;

@@ -1,5 +1,7 @@
-package pixelmon.attacks;
+package pixelmon.attacks.participants;
 
+import pixelmon.attacks.Attack;
+import pixelmon.attacks.BattleController;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 public interface IBattleParticipant {

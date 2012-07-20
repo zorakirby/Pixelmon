@@ -1,9 +1,12 @@
-package pixelmon.attacks;
+package pixelmon.attacks.participants;
 
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.mod_Pixelmon;
+import pixelmon.attacks.Attack;
+import pixelmon.attacks.BattleController;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
@@ -11,7 +14,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
 
 public class PlayerParticipant implements IBattleParticipant {
-	EntityPlayer player;
+	public EntityPlayer player;
 	PixelmonEntityHelper currentPixelmon;
 	BattleController bc;
 	
@@ -80,8 +83,10 @@ public class PlayerParticipant implements IBattleParticipant {
 		mod_Pixelmon.pokeballManager.getPlayerStorage(currentPixelmon.getOwner()).retrieve((IHaveHelper) currentPixelmon.getIHaveHelper());
 		IHaveHelper newPixelmon = mod_Pixelmon.pokeballManager.getPlayerStorage(currentPixelmon.getOwner()).sendOut(newPixelmonId,
 				currentPixelmon.getOwner().worldObj);
-		newPixelmon.getHelper().setLocationAndAngles(currentPixelmon.getIHaveHelper());
-		newPixelmon.releaseFromPokeball();
+		((EntityLiving)newPixelmon).setLocationAndAngles(((EntityLiving)currentPixelmon.getEntity()).posX, ((EntityLiving)currentPixelmon.getEntity()).posY, ((EntityLiving)currentPixelmon.getEntity()).posZ, ((EntityLiving)currentPixelmon.getEntity()).rotationYaw, 0.0F);
+		newPixelmon.getHelper().setMotion(0, 0, 0);
+		newPixelmon.getHelper().releaseFromPokeball();
+		
 		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "Go " + newPixelmon.getHelper().getName() + "!");
 		currentPixelmon = newPixelmon.getHelper();
 	}

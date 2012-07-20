@@ -3,6 +3,7 @@ package pixelmon.attacks;
 import java.util.ArrayList;
 import java.util.Random;
 
+import pixelmon.attacks.participants.IBattleParticipant;
 import pixelmon.attacks.statusEffects.StatusEffectBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.BattleStats;
