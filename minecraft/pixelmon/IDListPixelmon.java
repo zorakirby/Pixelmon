@@ -52,6 +52,7 @@ public class IDListPixelmon {
 	public static int starmieId;
 	public static int krokorokId;
 	public static int squirtleId;
+	public static int shellderId;
 	public static int trapinchId;
 	public static int venusaurId;
 	public static int voltorbId;
@@ -116,6 +117,7 @@ public class IDListPixelmon {
 		psyduckId = Integer.parseInt(configuration.getOrCreateIntProperty("Psyduck", "pokemon", i++).value);
 		rattataId = Integer.parseInt(configuration.getOrCreateIntProperty("Rattata", "pokemon", i++).value);
 		seakingId = Integer.parseInt(configuration.getOrCreateIntProperty("Seaking", "pokemon", i++).value);
+		shellderId = Integer.parseInt(configuration.getOrCreateIntProperty("Shellder", "pokemon", i++).value);
 		snorlaxId = Integer.parseInt(configuration.getOrCreateIntProperty("Snorlax", "pokemon", i++).value);
 		squirtleId = Integer.parseInt(configuration.getOrCreateIntProperty("Squirtle", "pokemon", i++).value);
 		staryuId = Integer.parseInt(configuration.getOrCreateIntProperty("Staryu", "pokemon", i++).value);

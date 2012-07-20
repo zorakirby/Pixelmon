@@ -206,6 +206,7 @@ public class PixelmonEntityList {
 		addMapping(EntityPsyduck.class, "Psyduck", IDListPixelmon.psyduckId, new RenderPixelmon(new ModelPsyduck(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityRattata.class, "Rattata", IDListPixelmon.rattataId, new RenderPixelmon(new ModelRattata(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntitySeaking.class, "Seaking", IDListPixelmon.seakingId, new RenderFreeWaterPixelmon(new ModelSeaking(), 0.5F), ClassType.Pixelmon);
+		addMapping(EntityShellder.class, "Shellder", IDListPixelmon.shellderId, new RenderPixelmon(new ModelShellder(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntitySnorlax.class, "Snorlax", IDListPixelmon.snorlaxId, new RenderPixelmon(new ModelSnorlax(), 0.9F), ClassType.Pixelmon);
 		addMapping(EntitySquirtle.class, "Squirtle", IDListPixelmon.squirtleId, new RenderPixelmon(new ModelSquirtle(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityStaryu.class, "Staryu", IDListPixelmon.staryuId, new RenderFreeWaterPixelmon(new ModelStaryu(), 0.5F), ClassType.Pixelmon);
