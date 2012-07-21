@@ -56,6 +56,7 @@ public class TrainerParticipant implements IBattleParticipant {
 	@Override
 	public void getNextPokemon() {
 		trainer.pokemonStorage.updateNBT(currentPokemon());
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted",true);
 		trainer.releasePokemon();
 	}
 
@@ -90,5 +91,10 @@ public class TrainerParticipant implements IBattleParticipant {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public void updatePokemon() {
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
 	}
 }

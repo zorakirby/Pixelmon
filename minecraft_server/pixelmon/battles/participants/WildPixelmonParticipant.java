@@ -81,4 +81,8 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	public void setBattleController(BattleController bc) {
 		this.bc = bc;
 	}
+
+	@Override
+	public void updatePokemon() {		
+	}
 }

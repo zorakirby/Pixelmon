@@ -17,4 +17,5 @@ public interface IBattleParticipant {
 	void switchPokemon(IBattleParticipant participant2, int newPixelmonId);
 	boolean checkPokemon();
 	void setBattleController(BattleController bc);
+	void updatePokemon();
 }

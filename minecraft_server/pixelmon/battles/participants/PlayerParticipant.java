@@ -121,4 +121,9 @@ public class PlayerParticipant implements IBattleParticipant {
 	public void setBattleController(BattleController bc) {
 		this.bc = bc;
 	}
+	
+	@Override
+	public void updatePokemon() {
+		mod_Pixelmon.pokeballManager.getPlayerStorage(currentPixelmon.getOwner()).getNBT(currentPixelmon.getPokemonId()).setBoolean("IsFainted", true);		
+	}
 }

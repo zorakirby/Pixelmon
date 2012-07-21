@@ -92,4 +92,9 @@ public class TrainerParticipant implements IBattleParticipant {
 		}
 		return true;
 	}
+	
+	@Override
+	public void updatePokemon() {
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
+	}
 }

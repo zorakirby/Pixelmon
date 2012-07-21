@@ -138,7 +138,7 @@ public class BattleController {
 				if (participant1.currentPokemon().getOwner()!=null || participant2.currentPokemon().getOwner()!=null)
 					awardExp(attackersList1, participant1.currentPokemon(), participant2.currentPokemon());
 			}
-			
+			participant.updatePokemon();
 			if (participant.hasMorePokemon()) {
 				participant.getNextPokemon();
 				participant.currentPokemon().SetBattleController(this);
