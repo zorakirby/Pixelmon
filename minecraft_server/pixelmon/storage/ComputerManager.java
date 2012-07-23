@@ -48,7 +48,7 @@ public class ComputerManager implements ISaveEventHandler {
 		File saveDirPath = new File(getSaveFolder(player));
 		if (!saveDirPath.exists())
 			saveDirPath.mkdirs();
-		File playerFile = new File(getSaveFolder(player)+player.username +".com");
+		File playerFile = new File(getSaveFolder(player)+player.username +".comp");
 		if (playerFile.exists()){
 			PlayerComputerStorage p = new PlayerComputerStorage(player);
 			try{
@@ -78,7 +78,7 @@ public class ComputerManager implements ISaveEventHandler {
 					}
 
 				if (playerConnected) {
-					File playerSaveFile = new File(getSaveFolder(player) + player.username + ".pk");
+					File playerSaveFile = new File(getSaveFolder(player) + player.username + ".comp");
 					if (getPlayerStorage(player).hasChanges()){
 						FileOutputStream f = new FileOutputStream(playerSaveFile);
 						DataOutputStream s = new DataOutputStream(f);
