@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.gui.FontScaler;
 import net.minecraft.src.*;
 
 public class GuiPokedex extends GuiContainer
