@@ -140,6 +140,7 @@ public class GuiPC extends GuiContainer {
 			PixelmonDataPacket p = partySlots[i].pokemonData;
 			if(p != null){
 				int pos = p.order;
+				partySlots[i].setPokemon((PixelmonDataPacket) null);
 				partySlots[pos].setPokemon(p);
 			}
 		}
