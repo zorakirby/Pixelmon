@@ -22,9 +22,9 @@ public class GuiLearnMove extends GuiScreen
 	public void initGui()
 	{
 		controlList.clear();
-		for (int i =0; i < user.getMoveset().size(); i++){
+		for (int i =0; i < user.moveset.size(); i++){
 			controlList.add(new GuiButton(i + 1, width / 2 - 100, height / 4 + i*24 + 20 + 12,
-					user.getMoveset().get(i).attackName));
+					user.moveset.get(i).attackName));
 		}
 		controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 20 + 12, "Cancel"));
 	}
@@ -35,8 +35,8 @@ public class GuiLearnMove extends GuiScreen
 			ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Decided not to teach " + user.getName() + " " + a.attackName + ".");
 			return;
 		}
-		ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Your " + user.getName() + " forgot " + user.getMoveset().get(index - 1).attackName + ", and learned " + a.attackName);
-		user.getMoveset().set(index - 1, a);
+		ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Your " + user.getName() + " forgot " + user.moveset.get(index - 1).attackName + ", and learned " + a.attackName);
+		user.moveset.set(index - 1, a);
 	}
 	public void actionPerformed(GuiButton b)
 	{

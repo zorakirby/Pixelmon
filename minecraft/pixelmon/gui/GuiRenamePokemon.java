@@ -63,13 +63,13 @@ public class GuiRenamePokemon extends GuiScreen {
 				ModLoader.sendPacket(PacketCreator.createStringPacket(EnumPackets.RenamePokemon, targetPacket.pokemonID, theGuiTextField.getText()));
 				targetPacket.nickname = theGuiTextField.getText();
 			} else {
-				target.setNickname(theGuiTextField.getText());
+				target.nickname = theGuiTextField.getText();
 				NBTTagCompound nbt = mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getNBT(target.getPokemonId());
 				if (nbt != null) {
 					nbt.setString("Nickname", theGuiTextField.getText());
 				}
 				if (theGuiTextField.getText().trim() == target.getName())
-					target.setNickname(null);
+					target.nickname= null;
 				mod_Pixelmon.pokeballManager.save();
 			}
 			parentGuiScreen.initGui();

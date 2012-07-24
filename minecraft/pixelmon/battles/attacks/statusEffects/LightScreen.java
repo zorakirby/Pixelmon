@@ -19,9 +19,9 @@ public class LightScreen extends StatusEffectBase {
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 
 		if (checkChance()) {
-			if (user.getStatus().contains(this))
+			if (user.status.contains(this))
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " already has a lightscreen!");
-			target.getStatus().add(this);
+			target.status.add(this);
 			effectTurns = 5;
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " has put up a screen of shimmering light!");
 		} else
@@ -39,7 +39,7 @@ public class LightScreen extends StatusEffectBase {
 	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		if (effectTurns == 0) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + "'s Lightscreen wears off!");
-			user.getStatus().remove(this);
+			user.status.remove(this);
 		}
 		effectTurns--;
 	}

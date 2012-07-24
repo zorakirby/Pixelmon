@@ -27,10 +27,10 @@ public class RenderPokeball extends RenderSnowball
 		EntityPokeBall entity = (EntityPokeBall)par1Entity;
 		//itemIconIndex = entity.ballBonus;
 		Item item = null;
-		if(entity.ballBonus == 1) item = mod_Pixelmon.pokeBall;
-		if(entity.ballBonus == 1.5) item = mod_Pixelmon.greatBall;
-		if(entity.ballBonus == 2) item = mod_Pixelmon.ultraBall;
-		if(entity.ballBonus == 255) item = mod_Pixelmon.masterBall;
+//		if(entity.ballBonus == 1) item = mod_Pixelmon.pokeBall;
+//		if(entity.ballBonus == 1.5) item = mod_Pixelmon.greatBall;
+//		if(entity.ballBonus == 2) item = mod_Pixelmon.ultraBall;
+//		if(entity.ballBonus == 255) item = mod_Pixelmon.masterBall;
 		itemIconIndex = item.getIconFromDamage(0);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);

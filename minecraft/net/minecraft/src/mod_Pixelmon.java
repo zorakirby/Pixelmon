@@ -43,7 +43,7 @@ import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pokeballs.EntityEmptyPokeBall;
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumGui;
@@ -54,7 +54,7 @@ import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.items.ItemEmptyPokeBall;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemPokedex;
-import pixelmon.render.RenderEmptyPokeball;
+import pixelmon.render.OldRenderEmptyPokeball;
 import pixelmon.render.RenderPokeball;
 import pixelmon.render.RenderTrainer;
 import pixelmon.storage.ComputerManager;
@@ -302,7 +302,7 @@ public class mod_Pixelmon extends NetworkMod {
 	public void registerEntities() {
 		removeNormalMobsAndCreatures();
 		PixelmonEntityList.registerEntities();
-		MinecraftForge.registerEntity(EntityEmptyPokeBall.class, this, IDListPixelmon.i, 50, 1, true);
+		MinecraftForge.registerEntity(EntityPokeBall.class, this, IDListPixelmon.i, 50, 1, true);
 		IDListPixelmon.i++;
 		MinecraftForge.registerEntity(EntityPokeBall.class, this, IDListPixelmon.i, 50, 1, true);
 		IDListPixelmon.i++;
@@ -419,7 +419,7 @@ public class mod_Pixelmon extends NetworkMod {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addRenderer(Map map) {
-		map.put(EntityEmptyPokeBall.class, new RenderEmptyPokeball());
+		map.put(EntityPokeBall.class, new OldRenderEmptyPokeball());
 		map.put(EntityPokeBall.class, new RenderPokeball());
 		PixelmonEntityList.addRenderer(map);
 	}

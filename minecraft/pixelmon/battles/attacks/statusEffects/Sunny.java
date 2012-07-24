@@ -23,15 +23,15 @@ public class Sunny extends StatusEffectBase {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "There's no sun at night!");
 				return;
 			}
-			for (StatusEffectBase e : user.getStatus())
+			for (StatusEffectBase e : user.status)
 				if (e.type == StatusEffectType.Sunny) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), "It's already sunny!");
 					return;
 				}
 
 			turnCount=5;
-			target.getStatus().add(this);
-			user.getStatus().add(this);
+			target.status.add(this);
+			user.status.add(this);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " makes the sun shine more brightly!");
 
 		} else
@@ -52,7 +52,7 @@ public class Sunny extends StatusEffectBase {
 	@Override
 	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		if (turnCount == 0) {
-			user.getStatus().remove(this);
+			user.status.remove(this);
 		}
 		turnCount--;
 	}

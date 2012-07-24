@@ -25,7 +25,7 @@ public class GuiEvolve extends GuiScreen
 	
 	private String getName(PixelmonEntityHelper e)
 	{
-		return (MathHelper.stringNullOrLengthZero(b.getNickName())?b.getName():b.getNickName());
+		return (MathHelper.stringNullOrLengthZero(b.nickname)?b.getName():b.nickname);
 	}
 	
 	public void initGui()

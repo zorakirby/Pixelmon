@@ -19,14 +19,14 @@ public class Paralysis extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 		if (checkChance()) {
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Paralysis) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already paralyzed!");
 					return;
 				}
 
-			target.getStatus().add(this);
-			target.getBattleStats().setIsParalyzed();
+			target.status.add(this);
+			target.battleStats.setIsParalyzed();
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is paralyzed!");
 
 		} else

@@ -21,12 +21,12 @@ public class Infatuated extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 		if (checkChance()) {
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Infatuated) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already in love!");
 					return;
 				}
-			target.getStatus().add(this);
+			target.status.add(this);
 			originalTarget = user;
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has fallen in love!");
 		} else
@@ -36,7 +36,7 @@ public class Infatuated extends StatusEffectBase {
 	@Override
 	public boolean canAttackThisTurn(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		if (originalTarget !=target){
-			user.getStatus().remove(this);
+			user.status.remove(this);
 			return true;
 		}
 		

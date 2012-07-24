@@ -433,4 +433,9 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);
 	}
+	
+	public World getWorldObj() {
+		return worldObj;
+	}
+
 }

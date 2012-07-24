@@ -30,9 +30,9 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 	}
 	public void loadAI(){
 		tasks = new EntityAITasks();
-		if (aggression >0){
+		if (helper.aggression >0){
 			tasks.addTask(0, new EntityAIMoveTowardsTarget(this, moveSpeed, 15));
-			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50-aggression, true));
+			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50-helper.aggression, true));
 			tasks.addTask(2, new EntityAIStartBattle(this));
 		}
 		tasks.addTask(3, new EntityAISwimming(this));
@@ -64,7 +64,7 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 	}
 	
 	public void EndBattle(){
-		bc = null;
+		helper.bc = null;
 		loadAI();
 	}
 	

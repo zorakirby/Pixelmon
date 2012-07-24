@@ -17,8 +17,8 @@ public class EntityButterfree extends EntityGroundPixelmon
 	{
 		name = "Butterfree";
 		isImmuneToFire = false;
-		doesHover = true;
-		hoverHeight = 1f;
+		helper.doesHover = true;
+		helper.hoverHeight = 1f;
 		super.init();
 	}
 	

@@ -25,12 +25,12 @@ public class Burn extends StatusEffectBase {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Burn) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already burnt!");
 					return;
 				}
-			target.getStatus().add(this);
+			target.status.add(this);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has been burnt!");
 		}
 	}

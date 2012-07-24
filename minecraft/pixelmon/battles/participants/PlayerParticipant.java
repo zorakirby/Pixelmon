@@ -42,7 +42,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
-		currentPixelmon.getBattleStats().clearBattleStats();
+		currentPixelmon.battleStats.clearBattleStats();
 		currentPixelmon.EndBattle();
 	}
 
@@ -56,7 +56,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return currentPixelmon.getIsDead() || currentPixelmon.getIsFainted();
+		return currentPixelmon.getIsDead() || currentPixelmon.isFainted;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
 		int y = 0;
-		if (currentPixelmon.getBattleController().participant1.currentPokemon() == currentPixelmon)
+		if (currentPixelmon.bc.participant1.currentPokemon() == currentPixelmon)
 			y = 1;
 		player.openGui(mod_Pixelmon.instance, EnumGui.ChooseAttack.getIndex(), player.worldObj,
 				mod_Pixelmon.battleRegistry.getIndex(bc), y, 0);
@@ -76,7 +76,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
-		currentPixelmon.getBattleStats().clearBattleStats();
+		currentPixelmon.battleStats.clearBattleStats();
 		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "That's enough " + currentPixelmon.getName() + "!");
 		currentPixelmon.catchInPokeball();
 

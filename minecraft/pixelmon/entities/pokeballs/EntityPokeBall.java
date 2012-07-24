@@ -1,60 +1,224 @@
 package pixelmon.entities.pokeballs;
 
+import java.util.Random;
+
+import org.lwjgl.util.vector.Vector3f;
+
+import pixelmon.comm.ChatHandler;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PokeballManager;
 import net.minecraft.src.EntityCrit2FX;
 import net.minecraft.src.EntityLiving;
-//import net.minecraft.src.EntityReddustFX;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityReddustFX;
 import net.minecraft.src.EntityThrowable;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.MovingObjectPosition;
+import net.minecraft.src.Vec3D;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
 
 public class EntityPokeBall extends EntityThrowable {
-
-	public PixelmonEntityHelper pixelmon;
-	public double ballBonus=1;
+	public EnumPokeballs type;
+	public int shakePokeball;
+	private EntityLiving thrower;
+	private PixelmonEntityHelper p;
+	private boolean isWaiting;
+	private int waitTime;
+	private boolean canCatch = false;
+	private PixelmonEntityHelper pixelmon;
 
 	public EntityPokeBall(World world) {
 		super(world);
+		dataWatcher.addObject(10, (short)0); // 0=empty, 1=full
+		type = EnumPokeballs.PokeBall;
 	}
 
-	public EntityPokeBall(World world, EntityLiving entityliving, PixelmonEntityHelper e) {
+	public EntityPokeBall(World world, EntityLiving entityliving, EnumPokeballs type) {
+		super(world, entityliving);
+		thrower = entityliving;
+		this.type = type;
+	}
+
+	public EntityPokeBall(World world, EntityLiving entityliving, PixelmonEntityHelper e, EnumPokeballs type) {
 		super(world, entityliving);
 		pixelmon = e;
-		ballBonus = 1;
+		this.type = type;
+		dataWatcher.updateObject(10, (short)1);
 	}
 
 	public void init() {
 	}
 
+	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
-		if (movingobjectposition != null && !worldObj.isRemote) {
-			if (pixelmon != null) {
-				if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0)
-					pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
-				else
-					pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
-				pixelmon.setMotion(0, 0, 0);
-				pixelmon.releaseFromPokeball();
-				if (movingobjectposition.entityHit != null
-						&& (movingobjectposition.entityHit instanceof IHaveHelper)
-						&& !mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(
-								((IHaveHelper) movingobjectposition.entityHit).getHelper()))
-					pixelmon.StartBattle(((IHaveHelper) movingobjectposition.entityHit).getHelper());
-				if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer)
-					pixelmon.StartBattle((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
-				else
-					pixelmon.clearAttackTarget();
-				if (thrower instanceof EntityPlayer) {
+		if (!worldObj.isRemote) {
+			if (dataWatcher.getWatchableObjectShort(10) == 0) {
+				if (movingobjectposition != null && !worldObj.isRemote) {
+					if (pixelmon != null) {
+						if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0)
+							pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
+						else
+							pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
+						pixelmon.setMotion(0, 0, 0);
+						pixelmon.releaseFromPokeball();
+						if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)
+								&& !mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper()))
+							pixelmon.StartBattle(((IHaveHelper) movingobjectposition.entityHit).getHelper());
+						if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer)
+							pixelmon.StartBattle((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
+						else
+							pixelmon.clearAttackTarget();
+						if (thrower instanceof EntityPlayer) {
 
+						}
+						spawnCaptureParticles();
+					}
+					setDead();
 				}
-				spawnCaptureParticles();
+			} else {
+				if (movingobjectposition != null) {
+					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
+						IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
+						p = entitypixelmon.getHelper();
+						if (p.getOwner() == (EntityPlayer) thrower) {
+							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
+							spawnFailParticles();
+							return;
+						}
+						doCaptureCalc(p);
+						isWaiting = true;
+						motionX = motionZ = 0;
+						motionY = -0.1;
+					}
+
+					else {
+						if (!isWaiting) {
+							entityDropItem(new ItemStack(mod_Pixelmon.getKindOfBallFromBonus(type.getBallBonus(), true)), 0.0F);
+							setDead();
+						}
+					}
+				}
 			}
+		}
+	}
+
+	int numRocks = 0;
+	boolean isUnloaded = false;
+
+	Vec3D initPos;
+	Vec3D diff;
+	float initialScale;
+
+	@Override
+	public void onEntityUpdate() {
+		if (worldObj.isRemote) {
+			motionX = motionY = motionZ = 0;
+		}
+		if (isWaiting) {
+			if (waitTime == 0 && !isUnloaded) {
+				initialScale = p.scale;
+				initPos = p.getPosition();
+				diff = Vec3D.createVector(posX, posY, posZ).subtract(initPos);
+				p.scale = initialScale / 1.1f;
+			}
+			if (waitTime == 1 && !isUnloaded) {
+				p.scale = initialScale / 1.3f;
+				moveCloser();
+			}
+			if (waitTime == 2 && !isUnloaded) {
+				p.scale = initialScale / 1.7f;
+				moveCloser();
+			}
+			if (waitTime == 3 && !isUnloaded) {
+				p.scale = initialScale / 2.2f;
+				moveCloser();
+			}
+			if (waitTime == 4 && !isUnloaded) {
+				p.scale = initialScale / 3;
+				moveCloser();
+			}
+			if (waitTime == 4 && !isUnloaded) {
+				p.unloadEntity();
+				isUnloaded = true;
+				waitTime = 0;
+			}
+			if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY) - 2, (int) this.posZ) && this.posY % 1 <= this.height) {
+				this.motionY = 0;
+				this.motionX = 0;
+				this.motionZ = 0;
+			}
+
+			waitTime++;
+		}
+	}
+
+	int i = 0;
+
+	private void moveCloser() {
+		p.setPosition(initPos.addVector(diff.xCoord * i / 4, diff.yCoord * i / 4, diff.zCoord * i / 4));
+		i++;
+	}
+
+	int initialDelay = 15;
+	int wobbleTime = 5;
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (isWaiting)
+			rotationPitch = 0;
+
+		if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
+			p.scale = initialScale;
+			if (numShakes == 0)
+				catchPokemon();
+			this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
+		} else if (waitTime >= initialDelay + wobbleTime && waitTime < initialDelay + 3 * wobbleTime) {
+			this.rotationPitch = -1 * ((float) (waitTime - (initialDelay + wobbleTime))) / wobbleTime * (float) 35 + 35;
+		} else if (waitTime >= initialDelay + 3 * wobbleTime && waitTime < initialDelay + 4 * wobbleTime) {
+			this.rotationPitch = ((float) (waitTime - (initialDelay + 3 * wobbleTime))) / wobbleTime * (float) 35 - 35;
+		} else if (waitTime == initialDelay + 4 * wobbleTime) {
+			waitTime = 0;
+			shakeCount++;
+			if (shakeCount == numShakes - 1 || numShakes == 1) {
+				catchPokemon();
+			}
+		}
+	}
+
+	int numShakes = 0;
+	int shakeCount = 0;
+
+	private void doCatchCheck() {
+
+	}
+
+	private void catchPokemon() {
+		if (canCatch) {
+			p.setTamed(true);
+			p.setOwner((EntityPlayer) thrower);
+			mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
+			p.clearAttackTarget();
+			p.catchInPokeball();
+			spawnCaptureParticles();
+			waitTime = 0;
+			isWaiting = false;
+			setDead();
+		} else {
+			spawnFailParticles();
+			waitTime = 0;
+			isWaiting = false;
+			p.getEntity().setPosition(posX, posY, posZ);
+			worldObj.spawnEntityInWorld(p.getEntity());
+			p.getEntity().setPosition(posX, posY, posZ);
+			p.setIsDead(false);
 			setDead();
 		}
 	}
@@ -66,13 +230,40 @@ public class EntityPokeBall extends EntityThrowable {
 		}
 	}
 
-	/*
-	 * private void spawnFailParticles() {
-	 * 
-	 * for (int i = 0; i < 30; i++) { EntityReddustFX entityred = new
-	 * EntityReddustFX(worldObj, posX, posY, posZ, 1, 0, 0);
-	 * entityred.setVelocity(worldObj.rand.nextFloat() / 5,
-	 * worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5);
-	 * ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityred); } }
-	 */
+	private void spawnFailParticles() {
+
+		for (int i = 0; i < 30; i++) {
+			EntityReddustFX entityred = new EntityReddustFX(worldObj, posX, posY, posZ, 1, 0, 0);
+			entityred.setVelocity(worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5);
+			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityred);
+		}
+	}
+
+	private int b;
+
+	protected void doCaptureCalc(PixelmonEntityHelper entitypixelmon) {
+		int pokemonRate = entitypixelmon.stats.BaseStats.CatchRate;
+		int hpMax = entitypixelmon.getMaxHealth();
+		int hpCurrent = entitypixelmon.getHealth();
+		int bonusStatus = 1;
+		double a, b, p;
+		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * type.getBallBonus()) / (3 * hpMax)) * bonusStatus;
+		b = (Math.pow(2, 16) - 1) * Math.sqrt(Math.sqrt((a / (Math.pow(2, 8) - 1))));
+		p = Math.pow(((b + 1) / Math.pow(2, 16)), 4);
+		p = (p * 10000) / 100;
+		b = (int) Math.floor(65536 / Math.pow((255 / p), 1f / 4f));
+		int passedShakes = 0;
+		for (int i = 0; i < 4; i++) {
+			int roll = new Random().nextInt(65536);
+			if (roll <= b) {
+				passedShakes++;
+			}
+		}
+		if (passedShakes == 4) {
+			canCatch = true;
+		} else {
+			canCatch = false;
+		}
+		numShakes = passedShakes;
+	}
 }

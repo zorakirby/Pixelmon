@@ -9,16 +9,16 @@ import net.minecraft.src.mod_Pixelmon;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import pixelmon.entities.pokeballs.EntityEmptyPokeBall;
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
 
 
-public class RenderEmptyPokeball extends RenderSnowball
+public class OldRenderEmptyPokeball extends RenderSnowball
 {
 
 	private int itemIconIndex;
 	
-	public RenderEmptyPokeball() 
+	public OldRenderEmptyPokeball() 
 	{
 		super(0);
 		itemIconIndex = 0;
@@ -26,7 +26,7 @@ public class RenderEmptyPokeball extends RenderSnowball
 	
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
 	{
-		EntityEmptyPokeBall entity = (EntityEmptyPokeBall)par1Entity;
+		EntityPokeBall entity = (EntityPokeBall)par1Entity;
 		//itemIconIndex = entity.ballBonus;
 		Item item = null;
 		if(entity.type == EnumPokeballs.PokeBall) item = mod_Pixelmon.pokeBall;

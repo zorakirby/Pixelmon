@@ -77,7 +77,7 @@ public class ComputerManager implements ISaveEventHandler {
 	private void load(World world) {
 		File f = new File(".");
 		File f1 = new File(f.getAbsolutePath().substring(0, f.getAbsolutePath().lastIndexOf('.')));
-		workingDir = new File(ModLoader.getMinecraftInstance().getMinecraftDir() + "\\saves\\" + world.getSaveHandler().getSaveDirectoryName() + "\\");
+		workingDir = new File(ModLoader.getMinecraftInstance().getMinecraftDir() + "/saves/" + world.getSaveHandler().getSaveDirectoryName() + "/");
 		if (!workingDir.exists())
 			workingDir.mkdir();
 		File file = new File(workingDir, "computer.dat");
@@ -127,8 +127,8 @@ public class ComputerManager implements ISaveEventHandler {
 	private File getFile() {
 		File f = new File(".");
 		File f1 = new File(f.getAbsolutePath().substring(0, f.getAbsolutePath().lastIndexOf('.')));
-		workingDir = new File(ModLoader.getMinecraftInstance().getMinecraftDir() + "\\saves\\"
-				+ ModLoader.getMinecraftInstance().theWorld.getSaveHandler().getSaveDirectoryName() + "\\");
+		workingDir = new File(ModLoader.getMinecraftInstance().getMinecraftDir() + "/saves/"
+				+ ModLoader.getMinecraftInstance().theWorld.getSaveHandler().getSaveDirectoryName() + "/");
 		if (!workingDir.exists())
 			workingDir.mkdir();
 		File file = new File(workingDir, "computer.dat");

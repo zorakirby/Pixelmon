@@ -60,17 +60,17 @@ public class GuiAttacking extends GuiScreen {
 				controlList.add(new GuiButton(3, width * 2 / 3 - width / 3, height * 3 / 4 + 30, width / 3 - 10, 20, userPacket.moveset[3].attackName + "(" + userPacket.moveset[3].pp + "/"
 						+ userPacket.moveset[3].ppBase + ")"));
 		} else {
-			controlList.add(new GuiButton(0, width / 3 - width / 3, height * 3 / 4, width / 3 - 10, 20, mypixelmon.getMoveset().get(0).attackName + "(" + mypixelmon.getMoveset().get(0).pp + "/"
-					+ mypixelmon.getMoveset().get(0).ppBase + ")"));
-			if (mypixelmon.getMoveset().size() > 1)
-				controlList.add(new GuiButton(1, width * 2 / 3 - width / 3, height * 3 / 4, width / 3 - 10, 20, mypixelmon.getMoveset().get(1).attackName + "(" + mypixelmon.getMoveset().get(1).pp
-						+ "/" + mypixelmon.getMoveset().get(1).ppBase + ")"));
-			if (mypixelmon.getMoveset().size() > 2)
-				controlList.add(new GuiButton(2, width / 3 - width / 3, height * 3 / 4 + 30, width / 3 - 10, 20, mypixelmon.getMoveset().get(2).attackName + "(" + mypixelmon.getMoveset().get(2).pp
-						+ "/" + mypixelmon.getMoveset().get(2).ppBase + ")"));
-			if (mypixelmon.getMoveset().size() > 3)
-				controlList.add(new GuiButton(3, width * 2 / 3 - width / 3, height * 3 / 4 + 30, width / 3 - 10, 20, mypixelmon.getMoveset().get(3).attackName + "("
-						+ mypixelmon.getMoveset().get(3).pp + "/" + mypixelmon.getMoveset().get(3).ppBase + ")"));
+			controlList.add(new GuiButton(0, width / 3 - width / 3, height * 3 / 4, width / 3 - 10, 20, mypixelmon.moveset.get(0).attackName + "(" + mypixelmon.moveset.get(0).pp + "/"
+					+ mypixelmon.moveset.get(0).ppBase + ")"));
+			if (mypixelmon.moveset.size() > 1)
+				controlList.add(new GuiButton(1, width * 2 / 3 - width / 3, height * 3 / 4, width / 3 - 10, 20, mypixelmon.moveset.get(1).attackName + "(" + mypixelmon.moveset.get(1).pp
+						+ "/" + mypixelmon.moveset.get(1).ppBase + ")"));
+			if (mypixelmon.moveset.size() > 2)
+				controlList.add(new GuiButton(2, width / 3 - width / 3, height * 3 / 4 + 30, width / 3 - 10, 20, mypixelmon.moveset.get(2).attackName + "(" + mypixelmon.moveset.get(2).pp
+						+ "/" + mypixelmon.moveset.get(2).ppBase + ")"));
+			if (mypixelmon.moveset.size() > 3)
+				controlList.add(new GuiButton(3, width * 2 / 3 - width / 3, height * 3 / 4 + 30, width / 3 - 10, 20, mypixelmon.moveset.get(3).attackName + "(" + mypixelmon.moveset.get(3).pp
+						+ "/" + mypixelmon.moveset.get(3).ppBase + ")"));
 		}
 		controlList.add(new GuiButton(10, width * 3 / 4, height * 3 / 4, width / 4 - 5, 20, "Run"));
 		controlList.add(new GuiButton(11, width * 3 / 4, height * 3 / 4 + 30, width / 4 - 5, 20, "Switch"));
@@ -102,8 +102,8 @@ public class GuiAttacking extends GuiScreen {
 			}
 		} else {
 			if (par1GuiButton.id < 4) {
-				if (mypixelmon.getMoveset().get(0).pp > 0) {
-					bc.setAttack(mypixelmon, mypixelmon.getMoveset().get(par1GuiButton.id));
+				if (mypixelmon.moveset.get(0).pp > 0) {
+					bc.setAttack(mypixelmon, mypixelmon.moveset.get(par1GuiButton.id));
 					mc.displayGuiScreen(null);
 					mc.setIngameFocus();
 				}
@@ -135,15 +135,15 @@ public class GuiAttacking extends GuiScreen {
 			drawCenteredString(fontRenderer, "Which move do you want your " + mypixelmon.getName() + " to use against the " + ("wild ") + target.getName() + "?", width / 2, 10, 0xFFFFFF);
 			drawPokemonStats(mypixelmon, width / 8, height * 2 / 6, true);
 			drawPokemonStats(target, width * 5 / 8, height * 2 / 6, false);
-			drawHealthBar(mypixelmon.getHealth(), mypixelmon.getStats().HP, width / 8, height * 2 / 6 + 10, 0, 0, 0);
-			drawHealthBar(target.getHealth(), target.getStats().HP, width * 5 / 8, height * 2 / 6 + 10, 0, 0, 0);
+			drawHealthBar(mypixelmon.getHealth(), mypixelmon.stats.HP, width / 8, height * 2 / 6 + 10, 0, 0, 0);
+			drawHealthBar(target.getHealth(), target.stats.HP, width * 5 / 8, height * 2 / 6 + 10, 0, 0, 0);
 		}
 	}
 
 	public void drawPokemonStats(PixelmonEntityHelper pixelmon, int x, int y, boolean isMine) {
 		fontRenderer.FONT_HEIGHT = 10;
 		drawString(fontRenderer, pixelmon.getName(), x, y, 0xDDDDDD);
-		if (pixelmon.getIsMale())
+		if (pixelmon.isMale)
 			drawString(fontRenderer, "♂ Lv." + pixelmon.getLvl().getLevel(), x + width / 4, y, 0xDDDDDD);
 		else
 			drawString(fontRenderer, "♀ Lv." + pixelmon.getLvl().getLevel(), x + width / 4, y, 0xDDDDDD);
