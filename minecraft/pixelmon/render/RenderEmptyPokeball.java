@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import pixelmon.entities.pokeballs.EntityEmptyPokeBall;
+import pixelmon.enums.EnumPokeballs;
 
 
 public class RenderEmptyPokeball extends RenderSnowball
@@ -28,10 +29,7 @@ public class RenderEmptyPokeball extends RenderSnowball
 		EntityEmptyPokeBall entity = (EntityEmptyPokeBall)par1Entity;
 		//itemIconIndex = entity.ballBonus;
 		Item item = null;
-		if(entity.ballBonus == 1) item = mod_Pixelmon.pokeBall;
-		if(entity.ballBonus == 1.5) item = mod_Pixelmon.greatBall;
-		if(entity.ballBonus == 2) item = mod_Pixelmon.ultraBall;
-		if(entity.ballBonus == 255) item = mod_Pixelmon.masterBall;
+		if(entity.type == EnumPokeballs.PokeBall) item = mod_Pixelmon.pokeBall;
 		itemIconIndex = item.getIconFromDamage(0);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);

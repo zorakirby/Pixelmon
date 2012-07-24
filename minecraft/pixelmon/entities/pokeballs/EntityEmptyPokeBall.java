@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PokeballManager;
 import net.minecraft.src.EntityCrit2FX;
 import net.minecraft.src.EntityLiving;
@@ -22,7 +23,7 @@ import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
 
 public class EntityEmptyPokeBall extends EntityThrowable {
-	public double ballBonus;
+	public EnumPokeballs type;
 	public int shakePokeball;
 	private EntityLiving thrower;
 	private PixelmonEntityHelper p;
@@ -32,13 +33,13 @@ public class EntityEmptyPokeBall extends EntityThrowable {
 
 	public EntityEmptyPokeBall(World world) {
 		super(world);
-		ballBonus = 1;
+		type = EnumPokeballs.PokeBall;
 	}
 
-	public EntityEmptyPokeBall(World world, EntityLiving entityliving, double d) {
+	public EntityEmptyPokeBall(World world, EntityLiving entityliving, EnumPokeballs type) {
 		super(world, entityliving);
 		thrower = entityliving;
-		ballBonus = d;
+		this.type = type;
 	}
 
 	public void init() {
@@ -64,7 +65,7 @@ public class EntityEmptyPokeBall extends EntityThrowable {
 
 				else {
 					if (!isWaiting) {
-						entityDropItem(new ItemStack(mod_Pixelmon.getKindOfBallFromBonus(ballBonus, true)), 0.0F);
+						entityDropItem(new ItemStack(mod_Pixelmon.getKindOfBallFromBonus(type.getBallBonus(), true)), 0.0F);
 						setDead();
 					}
 				}
@@ -211,7 +212,7 @@ public class EntityEmptyPokeBall extends EntityThrowable {
 		int hpCurrent = entitypixelmon.getHealth();
 		int bonusStatus = 1;
 		double a, b, p;
-		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * ballBonus) / (3 * hpMax)) * bonusStatus;
+		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * type.getBallBonus()) / (3 * hpMax)) * bonusStatus;
 		b = (Math.pow(2, 16) - 1) * Math.sqrt(Math.sqrt((a / (Math.pow(2, 8) - 1))));
 		p = Math.pow(((b + 1) / Math.pow(2, 16)), 4);
 		p = (p * 10000) / 100;
