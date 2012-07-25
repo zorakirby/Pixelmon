@@ -4,20 +4,17 @@ import net.minecraft.src.Item;
 import net.minecraft.src.mod_Pixelmon;
 
 public enum EnumPokeballs {
-	PokeBall(0, 1, "pokeball.png", "pokeball_flashing.png"), GreatBall(1, 1.5, "greatball.png", "greatball_flashing.png"), 
-	UltraBall(2, 2, "ultraball.png", "greatball_flashing.png"), MasterBall(3, 255, "masterball.png", "masterball_flashing.png");
+	PokeBall(0, 1, "pokeball"), GreatBall(1, 1.5, "greatball"), UltraBall(2, 2, "ultraball"), MasterBall(3, 255, "masterball");
 
-	private EnumPokeballs(int index, double ballBonus, String texture, String flashRedTexture) {
+	private EnumPokeballs(int index, double ballBonus, String filenamePrefix) {
 		this.ballBonus = ballBonus;
 		this.index = index;
-		this.texture = texture;
-		this.flashRedTexture = flashRedTexture;
+		this.filenamePrefix = filenamePrefix;
 	}
 
 	private double ballBonus;
 	private int index;
-	private String texture;
-	private String flashRedTexture;
+	private String filenamePrefix;
 
 	public double getBallBonus() {
 		return ballBonus;
@@ -36,10 +33,14 @@ public enum EnumPokeballs {
 	}
 
 	public String getTexture() {
-		return texture;
+		return filenamePrefix + ".png";
 	}
 
 	public String getFlashRedTexture() {
-		return flashRedTexture;
+		return filenamePrefix + "_flashing.png";
+	}
+
+	public String getCaptureTexture() {
+		return filenamePrefix + "_captured.png";
 	}
 }
