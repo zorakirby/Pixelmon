@@ -183,13 +183,19 @@ public class EntityPokeBall extends EntityThrowable {
 	int initialDelay = 15;
 	int wobbleTime = 5;
 	public boolean flashRed = false;
-
+	int flashTime=10;
+	int flashCounter=0;
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		rotationPitch = 0;
-		if (isWaiting)
+		if (isWaiting){
 			rotationYaw = 0;
+			flashCounter++;
+			if (flashCounter<15) flashRed=true;
+			else flashRed=false;
+			if (flashCounter==30)flashCounter=-1;
+		}
 		if (isCaptured){
 			if (waitTime>20){
 				p.setTamed(true);
@@ -203,13 +209,11 @@ public class EntityPokeBall extends EntityThrowable {
 		}
 		else{
 			if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
-				flashRed = true;
 				p.scale = initialScale;
 				if (numShakes == 0)
 					catchPokemon();
 				this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
 			} else if (waitTime >= initialDelay + wobbleTime && waitTime < initialDelay + 3 * wobbleTime) {
-				flashRed = false;
 				this.rotationPitch = -1 * ((float) (waitTime - (initialDelay + wobbleTime))) / wobbleTime * (float) 35 + 35;
 			} else if (waitTime >= initialDelay + 3 * wobbleTime && waitTime < initialDelay + 4 * wobbleTime) {
 				this.rotationPitch = ((float) (waitTime - (initialDelay + 3 * wobbleTime))) / wobbleTime * (float) 35 - 35;
