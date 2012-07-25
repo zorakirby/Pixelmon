@@ -221,7 +221,7 @@ public class ModelPokeball extends ModelBase {
 
 	public void render(float f) {
 		// setRotationAngles(f, f1, f2, f3, f4, f5);
-		Rocking.render(f);
+		Rocking.render(f); 
 	}
 
 	protected void setRotation(ModelRenderer model, float x, float y, float z) {
