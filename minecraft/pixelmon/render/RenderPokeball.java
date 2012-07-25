@@ -36,9 +36,9 @@ public class RenderPokeball extends Render {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, z);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/pokeball.png");
+		MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/"+pokeball.type.getTexture());
 		RenderHelper.enableStandardItemLighting();
-		float factor = (float) (1);
+		float factor = (float) (1.0/16.0);
 		GL11.glPushMatrix();
 		model.render(factor);
 		GL11.glPopMatrix();

@@ -7,10 +7,10 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 
-public class ItemEmptyPokeBall extends Item {
+public class ItemPokeBall extends Item {
 	private EnumPokeballs type;	
 
-	public ItemEmptyPokeBall(int i, EnumPokeballs type) {
+	public ItemPokeBall(int i, EnumPokeballs type) {
 		super(i);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);

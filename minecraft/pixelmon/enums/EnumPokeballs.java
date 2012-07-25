@@ -4,17 +4,17 @@ import net.minecraft.src.Item;
 import net.minecraft.src.mod_Pixelmon;
 
 public enum EnumPokeballs {
-	PokeBall(0, 1), GreatBall(1, 1.5), UltraBall(2, 2), MasterBall(3, 255);
+	PokeBall(0, 1, "pokeball.png"), GreatBall(1, 1.5, "greatball.png"), UltraBall(2, 2, "ultraball.png"), MasterBall(3, 255, "masterball.png");
 
-	private EnumPokeballs(int index, double ballBonus) {
+	private EnumPokeballs(int index, double ballBonus, String texture) {
 		this.ballBonus = ballBonus;
 		this.index = index;
-		this.item = item;
+		this.texture = texture;
 	}
 
 	private double ballBonus;
 	private int index;
-	private Item item;
+	private String texture;
 
 	public double getBallBonus() {
 		return ballBonus;
@@ -30,5 +30,9 @@ public enum EnumPokeballs {
 		if (index ==2) return mod_Pixelmon.ultraBall;
 		if (index ==3) return mod_Pixelmon.masterBall;
 		return  mod_Pixelmon.pokeBall;
+	}
+
+	public String getTexture() {
+		return texture;
 	}
 }
