@@ -513,18 +513,6 @@ public class mod_Pixelmon extends NetworkMod {
 	}
 
 	
-	public static Item getKindOfBallFromBonus(double d, boolean flag) {
-		if (d == 1)
-			return pokeBall;
-		if (d == 1.5)
-			return greatBall;
-		if (d == 2)
-			return ultraBall;
-		if (d == 255)
-			return masterBall;
-		return pokeBall;
-	}
-
 	public static Item getBallFromID(int i) {
 		if (i == pokeBall.shiftedIndex)
 			return pokeBall;

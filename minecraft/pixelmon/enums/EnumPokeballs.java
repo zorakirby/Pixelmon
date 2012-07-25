@@ -4,9 +4,9 @@ import net.minecraft.src.Item;
 import net.minecraft.src.mod_Pixelmon;
 
 public enum EnumPokeballs {
-	PokeBall(0, 1, mod_Pixelmon.pokeBall), GreatBall(1, 1.5, mod_Pixelmon.greatBall), UltraBall(2, 2, mod_Pixelmon.ultraBall), MasterBall(3, 255, mod_Pixelmon.masterBall);
+	PokeBall(0, 1), GreatBall(1, 1.5), UltraBall(2, 2), MasterBall(3, 255);
 
-	private EnumPokeballs(int index, double ballBonus, Item item) {
+	private EnumPokeballs(int index, double ballBonus) {
 		this.ballBonus = ballBonus;
 		this.index = index;
 		this.item = item;
@@ -25,6 +25,10 @@ public enum EnumPokeballs {
 	}
 	
 	public Item getItem(){
-		return item;
+		if (index ==0) return mod_Pixelmon.pokeBall;
+		if (index ==1) return mod_Pixelmon.greatBall;
+		if (index ==2) return mod_Pixelmon.ultraBall;
+		if (index ==3) return mod_Pixelmon.masterBall;
+		return  mod_Pixelmon.pokeBall;
 	}
 }

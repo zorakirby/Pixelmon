@@ -35,10 +35,11 @@ public class RenderPokeball extends Render {
 		GL11.glPushMatrix();
 		GL11.glDisable(2896 /* GL_LIGHTING */);
 		GL11.glTranslated(x, y, z);
-
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+	    GL11.glScalef(0.5F, 0.5F, 0.5F);
 		MinecraftForgeClient.bindTexture("test");
 
-		float factor = (float) (0);
+		float factor = (float) (0.0); 
 
 		model.WhteTip.render(factor);
 		model.WhiteTop.render(factor);
@@ -50,6 +51,7 @@ public class RenderPokeball extends Render {
 		model.Hinge.render(factor);
 
 		GL11.glEnable(2896 /* GL_LIGHTING */);
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
 
 	}
