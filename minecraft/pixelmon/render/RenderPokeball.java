@@ -33,14 +33,11 @@ public class RenderPokeball extends Render {
 	private void doRender(EntityPokeBall pokeball, double x, double y, double z, float f, float f1) {
 
 		GL11.glPushMatrix();
-		GL11.glDisable(2896 /* GL_LIGHTING */);
 		GL11.glTranslated(x, y, z);
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-	    GL11.glScalef(0.5F, 0.5F, 0.5F);
-		MinecraftForgeClient.bindTexture("test");
+		MinecraftForgeClient.bindTexture("pixelmon/texture/pokeballs/pokeball.png");
 
-		float factor = (float) (0.0); 
-
+		float factor = (float) (1.0f/16.0f);
+		GL11.glPopMatrix();
 		model.WhteTip.render(factor);
 		model.WhiteTop.render(factor);
 		model.WhiteBottom.render(factor);
@@ -49,10 +46,6 @@ public class RenderPokeball extends Render {
 		model.WhiteLeft.render(factor);
 		model.WhiteBack.render(factor);
 		model.Hinge.render(factor);
-
-		GL11.glEnable(2896 /* GL_LIGHTING */);
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		GL11.glPopMatrix();
 
 	}
 }

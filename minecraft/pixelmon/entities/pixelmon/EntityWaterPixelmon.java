@@ -84,9 +84,9 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	@Override
 	public String getTexture() {
 		if (dataWatcher.getWatchableObjectShort(20) == 1)
-			return "/pixelmon/texture/shiny/shiny" + name.toLowerCase() + ".png";
+			return "/pixelmon/texture/pokemon-shiny/shiny" + name.toLowerCase() + ".png";
 		else
-			return "/pixelmon/texture/" + name.toLowerCase() + ".png";
+			return "/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png";
 	}
 
 	public void loadMoveset() {
