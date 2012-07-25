@@ -38,8 +38,8 @@ public class BattleController {
 		this.participant2 = participant2;
 		participant1.setBattleController(this);
 		participant2.setBattleController(this);
-		participant1.currentPokemon().SetBattleController(this);
-		participant2.currentPokemon().SetBattleController(this);
+		participant1.currentPokemon().bc = this;
+		participant2.currentPokemon().bc = this;
 		if (!participant1.checkPokemon()) return;
 		if (!participant2.checkPokemon()) return;
 		if (participant1.canGainXP())
@@ -105,14 +105,14 @@ public class BattleController {
 					}
 				}
 
-				for (int i = 0; i < participant1.currentPokemon().getStatus().size(); i++) {
-					StatusEffectBase s = participant1.currentPokemon().getStatus().get(i);
+				for (int i = 0; i < participant1.currentPokemon().status.size(); i++) {
+					StatusEffectBase s = participant1.currentPokemon().status.get(i);
 					s.applyRepeatedEffect(participant1.currentPokemon(), participant2.currentPokemon());
 					s.turnTick(participant1.currentPokemon(), participant2.currentPokemon()); // Update
 																								// Status's
 				}
-				for (int i = 0; i < participant2.currentPokemon().getStatus().size(); i++) {
-					StatusEffectBase s = participant2.currentPokemon().getStatus().get(i);
+				for (int i = 0; i < participant2.currentPokemon().status.size(); i++) {
+					StatusEffectBase s = participant2.currentPokemon().status.get(i);
 					s.applyRepeatedEffect(participant2.currentPokemon(), participant1.currentPokemon());
 					s.turnTick(participant2.currentPokemon(), participant1.currentPokemon());
 				}
@@ -141,7 +141,7 @@ public class BattleController {
 			participant.updatePokemon();
 			if (participant.hasMorePokemon()) {
 				participant.getNextPokemon();
-				participant.currentPokemon().SetBattleController(this);
+				participant.currentPokemon().bc = this;
 				ChatHandler.sendChat(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out "
 						+ participant.currentPokemon().getName() + "!");
 				attackersList1.clear();
@@ -164,11 +164,11 @@ public class BattleController {
 	}
 
 	private void checkMoveSpeed() {
-		if (participant1.currentPokemon().getStats().Speed * participant1.currentPokemon().getBattleStats().SpeedModifier > participant2.currentPokemon()
-				.getStats().Speed * participant2.currentPokemon().getBattleStats().SpeedModifier)
+		if (participant1.currentPokemon().stats.Speed * participant1.currentPokemon().battleStats.SpeedModifier > participant2.currentPokemon()
+				.stats.Speed * participant2.currentPokemon().battleStats.SpeedModifier)
 			pixelmon1MovesFirst = true;
-		else if (participant2.currentPokemon().getStats().Speed * participant2.currentPokemon().getBattleStats().SpeedModifier > participant1.currentPokemon()
-				.getStats().Speed * participant1.currentPokemon().getBattleStats().SpeedModifier)
+		else if (participant2.currentPokemon().stats.Speed * participant2.currentPokemon().battleStats.SpeedModifier > participant1.currentPokemon()
+				.stats.Speed * participant1.currentPokemon().battleStats.SpeedModifier)
 			pixelmon1MovesFirst = false;
 		else {
 			if (mod_Pixelmon.getRandomNumberBetween(0, 2) >= 1)
@@ -194,14 +194,14 @@ public class BattleController {
 		pixelmon2WillTryFlee = false;
 		pixelmon1IsSwitching = false;
 		pixelmon2IsSwitching = false;
-		for (StatusEffectBase e : participant1.currentPokemon().getStatus()) {
+		for (StatusEffectBase e : participant1.currentPokemon().status) {
 			if (!e.canAttackThisTurn(participant1.currentPokemon(), participant2.currentPokemon())) {
 				pixelmon1CanAttack = false;
 				attackList1.add("None");
 				break;
 			}
 		}
-		for (StatusEffectBase e : participant2.currentPokemon().getStatus()) {
+		for (StatusEffectBase e : participant2.currentPokemon().status) {
 			if (!e.canAttackThisTurn(participant2.currentPokemon(), participant1.currentPokemon())) {
 				pixelmon2CanAttack = false;
 				attackList2.add("None");
@@ -249,8 +249,8 @@ public class BattleController {
 
 	private void calculateEscape(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " tries to run away");
-		float A = ((float) user.getStats().Speed) * ((float) user.getBattleStats().SpeedModifier) / 100;
-		float B = ((float) target.getStats().Speed) * ((float) target.getBattleStats().SpeedModifier) / 100;
+		float A = ((float) user.stats.Speed) * ((float) user.battleStats.SpeedModifier) / 100;
+		float B = ((float) target.stats.Speed) * ((float) target.battleStats.SpeedModifier) / 100;
 		if (B > 255)
 			B = 255;
 		float C = player1EscapeAttempts++;
@@ -274,7 +274,7 @@ public class BattleController {
 				else
 					return;
 				t = 1;// traded
-				b = pixelmon12.getStats().BaseStats.BaseExp;
+				b = pixelmon12.stats.BaseStats.BaseExp;
 				e = 1;// holding lucky egg
 				L = pixelmon12.getLvl().getLevel();
 				Lp = user.getInteger("Level");
@@ -304,14 +304,14 @@ public class BattleController {
 	public void SwitchPokemon(PixelmonEntityHelper currentPixelmon, int newPixelmonId) {
 		if (participant1.currentPokemon() == currentPixelmon) {
 			participant1.switchPokemon(participant2, newPixelmonId);
-			participant1.currentPokemon().SetBattleController(this);
+			participant1.currentPokemon().bc = this;
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
 			attackersList2.clear();
 			attackersList2.add(participant2.currentPokemon().getPokemonId());
 			pixelmon1IsSwitching = true;
 		} else {
 			participant2.switchPokemon(participant1, newPixelmonId);
-			currentPixelmon.SetBattleController(this);
+			participant2.currentPokemon().bc = this;
 			attackersList2.add(participant2.currentPokemon().getPokemonId());
 			attackersList1.clear();
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
@@ -320,7 +320,6 @@ public class BattleController {
 	}
 
 	public boolean isTrainerVsTrainer() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

@@ -33,9 +33,9 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		pixelmon.EndBattle();
-		if (!pixelmon.getIsDead() && !pixelmon.getIsFainted()){
-			pixelmon.getBattleStats().clearBattleStats();
-			pixelmon.setHealth(pixelmon.getStats().HP);
+		if (!pixelmon.getIsDead() && !pixelmon.isFainted) {
+			pixelmon.battleStats.clearBattleStats();
+			pixelmon.setHealth(pixelmon.stats.HP);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return pixelmon.getIsDead() || pixelmon.getIsFainted();
+		return pixelmon.getIsDead() || pixelmon.isFainted;
 	}
 
 	boolean isWild = true;
@@ -59,7 +59,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(pixelmon.getMoveset(), participant2.currentPokemon().getType(), pixelmon, participant2.currentPokemon());
+		return Attack.getWhichMoveIsBest(pixelmon.moveset, participant2.currentPokemon().getType(), pixelmon, participant2.currentPokemon());
 	}
 
 	@Override
@@ -70,9 +70,12 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean checkPokemon() {
-		if (pixelmon.getMoveset().size() == 0) {
-			System.out.println("Couldn't load " + pixelmon.getName() + "'s moves");
-			return false;
+		if (pixelmon.moveset.size() == 0) {
+			pixelmon.loadMoveset();
+			if (pixelmon.moveset.size() == 0) {
+				System.out.println("Couldn't load " + pixelmon.getName() + "'s moves");
+				return false;
+			}
 		}
 		return true;
 	}
@@ -83,6 +86,6 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void updatePokemon() {		
+	public void updatePokemon() {
 	}
 }

@@ -94,7 +94,7 @@ public class PlayerComputerStorage {
 
 	@SuppressWarnings("rawtypes")
 	public void readFromNBT(NBTTagCompound var1) {
-		Iterator<NBTTagCompound> i = data.getTags().iterator();
+		Iterator<NBTTagCompound> i = var1.getTags().iterator();
 
 		while (i.hasNext()) {
 			NBTTagCompound tag = i.next();
@@ -105,12 +105,11 @@ public class PlayerComputerStorage {
 	}
 
 	public void writeToNBT(NBTTagCompound n) {
-		data = new NBTTagCompound();
 		for (int i = 0; i < storageBoxes.length; i++) {
 			ComputerBox c = storageBoxes[i];
 			NBTTagCompound cTag = new NBTTagCompound();
 			c.save(cTag);
-			data.setCompoundTag("" + c.position, cTag);
+			n.setCompoundTag("" + c.position, cTag);
 		}
 	}
 

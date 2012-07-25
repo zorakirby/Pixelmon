@@ -43,17 +43,18 @@ import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pokeballs.EntityEmptyPokeBall;
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.gui.GuiChooseStarter;
 import pixelmon.gui.GuiHandler;
 import pixelmon.gui.GuiPixelmonOverlay;
-import pixelmon.items.ItemEmptyPokeBall;
+import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemPokedex;
-import pixelmon.render.RenderEmptyPokeball;
+import pixelmon.render.OldRenderEmptyPokeball;
 import pixelmon.render.RenderPokeball;
 import pixelmon.render.RenderTrainer;
 import pixelmon.storage.ComputerManager;
@@ -62,6 +63,7 @@ import pixelmon.storage.ServerStorageDisplay;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 import vazkii.um.UpdateManagerMod;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.registry.FMLRegistry;
 
 public class mod_Pixelmon extends NetworkMod {
@@ -111,10 +113,10 @@ public class mod_Pixelmon extends NetworkMod {
 	public static final Block leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, 1).setHardness(3.0f).setStepSound(Block.soundStoneFootstep).setBlockName("LeafStoneOre");
 	public static final Block waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, 2).setHardness(3.0f).setStepSound(Block.soundStoneFootstep).setBlockName("WaterStoneOre").setLightValue(0.5f);
 	public static final Block pc = new BlockPC(pcId).setBlockName("pc").setHardness(2.5f);
-	public static final Item pokeBall = new ItemEmptyPokeBall(10000, 1).setItemName("PokeBall").setIconIndex(pIMG);
-	public static final Item greatBall = new ItemEmptyPokeBall(10001, 1.5).setItemName("GreatBall").setIconIndex(gIMG);
-	public static final Item ultraBall = new ItemEmptyPokeBall(10002, 2).setItemName("UltraBall").setIconIndex(uIMG);
-	public static final Item masterBall = new ItemEmptyPokeBall(10003, 255).setItemName("MasterBall").setIconIndex(mIMG);
+	public static final Item pokeBall = new ItemPokeBall(10000, EnumPokeballs.PokeBall).setItemName("PokeBall").setIconIndex(pIMG);
+	public static final Item greatBall = new ItemPokeBall(10001, EnumPokeballs.GreatBall).setItemName("GreatBall").setIconIndex(gIMG);
+	public static final Item ultraBall = new ItemPokeBall(10002, EnumPokeballs.UltraBall).setItemName("UltraBall").setIconIndex(uIMG);
+	public static final Item masterBall = new ItemPokeBall(10003, EnumPokeballs.MasterBall).setItemName("MasterBall").setIconIndex(mIMG);
 	public static final Item pokeChecker = new Item(10004).setItemName("PokeChecker").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokechecker.png")).setMaxStackSize(1);
 	public static final Item pokeDex = new ItemPokedex(10027).setItemName("Pokedex").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokedex.png")).setMaxStackSize(1);
 	public static final Item rareCandy = new Item(10005).setItemName("Rare Candy").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/rarecandy.png"));
@@ -247,6 +249,7 @@ public class mod_Pixelmon extends NetworkMod {
 		registerEntities();
 		addSpawns();
 		addRecipes();
+		FMLClientHandler.instance().obtainBlockModelIdFor(this,true);
 		ForgeHooksClient.renderWorldLastHandlers.add(pixelmonOverlay);
 		MinecraftForge.registerEntity(BaseEntityPixelmon.class, this, 0, 100, 1, true);
 		MinecraftForge.registerSaveHandler(pokeballManager);
@@ -301,7 +304,7 @@ public class mod_Pixelmon extends NetworkMod {
 	public void registerEntities() {
 		removeNormalMobsAndCreatures();
 		PixelmonEntityList.registerEntities();
-		MinecraftForge.registerEntity(EntityEmptyPokeBall.class, this, IDListPixelmon.i, 50, 1, true);
+		MinecraftForge.registerEntity(EntityPokeBall.class, this, IDListPixelmon.i, 50, 1, true);
 		IDListPixelmon.i++;
 		MinecraftForge.registerEntity(EntityPokeBall.class, this, IDListPixelmon.i, 50, 1, true);
 		IDListPixelmon.i++;
@@ -418,7 +421,7 @@ public class mod_Pixelmon extends NetworkMod {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addRenderer(Map map) {
-		map.put(EntityEmptyPokeBall.class, new RenderEmptyPokeball());
+		map.put(EntityPokeBall.class, new OldRenderEmptyPokeball());
 		map.put(EntityPokeBall.class, new RenderPokeball());
 		PixelmonEntityList.addRenderer(map);
 	}
@@ -509,18 +512,7 @@ public class mod_Pixelmon extends NetworkMod {
 		removeNormalMobsAndCreatures();
 	}
 
-	public static Item getKindOfBallFromBonus(double d, boolean flag) {
-		if (d == 1)
-			return pokeBall;
-		if (d == 1.5)
-			return greatBall;
-		if (d == 2)
-			return ultraBall;
-		if (d == 255)
-			return masterBall;
-		return pokeBall;
-	}
-
+	
 	public static Item getBallFromID(int i) {
 		if (i == pokeBall.shiftedIndex)
 			return pokeBall;
@@ -553,6 +545,8 @@ public class mod_Pixelmon extends NetworkMod {
 	public static NetworkMod instance;
 	public static BattleRegistry battleRegistry = new BattleRegistry();
 
+	
+	
 	public static void drawModelToScreen(float size, int xSize, int ySize, int xPos, int yPos, Entity entity, GuiScreen gui, boolean spin) {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);

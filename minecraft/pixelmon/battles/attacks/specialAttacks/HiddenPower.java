@@ -21,12 +21,12 @@ public class HiddenPower extends SpecialAttackBase {
 	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack attack, ArrayList<String> attackList) {
 		int a, b, c, d, e, f;
 
-		a = user.getStats().IVs.HP % 2;
-		b = user.getStats().IVs.Attack % 2;
-		c = user.getStats().IVs.Defence % 2;
-		d = user.getStats().IVs.Speed % 2;
-		e = user.getStats().IVs.SpAtt % 2;
-		f = user.getStats().IVs.SpDef % 2;
+		a = user.stats.IVs.HP % 2;
+		b = user.stats.IVs.Attack % 2;
+		c = user.stats.IVs.Defence % 2;
+		d = user.stats.IVs.Speed % 2;
+		e = user.stats.IVs.SpAtt % 2;
+		f = user.stats.IVs.SpDef % 2;
 
 		double fedbca = 32 * f + 16 * e + 8 * d + 4 * c + 2 * b + a;
 		int type = (int) Math.floor((fedbca) * 15f / 63f);
@@ -74,22 +74,22 @@ public class HiddenPower extends SpecialAttackBase {
 
 		int u = 0, v = 0, w = 0, x = 0, y = 0, z = 0;
 		int tmp;
-		tmp = user.getStats().IVs.HP % 4;
+		tmp = user.stats.IVs.HP % 4;
 		if (tmp == 2 || tmp == 3)
 			u = 1;
-		tmp = user.getStats().IVs.Attack % 4;
+		tmp = user.stats.IVs.Attack % 4;
 		if (tmp == 2 || tmp == 3)
 			v = 1;
-		tmp = user.getStats().IVs.Defence % 4;
+		tmp = user.stats.IVs.Defence % 4;
 		if (tmp == 2 || tmp == 3)
 			w = 1;
-		tmp = user.getStats().IVs.Speed % 4;
+		tmp = user.stats.IVs.Speed % 4;
 		if (tmp == 2 || tmp == 3)
 			x = 1;
-		tmp = user.getStats().IVs.SpAtt % 4;
+		tmp = user.stats.IVs.SpAtt % 4;
 		if (tmp == 2 || tmp == 3)
 			y = 1;
-		tmp = user.getStats().IVs.SpDef % 4;
+		tmp = user.stats.IVs.SpDef % 4;
 		if (tmp == 2 || tmp == 3)
 			z = 1;
 

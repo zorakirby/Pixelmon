@@ -24,12 +24,12 @@ public class Poison extends StatusEffectBase {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Poison || e.type == StatusEffectType.PoisonBadly) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already poisoned!");
 					return;
 				}
-			target.getStatus().add(this);
+			target.status.add(this);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has been poisoned!");
 		} else
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");

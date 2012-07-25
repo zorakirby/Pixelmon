@@ -29,12 +29,12 @@ public class Fly extends MultiTurnSpecialAttackBase {
 		turnCounter++;
 		if (turnCounter == 1){
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " Flies up in the air!");
-			user.getStatus().add(new Flying());
+			user.status.add(new Flying());
 			return true;
 		}else{
-			for (int i =0; i < user.getStatus().size(); i++){
-				StatusEffectBase e = user.getStatus().get(i);
-				if (e.type == StatusEffectType.Flying) user.getStatus().remove(e);
+			for (int i =0; i < user.status.size(); i++){
+				StatusEffectBase e = user.status.get(i);
+				if (e.type == StatusEffectType.Flying) user.status.remove(e);
 			}
 			persists = false;
 			return false;

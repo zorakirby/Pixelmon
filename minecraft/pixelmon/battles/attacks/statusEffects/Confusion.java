@@ -22,12 +22,12 @@ public class Confusion extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 		if (checkChance()) {
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Confusion) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already confused!");
 					return;
 				}
-			target.getStatus().add(this);
+			target.status.add(this);
 			effectTurns = mod_Pixelmon.getRandomNumberBetween(1, 4);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has become confused!");
 		} else
@@ -51,8 +51,8 @@ public class Confusion extends StatusEffectBase {
 		double critical = 1;
 		double rand = ((double) mod_Pixelmon.getRandomNumberBetween(85, 100)) / 100;
 		double modifier = stab * type * critical * rand;
-		double attack = ((double) user.getStats().Attack) * ((double) user.getBattleStats().AttackModifier) / 100;
-		double defence = ((double) user.getStats().Defence) * ((double) user.getBattleStats().DefenceModifier) / 100;
+		double attack = ((double) user.stats.Attack) * ((double) user.battleStats.AttackModifier) / 100;
+		double defence = ((double) user.stats.Defence) * ((double) user.battleStats.DefenceModifier) / 100;
 		double Damage = ((2 * user.getLvl().getLevel() + 10) / 250 * (attack / defence) * 40 + 2) * modifier;
 
 		return (int) Math.round(Damage);
@@ -62,7 +62,7 @@ public class Confusion extends StatusEffectBase {
 	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		if (effectTurns == 0) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " snaps out of confusion!");
-			user.getStatus().remove(this);
+			user.status.remove(this);
 		}
 		effectTurns--;
 	}

@@ -62,7 +62,7 @@ public class PlayerStorage {
 	}
 
 	public void addToParty(PixelmonEntityHelper p) {
-		if (p.getMoveset().size()==0)
+		if (p.moveset.size()==0)
 			p.loadMoveset();
 		if (!hasSpace()) {
 			ChatHandler.sendChat(p.getOwner(), "Your party is full, " + p.getName() + " is sent to your computer!");

@@ -34,7 +34,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 		if (ModLoader.getMinecraftInstance().theWorld.isRemote)
 			s = !targetPacket.name.equals(targetPacket.nickname) ? "Give Nickname" : "Change Nickname";
 		else
-			s = !target.getDisplayName().equals(target.getNickName()) ? "Give Nickname" : "Change Nickname";
+			s = !target.getDisplayName().equals(target.nickname) ? "Give Nickname" : "Change Nickname";
 		controlList.add(new GuiButton(1, width / 2 - 100, (int) (height * 0.8 - 25), s));
 	}
 
@@ -104,15 +104,15 @@ public class GuiScreenPokeChecker extends GuiScreen {
 			}
 			drawCenteredString(fontRenderer, "Health: " + target.getHealth() + "/" + target.getMaxHealth(), width / 3, height / 7 + 60, 0xdddddd);
 			drawCenteredString(fontRenderer, "Exp: " + target.getLvl().getExp() + "/" + target.getLvl().getExpToNextLevel(), width / 3, height / 7 + 70, 0xdddddd);
-			drawCenteredString(fontRenderer, "Attack: " + target.getStats().Attack, width / 3, height / 7 + 80, 0xdddddd);
-			drawCenteredString(fontRenderer, "Defence: " + target.getStats().Defence, width / 3, height / 7 + 90, 0xdddddd);
-			drawCenteredString(fontRenderer, "Special Attack: " + target.getStats().SpecialAttack, width / 3, height / 7 + 100, 0xdddddd);
-			drawCenteredString(fontRenderer, "Special Defence: " + target.getStats().SpecialDefence, width / 3, height / 7 + 110, 0xdddddd);
+			drawCenteredString(fontRenderer, "Attack: " + target.stats.Attack, width / 3, height / 7 + 80, 0xdddddd);
+			drawCenteredString(fontRenderer, "Defence: " + target.stats.Defence, width / 3, height / 7 + 90, 0xdddddd);
+			drawCenteredString(fontRenderer, "Special Attack: " + target.stats.SpecialAttack, width / 3, height / 7 + 100, 0xdddddd);
+			drawCenteredString(fontRenderer, "Special Defence: " + target.stats.SpecialDefence, width / 3, height / 7 + 110, 0xdddddd);
 			// MOVES
 			drawCenteredString(fontRenderer, "Moves", width * 2 / 3, height / 7 + 25, 0xdddddd);
-			for (int i2 = 0; i2 < target.getMoveset().size(); i2++) {
-				drawCenteredString(fontRenderer, (((Attack) target.getMoveset().get(i2))).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10),
-						((Attack) target.getMoveset().get(i2)).attackType.getColor());
+			for (int i2 = 0; i2 < target.moveset.size(); i2++) {
+				drawCenteredString(fontRenderer, (((Attack) target.moveset.get(i2))).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10),
+						((Attack) target.moveset.get(i2)).attackType.getColor());
 			}
 		}
 		super.drawScreen(i, i1, f);

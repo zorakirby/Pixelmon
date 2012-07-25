@@ -21,13 +21,13 @@ public class Sleep extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 		if (checkChance()) {
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Sleep) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already asleep!");
 					return;
 				}
 
-			target.getStatus().add(this);
+			target.status.add(this);
 
 			effectTurns = mod_Pixelmon.getRandomNumberBetween(1, 4);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has fallen asleep!");
@@ -46,7 +46,7 @@ public class Sleep extends StatusEffectBase {
 	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		if (effectTurns == 0) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " wakes up!");
-			user.getStatus().remove(this);
+			user.status.remove(this);
 		}
 		effectTurns--;
 

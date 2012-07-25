@@ -19,7 +19,7 @@ public class Freeze extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 		if (checkChance()) {
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Freeze) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already frozen!");
 					return;
@@ -28,7 +28,7 @@ public class Freeze extends StatusEffectBase {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
-			target.getStatus().add(this);
+			target.status.add(this);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has been frozen solid");
 		} else
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
@@ -39,7 +39,7 @@ public class Freeze extends StatusEffectBase {
 	public boolean canAttackThisTurn(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		if (mod_Pixelmon.getRandomNumberBetween(0, 100) <= 20) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " breaks free from the ice!");
-			user.getStatus().remove(this);
+			user.status.remove(this);
 			return true;
 		} else {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is frozen solid!");

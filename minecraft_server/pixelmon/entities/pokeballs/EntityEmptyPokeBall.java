@@ -79,25 +79,25 @@ public class EntityEmptyPokeBall extends EntityThrowable {
 	public void onEntityUpdate() {
 		if (isWaiting) {
 			if (waitTime == 0 && !isUnloaded) {
-				initialScale = p.getScale();
+				initialScale = p.scale;
 				initPos = p.getPosition();
 				diff = Vec3D.createVector(posX-initPos.xCoord, posY-initPos.yCoord, posZ-initPos.zCoord);
-				p.setScale(initialScale / 1.1f);
+				p.scale = initialScale / 1.1f;
 			}
 			if (waitTime == 1 && !isUnloaded) {
-				p.setScale(initialScale / 1.3f);
+				p.scale = initialScale / 1.3f;
 				moveCloser();
 			}
 			if (waitTime == 2 && !isUnloaded) {
-				p.setScale(initialScale / 1.7f);
+				p.scale = initialScale / 1.7f;
 				moveCloser();
 			}
 			if (waitTime == 3 && !isUnloaded) {
-				p.setScale(initialScale / 2.2f);
+				p.scale = initialScale / 2.2f;
 				moveCloser();
 			}
 			if (waitTime == 4 && !isUnloaded) {
-				p.setScale(initialScale / 3);
+				p.scale = initialScale / 3;
 				moveCloser();
 			}
 			if (waitTime == 4 && !isUnloaded) {
@@ -133,7 +133,7 @@ public class EntityEmptyPokeBall extends EntityThrowable {
 			rotationPitch = 0;
 
 		if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
-			p.setScale(initialScale);
+			p.scale = initialScale;
 			if (numShakes == 0)
 				catchPokemon();
 			this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
@@ -191,7 +191,7 @@ public class EntityEmptyPokeBall extends EntityThrowable {
 	private int b;
 
 	protected void doCaptureCalc(PixelmonEntityHelper entitypixelmon) {
-		int pokemonRate = entitypixelmon.getStats().BaseStats.CatchRate;
+		int pokemonRate = entitypixelmon.stats.BaseStats.CatchRate;
 		int hpMax = entitypixelmon.getMaxHealth();
 		int hpCurrent = entitypixelmon.getHealth();
 		int bonusStatus = 1;

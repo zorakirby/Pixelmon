@@ -8,6 +8,7 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.enums.EnumPokeballs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.KeyBinding;
 import net.minecraft.src.MathHelper;
@@ -41,7 +42,7 @@ public class KeyboardHandler {
 								mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon))) {
 					mc.theWorld.playSoundAtEntity(mc.thePlayer, "random.bow", 0.5F, 0.4F / ((new Random()).nextFloat() * 0.4F + 0.8F));
 					mod_Pixelmon.currentPokeball = new EntityPokeBall(mc.theWorld, mc.thePlayer, mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer)
-							.sendOut(mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon), mc.theWorld).getHelper());
+							.sendOut(mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon), mc.theWorld).getHelper(), EnumPokeballs.PokeBall);
 					boolean flag = MathHelper.stringNullOrLengthZero(nbt.getString("Nickname"));
 					mc.ingameGUI.addChatMessage("You sent out " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");
 					mc.theWorld.spawnEntityInWorld(mod_Pixelmon.currentPokeball);

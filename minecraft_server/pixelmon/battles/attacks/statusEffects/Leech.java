@@ -22,12 +22,12 @@ public class Leech extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 		if (checkChance()) {
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Leech) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already seeded!");
 					return;
 				}
-			target.getStatus().add(this);
+			target.status.add(this);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " has planted a seed!");
 		} else
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");

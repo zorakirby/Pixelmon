@@ -22,7 +22,7 @@ public class Venoshock extends SpecialAttackBase {
 	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList) {
 		a.basePower = 65;
 		boolean isPoisoned=false;
-		for(StatusEffectBase e:target.getStatus())
+		for(StatusEffectBase e:target.status)
 			if (e.type == StatusEffectType.Poison || e.type == StatusEffectType.PoisonBadly) isPoisoned = true;
 
 		if (isPoisoned) a.basePower=130;

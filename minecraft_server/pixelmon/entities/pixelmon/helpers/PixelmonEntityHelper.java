@@ -10,6 +10,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.BattleStats;
+import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.database.Stats;
@@ -19,6 +20,7 @@ import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumType;
 import pixelmon.items.ItemEvolutionStone;
 
@@ -37,9 +39,29 @@ import net.minecraft.src.mod_Pixelmon;
 
 public class PixelmonEntityHelper {
 	private IHaveHelper pixelmon;
+	public EnumPokeballs caughtBall;
+	public Moveset moveset = new Moveset();
+	public Stats stats = new Stats();
+	public BattleStats battleStats = new BattleStats();
+	public ArrayList<StatusEffectBase> status = new ArrayList<StatusEffectBase>();
+	public boolean isMale;
+	public String nickname = "";
+	public boolean isInBall = true;
+	public boolean isFainted = false;
+	public boolean doesHover = false;
+	public float hoverHeight;
+	public int aggression;
+	public float scale = 1F;
+	public float maxScale = 1.25F;
+	public BattleController bc;
+	public LevelHelper lvl;
 
 	public PixelmonEntityHelper(IHaveHelper pixelmon) {
 		this.pixelmon = pixelmon;
+	}
+
+	public void loadMoveset() {
+		moveset = DatabaseMoves.GetInitialMoves(getName(), getLvl().getLevel());
 	}
 
 	public EntityLookHelper getLookHelper() {
@@ -62,31 +84,10 @@ public class PixelmonEntityHelper {
 	}
 
 	public String getDisplayName() {
-		if (pixelmon instanceof BaseEntityPixelmon) {
-			BaseEntityPixelmon p = (BaseEntityPixelmon) pixelmon;
-			return !(p.nickname == null || p.nickname.equals("")) ? p.nickname : p.name;
-		} else if (pixelmon instanceof EntityWaterPixelmon) {
-			EntityWaterPixelmon p = (EntityWaterPixelmon) pixelmon;
-			return !(p.nickname == null || p.nickname.equals("")) ? p.nickname : p.name;
-		}
-		return null;
-	}
-
-	public BattleStats getBattleStats() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).battleStats;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).battleStats;
-		return null;
-	}
-
-	public ArrayList<StatusEffectBase> getStatus() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).status;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).status;
-
-		return null;
+		if (nickname == null || nickname.equals(""))
+			return getName();
+		else
+			return nickname;
 	}
 
 	public boolean attackEntityFrom(DamageSource dmgSource, int power) {
@@ -106,7 +107,6 @@ public class PixelmonEntityHelper {
 			((BaseEntityPixelmon) entity).setTarget(entity);
 		else if (entity instanceof EntityWaterPixelmon)
 			((EntityWaterPixelmon) entity).setTarget(entity);
-
 	}
 
 	private void setAttackTarget(EntityLiving entity) {
@@ -125,46 +125,12 @@ public class PixelmonEntityHelper {
 	}
 
 	public LevelHelper getLvl() {
-		if (pixelmon instanceof BaseEntityPixelmon) {
-			BaseEntityPixelmon p = (BaseEntityPixelmon) pixelmon;
-			if (p.lvl == null) {
-				p.lvl = new LevelHelper(p.helper);
-				p.lvl.setLevel(mod_Pixelmon.getRandomNumberBetween(getStats().BaseStats.SpawnLevel, getStats().BaseStats.SpawnLevel + getStats().BaseStats.SpawnLevelRange));
-				p.setHealth(p.stats.HP);
-				p.lvl.updateEntityString();
-			}
-			return p.lvl;
-		} else if (pixelmon instanceof EntityWaterPixelmon) {
-			EntityWaterPixelmon p = (EntityWaterPixelmon) pixelmon;
-			if (p.lvl == null) {
-				p.lvl = new LevelHelper(p.helper);
-				p.lvl.setLevel(mod_Pixelmon.getRandomNumberBetween(getStats().BaseStats.SpawnLevel, getStats().BaseStats.SpawnLevel + getStats().BaseStats.SpawnLevelRange));
-				p.setHealth(p.stats.HP);
-				p.lvl.updateEntityString();
-			}
-			return ((EntityWaterPixelmon) pixelmon).lvl;
+		if (lvl == null) {
+			lvl = new LevelHelper(this);
+			lvl.setLevel(mod_Pixelmon.getRandomNumberBetween(stats.BaseStats.SpawnLevel, stats.BaseStats.SpawnLevel + stats.BaseStats.SpawnLevelRange));
+			setHealth(stats.HP);
 		}
-		return null;
-	}
-
-	public Stats getStats() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).stats;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).stats;
-		return null;
-	}
-
-	public void SetBattleController(BattleController battleController) {
-		pixelmon.SetBattleController(battleController);
-	}
-
-	public boolean getIsFainted() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).isFainted;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).isFainted;
-		return false;
+		return lvl;
 	}
 
 	public void EndBattle() {
@@ -180,19 +146,9 @@ public class PixelmonEntityHelper {
 	}
 
 	public int getMaxHealth() {
-		if (pixelmon instanceof BaseEntityPixelmon && ((BaseEntityPixelmon) pixelmon).stats != null)
-			return ((BaseEntityPixelmon) pixelmon).stats.HP;
-		else if (pixelmon instanceof EntityWaterPixelmon && ((EntityWaterPixelmon) pixelmon).stats != null)
-			return ((EntityWaterPixelmon) pixelmon).stats.HP;
-		return 1;
-	}
-
-	public Moveset getMoveset() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).moveset;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).moveset;
-		return null;
+		if (stats == null)
+			return 1;
+		return stats.HP;
 	}
 
 	public void setHealth(int i) {
@@ -202,27 +158,12 @@ public class PixelmonEntityHelper {
 			((EntityWaterPixelmon) pixelmon).setHealth(i);
 	}
 
-	public boolean getIsMale() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).isMale;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).isMale;
-		return false;
-	}
-
 	public void catchInPokeball() {
 		pixelmon.catchInPokeball();
 	}
 
 	public int getPokemonId() {
 		return pixelmon.getPokemonId();
-	}
-
-	public void setIsInBall(boolean b) {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			((BaseEntityPixelmon) pixelmon).isInBall = b;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).isInBall = b;
 	}
 
 	public void writeEntityToNBT(NBTTagCompound nbt) {
@@ -254,14 +195,6 @@ public class PixelmonEntityHelper {
 		}
 	}
 
-	public boolean getIsInBall() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).isInBall;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).isInBall;
-		return false;
-	}
-
 	public void StartBattle(EntityTrainer entityHit, EntityPlayer opponent) {
 		pixelmon.StartBattle(entityHit, opponent);
 	}
@@ -285,80 +218,12 @@ public class PixelmonEntityHelper {
 			((EntityWaterPixelmon) pixelmon).setLocationAndAngles(currentPixelmon);
 	}
 
-	public String getNickName() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).nickname;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).nickname;
-
-		return null;
-	}
-
 	public void setPokemonID(int uniqueEntityId) {
 		pixelmon.setPokemonId(uniqueEntityId);
 	}
 
-	public void setNickname(String nickname) {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			((BaseEntityPixelmon) pixelmon).nickname = nickname;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).nickname = nickname;
-	}
-
-	public void setCaughtBall(double caughtBall) {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			((BaseEntityPixelmon) pixelmon).caughtBall = caughtBall;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).caughtBall = caughtBall;
-	}
-
-	public double getCaughtBall() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).caughtBall;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).caughtBall;
-		return -1;
-	}
-
 	public void setPositionAndRotation(double posX, double posY, double posZ, float rotationYaw, float rotationPitch) {
 		pixelmon.setPositionAndRotation(posX, posY, posZ, rotationYaw, rotationPitch);
-	}
-
-	public float getMaxScale() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).maxScale;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).maxScale;
-		return 0;
-	}
-
-	public void increaseSize(float percent) {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			((BaseEntityPixelmon) pixelmon).scale = percent;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).scale = percent;
-
-	}
-
-	public float getScale() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).scale;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			return ((EntityWaterPixelmon) pixelmon).scale;
-		return 0;
-	}
-
-	public boolean getDoesHover() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).doesHover;
-
-		return false;
-	}
-
-	public float getHoverHeight() {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			return ((BaseEntityPixelmon) pixelmon).hoverHeight;
-		return 0;
 	}
 
 	public Entity getEntity() {
@@ -367,14 +232,14 @@ public class PixelmonEntityHelper {
 
 	protected void copyTo(PixelmonEntityHelper entity) {
 		entity.setTamed(true);
-		entity.setNickname(getNickName());
-		entity.setCaughtBall(getCaughtBall());
-		entity.getMoveset().clear();
-		entity.setIsMale(getIsMale());
+		entity.nickname = nickname;
+		entity.caughtBall = caughtBall;
+		entity.moveset.clear();
+		entity.isMale = isMale;
 		entity.setIsShiny(getIsShiny());
-		for (int i = 0; i < getMoveset().size(); i++)
-			entity.getMoveset().add(getMoveset().get(i));
-		entity.getStats().IVs.CopyIVs(getStats().IVs);
+		for (int i = 0; i < moveset.size(); i++)
+			entity.moveset.add(moveset.get(i));
+		entity.stats.IVs.CopyIVs(stats.IVs);
 		entity.getLvl().setLevel(getLvl().getLevel());
 		entity.getLvl().setEXP(getLvl().getExp());
 		if (pixelmon instanceof BaseEntityPixelmon) {
@@ -390,11 +255,11 @@ public class PixelmonEntityHelper {
 		entity.setOwner(this.getOwner());
 		if (entity.getOwner() != null)
 			ChatHandler.sendChat(entity.getOwner(), "Your " + getName() + " evolved into " + entity.getName() + "!");
-		int oldHP = getStats().HP;
+		int oldHP = stats.HP;
 		copyTo(entity);
-		if (getNickName().equals(getName()))
-			entity.setNickname(entity.getName());
-		float percentIncrease = ((float) getStats().HP) / ((float) oldHP);
+		if (nickname.equals(getName()))
+			entity.nickname = entity.getName();
+		float percentIncrease = ((float) stats.HP) / ((float) oldHP);
 		setHealth((int) (((float) getHealth()) * percentIncrease));
 		mod_Pixelmon.pokeballManager.getPlayerStorage(entity.getOwner()).replace(this, entity);
 		entity.getOwner().worldObj.spawnEntityInWorld((EntityLiving) entity.getEntity());
@@ -428,8 +293,8 @@ public class PixelmonEntityHelper {
 				setHealth(getHealth() + 20);
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;
-				if (getHealth() > getStats().HP)
-					setHealth(getStats().HP);
+				if (getHealth() > stats.HP)
+					setHealth(stats.HP);
 				flag = true;
 			}
 			// if (itemstack.itemID == mod_Pixelmon.pokeDex.shiftedIndex) {
@@ -479,52 +344,37 @@ public class PixelmonEntityHelper {
 		getLvl().readFromNBT(var1);
 		setHealth(var1.getShort("Health"));
 		setPokemonID(var1.getInteger("pixelmonID"));
-		getStats().readFromNBT(var1);
-		if (getHealth() > getStats().HP)
-			setHealth(getStats().HP);
-		setIsInBall(var1.getBoolean("IsInBall"));
-		setNickname(var1.getString("Nickname"));
-		increaseSize(var1.getFloat("Scale"));
-		setIsFainted(var1.getBoolean("IsFainted"));
-		setIsMale(var1.getBoolean("IsMale"));
+		stats.readFromNBT(var1);
+		if (getHealth() > stats.HP)
+			setHealth(stats.HP);
+		isInBall = var1.getBoolean("IsInBall");
+		nickname = var1.getString("Nickname");
+		scale = var1.getFloat("Scale");
+		isFainted = var1.getBoolean("IsFainted");
+		isMale = var1.getBoolean("IsMale");
 		setIsShiny(var1.getBoolean("IsShiny"));
-		getBattleStats().readFromNBT(var1);
-		getMoveset().readFromNBT(var1);
+		battleStats.readFromNBT(var1);
+		moveset.readFromNBT(var1);
 		getLvl().updateEntityString();
-	}
-
-	private void setIsMale(boolean boolean1) {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			((BaseEntityPixelmon) pixelmon).isMale = boolean1;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).isMale = boolean1;
-	}
-
-	public void setIsFainted(boolean boolean1) {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			((BaseEntityPixelmon) pixelmon).isFainted = boolean1;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).isFainted = boolean1;
 	}
 
 	public void writeToNBT(NBTTagCompound var1) {
 		getLvl().writeToNBT(var1);
 		var1.setInteger("pixelmonID", getPokemonId());
 		var1.setString("Name", getName());
-		if (getNickName() != null && !getNickName().equalsIgnoreCase("")) {
-			var1.setString("Nickname", getNickName());
+		if (nickname != null && !nickname.equalsIgnoreCase("")) {
+			var1.setString("Nickname", nickname);
 		} else {
 			var1.setString("Nickname", getName());
 		}
-		var1.setBoolean("IsInBall", getIsInBall());
-		var1.setFloat("Scale", getScale());
-		var1.setBoolean("IsFainted", getIsFainted() || getIsDead());
-		var1.setBoolean("IsMale", getIsMale());
+		var1.setBoolean("IsInBall", isInBall);
+		var1.setFloat("Scale", scale);
+		var1.setBoolean("IsFainted", isFainted || getIsDead());
+		var1.setBoolean("IsMale", isMale);
 		var1.setBoolean("IsShiny", getIsShiny());
-		if (getBattleStats() != null)
-			getBattleStats().writeToNBT(var1);
-		getMoveset().writeToNBT(var1);
-		getStats().writeToNBT(var1);
+		battleStats.writeToNBT(var1);
+		moveset.writeToNBT(var1);
+		stats.writeToNBT(var1);
 	}
 
 	public boolean getIsDead() {
@@ -597,33 +447,12 @@ public class PixelmonEntityHelper {
 		return 0;
 	}
 
-	public BattleController getBattleController() {
-		if (pixelmon instanceof BaseEntityPixelmon) {
-			return ((BaseEntityPixelmon) pixelmon).bc;
-		} else if (pixelmon instanceof EntityWaterPixelmon) {
-			return ((EntityWaterPixelmon) pixelmon).bc;
-		}
-		return null;
-	}
-
 	public EntityPlayer getOwner() {
 		return pixelmon.getOwner();
 	}
 
 	public void setOwner(EntityPlayer player) {
 		pixelmon.setOwner(player);
-	}
-
-	public void loadMoveset() {
-		pixelmon.loadMoveset();
-	}
-
-	public void setScale(float f) {
-		if (pixelmon instanceof BaseEntityPixelmon)
-			((BaseEntityPixelmon) pixelmon).scale = f;
-		else if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).scale = f;
-
 	}
 
 	public Vec3D getPosition() {

@@ -19,9 +19,9 @@ public class RemoveEffect extends EffectBase {
 
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
-		for (StatusEffectBase e:target.getStatus()){
+		for (StatusEffectBase e:target.status){
 			if (e.type == removeType) {
-				target.getStatus().remove(e);
+				target.status.remove(e);
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), user
 						.getName() + " removed " + target.getName() + "'s "+ e.type.toString() +"!");
 			}

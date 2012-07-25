@@ -43,7 +43,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
-		trainer.releasedPokemon.getHelper().getBattleStats().clearBattleStats();
+		trainer.releasedPokemon.getHelper().battleStats.clearBattleStats();
 		trainer.releasedPokemon.EndBattle();
 		trainer.healAllPokemon();
 		this.trainer.setAttackTarget(null);
@@ -55,14 +55,14 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void getNextPokemon() {
-		trainer.releasedPokemon.getHelper().getBattleStats();
+		trainer.releasedPokemon.getHelper().battleStats.clearBattleStats();
 		trainer.pokemonStorage.updateNBT(currentPokemon());
 		trainer.releasePokemon();
 	}
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return trainer.releasedPokemon.getHelper().getIsDead() || trainer.releasedPokemon.getHelper().getIsFainted();
+		return trainer.releasedPokemon.getHelper().getIsDead() || trainer.releasedPokemon.getHelper().isFainted;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.getHelper().getMoveset(), participant2.currentPokemon().getType(),
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.getHelper().moveset, participant2.currentPokemon().getType(),
 				trainer.releasedPokemon.getHelper(), participant2.currentPokemon());
 	}
 

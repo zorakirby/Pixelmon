@@ -19,12 +19,12 @@ public class SmackDown extends SpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList) {
-		target.getStatus().add(new SmackedDown());
-		for (int i = 0; i < target.getStatus().size(); i++) {
-			StatusEffectBase s = target.getStatus().get(i);
+		target.status.add(new SmackedDown());
+		for (int i = 0; i < target.status.size(); i++) {
+			StatusEffectBase s = target.status.get(i);
 			if (s.type == StatusEffectType.Flying) {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " got knocked out of the sky!");
-				target.getStatus().remove(s);
+				target.status.remove(s);
 			}
 		}
 		return false;

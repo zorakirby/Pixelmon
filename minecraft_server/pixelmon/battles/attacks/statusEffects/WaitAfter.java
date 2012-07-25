@@ -21,7 +21,7 @@ public class WaitAfter extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 		turnCount = 0;
-		user.getStatus().add(this);
+		user.status.add(this);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class WaitAfter extends StatusEffectBase {
 	@Override
 	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		turnCount++;
-		if (turnCount == numTurns) user.getStatus().remove(this);
+		if (turnCount == numTurns) user.status.remove(this);
 	}
 
 }

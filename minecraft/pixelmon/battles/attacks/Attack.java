@@ -24,9 +24,8 @@ import net.minecraft.src.*;
 
 public class Attack {
 	public static final float EFFECTIVE_NORMAL = 1, EFFECTIVE_SUPER = 2, EFFECTIVE_MAX = 4, EFFECTIVE_NOT = 0.5F, EFFECTIVE_BARELY = 0.25F, EFFECTIVE_NONE = 0;
-	public static final int TYPE_NORMAL = 0, TYPE_FIRE = 1, TYPE_WATER = 2, TYPE_ELECTRIC = 3, TYPE_GRASS = 4, TYPE_ICE = 5, TYPE_FIGHT = 6, TYPE_POISON = 7,
-			TYPE_GROUND = 8, TYPE_FLYING = 9, TYPE_PSYCHIC = 10, TYPE_BUG = 11, TYPE_ROCK = 12, TYPE_GHOST = 13, TYPE_DRAGON = 14, TYPE_DARK = 15,
-			TYPE_STEEL = 16;
+	public static final int TYPE_NORMAL = 0, TYPE_FIRE = 1, TYPE_WATER = 2, TYPE_ELECTRIC = 3, TYPE_GRASS = 4, TYPE_ICE = 5, TYPE_FIGHT = 6, TYPE_POISON = 7, TYPE_GROUND = 8, TYPE_FLYING = 9,
+			TYPE_PSYCHIC = 10, TYPE_BUG = 11, TYPE_ROCK = 12, TYPE_GHOST = 13, TYPE_DRAGON = 14, TYPE_DARK = 15, TYPE_STEEL = 16;
 	public static final int ATTACK_PHYSICAL = 0, ATTACK_SPECIAL = 1, ATTACK_STATUS = 2;
 
 	public EnumType attackType;
@@ -70,14 +69,14 @@ public class Attack {
 		boolean attackHandled = false, cantMiss = false;
 		flinched = false;
 		user.getLookHelper().setLookPositionWithEntity((Entity) target.getEntity(), 0, 0);
-		double accuracy = ((double) this.accuracy) * ((double) user.getBattleStats().Accuracy) / ((double) target.getBattleStats().Evasion);
+		double accuracy = ((double) this.accuracy) * ((double) user.battleStats.Accuracy) / ((double) target.battleStats.Evasion);
 		double crit = calcCriticalHit(null);
 		/* Check for Protect */
-		for (StatusEffectBase e : target.getStatus()) {
+		for (StatusEffectBase e : target.status) {
 			if (e.stopsIncomingAttack(user, target, this))
 				return;
 		}
-		for (StatusEffectBase e : user.getStatus()) {
+		for (StatusEffectBase e : user.status) {
 			if (!e.canAttackThisTurn(user, target))
 				return;
 		}
@@ -96,9 +95,9 @@ public class Attack {
 				if (e.effectType == EffectType.Stats) {
 					e.ApplyEffect(user, target, attackList);
 				} else if (e.effectType == EffectType.Status) {
-					if (target.getStatus().size() > 0) {
-						for (int i = 0; i < target.getStatus().size(); i++) {
-							StatusEffectBase et = target.getStatus().get(i);
+					if (target.status.size() > 0) {
+						for (int i = 0; i < target.status.size(); i++) {
+							StatusEffectBase et = target.status.get(i);
 							if (!et.stopsStatusChange())
 								e.ApplyEffect(user, target, attackList);
 						}
@@ -159,13 +158,15 @@ public class Attack {
 			for (EffectBase e : effects)
 				e.ApplyMissEffect(user, target);
 		}
-		if (user.getOwner()!=null)
+		if (user.getOwner() != null)
 			mod_Pixelmon.pokeballManager.getPlayerStorage(user.getOwner()).updateNBT(user);
-		if (target.getOwner()!=null)
+		if (target.getOwner() != null)
 			mod_Pixelmon.pokeballManager.getPlayerStorage(target.getOwner()).updateNBT(target);
-		if (user.getTrainer()!=null) user.getTrainer().pokemonStorage.updateNBT(user);
-		if (target.getTrainer()!=null) target.getTrainer().pokemonStorage.updateNBT(target);
-		pp --;
+		if (user.getTrainer() != null)
+			user.getTrainer().pokemonStorage.updateNBT(user);
+		if (target.getTrainer() != null)
+			target.getTrainer().pokemonStorage.updateNBT(target);
+		pp--;
 		return;
 	}
 
@@ -184,15 +185,15 @@ public class Attack {
 		double modifier = stab * type * critical * rand;
 		double attack = 0, defence = 0;
 		if (attackCategory == ATTACK_PHYSICAL) {
-			attack = ((double) user.getStats().Attack) * ((double) user.getBattleStats().AttackModifier) / 100;
-			defence = ((double) target.getStats().Defence) * ((double) target.getBattleStats().DefenceModifier) / 100;
+			attack = ((double) user.stats.Attack) * ((double) user.battleStats.AttackModifier) / 100;
+			defence = ((double) target.stats.Defence) * ((double) target.battleStats.DefenceModifier) / 100;
 		} else if (attackCategory == ATTACK_SPECIAL) {
-			attack = ((double) user.getStats().SpecialAttack) * ((double) user.getBattleStats().SpecialAttackModifier) / 100;
-			defence = ((double) target.getStats().SpecialDefence) * ((double) target.getBattleStats().SpecialDefenceModifier) / 100;
+			attack = ((double) user.stats.SpecialAttack) * ((double) user.battleStats.SpecialAttackModifier) / 100;
+			defence = ((double) target.stats.SpecialDefence) * ((double) target.battleStats.SpecialDefenceModifier) / 100;
 		}
 		double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250 * (attack / defence) * basePower + 2) * modifier;
 
-		for (StatusEffectBase e : target.getStatus())
+		for (StatusEffectBase e : target.status)
 			Damage = e.adjustDamage(this, Damage, user, target, crit);
 		return (int) Math.floor(Damage);
 	}
@@ -227,7 +228,7 @@ public class Attack {
 			return false;
 		}
 
-		if (((EntityLiving) pixelmon1.getEntity()).isDead || pixelmon1.getIsFainted() || ((EntityLiving) pixelmon2.getEntity()).isDead || pixelmon2.getIsFainted()) {
+		if (((EntityLiving) pixelmon1.getEntity()).isDead || pixelmon1.isFainted || ((EntityLiving) pixelmon2.getEntity()).isDead || pixelmon2.isFainted) {
 			return false;
 		}
 
@@ -235,7 +236,7 @@ public class Attack {
 	}
 
 	public static boolean canMovesHit(PixelmonEntityHelper entity, PixelmonEntityHelper target) {
-		Iterator<Attack> i = entity.getMoveset().iterator();
+		Iterator<Attack> i = entity.moveset.iterator();
 		boolean[] b = new boolean[4];
 		int i1 = 0;
 		b[0] = b[1] = b[2] = b[3] = true;
@@ -286,7 +287,7 @@ public class Attack {
 
 	public boolean doesPersist(PixelmonEntityHelper pixelmon1) {
 		if (attackName.equalsIgnoreCase("Fly") || attackName.equalsIgnoreCase("Bounce")) {
-			for (StatusEffectBase s : pixelmon1.getStatus())
+			for (StatusEffectBase s : pixelmon1.status)
 				if (s.type == StatusEffectType.Flying)
 					return true;
 			return false;

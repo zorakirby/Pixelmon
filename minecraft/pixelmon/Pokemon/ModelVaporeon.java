@@ -376,12 +376,6 @@ public class ModelVaporeon extends ModelBase
     rearlowerleftleg.render(f5);
     TopLowerBody.render(f5);
     UnderLowerBody.render(f5);
-    tail1.render(f5);
-    tail2.render(f5);
-    tail3.render(f5);
-    tailtip.render(f5);
-    tailfin2.render(f5);
-    tailfin3.render(f5);
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

@@ -85,30 +85,30 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		this.packetType = packetType;
 		modID = MinecraftForge.getModID(mod);
 		pokemonID = p.getPokemonId();
-		nationalPokedexNumber = p.getStats().BaseStats.nationalPokedexNumber;
+		nationalPokedexNumber = p.stats.BaseStats.nationalPokedexNumber;
 		name = p.getName();
-		nickname = p.getNickName();
+		nickname = p.nickname;
 		lvl = p.getLvl().getLevel();
 		nextLvlXP = p.getLvl().getExpToNextLevel();
-		hp = p.getStats().HP;
+		hp = p.stats.HP;
 		health = p.getHealth();
-		isMale = p.getIsMale();
-		isFainted = p.getIsFainted();
+		isMale = p.isMale;
+		isFainted = p.isFainted;
 		order = 0;
-		if (p.getMoveset().size() ==0) p.loadMoveset();
-		numMoves = p.getMoveset().size();
+		if (p.moveset.size() ==0) p.loadMoveset();
+		numMoves = p.moveset.size();
 		for (int i =0; i < numMoves; i++){
-			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.getMoveset(),i);
+			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.moveset,i);
 		}
 		type1 = p.getType().get(0);
 		if (p.getType().size()==1) type2 = EnumType.Mystery;
 		else type2 = p.getType().get(1);
-		HP = p.getStats().HP;
-		Speed = p.getStats().Speed;
-		Attack = p.getStats().Attack;
-		Defence = p.getStats().Defence;
-		SpecialAttack = p.getStats().SpecialAttack;
-		SpecialDefence = p.getStats().SpecialDefence;		
+		HP = p.stats.HP;
+		Speed = p.stats.Speed;
+		Attack = p.stats.Attack;
+		Defence = p.stats.Defence;
+		SpecialAttack = p.stats.SpecialAttack;
+		SpecialDefence = p.stats.SpecialDefence;		
 	}
 
 	public void writeData(DataOutputStream data) throws IOException {
