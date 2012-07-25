@@ -19,49 +19,49 @@ public class ModelPokeball extends ModelBase {
 
 		WhteTip = new ModelRenderer(this, 18, 12);
 		WhteTip.addBox(-1F, 0.8F, -1F, 2, 1, 2);
-		WhteTip.setRotationPoint(0F, 22F, 0F);
+		WhteTip.setRotationPoint(0F, 0F, 0F);
 		WhteTip.setTextureSize(32, 32);
 		WhteTip.mirror = true;
 		setRotation(WhteTip, 0F, 0F, 0F);
 		WhiteTop = new ModelRenderer(this, 0, 12);
 		WhiteTop.addBox(-1.5F, 0F, -1.5F, 3, 1, 3);
-		WhiteTop.setRotationPoint(0F, 22F, 0F);
+		WhiteTop.setRotationPoint(0F, 0F, 0F);
 		WhiteTop.setTextureSize(32, 32);
 		WhiteTop.mirror = true;
 		setRotation(WhiteTop, 0F, 0F, 0F);
 		WhiteBottom = new ModelRenderer(this, 0, 16);
 		WhiteBottom.addBox(-1.5F, 0.4F, -1.5F, 3, 1, 3);
-		WhiteBottom.setRotationPoint(0F, 22F, 0F);
+		WhiteBottom.setRotationPoint(0F, 0F, 0F);
 		WhiteBottom.setTextureSize(32, 32);
 		WhiteBottom.mirror = true;
 		setRotation(WhiteBottom, 0F, 0F, 0F);
 		WhiteFront = new ModelRenderer(this, 12, 12);
 		WhiteFront.addBox(-1F, 0F, -1.9F, 2, 1, 1);
-		WhiteFront.setRotationPoint(0F, 22F, 0F);
+		WhiteFront.setRotationPoint(0F, 0F, 0F);
 		WhiteFront.setTextureSize(32, 32);
 		WhiteFront.mirror = true;
 		setRotation(WhiteFront, 0F, 0F, 0F);
 		WhiteRight = new ModelRenderer(this, 0, 20);
 		WhiteRight.addBox(-1.9F, 0F, -1F, 1, 1, 2);
-		WhiteRight.setRotationPoint(0F, 22F, 0F);
+		WhiteRight.setRotationPoint(0F, 0F, 0F);
 		WhiteRight.setTextureSize(32, 32);
 		WhiteRight.mirror = true;
 		setRotation(WhiteRight, 0F, 0F, 0F);
 		WhiteLeft = new ModelRenderer(this, 6, 20);
 		WhiteLeft.addBox(0.9F, 0F, -1F, 1, 1, 2);
-		WhiteLeft.setRotationPoint(0F, 22F, 0F);
+		WhiteLeft.setRotationPoint(0F, 0F, 0F);
 		WhiteLeft.setTextureSize(32, 32);
 		WhiteLeft.mirror = true;
 		setRotation(WhiteLeft, 0F, 0F, 0F);
 		WhiteBack = new ModelRenderer(this, 12, 14);
 		WhiteBack.addBox(-1F, 0F, 0.9F, 2, 1, 1);
-		WhiteBack.setRotationPoint(0F, 22F, 0F);
+		WhiteBack.setRotationPoint(0F, 0F, 0F);
 		WhiteBack.setTextureSize(32, 32);
 		WhiteBack.mirror = true;
 		setRotation(WhiteBack, 0F, 0F, 0F);
 
 		Hinge = new ModelRenderer(this, "Hinge");
-		Hinge.setRotationPoint(0F, 22F, 1.5F);
+		Hinge.setRotationPoint(0F, 0F, 1.5F);
 		setRotation(Hinge, 0F, 0F, 0F);
 		Hinge.mirror = true;
 		ModelRenderer Black9 = new ModelRenderer(this, 0, 25);
@@ -211,17 +211,15 @@ public class ModelPokeball extends ModelBase {
 		Hinge.addChild(Button);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5);
-		WhteTip.render(f5);
-		WhiteTop.render(f5);
-		WhiteBottom.render(f5);
-		WhiteFront.render(f5);
-		WhiteRight.render(f5);
-		WhiteLeft.render(f5);
-		WhiteBack.render(f5);
-		Hinge.render(f5);
+	public void render(float f) {
+		WhteTip.render(f);
+		WhiteTop.render(f);
+		WhiteBottom.render(f);
+		WhiteFront.render(f);
+		WhiteRight.render(f);
+		WhiteLeft.render(f);
+		WhiteBack.render(f);
+		Hinge.render(f);
 	}
 
 	protected void setRotation(ModelRenderer model, float x, float y, float z) {
