@@ -19,10 +19,10 @@ import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.models.ModelPokeball;
 
 public class RenderPokeball extends Render {
-	static ModelPokeball model = new ModelPokeball();
+	ModelPokeball model;
 
 	public RenderPokeball() {
-
+		 model = new ModelPokeball();
 	}
 
 	@Override
@@ -36,8 +36,9 @@ public class RenderPokeball extends Render {
 		GL11.glTranslated(x, y, z);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		MinecraftForgeClient.bindTexture("pixelmon/texture/pokeballs/pokeball.png");
-
-		float factor = (float) (1.0f/16.0f);
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glScalef(0.5F, 0.5F, 0.5F);
+		float factor = (float) (1);
 		GL11.glPushMatrix();
 		model.WhteTip.render(factor);
 		model.WhiteTop.render(factor);
@@ -48,6 +49,7 @@ public class RenderPokeball extends Render {
 		model.WhiteBack.render(factor);
 		model.Hinge.render(factor);
 		GL11.glPopMatrix();
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
 	}
 }
