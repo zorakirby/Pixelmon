@@ -34,6 +34,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private boolean canCatch = false;
 	private PixelmonEntityHelper pixelmon;
 	private boolean isEmpty;
+	private float endRotationYaw = 0;
 
 	public EntityPokeBall(World world) {
 		super(world);
@@ -49,6 +50,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 	public EntityPokeBall(World world, EntityLiving entityliving, PixelmonEntityHelper e, EnumPokeballs type) {
 		super(world, entityliving);
+		endRotationYaw = entityliving.rotationYawHead;
 		pixelmon = e;
 		this.type = type;
 		isEmpty = false;
@@ -129,9 +131,6 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onEntityUpdate() {
-		if (!onGround) {
-			rotationYaw += 0.01;
-		}
 		if (worldObj.isRemote) {
 			motionX = motionY = motionZ = 0;
 		}
@@ -183,21 +182,28 @@ public class EntityPokeBall extends EntityThrowable {
 	int initialDelay = 15;
 	int wobbleTime = 5;
 	public boolean flashRed = false;
-	int flashTime=10;
-	int flashCounter=0;
+	int flashTime = 10;
+	int flashCounter = 0;
+
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		rotationPitch = 0;
-		if (isWaiting){
-			rotationYaw = 0;
-			flashCounter++;
-			if (flashCounter<15) flashRed=true;
-			else flashRed=false;
-			if (flashCounter==30)flashCounter=-1;
+		if (!onGround) {
+			rotationYaw += 10;
 		}
-		if (isCaptured){
-			if (waitTime>20){
+		rotationPitch = 0;
+		if (isWaiting) {
+			rotationYaw = endRotationYaw;
+			flashCounter++;
+			if (flashCounter < 15)
+				flashRed = true;
+			else
+				flashRed = false;
+			if (flashCounter == 30)
+				flashCounter = -1;
+		}
+		if (isCaptured) {
+			if (waitTime > 20) {
 				p.setTamed(true);
 				p.setOwner((EntityPlayer) thrower);
 				mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
@@ -206,8 +212,7 @@ public class EntityPokeBall extends EntityThrowable {
 				isWaiting = false;
 				setDead();
 			}
-		}
-		else{
+		} else {
 			if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
 				p.scale = initialScale;
 				if (numShakes == 0)
@@ -236,8 +241,10 @@ public class EntityPokeBall extends EntityThrowable {
 
 	private void catchPokemon() {
 		if (canCatch) {
-			if (worldObj.isRemote) ChatHandler.sendChat((EntityPlayer)thrower, "You captured " + p.getName());
-			else ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("You captured " + p.getName());
+			if (worldObj.isRemote)
+				ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
+			else
+				ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("You captured " + p.getName());
 			spawnCaptureParticles();
 			isCaptured = true;
 			waitTime = 0;

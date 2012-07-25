@@ -48,9 +48,8 @@ public class RenderPokeball extends Render {
 		RenderHelper.enableStandardItemLighting();
 		float factor = (float) (1.0 / 16.0);
 		GL11.glPushMatrix();
-		GL11.glRotatef((float) (pokeball.rotationYaw / (Math.PI) * 180f), 0, 1, 0);
 		System.out.println("yaw = " + pokeball.rotationYaw + " pitch = " + pokeball.rotationPitch);
-		model.setRotationAngles(pokeball.rotationPitch);
+		model.setRotationAngles(pokeball.rotationPitch, pokeball.rotationYaw);
 		model.render(factor);
 		GL11.glPopMatrix();
 		RenderHelper.disableStandardItemLighting();
