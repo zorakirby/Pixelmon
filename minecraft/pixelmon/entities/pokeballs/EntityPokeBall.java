@@ -32,10 +32,10 @@ public class EntityPokeBall extends EntityThrowable {
 	private int waitTime;
 	private boolean canCatch = false;
 	private PixelmonEntityHelper pixelmon;
+	private boolean isEmpty;
 
 	public EntityPokeBall(World world) {
 		super(world);
-		dataWatcher.addObject(10, (short)0); // 0=empty, 1=full
 		type = EnumPokeballs.PokeBall;
 	}
 
@@ -43,13 +43,14 @@ public class EntityPokeBall extends EntityThrowable {
 		super(world, entityliving);
 		thrower = entityliving;
 		this.type = type;
+		isEmpty=true;
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, PixelmonEntityHelper e, EnumPokeballs type) {
 		super(world, entityliving);
 		pixelmon = e;
 		this.type = type;
-		dataWatcher.updateObject(10, (short)1);
+		isEmpty=false;
 	}
 
 	public void init() {
@@ -58,7 +59,7 @@ public class EntityPokeBall extends EntityThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
 		if (!worldObj.isRemote) {
-			if (dataWatcher.getWatchableObjectShort(10) == 0) {
+			if (!isEmpty) {
 				if (movingobjectposition != null && !worldObj.isRemote) {
 					if (pixelmon != null) {
 						if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0)

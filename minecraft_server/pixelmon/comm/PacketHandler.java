@@ -94,9 +94,9 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 				if (buttonId < 4) {
 					BattleController bc = mod_Pixelmon.battleRegistry.getBattle(battleIndex);
 					if (bc.participant1.currentPokemon().getPokemonId() == pokemonID)
-						bc.setAttack(bc.participant1.currentPokemon(), bc.participant1.currentPokemon().getMoveset().get(buttonId));
+						bc.setAttack(bc.participant1.currentPokemon(), bc.participant1.currentPokemon().moveset.get(buttonId));
 					else
-						bc.setAttack(bc.participant2.currentPokemon(), bc.participant2.currentPokemon().getMoveset().get(buttonId));
+						bc.setAttack(bc.participant2.currentPokemon(), bc.participant2.currentPokemon().moveset.get(buttonId));
 				} else if (buttonId == 11) {
 					player.openGui(mod_Pixelmon.instance, EnumGui.ChoosePokemon.getIndex(), player.worldObj, 0, 0, 0);
 				} else if (buttonId == 10) {
@@ -144,7 +144,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 				EntityPlayer player = ((NetServerHandler) network.getNetHandler()).getPlayerEntity();
 				int id = dataStream.readInt();
 				if (mod_Pixelmon.pokeballManager.getPlayerStorage(player).EntityAlreadyExists(id, player.worldObj)) {
-					mod_Pixelmon.pokeballManager.getPlayerStorage(player).getAlreadyExists(id, player.worldObj).getHelper().setNickname(Packet.readString(dataStream, 64));
+					mod_Pixelmon.pokeballManager.getPlayerStorage(player).getAlreadyExists(id, player.worldObj).getHelper().nickname = Packet.readString(dataStream, 64);
 				} else {
 					NBTTagCompound nbt = mod_Pixelmon.pokeballManager.getPlayerStorage(player).getNBT(id);
 					if (nbt != null) {

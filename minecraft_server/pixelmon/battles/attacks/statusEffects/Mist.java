@@ -23,13 +23,13 @@ public class Mist extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
 		if (checkChance()) {
-			for (StatusEffectBase e : user.getStatus())
+			for (StatusEffectBase e : user.status)
 				if (e.type == StatusEffectType.Paralysis) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is already surrounded by mist!");
 					return;
 				}
 
-			user.getStatus().add(this);
+			user.status.add(this);
 			turnCount=0;
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " creates a cloud of mist!");
 
@@ -58,7 +58,7 @@ public class Mist extends StatusEffectBase {
 	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		turnCount++;
 		if (turnCount==5) {
-			user.getStatus().remove(this);
+			user.status.remove(this);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), "The mist wore off!");
 		}
 	}

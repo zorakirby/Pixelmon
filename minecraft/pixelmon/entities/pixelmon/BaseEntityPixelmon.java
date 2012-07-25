@@ -171,7 +171,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public int getMaxHealth() {
-		if (helper.stats == null)
+		if (helper==null || helper.stats == null)
 			return 1;
 		return helper.stats.HP;
 	}

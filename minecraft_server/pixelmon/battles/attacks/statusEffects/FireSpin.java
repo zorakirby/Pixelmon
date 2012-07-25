@@ -26,13 +26,13 @@ public class FireSpin extends StatusEffectBase {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
-			for (StatusEffectBase e : target.getStatus())
+			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.FireSpin) {
 					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already spinning in fire!");
 					return;
 				}
 			effectTurns = mod_Pixelmon.getRandomNumberBetween(4, 5);
-			target.getStatus().add(this);
+			target.status.add(this);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is trapped in a vortex!");
 		} else
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
@@ -49,7 +49,7 @@ public class FireSpin extends StatusEffectBase {
 	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
 		if (effectTurns == 0) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " breaks free of the swirling vortex!");
-			user.getStatus().remove(this);
+			user.status.remove(this);
 		}
 		effectTurns--;
 	}

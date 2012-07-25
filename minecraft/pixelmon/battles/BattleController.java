@@ -311,7 +311,7 @@ public class BattleController {
 			pixelmon1IsSwitching = true;
 		} else {
 			participant2.switchPokemon(participant1, newPixelmonId);
-			currentPixelmon.bc = this;
+			participant2.currentPokemon().bc = this;
 			attackersList2.add(participant2.currentPokemon().getPokemonId());
 			attackersList1.clear();
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
@@ -320,7 +320,6 @@ public class BattleController {
 	}
 
 	public boolean isTrainerVsTrainer() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

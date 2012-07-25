@@ -27,7 +27,7 @@ public class RenderPokeball extends RenderSnowball
 		EntityPokeBall entity = (EntityPokeBall)par1Entity;
 		//itemIconIndex = entity.ballBonus;
 		Item item = null;
-//		if(entity.ballBonus == 1) item = mod_Pixelmon.pokeBall;
+		item = mod_Pixelmon.pokeBall;
 //		if(entity.ballBonus == 1.5) item = mod_Pixelmon.greatBall;
 //		if(entity.ballBonus == 2) item = mod_Pixelmon.ultraBall;
 //		if(entity.ballBonus == 255) item = mod_Pixelmon.masterBall;
