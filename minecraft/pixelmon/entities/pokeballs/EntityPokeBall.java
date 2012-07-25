@@ -190,23 +190,35 @@ public class EntityPokeBall extends EntityThrowable {
 		rotationPitch = 0;
 		if (isWaiting)
 			rotationYaw = 0;
-
-		if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
-			flashRed = true;
-			p.scale = initialScale;
-			if (numShakes == 0)
-				catchPokemon();
-			this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
-		} else if (waitTime >= initialDelay + wobbleTime && waitTime < initialDelay + 3 * wobbleTime) {
-			flashRed = false;
-			this.rotationPitch = -1 * ((float) (waitTime - (initialDelay + wobbleTime))) / wobbleTime * (float) 35 + 35;
-		} else if (waitTime >= initialDelay + 3 * wobbleTime && waitTime < initialDelay + 4 * wobbleTime) {
-			this.rotationPitch = ((float) (waitTime - (initialDelay + 3 * wobbleTime))) / wobbleTime * (float) 35 - 35;
-		} else if (waitTime == initialDelay + 4 * wobbleTime) {
-			waitTime = 0;
-			shakeCount++;
-			if (shakeCount == numShakes - 1 || numShakes == 1) {
-				catchPokemon();
+		if (isCaptured){
+			if (waitTime>20){
+				p.setTamed(true);
+				p.setOwner((EntityPlayer) thrower);
+				mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
+				p.clearAttackTarget();
+				p.catchInPokeball();
+				isWaiting = false;
+				setDead();
+			}
+		}
+		else{
+			if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
+				flashRed = true;
+				p.scale = initialScale;
+				if (numShakes == 0)
+					catchPokemon();
+				this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
+			} else if (waitTime >= initialDelay + wobbleTime && waitTime < initialDelay + 3 * wobbleTime) {
+				flashRed = false;
+				this.rotationPitch = -1 * ((float) (waitTime - (initialDelay + wobbleTime))) / wobbleTime * (float) 35 + 35;
+			} else if (waitTime >= initialDelay + 3 * wobbleTime && waitTime < initialDelay + 4 * wobbleTime) {
+				this.rotationPitch = ((float) (waitTime - (initialDelay + 3 * wobbleTime))) / wobbleTime * (float) 35 - 35;
+			} else if (waitTime == initialDelay + 4 * wobbleTime + initialDelay) {
+				waitTime = 0;
+				shakeCount++;
+				if (shakeCount == numShakes - 1 || numShakes == 1) {
+					catchPokemon();
+				}
 			}
 		}
 	}
@@ -220,15 +232,11 @@ public class EntityPokeBall extends EntityThrowable {
 
 	private void catchPokemon() {
 		if (canCatch) {
-			p.setTamed(true);
-			p.setOwner((EntityPlayer) thrower);
-			mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
-			p.clearAttackTarget();
-			p.catchInPokeball();
+			if (worldObj.isRemote) ChatHandler.sendChat((EntityPlayer)thrower, "You captured " + p.getName());
+			else ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("You captured " + p.getName());
 			spawnCaptureParticles();
+			isCaptured = true;
 			waitTime = 0;
-			isWaiting = false;
-			setDead();
 		} else {
 			spawnFailParticles();
 			waitTime = 0;
@@ -258,6 +266,7 @@ public class EntityPokeBall extends EntityThrowable {
 	}
 
 	private int b;
+	public boolean isCaptured = false;
 
 	protected void doCaptureCalc(PixelmonEntityHelper entitypixelmon) {
 		int pokemonRate = entitypixelmon.stats.BaseStats.CatchRate;
