@@ -17,6 +17,7 @@ import net.minecraft.src.EntityReddustFX;
 import net.minecraft.src.EntityThrowable;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.MovingObjectPosition;
 import net.minecraft.src.Vec3D;
@@ -43,14 +44,24 @@ public class EntityPokeBall extends EntityThrowable {
 		super(world, entityliving);
 		thrower = entityliving;
 		this.type = type;
-		isEmpty=true;
+		isEmpty = true;
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, PixelmonEntityHelper e, EnumPokeballs type) {
 		super(world, entityliving);
 		pixelmon = e;
 		this.type = type;
-		isEmpty=false;
+		isEmpty = false;
+		float speed = 0.3f;
+		this.setLocationAndAngles(entityliving.posX, entityliving.posY + (double) entityliving.getEyeHeight(), entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
+		this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
+		this.posY -= 0.10000000149011612D;
+		this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
+		this.setPosition(this.posX, this.posY, this.posZ);
+		this.yOffset = 0.0F;
+		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI))/2;
+		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI))/2;
+		this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI))/2;
 	}
 
 	public void init() {
