@@ -232,6 +232,7 @@ public class ModelPokeball extends ModelBase {
 
 	public void setRotationAngles(float f) {
 		Rocking.rotateAngleZ = f/180f*((float)Math.PI);
+		
 	}
 
 }

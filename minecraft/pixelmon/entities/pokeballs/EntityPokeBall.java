@@ -59,9 +59,9 @@ public class EntityPokeBall extends EntityThrowable {
 		this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
 		this.setPosition(this.posX, this.posY, this.posZ);
 		this.yOffset = 0.0F;
-		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI))/2;
-		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI))/2;
-		this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI))/2;
+		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) / 2;
+		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) / 2;
+		this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI)) / 2;
 	}
 
 	public void init() {
@@ -130,7 +130,7 @@ public class EntityPokeBall extends EntityThrowable {
 	@Override
 	public void onEntityUpdate() {
 		if (!onGround) {
-			rotationYaw+=0.01;
+			rotationYaw += 0.01;
 		}
 		if (worldObj.isRemote) {
 			motionX = motionY = motionZ = 0;
@@ -182,20 +182,23 @@ public class EntityPokeBall extends EntityThrowable {
 
 	int initialDelay = 15;
 	int wobbleTime = 5;
+	public boolean flashRed = false;
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		rotationPitch=0;
+		rotationPitch = 0;
 		if (isWaiting)
-			rotationYaw=0;
-	
+			rotationYaw = 0;
+
 		if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
+			flashRed = true;
 			p.scale = initialScale;
 			if (numShakes == 0)
 				catchPokemon();
 			this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
 		} else if (waitTime >= initialDelay + wobbleTime && waitTime < initialDelay + 3 * wobbleTime) {
+			flashRed = false;
 			this.rotationPitch = -1 * ((float) (waitTime - (initialDelay + wobbleTime))) / wobbleTime * (float) 35 + 35;
 		} else if (waitTime >= initialDelay + 3 * wobbleTime && waitTime < initialDelay + 4 * wobbleTime) {
 			this.rotationPitch = ((float) (waitTime - (initialDelay + 3 * wobbleTime))) / wobbleTime * (float) 35 - 35;
