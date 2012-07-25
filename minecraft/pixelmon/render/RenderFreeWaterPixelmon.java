@@ -86,7 +86,7 @@ public class RenderFreeWaterPixelmon extends RenderLiving{
 			GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 			tessellator.startDrawingQuads();
 			float f5 = ((EntityWaterPixelmon) entityLiving).getHealth();
-			float f6 = ((EntityWaterPixelmon) entityLiving).stats.HP;
+			float f6 = ((EntityWaterPixelmon) entityLiving).helper.stats.HP;
 			float f8 = 50F * (f5 / f6);
 			tessellator.setColorRGBA_F(1.0F, 0.0F, 0.0F, 1.0F);
 			tessellator.addVertex(-25F + f8, -7 + byte0, 0.0D);
@@ -158,7 +158,7 @@ public class RenderFreeWaterPixelmon extends RenderLiving{
 	}
 
 	protected void preRenderScale(EntityWaterPixelmon entity, float f) {
-		GL11.glScalef(entity.scale*1F, entity.scale*1F, entity.scale*1F);
+		GL11.glScalef(entity.helper.scale*1F, entity.helper.scale*1F, entity.helper.scale*1F);
 	}
 
 	protected void preRenderCallback(EntityLiving entityliving, float f) {

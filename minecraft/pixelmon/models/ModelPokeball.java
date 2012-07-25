@@ -4,14 +4,14 @@ import net.minecraft.src.*;
 
 public class ModelPokeball extends ModelBase {
 	// fields
-	ModelRenderer WhteTip;
-	ModelRenderer WhiteTop;
-	ModelRenderer WhiteBottom;
-	ModelRenderer WhiteFront;
-	ModelRenderer WhiteRight;
-	ModelRenderer WhiteLeft;
-	ModelRenderer WhiteBack;
-	ModelRenderer Hinge;
+	public ModelRenderer WhteTip;
+	public ModelRenderer WhiteTop;
+	public ModelRenderer WhiteBottom;
+	public ModelRenderer WhiteFront;
+	public ModelRenderer WhiteRight;
+	public ModelRenderer WhiteLeft;
+	public ModelRenderer WhiteBack;
+	public ModelRenderer Hinge;
 
 	public ModelPokeball() {
 		textureWidth = 32;

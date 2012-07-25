@@ -40,19 +40,7 @@ import net.minecraft.src.mod_Pixelmon;
 
 public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon implements IHaveHelper {
 	public String name;
-	public String nickname = "";
-	public float scale = 1F;
-	public float maxScale = 1.25F;
-	public LevelHelper lvl;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
-	public Moveset moveset = new Moveset();
-	public double caughtBall = 0;
-	public boolean isInBall = true;
-	public Stats stats = new Stats();
-	public boolean isFainted = false;
-	public BattleStats battleStats = new BattleStats();
-	public ArrayList<StatusEffectBase> status = new ArrayList<StatusEffectBase>();
-	public BattleController bc;
 	private float field_21080_l;
 	public float swimFrequency = 0.6f;
 	public float swimSpeed = 1.5f;
@@ -61,20 +49,15 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	protected int depthRangeStart = 0;
 	protected int depthRangeEnd = 100;
 	private boolean isSwimming = true;
-	public boolean isMale;
 	public PixelmonEntityHelper helper = new PixelmonEntityHelper(this);
 	private RidingHelper ridingHelper;
 
 	public EntityWaterPixelmon(World par1World) {
 		super(par1World);
 		setSize(0.5f, 0.5f);
-		stats.IVs = PixelmonIVStore.CreateNewIVs();
+		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
 		dataWatcher.addObject(19, -1);
 		dataWatcher.addObject(20, (short) 0);
-	}
-
-	public Stats getStats() {
-		return stats;
 	}
 
 	public void init() {
@@ -83,16 +66,16 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 			dataWatcher.updateObject(20, (short) 1);
 		}
 		dataWatcher.addObject(18, "");
-		stats.BaseStats = DatabaseStats.GetBaseStats(name);
-		type.add(stats.BaseStats.Type1);
-		if (stats.BaseStats.Type2 != EnumType.Mystery)
-			type.add(stats.BaseStats.Type2);
+		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
+		type.add(helper.stats.BaseStats.Type1);
+		if (helper.stats.BaseStats.Type2 != EnumType.Mystery)
+			type.add(helper.stats.BaseStats.Type2);
 		health = 10;
-		if (rand.nextInt(100) < stats.BaseStats.MalePercent)
-			isMale = true;
+		if (rand.nextInt(100) < helper.stats.BaseStats.MalePercent)
+			helper.isMale = true;
 		else
-			isMale = false;
-		setSize(stats.BaseStats.Height, width);
+			helper.isMale = false;
+		setSize(helper.stats.BaseStats.Height, width);
 		helper.getLvl();
 		this.field_21080_l = 1.0F / (this.rand.nextFloat() + 1.0F) * swimFrequency;
 		ridingHelper = new RidingHelper(this, worldObj);
@@ -107,11 +90,11 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public void loadMoveset() {
-		moveset = DatabaseMoves.GetInitialMoves(name, helper.getLvl().getLevel());
+		helper.moveset = DatabaseMoves.GetInitialMoves(name, helper.getLvl().getLevel());
 	}
 
 	public void StartBattle(PixelmonEntityHelper target) {
-		if (this.moveset.size() == 0)
+		if (helper.moveset.size() == 0)
 			loadMoveset();
 
 		IBattleParticipant p1, p2;
@@ -125,12 +108,12 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		else
 			p2 = new WildPixelmonParticipant(target);
 
-		bc = new BattleController(p1, p2);
+		helper.bc = new BattleController(p1, p2);
 		tasks = new EntityAITasks();
 	}
 
 	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
-		if (this.moveset.size() == 0)
+		if (helper.moveset.size() == 0)
 			loadMoveset();
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
@@ -140,7 +123,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 		p2 = new TrainerParticipant(trainer, opponent);
 
-		bc = new BattleController(p1, p2);
+		helper.bc = new BattleController(p1, p2);
 		tasks = new EntityAITasks();
 	}
 
@@ -150,15 +133,15 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	@Override
 	public void SetBattleController(BattleController battleController) {
-		this.bc = battleController;
-		if (this.moveset.size() == 0)
+		helper.bc = battleController;
+		if (helper.moveset.size() == 0)
 			loadMoveset();
 		isSwimming = false;
 	}
 
 	@Override
 	public void EndBattle() {
-		bc = null;
+		helper.bc = null;
 		isSwimming = true;
 	}
 
@@ -171,7 +154,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		if (getOwner() != null) {
 			String s = "Your " + helper.getName() + " fainted!";
 			ChatHandler.sendChat(getOwner(), s);
-			isFainted = true;
+			helper.isFainted = true;
 			health = 0;
 			catchInPokeball();
 		} else {
@@ -285,7 +268,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	public void catchInPokeball() {
 		mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
-		isInBall = true;
+		helper.isInBall = true;
 		unloadEntity();
 	}
 
@@ -294,20 +277,20 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		list.add(this);
 		worldObj.unloadEntities(list);
 		clearAttackTarget();
-		if (bc != null) {
-			bc = null;
+		if (helper.bc != null) {
+			helper.bc = null;
 		}
 	}
 
 	public int getMaxHealth() {
-		if (stats == null)
+		if (helper==null || helper.stats == null)
 			return 1;
-		return stats.HP;
+		return helper.stats.HP;
 	}
 
 	public void releaseFromPokeball() {
 		worldObj.spawnEntityInWorld(this);
-		isInBall = false;
+		helper.isInBall = false;
 	}
 
 	public void setMotion(int i, int j, int k) {
@@ -358,8 +341,8 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public void onUpdate() {
-		if (bc != null) {
-			bc.update();
+		if (helper.bc != null) {
+			helper.bc.update();
 		}
 		super.onUpdate();
 	}

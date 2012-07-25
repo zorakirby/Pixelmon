@@ -63,6 +63,7 @@ import pixelmon.storage.ServerStorageDisplay;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 import vazkii.um.UpdateManagerMod;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.registry.FMLRegistry;
 
 public class mod_Pixelmon extends NetworkMod {
@@ -248,6 +249,7 @@ public class mod_Pixelmon extends NetworkMod {
 		registerEntities();
 		addSpawns();
 		addRecipes();
+		FMLClientHandler.instance().obtainBlockModelIdFor(this,true);
 		ForgeHooksClient.renderWorldLastHandlers.add(pixelmonOverlay);
 		MinecraftForge.registerEntity(BaseEntityPixelmon.class, this, 0, 100, 1, true);
 		MinecraftForge.registerSaveHandler(pokeballManager);
@@ -510,6 +512,7 @@ public class mod_Pixelmon extends NetworkMod {
 		removeNormalMobsAndCreatures();
 	}
 
+	
 	public static Item getKindOfBallFromBonus(double d, boolean flag) {
 		if (d == 1)
 			return pokeBall;
@@ -554,6 +557,8 @@ public class mod_Pixelmon extends NetworkMod {
 	public static NetworkMod instance;
 	public static BattleRegistry battleRegistry = new BattleRegistry();
 
+	
+	
 	public static void drawModelToScreen(float size, int xSize, int ySize, int xPos, int yPos, Entity entity, GuiScreen gui, boolean spin) {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);

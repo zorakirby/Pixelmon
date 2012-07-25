@@ -100,7 +100,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 					else {
 						if (!isWaiting) {
-							entityDropItem(new ItemStack(mod_Pixelmon.getKindOfBallFromBonus(type.getBallBonus(), true)), 0.0F);
+							entityDropItem(new ItemStack(type.getItem()), 0.0F);
 							setDead();
 						}
 					}
