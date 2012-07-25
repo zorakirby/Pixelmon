@@ -15,12 +15,12 @@ public class ModelPokeball extends ModelBase
     setTextureOffset("Rocking.DeleteThis5", 0, 0);
     
     Rocking = new ModelRenderer(this, "Rocking");
-    Rocking.setRotationPoint(0F, 24F, 0F);
+    Rocking.setRotationPoint(0F, 0F, 0F);
     setRotation(Rocking, 0F, 0F, 0F);
     Rocking.mirror = true;
     
     Hinge = new ModelRenderer(this, "Hinge");
-    Hinge.setRotationPoint(0F, -23.5F, 1.5F);
+    Hinge.setRotationPoint(0F, 0.5F, 1.5F);
     setRotation(Hinge, 0F, 0F, 0F);
     Hinge.mirror = true;
       ModelRenderer Black9 = new ModelRenderer(this, 0, 25);
@@ -231,9 +231,9 @@ public class ModelPokeball extends ModelBase
     model.rotateAngleZ = z;
   }
   
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
+  public void setRotationAngles(float f)
   {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    Rocking.rotateAngleX = f;
   }
 
 }

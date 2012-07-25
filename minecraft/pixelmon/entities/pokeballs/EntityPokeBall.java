@@ -129,6 +129,9 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onEntityUpdate() {
+		if (!onGround) {
+			rotationYaw+=0.01;
+		}
 		if (worldObj.isRemote) {
 			motionX = motionY = motionZ = 0;
 		}
@@ -183,10 +186,10 @@ public class EntityPokeBall extends EntityThrowable {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-
+		rotationPitch=0;
 		if (isWaiting)
-			rotationPitch = 0;
-
+			rotationYaw=0;
+	
 		if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
 			p.scale = initialScale;
 			if (numShakes == 0)

@@ -23,7 +23,7 @@ public class RenderPokeball extends Render {
 	ModelPokeball model;
 
 	public RenderPokeball() {
-		 model = new ModelPokeball();
+		model = new ModelPokeball();
 	}
 
 	@Override
@@ -37,10 +37,13 @@ public class RenderPokeball extends Render {
 		GL11.glTranslated(x, y, z);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(180, 1, 0, 1);
-		MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/"+pokeball.type.getTexture());
+		MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.type.getTexture());
 		RenderHelper.enableStandardItemLighting();
-		float factor = (float) (1.0/16.0);
+		float factor = (float) (1.0 / 16.0);
 		GL11.glPushMatrix();
+		GL11.glRotatef((float) (pokeball.rotationYaw / (Math.PI) * 180f), 0, 1, 0);
+		System.out.println("yaw = " + pokeball.rotationYaw + " pitch = " + pokeball.rotationPitch);
+		model.setRotationAngles(pokeball.rotationPitch);
 		model.render(factor);
 		GL11.glPopMatrix();
 		RenderHelper.disableStandardItemLighting();
