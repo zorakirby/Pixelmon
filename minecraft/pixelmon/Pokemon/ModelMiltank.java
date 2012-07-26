@@ -224,6 +224,9 @@ public class ModelMiltank extends ModelBase
       leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.4F * f1;
       rightleg.rotateAngleY = 0.0F;
       leftleg.rotateAngleY = 0.0F;
+      TAIL.rotateAngleY = MathHelper.cos(f * 0.6662F) * .8F * f1;
+      rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * .5F * f1;
+      leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .5F * f1;
     }
 
   }

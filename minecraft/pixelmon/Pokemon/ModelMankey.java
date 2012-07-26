@@ -6,6 +6,7 @@
 package pixelmon.Pokemon;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -345,6 +346,11 @@ public class ModelMankey extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    BODY.rotateAngleY = f3 / (270F / (float)Math.PI);
+    BODY.rotateAngleX = f4 / (270F / (float)Math.PI);
+    RIGHTLEG.rotateAngleX = MathHelper.cos(f * 0.7F) * .7F * f1;
+    LEFTLEG.rotateAngleX = MathHelper.cos(f * 0.7F + (float)Math.PI) *.7F * f1;
+    LEFTARM.rotateAngleX = MathHelper.cos(f * 0.7F) * 1.4F * f1;
+    RIGHTARM.rotateAngleX =  MathHelper.cos(f * 0.7F + (float)Math.PI) * .7F * f1; 
   }
-
 }
