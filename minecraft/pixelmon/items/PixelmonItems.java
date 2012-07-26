@@ -29,6 +29,8 @@ public class PixelmonItems {
 			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Thunderstone.png"));
 	public static final Item leafStone = new ItemEvolutionStone(10012, EnumEvolutionStone.LEAFSTONE).setItemName("LeafStone").setIconIndex(
 			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Leafstone.png"));
+	public static final Item pcItem = new ItemPC(10013).setItemName("PC").setIconIndex(
+			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pc.png"));
 	// 9 ids needed for the 9 stones, shards starting on next open id and are
 	// the stone they make's id + 10
 	public static final Item thunderStoneShard = new PixelmonItem(10021).setItemName("ThunderStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Thunderstone_Shard.png"));
