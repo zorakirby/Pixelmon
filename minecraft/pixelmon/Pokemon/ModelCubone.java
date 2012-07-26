@@ -470,14 +470,15 @@ public class ModelCubone extends ModelBase
     
     HEADPIECE.rotateAngleY = f3 / (180F / (float)Math.PI);
     HEADPIECE.rotateAngleX = f4 / (180F / (float)Math.PI);
-    RIGHTARM.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 2.0F * f1 * 0.5F;
-    LEFTARM.rotateAngleX = MathHelper.cos(f * 0.6662F) * 2.0F * f1 * 0.5F;
+    RIGHTARM.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.8F * f1 * 0.5F;
+    LEFTARM.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.8F * f1 * 0.5F;
     RIGHTARM.rotateAngleZ = 0.0F;
     LEFTARM.rotateAngleZ = 0.0F;
     RIGHTLEG.rotateAngleX = MathHelper.cos(f * 1F) * 1.1F * f1;
     LEFTLEG.rotateAngleX = MathHelper.cos(f * 1F + (float)Math.PI) * 1.1F * f1;
     RIGHTLEG.rotateAngleY = 0.0F;
     LEFTLEG.rotateAngleY = 0.0F;
+    TAIL.rotateAngleY = MathHelper.cos(f * 1F) * .5F * f1;
   }
 
 }
