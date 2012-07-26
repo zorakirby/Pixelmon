@@ -230,13 +230,13 @@ public enum EnumType
 				e = Effectiveness.Not.value;
 			}
 			if (t1 == Ground) {
-				e = Effectiveness.Not.value;
+				e = Effectiveness.Super.value;
 			}
 			if (t1 == Flying) {
-				e = Effectiveness.Not.value;
+				e = Effectiveness.Super.value;
 			}
 			if (t1 == Dragon) {
-				e = Effectiveness.Not.value;
+				e = Effectiveness.Super.value;
 			}
 			if (t1 == Steel) {
 				e = Effectiveness.Not.value;
