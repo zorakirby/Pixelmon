@@ -13,12 +13,12 @@ public class PixelmonBlocks {
 	public static int waterStoneOreId;
 	public static int pcId;
 
-	public static final Block healerIdle = (new BlockHealer(pokemonHealerIdleId, false)).setBlockName("PokeHealer");
-	public static final Block healerActive = (new BlockHealer(pokemonHealerActiveId, true)).setBlockName("healer");
-	public static final Block thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, 0, 3.0f).setBlockName("ThunderStoneOre");
-	public static final Block leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, 1, 3.0f).setBlockName("LeafStoneOre");
-	public static final Block waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, 2, 3.0f).setBlockName("WaterStoneOre");
-	public static final Block pc = new BlockPC(pcId, 0, TileEntityPC.class).setBlockName("pc");
+	public static Block healerIdle;
+	public static Block healerActive;
+	public static Block thunderStoneOre;
+	public static Block leafStoneOre;
+	public static Block waterStoneOre;
+	public static Block pc;
 
 	public static void load(Configuration configuration) {
 		pokemonHealerActiveId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PokemonHealerActive", 201).value);
@@ -27,7 +27,12 @@ public class PixelmonBlocks {
 		leafStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("LeafStoneOre", 204).value);
 		pcId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PC", 205).value);
 		waterStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("WaterStoneOre", 206).value);
-
+		healerIdle = (new BlockHealer(pokemonHealerIdleId, false)).setBlockName("PokeHealer");
+		healerActive = (new BlockHealer(pokemonHealerActiveId, true)).setBlockName("healer");
+		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, 0, 3.0f).setBlockName("ThunderStoneOre");
+		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, 1, 3.0f).setBlockName("LeafStoneOre");
+		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, 2, 3.0f).setBlockName("WaterStoneOre");
+		pc = new BlockPC(pcId, 0, TileEntityPC.class).setBlockName("pc");
 	}
 
 	public static void registerBlocks() {
@@ -52,6 +57,6 @@ public class PixelmonBlocks {
 		thunderStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Thunderstone.png");
 		leafStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Leafstone.png");
 		waterStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Waterstone.png");
-		pc.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Pcside.png");		
+		pc.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Pcside.png");
 	}
 }

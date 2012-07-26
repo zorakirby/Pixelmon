@@ -132,6 +132,7 @@ public class mod_Pixelmon extends NetworkMod {
 
 	private static boolean configurationProperties() {
 		configuration.load();
+		
 		PixelmonBlocks.load(configuration);
 
 		IDListPixelmon.load(configuration);
