@@ -1,5 +1,7 @@
 package pixelmon.blocks;
 
+import java.util.Random;
+
 import pixelmon.enums.EnumGui;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityLiving;
@@ -8,26 +10,46 @@ import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
 
 public class BlockPC extends Block {
 	
-	public BlockPC(int id){
-		super(id, Material.rock);
-		
+	private Class class1;
+	public BlockPC(int i, int j, Class class1){
+		super(i,j, Material.rock);
+		this.class1=class1;
+		setHardness(2.5f);
 	}
-	
+	@Override
+	public int idDropped(int par1, Random par2Random, int par3)
+	{
+	return -1;
+	}
+	@Override
+	public int quantityDropped(Random random) {
+	  return 0;
+	}
+	@Override
+	public boolean isOpaqueCube() {
+	  return false;
+	}
+	@Override
+	public boolean renderAsNormalBlock() {
+	  return false;
+	}
+	@Override
+	public int getRenderType() {
+	  return -1;
+	}
+	@Override
 	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player){
 		if (!world.isRemote) player.openGui(mod_Pixelmon.instance, EnumGui.PC.getIndex(), world, 0, 0, 0);
 		return true;
 	}
 	
-    public int getBlockTextureFromSide(int par1)
-    {
-        return par1 == 3 ? mod_Pixelmon.pcFront : this.blockIndexInTexture;
-    }
-	
+   	
     public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving)
     {
         int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
@@ -93,10 +115,8 @@ public class BlockPC extends Block {
         this.setDefaultDirection(par1World, par2, par3, par4);
     }
     
-    public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
-    {
-        int var6 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-        return par5 != var6 ? this.blockIndexInTexture : mod_Pixelmon.pcFront;
+    @Override
+    public TileEntity getTileEntity(int i){
+    	return new TileEntityPC();
     }
-
 }

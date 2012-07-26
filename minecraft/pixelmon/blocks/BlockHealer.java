@@ -45,6 +45,10 @@ public class BlockHealer extends BlockContainer {
 		super(par1, Material.rock);
 		furnaceRand = new Random();
 		isActive = par2;
+		setHardness(3.5f);
+		setStepSound(Block.soundStoneFootstep);
+		setRequiresSelfNotify();
+		if (par2) setLightValue(0.875F);
 	}
 
 	/**

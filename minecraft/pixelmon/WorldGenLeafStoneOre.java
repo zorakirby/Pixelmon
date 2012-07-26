@@ -2,6 +2,8 @@ package pixelmon;
 
 import java.util.Random;
 
+import pixelmon.blocks.PixelmonBlocks;
+
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldGenerator;
@@ -15,7 +17,7 @@ public class WorldGenLeafStoneOre extends WorldGenerator{
 		if(world.getBlockId(x, y, z) != leaf){
 			return false;
 		}
-		world.setBlockWithNotify(x, y, z, mod_Pixelmon.leafStoneOre.blockID);
+		world.setBlockWithNotify(x, y, z, PixelmonBlocks.leafStoneOre.blockID);
 		return true;
 	}
 
