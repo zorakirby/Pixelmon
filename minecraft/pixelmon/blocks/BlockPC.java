@@ -23,6 +23,7 @@ public class BlockPC extends BlockContainer {
 		super(i, Material.rock);
 		setHardness(2.5f);
 		renderType = j;
+		this.maxY=2;
 	}
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3)
