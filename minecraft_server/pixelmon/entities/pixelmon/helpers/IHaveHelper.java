@@ -5,6 +5,7 @@ import pixelmon.entities.EntityTrainer;
 import net.minecraft.src.EntityLookHelper;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.World;
 
 public interface IHaveHelper {
 
@@ -38,8 +39,8 @@ public interface IHaveHelper {
 
 	void writeEntityToStorageNBT(NBTTagCompound nbt);
 
-	void loadMoveset();
-
+	World getWorldObj();
+	
 	int getPokemonId();
 	
 	void setPokemonId(int uniqueEntityId);

@@ -11,6 +11,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumPokeballs;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.MathHelper;
@@ -58,7 +59,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 				if (!mod_Pixelmon.pokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj) && (currentPokeball == null || currentPokeball.isDead)
 						&& !mod_Pixelmon.pokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
 					player.worldObj.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / ((new Random()).nextFloat() * 0.4F + 0.8F));
-					currentPokeball = new EntityPokeBall(player.worldObj, player, mod_Pixelmon.pokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj).getHelper());
+					currentPokeball = new EntityPokeBall(player.worldObj, player, mod_Pixelmon.pokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj).getHelper(),EnumPokeballs.PokeBall);
 					boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
 					ChatHandler.sendChat(player, "You sent out " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");
 					player.worldObj.spawnEntityInWorld(currentPokeball);

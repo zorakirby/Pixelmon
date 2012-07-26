@@ -17,8 +17,8 @@ public class EntityGastly extends EntityGroundPixelmon
 		name = "Gastly";
 		yOffset = 0;
 		isImmuneToFire = false;
-		doesHover = true;
-		hoverHeight = 1f;
+		helper.doesHover = true;
+		helper.hoverHeight = 1f;
 		super.init();
 	}
 

@@ -12,181 +12,36 @@
 package pixelmon.Pokemon;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
 public class ModelVaporeon extends ModelBase
 {
   //fields
-    ModelRenderer TAILPIECE1;
-    ModelRenderer REARLEFTLEGPIECE;
-    ModelRenderer FRONTRIGHTLEGPIECE;
-    ModelRenderer REARRIGHTLEGPIECE;
-    ModelRenderer FRONTLEFTLEGPIECE;
-    ModelRenderer HEADPIECE;
-    ModelRenderer rearkneeleftleg;
-    ModelRenderer rearupperleftleg;
-    ModelRenderer rearkneeright;
-    ModelRenderer rearupperrightleg;
-    ModelRenderer tailfin1;
-    ModelRenderer rearlowerrightleg;
     ModelRenderer ManeFin;
     ModelRenderer BackFin;
     ModelRenderer UpperBody;
-    ModelRenderer rearlowerleftleg;
     ModelRenderer TopLowerBody;
     ModelRenderer UnderLowerBody;
-    ModelRenderer tail1;
-    ModelRenderer tail2;
-    ModelRenderer tail3;
-    ModelRenderer tailtip;
-    ModelRenderer tailfin2;
-    ModelRenderer tailfin3;
-    ModelRenderer TAILPIECE2;
-    ModelRenderer TAILPIECE3;
-    ModelRenderer TAILPIECE4;
-    ModelRenderer frontrightleg;
-
-    ModelRenderer fronttoesrightleg;
-    ModelRenderer FrontToesLeft;
-    ModelRenderer reartoesleftleg;
-    ModelRenderer Head;
-    ModelRenderer HeadTopFin;
-    ModelRenderer HeadRightFin;
-    ModelRenderer HeadMainFin;
-    ModelRenderer HeadLeftFin;
-    ModelRenderer reartoesrightleg;
-    ModelRenderer FrontLeftLeg;
-    ModelRenderer Nose;
-    
-    
+    ModelRenderer TailBase;
+    ModelRenderer TailSeg2;
+    ModelRenderer TailTip;
+    ModelRenderer TailFlipper;
+    ModelRenderer TailFin1;
+    ModelRenderer TailFin2;
+    ModelRenderer TailFin3;
+    ModelRenderer HEADBASE;
+    ModelRenderer FRONTLEFTLEG;
+    ModelRenderer FRONTRIGHTLEG;
+    ModelRenderer REARRIGHTLEG;
+    ModelRenderer REARLEFTLEG;
+  
   public ModelVaporeon()
   {
     textureWidth = 64;
     textureHeight = 32;
     
-    
-  
-      reartoesleftleg = new ModelRenderer(this, 8, 1);
-      reartoesleftleg.addBox(-0.4F, 6F, -1.3F, 2, 1, 1);
-      reartoesleftleg.setRotationPoint(-1.4F, -1F, 1.5F);
-      reartoesleftleg.setTextureSize(64, 32);
-      reartoesleftleg.mirror = true;
-      setRotation(reartoesleftleg, 0F, 0F, 0F);
-      reartoesleftleg.mirror = false;
-    
-      frontrightleg = new ModelRenderer(this, 19, 0);
-      frontrightleg.addBox(0F, 0F, -1F, 2, 7, 1);
-      frontrightleg.setRotationPoint(-0.2F, 0F, 0F);
-      frontrightleg.setTextureSize(64, 32);
-      frontrightleg.mirror = true;
-      setRotation(frontrightleg, 0F, 0F, 0F);
-      
-      fronttoesrightleg = new ModelRenderer(this, 8, 1);
-      fronttoesrightleg.addBox(-1F, 5F, -1F, 2, 1, 1);
-      fronttoesrightleg.setRotationPoint(0.8F, 0F, -0.5F);
-      fronttoesrightleg.setTextureSize(64, 32);
-      fronttoesrightleg.mirror = true;
-      setRotation(fronttoesrightleg, 0F, 0F, 0F);
-    
-      reartoesrightleg = new ModelRenderer(this, 8, 1);
-      reartoesrightleg.addBox(-0.4F, 6F, -1.3F, 2, 1, 1);
-      reartoesrightleg.setRotationPoint(-1.4F, -1F, 1.5F);
-      reartoesrightleg.setTextureSize(64, 32);
-      reartoesrightleg.mirror = true;
-      setRotation(reartoesrightleg, 0F, 0F, 0F);
-   
-
-      FrontToesLeft = new ModelRenderer(this, 8, 1);
-      FrontToesLeft.addBox(-1F, 5F, -1F, 2, 1, 1);
-      FrontToesLeft.setRotationPoint(-0.8F, 0F, -0.5F);
-      FrontToesLeft.setTextureSize(64, 32);
-      FrontToesLeft.mirror = true;
-      setRotation(FrontToesLeft, 0F, 0F, 0F);
-      FrontToesLeft.mirror = false;
-
-      FrontLeftLeg = new ModelRenderer(this, 19, 0);
-      FrontLeftLeg.addBox(-1F, 0F, -0.5F, 2, 7, 1);
-      FrontLeftLeg.setRotationPoint(-0.8F, -1F, -0.5F);
-      FrontLeftLeg.setTextureSize(64, 32);
-      FrontLeftLeg.mirror = true;
-      setRotation(FrontLeftLeg, 0F, 0F, 0F);
-      FrontLeftLeg.mirror = false;
-   
-      Nose = new ModelRenderer(this, 0, 1);
-      Nose.addBox(-1.2F, -1.8F, -2.3F, 3, 2, 1);
-      Nose.setRotationPoint(0F,0F,0F);
-      Nose.setTextureSize(64, 32);
-      Nose.mirror = true;
-      setRotation(Nose, 0.1745329F, 0F, 0F);
-      
-      Head = new ModelRenderer(this, 0, 4);
-      Head.addBox(-2F, -1.8F, -2.3F, 4, 4, 3);
-      Head.setRotationPoint(0F,0F,0F);
-      Head.setTextureSize(64, 32);
-      Head.mirror = true;
-      setRotation(Head, 0.0872665F, 0F, 0F);
-      
-      HeadLeftFin = new ModelRenderer(this, 31, 26);
-      HeadLeftFin.addBox(2.5F, -1.9F, 0.3F, 0, 3, 3);
-      HeadLeftFin.setRotationPoint(0F,0F,0F);
-      HeadLeftFin.setTextureSize(64, 32);
-      HeadLeftFin.mirror = true;
-      setRotation(HeadLeftFin, 0.0872665F, 0.8203047F, 0.0872665F);
-      
-      HeadTopFin = new ModelRenderer(this, 38, 25);
-      HeadTopFin.addBox(0F, -4.8F, -2F, 0, 3, 4);
-      HeadTopFin.setRotationPoint(0F, 0F,0F);
-      HeadTopFin.setTextureSize(64, 32);
-      HeadTopFin.mirror = true;
-      setRotation(HeadTopFin, 0.0872665F, 0F, 0F);
-      
-      HeadRightFin = new ModelRenderer(this, 31, 26);
-      HeadRightFin.addBox(-2.5F, -1.9F, 0.3F, 0, 3, 3);
-      HeadRightFin.setRotationPoint(0F,0F,0F);
-      HeadRightFin.setTextureSize(64, 32);
-      HeadRightFin.mirror = true;
-      setRotation(HeadRightFin, 0.0872665F, -0.8203047F, -0.0872665F);
-      
-      rearkneeleftleg = new ModelRenderer(this, 8, 1);
-      rearkneeleftleg.addBox(-1.7F, 2F, -1.5F, 2, 1, 1);
-      rearkneeleftleg.setRotationPoint(2F, 18F, 3F);
-      rearkneeleftleg.setTextureSize(64, 32);
-      rearkneeleftleg.mirror = true;
-      setRotation(rearkneeleftleg, 0.7853982F, 0F, 0F);
-      
-
-      rearupperleftleg = new ModelRenderer(this, 18, 0);
-      rearupperleftleg.addBox(-1.7F, -1.5F, 0F, 2, 4, 2);
-      rearupperleftleg.setRotationPoint(2F, 18F, 3F);
-      rearupperleftleg.setTextureSize(64, 32);
-
-      setRotation(rearupperleftleg, 0.0872665F, 0F, 0F);
-      rearupperleftleg.mirror = false;
-      rearkneeright = new ModelRenderer(this, 8, 1);
-      rearkneeright.addBox(-1.8F, 2F, -1.5F, 2, 1, 1);
-      rearkneeright.setRotationPoint(-0.5F, 18F, 3F);
-      rearkneeright.setTextureSize(64, 32);
-      rearkneeright.mirror = true;
-      setRotation(rearkneeright, 0.7853982F, 0F, 0F);
-      rearupperrightleg = new ModelRenderer(this, 18, 0);
-      rearupperrightleg.addBox(-1.8F, -1.4F, 0.1F, 2, 4, 2);
-      rearupperrightleg.setRotationPoint(-0.5F, 18F, 3F);
-      rearupperrightleg.setTextureSize(64, 32);
-      rearupperrightleg.mirror = true;
-      setRotation(rearupperrightleg, 0.0872665F, 0F, 0F);
-      tailfin1 = new ModelRenderer(this, 52, 28);
-      tailfin1.addBox(0F, -2.1F, -0.5F, 0, 1, 3);
-      tailfin1.setRotationPoint(0F, 18F, 5F);
-      tailfin1.setTextureSize(64, 32);
-      tailfin1.mirror = true;
-      setRotation(tailfin1, -0.3490659F, 0F, 0F);
-      rearlowerrightleg = new ModelRenderer(this, 19, 2);
-      rearlowerrightleg.addBox(-1.8F,1.6F,1.6F, 2, 4, 1);
-      rearlowerrightleg.setRotationPoint(-0.5F, 18F, 3F);
-      rearlowerrightleg.setTextureSize(64, 32);
-      rearlowerrightleg.mirror = true;
-      setRotation(rearlowerrightleg, -0.2094395F, 0F, 0F);
       ManeFin = new ModelRenderer(this, 16, 25);
       ManeFin.addBox(-3.5F, -4F, -2.1F, 7, 7, 0);
       ManeFin.setRotationPoint(0F, 17.5F, -1.5F);
@@ -205,14 +60,6 @@ public class ModelVaporeon extends ModelBase
       UpperBody.setTextureSize(64, 32);
       UpperBody.mirror = true;
       setRotation(UpperBody, 0F, 0F, 0F);
-
-      rearlowerleftleg = new ModelRenderer(this, 19, 2);
-      rearlowerleftleg.addBox(-1.8F, 1.5F, 1.5F, 2, 4, 1);
-      rearlowerleftleg.setRotationPoint(2F, 18F, 3F);
-      rearlowerleftleg.setTextureSize(64, 32);
-      rearlowerleftleg.mirror = true;
-      setRotation(rearlowerleftleg, -0.2094395F, 0F, 0F);
-
       TopLowerBody = new ModelRenderer(this, 0, 16);
       TopLowerBody.addBox(-2F, -1.5F, 1.5F, 4, 3, 5);
       TopLowerBody.setRotationPoint(0F, 17.5F, -1.5F);
@@ -225,132 +72,202 @@ public class ModelVaporeon extends ModelBase
       UnderLowerBody.setTextureSize(64, 32);
       UnderLowerBody.mirror = true;
       setRotation(UnderLowerBody, 0.122173F, 0F, 0F);
-      tail1 = new ModelRenderer(this, 18, 19);
-      tail1.addBox(-1.5F, -1.6F, -0.5F, 3, 3, 3);
-      tail1.setRotationPoint(0F, 18F, 5F);
-      tail1.setTextureSize(64, 32);
-      tail1.mirror = true;
-      setRotation(tail1, -0.3490659F, 0F, 0F);
-      tail2 = new ModelRenderer(this, 18, 14);
-      tail2.addBox(-1F, -0.8F, -0.5F, 2, 2, 3);
-      tail2.setRotationPoint(0F, 18.5F, 7.5F);
-      tail2.setTextureSize(64, 32);
-      tail2.mirror = true;
-      setRotation(tail2, -0.6108652F, 0F, 0F);
-      tail3 = new ModelRenderer(this, 18, 10);
-      tail3.addBox(-0.5F, -0.5F, -1F, 1, 1, 3);
-      tail3.setRotationPoint(0F, 20F, 9.5F);
-      tail3.setTextureSize(64, 32);
-      tail3.mirror = true;
-      setRotation(tail3, -0.4363323F, 0F, 0F);
-      tailtip = new ModelRenderer(this, 43, 19);
-      tailtip.addBox(-1.5F, 0F, 0F, 3, 0, 3);
-      tailtip.setRotationPoint(0F, 21F, 11.5F);
-      tailtip.setTextureSize(64, 32);
-      tailtip.mirror = true;
-      setRotation(tailtip, -0.1570796F, 0F, 0F);
-      tailfin2 = new ModelRenderer(this, 52, 28);
-      tailfin2.addBox(0F, -1.2F, -0.3F, 0, 1, 3);
-      tailfin2.setRotationPoint(0F, 18.5F, 7.5F);
-      tailfin2.setTextureSize(64, 32);
-      tailfin2.mirror = true;
-      setRotation(tailfin2, -0.6108652F, 0F, 0F);
-      tailfin3 = new ModelRenderer(this, 53, 29);
-      tailfin3.addBox(0F, -0.9F, 0.6F, 0, 1, 2);
-      tailfin3.setRotationPoint(0F, 20F, 9.5F);
-      tailfin3.setTextureSize(64, 32);
-      tailfin3.mirror = true;
-      setRotation(tailfin3, -0.4363323F, 0F, 0F);
+      TailBase = new ModelRenderer(this, 18, 19);
+      TailBase.addBox(-1.5F, -1.3F, -0.5F, 3, 3, 3);
+      TailBase.setRotationPoint(0F, 17.5F, 5F);
+      TailBase.setTextureSize(64, 32);
+      TailBase.mirror = true;
+      setRotation(TailBase, -0.3490659F, 0F, 0F);
+      TailSeg2 = new ModelRenderer(this, 18, 14);
+      TailSeg2.addBox(-1F, -1.4F, 2.1F, 2, 2, 3);
+      TailSeg2.setRotationPoint(0F, 17.5F, 5F);
+      TailSeg2.setTextureSize(64, 32);
+      TailSeg2.mirror = true;
+      setRotation(TailSeg2, -0.6108652F, 0F, 0F);
+      TailTip = new ModelRenderer(this, 18, 10);
+      TailTip.addBox(-0.5F, 0F, 4.5F, 1, 1, 3);
+      TailTip.setRotationPoint(0F, 17.5F, 5F);
+      TailTip.setTextureSize(64, 32);
+      TailTip.mirror = true;
+      setRotation(TailTip, -0.4363323F, 0F, 0F);
+      TailFlipper = new ModelRenderer(this, 43, 19);
+      TailFlipper.addBox(-1.5F, 2.5F, 7F, 3, 0, 3);
+      TailFlipper.setRotationPoint(0F, 17.5F, 5F);
+      TailFlipper.setTextureSize(64, 32);
+      TailFlipper.mirror = true;
+      setRotation(TailFlipper, -0.1570796F, 0F, 0F);
+      TailFin1 = new ModelRenderer(this, 52, 28);
+      TailFin1.addBox(0F, -1.7F, -0.5F, 0, 1, 3);
+      TailFin1.setRotationPoint(0F, 17.5F, 5F);
+      TailFin1.setTextureSize(64, 32);
+      TailFin1.mirror = true;
+      setRotation(TailFin1, -0.3490659F, 0F, 0F);
+      TailFin2 = new ModelRenderer(this, 52, 28);
+      TailFin2.addBox(0F, -1.9F, 2.1F, 0, 1, 3);
+      TailFin2.setRotationPoint(0F, 17.5F, 5F);
+      TailFin2.setTextureSize(64, 32);
+      TailFin2.mirror = true;
+      setRotation(TailFin2, -0.6108652F, 0F, 0F);
+      TailFin3 = new ModelRenderer(this, 53, 29);
+      TailFin3.addBox(0F, -0.5F, 5.2F, 0, 1, 2);
+      TailFin3.setRotationPoint(0F, 17.5F, 5F);
+      TailFin3.setTextureSize(64, 32);
+      TailFin3.mirror = true;
+      setRotation(TailFin3, -0.4363323F, 0F, 0F);
       
+    HEADBASE = new ModelRenderer(this, "HEADBASE");
+    HEADBASE.setRotationPoint(0F, 16.5F, -3.4F);
+    setRotation(HEADBASE, 0F, 0F, 0F);
+    HEADBASE.mirror = true;
+      ModelRenderer   Nose = new ModelRenderer(this, 0, 1);
+      Nose.addBox(-1.5F, -1.1F, -3.1F, 3, 2, 1);
+      Nose.setRotationPoint(0F, 0F, 0F);
+      Nose.setTextureSize(64, 32);
+      Nose.mirror = true;
+      setRotation(Nose, 0.1745329F, 0F, 0F);
+      ModelRenderer   HeadLeftFin = new ModelRenderer(this, 31, 26);
+      HeadLeftFin.addBox(2.5F, -2.9F, 0.3F, 0, 3, 3);
+      HeadLeftFin.setRotationPoint(0F, 0F, 0F);
+      HeadLeftFin.setTextureSize(64, 32);
+      HeadLeftFin.mirror = true;
+      setRotation(HeadLeftFin, 0.0872665F, 0.8203047F, 0.0872665F);
+      ModelRenderer    HeadRightFin = new ModelRenderer(this, 31, 26);
+      HeadRightFin.addBox(-2.5F, -2.9F, 0.3F, 0, 3, 3);
+      HeadRightFin.setRotationPoint(0F, 0F, 0F);
+      HeadRightFin.setTextureSize(64, 32);
+      HeadRightFin.mirror = true;
+      setRotation(HeadRightFin, 0.0872665F, -0.8203047F, -0.0872665F);
+      ModelRenderer    HeadTopFin = new ModelRenderer(this, 38, 25);
+      HeadTopFin.addBox(0F, -5.8F, -3F, 0, 3, 4);
+      HeadTopFin.setRotationPoint(0F, 0F, 0F);
+      HeadTopFin.setTextureSize(64, 32);
+      HeadTopFin.mirror = true;
+      setRotation(HeadTopFin, 0.0872665F, 0F, 0F);
+      ModelRenderer  Head = new ModelRenderer(this, 0, 4);
+      Head.addBox(-2F, -2.8F, -3F, 4, 4, 3);
+      Head.setRotationPoint(0F, 0F, 0F);
+      Head.setTextureSize(64, 32);
+      Head.mirror = true;
+      setRotation(Head, 0.0872665F, 0F, 0F);
       
-      HEADPIECE = new ModelRenderer(this, "HEADPIECE");
-      HEADPIECE.setRotationPoint(0F,16F,-4F);
-      setRotation(HEADPIECE, 0F,0F,0F);
-      HEADPIECE.mirror = true;
+      HEADBASE.addChild(Nose);
+      HEADBASE.addChild(Head);
+      HEADBASE.addChild(HeadRightFin);
+      HEADBASE.addChild(HeadLeftFin);
+      HEADBASE.addChild(HeadTopFin);
       
-      TAILPIECE1 = new ModelRenderer(this, "TAILPIECE1");
-      TAILPIECE1.setRotationPoint(0F, 18F, 5F);
-      setRotation(TAILPIECE1, 0F, 0F, 0F);
-      TAILPIECE1.mirror = true;
+    FRONTLEFTLEG = new ModelRenderer(this, "FRONTLEFTLEG");
+    FRONTLEFTLEG.setRotationPoint(2F, 18F, -2.5F);
+    setRotation(FRONTLEFTLEG, 0F, 0F, 0F);
+    FRONTLEFTLEG.mirror = true;
+      ModelRenderer  FrontToesLeft = new ModelRenderer(this, 8, 1);
+      FrontToesLeft.addBox(-1F, 5F, -1F, 2, 1, 1);
+      FrontToesLeft.setRotationPoint(-0.8F, 0F, 0F);
+      FrontToesLeft.setTextureSize(64, 32);
+      FrontToesLeft.mirror = true;
+      setRotation(FrontToesLeft, 0F, 0F, 0F);
+      FrontToesLeft.mirror = false;
+      ModelRenderer  FrontLeftLeg = new ModelRenderer(this, 19, 0);
+      FrontLeftLeg.addBox(-1F, 0F, -0.5F, 2, 7, 1);
+      FrontLeftLeg.setRotationPoint(-0.8F, -1F, 0F);
+      FrontLeftLeg.setTextureSize(64, 32);
+      FrontLeftLeg.mirror = true;
+      setRotation(FrontLeftLeg, 0F, 0F, 0F);
+      FrontLeftLeg.mirror = false;
+
+      FRONTLEFTLEG.addChild(FrontToesLeft);
+      FRONTLEFTLEG.addChild(FrontLeftLeg);
       
-      TAILPIECE2 = new ModelRenderer(this, "TAILPIECE2");
-      TAILPIECE2.setRotationPoint(0F, 0.5F, 2.5F);
-      setRotation(TAILPIECE2, 0F, 0F, 0F);
-      TAILPIECE2.mirror = true;
+    FRONTRIGHTLEG = new ModelRenderer(this, "FRONTRIGHTLEG");
+    FRONTRIGHTLEG.setRotationPoint(-2F, 18F, -2.5F);
+    setRotation(FRONTRIGHTLEG, 0F, 0F, 0F);
+    FRONTRIGHTLEG.mirror = true;
+    ModelRenderer FrontToesRight = new ModelRenderer(this, 8, 1);
+      FrontToesRight.addBox(-1F, 5F, -1F, 2, 1, 1);
+      FrontToesRight.setRotationPoint(0.8F, 0F, 0F);
+      FrontToesRight.setTextureSize(64, 32);
+      FrontToesRight.mirror = true;
+      setRotation(FrontToesRight, 0F, 0F, 0F);
+      ModelRenderer  FrontRightLeg = new ModelRenderer(this, 19, 0);
+      FrontRightLeg.addBox(-1F, 0F, -0.5F, 2, 7, 1);
+      FrontRightLeg.setRotationPoint(0.8F, -1F, 0F);
+      FrontRightLeg.setTextureSize(64, 32);
+      FrontRightLeg.mirror = true;
+      setRotation(FrontRightLeg, 0F, 0F, 0F);
       
-      TAILPIECE3 = new ModelRenderer(this, "TAILPIECE3");
-      TAILPIECE3.setRotationPoint(0F, 1.5F, 2F);
-      setRotation(TAILPIECE3, 0F, 0F, 0F);
-      TAILPIECE3.mirror = true;
+      FRONTRIGHTLEG.addChild(FrontToesRight);
+      FRONTRIGHTLEG.addChild(FrontRightLeg);
       
-      TAILPIECE4 = new ModelRenderer(this, "TAILPIECE4");
-      TAILPIECE4.setRotationPoint(0F, 1F, 2F);
-      setRotation(TAILPIECE4, 0F, 0F, 0F);
-      TAILPIECE4.mirror = true;
-       
-      REARLEFTLEGPIECE = new ModelRenderer(this, "REARLEFTLEGPIECE");
-      REARLEFTLEGPIECE.setRotationPoint(2F, 18F, 3F);
-      setRotation(REARLEFTLEGPIECE, 0F, 0F, 0F);
-      REARLEFTLEGPIECE.mirror = true;
+    REARRIGHTLEG = new ModelRenderer(this, "REARRIGHTLEG");
+    REARRIGHTLEG.setRotationPoint(-2F, 17.53333F, 4F);
+    setRotation(REARRIGHTLEG, 0F, 0F, 0F);
+    REARRIGHTLEG.mirror = true;
+      ModelRenderer  RearUpperRightLeg = new ModelRenderer(this, 18, 0);
+      RearUpperRightLeg.addBox(-1.6F, -0.5F, -1.5F, 2, 4, 2);
+      RearUpperRightLeg.setRotationPoint(1.4F, -0.5F, 0.5F);
+      RearUpperRightLeg.setTextureSize(64, 32);
+      RearUpperRightLeg.mirror = true;
+      setRotation(RearUpperRightLeg, 0.0872665F, 0F, 0F);
+      ModelRenderer  RearKneeRight = new ModelRenderer(this, 8, 1);
+      RearKneeRight.addBox(-1.6F, 1.7F, -3.3F, 2, 1, 1);
+      RearKneeRight.setRotationPoint(1.4F, -0.5F, 0.5F);
+      RearKneeRight.setTextureSize(64, 32);
+      RearKneeRight.mirror = true;
+      setRotation(RearKneeRight, 0.7853982F, 0F, 0F);
+      ModelRenderer  RearToesRight = new ModelRenderer(this, 8, 1);
+      RearToesRight.addBox(-1.6F, 6F, -1.3F, 2, 1, 1);
+      RearToesRight.setRotationPoint(1.4F, -0.5F, 0.5F);
+      RearToesRight.setTextureSize(64, 32);
+      RearToesRight.mirror = true;
+      setRotation(RearToesRight, 0F, 0F, 0F);
+      ModelRenderer   RearlowerRightLeg = new ModelRenderer(this, 19, 2);
+      RearlowerRightLeg.addBox(-1.6F, 2.9F, 0.4F, 2, 4, 1);
+      RearlowerRightLeg.setRotationPoint(1.4F, -0.5F, 0.5F);
+      RearlowerRightLeg.setTextureSize(64, 32);
+      RearlowerRightLeg.mirror = true;
+      setRotation(RearlowerRightLeg, -0.2094395F, 0F, 0F);
       
-      FRONTRIGHTLEGPIECE = new ModelRenderer(this, "FRONTRIGHTLEGPIECE");
-      FRONTRIGHTLEGPIECE.setRotationPoint(-2F, 18F, -2F);
-      setRotation(FRONTRIGHTLEGPIECE, 0F, 0F, 0F);
-      FRONTRIGHTLEGPIECE.mirror = true;
+      REARRIGHTLEG.addChild(RearUpperRightLeg);
+      REARRIGHTLEG.addChild(RearKneeRight);
+      REARRIGHTLEG.addChild(RearlowerRightLeg);
+      REARRIGHTLEG.addChild(RearToesRight);
       
-      REARRIGHTLEGPIECE = new ModelRenderer(this, "REARRIGHTLEGPIECE");
-      REARRIGHTLEGPIECE.setRotationPoint(-0.5F, 18F, 3F);
-      setRotation(REARRIGHTLEGPIECE, 0F, 0F, 0F);
-      REARRIGHTLEGPIECE.mirror = true;
+    REARLEFTLEG = new ModelRenderer(this, "REARLEFTLEG");
+    REARLEFTLEG.setRotationPoint(2F, 17.5F, 4F);
+    setRotation(REARLEFTLEG, 0F, 0F, 0F);
+    REARLEFTLEG.mirror = true;
+    ModelRenderer  RearUpperLeftLeg = new ModelRenderer(this, 18, 0);
+      RearUpperLeftLeg.addBox(-0.4F, -0.5F, -1.5F, 2, 4, 2);
+      RearUpperLeftLeg.setRotationPoint(-1.4F, -0.5F, 0.5F);
+      RearUpperLeftLeg.setTextureSize(64, 32);
+      RearUpperLeftLeg.mirror = true;
+      setRotation(RearUpperLeftLeg, 0.0872665F, 0F, 0F);
+      RearUpperLeftLeg.mirror = false;
+      ModelRenderer RearKneeLeft = new ModelRenderer(this, 8, 1);
+      RearKneeLeft.addBox(-0.4F, 1.7F, -3.3F, 2, 1, 1);
+      RearKneeLeft.setRotationPoint(-1.4F, -0.5F, 0.5F);
+      RearKneeLeft.setTextureSize(64, 32);
+      RearKneeLeft.mirror = true;
+      setRotation(RearKneeLeft, 0.7853982F, 0F, 0F);
+      ModelRenderer  RearlowerLeftLeg = new ModelRenderer(this, 19, 2);
+      RearlowerLeftLeg.addBox(-0.4F, 2.9F, 0.4F, 2, 4, 1);
+      RearlowerLeftLeg.setRotationPoint(-1.4F, -0.5F, 0.5F);
+      RearlowerLeftLeg.setTextureSize(64, 32);
+      RearlowerLeftLeg.mirror = true;
+      setRotation(RearlowerLeftLeg, -0.2094395F, 0F, 0F);
+      RearlowerLeftLeg.mirror = false;
+      ModelRenderer  RearToesLeft = new ModelRenderer(this, 8, 1);
+      RearToesLeft.addBox(-0.4F, 6F, -1.3F, 2, 1, 1);
+      RearToesLeft.setRotationPoint(-1.4F, -0.5F, 0.5F);
+      RearToesLeft.setTextureSize(64, 32);
+      RearToesLeft.mirror = true;
+      setRotation(RearToesLeft, 0F, 0F, 0F);
+      RearToesLeft.mirror = false;
       
-      FRONTLEFTLEGPIECE = new ModelRenderer(this, "FRONTLEFTLEGPIECE");
-      FRONTLEFTLEGPIECE.setRotationPoint(2F, 18F, -2F);
-      setRotation(FRONTLEFTLEGPIECE, 0F, 0F, 0F);
-      FRONTLEFTLEGPIECE.mirror = true;
-      
-     
-      
-      
-      HEADPIECE.addChild(Head);
-      HEADPIECE.addChild(HeadTopFin);
-      HEADPIECE.addChild(HeadRightFin);
-      HEADPIECE.addChild(HeadLeftFin);
-      
-      FRONTLEFTLEGPIECE.addChild(FrontLeftLeg);
-      FRONTLEFTLEGPIECE.addChild(FrontToesLeft);
-      
-      FRONTRIGHTLEGPIECE.addChild(frontrightleg);
-      FRONTRIGHTLEGPIECE.addChild(fronttoesrightleg);
-      
-      REARLEFTLEGPIECE.addChild(rearupperleftleg);
-      REARLEFTLEGPIECE.addChild(reartoesrightleg);
-      REARLEFTLEGPIECE.addChild(rearkneeleftleg);
-      REARLEFTLEGPIECE.addChild(rearlowerleftleg);
-      
-      REARRIGHTLEGPIECE.addChild(rearupperrightleg);
-      REARRIGHTLEGPIECE.addChild(rearlowerrightleg);
-      REARRIGHTLEGPIECE.addChild(rearkneeright);
-      REARRIGHTLEGPIECE.addChild(reartoesrightleg);
-      
-      
-      TAILPIECE1.addChild(TAILPIECE2);
-      TAILPIECE1.addChild(tail1);
-      TAILPIECE1.addChild(tailfin1);
-      
-      TAILPIECE2.addChild(TAILPIECE3);
-      TAILPIECE2.addChild(tail2);
-      TAILPIECE2.addChild(tailfin2);
-      
-      TAILPIECE3.addChild(TAILPIECE4);
-      TAILPIECE3.addChild(tail3);
-      TAILPIECE3.addChild(tailfin3);
-      
-      TAILPIECE4.addChild(tailtip);
-      
-      
-      
-      
-      
+      REARLEFTLEG.addChild(RearUpperLeftLeg);
+      REARLEFTLEG.addChild(RearKneeLeft);
+      REARLEFTLEG.addChild(RearlowerLeftLeg);
+      REARLEFTLEG.addChild(RearToesLeft);
       
   }
   
@@ -358,24 +275,23 @@ public class ModelVaporeon extends ModelBase
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5);
-    TAILPIECE1.render(f5);
-    REARLEFTLEGPIECE.render(f5);
-    FRONTRIGHTLEGPIECE.render(f5);
-    REARRIGHTLEGPIECE.render(f5);
-    FRONTLEFTLEGPIECE.render(f5);
-    HEADPIECE.render(f5);
-    rearkneeleftleg.render(f5);
-    rearupperleftleg.render(f5);
-    rearkneeright.render(f5);
-    rearupperrightleg.render(f5);
-    tailfin1.render(f5);
-    rearlowerrightleg.render(f5);
     ManeFin.render(f5);
     BackFin.render(f5);
     UpperBody.render(f5);
-    rearlowerleftleg.render(f5);
     TopLowerBody.render(f5);
     UnderLowerBody.render(f5);
+    TailBase.render(f5);
+    TailSeg2.render(f5);
+    TailTip.render(f5);
+    TailFlipper.render(f5);
+    TailFin1.render(f5);
+    TailFin2.render(f5);
+    TailFin3.render(f5);
+    HEADBASE.render(f5);
+    FRONTLEFTLEG.render(f5);
+    FRONTRIGHTLEG.render(f5);
+    REARRIGHTLEG.render(f5);
+    REARLEFTLEG.render(f5);
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
@@ -388,6 +304,12 @@ public class ModelVaporeon extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+	HEADBASE.rotateAngleX = f4 / 57.29578F;
+    HEADBASE.rotateAngleY = f3 / 57.29578F;
+    REARRIGHTLEG.rotateAngleX = MathHelper.cos(f * 0.6662F) * 0.8F * f1;
+    REARLEFTLEG.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * 0.8F * f1;
+    FRONTRIGHTLEG.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * 0.8F * f1;
+    FRONTLEFTLEG.rotateAngleX = MathHelper.cos(f * 0.6662F) * 0.8F * f1;
   }
 
 }

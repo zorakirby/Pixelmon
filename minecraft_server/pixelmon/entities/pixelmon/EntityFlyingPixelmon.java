@@ -7,6 +7,7 @@ import pixelmon.AI.EntityAIStartBattle;
 import pixelmon.battles.BattleController;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.items.PixelmonItems;
 
 import net.minecraft.src.*;
 
@@ -41,13 +42,22 @@ public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
 
 	public void init() {
 		super.init();
-		if (aggression > 0) {
+		loadAI();
+	}
+
+	public void resetAI(){
+		tasks = new EntityAITasks();
+	}
+	
+	public void loadAI() {
+		tasks = new EntityAITasks();
+		if (helper.aggression > 0) {
 			tasks.addTask(0, new EntityAIMoveTowardsTarget(this, moveSpeed, 15));
-			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50 - aggression, true));
+			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50 - helper.aggression, true));
 			tasks.addTask(2, new EntityAIStartBattle(this));
 		}
 		tasks.addTask(3, new EntityAISwimming(this));
-		tasks.addTask(4, new EntityAITempt(this, moveSpeed, mod_Pixelmon.rareCandy.shiftedIndex, false));
+		tasks.addTask(4, new EntityAITempt(this, moveSpeed, PixelmonItems.rareCandy.shiftedIndex, false));
 		tasks.addTask(6, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
 		tasks.addTask(7, new EntityAILookIdle(this));
 	}
@@ -65,7 +75,7 @@ public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
 	}
 
 	public void EndBattle() {
-		bc = null;
+		helper.bc = null;
 	}
 
 	protected void fall(float f) {

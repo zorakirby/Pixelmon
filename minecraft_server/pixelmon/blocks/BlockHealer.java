@@ -20,43 +20,40 @@ import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
 
 public class BlockHealer extends BlockContainer {
-	/**
-	 * Is the random generator used by furnace to drop the inventory contents in
-	 * random directions.
-	 */
-	private Random furnaceRand;
-	private static final int hTop = ModLoader.addOverride("/terrain.png", "/pixelmon/block/healertop.png");
-	private static final int hBottom = ModLoader.addOverride("/terrain.png", "/pixelmon/block/healerbottom.png");
-	private static final int hSide = ModLoader.addOverride("/terrain.png", "/pixelmon/block/healerside.png");
-	private static final int hFrontActive = ModLoader.addOverride("/terrain.png", "/pixelmon/block/healerfrontactive.png");
-	private static final int hFrontInactive = ModLoader.addOverride("/terrain.png", "/pixelmon/block/healerfrontinactive.png");
 
-	/** True if this is an active furnace, false if idle */
-	private final boolean isActive;
-
-	/**
-	 * This flag is used to prevent the furnace inventory to be dropped upon
-	 * block removal, is used internally when the furnace block changes from
-	 * idle to active and vice-versa.
-	 */
-	private static boolean keepFurnaceInventory = false;
-
-	public BlockHealer(int par1, boolean par2) {
+	public BlockHealer(int par1) {
 		super(par1, Material.rock);
-		furnaceRand = new Random();
-		isActive = par2;
+		setHardness(3.5f);
+		setStepSound(Block.soundStoneFootstep);
+		setRequiresSelfNotify();
 	}
 
-	/**
-	 * Returns the ID of the items to drop on destruction.
-	 */
+	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return -1;//mod_Pixelmon.healerIdle.blockID;
+		return -1;
 	}
 
-	/**
-	 * Called whenever the block is added into the world. Args: world, x, y, z
-	 */
+	@Override
+	public int quantityDropped(Random random) {
+		return 0;
+	}
+
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+
+	@Override
+	public int getRenderType() {
+		return -1;
+	}
+
+	@Override
 	public void onBlockAdded(World par1World, int par2, int par3, int par4) {
 		super.onBlockAdded(par1World, par2, par3, par4);
 		setDefaultDirection(par1World, par2, par3, par4);
@@ -65,8 +62,7 @@ public class BlockHealer extends BlockContainer {
 	/**
 	 * set a blocks direction
 	 */
-	private void setDefaultDirection(World par1World, int par2, int par3,
-			int par4) {
+	private void setDefaultDirection(World par1World, int par2, int par3, int par4) {
 		if (par1World.isRemote) {
 			return;
 		}
@@ -97,86 +93,17 @@ public class BlockHealer extends BlockContainer {
 	}
 
 	/**
-	 * Retrieves the block texture to use based on the display side. Args:
-	 * iBlockAccess, x, y, z, side
-	 */
-	public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2,
-			int par3, int par4, int par5) {
-		if (par5 == 1) {
-			return hTop;//top
-		}
-
-		if (par5 == 0) {
-			return hBottom;//bottom
-		}
-
-		int i = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-
-		if (par5 != i) {
-			return hSide;//side
-		}
-
-		if (isActive) {
-			return hFrontActive;//front active
-		} else {
-			return hFrontInactive;//front inactive
-		}
-	}
-
-	/**
-	 * Returns the block texture based on the side being looked at. Args: side
-	 */
-	public int getBlockTextureFromSide(int par1) {
-		if (par1 == 1) {
-			return hTop;//top
-		}
-
-		if (par1 == 0) {
-			return hBottom;//bottom
-		}
-
-		if (par1 == 3) {
-			return hFrontInactive;//front inactive
-		} else {
-			return hSide;//side
-		}
-	}
-
-	public void randomDisplayTick(World world, int i, int j, int k, Random random)
-	{
-       
-	}
-	
-	/**
 	 * Called upon block activation (left or right click on the block.). The
 	 * three integers represent x,y,z of the block.
 	 */
-	public boolean blockActivated(World par1World, int j, int k,
-			int par4, EntityPlayer par5EntityPlayer) {
-		if (par1World.isRemote) {
-			return true;
-		}
-		par5EntityPlayer.openGui(mod_Pixelmon.instance, EnumGui.Healer.getIndex(), par1World, 0,0,0);
-		
+	public boolean blockActivated(World par1World, int j, int k, int par4, EntityPlayer par5EntityPlayer) {
+		par5EntityPlayer.openGui(mod_Pixelmon.instance, EnumGui.Healer.getIndex(), par1World, 0, 0, 0);
+
 		return true;
 	}
 
-	/**
-	 * Update which block ID the furnace is using depending on whether or not it
-	 * is burning
-	 */
-	public static void updateFurnaceBlockState(boolean par0, World par1World,
-			int par2, int par3, int par4) {
-		
-	}
-
-	/**
-	 * Called when the block is placed in the world.
-	 */
-	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
-			EntityLiving par5EntityLiving) {
-		int i = MathHelper
-				.floor_double((double) ((par5EntityLiving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
+	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving) {
+		int i = MathHelper.floor_double((double) ((par5EntityLiving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
 
 		if (i == 0) {
 			par1World.setBlockMetadataWithNotify(par2, par3, par4, 2);
@@ -204,6 +131,6 @@ public class BlockHealer extends BlockContainer {
 
 	@Override
 	public TileEntity getBlockEntity() {
-		return null;
+		return new TileEntityHealer();
 	}
 }

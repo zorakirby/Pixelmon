@@ -37,6 +37,7 @@ import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.PixelmonBlocks;
+import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -58,8 +59,10 @@ import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.PixelmonItems;
+import pixelmon.items.PixelmonRecipes;
 import pixelmon.render.OldRenderEmptyPokeball;
 import pixelmon.render.RenderPokeball;
+import pixelmon.render.RenderTileEntityHealer;
 import pixelmon.render.RenderTileEntityPC;
 import pixelmon.render.RenderTrainer;
 import pixelmon.storage.ComputerManager;
@@ -218,6 +221,7 @@ public class mod_Pixelmon extends NetworkMod {
 		MinecraftForge.registerConnectionHandler(new PacketHandler());
 
 		ModLoader.registerTileEntity(TileEntityPC.class, "PC", new RenderTileEntityPC());
+		ModLoader.registerTileEntity(TileEntityHealer.class, "Healer", new RenderTileEntityHealer());
 
 		ModLoader.registerKey(this, nextPixelmonKey, false);
 		ModLoader.registerKey(this, previousPixelmonKey, false);
@@ -273,7 +277,7 @@ public class mod_Pixelmon extends NetworkMod {
 	}
 
 	public void addRecipes() {
-
+		PixelmonRecipes.addRecipes();
 	}
 
 	private void removeNormalMobsAndCreatures() {

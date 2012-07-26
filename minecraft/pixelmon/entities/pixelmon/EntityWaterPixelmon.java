@@ -89,13 +89,9 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 			return "/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png";
 	}
 
-	public void loadMoveset() {
-		helper.moveset = DatabaseMoves.GetInitialMoves(name, helper.getLvl().getLevel());
-	}
-
 	public void StartBattle(PixelmonEntityHelper target) {
 		if (helper.moveset.size() == 0)
-			loadMoveset();
+			helper.loadMoveset();
 
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
@@ -114,7 +110,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
 		if (helper.moveset.size() == 0)
-			loadMoveset();
+			helper.loadMoveset();
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
 			p1 = new PlayerParticipant(getOwner(), helper);
@@ -135,7 +131,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public void SetBattleController(BattleController battleController) {
 		helper.bc = battleController;
 		if (helper.moveset.size() == 0)
-			loadMoveset();
+			helper.loadMoveset();
 		isSwimming = false;
 	}
 
@@ -283,7 +279,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public int getMaxHealth() {
-		if (helper==null || helper.stats == null)
+		if (helper == null || helper.stats == null)
 			return 1;
 		return helper.stats.HP;
 	}
@@ -416,7 +412,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);
 	}
-	
+
 	public World getWorldObj() {
 		return worldObj;
 	}

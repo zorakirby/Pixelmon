@@ -1,16 +1,12 @@
 package pixelmon.blocks;
 
-import pixelmon.render.RenderTileEntityPC;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.src.Block;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.mod_Pixelmon;
 import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
-import net.minecraft.src.forge.MinecraftForgeClient;
 
 public class PixelmonBlocks {
 	public static int pokemonHealerIdleId;
