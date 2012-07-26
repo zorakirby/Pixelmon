@@ -1,5 +1,6 @@
 package pixelmon.enums;
 
+import pixelmon.items.PixelmonItems;
 import net.minecraft.src.Item;
 import net.minecraft.src.mod_Pixelmon;
 
@@ -25,11 +26,11 @@ public enum EnumPokeballs {
 	}
 	
 	public Item getItem(){
-		if (index ==0) return mod_Pixelmon.pokeBall;
-		if (index ==1) return mod_Pixelmon.greatBall;
-		if (index ==2) return mod_Pixelmon.ultraBall;
-		if (index ==3) return mod_Pixelmon.masterBall;
-		return  mod_Pixelmon.pokeBall;
+		if (index ==0) return PixelmonItems.pokeBall;
+		if (index ==1) return PixelmonItems.greatBall;
+		if (index ==2) return PixelmonItems.ultraBall;
+		if (index ==3) return PixelmonItems.masterBall;
+		return  PixelmonItems.pokeBall;
 	}
 
 	public String getTexture() {
