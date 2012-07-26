@@ -1,5 +1,6 @@
 package pixelmon.models;
 
+import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import net.minecraft.src.Entity;
 import net.minecraft.src.ModelBase;
@@ -181,7 +182,7 @@ public class ModelHealer extends ModelBase
     BackCurveLeft1.render(f5);
     BackCurveLeft2.render(f5);
   }
-  public void renderModel(TileEntityPC entity, float f5) {
+  public void renderModel(TileEntityHealer entity, float f5) {
 	  HealerBase.render(f5);
 	    HealerLeg1.render(f5);
 	    HealerLeg2.render(f5);

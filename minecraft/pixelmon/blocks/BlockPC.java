@@ -17,12 +17,9 @@ import net.minecraft.src.mod_Pixelmon;
 
 public class BlockPC extends BlockContainer {
 	
-	private Class class1;
-	public int renderType;
 	public BlockPC(int i, int j){
 		super(i, Material.rock);
 		setHardness(2.5f);
-		renderType = j;
 	}
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3)
