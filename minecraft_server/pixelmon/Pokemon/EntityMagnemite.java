@@ -17,8 +17,8 @@ public class EntityMagnemite  extends EntityGroundPixelmon
 	{
 		name = "Magnemite";
 		isImmuneToFire = false;
-		doesHover = true;
-		hoverHeight=1f;
+		helper.doesHover = true;
+		helper.hoverHeight=1f;
 		super.init();
 	}
 	

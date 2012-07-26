@@ -17,8 +17,8 @@ public class EntitySolrock  extends EntityGroundPixelmon
 	{
 		name = "Solrock";
 		isImmuneToFire = true;
-		doesHover = true;
-		hoverHeight=1f;
+		helper.doesHover = true;
+		helper.hoverHeight=1f;
 		super.init();
 	}
 	

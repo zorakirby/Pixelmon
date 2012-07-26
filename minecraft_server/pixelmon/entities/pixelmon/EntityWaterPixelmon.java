@@ -381,4 +381,8 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		else
 			dataWatcher.updateObject(20, (short) 0);
 	}
+	
+	public World getWorldObj(){
+		return worldObj;
+	}
 }

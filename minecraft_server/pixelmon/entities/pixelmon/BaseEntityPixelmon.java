@@ -42,21 +42,7 @@ import net.minecraft.src.mod_Pixelmon;
 public abstract class BaseEntityPixelmon extends EntityTameable implements IHaveHelper {
 
 	public String name;
-	public String nickname = "";
-	public float scale = 1F;
-	public float maxScale = 1.25F;
-	public LevelHelper lvl;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
-	public Moveset moveset = new Moveset();
-	public double caughtBall = 0;
-	public boolean isInBall = true;
-	public Stats stats = new Stats();
-	public boolean isFainted = false;
-	public BattleStats battleStats = new BattleStats();
-	public ArrayList<StatusEffectBase> status = new ArrayList<StatusEffectBase>();
-	public boolean doesHover = false;
-	public float hoverHeight;
-	public boolean isMale;
 	public PixelmonEntityHelper helper = new PixelmonEntityHelper(this);
 	public int aggression;
 	public boolean litUp;
@@ -64,7 +50,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	public BaseEntityPixelmon(World par1World) {
 		super(par1World);
-		stats.IVs = PixelmonIVStore.CreateNewIVs();
+		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
 		targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 		dataWatcher.addObject(19, -1);
 		dataWatcher.addObject(20, (short) 0);
@@ -80,31 +66,30 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		}
 		dataWatcher.addObject(18, "");
 		moveSpeed = getMoveSpeed();// + getMoveSpeed();
-		stats.BaseStats = DatabaseStats.GetBaseStats(name);
+		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
 		health = 11;
-		if (rand.nextInt(100) < stats.BaseStats.MalePercent)
-			isMale = true;
+		if (rand.nextInt(100) < helper.stats.BaseStats.MalePercent)
+			helper.isMale = true;
 		else
-			isMale = false;
-		type.add(stats.BaseStats.Type1);
-		if (stats.BaseStats.Type2 != EnumType.Mystery)
-			type.add(stats.BaseStats.Type2);
+			helper.isMale = false;
+		type.add(helper.stats.BaseStats.Type1);
+		if (helper.stats.BaseStats.Type2 != EnumType.Mystery)
+			type.add(helper.stats.BaseStats.Type2);
 
 		helper.getLvl();
-		setSize(stats.BaseStats.Height, width);
+		setSize(helper.stats.BaseStats.Height, width);
 	}
 
-	public BattleController bc;
 	public EntityTrainer trainer;
 	private String ownerName;
 
-	public void loadMoveset() {
-		moveset = DatabaseMoves.GetInitialMoves(name, helper.getLvl().getLevel());
-	}
+	public abstract void loadAI();
+
+	public abstract void resetAI();
 
 	public void StartBattle(PixelmonEntityHelper target) {
-		if (this.moveset.size() == 0)
-			loadMoveset();
+		if (helper.moveset.size() == 0)
+			helper.loadMoveset();
 
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
@@ -117,13 +102,13 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		else
 			p2 = new WildPixelmonParticipant(target);
 
-		bc = new BattleController(p1, p2);
+		helper.bc = new BattleController(p1, p2);
 		tasks = new EntityAITasks();
 	}
 
 	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
-		if (this.moveset.size() == 0)
-			loadMoveset();
+		if (helper.moveset.size() == 0)
+			helper.loadMoveset();
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
 			p1 = new PlayerParticipant(getOwner(), helper);
@@ -132,20 +117,20 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 		p2 = new TrainerParticipant(trainer, opponent);
 
-		bc = new BattleController(p1, p2);
+		helper.bc = new BattleController(p1, p2);
 		tasks = new EntityAITasks();
 	}
 
 	public void SetBattleController(BattleController bc) {
-		if (this.moveset.size() == 0)
-			loadMoveset();
+		if (helper.moveset.size() == 0)
+			helper.loadMoveset();
 
-		this.bc = bc;
+		helper.bc = bc;
 		tasks = new EntityAITasks();
 	}
 
 	public void EndBattle() {
-		this.bc = null;
+		helper.bc = null;
 	}
 
 	public void onDeath(DamageSource damagesource) {
@@ -153,7 +138,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		if (getOwner() != null && mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).isIn(helper)) {
 			String s = "Your " + getName() + " fainted!";
 			ChatHandler.sendChat(getOwner(), s);
-			isFainted = true;
+			helper.isFainted = true;
 			health = 0;
 			catchInPokeball();
 		} else {
@@ -169,15 +154,13 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public int getMaxHealth() {
-		if (stats == null)
+		if (helper == null || helper.stats == null)
 			return 1;
-		return stats.HP;
+		return helper.stats.HP;
 	}
 
 	public String getName() {
-		if (nickname == null || nickname.isEmpty())
-			return name;
-		return nickname;
+		return name;
 	}
 
 	public void setHealth(int i) {
@@ -213,14 +196,14 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			return;
 		}
 		mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
-		isInBall = true;
+		helper.isInBall = true;
 		unloadEntity();
 	}
 
 	public void releaseFromPokeball() {
 		this.aggression = 0;
 		worldObj.spawnEntityInWorld(this);
-		isInBall = false;
+		helper.isInBall = false;
 	}
 
 	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
@@ -248,16 +231,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		}
 	}
 
-	public void increaseSize(float var1) {
-		scale = var1;
-	}
-
 	public boolean hasOwner() {
 		return (getOwnerName() != null && !getOwnerName().isEmpty());
-	}
-
-	public Stats getStats() {
-		return stats;
 	}
 
 	public World getWorldObj() {
@@ -273,19 +248,11 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public void LearnMove() {
-		if (getMoveset().size() >= 4) {
-			ArrayList<Attack> attacks = getAttacksAtLevel(lvl.getLevel());
+		if (helper.moveset.size() >= 4) {
+			ArrayList<Attack> attacks = getAttacksAtLevel(helper.lvl.getLevel());
 			for (int i = 0; i < attacks.size(); i++)
 				getOwner().openGui(mod_Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, getPokemonId(), attacks.get(i).attackIndex, 0);
 		}
-	}
-
-	public float getMaxScale() {
-		return maxScale;
-	}
-
-	public Moveset getMoveset() {
-		return moveset;
 	}
 
 	public boolean getCanSpawnHere() {
@@ -295,9 +262,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
 	}
 
-	public ArrayList<StatusEffectBase> getStatus() {
-		return status;
-	}
 
 	public void writeEntityToNBT(NBTTagCompound var1) {
 		if (trainer != null && !isStorage)
@@ -346,9 +310,9 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public void onUpdate() {
-		if (bc != null) {
-			if (bc.participant1.currentPokemon() == helper)
-				bc.update();
+		if (helper.bc != null) {
+			if (helper.bc.participant1.currentPokemon() == helper)
+				helper.bc.update();
 		}
 		if (litUp = true) {
 			double po11 = this.lastTickPosX;
@@ -391,8 +355,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		list.add(this);
 		worldObj.unloadEntities(list);
 		clearAttackTarget();
-		if (bc != null) {
-			bc = null;
+		if (helper.bc != null) {
+			helper.bc = null;
 		}
 	}
 

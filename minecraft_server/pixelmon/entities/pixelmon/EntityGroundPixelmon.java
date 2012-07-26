@@ -27,9 +27,14 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 	
 	public void init(){
 		super.init();
-		if (aggression >0){
+		loadAI();
+	}
+	
+	public void loadAI(){
+		tasks = new EntityAITasks();
+		if (helper.aggression >0){
 			tasks.addTask(0, new EntityAIMoveTowardsTarget(this, moveSpeed, 15));
-			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50-aggression, true));
+			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50-helper.aggression, true));
 			tasks.addTask(2, new EntityAIStartBattle(this));
 		}
 		tasks.addTask(3, new EntityAISwimming(this));
@@ -41,31 +46,29 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 		tasks.addTask(7, new EntityAILookIdle(this));
 	}
 	
+	public void resetAI(){
+		tasks = new EntityAITasks();
+		tasks.addTask(3, new EntityAISwimming(this));
+	}
+	
 	public void StartBattle(PixelmonEntityHelper target){
 		super.StartBattle(target);
-		tasks.addTask(3, new EntityAISwimming(this));
+		resetAI();
 	}
 	
 	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent){
 		super.StartBattle(trainer, opponent);
-		tasks.addTask(3, new EntityAISwimming(this));
+		resetAI();
 	}
 	
 	public void SetBattleController(BattleController bc) {
 		super.SetBattleController(bc);
-		tasks.addTask(3, new EntityAISwimming(this));
+		resetAI();
 	}
 	
 	public void EndBattle(){
-		bc = null;
-		tasks = new EntityAITasks();
-		tasks.addTask(3, new EntityAISwimming(this));
-		tasks.addTask(4, new EntityAITempt(this, moveSpeed,
-				PixelmonItems.rareCandy.shiftedIndex, false));
-		tasks.addTask(5, new EntityAIWander(this, moveSpeed));
-		tasks.addTask(6, new EntityAIWatchClosest(this,
-				pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
-		tasks.addTask(7, new EntityAILookIdle(this));
+		helper.bc = null;
+		loadAI();
 	}
 	
 }
