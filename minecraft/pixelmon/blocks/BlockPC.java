@@ -4,6 +4,7 @@ import java.util.Random;
 
 import pixelmon.enums.EnumGui;
 import net.minecraft.src.Block;
+import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
@@ -14,13 +15,14 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
 
-public class BlockPC extends Block {
+public class BlockPC extends BlockContainer {
 	
 	private Class class1;
-	public BlockPC(int i, int j, Class class1){
-		super(i,j, Material.rock);
-		this.class1=class1;
+	public int renderType;
+	public BlockPC(int i, int j){
+		super(i, Material.rock);
 		setHardness(2.5f);
+		renderType = j;
 	}
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3)
@@ -115,8 +117,8 @@ public class BlockPC extends Block {
         this.setDefaultDirection(par1World, par2, par3, par4);
     }
     
-    @Override
-    public TileEntity getTileEntity(int i){
-    	return new TileEntityPC();
-    }
+	@Override
+	public TileEntity getBlockEntity() {
+		return new TileEntityPC();
+	}
 }

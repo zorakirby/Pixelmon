@@ -100,9 +100,6 @@ public class mod_Pixelmon extends NetworkMod {
 	public static int numWaterPokemon;
 	public static int spawnFrequency;
 
-
-	
-	
 	@SuppressWarnings("rawtypes")
 	private static CustomSpawner myCustomSpawner;
 
@@ -110,7 +107,7 @@ public class mod_Pixelmon extends NetworkMod {
 	public static final KeyBinding sendPixelmonKey = new KeyBinding("Send/Recieve Pixelmon", Keyboard.KEY_P);
 	public static final KeyBinding nextPixelmonKey = new KeyBinding("Next Pixelmon", 27);
 	public static final KeyBinding previousPixelmonKey = new KeyBinding("Previous Pixelmon", 26);
-	//Debug Key
+	// Debug Key
 	public static final KeyBinding debugKey = new KeyBinding("Debug Key [Pixelmon]", Keyboard.KEY_F1);
 	public static GuiPixelmonOverlay pixelmonOverlay = new GuiPixelmonOverlay();
 
@@ -132,7 +129,7 @@ public class mod_Pixelmon extends NetworkMod {
 
 	private static boolean configurationProperties() {
 		configuration.load();
-		
+
 		PixelmonBlocks.load(configuration);
 
 		IDListPixelmon.load(configuration);
@@ -185,7 +182,7 @@ public class mod_Pixelmon extends NetworkMod {
 
 	public void load() {
 		new UpdateHandler(this);
-		
+
 		if (!DatabaseHelper.has()) {
 			ModLoader.throwException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!", new java.lang.Error(
 					"Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!"));
@@ -208,26 +205,31 @@ public class mod_Pixelmon extends NetworkMod {
 
 		ModLoader.setInGUIHook(this, true, true);
 		ModLoader.setInGameHook(this, true, true);
+		PixelmonBlocks.getModelIds();
 		addNames();
 		registerEntities();
 		addSpawns();
 		addRecipes();
-		FMLClientHandler.instance().obtainBlockModelIdFor(this,true);
+		FMLClientHandler.instance().obtainBlockModelIdFor(this, true);
 		ForgeHooksClient.renderWorldLastHandlers.add(pixelmonOverlay);
 		MinecraftForge.registerEntity(BaseEntityPixelmon.class, this, 0, 100, 1, true);
 		MinecraftForge.registerSaveHandler(pokeballManager);
 		MinecraftForge.registerSaveHandler(computerManager);
 		MinecraftForge.registerConnectionHandler(new PacketHandler());
-		
-		ModLoader.registerTileEntity(TileEntityPC.class, "PC",new RenderTileEntityPC());
-		
-		
+
+		ModLoader.registerTileEntity(TileEntityPC.class, "PC", new RenderTileEntityPC());
+
 		ModLoader.registerKey(this, nextPixelmonKey, false);
 		ModLoader.registerKey(this, previousPixelmonKey, false);
 		ModLoader.registerKey(this, sendPixelmonKey, false);
 		ModLoader.registerKey(this, minmizePixelmonKey, false);
 		ModLoader.registerKey(this, minmizePixelmonKey, false);
 		alreadySet = true;
+	}
+
+	@Override
+	public boolean renderWorldBlock(RenderBlocks renderer, IBlockAccess world, int x, int y, int z, Block block, int modelID) {
+		return false;//PixelmonBlocks.renderWorldBlock(renderer, world, x, y, z, block, modelID);
 	}
 
 	public static int pcFront = ModLoader.addOverride("/terrain.png", "/pixelmon/block/PcFrontInactive.png");
@@ -271,7 +273,6 @@ public class mod_Pixelmon extends NetworkMod {
 	}
 
 	public void addRecipes() {
-		
 
 	}
 
@@ -358,11 +359,12 @@ public class mod_Pixelmon extends NetworkMod {
 			ContainerCreative container = (ContainerCreative) ((GuiContainerCreative) gui).inventorySlots;
 			int pos = 0;
 			boolean found = false;
-			
+
 			for (Object o : container.itemList) {
 				ItemStack i = (ItemStack) o;
 				int id = i.getItem().shiftedIndex;
-				if (id == PixelmonBlocks.healerIdle.blockID || id == PixelmonBlocks.leafStoneOre.blockID || id == PixelmonBlocks.thunderStoneOre.blockID || id == PixelmonBlocks.pc.blockID || id == PixelmonBlocks.waterStoneOre.blockID) {
+				if (id == PixelmonBlocks.healerIdle.blockID || id == PixelmonBlocks.leafStoneOre.blockID || id == PixelmonBlocks.thunderStoneOre.blockID || id == PixelmonBlocks.pc.blockID
+						|| id == PixelmonBlocks.waterStoneOre.blockID) {
 					found = true;
 					break;
 				} else if (id < 256) {
@@ -425,7 +427,6 @@ public class mod_Pixelmon extends NetworkMod {
 		removeNormalMobsAndCreatures();
 	}
 
-	
 	public static IHaveHelper getRandomPokemon() {
 		try {
 			IHaveHelper e = (IHaveHelper) EntityBulbasaur.class.getConstructor(new Class[] { World.class }).newInstance(new Object[] { ModLoader.getMinecraftInstance().theWorld });
@@ -446,8 +447,6 @@ public class mod_Pixelmon extends NetworkMod {
 	public static NetworkMod instance;
 	public static BattleRegistry battleRegistry = new BattleRegistry();
 
-	
-	
 	public static void drawModelToScreen(float size, int xSize, int ySize, int xPos, int yPos, Entity entity, GuiScreen gui, boolean spin) {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
@@ -510,12 +509,11 @@ public class mod_Pixelmon extends NetworkMod {
 		return null;
 	}
 
-	//For the debug Keybinding
-	public static void debugKeyFunction(Minecraft mc)
-	{
-		
+	// For the debug Keybinding
+	public static void debugKeyFunction(Minecraft mc) {
+
 	}
-	
+
 	public class UpdateHandler extends UpdateManagerMod {
 		public UpdateHandler(BaseMod m) {
 			super(m);

@@ -1,9 +1,16 @@
 package pixelmon.blocks;
 
+import pixelmon.render.RenderTileEntityPC;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.src.Block;
+import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.RenderBlocks;
+import net.minecraft.src.mod_Pixelmon;
 import net.minecraft.src.forge.Configuration;
+import net.minecraft.src.forge.MinecraftForge;
+import net.minecraft.src.forge.MinecraftForgeClient;
 
 public class PixelmonBlocks {
 	public static int pokemonHealerIdleId;
@@ -32,7 +39,7 @@ public class PixelmonBlocks {
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, 0, 3.0f).setBlockName("ThunderStoneOre");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, 1, 3.0f).setBlockName("LeafStoneOre");
 		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, 2, 3.0f).setBlockName("WaterStoneOre");
-		pc = new BlockPC(pcId, 0, TileEntityPC.class).setBlockName("pc");
+		pc = new BlockPC(pcId, 0).setBlockName("pc");
 	}
 
 	public static void registerBlocks() {
@@ -59,4 +66,15 @@ public class PixelmonBlocks {
 		waterStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Waterstone.png");
 		pc.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Pcside.png");
 	}
+
+	public static void getModelIds() {
+		//((BlockPC)pc).renderType =  FMLClientHandler.instance().obtainBlockModelIdFor(mod_Pixelmon.instance,false);	
+	}
+	
+//	public static boolean renderWorldBlock(RenderBlocks renderer, IBlockAccess world, int x, int y, int z, Block block, int modelID) {
+//		if (modelID == ((BlockPC)pc).renderType){
+//			//return (new RenderTileEntityPC()).renderAModelAt(tile, d, d1, d2, f)
+//		return false;
+//	}
+//	}
 }
