@@ -59,6 +59,7 @@ import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.PixelmonItems;
+import pixelmon.items.PixelmonRecipes;
 import pixelmon.render.OldRenderEmptyPokeball;
 import pixelmon.render.RenderPokeball;
 import pixelmon.render.RenderTileEntityHealer;
@@ -276,7 +277,7 @@ public class mod_Pixelmon extends NetworkMod {
 	}
 
 	public void addRecipes() {
-
+		PixelmonRecipes.addRecipes();
 	}
 
 	private void removeNormalMobsAndCreatures() {

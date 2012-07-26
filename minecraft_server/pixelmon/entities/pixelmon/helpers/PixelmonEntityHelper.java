@@ -23,6 +23,7 @@ import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumType;
 import pixelmon.items.ItemEvolutionStone;
+import pixelmon.items.PixelmonItems;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
@@ -279,17 +280,17 @@ public class PixelmonEntityHelper {
 			if (itemstack == null)
 				return false;
 			boolean flag = false;
-			if (itemstack.itemID == mod_Pixelmon.rareCandy.shiftedIndex && getOwner() == entity) {
+			if (itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex && getOwner() == entity) {
 				getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;
 				flag = true;
 			}
-			if (itemstack.itemID == mod_Pixelmon.pokeChecker.shiftedIndex && getOwner() != null) {
+			if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
 				getOwner().openGui(mod_Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
-			if (itemstack.itemID == mod_Pixelmon.potion.shiftedIndex && getOwner() == entity) {
+			if (itemstack.itemID == PixelmonItems.potion.shiftedIndex && getOwner() == entity) {
 				setHealth(getHealth() + 20);
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;

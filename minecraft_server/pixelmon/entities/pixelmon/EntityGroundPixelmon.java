@@ -5,6 +5,7 @@ import pixelmon.AI.EntityAIStartBattle;
 import pixelmon.battles.BattleController;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.items.PixelmonItems;
 import net.minecraft.src.EntityAILookIdle;
 import net.minecraft.src.EntityAIMoveTowardsTarget;
 import net.minecraft.src.EntityAISwimming;
@@ -33,7 +34,7 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 		}
 		tasks.addTask(3, new EntityAISwimming(this));
 		tasks.addTask(4, new EntityAITempt(this, moveSpeed,
-				mod_Pixelmon.rareCandy.shiftedIndex, false));
+				PixelmonItems.rareCandy.shiftedIndex, false));
 		tasks.addTask(5, new EntityAIWander(this, moveSpeed));
 		tasks.addTask(6, new EntityAIWatchClosest(this,
 				pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
@@ -60,7 +61,7 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 		tasks = new EntityAITasks();
 		tasks.addTask(3, new EntityAISwimming(this));
 		tasks.addTask(4, new EntityAITempt(this, moveSpeed,
-				mod_Pixelmon.rareCandy.shiftedIndex, false));
+				PixelmonItems.rareCandy.shiftedIndex, false));
 		tasks.addTask(5, new EntityAIWander(this, moveSpeed));
 		tasks.addTask(6, new EntityAIWatchClosest(this,
 				pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
