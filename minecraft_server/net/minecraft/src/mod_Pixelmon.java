@@ -19,6 +19,8 @@ import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.PixelmonBlocks;
+import pixelmon.blocks.TileEntityHealer;
+import pixelmon.blocks.TileEntityPC;
 import pixelmon.comm.PacketHandler;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.database.DatabaseMoves;
@@ -159,6 +161,9 @@ public class mod_Pixelmon extends NetworkMod {
 		instance = this;
 
 		MinecraftForge.setGuiHandler(this, new GuiHandler());
+		
+		ModLoader.registerTileEntity(TileEntityPC.class, "PC");
+		ModLoader.registerTileEntity(TileEntityHealer.class, "Healer");
 		
 		ModLoader.setInGUIHook(this, true, true);
 		ModLoader.setInGameHook(this, true, true);
