@@ -20,6 +20,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import pixelmon.AddRenderers;
 import pixelmon.KeyboardHandler;
 import pixelmon.IDListPixelmon;
 import pixelmon.IDListTrainer;
@@ -35,6 +36,8 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
+import pixelmon.blocks.PixelmonBlocks;
+import pixelmon.blocks.TileEntityPC;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PacketHandler;
@@ -54,8 +57,10 @@ import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemPokedex;
+import pixelmon.items.PixelmonItems;
 import pixelmon.render.OldRenderEmptyPokeball;
 import pixelmon.render.RenderPokeball;
+import pixelmon.render.RenderTileEntityPC;
 import pixelmon.render.RenderTrainer;
 import pixelmon.storage.ComputerManager;
 import pixelmon.storage.PokeballManager;
@@ -68,14 +73,7 @@ import cpw.mods.fml.common.registry.FMLRegistry;
 
 public class mod_Pixelmon extends NetworkMod {
 	static Configuration configuration = new Configuration(new File(Minecraft.getMinecraftDir(), "config/pixelmon.cfg"));
-	public static int pokemonHealerIdleId = configurationProperties();
-	public static int pokemonHealerActiveId;
-	public static int thunderStoneOreId;
-	public static int leafStoneOreId;
-	public static int waterStoneOreId;
-	public static int pcId;
-
-	public static boolean spawnSheep;
+	public static boolean spawnSheep = configurationProperties();
 	public static boolean spawnCow;
 	public static boolean spawnPig;
 	public static boolean spawnChicken;
@@ -102,40 +100,6 @@ public class mod_Pixelmon extends NetworkMod {
 	public static int numWaterPokemon;
 	public static int spawnFrequency;
 
-	private static final int pIMG = ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokeball.png");
-	private static final int gIMG = ModLoader.addOverride("/gui/items.png", "/pixelmon/image/greatball.png");
-	private static final int uIMG = ModLoader.addOverride("/gui/items.png", "/pixelmon/image/ultraball.png");
-	private static final int mIMG = ModLoader.addOverride("/gui/items.png", "/pixelmon/image/masterball.png");
-	public static final Block healerIdle = (new BlockHealer(pokemonHealerIdleId, false)).setHardness(3.5F).setStepSound(Block.soundStoneFootstep).setBlockName("PokeHealer").setRequiresSelfNotify();
-	public static final Block healerActive = (new BlockHealer(pokemonHealerActiveId, true)).setHardness(3.5F).setStepSound(Block.soundStoneFootstep).setLightValue(0.875F).setBlockName("healer")
-			.setRequiresSelfNotify();
-	public static final Block thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, 0).setHardness(3.0f).setStepSound(Block.soundStoneFootstep).setBlockName("ThunderStoneOre");
-	public static final Block leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, 1).setHardness(3.0f).setStepSound(Block.soundStoneFootstep).setBlockName("LeafStoneOre");
-	public static final Block waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, 2).setHardness(3.0f).setStepSound(Block.soundStoneFootstep).setBlockName("WaterStoneOre").setLightValue(0.5f);
-	public static final Block pc = new BlockPC(pcId).setBlockName("pc").setHardness(2.5f);
-	public static final Item pokeBall = new ItemPokeBall(10000, EnumPokeballs.PokeBall).setItemName("PokeBall").setIconIndex(pIMG);
-	public static final Item greatBall = new ItemPokeBall(10001, EnumPokeballs.GreatBall).setItemName("GreatBall").setIconIndex(gIMG);
-	public static final Item ultraBall = new ItemPokeBall(10002, EnumPokeballs.UltraBall).setItemName("UltraBall").setIconIndex(uIMG);
-	public static final Item masterBall = new ItemPokeBall(10003, EnumPokeballs.MasterBall).setItemName("MasterBall").setIconIndex(mIMG);
-	public static final Item pokeChecker = new Item(10004).setItemName("PokeChecker").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokechecker.png")).setMaxStackSize(1);
-	public static final Item pokeDex = new ItemPokedex(10027).setItemName("Pokedex").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokedex.png")).setMaxStackSize(1);
-	public static final Item rareCandy = new Item(10005).setItemName("Rare Candy").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/rarecandy.png"));
-	public static final Item potion = new Item(10006).setItemName("Potion").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/potion.png")).setMaxStackSize(16);
-	public static final Item coalDust = new Item(10007).setItemName("CoalDust").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/coaldust.png"));
-	public static final Item fireStone = new ItemEvolutionStone(10008, EnumEvolutionStone.FIRESTONE).setItemName("FireStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Firestone.png"));
-	public static final Item waterStone = new ItemEvolutionStone(10009, EnumEvolutionStone.WATERSTONE).setItemName("WaterStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Waterstone.png"));
-	public static final Item moonStone = new ItemEvolutionStone(10010, EnumEvolutionStone.MOONSTONE).setItemName("MoonStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Moonstone.png"));
-	public static final Item thunderStone = new ItemEvolutionStone(10011, EnumEvolutionStone.THUNDERSTONE).setItemName("ThunderStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Thunderstone.png"));
-	public static final Item leafStone = new ItemEvolutionStone(10012, EnumEvolutionStone.LEAFSTONE).setItemName("LeafStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Leafstone.png"));
-	// 9 ids needed for the 9 stones, shards starting on next open id and are
-	// the stone they make's id + 10
-	public static final Item thunderStoneShard = new Item(10021).setItemName("ThunderStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Thunderstone_Shard.png"));
-	public static final Item leafStoneShard = new Item(10022).setItemName("LeafStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Leafstone_Shard.png"));
 	@SuppressWarnings("rawtypes")
 	private static CustomSpawner myCustomSpawner;
 
@@ -143,7 +107,7 @@ public class mod_Pixelmon extends NetworkMod {
 	public static final KeyBinding sendPixelmonKey = new KeyBinding("Send/Recieve Pixelmon", Keyboard.KEY_P);
 	public static final KeyBinding nextPixelmonKey = new KeyBinding("Next Pixelmon", 27);
 	public static final KeyBinding previousPixelmonKey = new KeyBinding("Previous Pixelmon", 26);
-	//Debug Key
+	// Debug Key
 	public static final KeyBinding debugKey = new KeyBinding("Debug Key [Pixelmon]", Keyboard.KEY_F1);
 	public static GuiPixelmonOverlay pixelmonOverlay = new GuiPixelmonOverlay();
 
@@ -163,14 +127,10 @@ public class mod_Pixelmon extends NetworkMod {
 		return "version 1.5 for 1.2.5";
 	}
 
-	private static int configurationProperties() {
+	private static boolean configurationProperties() {
 		configuration.load();
-		pokemonHealerActiveId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PokemonHealerActive", 201).value);
-		pokemonHealerIdleId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PokemonHealerIdle", 202).value);
-		thunderStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ThunderStoneOre", 203).value);
-		leafStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("LeafStoneOre", 204).value);
-		pcId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PC", 205).value);
-		waterStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("WaterStoneOre", 206).value);
+
+		PixelmonBlocks.load(configuration);
 
 		IDListPixelmon.load(configuration);
 		IDListTrainer.load(configuration);
@@ -202,7 +162,7 @@ public class mod_Pixelmon extends NetworkMod {
 		numWaterPokemon = Integer.parseInt((configuration.getOrCreateIntProperty("NumberWaterPixelmonSpawns", "Overall Spawning settings", 100)).value);
 		spawnFrequency = Integer.parseInt((configuration.getOrCreateIntProperty("SpawnFrequency", "Overall Spawning settings", 10)).value);
 		configuration.save();
-		return pokemonHealerIdleId;
+		return spawnSheep;
 	}
 
 	public static void savePokedexProps() {
@@ -222,7 +182,7 @@ public class mod_Pixelmon extends NetworkMod {
 
 	public void load() {
 		new UpdateHandler(this);
-		
+
 		if (!DatabaseHelper.has()) {
 			ModLoader.throwException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!", new java.lang.Error(
 					"Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!"));
@@ -245,16 +205,20 @@ public class mod_Pixelmon extends NetworkMod {
 
 		ModLoader.setInGUIHook(this, true, true);
 		ModLoader.setInGameHook(this, true, true);
+		PixelmonBlocks.getModelIds();
 		addNames();
 		registerEntities();
 		addSpawns();
 		addRecipes();
-		FMLClientHandler.instance().obtainBlockModelIdFor(this,true);
+		FMLClientHandler.instance().obtainBlockModelIdFor(this, true);
 		ForgeHooksClient.renderWorldLastHandlers.add(pixelmonOverlay);
 		MinecraftForge.registerEntity(BaseEntityPixelmon.class, this, 0, 100, 1, true);
 		MinecraftForge.registerSaveHandler(pokeballManager);
 		MinecraftForge.registerSaveHandler(computerManager);
 		MinecraftForge.registerConnectionHandler(new PacketHandler());
+
+		ModLoader.registerTileEntity(TileEntityPC.class, "PC", new RenderTileEntityPC());
+
 		ModLoader.registerKey(this, nextPixelmonKey, false);
 		ModLoader.registerKey(this, previousPixelmonKey, false);
 		ModLoader.registerKey(this, sendPixelmonKey, false);
@@ -263,42 +227,19 @@ public class mod_Pixelmon extends NetworkMod {
 		alreadySet = true;
 	}
 
+	@Override
+	public boolean renderWorldBlock(RenderBlocks renderer, IBlockAccess world, int x, int y, int z, Block block, int modelID) {
+		return false;//PixelmonBlocks.renderWorldBlock(renderer, world, x, y, z, block, modelID);
+	}
+
 	public static int pcFront = ModLoader.addOverride("/terrain.png", "/pixelmon/block/PcFrontInactive.png");
 
 	public void addNames() {
 		// ModLoader.addName(pokeBall2, "PokeBall2");
-		thunderStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Thunderstone.png");
-		leafStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Leafstone.png");
-		waterStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Waterstone.png");
-		pc.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Pcside.png");
-		ModLoader.addName(pokeBall, "PokeBall");
-		ModLoader.addName(greatBall, "GreatBall");
-		ModLoader.addName(ultraBall, "UltraBall");
-		ModLoader.addName(masterBall, "MasterBall");
-		ModLoader.addName(pokeChecker, "PokeChecker");
-		ModLoader.addName(rareCandy, "Rare Candy");
-		ModLoader.addName(potion, "Potion");
-		ModLoader.addName(coalDust, "Coal Dust");
-		ModLoader.addName(pokeDex, "Pokedex");
-		ModLoader.registerBlock(healerIdle);
-		ModLoader.registerBlock(healerActive);
-		ModLoader.registerBlock(thunderStoneOre);
-		ModLoader.registerBlock(leafStoneOre);
-		ModLoader.registerBlock(waterStoneOre);
-		ModLoader.registerBlock(pc);
-		ModLoader.addName(healerIdle, "Healer");
-		ModLoader.addName(healerActive, "Healer");
-		ModLoader.addName(thunderStoneOre, "Thunder Stone Ore");
-		ModLoader.addName(leafStoneOre, "Leaf Stone Ore");
-		ModLoader.addName(waterStoneOre, "Water Stone Ore");
-		ModLoader.addName(pc, "PC");
-		ModLoader.addName(fireStone, "Fire Stone");
-		ModLoader.addName(leafStone, "Leaf Stone");
-		ModLoader.addName(waterStone, "Water Stone");
-		ModLoader.addName(thunderStone, "Thunder Stone");
-		ModLoader.addName(moonStone, "Moon Stone");
-		ModLoader.addName(thunderStoneShard, "Thunder Stone Shard");
-		ModLoader.addName(leafStoneShard, "Leaf Stone Shard");
+		PixelmonItems.addNames();
+		PixelmonBlocks.setTextureIds();
+		PixelmonBlocks.registerBlocks();
+		PixelmonBlocks.addNames();
 	}
 
 	public void registerEntities() {
@@ -332,32 +273,6 @@ public class mod_Pixelmon extends NetworkMod {
 	}
 
 	public void addRecipes() {
-		ModLoader.addRecipe(new ItemStack(healerIdle),
-				new Object[] { "IRI", "RDR", "IRI", Character.valueOf('D'), new ItemStack(Item.diamond), Character.valueOf('I'), Item.ingotIron, Character.valueOf('R'), Block.stone });
-		ModLoader.addRecipe(new ItemStack(pokeBall, 3), new Object[] { "RRR", "CBC", "III", Character.valueOf('R'), new ItemStack(Item.dyePowder, 1, 1), Character.valueOf('B'), Block.button,
-				Character.valueOf('I'), Item.ingotIron, Character.valueOf('C'), coalDust });
-		ModLoader.addRecipe(
-				new ItemStack(greatBall, 2),
-				new Object[] { "LLL", "CBC", "III", Character.valueOf('L'), new ItemStack(Item.dyePowder, 1, 4), Character.valueOf('C'), coalDust, Character.valueOf('B'), Block.button,
-						Character.valueOf('I'), Item.ingotIron });
-		ModLoader.addRecipe(new ItemStack(ultraBall, 1), new Object[] { "GGG", "CBC", "III", Character.valueOf('G'), Item.ingotGold, Character.valueOf('C'), coalDust, Character.valueOf('B'),
-				Block.button, Character.valueOf('I'), Item.ingotIron });
-		ModLoader.addRecipe(new ItemStack(masterBall), new Object[] { "PPP", "OBO", "DDD", Character.valueOf('P'), new ItemStack(Item.dyePowder, 1, 5), Character.valueOf('O'), Block.obsidian,
-				Character.valueOf('B'), Block.button, Character.valueOf('D'), Item.diamond });
-		ModLoader.addRecipe(new ItemStack(pokeChecker), new Object[] { " GG", "IIG", "II ", Character.valueOf('G'), Block.glass, Character.valueOf('I'), Item.ingotIron });
-		ModLoader.addShapelessRecipe(new ItemStack(rareCandy), new Object[] { Item.lightStoneDust, Item.appleGold, Item.sugar });
-		ModLoader.addShapelessRecipe(new ItemStack(potion, 4), new Object[] { Item.glassBottle, Item.bucketMilk, Item.wheat });
-		ModLoader.addShapelessRecipe(new ItemStack(coalDust, 4), new Object[] { Item.coal });
-		ModLoader.addRecipe(new ItemStack(Item.coal, 1), new Object[] { "XX", "XX", Character.valueOf('X'), coalDust });
-		ModLoader.addRecipe(new ItemStack(pokeDex, 1), new Object[] { "IPI", "DGD", "IRI", Character.valueOf('I'), Item.ingotIron, Character.valueOf('P'), Block.thinGlass, Character.valueOf('D'),
-				new ItemStack(Item.dyePowder, 1, 1), Character.valueOf('G'), Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
-		ModLoader.addRecipe(new ItemStack(thunderStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), thunderStoneShard });
-		ModLoader.addRecipe(new ItemStack(leafStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), leafStoneShard });
-		ModLoader.addShapelessRecipe(new ItemStack(pc, 1), new Object[] { Block.dirt });
-		// ModLoader.addShapelessRecipe(new ItemStack(pokeBall, 1), new Object[]
-		// { Block.dirt, Block.dirt });
-		// ModLoader.addShapelessRecipe(new ItemStack(rareCandy, 1), new
-		// Object[] { Block.sand });
 
 	}
 
@@ -409,7 +324,7 @@ public class mod_Pixelmon extends NetworkMod {
 	}
 
 	public int addFuel(int i, int i1) {
-		if (i == coalDust.shiftedIndex) {
+		if (i == PixelmonItems.coalDust.shiftedIndex) {
 			return 400;
 		}
 		return 0;
@@ -421,9 +336,7 @@ public class mod_Pixelmon extends NetworkMod {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addRenderer(Map map) {
-		map.put(EntityPokeBall.class, new OldRenderEmptyPokeball());
-		map.put(EntityPokeBall.class, new RenderPokeball());
-		PixelmonEntityList.addRenderer(map);
+		AddRenderers.addRenderers(map);
 	}
 
 	public static int getRandomNumberBetween(int i, int i1) {
@@ -446,10 +359,12 @@ public class mod_Pixelmon extends NetworkMod {
 			ContainerCreative container = (ContainerCreative) ((GuiContainerCreative) gui).inventorySlots;
 			int pos = 0;
 			boolean found = false;
+
 			for (Object o : container.itemList) {
 				ItemStack i = (ItemStack) o;
 				int id = i.getItem().shiftedIndex;
-				if (id == healerIdle.blockID || id == leafStoneOre.blockID || id == thunderStoneOre.blockID || id == pc.blockID || id == waterStoneOre.blockID) {
+				if (id == PixelmonBlocks.healerIdle.blockID || id == PixelmonBlocks.leafStoneOre.blockID || id == PixelmonBlocks.thunderStoneOre.blockID || id == PixelmonBlocks.pc.blockID
+						|| id == PixelmonBlocks.waterStoneOre.blockID) {
 					found = true;
 					break;
 				} else if (id < 256) {
@@ -457,15 +372,15 @@ public class mod_Pixelmon extends NetworkMod {
 				}
 			}
 			if (!found) {
-				container.itemList.add(pos, new ItemStack(healerIdle, 1));
+				container.itemList.add(pos, new ItemStack(PixelmonBlocks.healerIdle, 1));
 				pos++;
-				container.itemList.add(pos, new ItemStack(leafStoneOre, 1));
+				container.itemList.add(pos, new ItemStack(PixelmonBlocks.leafStoneOre, 1));
 				pos++;
-				container.itemList.add(pos, new ItemStack(thunderStoneOre, 1));
+				container.itemList.add(pos, new ItemStack(PixelmonBlocks.thunderStoneOre, 1));
 				pos++;
-				container.itemList.add(pos, new ItemStack(waterStoneOre, 1));
+				container.itemList.add(pos, new ItemStack(PixelmonBlocks.waterStoneOre, 1));
 				pos++;
-				container.itemList.add(pos, new ItemStack(pc, 1));
+				container.itemList.add(pos, new ItemStack(PixelmonBlocks.pc, 1));
 			}
 		}
 		return true;
@@ -512,19 +427,6 @@ public class mod_Pixelmon extends NetworkMod {
 		removeNormalMobsAndCreatures();
 	}
 
-	
-	public static Item getBallFromID(int i) {
-		if (i == pokeBall.shiftedIndex)
-			return pokeBall;
-		if (i == greatBall.shiftedIndex)
-			return greatBall;
-		if (i == ultraBall.shiftedIndex)
-			return ultraBall;
-		if (i == masterBall.shiftedIndex)
-			return masterBall;
-		return null;
-	}
-
 	public static IHaveHelper getRandomPokemon() {
 		try {
 			IHaveHelper e = (IHaveHelper) EntityBulbasaur.class.getConstructor(new Class[] { World.class }).newInstance(new Object[] { ModLoader.getMinecraftInstance().theWorld });
@@ -545,8 +447,6 @@ public class mod_Pixelmon extends NetworkMod {
 	public static NetworkMod instance;
 	public static BattleRegistry battleRegistry = new BattleRegistry();
 
-	
-	
 	public static void drawModelToScreen(float size, int xSize, int ySize, int xPos, int yPos, Entity entity, GuiScreen gui, boolean spin) {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
@@ -581,7 +481,7 @@ public class mod_Pixelmon extends NetworkMod {
 			int xPos = rand.nextInt(16) + x;
 			int zPos = rand.nextInt(16) + z;
 			int yPos = rand.nextInt(50) + 75; // generates 75 to 125
-			new WorldGenMinable(thunderStoneOre.blockID, 2 + rand.nextInt(2)).generate(world, rand, xPos, yPos, zPos);
+			new WorldGenMinable(PixelmonBlocks.thunderStoneOre.blockID, 2 + rand.nextInt(2)).generate(world, rand, xPos, yPos, zPos);
 		}
 
 		// leafstone ore
@@ -609,12 +509,11 @@ public class mod_Pixelmon extends NetworkMod {
 		return null;
 	}
 
-	//For the debug Keybinding
-	public static void debugKeyFunction(Minecraft mc)
-	{
-		
+	// For the debug Keybinding
+	public static void debugKeyFunction(Minecraft mc) {
+
 	}
-	
+
 	public class UpdateHandler extends UpdateManagerMod {
 		public UpdateHandler(BaseMod m) {
 			super(m);

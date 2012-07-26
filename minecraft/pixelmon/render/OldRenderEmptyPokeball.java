@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL12;
 
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.items.PixelmonItems;
 
 
 public class OldRenderEmptyPokeball extends RenderSnowball
@@ -29,7 +30,7 @@ public class OldRenderEmptyPokeball extends RenderSnowball
 		EntityPokeBall entity = (EntityPokeBall)par1Entity;
 		//itemIconIndex = entity.ballBonus;
 		Item item = null;
-		if(entity.type == EnumPokeballs.PokeBall) item = mod_Pixelmon.pokeBall;
+		if(entity.type == EnumPokeballs.PokeBall) item = PixelmonItems.pokeBall;
 		itemIconIndex = item.getIconFromDamage(0);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);

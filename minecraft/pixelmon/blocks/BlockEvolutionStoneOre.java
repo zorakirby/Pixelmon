@@ -2,6 +2,8 @@ package pixelmon.blocks;
 
 import java.util.Random;
 
+import pixelmon.items.PixelmonItems;
+
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.mod_Pixelmon;
@@ -10,9 +12,12 @@ public class BlockEvolutionStoneOre extends Block{
 	
 	private int type;
 	
-	public BlockEvolutionStoneOre(int id, int type){
+	public BlockEvolutionStoneOre(int id, int type, float hardness){
 		super(id, Material.rock);
 		this.type = type;
+		setHardness(hardness);
+		setStepSound(Block.soundStoneFootstep);
+		if (id == PixelmonBlocks.waterStoneOreId) setLightValue(0.5f);
 	}
 	
     public boolean isOpaqueCube()
@@ -26,13 +31,13 @@ public class BlockEvolutionStoneOre extends Block{
 		int result = 0;
 		switch(type){
 		case 0:
-			result = mod_Pixelmon.thunderStoneShard.shiftedIndex;
+			result = PixelmonItems.thunderStoneShard.shiftedIndex;
 			break;
 		case 1:
-			result = mod_Pixelmon.leafStoneShard.shiftedIndex;
+			result = PixelmonItems.leafStoneShard.shiftedIndex;
 			break;
 		case 2:
-			result = mod_Pixelmon.waterStone.shiftedIndex;
+			result = PixelmonItems.waterStone.shiftedIndex;
 		}
 		
 		return result;

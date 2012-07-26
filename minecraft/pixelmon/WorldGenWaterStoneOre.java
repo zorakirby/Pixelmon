@@ -2,6 +2,8 @@ package pixelmon;
 
 import java.util.Random;
 
+import pixelmon.blocks.PixelmonBlocks;
+
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldGenerator;
@@ -24,7 +26,7 @@ public class WorldGenWaterStoneOre extends WorldGenerator{
 				}
 				
 			}
-			world.setBlockWithNotify(x, y, z, mod_Pixelmon.waterStoneOre.blockID);
+			world.setBlockWithNotify(x, y, z, PixelmonBlocks.waterStoneOre.blockID);
 			return true;
 		}
 		return false;
