@@ -82,8 +82,9 @@ public class GuiPixelmonOverlay extends Gui implements IRenderWorldLastHandler {
 						numString = "0" + p.nationalPokedexNumber;
 					else
 						numString = "" + p.nationalPokedexNumber;
-					int var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-					
+					int var9 ;
+					if (p.isShiny)var9= ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+					else var9= ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 					drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 					if (!mod_Pixelmon.isGuiMinimized) {
 						fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
@@ -115,7 +116,9 @@ public class GuiPixelmonOverlay extends Gui implements IRenderWorldLastHandler {
 						else
 							this.drawTexturedModalRect(fontRenderer.getStringWidth(n.getString("Nickname")) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 218, 5, 9);
 					}
-					int var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + n.getString("NationalPokedexNumber"));
+					int var9;
+					if (n.hasKey("IsShiny") && n.getBoolean("IsShiny")) var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + n.getString("NationalPokedexNumber"));
+					else var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + n.getString("NationalPokedexNumber"));
 					drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 					if (!mod_Pixelmon.isGuiMinimized) {
 						fontRenderer.drawString("Lvl " + n.getInteger("Level"), 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);

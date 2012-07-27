@@ -99,6 +99,7 @@ public class PlayerStorage {
 		n.setName(p.getName());
 		n.setString("Nickname", n.getName());
 		n.setBoolean("IsInBall", true);
+		n.setBoolean("IsShiny", p.getIsShiny());
 		n.setInteger("PixelmonOrder", getNextOpen());
 		if (n.getShort("Health")>0)n.setBoolean("IsFainted",false);
 		partyPokemon[getNextOpen()] = n;

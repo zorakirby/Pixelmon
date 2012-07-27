@@ -429,7 +429,8 @@ public class GuiPC extends GuiContainer {
 					numString = "0" + slot.pokemonData.nationalPokedexNumber;
 				else
 					numString = "" + slot.pokemonData.nationalPokedexNumber;
-				image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+				if (slot.pokemonData.isShiny) image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+				else image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			}
 			for (int a = 0; a < partySlots.length; a++) {
@@ -445,7 +446,8 @@ public class GuiPC extends GuiContainer {
 					numString = "0" + slot.pokemonData.nationalPokedexNumber;
 				else
 					numString = "" + slot.pokemonData.nationalPokedexNumber;
-				image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+				if (slot.pokemonData.isShiny) image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+				else image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			}
 			image = 0;
@@ -458,7 +460,8 @@ public class GuiPC extends GuiContainer {
 					numString = "0" + p.nationalPokedexNumber;
 				else
 					numString = "" + p.nationalPokedexNumber;
-				image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+				if (p.isShiny) image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+				else image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(image, mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 				if (p.nickname == null || p.nickname.equalsIgnoreCase("")) {
 					p.nickname = p.name;
