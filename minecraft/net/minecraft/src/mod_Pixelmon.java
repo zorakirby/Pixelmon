@@ -236,8 +236,6 @@ public class mod_Pixelmon extends NetworkMod {
 		return false;//PixelmonBlocks.renderWorldBlock(renderer, world, x, y, z, block, modelID);
 	}
 
-	public static int pcFront = ModLoader.addOverride("/terrain.png", "/pixelmon/block/PcFrontInactive.png");
-
 	public void addNames() {
 		// ModLoader.addName(pokeBall2, "PokeBall2");
 		PixelmonItems.addNames();
