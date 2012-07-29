@@ -74,6 +74,7 @@ public class GuiAttacking extends GuiScreen {
 		}
 		controlList.add(new GuiButton(10, width * 3 / 4, height * 3 / 4, width / 4 - 5, 20, "Run"));
 		controlList.add(new GuiButton(11, width * 3 / 4, height * 3 / 4 + 30, width / 4 - 5, 20, "Switch"));
+		controlList.add(new GuiButton(12, width * 3 / 4, height * 3 / 4 - 30, width /4 - 5, 20, "Bag"));
 	}
 
 	public void updateScreen() {
@@ -85,6 +86,22 @@ public class GuiAttacking extends GuiScreen {
 
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
+	}
+	
+	
+	public PixelmonEntityHelper getMyPixelmon(){
+		return mypixelmon;
+	}
+	
+	public PixelmonDataPacket getMyPixelmonPacket(){
+		return userPacket;
+	}
+	public PixelmonEntityHelper getOtherPixelmon(){
+		return target;
+	}
+	
+	public PixelmonDataPacket getOtherPixelmonPacket(){
+		return targetPacket;
 	}
 
 	protected void actionPerformed(GuiButton par1GuiButton) {
@@ -113,6 +130,8 @@ public class GuiAttacking extends GuiScreen {
 				bc.setFlee(mypixelmon);
 				mc.displayGuiScreen(null);
 				mc.setIngameFocus();
+			} else if(par1GuiButton.id == 12) {
+				mc.displayGuiScreen(new GuiAttackingBag(this));
 			}
 		}
 	}
