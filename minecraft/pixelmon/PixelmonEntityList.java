@@ -227,6 +227,7 @@ public class PixelmonEntityList {
 		addMapping(EntityNidoranMale.class, "NidoranMale", IDListPixelmon.nidoranMaleId, new RenderPixelmon(new ModelNidoranMale(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityVaporeon.class, "Vaporeon", IDListPixelmon.vaporeonId, new RenderPixelmon(new ModelVaporeon(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityGloom.class, "Gloom", IDListPixelmon.gloomId, new RenderPixelmon(new ModelGloom(), 0.5F), ClassType.Pixelmon);
+		addMapping(EntityKrabby.class, "Krabby", IDListPixelmon.krabbyId, new RenderPixelmon(new ModelKrabby(), 0.5F), ClassType.Pixelmon);
 		
 		
 		

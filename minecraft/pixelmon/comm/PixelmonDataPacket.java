@@ -43,6 +43,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public int SpecialDefence;
 	public int nextLvlXP;
 	public int boxNumber=0;
+	public boolean isShiny;
 	
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
 	
@@ -64,6 +65,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		health = p.getShort("Health");
 		isMale = p.getBoolean("IsMale");
 		isFainted = p.getBoolean("IsFainted");
+		isShiny = p.getBoolean("IsShiny");
 		order = p.getInteger("PixelmonOrder");
 		numMoves = p.getInteger("PixelmonNumberMoves");
 		for (int i =0; i < numMoves; i++){
@@ -94,6 +96,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		health = p.getHealth();
 		isMale = p.isMale;
 		isFainted = p.isFainted;
+		isShiny = p.getIsShiny();
 		order = 0;
 		if (p.moveset.size() ==0) p.loadMoveset();
 		numMoves = p.moveset.size();
@@ -137,6 +140,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeShort(SpecialAttack);
 		data.writeShort(SpecialDefence);
 		data.writeShort(boxNumber);
+		data.writeBoolean(isShiny);
 	}
 
 	public void readData(DataInputStream data) throws IOException {
@@ -166,6 +170,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		SpecialAttack = data.readShort();
 		SpecialDefence = data.readShort();
 		boxNumber = data.readShort();
+		isShiny = data.readBoolean();
 	}
 
 	@Override

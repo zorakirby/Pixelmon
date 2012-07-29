@@ -94,7 +94,7 @@ public class mod_Pixelmon extends NetworkMod {
 	}
 
 	public String getVersion() {
-		return "version 1.5 for 1.2.5";
+		return "version 1.5.2 for 1.2.5";
 	}
 
 	private static boolean configurationProperties() {
@@ -181,8 +181,6 @@ public class mod_Pixelmon extends NetworkMod {
 		
 		alreadySet = true;
 	}
-
-	public static int pcFront = ModLoader.addOverride("/terrain.png", "/pixelmon/block/PcFrontInactive.png");
 
 	public void addNames() {
 		// ModLoader.addName(pokeBall2, "PokeBall2");

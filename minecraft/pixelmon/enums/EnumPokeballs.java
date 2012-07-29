@@ -38,10 +38,10 @@ public enum EnumPokeballs {
 	}
 
 	public String getFlashRedTexture() {
-		return filenamePrefix + "_flashing.png";
+		return filenamePrefix + "flashing.png";
 	}
 
 	public String getCaptureTexture() {
-		return filenamePrefix + "_captured.png";
+		return filenamePrefix + "captured.png";
 	}
 }

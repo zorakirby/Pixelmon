@@ -2,7 +2,7 @@
 {
   "modid" : "mod_MinecraftForge",
   "name" : "Minecraft Forge",
-  "version" : "3.3.8.151",
+  "version" : "3.3.8.152",
   "url" : "http://MinecraftForge.net",
   "credits" : "Lots of people have contributed to MinecraftForge",
   "authors": [

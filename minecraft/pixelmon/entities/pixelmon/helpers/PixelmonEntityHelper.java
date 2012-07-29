@@ -499,14 +499,14 @@ public class PixelmonEntityHelper {
 		}
 	}
 
-	private void setIsShiny(boolean isShiny) {
+	public void setIsShiny(boolean isShiny) {
 		if (pixelmon instanceof BaseEntityPixelmon)
 			((BaseEntityPixelmon) pixelmon).setIsShiny(isShiny);
 		else if (pixelmon instanceof EntityWaterPixelmon)
 			((EntityWaterPixelmon) pixelmon).setIsShiny(isShiny);
 	}
 
-	private boolean getIsShiny() {
+	public boolean getIsShiny() {
 		if (pixelmon instanceof BaseEntityPixelmon)
 			return ((BaseEntityPixelmon) pixelmon).getIsShiny();
 		else if (pixelmon instanceof EntityWaterPixelmon)

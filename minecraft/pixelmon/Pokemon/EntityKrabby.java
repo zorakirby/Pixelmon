@@ -6,10 +6,10 @@ import net.minecraft.src.Block;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-public class EntityShellder extends EntityGroundPixelmon
+public class EntityKrabby extends EntityGroundPixelmon
 {
 	
-	public EntityShellder(World world)
+	public EntityKrabby(World world)
 	{
 		super(world);
 		init();
@@ -17,7 +17,7 @@ public class EntityShellder extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Shellder";
+		name = "Krabby";
 		isImmuneToFire = false;
 		super.init();
 	}

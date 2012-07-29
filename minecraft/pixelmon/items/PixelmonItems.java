@@ -20,21 +20,21 @@ public class PixelmonItems {
 	public static final Item potion = new PixelmonItem(10006).setItemName("Potion").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/potion.png")).setMaxStackSize(16);
 	public static final Item coalDust = new PixelmonItem(10007).setItemName("CoalDust").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/coaldust.png"));
 	public static final Item fireStone = new ItemEvolutionStone(10008, EnumEvolutionStone.FIRESTONE).setItemName("FireStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Firestone.png"));
+			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/firestone.png"));
 	public static final Item waterStone = new ItemEvolutionStone(10009, EnumEvolutionStone.WATERSTONE).setItemName("WaterStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Waterstone.png"));
+			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/waterstone.png"));
 	public static final Item moonStone = new ItemEvolutionStone(10010, EnumEvolutionStone.MOONSTONE).setItemName("MoonStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Moonstone.png"));
+			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/moonstone.png"));
 	public static final Item thunderStone = new ItemEvolutionStone(10011, EnumEvolutionStone.THUNDERSTONE).setItemName("ThunderStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Thunderstone.png"));
+			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/thunderstone.png"));
 	public static final Item leafStone = new ItemEvolutionStone(10012, EnumEvolutionStone.LEAFSTONE).setItemName("LeafStone").setIconIndex(
-			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Leafstone.png"));
+			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/leafstone.png"));
 	public static final Item pcItem = new ItemPC(10013).setItemName("PC").setIconIndex(
 			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pc.png"));
 	// 9 ids needed for the 9 stones, shards starting on next open id and are
 	// the stone they make's id + 10
-	public static final Item thunderStoneShard = new PixelmonItem(10021).setItemName("ThunderStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Thunderstone_Shard.png"));
-	public static final Item leafStoneShard = new PixelmonItem(10022).setItemName("LeafStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/Leafstone_Shard.png"));
+	public static final Item thunderStoneShard = new PixelmonItem(10021).setItemName("ThunderStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/thunderstoneshard.png"));
+	public static final Item leafStoneShard = new PixelmonItem(10022).setItemName("LeafStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/leafstoneshard.png"));
 
 	public static void addNames() {
 		ModLoader.addName(pokeBall, "PokeBall");

@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
-
 import net.minecraft.src.AchievementList;
 import net.minecraft.src.AnvilSaveConverter;
 import net.minecraft.src.AxisAlignedBB;
@@ -107,7 +106,6 @@ import net.minecraft.src.WorldProvider;
 import net.minecraft.src.WorldRenderer;
 import net.minecraft.src.WorldSettings;
 import net.minecraft.src.WorldType;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Controllers;

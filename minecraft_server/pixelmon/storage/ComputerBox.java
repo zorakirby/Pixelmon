@@ -46,6 +46,7 @@ public class ComputerBox {
 		n.setName(p.getName());
 		n.setString("Nickname", n.getName());
 		n.setBoolean("IsInBall", true);
+		n.setBoolean("IsShiny", p.getIsShiny());
 		int pos = getNextSpace();
 		n.setInteger("PixelmonOrder", pos);
 		n.setInteger("BoxNumber", position);
