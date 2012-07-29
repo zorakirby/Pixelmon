@@ -47,11 +47,13 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	public int aggression;
 	public boolean litUp;
 	public int litLevel;
-
+	private String lvlString="";
+	
 	public BaseEntityPixelmon(World par1World) {
 		super(par1World);
 		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
 		targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+		dataWatcher.addObject(18, lvlString);
 		dataWatcher.addObject(19, -1);
 		dataWatcher.addObject(20, (short) 0);
 		getNavigator().setAvoidsWater(true);
@@ -64,7 +66,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			System.out.println("Shiny " + name + " spawned");
 			dataWatcher.updateObject(20, (short) 1);
 		}
-		dataWatcher.addObject(18, "");
 		moveSpeed = getMoveSpeed();// + getMoveSpeed();
 		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
 		health = 11;

@@ -57,7 +57,9 @@ public class RenderPixelmon extends RenderLiving {
 				} else {
 					flag = MathHelper.stringNullOrLengthZero(p.nickname);
 				}
-				String s = " Lv: " + lvlInstance.getLevel() + " ";
+				String s ="";
+				if (lvlInstance!=null)
+					s = " Lv: " + lvlInstance.getLevel() + " ";
 				s += (flag ? entitypixelmon.name : p.nickname);
 				if (mod_Pixelmon.serverStorageDisplay.contains(entitypixelmon.getHelper().getPokemonId())) {
 					s += " (" + ModLoader.getMinecraftInstance().thePlayer.username + ")";

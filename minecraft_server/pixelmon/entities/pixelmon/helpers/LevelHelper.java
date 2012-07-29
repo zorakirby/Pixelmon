@@ -62,7 +62,9 @@ public class LevelHelper {
 		float oldHp = pixelmon.stats.HP;
 		updateStats();
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
-		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
+		float newHealth;
+		if (oldHp ==0) newHealth = pixelmon.getMaxHealth();
+		else newHealth = ((float) pixelmon.getHealth()) * percentGain;
 		pixelmon.setHealth((int) Math.ceil(newHealth));
 		updateEntityString();
 	}

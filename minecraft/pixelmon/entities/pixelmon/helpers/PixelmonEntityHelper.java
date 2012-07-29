@@ -152,15 +152,18 @@ public class PixelmonEntityHelper {
 
 	public int getHealth() {
 		if (pixelmon instanceof BaseEntityPixelmon)
-			if (((BaseEntityPixelmon) pixelmon).worldObj.isRemote)
+			if (((BaseEntityPixelmon) pixelmon).worldObj.isRemote){
+				if (getLvl()==null) return 10;
 				return getLvl().health;
+			}
 			else
 				return ((BaseEntityPixelmon) pixelmon).getHealth();
 
 		else if (pixelmon instanceof EntityWaterPixelmon)
-			if (((EntityWaterPixelmon) pixelmon).worldObj.isRemote)
+			if (((EntityWaterPixelmon) pixelmon).worldObj.isRemote){
+				if (getLvl()==null) return 10;
 				return getLvl().health;
-			else
+			}else
 				return ((EntityWaterPixelmon) pixelmon).getHealth();
 		return 0;
 	}
@@ -168,9 +171,10 @@ public class PixelmonEntityHelper {
 	public int getMaxHealth() {
 		if (stats == null)
 			return 1;
-		if (pixelmon.getWorldObj().isRemote)
+		if (pixelmon.getWorldObj().isRemote){
+			if (getLvl()==null) return 10;
 			return getLvl().maxHealth;
-		else
+		}else
 			return stats.HP;
 	}
 

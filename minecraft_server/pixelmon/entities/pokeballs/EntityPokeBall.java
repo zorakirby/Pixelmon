@@ -48,6 +48,7 @@ public class EntityPokeBall extends EntityThrowable {
 	public EntityPokeBall(World world, EntityLiving entityliving, PixelmonEntityHelper e, EnumPokeballs type) {
 		super(world, entityliving);
 		endRotationYaw = entityliving.rotationYawHead;
+		thrower = entityliving;
 		pixelmon = e;
 		this.type = type;
 		isEmpty = false;

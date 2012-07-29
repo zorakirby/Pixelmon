@@ -2,12 +2,12 @@
 {
   "modid" : "mod_Pixelmon",
   "name" : "Pixelmon",
-  "version" : "1.5",
+  "version" : "1.5.2",
   "url" : "http://pixelmon.freeforums.org/index.php",
   "credits" : "The Coders, Modelers and the Community!",
     "authors": [
-    "Grethen",
     "MrMasoschism",
+    "Grethen",
     "The Pixelmon Team"
   ],
   "description": "A mod that brings Pokemon to Minecraft!",
