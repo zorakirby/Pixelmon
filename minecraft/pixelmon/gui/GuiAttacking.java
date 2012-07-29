@@ -87,6 +87,22 @@ public class GuiAttacking extends GuiScreen {
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
 	}
+	
+	
+	public PixelmonEntityHelper getMyPixelmon(){
+		return mypixelmon;
+	}
+	
+	public PixelmonDataPacket getMyPixelmonPacket(){
+		return userPacket;
+	}
+	public PixelmonEntityHelper getOtherPixelmon(){
+		return target;
+	}
+	
+	public PixelmonDataPacket getOtherPixelmonPacket(){
+		return targetPacket;
+	}
 
 	protected void actionPerformed(GuiButton par1GuiButton) {
 		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
