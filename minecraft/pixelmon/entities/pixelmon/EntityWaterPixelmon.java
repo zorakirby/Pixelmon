@@ -223,7 +223,6 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	int count = 0;
 	public EntityTrainer trainer;
-	private String ownerName;
 
 	protected void updateEntityActionState() {
 		if (count == 0) {
@@ -344,13 +343,13 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public EntityPlayer getOwner() {
-		if (ownerName == null)
-			return null;
-		return worldObj.getPlayerEntityByName(ownerName);
+		if (super.getOwner() instanceof EntityPlayer)
+			return (EntityPlayer)super.getOwner();
+		return null;
 	}
 
 	public void setOwner(EntityPlayer owner) {
-		ownerName = owner.username;
+		super.setOwner(owner.username);
 	}
 
 	public void setLvlString(String string) {

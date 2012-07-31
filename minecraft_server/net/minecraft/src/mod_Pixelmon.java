@@ -74,9 +74,6 @@ public class mod_Pixelmon extends NetworkMod {
 	public static int numWaterPokemon;
 	public static int spawnFrequency;
 
-	private static final List<Class> starterList = new ArrayList<Class>();
-
-	
 	public static final PokeballManager pokeballManager = new PokeballManager();
 	public static final ComputerManager computerManager = new ComputerManager();
 
@@ -167,10 +164,6 @@ public class mod_Pixelmon extends NetworkMod {
 		
 		ModLoader.setInGUIHook(this, true, true);
 		ModLoader.setInGameHook(this, true, true);
-		starterList.add(EntityBulbasaur.class);
-		starterList.add(EntitySquirtle.class);
-		starterList.add(EntityCharmander.class);
-		starterList.add(EntityEevee.class);
 		addNames();
 		registerEntities();
 		addSpawns();

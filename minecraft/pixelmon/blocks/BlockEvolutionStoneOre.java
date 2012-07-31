@@ -25,8 +25,6 @@ public class BlockEvolutionStoneOre extends Block{
         return !(type == 1);
     }
 
-	
-	
 	public int idDropped(int i, Random rand, int j){
 		int result = 0;
 		switch(type){

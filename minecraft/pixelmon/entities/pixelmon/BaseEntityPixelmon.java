@@ -147,8 +147,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	public EntityTrainer trainer;
 	public String lvlString = "";
-	private String ownerName;
-
 	
 	public void onDeath(DamageSource damagesource) {
 		super.onDeath(damagesource);
@@ -285,8 +283,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			return;
 		super.writeEntityToNBT(var1);
 		helper.writeToNBT(var1);
-		if (ownerName != null && ownerName != "")
-			var1.setString("pixelmonOwner", ownerName);
+		if (getOwner() != null)
+			var1.setString("pixelmonOwner", getOwnerName());
 	}
 
 	boolean isStorage = false;
@@ -301,7 +299,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		super.readEntityFromNBT(var1);
 		helper.readFromNBT(var1);
 		if (var1.hasKey("pixelmonOwner"))
-			ownerName = var1.getString("pixelmonOwner");
+			super.setOwner("pixelmonOwner");
 	}
 
 	public void setMotion(int i, int j, int k) {
@@ -357,13 +355,13 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public EntityPlayer getOwner() {
-		if (ownerName == null)
-			return null;
-		return worldObj.getPlayerEntityByName(ownerName);
+		if (super.getOwner() instanceof EntityPlayer)
+			return (EntityPlayer)super.getOwner();
+		return null;
 	}
 
 	public void setOwner(EntityPlayer owner) {
-		ownerName = owner.username;
+		super.setOwner(owner.username);
 	}
 
 	public void unloadEntity() {
