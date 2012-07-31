@@ -1,6 +1,7 @@
 package pixelmon.Pokemon;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -175,6 +176,15 @@ public class ModelDugtrio extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    body.rotationPointY = MathHelper.cos(1F * f)*f1 + 23.5F;
+    mouth.rotationPointY = MathHelper.cos(1F * f)*f1 + 23.5F;
+    top.rotationPointY = MathHelper.cos(1F * f)*f1 + 23.5F;
+    body1.rotationPointY = MathHelper.cos(1F * f +5F)*f1 + 23.5F;
+    mouth1.rotationPointY = MathHelper.cos(1F * f + 5F)*f1 + 23.5F;
+    top1.rotationPointY = MathHelper.cos(1F * f + 5F)*f1 + 23.5F;
+    body2.rotationPointY = MathHelper.cos(1F * f + 3)*2*f1 + 23.5F;
+    mouth2.rotationPointY = MathHelper.cos(1F * f + 3)*2*f1 + 23.5F;
+    top2.rotationPointY = MathHelper.cos(1F * f + 3)*2*f1 + 23.5F;
   }
 
 }
