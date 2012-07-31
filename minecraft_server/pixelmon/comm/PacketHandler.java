@@ -24,6 +24,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new RenamePokemon());
 		handlers.add(new SendPixelmon());
 		handlers.add(new SwitchPokemon());
+		handlers.add(new ReplaceMove());
 	}
 
 	@Override
@@ -42,10 +43,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 	}
 
 	@Override
-	public void onConnect(NetworkManager network) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onConnect(NetworkManager network) {	}
 
 	@Override
 	public void onLogin(NetworkManager network, Packet1Login login) {
@@ -53,9 +51,6 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 	}
 
 	@Override
-	public void onDisconnect(NetworkManager network, String message, Object[] args) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onDisconnect(NetworkManager network, String message, Object[] args) {	}
 
 }

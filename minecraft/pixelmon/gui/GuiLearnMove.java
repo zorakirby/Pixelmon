@@ -25,27 +25,27 @@ public class GuiLearnMove extends GuiScreen {
 		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
 			PixelmonDataPacket p = mod_Pixelmon.serverStorageDisplay.get(user.getPokemonId());
 			for (int i = 0; i < p.numMoves; i++) {
-				controlList.add(new GuiButton(i + 1, width / 2 - 100, height / 4 + i * 24 + 20 + 12, p.moveset[i].attackName));
+				controlList.add(new GuiButton(i, width / 2 - 100, height / 4 + i * 24 + 20 + 12, p.moveset[i].attackName));
 			}
 		} else {
 			for (int i = 0; i < user.moveset.size(); i++) {
-				controlList.add(new GuiButton(i + 1, width / 2 - 100, height / 4 + i * 24 + 20 + 12, user.moveset.get(i).attackName));
+				controlList.add(new GuiButton(i, width / 2 - 100, height / 4 + i * 24 + 20 + 12, user.moveset.get(i).attackName));
 			}
 		}
-		controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 20 + 12, "Cancel"));
+		controlList.add(new GuiButton(10, width / 2 - 100, height / 4 + 96 + 20 + 12, "Cancel"));
 	}
 
 	private void teachMove(int index, Attack a) {
-		if (index == 0) {
+		if (index == 10) {
 			ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Decided not to teach " + user.getName() + " " + a.attackName + ".");
 			return;
 		}
 		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
 			PixelmonDataPacket p = mod_Pixelmon.serverStorageDisplay.get(user.getPokemonId());
-			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.ReplaceMove, moveToLearn.attackIndex, index, 0));
+			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.ReplaceMove, user.getPokemonId(), moveToLearn.attackIndex, index));
 		} else {
-			ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Your " + user.getName() + " forgot " + user.moveset.get(index - 1).attackName + ", and learned " + a.attackName);
-			user.moveset.set(index - 1, a);
+			ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Your " + user.getName() + " forgot " + user.moveset.get(index).attackName + ", and learned " + a.attackName);
+			user.moveset.set(index, a);
 		}
 	}
 
