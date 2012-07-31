@@ -238,6 +238,10 @@ public class ModelSeaking extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    Lefttailfin.rotateAngleY = MathHelper.cos(f * 0.785398163F) * 1F * f1 + .5F;
+    Righttailfin.rotateAngleY = MathHelper.cos(f * 0.785398163F + 3.141593F) * 1F * f1 - 0.5F;
+    rightfin.rotateAngleY = MathHelper.cos(f * .5F) * .75F * f1 + .5F;
+    leftfin.rotateAngleY = MathHelper.cos(f * .5F) * .75F * f1 - .5F;
   }
 
 }
