@@ -96,12 +96,12 @@ public class ModelDiglett extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
-    body.rotationPointY = MathHelper.cos(1F * f)*f1 + 23.5F;
-    mouth.rotationPointY = MathHelper.cos(1F * f)*f1 + 23.5F;
-    top.rotationPointY = MathHelper.cos(1F * f)*f1 + 23.5F;
-    body.rotationPointZ = MathHelper.cos(1F * f)*f1;
-    mouth.rotationPointZ = MathHelper.cos(1F * f)*f1;
-    top.rotationPointZ = MathHelper.cos(1F * f)*f1;
+    body.rotationPointY = MathHelper.cos(1.5F * f)*f1 + 23.5F;
+    mouth.rotationPointY = MathHelper.cos(1.5F * f)*f1 + 23.5F;
+    top.rotationPointY = MathHelper.cos(1.5F * f)*f1 + 23.5F;
+    body.rotationPointZ = MathHelper.cos(1.5F * f)*f1;
+    mouth.rotationPointZ = MathHelper.cos(1.5F * f)*f1;
+    top.rotationPointZ = MathHelper.cos(1.5F * f)*f1;
     
   }
 
