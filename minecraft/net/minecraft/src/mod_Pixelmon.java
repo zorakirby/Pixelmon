@@ -365,7 +365,7 @@ public class mod_Pixelmon extends NetworkMod {
 			for (Object o : container.itemList) {
 				ItemStack i = (ItemStack) o;
 				int id = i.getItem().shiftedIndex;
-				if (id == PixelmonBlocks.healerIdle.blockID || id == PixelmonBlocks.leafStoneOre.blockID || id == PixelmonBlocks.thunderStoneOre.blockID || id == PixelmonBlocks.pc.blockID
+				if (id == PixelmonBlocks.healer.blockID || id == PixelmonBlocks.leafStoneOre.blockID || id == PixelmonBlocks.thunderStoneOre.blockID || id == PixelmonBlocks.pc.blockID
 						|| id == PixelmonBlocks.waterStoneOre.blockID) {
 					found = true;
 					break;
@@ -374,15 +374,12 @@ public class mod_Pixelmon extends NetworkMod {
 				}
 			}
 			if (!found) {
-				container.itemList.add(pos, new ItemStack(PixelmonBlocks.healerIdle, 1));
-				pos++;
 				container.itemList.add(pos, new ItemStack(PixelmonBlocks.leafStoneOre, 1));
 				pos++;
 				container.itemList.add(pos, new ItemStack(PixelmonBlocks.thunderStoneOre, 1));
 				pos++;
 				container.itemList.add(pos, new ItemStack(PixelmonBlocks.waterStoneOre, 1));
 				pos++;
-				container.itemList.add(pos, new ItemStack(PixelmonBlocks.pc, 1));
 			}
 		}
 		return true;

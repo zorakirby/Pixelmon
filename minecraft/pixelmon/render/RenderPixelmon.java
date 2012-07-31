@@ -61,8 +61,8 @@ public class RenderPixelmon extends RenderLiving {
 				if (lvlInstance!=null)
 					s = " Lv: " + lvlInstance.getLevel() + " ";
 				s += (flag ? entitypixelmon.name : p.nickname);
-				if (mod_Pixelmon.serverStorageDisplay.contains(entitypixelmon.getHelper().getPokemonId())) {
-					s += " (" + ModLoader.getMinecraftInstance().thePlayer.username + ")";
+				if (entitypixelmon.getHelper().getOwner()!=null) {
+					s += " (" + entitypixelmon.getHelper().getOwner().username + ")";
 				} else {
 					s += " (Wild)";
 				}
