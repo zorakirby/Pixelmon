@@ -74,7 +74,7 @@ public class PixelmonEntityHelper {
 	public void loadMoveset() {
 		moveset = DatabaseMoves.GetInitialMoves(getName(), getLvl().getLevel());
 	}
-	
+
 	public EntityLookHelper getLookHelper() {
 		if (pixelmon instanceof BaseEntityPixelmon)
 			return ((BaseEntityPixelmon) pixelmon).getLookHelper();
@@ -95,8 +95,10 @@ public class PixelmonEntityHelper {
 	}
 
 	public String getDisplayName() {
-		if (nickname==null || nickname.equals("")) return getName();
-		else return nickname;
+		if (nickname == null || nickname.equals(""))
+			return getName();
+		else
+			return nickname;
 	}
 
 	public boolean attackEntityFrom(DamageSource dmgSource, int power) {
@@ -152,18 +154,19 @@ public class PixelmonEntityHelper {
 
 	public int getHealth() {
 		if (pixelmon instanceof BaseEntityPixelmon)
-			if (((BaseEntityPixelmon) pixelmon).worldObj.isRemote){
-				if (getLvl()==null) return 10;
+			if (((BaseEntityPixelmon) pixelmon).worldObj.isRemote) {
+				if (getLvl() == null)
+					return 10;
 				return getLvl().health;
-			}
-			else
+			} else
 				return ((BaseEntityPixelmon) pixelmon).getHealth();
 
 		else if (pixelmon instanceof EntityWaterPixelmon)
-			if (((EntityWaterPixelmon) pixelmon).worldObj.isRemote){
-				if (getLvl()==null) return 10;
+			if (((EntityWaterPixelmon) pixelmon).worldObj.isRemote) {
+				if (getLvl() == null)
+					return 10;
 				return getLvl().health;
-			}else
+			} else
 				return ((EntityWaterPixelmon) pixelmon).getHealth();
 		return 0;
 	}
@@ -171,10 +174,11 @@ public class PixelmonEntityHelper {
 	public int getMaxHealth() {
 		if (stats == null)
 			return 1;
-		if (pixelmon.getWorldObj().isRemote){
-			if (getLvl()==null) return 10;
+		if (pixelmon.getWorldObj().isRemote) {
+			if (getLvl() == null)
+				return 10;
 			return getLvl().maxHealth;
-		}else
+		} else
 			return stats.HP;
 	}
 
@@ -184,7 +188,6 @@ public class PixelmonEntityHelper {
 		else if (pixelmon instanceof EntityWaterPixelmon)
 			((EntityWaterPixelmon) pixelmon).setHealth(i);
 	}
-
 
 	public void catchInPokeball() {
 		pixelmon.catchInPokeball();
@@ -296,6 +299,8 @@ public class PixelmonEntityHelper {
 	}
 
 	public boolean interact(EntityPlayer entity) {
+		if (ModLoader.getMinecraftInstance().theWorld.isRemote)
+			return false;
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer entity1 = (EntityPlayer) entity;
 			ItemStack itemstack = entity1.getCurrentEquippedItem();
