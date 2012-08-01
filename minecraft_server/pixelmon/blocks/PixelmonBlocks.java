@@ -16,8 +16,7 @@ public class PixelmonBlocks {
 	public static int waterStoneOreId;
 	public static int pcId;
 
-	public static Block healerIdle;
-	public static Block healerActive;
+	public static Block healer;
 	public static Block thunderStoneOre;
 	public static Block leafStoneOre;
 	public static Block waterStoneOre;
@@ -30,7 +29,7 @@ public class PixelmonBlocks {
 		leafStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("LeafStoneOre", 204).value);
 		pcId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PC", 205).value);
 		waterStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("WaterStoneOre", 206).value);
-		healerIdle = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
+		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, 0, 3.0f).setBlockName("ThunderStoneOre");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, 1, 3.0f).setBlockName("LeafStoneOre");
 		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, 2, 3.0f).setBlockName("WaterStoneOre");
@@ -38,8 +37,7 @@ public class PixelmonBlocks {
 	}
 
 	public static void registerBlocks() {
-		ModLoader.registerBlock(healerIdle);
-		//ModLoader.registerBlock(healerActive);
+		ModLoader.registerBlock(healer);
 		ModLoader.registerBlock(thunderStoneOre);
 		ModLoader.registerBlock(leafStoneOre);
 		ModLoader.registerBlock(waterStoneOre);
@@ -47,8 +45,7 @@ public class PixelmonBlocks {
 	}
 
 	public static void addNames() {
-		ModLoader.addName(healerIdle, "Healer");
-		//ModLoader.addName(healerActive, "Healer");
+		ModLoader.addName(healer, "Healer");
 		ModLoader.addName(thunderStoneOre, "Thunder Stone Ore");
 		ModLoader.addName(leafStoneOre, "Leaf Stone Ore");
 		ModLoader.addName(waterStoneOre, "Water Stone Ore");

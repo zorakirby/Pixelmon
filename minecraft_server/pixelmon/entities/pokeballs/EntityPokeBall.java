@@ -204,6 +204,7 @@ public class EntityPokeBall extends EntityThrowable {
 			if (waitTime > 20) {
 				p.setTamed(true);
 				p.setOwner((EntityPlayer) thrower);
+				p.caughtBall = type;
 				mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
 				p.clearAttackTarget();
 				p.catchInPokeball();

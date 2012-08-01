@@ -271,8 +271,8 @@ public class BattleController {
 		for (int userIndex : users) {
 			if (!doneUsers.contains(userIndex)) {
 				double a, t, b, e, L, Lp, s, p;
-				
-				NBTTagCompound user = mod_Pixelmon.pokeballManager.getPlayerStorage(pixelmon22.getOwner()).getNBT(userIndex);
+				NBTTagCompound user = null;
+				if (pixelmon22.getOwner()!=null) user = mod_Pixelmon.pokeballManager.getPlayerStorage(pixelmon22.getOwner()).getNBT(userIndex);
 				if (user != null)
 					a = 1.5;
 				else

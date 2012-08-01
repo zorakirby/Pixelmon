@@ -2,6 +2,7 @@ package pixelmon.items;
 
 import net.minecraft.src.Item;
 import net.minecraft.src.ModLoader;
+import pixelmon.blocks.PixelmonBlocks;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPokeballs;
 
@@ -29,8 +30,10 @@ public class PixelmonItems {
 			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/thunderstone.png"));
 	public static final Item leafStone = new ItemEvolutionStone(10012, EnumEvolutionStone.LEAFSTONE).setItemName("LeafStone").setIconIndex(
 			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/leafstone.png"));
-	public static final Item pcItem = new ItemPC(10013).setItemName("PC").setIconIndex(
+	public static final Item pcItem = new ItemBlock(10013, PixelmonBlocks.pc).setItemName("PC").setIconIndex(
 			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pc.png"));
+	public static final Item healerItem = new ItemBlock(10014, PixelmonBlocks.healer).setItemName("Healer").setIconIndex(
+			ModLoader.addOverride("/gui/items.png", "/pixelmon/image/healer.png"));
 	// 9 ids needed for the 9 stones, shards starting on next open id and are
 	// the stone they make's id + 10
 	public static final Item thunderStoneShard = new PixelmonItem(10021).setItemName("ThunderStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/thunderstoneshard.png"));
@@ -53,6 +56,8 @@ public class PixelmonItems {
 		ModLoader.addName(moonStone, "Moon Stone");
 		ModLoader.addName(thunderStoneShard, "Thunder Stone Shard");
 		ModLoader.addName(leafStoneShard, "Leaf Stone Shard");	
+		ModLoader.addName(pcItem, "PC");
+		ModLoader.addName(healerItem, "Healer");
 	}
 
 }

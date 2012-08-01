@@ -1,5 +1,6 @@
 package pixelmon.items;
 
+import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.PixelmonBlocks;
 import net.minecraft.src.Block;
@@ -10,10 +11,11 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-public class ItemPC extends Item {
-
-	public ItemPC(int par1) {
+public class ItemBlock extends Item {
+	Block block;
+	public ItemBlock(int par1, Block block) {
 		super(par1);
+		this.block = block;
 	}
 
 	/**
@@ -26,7 +28,6 @@ public class ItemPC extends Item {
 			return false;
 		} else {
 			++y;
-			BlockPC pcBlock = (BlockPC) PixelmonBlocks.pc;
 			int var6 = MathHelper.floor_double((double) (par2EntityPlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 			int var9 = 0;
 			if (var6 == 0) {
@@ -46,11 +47,10 @@ public class ItemPC extends Item {
 			}
 
 			if (par2EntityPlayer.canPlayerEdit(x, y, z) && par2EntityPlayer.canPlayerEdit(x, y + 1, z)) {
-				if (par3World.isAirBlock(x, y, z) && par3World.isAirBlock(x, y + 1, z) && par3World.isBlockNormalCube(x, y - 1, z) && par3World.getBlockId(x, y - 1, z) != pcBlock.blockID) {
-					par3World.setBlockAndMetadataWithNotify(x, y, z, pcBlock.blockID, var9);
-
-					if (par3World.getBlockId(x, y, z) == pcBlock.blockID) {
-						par3World.setBlockAndMetadataWithNotify(x, y + 1, z, pcBlock.blockID, var9 - 6);
+				if (par3World.isAirBlock(x, y, z) && par3World.isAirBlock(x, y + 1, z) && par3World.isBlockNormalCube(x, y - 1, z) && par3World.getBlockId(x, y - 1, z) != block.blockID) {
+					par3World.setBlockAndMetadataWithNotify(x, y, z, block.blockID, var9);
+					if (par3World.getBlockId(x, y, z) == block.blockID && block instanceof BlockPC) {
+						par3World.setBlockAndMetadataWithNotify(x, y + 1, z, block.blockID, var9 - 6);
 					}
 
 					--par1ItemStack.stackSize;

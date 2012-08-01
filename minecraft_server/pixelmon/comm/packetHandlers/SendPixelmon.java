@@ -2,6 +2,7 @@ package pixelmon.comm.packetHandlers;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Random;
 
 import net.minecraft.src.EntityPlayer;
@@ -12,28 +13,39 @@ import net.minecraft.src.mod_Pixelmon;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
 
 public class SendPixelmon extends PacketHandlerBase {
-	static EntityPokeBall currentPokeball = null;
+	public static HashMap<EntityPlayer, EntityPokeBall> playerPokeballs;
 
 	public SendPixelmon(){
 		packetsHandled.add(EnumPackets.SendPokemon);
+		playerPokeballs = new HashMap<EntityPlayer, EntityPokeBall>();
 	}
+	
 	
 	@Override
 	public void handlePacket(int index, NetworkManager network, DataInputStream dataStream) throws IOException {
 		EntityPlayer player = ((NetServerHandler) network.getNetHandler()).getPlayerEntity();
 		int pokemonId = dataStream.readInt();
 		NBTTagCompound nbt = mod_Pixelmon.pokeballManager.getPlayerStorage(player).getNBT(pokemonId);
-		if (!mod_Pixelmon.pokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj) && (currentPokeball == null || currentPokeball.isDead)
+		if (!mod_Pixelmon.pokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj)
 				&& !mod_Pixelmon.pokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
-			player.worldObj.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / ((new Random()).nextFloat() * 0.4F + 0.8F));
-			currentPokeball = new EntityPokeBall(player.worldObj, player, mod_Pixelmon.pokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj).getHelper(),EnumPokeballs.PokeBall);
+			
+			if (playerPokeballs.get(player)!=null && !playerPokeballs.get(player).isDead)
+				return;
+			
+			PixelmonEntityHelper helper = mod_Pixelmon.pokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj).getHelper();
+			EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, helper, helper.caughtBall);
+			playerPokeballs.put(player, pokeball);
+			
 			boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
 			ChatHandler.sendChat(player, "You sent out " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");
-			player.worldObj.spawnEntityInWorld(currentPokeball);
+
+			player.worldObj.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / ((new Random()).nextFloat() * 0.4F + 0.8F));
+			player.worldObj.spawnEntityInWorld(pokeball);
 		} else if (mod_Pixelmon.pokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
 			boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
 			ChatHandler.sendChat(player, (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + " is unable to battle!");

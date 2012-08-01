@@ -10,7 +10,7 @@ import net.minecraft.src.mod_Pixelmon;
 public class PixelmonRecipes {
 
 	public static void addRecipes() {
-		ModLoader.addRecipe(new ItemStack(PixelmonBlocks.healer),
+		ModLoader.addRecipe(new ItemStack(PixelmonItems.healerItem),
 				new Object[] { "IRI", "RDR", "IRI", Character.valueOf('D'), new ItemStack(Item.diamond), Character.valueOf('I'), Item.ingotIron, Character.valueOf('R'), Block.stone });
 		ModLoader.addRecipe(new ItemStack(PixelmonItems.pokeBall, 3), new Object[] { "RRR", "CBC", "III", Character.valueOf('R'), new ItemStack(Item.dyePowder, 1, 1), Character.valueOf('B'), Block.button,
 				Character.valueOf('I'), Item.ingotIron, Character.valueOf('C'), PixelmonItems.coalDust });
@@ -31,7 +31,7 @@ public class PixelmonRecipes {
 				new ItemStack(Item.dyePowder, 1, 1), Character.valueOf('G'), Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
 		ModLoader.addRecipe(new ItemStack(PixelmonItems.thunderStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), PixelmonItems.thunderStoneShard });
 		ModLoader.addRecipe(new ItemStack(PixelmonItems.leafStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), PixelmonItems.leafStoneShard });
-		ModLoader.addShapelessRecipe(new ItemStack(PixelmonBlocks.pc, 1), new Object[] { Block.dirt });
+		ModLoader.addShapelessRecipe(new ItemStack(PixelmonItems.pcItem, 1), new Object[] { Block.dirt });
 		// ModLoader.addShapelessRecipe(new ItemStack(pokeBall, 1), new Object[]
 		// { Block.dirt, Block.dirt });
 		// ModLoader.addShapelessRecipe(new ItemStack(rareCandy, 1), new
