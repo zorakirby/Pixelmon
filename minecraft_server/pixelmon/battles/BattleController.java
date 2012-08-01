@@ -268,6 +268,7 @@ public class BattleController {
 
 	private void awardExp(ArrayList<Integer> users, PixelmonEntityHelper pixelmon22, PixelmonEntityHelper pixelmon12) {
 		ArrayList<Integer> doneUsers = new ArrayList<Integer>();
+		if (!users.contains(pixelmon22.getPokemonId())) users.add(pixelmon22.getPokemonId());
 		for (int userIndex : users) {
 			if (!doneUsers.contains(userIndex)) {
 				double a, t, b, e, L, Lp, s, p;
