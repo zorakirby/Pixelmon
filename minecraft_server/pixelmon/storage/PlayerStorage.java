@@ -101,6 +101,7 @@ public class PlayerStorage {
 		p.writeEntityToNBT(n);
 		Entity entity1 = (Entity) p.getEntity();
 		entity1.writeToNBT(n);
+		p.lvl.writeToNBT(n);
 		n.setString("id", p.getName());
 		n.setName(p.getName());
 		n.setString("Nickname", n.getName());
