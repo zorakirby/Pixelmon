@@ -2,7 +2,11 @@ package pixelmon.blocks;
 
 import java.util.Random;
 
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumGui;
+import pixelmon.storage.ComputerBox;
+import pixelmon.storage.PlayerComputerStorage;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityLiving;
@@ -11,6 +15,7 @@ import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
@@ -44,7 +49,16 @@ public class BlockPC extends BlockContainer {
 	}
 	@Override
 	public boolean blockActivated(World world, int x, int y, int z, EntityPlayer player){
-		if (!world.isRemote) player.openGui(mod_Pixelmon.instance, EnumGui.PC.getIndex(), world, 0, 0, 0);
+		PlayerComputerStorage s = mod_Pixelmon.computerManager.getPlayerStorage(player);
+		for(ComputerBox b : s.getBoxList()){
+			for(NBTTagCompound n: b.getStoredPokemon()){
+				if (n != null) {
+					PixelmonDataPacket p = new PixelmonDataPacket(n, mod_Pixelmon.instance, EnumPackets.AddToTempStore);
+					ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username, p.getPacket());
+				}
+			}
+		}
+		player.openGui(mod_Pixelmon.instance, EnumGui.PC.getIndex(), world, x, y, z); // GUIPC
 		return true;
 	}
 	

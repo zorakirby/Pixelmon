@@ -21,12 +21,7 @@ public class ServerStorageDisplay {
 		PixelmonDataPacket packet = new PixelmonDataPacket();
 		try {
 			packet.readData(dataStream);
-			for (int i = 0; i < pokemon.length; i++) {
-				if (pokemon[i] == null) {
-					pokemon[i] = packet;
-					break;
-				}
-			}
+			pokemon[packet.order] = packet;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,10 +42,7 @@ public class ServerStorageDisplay {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		for(int i=0; i < pokemon.length; i++){
-			if (pokemon[i]!=null && pokemon[i].pokemonID == packet.pokemonID)
-				pokemon[i] = packet;
-		}
+		pokemon[packet.order] = packet;
 
 	}
 
@@ -66,9 +58,9 @@ public class ServerStorageDisplay {
 		return false;
 	}
 
-	public PixelmonDataPacket get(int x) {
+	public PixelmonDataPacket get(int id) {
 		for(PixelmonDataPacket p:pokemon)
-			if (p.pokemonID == x) return p;
+			if (p.pokemonID == id) return p;
 		return null;
 	}
 

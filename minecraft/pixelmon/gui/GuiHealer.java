@@ -14,12 +14,12 @@ import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StatCollector;
 import net.minecraft.src.mod_Pixelmon;
 
-public class GuiSMPHealer extends GuiScreen {
+public class GuiHealer extends GuiScreen {
 
 	private boolean isHealing = false;
 	public ProgressBar[] progressBars;
 
-	public GuiSMPHealer() {
+	public GuiHealer() {
 		progressBars = new ProgressBar[6];
 		for (int i = 0; i < progressBars.length; i++)
 			progressBars[i] = new ProgressBar();
