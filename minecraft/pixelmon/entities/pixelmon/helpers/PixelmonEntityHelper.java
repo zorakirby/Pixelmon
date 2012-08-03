@@ -326,7 +326,12 @@ public class PixelmonEntityHelper {
 				flag = true;
 			}
 			if (itemstack.itemID == PixelmonItems.potion.shiftedIndex && getOwner() == entity) {
-				setHealth(getHealth() + 20);
+				if (getHealth()+20 > stats.HP)
+					setHealth(stats.HP);
+				else
+					setHealth(getHealth() + 20);
+				if (getOwner()!=null)
+					mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(this);
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;
 				if (getHealth() > stats.HP)

@@ -194,6 +194,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 		Entity entity = par1DamageSource.getEntity();
+		if (getOwner()!=null) mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		if (isValidTarget(entity)) {
 			setAttackTarget((EntityLiving) entity);
 			setTarget(entity);
