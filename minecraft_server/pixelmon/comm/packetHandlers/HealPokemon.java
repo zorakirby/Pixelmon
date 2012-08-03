@@ -23,7 +23,7 @@ public class HealPokemon extends PacketHandlerBase {
 		if (ind == -1)
 			mod_Pixelmon.pokeballManager.getPlayerStorage(player).healAllPokemon();
 		else
-			mod_Pixelmon.pokeballManager.getPlayerStorage(player).heal(index);
+			mod_Pixelmon.pokeballManager.getPlayerStorage(player).heal(ind);
 
 	}
 

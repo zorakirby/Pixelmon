@@ -372,7 +372,7 @@ public class PixelmonEntityHelper {
 		} else {
 			var1.setString("Nickname", getName());
 		}
-		var1.setInteger("CaughtBall", caughtBall.getIndex());
+		if (caughtBall!=null) var1.setInteger("CaughtBall", caughtBall.getIndex());
 		var1.setBoolean("IsInBall", isInBall);
 		var1.setFloat("Scale", scale);
 		var1.setBoolean("IsFainted", isFainted || getIsDead());
