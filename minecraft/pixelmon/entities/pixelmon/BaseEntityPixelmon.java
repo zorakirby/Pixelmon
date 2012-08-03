@@ -444,11 +444,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	@Override
     protected String getLivingSound()
     {
-		if (name.equalsIgnoreCase("charmander")){
-			System.out.println("playing sound");
-			return "pixelmon.charmander";
-		}
-		else return super.getLivingSound();
+		return ("pixelmon." + name.toLowerCase());		
     }
 
     /**
