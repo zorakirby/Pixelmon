@@ -18,7 +18,7 @@ public class EntityCharizard extends EntityGroundPixelmon
 		name = "Charizard";
 		isImmuneToFire = true;
 		super.init();
-		this.litUp = true;
+		this.litUp = false;
 		this.litLevel = 50;
 	}
 	
