@@ -183,6 +183,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			setAttackTarget((EntityLiving) entity);
 			setTarget(entity);
 		}
+		if (getOwner()!=null) mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		return flag;
 	}
 
