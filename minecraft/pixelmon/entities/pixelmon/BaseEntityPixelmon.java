@@ -436,4 +436,45 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);
 	}
+	
+	
+    /**
+     * Returns the sound this mob makes while it's alive.
+     */
+	@Override
+    protected String getLivingSound()
+    {
+		if (name.equalsIgnoreCase("charmander")){
+			System.out.println("playing sound");
+			return "pixelmon.charmander";
+		}
+		else return super.getLivingSound();
+    }
+
+    /**
+     * Returns the sound this mob makes when it is hurt.
+     */
+//	@Override
+//    protected String getHurtSound()
+//    {
+//        return "mob.cowhurt";
+//    }
+//
+//    /**
+//     * Returns the sound this mob makes on death.
+//     */
+//	@Override
+//    protected String getDeathSound()
+//    {
+//        return "mob.cowhurt";
+//    }
+
+    /**
+     * Returns the volume for the sounds this mob makes.
+     */
+	@Override
+    protected float getSoundVolume()
+    {
+        return 0.4F;
+    }
 }

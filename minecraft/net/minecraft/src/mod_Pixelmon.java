@@ -64,6 +64,7 @@ import pixelmon.render.RenderPokeball;
 import pixelmon.render.RenderTileEntityHealer;
 import pixelmon.render.RenderTileEntityPC;
 import pixelmon.render.RenderTrainer;
+import pixelmon.sounds.Sounds;
 import pixelmon.storage.ComputerManager;
 import pixelmon.storage.PokeballManager;
 import pixelmon.storage.ServerStorageDisplay;
@@ -205,7 +206,7 @@ public class mod_Pixelmon extends NetworkMod {
 		MinecraftForge.setGuiHandler(instance, guiHandler);
 		myCustomSpawner = new CustomSpawner();
 
-		ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/charmander.ogg", new File("resources/newsound/pixelmon/charmander.ogg"));
+		Sounds.installSounds();
 		
 		ModLoader.setInGUIHook(this, true, true);
 		ModLoader.setInGameHook(this, true, true);
