@@ -25,7 +25,6 @@ import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
 
 public class EntityPokeBall extends EntityThrowable {
-	public EnumPokeballs type;
 	public int shakePokeball;
 	private EntityLiving thrower;
 	private PixelmonEntityHelper p;
@@ -38,13 +37,13 @@ public class EntityPokeBall extends EntityThrowable {
 
 	public EntityPokeBall(World world) {
 		super(world);
-		type = EnumPokeballs.PokeBall;
+		dataWatcher.addObject(10, EnumPokeballs.PokeBall.getIndex());
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, EnumPokeballs type) {
 		super(world, entityliving);
 		thrower = entityliving;
-		this.type = type;
+		dataWatcher.addObject(10, type.getIndex());
 		isEmpty = true;
 	}
 
@@ -52,7 +51,7 @@ public class EntityPokeBall extends EntityThrowable {
 		super(world, entityliving);
 		endRotationYaw = entityliving.rotationYawHead;
 		pixelmon = e;
-		this.type = type;
+		dataWatcher.addObject(10, type.getIndex());
 		isEmpty = false;
 		float speed = 0.3f;
 		this.setLocationAndAngles(entityliving.posX, entityliving.posY + (double) entityliving.getEyeHeight(), entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
@@ -113,7 +112,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 					else {
 						if (!isWaiting) {
-							entityDropItem(new ItemStack(type.getItem()), 0.0F);
+							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
 							setDead();
 						}
 					}
@@ -206,8 +205,9 @@ public class EntityPokeBall extends EntityThrowable {
 			if (waitTime > 20) {
 				p.setTamed(true);
 				p.setOwner((EntityPlayer) thrower);
-				mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
+				p.caughtBall = getType();
 				p.clearAttackTarget();
+				mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
 				p.catchInPokeball();
 				isWaiting = false;
 				setDead();
@@ -285,7 +285,7 @@ public class EntityPokeBall extends EntityThrowable {
 		int hpCurrent = entitypixelmon.getHealth();
 		int bonusStatus = 1;
 		double a, b, p;
-		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * type.getBallBonus()) / (3 * hpMax)) * bonusStatus;
+		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * getType().getBallBonus()) / (3 * hpMax)) * bonusStatus;
 		b = (Math.pow(2, 16) - 1) * Math.sqrt(Math.sqrt((a / (Math.pow(2, 8) - 1))));
 		p = Math.pow(((b + 1) / Math.pow(2, 16)), 4);
 		p = (p * 10000) / 100;
@@ -303,5 +303,9 @@ public class EntityPokeBall extends EntityThrowable {
 			canCatch = false;
 		}
 		numShakes = passedShakes;
+	}
+
+	public EnumPokeballs getType() {
+		return EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10));
 	}
 }

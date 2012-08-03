@@ -356,6 +356,10 @@ public class PixelmonEntityHelper {
 		setIsShiny(var1.getBoolean("IsShiny"));
 		battleStats.readFromNBT(var1);
 		moveset.readFromNBT(var1);
+		if (var1.hasKey("CaughtBall"))
+			caughtBall = EnumPokeballs.getFromIndex(var1.getInteger("CaughtBall"));
+		else
+			caughtBall = EnumPokeballs.PokeBall;
 		getLvl().updateEntityString();
 	}
 
@@ -368,6 +372,7 @@ public class PixelmonEntityHelper {
 		} else {
 			var1.setString("Nickname", getName());
 		}
+		var1.setInteger("CaughtBall", caughtBall.getIndex());
 		var1.setBoolean("IsInBall", isInBall);
 		var1.setFloat("Scale", scale);
 		var1.setBoolean("IsFainted", isFainted || getIsDead());

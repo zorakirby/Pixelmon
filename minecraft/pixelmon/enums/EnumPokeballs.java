@@ -20,17 +20,21 @@ public enum EnumPokeballs {
 	public double getBallBonus() {
 		return ballBonus;
 	}
-	
-	public int getIndex(){
+
+	public int getIndex() {
 		return index;
 	}
-	
-	public Item getItem(){
-		if (index ==0) return PixelmonItems.pokeBall;
-		if (index ==1) return PixelmonItems.greatBall;
-		if (index ==2) return PixelmonItems.ultraBall;
-		if (index ==3) return PixelmonItems.masterBall;
-		return  PixelmonItems.pokeBall;
+
+	public Item getItem() {
+		if (index == 0)
+			return PixelmonItems.pokeBall;
+		if (index == 1)
+			return PixelmonItems.greatBall;
+		if (index == 2)
+			return PixelmonItems.ultraBall;
+		if (index == 3)
+			return PixelmonItems.masterBall;
+		return PixelmonItems.pokeBall;
 	}
 
 	public String getTexture() {
@@ -43,5 +47,13 @@ public enum EnumPokeballs {
 
 	public String getCaptureTexture() {
 		return filenamePrefix + "captured.png";
+	}
+
+	public static EnumPokeballs getFromIndex(int index) {
+		if (index ==0) return EnumPokeballs.PokeBall;
+		if (index ==1) return EnumPokeballs.GreatBall;
+		if (index ==2) return EnumPokeballs.UltraBall;
+		if (index ==3) return EnumPokeballs.MasterBall;
+		else return EnumPokeballs.PokeBall;
 	}
 }

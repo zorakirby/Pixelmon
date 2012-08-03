@@ -2,7 +2,6 @@ package pixelmon.entities.pokeballs;
 
 import java.util.Random;
 
-
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
@@ -22,7 +21,6 @@ import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
 
 public class EntityPokeBall extends EntityThrowable {
-	public EnumPokeballs type;
 	public int shakePokeball;
 	private EntityLiving thrower;
 	private PixelmonEntityHelper p;
@@ -35,13 +33,13 @@ public class EntityPokeBall extends EntityThrowable {
 
 	public EntityPokeBall(World world) {
 		super(world);
-		type = EnumPokeballs.PokeBall;
+		dataWatcher.addObject(10, EnumPokeballs.PokeBall.getIndex());
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, EnumPokeballs type) {
 		super(world, entityliving);
 		thrower = entityliving;
-		this.type = type;
+		dataWatcher.addObject(10, type.getIndex());
 		isEmpty = true;
 	}
 
@@ -50,7 +48,7 @@ public class EntityPokeBall extends EntityThrowable {
 		endRotationYaw = entityliving.rotationYawHead;
 		thrower = entityliving;
 		pixelmon = e;
-		this.type = type;
+		dataWatcher.addObject(10, type.getIndex());
 		isEmpty = false;
 		float speed = 0.3f;
 		this.setLocationAndAngles(entityliving.posX, entityliving.posY + (double) entityliving.getEyeHeight(), entityliving.posZ, entityliving.rotationYaw, entityliving.rotationPitch);
@@ -80,7 +78,7 @@ public class EntityPokeBall extends EntityThrowable {
 						pixelmon.setMotion(0, 0, 0);
 						pixelmon.releaseFromPokeball();
 						if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)
-								&& !mod_Pixelmon.pokeballManager.getPlayerStorage(((EntityPlayer)thrower)).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper()))
+								&& !mod_Pixelmon.pokeballManager.getPlayerStorage(((EntityPlayer) thrower)).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper()))
 							pixelmon.StartBattle(((IHaveHelper) movingobjectposition.entityHit).getHelper());
 						if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer)
 							pixelmon.StartBattle((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
@@ -89,7 +87,7 @@ public class EntityPokeBall extends EntityThrowable {
 						if (thrower instanceof EntityPlayer) {
 
 						}
-						//spawnCaptureParticles();
+						// spawnCaptureParticles();
 					}
 					setDead();
 				}
@@ -100,7 +98,7 @@ public class EntityPokeBall extends EntityThrowable {
 						p = entitypixelmon.getHelper();
 						if (p.getOwner() == (EntityPlayer) thrower) {
 							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
-							//spawnFailParticles();
+							// spawnFailParticles();
 							return;
 						}
 						doCaptureCalc(p);
@@ -111,7 +109,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 					else {
 						if (!isWaiting) {
-							entityDropItem(new ItemStack(type.getItem()), 0.0F);
+							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
 							setDead();
 						}
 					}
@@ -136,7 +134,7 @@ public class EntityPokeBall extends EntityThrowable {
 			if (waitTime == 0 && !isUnloaded) {
 				initialScale = p.scale;
 				initPos = p.getPosition();
-				diff = Vec3D.createVector(posX-initPos.xCoord, posY-initPos.yCoord, posZ-initPos.zCoord);
+				diff = Vec3D.createVector(posX - initPos.xCoord, posY - initPos.yCoord, posZ - initPos.zCoord);
 				p.scale = initialScale / 1.1f;
 			}
 			if (waitTime == 1 && !isUnloaded) {
@@ -204,9 +202,9 @@ public class EntityPokeBall extends EntityThrowable {
 			if (waitTime > 20) {
 				p.setTamed(true);
 				p.setOwner((EntityPlayer) thrower);
-				p.caughtBall = type;
-				mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
+				p.caughtBall = getType();
 				p.clearAttackTarget();
+				mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
 				p.catchInPokeball();
 				isWaiting = false;
 				setDead();
@@ -241,11 +239,11 @@ public class EntityPokeBall extends EntityThrowable {
 	private void catchPokemon() {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-//			spawnCaptureParticles();
+			// spawnCaptureParticles();
 			isCaptured = true;
 			waitTime = 0;
 		} else {
-//			spawnFailParticles();
+			// spawnFailParticles();
 			waitTime = 0;
 			isWaiting = false;
 			p.getEntity().setPosition(posX, posY, posZ);
@@ -265,7 +263,7 @@ public class EntityPokeBall extends EntityThrowable {
 		int hpCurrent = entitypixelmon.getHealth();
 		int bonusStatus = 1;
 		double a, b, p;
-		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * type.getBallBonus()) / (3 * hpMax)) * bonusStatus;
+		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * getType().getBallBonus()) / (3 * hpMax)) * bonusStatus;
 		b = (Math.pow(2, 16) - 1) * Math.sqrt(Math.sqrt((a / (Math.pow(2, 8) - 1))));
 		p = Math.pow(((b + 1) / Math.pow(2, 16)), 4);
 		p = (p * 10000) / 100;
@@ -283,5 +281,9 @@ public class EntityPokeBall extends EntityThrowable {
 			canCatch = false;
 		}
 		numShakes = passedShakes;
+	}
+
+	public EnumPokeballs getType() {
+		return EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10));
 	}
 }

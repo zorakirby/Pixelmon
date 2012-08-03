@@ -7,6 +7,7 @@ import pixelmon.PixelmonEntityList;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.enums.EnumPokeballs;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NetServerHandler;
@@ -25,6 +26,7 @@ public class ChooseStarter extends PacketHandlerBase {
 		IHaveHelper p = (IHaveHelper) PixelmonEntityList.createEntityByName(StarterList.getStarterStringList()[dataStream.readInt()], player.worldObj);
 		p.getHelper().getLvl().setLevel(5);
 		p.getHelper().loadMoveset();
+		p.getHelper().caughtBall = EnumPokeballs.MasterBall;
 		mod_Pixelmon.pokeballManager.getPlayerStorage(player).addToParty(p.getHelper());
 	}
 

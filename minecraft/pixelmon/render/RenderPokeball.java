@@ -38,12 +38,12 @@ public class RenderPokeball extends Render {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(180, 1, 0, 1);
 		if (pokeball.isCaptured){
-			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.type.getCaptureTexture());
+			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getCaptureTexture());
 		}
 		else if (pokeball.flashRed){
-			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.type.getFlashRedTexture());
+			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getFlashRedTexture());
 		}else{
-			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.type.getTexture());
+			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getTexture());
 		}
 		RenderHelper.enableStandardItemLighting();
 		float factor = (float) (1.0 / 16.0);

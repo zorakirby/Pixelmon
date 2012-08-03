@@ -60,7 +60,6 @@ import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.PixelmonItems;
 import pixelmon.items.PixelmonRecipes;
-import pixelmon.render.OldRenderEmptyPokeball;
 import pixelmon.render.RenderPokeball;
 import pixelmon.render.RenderTileEntityHealer;
 import pixelmon.render.RenderTileEntityPC;
