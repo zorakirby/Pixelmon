@@ -205,6 +205,8 @@ public class mod_Pixelmon extends NetworkMod {
 		MinecraftForge.setGuiHandler(instance, guiHandler);
 		myCustomSpawner = new CustomSpawner();
 
+		ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/charmander.ogg", new File("resources/newsound/pixelmon/charmander.ogg"));
+		
 		ModLoader.setInGUIHook(this, true, true);
 		ModLoader.setInGameHook(this, true, true);
 		PixelmonBlocks.getModelIds();
