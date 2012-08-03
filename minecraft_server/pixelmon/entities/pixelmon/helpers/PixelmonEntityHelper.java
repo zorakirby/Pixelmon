@@ -287,12 +287,14 @@ public class PixelmonEntityHelper {
 				flag = true;
 			}
 			if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
-				getOwner().openGui(mod_Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
+				if (getOwner()!=null)
+					getOwner().openGui(mod_Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
 			if (itemstack.itemID == PixelmonItems.potion.shiftedIndex && getOwner() == entity) {
 				setHealth(getHealth() + 20);
-				mod_Pixelmon.pokeballManager.getPlayerStorage(entity1).updateNBT(this);
+				if (getOwner()!=null)
+					mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(this);
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;
 				if (getHealth() > stats.HP)

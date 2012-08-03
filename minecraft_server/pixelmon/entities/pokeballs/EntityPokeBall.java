@@ -8,6 +8,7 @@ import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PokeballManager;
+import net.minecraft.src.Block;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityThrowable;
@@ -71,7 +72,7 @@ public class EntityPokeBall extends EntityThrowable {
 			if (!isEmpty) {
 				if (movingobjectposition != null && !worldObj.isRemote) {
 					if (pixelmon != null) {
-						if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0)
+						if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0 && worldObj.getBlockId((int) posX, (int) posY, (int) posZ) != Block.snow.blockID)
 							pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
 						else
 							pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);

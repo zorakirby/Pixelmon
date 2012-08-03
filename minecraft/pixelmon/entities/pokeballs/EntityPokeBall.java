@@ -10,6 +10,7 @@ import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PokeballManager;
+import net.minecraft.src.Block;
 import net.minecraft.src.EntityCrit2FX;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
@@ -60,9 +61,9 @@ public class EntityPokeBall extends EntityThrowable {
 		this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
 		this.setPosition(this.posX, this.posY, this.posZ);
 		this.yOffset = 0.0F;
-		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) / 2;
-		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) / 2;
-		this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI)) / 2;
+		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) * 0.8;
+		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) * 0.8;
+		this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI)) * 0.8;
 	}
 
 	public void init() {
@@ -74,7 +75,7 @@ public class EntityPokeBall extends EntityThrowable {
 			if (!isEmpty) {
 				if (movingobjectposition != null && !worldObj.isRemote) {
 					if (pixelmon != null) {
-						if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0)
+						if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0 && worldObj.getBlockId((int) posX, (int) posY, (int) posZ) != Block.snow.blockID)
 							pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
 						else
 							pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
