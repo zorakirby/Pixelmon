@@ -229,7 +229,7 @@ public class PixelmonEntityList {
 		addMapping(EntityVaporeon.class, "Vaporeon", IDListPixelmon.vaporeonId, new RenderPixelmon(new ModelVaporeon(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityGloom.class, "Gloom", IDListPixelmon.gloomId, new RenderPixelmon(new ModelGloom(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityKrabby.class, "Krabby", IDListPixelmon.krabbyId, new RenderPixelmon(new ModelKrabby(), 0.5F), ClassType.Pixelmon);
-
+		addMapping(EntityWeedle.class, "Weedle", IDListPixelmon.weedleId, new RenderPixelmon(new ModelWeedle(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityTrainerYoungster.class, "Youngster", IDListTrainer.trainerYoungsterId, new RenderTrainer(new ModelYoungster(), 0.5F), ClassType.Trainer);
 		addMapping(EntityTrainerYoungster02.class, "Youngster2", IDListTrainer.trainerYoungster2Id, new RenderTrainer(new ModelYoungster02(), 0.5F), ClassType.Trainer);
 		addMapping(EntityTrainerBugCatcher.class, "BugCatcher", IDListTrainer.trainerBugCatcherId, new RenderTrainer(new ModelBugCatcher(), 0.5F), ClassType.Trainer);

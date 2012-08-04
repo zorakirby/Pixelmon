@@ -7,6 +7,7 @@ import net.minecraft.src.ModLoader;
 public class Sounds {
 
 	public static void installSounds(){
+
 	}
 
 }

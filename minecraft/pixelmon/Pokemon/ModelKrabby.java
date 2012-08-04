@@ -296,10 +296,10 @@ public class ModelKrabby extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
-  	RIGHT_LEG_1.rotateAngleX = MathHelper.cos(f * 1.7F) * 1F * f1;
-  	LEFT_LEG_1.rotateAngleX = MathHelper.cos(f * 1.7F + 3.141593F) * 1F * f1;
-  	RIGHT_LEG_2.rotateAngleX = MathHelper.cos(f * 1.7F + 3.141593F) * 1F * f1;
-  	LEFT_LEG_2.rotateAngleX = MathHelper.cos(f * 1.7F) * 1F * f1;
+  	RIGHT_LEG_1.rotateAngleX = MathHelper.cos(f * 1.4F) * 1F * f1;
+  	LEFT_LEG_1.rotateAngleX = MathHelper.cos(f * 1.4F + 3.141593F) * 1F * f1;
+  	RIGHT_LEG_2.rotateAngleX = MathHelper.cos(f * 1.4F + 3.141593F) * 1F * f1;
+  	LEFT_LEG_2.rotateAngleX = MathHelper.cos(f * 1.4F) * 1F * f1;
   }
 
 }

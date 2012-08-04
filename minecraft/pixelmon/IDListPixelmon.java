@@ -71,6 +71,7 @@ public class IDListPixelmon {
 	public static int vaporeonId;
 	public static int gloomId;
 	public static int krabbyId;
+	public static int weedleId;
 	
 	
 	public static int i=0;
@@ -142,5 +143,6 @@ public class IDListPixelmon {
 		vaporeonId = Integer.parseInt(configuration.getOrCreateIntProperty("Vaporeon", "pokemon", i++).value);
 		gloomId = Integer.parseInt(configuration.getOrCreateIntProperty("Gloom", "pokemon", i++).value);
 		krabbyId = Integer.parseInt(configuration.getOrCreateIntProperty("Krabby", "pokemon", i++).value);
+		weedleId = Integer.parseInt(configuration.getOrCreateIntProperty("Weedle", "pokemon", i++).value);
 	}
 }
