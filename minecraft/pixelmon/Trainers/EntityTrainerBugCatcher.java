@@ -12,7 +12,7 @@ public class EntityTrainerBugCatcher extends EntityTrainer {
 	}
 
 	public void init(){
-		name = "Bug Catcher";
+		name = "BugCatcher";
 		super.init();
 	}
 }
