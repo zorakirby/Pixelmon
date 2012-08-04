@@ -158,7 +158,7 @@ public class RenderFreeWaterPixelmon extends RenderLiving{
 	}
 
 	protected void preRenderScale(EntityWaterPixelmon entity, float f) {
-		GL11.glScalef(entity.helper.scale*1F, entity.helper.scale*1F, entity.helper.scale*1F);
+		GL11.glScalef(entity.getHelper().scale * entity.getHelper().giScale, entity.getHelper().scale * entity.getHelper().giScale, entity.getHelper().scale * entity.getHelper().giScale);
 	}
 
 	protected void preRenderCallback(EntityLiving entityliving, float f) {
