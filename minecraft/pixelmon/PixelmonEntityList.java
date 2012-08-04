@@ -278,7 +278,8 @@ public class PixelmonEntityList {
 				if (rarity != -1) {
 					myCustomSpawner.AddCustomSpawn((Class) entry.getValue(), rarity, groupMin, groupMax, creaturetype, biomes);
 				}
-				ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/" + name.toLowerCase() + ".ogg", new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg"));
+				if (new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg").exists())
+					ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/" + name.toLowerCase() + ".ogg", new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg"));
 			} else if (type == ClassType.Trainer) {
 				biomes = DatabaseTrainers.GetSpawnBiomes(name);
 				myCustomSpawner.AddCustomSpawn((Class) entry.getValue(), 10, 1, 1, EnumCreatureType.creature, biomes);
