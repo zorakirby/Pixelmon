@@ -185,7 +185,7 @@ public class RenderPixelmon extends RenderLiving {
 	}
 
 	protected void preRenderScale(IHaveHelper entity, float f) {
-		GL11.glScalef(entity.getHelper().scale * 1F, entity.getHelper().scale * 1F, entity.getHelper().scale * 1F);
+		GL11.glScalef(entity.getHelper().scale * entity.getHelper().giScale, entity.getHelper().scale * entity.getHelper().giScale, entity.getHelper().scale * entity.getHelper().giScale);
 		if (entity.getHelper().doesHover) {
 			GL11.glTranslatef(0, -1 * entity.getHelper().hoverHeight, 0);
 		}

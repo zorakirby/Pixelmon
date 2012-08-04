@@ -63,6 +63,7 @@ public class PixelmonEntityHelper {
 	public float hoverHeight;
 	public int aggression;
 	public float scale = 1F;
+	public float giScale=1F;
 	public float maxScale = 1.25F;
 	public BattleController bc;
 	public LevelHelper lvl;
