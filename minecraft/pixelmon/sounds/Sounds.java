@@ -7,7 +7,6 @@ import net.minecraft.src.ModLoader;
 public class Sounds {
 
 	public static void installSounds(){
-		ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/charmander.ogg", new File("resources/newsound/pixelmon/charmander.ogg"));
 	}
 
 }

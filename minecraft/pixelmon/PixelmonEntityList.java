@@ -1,5 +1,6 @@
 package pixelmon;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -228,9 +229,7 @@ public class PixelmonEntityList {
 		addMapping(EntityVaporeon.class, "Vaporeon", IDListPixelmon.vaporeonId, new RenderPixelmon(new ModelVaporeon(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityGloom.class, "Gloom", IDListPixelmon.gloomId, new RenderPixelmon(new ModelGloom(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityKrabby.class, "Krabby", IDListPixelmon.krabbyId, new RenderPixelmon(new ModelKrabby(), 0.5F), ClassType.Pixelmon);
-		
-		
-		
+
 		addMapping(EntityTrainerYoungster.class, "Youngster", IDListTrainer.trainerYoungsterId, new RenderTrainer(new ModelYoungster(), 0.5F), ClassType.Trainer);
 		addMapping(EntityTrainerYoungster02.class, "Youngster2", IDListTrainer.trainerYoungster2Id, new RenderTrainer(new ModelYoungster02(), 0.5F), ClassType.Trainer);
 		addMapping(EntityTrainerBugCatcher.class, "BugCatcher", IDListTrainer.trainerBugCatcherId, new RenderTrainer(new ModelBugCatcher(), 0.5F), ClassType.Trainer);
@@ -279,6 +278,7 @@ public class PixelmonEntityList {
 				if (rarity != -1) {
 					myCustomSpawner.AddCustomSpawn((Class) entry.getValue(), rarity, groupMin, groupMax, creaturetype, biomes);
 				}
+				ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/" + name.toLowerCase() + ".ogg", new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg"));
 			} else if (type == ClassType.Trainer) {
 				biomes = DatabaseTrainers.GetSpawnBiomes(name);
 				myCustomSpawner.AddCustomSpawn((Class) entry.getValue(), 10, 1, 1, EnumCreatureType.creature, biomes);

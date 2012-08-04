@@ -298,6 +298,7 @@ public class PixelmonEntityHelper {
 					setHealth(getHealth() + 20);
 				if (getOwner()!=null)
 					mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(this);
+				lvl.updateEntityString();
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;
 				if (getHealth() > stats.HP)

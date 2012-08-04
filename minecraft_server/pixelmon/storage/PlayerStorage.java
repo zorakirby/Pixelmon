@@ -255,7 +255,6 @@ public class PlayerStorage {
 					nbt.setName(helper.getName());
 					if (mode == PokeballManagerMode.Player)
 						ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username, new PixelmonDataPacket(nbt, mod_Pixelmon.instance, EnumPackets.UpdateStorage).getPacket());
-					helper.getLvl().updateEntityString();
 				}
 			}
 		}

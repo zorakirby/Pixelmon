@@ -158,6 +158,8 @@ public class Attack {
 			for (EffectBase e : effects)
 				e.ApplyMissEffect(user, target);
 		}
+		user.lvl.updateEntityString();
+		target.lvl.updateEntityString();
 		if (user.getOwner() != null)
 			mod_Pixelmon.pokeballManager.getPlayerStorage(user.getOwner()).updateNBT(user);
 		if (target.getOwner() != null)
