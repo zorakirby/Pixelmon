@@ -4,26 +4,25 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
-public class EntityWeedle extends EntityGroundPixelmon
+public class EntityKakuna extends EntityGroundPixelmon
 {
 	
-	public EntityWeedle(World world)
+	public EntityKakuna(World world)
 	{
 		super(world);
 		init();
-		helper.giScale = .218F;
 	}
 
 	public void init()
 	{
-		name = "Weedle";
+		name = "Kakuna";
 		isImmuneToFire = false;
 		super.init();
+		helper.giScale = 0.915F;
 	}
 	
 	public void evolve() 
 	{		
-		BaseEntityPixelmon entity = new EntityKakuna(worldObj);
-		helper.evolve(entity.getHelper());
+		
 	}
 }

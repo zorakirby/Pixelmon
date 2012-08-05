@@ -71,6 +71,10 @@ public class IDListPixelmon {
 	public static int vaporeonId;
 	public static int gloomId;
 	public static int krabbyId;
+	public static int kakunaId;
+	public static int koffingId;
+	public static int weezingId;
+	public static int primeapeId;
 	
 	
 	public static int i=0;

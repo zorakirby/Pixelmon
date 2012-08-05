@@ -4,26 +4,27 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
-public class EntityWeedle extends EntityGroundPixelmon
+public class EntityKoffing  extends EntityGroundPixelmon
 {
 	
-	public EntityWeedle(World world)
+	public EntityKoffing(World world)
 	{
 		super(world);
 		init();
-		helper.giScale = .218F;
 	}
 
 	public void init()
 	{
-		name = "Weedle";
+		name = "Koffing";
 		isImmuneToFire = false;
+		helper.doesHover = true;
+		helper.hoverHeight=1f;
 		super.init();
 	}
 	
 	public void evolve() 
 	{		
-		BaseEntityPixelmon entity = new EntityKakuna(worldObj);
-		helper.evolve(entity.getHelper());
+		BaseEntityPixelmon entity = new EntityWeezing(worldObj);
+		helper.evolve(entity.helper);
 	}
 }

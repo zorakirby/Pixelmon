@@ -4,10 +4,10 @@ import net.minecraft.src.World;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 
-public class EntityMankey  extends EntityGroundPixelmon
+public class EntityKoffing  extends EntityGroundPixelmon
 {
 	
-	public EntityMankey(World world)
+	public EntityKoffing(World world)
 	{
 		super(world);
 		init();
@@ -15,14 +15,17 @@ public class EntityMankey  extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Mankey";
+		name = "Koffing";
 		isImmuneToFire = false;
+		helper.doesHover = true;
+		helper.hoverHeight=1f;
 		super.init();
+		helper.giScale = 0.33F;
 	}
 	
 	public void evolve() 
 	{		
-		BaseEntityPixelmon entity = new EntityPrimeape(worldObj);
-		helper.evolve(entity.getHelper());
+		BaseEntityPixelmon entity = new EntityWeezing(worldObj);
+		helper.evolve(entity.helper);
 	}
 }
