@@ -163,6 +163,8 @@ public class PixelmonEntityList {
 	}
 
 	static {
+		
+		//Pokemon
 		addMapping(EntityAbra.class, "Abra", IDListPixelmon.abraId, new RenderPixelmon(new ModelAbra(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityArbok.class, "Arbok", IDListPixelmon.arbokId, new RenderPixelmon(new ModelArbok(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityBlastoise.class, "Blastoise", IDListPixelmon.blastoiseId, new RenderPixelmon(new ModelBlastoise(), 0.8F), ClassType.Pixelmon);
@@ -230,6 +232,16 @@ public class PixelmonEntityList {
 		addMapping(EntityGloom.class, "Gloom", IDListPixelmon.gloomId, new RenderPixelmon(new ModelGloom(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityKrabby.class, "Krabby", IDListPixelmon.krabbyId, new RenderPixelmon(new ModelKrabby(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityWeedle.class, "Weedle", IDListPixelmon.weedleId, new RenderPixelmon(new ModelWeedle(), 0.5F), ClassType.Pixelmon);
+		addMapping(EntityKakuna.class, "Kakuna", IDListPixelmon.kakunaId, new RenderPixelmon(new ModelKakuna(), 0.5F), ClassType.Pixelmon);
+		addMapping(EntityKoffing.class, "Koffing", IDListPixelmon.koffingId, new RenderPixelmon(new ModelKoffing(), 0.5F), ClassType.Pixelmon);
+		addMapping(EntityWeezing.class, "Weezing", IDListPixelmon.weezingId, new RenderPixelmon(new ModelWeezing(), 0.5F), ClassType.Pixelmon);
+		addMapping(EntityPrimeape.class, "Primeape", IDListPixelmon.primeapeId, new RenderPixelmon(new ModelPrimeape(), 0.5F), ClassType.Pixelmon);
+		
+		
+		
+		
+		
+		//Trainers
 		addMapping(EntityTrainerYoungster.class, "Youngster", IDListTrainer.trainerYoungsterId, new RenderTrainer(new ModelYoungster(), 0.5F), ClassType.Trainer);
 		addMapping(EntityTrainerYoungster02.class, "Youngster2", IDListTrainer.trainerYoungster2Id, new RenderTrainer(new ModelYoungster02(), 0.5F), ClassType.Trainer);
 		addMapping(EntityTrainerBugCatcher.class, "BugCatcher", IDListTrainer.trainerBugCatcherId, new RenderTrainer(new ModelBugCatcher(), 0.5F), ClassType.Trainer);
