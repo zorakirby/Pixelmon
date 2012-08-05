@@ -11,6 +11,7 @@ public class EntityWeedle extends EntityGroundPixelmon
 	{
 		super(world);
 		init();
+		helper.giScale = .218F;
 	}
 
 	public void init()

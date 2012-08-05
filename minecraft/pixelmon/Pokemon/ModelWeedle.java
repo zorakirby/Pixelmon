@@ -90,7 +90,7 @@ public class ModelWeedle extends ModelBase
     setTextureOffset("STINGER.DELETE", 0, 0);
     
     MODELWEEDLE = new ModelRenderer(this, "MODELWEEDLE");
-    MODELWEEDLE.setRotationPoint(0F, 0F, -22F);
+    MODELWEEDLE.setRotationPoint(0F, 15F, -22F);
     setRotation(MODELWEEDLE, 0F, 0F, 0F);
     MODELWEEDLE.mirror = true;
     HEAD = new ModelRenderer(this, "HEAD");
@@ -397,6 +397,61 @@ public class ModelWeedle extends ModelBase
       Stinger_end.setTextureSize(256, 128);
       Stinger_end.mirror = true;
       setRotation(Stinger_end, 0F, 0F, 0F);
+      
+      MODELWEEDLE.addChild(tip_of_horn);
+      MODELWEEDLE.addChild(nose);
+      MODELWEEDLE.addChild(Head_middle);
+      MODELWEEDLE.addChild(Face_middle);
+      MODELWEEDLE.addChild(Head_Horizontal_Middle);
+      MODELWEEDLE.addChild(Head_vertical_middle);
+      MODELWEEDLE.addChild(HEAD);
+      HEAD.addChild(BODY);
+      BODY.addChild(BODY_SECTION_1);
+      BODY_SECTION_1.addChild(BODY_SECTION_2);
+      BODY_SECTION_2.addChild(BODY_SECTION_3);
+      BODY_SECTION_3.addChild(BODY_SECTION_4);
+      BODY_SECTION_4.addChild(BODY_SECTION_5);
+      BODY_SECTION_5.addChild(BODY_SECTION_6);
+      BODY_SECTION_6.addChild(BODY_SECTION_7);
+      BODY_SECTION_7.addChild(STINGER);
+      BODY_SECTION_1.addChild(bs1_middle);
+      BODY_SECTION_1.addChild(bs1_Legs);
+      BODY_SECTION_1.addChild(bs1_Front_middle);
+      BODY_SECTION_1.addChild(bs1_Vertical_middle);
+      BODY_SECTION_1.addChild(bs1_Horizontal_middle);
+      BODY_SECTION_2.addChild(bs2_middle);
+      BODY_SECTION_2.addChild(bs2_Legs);
+      BODY_SECTION_2.addChild(bs2_Front_middle);
+      BODY_SECTION_2.addChild(bs2_Vertical_middle);
+      BODY_SECTION_2.addChild(bs2_Horizontal_middle);
+      BODY_SECTION_3.addChild(bs3_middle);
+      BODY_SECTION_3.addChild(bs3_Legs);
+      BODY_SECTION_3.addChild(bs3_Front_middle);
+      BODY_SECTION_3.addChild(bs3_Vertical_middle);
+      BODY_SECTION_3.addChild(bs3_Horizontal_middle);
+      BODY_SECTION_4.addChild(bs4_middle);
+      BODY_SECTION_4.addChild(bs4_Legs);
+      BODY_SECTION_4.addChild(bs4_Front_middle);
+      BODY_SECTION_4.addChild(bs4_Vertical_middle);
+      BODY_SECTION_4.addChild(bs4_Horizontal_middle);
+      BODY_SECTION_5.addChild(bs5_middle);
+      BODY_SECTION_5.addChild(bs5_Legs);
+      BODY_SECTION_5.addChild(bs5_Front_middle);
+      BODY_SECTION_5.addChild(bs5_Vertical_middle);
+      BODY_SECTION_5.addChild(bs5_Horizontal_middle);
+      BODY_SECTION_6.addChild(bs6_middle);
+      BODY_SECTION_6.addChild(bs6_Legs);
+      BODY_SECTION_6.addChild(bs6_Front_middle);
+      BODY_SECTION_6.addChild(bs6_Vertical_middle);
+      BODY_SECTION_6.addChild(bs6_Horizontal_middle);
+      BODY_SECTION_7.addChild(bs7_middle);
+      BODY_SECTION_7.addChild(bs7_Legs);
+      BODY_SECTION_7.addChild(bs7_Front_middle);
+      BODY_SECTION_7.addChild(bs7_Vertical_middle);
+      BODY_SECTION_7.addChild(bs7_Horizontal_middle);
+      STINGER.addChild(Stinger_middle);
+      STINGER.addChild(Stinger_base);
+      STINGER.addChild(Stinger_end);
      
   }
   
