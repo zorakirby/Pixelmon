@@ -89,6 +89,17 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 			return "/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png";
 	}
 
+	@Override
+	public void setPosition(double par1, double par3, double par5)
+    {
+        this.posX = par1;
+        this.posY = par3;
+        this.posZ = par5;
+        float halfWidth = this.width / 2.0F;
+        float halfLength = this.width / 2.0F;
+        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfWidth, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfWidth);
+    }
+	
 	public void StartBattle(PixelmonEntityHelper target) {
 		if (helper.moveset.size() == 0)
 			helper.loadMoveset();

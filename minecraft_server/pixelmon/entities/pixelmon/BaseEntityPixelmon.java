@@ -81,6 +81,17 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		setSize(helper.stats.BaseStats.Height, width);
 	}
 
+	@Override
+	public void setPosition(double par1, double par3, double par5)
+    {
+        this.posX = par1;
+        this.posY = par3;
+        this.posZ = par5;
+        float halfWidth = this.width / 2.0F;
+        float halfLength = this.width / 2.0F;
+        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfWidth, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfWidth);
+    }
+	
 	public EntityTrainer trainer;
 
 	public abstract void loadAI();

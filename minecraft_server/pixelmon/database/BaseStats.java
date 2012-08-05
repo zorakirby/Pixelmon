@@ -22,6 +22,9 @@ public class BaseStats {
 	public int nationalPokedexNumber;
 	public int SpawnLevel;
 	public int SpawnLevelRange;
+	public boolean IsRideable;
+	public float Width;
+	public float Length;
 
 	public String getNationalPokedexNumberString() {
 		if (nationalPokedexNumber < 10)

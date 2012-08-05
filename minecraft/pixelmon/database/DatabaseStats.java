@@ -38,6 +38,8 @@ public class DatabaseStats {
 				stats.EvolveInto = rs.getString("EvolveInto");
 				stats.CanFly = rs.getInt("CanFly") == 1;
 				stats.Height = rs.getFloat("Height");
+				stats.Width = rs.getFloat("Width");
+				stats.Length = rs.getFloat("Length");
 				stats.Type1 = EnumType.parseType(rs.getString("Type1"));
 				stats.BaseExp = rs.getInt("BaseExp");
 				stats.ExperienceGroup = ExperienceGroup.getExperienceGroup(rs.getString("ExperienceGroup"));

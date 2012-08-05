@@ -38,12 +38,15 @@ public class DatabaseStats {
 				stats.EvolveInto = rs.getString("EvolveInto");
 				stats.CanFly = rs.getInt("CanFly") == 1;
 				stats.Height = rs.getFloat("Height");
+				stats.Width = rs.getFloat("Width");
+				stats.Length = rs.getFloat("Length");
 				stats.Type1 = EnumType.parseType(rs.getString("Type1"));
 				stats.BaseExp = rs.getInt("BaseExp");
 				stats.ExperienceGroup = ExperienceGroup.getExperienceGroup(rs.getString("ExperienceGroup"));
 				stats.nationalPokedexNumber = rs.getInt("NationalPokedexNumber");
 				stats.SpawnLevel = rs.getInt("SpawnLevel");
 				stats.SpawnLevelRange= rs.getInt("SpawnLevelRange");
+				stats.IsRideable = rs.getBoolean("IsRideable");
 				rs.getString("Type2");
 				if (!rs.wasNull())
 					stats.Type2 = EnumType.parseType(rs.getString("Type2"));
@@ -84,13 +87,12 @@ public class DatabaseStats {
 				return biomes;
 			}
 		} catch (Exception e) {
-			if (conn != null) {
+			if (conn != null)
 				try {
 					conn.close();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-			}
 		}
 		return null;
 	}
@@ -136,7 +138,7 @@ public class DatabaseStats {
 		}
 		return -1;
 	}
-
+	
 	public static int GetMaxGroupSize(String pixelmonName) {
 		Connection conn = null;
 		try {
@@ -167,10 +169,8 @@ public class DatabaseStats {
 			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + pixelmonName + "'");
 			while (rs.next()) {
 				String type = rs.getString("CreatureType");
-				if (type.equalsIgnoreCase("Land"))
-					return EnumCreatureType.creature;
-				else
-					return EnumCreatureType.waterCreature;
+				if (type.equalsIgnoreCase("Land")) return EnumCreatureType.creature;
+				else return EnumCreatureType.waterCreature;
 			}
 		} catch (Exception e) {
 			if (conn != null)
@@ -194,7 +194,7 @@ public class DatabaseStats {
 			while (rs.next()) {
 				String type = rs.getString("EvolveStone");
 				String[] strList = type.split(";");
-				for (String s : strList) {
+				for (String s:strList){
 					String[] sSplit = s.split(":");
 					EvolutionInfo i = new EvolutionInfo();
 					i.evolutionStone = EnumEvolutionStone.getEvolutionStone(sSplit[0]);
