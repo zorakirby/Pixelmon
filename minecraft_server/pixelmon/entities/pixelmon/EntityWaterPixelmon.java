@@ -48,6 +48,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	protected int depthRangeEnd = 100;
 	private boolean isSwimming = true;
 	public PixelmonEntityHelper helper = new PixelmonEntityHelper(this);
+	private float length = 1.0f;
 
 	public EntityWaterPixelmon(World par1World) {
 		super(par1World);
@@ -73,39 +74,40 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		else
 			helper.isMale = false;
 		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height);
+		length = helper.stats.BaseStats.Length;
 		helper.getLvl();
 		this.field_21080_l = 1.0F / (this.rand.nextFloat() + 1.0F) * swimFrequency;
 	}
 
 	@Override
-	public void setPosition(double par1, double par3, double par5)
-    {
-        this.posX = par1;
-        this.posY = par3;
-        this.posZ = par5;
-        float halfWidth = this.width / 2.0F;
-        float halfLength = this.width / 2.0F;
-        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfLength, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfLength);
-    }
-	/**
-     * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
-     * pushable on contact, like boats or minecarts.
-     */
-	@Override
-    public AxisAlignedBB getCollisionBox(Entity par1Entity)
-    {
-        return par1Entity.boundingBox;
-    }
+	public void setPosition(double par1, double par3, double par5) {
+		this.posX = par1;
+		this.posY = par3;
+		this.posZ = par5;
+		float halfWidth = this.width / 2.0F;
+		float halfLength = this.length / 2.0F;
+		this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
+				+ (double) this.ySize + (double) height, par5 + (double) halfLength);
+	}
 
-    /**
-     * returns the bounding box for this entity
-     */
+	/**
+	 * Returns a boundingBox used to collide the entity with other entities and
+	 * blocks. This enables the entity to be pushable on contact, like boats or
+	 * minecarts.
+	 */
 	@Override
-    public AxisAlignedBB getBoundingBox()
-    {
-        return this.boundingBox;
-    }
-	
+	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
+		return par1Entity.boundingBox;
+	}
+
+	/**
+	 * returns the bounding box for this entity
+	 */
+	@Override
+	public AxisAlignedBB getBoundingBox() {
+		return this.boundingBox;
+	}
+
 	public void StartBattle(PixelmonEntityHelper target) {
 		if (helper.moveset.size() == 0)
 			helper.loadMoveset();
@@ -360,7 +362,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	public EntityPlayer getOwner() {
 		if (super.getOwner() instanceof EntityPlayer)
-			return (EntityPlayer)super.getOwner();
+			return (EntityPlayer) super.getOwner();
 		return null;
 	}
 
@@ -394,12 +396,13 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public World getWorldObj() {
 		return worldObj;
 	}
-	
+
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 		Entity entity = par1DamageSource.getEntity();
 		helper.lvl.updateEntityString();
-		if (getOwner()!=null) mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+		if (getOwner() != null)
+			mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		if (isValidTarget(entity)) {
 			setAttackTarget((EntityLiving) entity);
 			setTarget(entity);

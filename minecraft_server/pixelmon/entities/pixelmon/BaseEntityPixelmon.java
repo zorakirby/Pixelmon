@@ -48,8 +48,9 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	public int aggression;
 	public boolean litUp;
 	public int litLevel;
-	private String lvlString="";
-	
+	private String lvlString = "";
+	private float length = 1.0f;
+
 	public BaseEntityPixelmon(World par1World) {
 		super(par1World);
 		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
@@ -58,7 +59,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		dataWatcher.addObject(19, -1);
 		dataWatcher.addObject(20, (short) 0);
 		getNavigator().setAvoidsWater(true);
-		setSize(0.5f, 0.5f);
 		aggression = rand.nextInt(11) - 5;
 	}
 
@@ -80,38 +80,38 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 		helper.getLvl();
 		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height);
+		length = helper.stats.BaseStats.Length;
 	}
 
 	@Override
-	public void setPosition(double par1, double par3, double par5)
-    {
-        this.posX = par1;
-        this.posY = par3;
-        this.posZ = par5;
-        float halfWidth = this.width / 2.0F;
-        float halfLength = this.width / 2.0F;
-        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfLength, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfLength);
-    }
-	
-	/**
-     * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
-     * pushable on contact, like boats or minecarts.
-     */
-	@Override
-    public AxisAlignedBB getCollisionBox(Entity par1Entity)
-    {
-        return par1Entity.boundingBox;
-    }
+	public void setPosition(double par1, double par3, double par5) {
+		this.posX = par1;
+		this.posY = par3;
+		this.posZ = par5;
+		float halfWidth = this.width / 2.0F;
+		float halfLength = this.length / 2.0F;
+		this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
+				+ (double) this.ySize + (double) height, par5 + (double) halfLength);
+	}
 
-    /**
-     * returns the bounding box for this entity
-     */
+	/**
+	 * Returns a boundingBox used to collide the entity with other entities and
+	 * blocks. This enables the entity to be pushable on contact, like boats or
+	 * minecarts.
+	 */
 	@Override
-    public AxisAlignedBB getBoundingBox()
-    {
-        return this.boundingBox;
-    }
-	
+	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
+		return par1Entity.boundingBox;
+	}
+
+	/**
+	 * returns the bounding box for this entity
+	 */
+	@Override
+	public AxisAlignedBB getBoundingBox() {
+		return this.boundingBox;
+	}
+
 	public EntityTrainer trainer;
 
 	public abstract void loadAI();
@@ -215,7 +215,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			setTarget(entity);
 		}
 		helper.lvl.updateEntityString();
-		if (getOwner()!=null) mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+		if (getOwner() != null)
+			mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		return flag;
 	}
 
@@ -295,13 +296,12 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
 	}
 
-
 	public void writeEntityToNBT(NBTTagCompound var1) {
 		if (trainer != null && !isStorage)
 			return;
 		super.writeEntityToNBT(var1);
 		helper.writeToNBT(var1);
-		if (getOwner()!=null)
+		if (getOwner() != null)
 			var1.setString("pixelmonOwner", getOwnerName());
 	}
 
@@ -375,7 +375,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	public EntityPlayer getOwner() {
 		if (super.getOwner() instanceof EntityPlayer)
-			return (EntityPlayer)super.getOwner();
+			return (EntityPlayer) super.getOwner();
 		return null;
 	}
 

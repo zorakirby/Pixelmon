@@ -52,10 +52,10 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	private boolean isSwimming = true;
 	public PixelmonEntityHelper helper = new PixelmonEntityHelper(this);
 	private RidingHelper ridingHelper;
+	private float length = 1.0f;
 
 	public EntityWaterPixelmon(World par1World) {
 		super(par1World);
-		setSize(0.5f, 0.5f);
 		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
 		dataWatcher.addObject(19, -1);
 		dataWatcher.addObject(20, (short) 0);
@@ -77,6 +77,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		else
 			helper.isMale = false;
 		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height);
+		length = helper.stats.BaseStats.Length;
 		helper.getLvl();
 		this.field_21080_l = 1.0F / (this.rand.nextFloat() + 1.0F) * swimFrequency;
 		ridingHelper = new RidingHelper(this, worldObj);
@@ -91,34 +92,34 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	@Override
-	public void setPosition(double par1, double par3, double par5)
-    {
-        this.posX = par1;
-        this.posY = par3;
-        this.posZ = par5;
-        float halfWidth = this.width / 2.0F;
-        float halfLength = this.width / 2.0F;
-        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfLength, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfLength);
-    }
-	/**
-     * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
-     * pushable on contact, like boats or minecarts.
-     */
-	@Override
-    public AxisAlignedBB getCollisionBox(Entity par1Entity)
-    {
-        return par1Entity.boundingBox;
-    }
+	public void setPosition(double par1, double par3, double par5) {
+		this.posX = par1;
+		this.posY = par3;
+		this.posZ = par5;
+		float halfWidth = this.width / 2.0F;
+		float halfLength = this.length / 2.0F;
+		this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
+				+ (double) this.ySize + (double) height, par5 + (double) halfLength);
+	}
 
-    /**
-     * returns the bounding box for this entity
-     */
+	/**
+	 * Returns a boundingBox used to collide the entity with other entities and
+	 * blocks. This enables the entity to be pushable on contact, like boats or
+	 * minecarts.
+	 */
 	@Override
-    public AxisAlignedBB getBoundingBox()
-    {
-        return this.boundingBox;
-    }
-	
+	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
+		return par1Entity.boundingBox;
+	}
+
+	/**
+	 * returns the bounding box for this entity
+	 */
+	@Override
+	public AxisAlignedBB getBoundingBox() {
+		return this.boundingBox;
+	}
+
 	public void StartBattle(PixelmonEntityHelper target) {
 		if (helper.moveset.size() == 0)
 			helper.loadMoveset();
@@ -374,7 +375,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	public EntityPlayer getOwner() {
 		if (super.getOwner() instanceof EntityPlayer)
-			return (EntityPlayer)super.getOwner();
+			return (EntityPlayer) super.getOwner();
 		return null;
 	}
 
@@ -449,47 +450,46 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 		Entity entity = par1DamageSource.getEntity();
-		if (getOwner()!=null) mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+		if (getOwner() != null)
+			mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		if (isValidTarget(entity)) {
 			setAttackTarget((EntityLiving) entity);
 			setTarget(entity);
 		}
 		return flag;
 	}
-	
+
 	/**
-     * Returns the sound this mob makes while it's alive.
-     */
+	 * Returns the sound this mob makes while it's alive.
+	 */
 	@Override
-    protected String getLivingSound()
-    {
-		return ("pixelmon." + name.toLowerCase());		
-    }
+	protected String getLivingSound() {
+		return ("pixelmon." + name.toLowerCase());
+	}
 
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
-//	@Override
-//    protected String getHurtSound()
-//    {
-//        return "mob.cowhurt";
-//    }
-//
-//    /**
-//     * Returns the sound this mob makes on death.
-//     */
-//	@Override
-//    protected String getDeathSound()
-//    {
-//        return "mob.cowhurt";
-//    }
+	/**
+	 * Returns the sound this mob makes when it is hurt.
+	 */
+	// @Override
+	// protected String getHurtSound()
+	// {
+	// return "mob.cowhurt";
+	// }
+	//
+	// /**
+	// * Returns the sound this mob makes on death.
+	// */
+	// @Override
+	// protected String getDeathSound()
+	// {
+	// return "mob.cowhurt";
+	// }
 
-    /**
-     * Returns the volume for the sounds this mob makes.
-     */
+	/**
+	 * Returns the volume for the sounds this mob makes.
+	 */
 	@Override
-    protected float getSoundVolume()
-    {
-        return 0.4F;
-    }
+	protected float getSoundVolume() {
+		return 0.4F;
+	}
 }
