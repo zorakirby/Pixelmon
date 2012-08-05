@@ -140,12 +140,12 @@ public class ModelZubat extends ModelBase
     model.rotateAngleZ = z;
   }
   
-  float timer = 0;
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    leftwing.rotateAngleY = MathHelper.cos(f2*f);
+    rightwing.rotateAngleY = MathHelper.cos(f2*f + 3.14159F);
     
-    timer += Math.PI/60;
     
   }
 
