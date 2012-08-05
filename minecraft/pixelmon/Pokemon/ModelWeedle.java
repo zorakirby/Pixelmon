@@ -398,14 +398,14 @@ public class ModelWeedle extends ModelBase
       Stinger_end.mirror = true;
       setRotation(Stinger_end, 0F, 0F, 0F);
       
-      MODELWEEDLE.addChild(tip_of_horn);
-      MODELWEEDLE.addChild(nose);
-      MODELWEEDLE.addChild(Head_middle);
-      MODELWEEDLE.addChild(Face_middle);
-      MODELWEEDLE.addChild(Head_Horizontal_Middle);
-      MODELWEEDLE.addChild(Head_vertical_middle);
+      HEAD.addChild(tip_of_horn);
+      HEAD.addChild(nose);
+      HEAD.addChild(Head_middle);
+      HEAD.addChild(Face_middle);
+      HEAD.addChild(Head_Horizontal_Middle);
+      HEAD.addChild(Head_vertical_middle);
       MODELWEEDLE.addChild(HEAD);
-      HEAD.addChild(BODY);
+      MODELWEEDLE.addChild(BODY);
       BODY.addChild(BODY_SECTION_1);
       BODY_SECTION_1.addChild(BODY_SECTION_2);
       BODY_SECTION_2.addChild(BODY_SECTION_3);
@@ -472,6 +472,8 @@ public class ModelWeedle extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    HEAD.rotateAngleX = f4 / 57.29578F;
+    HEAD.rotateAngleY = f3 / 57.29578F;
   }
 
 }
