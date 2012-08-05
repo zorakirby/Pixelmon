@@ -24,6 +24,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumType;
 import pixelmon.storage.PokeballManager;
 
+import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAITasks;
@@ -71,7 +72,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 			helper.isMale = true;
 		else
 			helper.isMale = false;
-		setSize(helper.stats.BaseStats.Height, width);
+		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height);
 		helper.getLvl();
 		this.field_21080_l = 1.0F / (this.rand.nextFloat() + 1.0F) * swimFrequency;
 	}
@@ -84,7 +85,25 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
         this.posZ = par5;
         float halfWidth = this.width / 2.0F;
         float halfLength = this.width / 2.0F;
-        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfWidth, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfWidth);
+        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfLength, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfLength);
+    }
+	/**
+     * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
+     * pushable on contact, like boats or minecarts.
+     */
+	@Override
+    public AxisAlignedBB getCollisionBox(Entity par1Entity)
+    {
+        return par1Entity.boundingBox;
+    }
+
+    /**
+     * returns the bounding box for this entity
+     */
+	@Override
+    public AxisAlignedBB getBoundingBox()
+    {
+        return this.boundingBox;
     }
 	
 	public void StartBattle(PixelmonEntityHelper target) {

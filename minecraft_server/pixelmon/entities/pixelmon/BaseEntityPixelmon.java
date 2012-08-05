@@ -20,6 +20,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumType;
 
+import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
@@ -78,7 +79,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			type.add(helper.stats.BaseStats.Type2);
 
 		helper.getLvl();
-		setSize(helper.stats.BaseStats.Height, width);
+		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height);
 	}
 
 	@Override
@@ -89,7 +90,26 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
         this.posZ = par5;
         float halfWidth = this.width / 2.0F;
         float halfLength = this.width / 2.0F;
-        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfWidth, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfWidth);
+        this.boundingBox.setBounds(par1 - (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize, par5 - (double)halfLength, par1 + (double)halfWidth, par3 - (double)this.yOffset + (double)this.ySize + (double)height, par5 + (double)halfLength);
+    }
+	
+	/**
+     * Returns a boundingBox used to collide the entity with other entities and blocks. This enables the entity to be
+     * pushable on contact, like boats or minecarts.
+     */
+	@Override
+    public AxisAlignedBB getCollisionBox(Entity par1Entity)
+    {
+        return par1Entity.boundingBox;
+    }
+
+    /**
+     * returns the bounding box for this entity
+     */
+	@Override
+    public AxisAlignedBB getBoundingBox()
+    {
+        return this.boundingBox;
     }
 	
 	public EntityTrainer trainer;
