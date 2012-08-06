@@ -237,10 +237,6 @@ public class PixelmonEntityList {
 		addMapping(EntityWeezing.class, "Weezing", IDListPixelmon.weezingId, new RenderPixelmon(new ModelWeezing(), 0.5F), ClassType.Pixelmon);
 		addMapping(EntityPrimeape.class, "Primeape", IDListPixelmon.primeapeId, new RenderPixelmon(new ModelPrimeape(), 0.5F), ClassType.Pixelmon);
 		
-		
-		
-		
-		
 		//Trainers
 		addMapping(EntityTrainerYoungster.class, "Youngster", IDListTrainer.trainerYoungsterId, new RenderTrainer(new ModelYoungster(), 0.5F), ClassType.Trainer);
 		addMapping(EntityTrainerYoungster02.class, "Youngster2", IDListTrainer.trainerYoungster2Id, new RenderTrainer(new ModelYoungster02(), 0.5F), ClassType.Trainer);

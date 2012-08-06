@@ -96,6 +96,7 @@ public class BattleController {
 				moveStage = MoveStage.SecondMove;
 			} else if (moveStage == MoveStage.SecondMove) { // Second Move
 				if (attacks[0] == null || (attacks[0] != null && !attacks[0].flinched)) {
+					attacks[0].flinched=false;
 					if (pixelmon1MovesFirst) {
 						if (pixelmon2CanAttack)
 							takeTurn(participant2, participant1, attacks[1]);
