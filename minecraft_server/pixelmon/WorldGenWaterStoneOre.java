@@ -12,20 +12,9 @@ import net.minecraft.src.mod_Pixelmon;
 public class WorldGenWaterStoneOre extends WorldGenerator{
 	
 	public boolean generate(World world, Random rand, int x, int y, int z){
-		if((world.getBlockId(x, y, z) == Block.waterStill.blockID || world.getBlockId(x, y, z) == Block.waterMoving.blockID)
+		if((world.getBlockId(x, y+1, z) == Block.waterStill.blockID)
 				&& (world.getBlockId(x, y - 1, z) != Block.waterStill.blockID && 
-				world.getBlockId(x, y, z) != Block.waterMoving.blockID)){
-			int pos = 0;
-			while(pos > 5){
-				pos++;
-				if(world.getBlockId(x, y + pos, z) == Block.waterStill.blockID || world.getBlockId(x, y + pos, z) == Block.waterMoving.blockID){
-					
-				}
-				else{
-					return false;
-				}
-				
-			}
+				WorldHelper.getWaterDepth(x, y+1, z, world) > 4)){
 			world.setBlockWithNotify(x, y, z, PixelmonBlocks.waterStoneOre.blockID);
 			return true;
 		}
