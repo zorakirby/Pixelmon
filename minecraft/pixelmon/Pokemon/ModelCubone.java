@@ -478,6 +478,7 @@ public class ModelCubone extends ModelBase
     LEFTLEG.rotateAngleX = MathHelper.cos(f * 1F + (float)Math.PI) * 1.1F * f1;
     RIGHTLEG.rotateAngleY = 0.0F;
     LEFTLEG.rotateAngleY = 0.0F;
+    TAIL.rotateAngleY = MathHelper.cos(f * 1F) * .5F * f1;
   }
 
 }
