@@ -1,5 +1,7 @@
 package pixelmon.Pokemon;
 
+import net.minecraft.src.EntityMagmaCube;
+import net.minecraft.src.EntitySlime;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
@@ -13,6 +15,17 @@ public class EntityKoffing  extends EntityGroundPixelmon
 		super(world);
 		init();
 	}
+	
+	protected String getKoffingParticle()
+    {
+        return "smoke";
+    }
+
+    protected EntityKoffing createInstance()
+    {
+        return new EntityKoffing(this.worldObj);
+    }
+
 
 	public void init()
 	{
