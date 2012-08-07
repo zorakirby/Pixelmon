@@ -16,6 +16,8 @@ public class EntityKoffing  extends EntityGroundPixelmon
 		init();
 	}
 	
+	public float hoverTimer;
+	
 	protected String getKoffingParticle()
     {
         return "smoke";
@@ -32,12 +34,12 @@ public class EntityKoffing  extends EntityGroundPixelmon
     	
     	float var2 = helper.stats.BaseStats.Width * helper.giScale * helper.scale;
     	float var4 = this.rand.nextFloat() * (float)Math.PI * 2.0F;
-    	float var5 = this.rand.nextFloat() * .5F + .5F;
+    	float var5 = this.rand.nextFloat() * 4F + .5F;
     	float var6 = MathHelper.sin(var4) * var2 * .5F * var5;
     	float var7 = MathHelper.cos(var4) * var2 * .5F * var5;
     	
     
-    	this.worldObj.spawnParticle(this.getKoffingParticle(),this.posX +(double)var6, this.boundingBox.minY, this.posZ + (double)var7, 0.0D,0.0D,0.0D);
+    	this.worldObj.spawnParticle(this.getKoffingParticle(),this.posX +(double)var6, this.posY + hoverTimer + 1.5, this.posZ + (double)var7, 0.0D,0.0D,0.0D);
     }
 
 
