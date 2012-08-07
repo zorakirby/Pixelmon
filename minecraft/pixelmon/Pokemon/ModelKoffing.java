@@ -15,6 +15,7 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
+import pixelmon.Pokemon.EntityKoffing;
 
 public class ModelKoffing extends ModelBase
 {
@@ -423,6 +424,7 @@ public class ModelKoffing extends ModelBase
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5);
     Main_body.render(f5);
+    ((EntityKoffing)entity).hoverTimer = MathHelper.cos(.1F*f2 + (float)Math.PI) * .33F;
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
@@ -436,6 +438,7 @@ public class ModelKoffing extends ModelBase
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
     Main_body.rotationPointY = MathHelper.cos(.1F*f2) * 15F - 50F;
+    
   }
 
 }

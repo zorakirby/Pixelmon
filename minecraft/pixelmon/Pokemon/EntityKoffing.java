@@ -1,5 +1,7 @@
 package pixelmon.Pokemon;
 
+import net.minecraft.src.EntityMagmaCube;
+import net.minecraft.src.EntitySlime;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
@@ -13,6 +15,33 @@ public class EntityKoffing  extends EntityGroundPixelmon
 		super(world);
 		init();
 	}
+	
+	public float hoverTimer;
+	
+	protected String getKoffingParticle()
+    {
+        return "smoke";
+    }
+
+    protected EntityKoffing createInstance()
+    {
+        return new EntityKoffing(this.worldObj);
+    }
+    
+    public void onUpdate()
+    {
+    	super.onUpdate();
+    	
+    	float var2 = helper.stats.BaseStats.Width * helper.giScale * helper.scale;
+    	float var4 = this.rand.nextFloat() * (float)Math.PI * 2.0F;
+    	float var5 = this.rand.nextFloat() * 4F + .5F;
+    	float var6 = MathHelper.sin(var4) * var2 * .5F * var5;
+    	float var7 = MathHelper.cos(var4) * var2 * .5F * var5;
+    	
+    
+    	this.worldObj.spawnParticle(this.getKoffingParticle(),this.posX +(double)var6, this.posY + hoverTimer + 1.5, this.posZ + (double)var7, 0.0D,0.0D,0.0D);
+    }
+
 
 	public void init()
 	{
@@ -24,11 +53,6 @@ public class EntityKoffing  extends EntityGroundPixelmon
 		helper.giScale = 0.33F;
 	}
 	
-	public void onLivingUpdate()
-	{
-		super.onLivingUpdate();
-		worldObj.spawnParticle("smoke", posX, posY +  1.5F, posZ, 0.0D, 0.0D, 0.0D);
-	}
 	
 	public void evolve() 
 	{		
