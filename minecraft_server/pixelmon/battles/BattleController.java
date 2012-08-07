@@ -80,7 +80,8 @@ public class BattleController {
 			tickTop = 50;
 		if (battleTicks++ > tickTop) {
 			if (moveStage == MoveStage.PickAttacks) { // Pick Moves
-				attacks[0].flinched = attacks[1].flinched = false;
+				if (attacks[0]!=null) attacks[0].flinched = false;
+				if (attacks[1]!=null) attacks[1].flinched = false;
 				// moveToPositions();
 				pickMoves();
 				checkMoveSpeed();

@@ -69,6 +69,7 @@ import pixelmon.storage.ComputerManager;
 import pixelmon.storage.PokeballManager;
 import pixelmon.storage.ServerStorageDisplay;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
+import pixelmon.villageGeneration.MapGenPixelmonVillage;
 import vazkii.um.UpdateManagerMod;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -476,6 +477,8 @@ public class mod_Pixelmon extends NetworkMod {
 		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
 
+	private MapGenPixelmonVillage villageGenerator = new MapGenPixelmonVillage(0);
+	
 	public void generateSurface(World world, Random rand, int x, int z) {
 		// thunderstone ore
 		for (int i = 0; i < 30; i++) {
@@ -498,6 +501,8 @@ public class mod_Pixelmon extends NetworkMod {
 			int yPos = rand.nextInt(40) + 40;
 			new WorldGenWaterStoneOre().generate(world, rand, xPos, yPos, zPos);
 		}
+		
+		villageGenerator.generateStructuresInChunk(world, rand, x, z);
 	}
 
 	private IHaveHelper LocateSentOutPokemon(int idFromPosition) {
