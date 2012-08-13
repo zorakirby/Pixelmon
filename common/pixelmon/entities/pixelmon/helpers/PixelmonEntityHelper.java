@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import pixelmon.Pixelmon;
 import pixelmon.PixelmonEntityList;
+import pixelmon.RandomHelper;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.Moveset;
 import pixelmon.battles.attacks.Attack;
@@ -43,10 +45,8 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.Vec3D;
+import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
-import net.minecraft.src.forge.MinecraftForge;
 
 public class PixelmonEntityHelper {
 	private IHaveHelper pixelmon;
@@ -63,7 +63,7 @@ public class PixelmonEntityHelper {
 	public float hoverHeight;
 	public int aggression;
 	public float scale = 1F;
-	public float giScale=1F;
+	public float giScale = 1F;
 	public float maxScale = 1.25F;
 	public BattleController bc;
 	public LevelHelper lvl;
@@ -142,7 +142,7 @@ public class PixelmonEntityHelper {
 		} else {
 			if (lvl == null && pixelmon.getLvlString().isEmpty()) {
 				lvl = new LevelHelper(this);
-				lvl.setLevel(mod_Pixelmon.getRandomNumberBetween(stats.BaseStats.SpawnLevel, stats.BaseStats.SpawnLevel + stats.BaseStats.SpawnLevelRange));
+				lvl.setLevel(RandomHelper.getRandomNumberBetween(stats.BaseStats.SpawnLevel, stats.BaseStats.SpawnLevel + stats.BaseStats.SpawnLevelRange));
 				setHealth(stats.HP);
 			}
 		}
@@ -288,7 +288,7 @@ public class PixelmonEntityHelper {
 			entity.nickname = entity.getName();
 		float percentIncrease = ((float) stats.HP) / ((float) oldHP);
 		setHealth((int) (((float) getHealth()) * percentIncrease));
-		mod_Pixelmon.pokeballManager.getPlayerStorage(entity.getOwner()).replace(this, entity);
+		Pixelmon.PokeballManager.getPlayerStorage(entity.getOwner()).replace(this, entity);
 		entity.getOwner().worldObj.spawnEntityInWorld((EntityLiving) entity.getEntity());
 		entity.setPokemonID(getPokemonId());
 		getEntity().setDead();
@@ -306,7 +306,7 @@ public class PixelmonEntityHelper {
 			EntityPlayer entity1 = (EntityPlayer) entity;
 			ItemStack itemstack = entity1.getCurrentEquippedItem();
 			if (itemstack == null) {
-				if (stats.BaseStats.IsRideable && mod_Pixelmon.pokeballManager.getPlayerStorage(entity).isIn(this)) {
+				if (stats.BaseStats.IsRideable && Pixelmon.PokeballManager.getPlayerStorage(entity).isIn(this)) {
 					entity.mountEntity((EntityLiving) pixelmon);
 					if (pixelmon instanceof BaseEntityPixelmon)
 						((BaseEntityPixelmon) pixelmon).resetAI();
@@ -323,16 +323,16 @@ public class PixelmonEntityHelper {
 				flag = true;
 			}
 			if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
-				getOwner().openGui(mod_Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
+				getOwner().openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
 			if (itemstack.itemID == PixelmonItems.potion.shiftedIndex && getOwner() == entity) {
-				if (getHealth()+20 > stats.HP)
+				if (getHealth() + 20 > stats.HP)
 					setHealth(stats.HP);
 				else
 					setHealth(getHealth() + 20);
-				if (getOwner()!=null)
-					mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(this);
+				if (getOwner() != null)
+					Pixelmon.PokeballManager.getPlayerStorage(getOwner()).updateNBT(this);
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;
 				if (getHealth() > stats.HP)
@@ -489,29 +489,16 @@ public class PixelmonEntityHelper {
 		pixelmon.setOwner(player);
 	}
 
-	public Vec3D getPosition() {
-		if (pixelmon instanceof BaseEntityPixelmon) {
-			BaseEntityPixelmon p = (BaseEntityPixelmon) pixelmon;
-			return Vec3D.createVector(p.posX, p.posY, p.posZ);
-		} else if (pixelmon instanceof EntityWaterPixelmon) {
-			EntityWaterPixelmon p = (EntityWaterPixelmon) pixelmon;
-			return Vec3D.createVector(p.posX, p.posY, p.posZ);
-		}
-		return null;
+	public Vec3 getPosition() {
+		EntityLiving p = (EntityLiving) pixelmon;
+		return Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
 	}
 
-	public void setPosition(Vec3D pos) {
-		if (pixelmon instanceof BaseEntityPixelmon) {
-			BaseEntityPixelmon p = (BaseEntityPixelmon) pixelmon;
-			p.posX = pos.xCoord;
-			p.posY = pos.yCoord;
-			p.posZ = pos.zCoord;
-		} else if (pixelmon instanceof EntityWaterPixelmon) {
-			EntityWaterPixelmon p = (EntityWaterPixelmon) pixelmon;
-			p.posX = pos.xCoord;
-			p.posY = pos.yCoord;
-			p.posZ = pos.zCoord;
-		}
+	public void setPosition(Vec3 vec) {
+		EntityLiving p = (EntityLiving) pixelmon;
+		p.posX = vec.xCoord;
+		p.posY = vec.yCoord;
+		p.posZ = vec.zCoord;
 	}
 
 	public void setIsShiny(boolean isShiny) {

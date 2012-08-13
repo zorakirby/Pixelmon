@@ -2,6 +2,7 @@ package pixelmon.entities.pixelmon.helpers;
 
 import java.util.ArrayList;
 
+import pixelmon.Pixelmon;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
@@ -10,12 +11,9 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.enums.EnumGui;
 
-import cpw.mods.fml.common.registry.FMLRegistry;
-
 import net.minecraft.src.Entity;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.mod_Pixelmon;
 
 public class LevelHelper {
 
@@ -122,20 +120,18 @@ public class LevelHelper {
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
 		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
 		pixelmon.setHealth((int) Math.ceil(newHealth));
-		if (pixelmon.getOwner() != null)
-			mod_Pixelmon.pokeballManager.getPlayerStorage(pixelmon.getOwner()).updateNBT(pixelmon);
-		String name = "";
-		if (mod_Pixelmon.pokeballManager.getPlayerStorage(pixelmon.getOwner()).contains(pixelmon.getPokemonId())) {
-			ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Your " + pixelmon.getName() + " leveled up to level " + level + "!");
-			mod_Pixelmon.pokeballManager.getPlayerStorage(pixelmon.getOwner()).updateNBT(pixelmon);
+		if (pixelmon.getOwner() != null){
+			Pixelmon.PokeballManager.getPlayerStorage(pixelmon.getOwner()).updateNBT(pixelmon);
+			ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + level + "!");
 		}
+		String name = "";
 		name = pixelmon.getName();
 
 		if (DatabaseMoves.LearnsAttackAtLevel(name, level)) {
 			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, level);
 			for (Attack a : newAttacks) {
 				if (pixelmon.moveset.size() >= 4) {
-					pixelmon.getOwner().openGui(mod_Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
+					pixelmon.getOwner().openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
 				} else {
 					pixelmon.moveset.add(a);
 					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
