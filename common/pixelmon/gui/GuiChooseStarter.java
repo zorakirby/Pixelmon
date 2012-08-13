@@ -21,6 +21,7 @@ import net.minecraft.src.*;
 public class GuiChooseStarter extends GuiScreen {
 
 	String[] starterList;
+
 	public GuiChooseStarter() {
 		starterList = StarterList.getStarterStringList();
 	}
@@ -38,16 +39,8 @@ public class GuiChooseStarter extends GuiScreen {
 
 	public void actionPerformed(GuiButton button) {
 		String pixelmonName = starterList[button.id];
-		if (!ModLoader.getMinecraftInstance().theWorld.isRemote) {
-			IHaveHelper pixelmon = (IHaveHelper)PixelmonEntityList.createEntityByName(pixelmonName, ModLoader.getMinecraftInstance().theWorld);
-			pixelmon.getHelper().getLvl().setLevel(5);
-			pixelmon.getHelper().loadMoveset();
-			mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).addToParty(pixelmon.getHelper());
-			pixelmon.catchInPokeball();
-		} else {
-			Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, button.id);
-			ModLoader.sendPacket(packet);
-		}
+		Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, button.id);
+		ModLoader.sendPacket(packet);
 		mc.displayGuiScreen(null);
 	}
 

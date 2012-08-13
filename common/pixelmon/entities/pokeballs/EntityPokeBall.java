@@ -4,6 +4,8 @@ import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import pixelmon.Pixelmon;
+import pixelmon.RandomHelper;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
@@ -21,9 +23,8 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.MovingObjectPosition;
-import net.minecraft.src.Vec3D;
+import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
 
 public class EntityPokeBall extends EntityThrowable {
 	public int shakePokeball;
@@ -82,7 +83,7 @@ public class EntityPokeBall extends EntityThrowable {
 						pixelmon.setMotion(0, 0, 0);
 						pixelmon.releaseFromPokeball();
 						if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)
-								&& !mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper()))
+								&& !Pixelmon.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper()))
 							pixelmon.StartBattle(((IHaveHelper) movingobjectposition.entityHit).getHelper());
 						if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer)
 							pixelmon.StartBattle((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
@@ -125,8 +126,8 @@ public class EntityPokeBall extends EntityThrowable {
 	int numRocks = 0;
 	boolean isUnloaded = false;
 
-	Vec3D initPos;
-	Vec3D diff;
+	Vec3 initPos;
+	Vec3 diff;
 	float initialScale;
 
 	@Override
@@ -138,7 +139,7 @@ public class EntityPokeBall extends EntityThrowable {
 			if (waitTime == 0 && !isUnloaded) {
 				initialScale = p.scale;
 				initPos = p.getPosition();
-				diff = Vec3D.createVector(posX, posY, posZ).subtract(initPos);
+				diff = Vec3.createVectorHelper(posX, posY, posZ).subtract(initPos);
 				p.scale = initialScale / 1.1f;
 			}
 			if (waitTime == 1 && !isUnloaded) {
@@ -208,7 +209,7 @@ public class EntityPokeBall extends EntityThrowable {
 				p.setOwner((EntityPlayer) thrower);
 				p.caughtBall = getType();
 				p.clearAttackTarget();
-				mod_Pixelmon.pokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
+				Pixelmon.PokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
 				p.catchInPokeball();
 				isWaiting = false;
 				setDead();
@@ -242,10 +243,8 @@ public class EntityPokeBall extends EntityThrowable {
 
 	private void catchPokemon() {
 		if (canCatch) {
-			if (worldObj.isRemote)
-				ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-			else
-				ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("You captured " + p.getName());
+			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
+			
 			spawnCaptureParticles();
 			isCaptured = true;
 			waitTime = 0;
@@ -262,7 +261,7 @@ public class EntityPokeBall extends EntityThrowable {
 	}
 
 	private void spawnCaptureParticles() {
-		for (int i = mod_Pixelmon.getRandomNumberBetween(5, 7); i > 0; i--) {
+		for (int i = RandomHelper.getRandomNumberBetween(5, 7); i > 0; i--) {
 			EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this, "crit");
 			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
 		}

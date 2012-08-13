@@ -15,7 +15,6 @@ import net.minecraft.src.EntityAIWander;
 import net.minecraft.src.EntityAIWatchClosest;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
 
 public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 	private World world;
@@ -30,7 +29,6 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 		loadAI();
 	}
 	public void loadAI(){
-		tasks = new EntityAITasks();
 		if (helper.aggression >0){
 			tasks.addTask(0, new EntityAIMoveTowardsTarget(this, moveSpeed, 15));
 			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50-helper.aggression, true));
@@ -46,7 +44,7 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 	}
 	
 	public void resetAI(){
-		tasks = new EntityAITasks();
+		tasks.field_75782_a.clear();
 		tasks.addTask(3, new EntityAISwimming(this));
 	}
 	public void StartBattle(PixelmonEntityHelper target){

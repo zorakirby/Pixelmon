@@ -2,7 +2,6 @@ package pixelmon.enums;
 
 import pixelmon.items.PixelmonItems;
 import net.minecraft.src.Item;
-import net.minecraft.src.mod_Pixelmon;
 
 public enum EnumPokeballs {
 	PokeBall(0, 1, "pokeball"), GreatBall(1, 1.5, "greatball"), UltraBall(2, 2, "ultraball"), MasterBall(3, 255, "masterball");

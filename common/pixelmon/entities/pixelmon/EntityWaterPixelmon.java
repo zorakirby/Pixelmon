@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 import java.util.Random;
 
+import pixelmon.Pixelmon;
 import pixelmon.WorldHelper;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.Moveset;
@@ -37,7 +38,6 @@ import net.minecraft.src.EntityWaterMob;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
 
 public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon implements IHaveHelper {
 	public String name;
@@ -136,7 +136,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 			p2 = new WildPixelmonParticipant(target);
 
 		helper.bc = new BattleController(p1, p2);
-		tasks = new EntityAITasks();
+		isSwimming = false;
 	}
 
 	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
@@ -151,7 +151,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		p2 = new TrainerParticipant(trainer, opponent);
 
 		helper.bc = new BattleController(p1, p2);
-		tasks = new EntityAITasks();
+		isSwimming = false;
 	}
 
 	protected boolean isValidTarget(Entity entity) {
@@ -187,7 +187,6 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		} else {
 			super.onDeath(damagesource);
 			this.setDead();
-			this.onEntityDeath();
 		}
 	}
 
@@ -293,7 +292,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public void catchInPokeball() {
-		mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+		Pixelmon.PokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		helper.isInBall = true;
 		unloadEntity();
 	}
@@ -451,7 +450,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 		Entity entity = par1DamageSource.getEntity();
 		if (getOwner() != null)
-			mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+			Pixelmon.PokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		if (isValidTarget(entity)) {
 			setAttackTarget((EntityLiving) entity);
 			setTarget(entity);

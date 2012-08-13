@@ -1,4 +1,4 @@
-package pixelmon.gui;
+package pixelmon;
 
 import net.minecraft.src.Gui;
 
@@ -21,10 +21,8 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StringTranslate;
 import net.minecraft.src.Tessellator;
-import net.minecraft.src.mod_Pixelmon;
-import net.minecraft.src.forge.IRenderWorldLastHandler;
 
-public class GuiPixelmonOverlay extends Gui implements IRenderWorldLastHandler {
+public class GuiPixelmonOverlay extends Gui{
 
 	public FontRenderer fontRenderer;
 	public int selectedPixelmon;
@@ -33,7 +31,6 @@ public class GuiPixelmonOverlay extends Gui implements IRenderWorldLastHandler {
 		fontRenderer = ModLoader.getMinecraftInstance().fontRenderer;
 	}
 
-	@Override
 	public void onRenderWorldLast(RenderGlobal renderer, float partialTicks) {
 
 		ScaledResolution var5 = new ScaledResolution(ModLoader.getMinecraftInstance().gameSettings, ModLoader.getMinecraftInstance().displayWidth,

@@ -45,7 +45,6 @@ import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
 
 public abstract class BaseEntityPixelmon extends EntityTameable implements IHaveHelper {
 
@@ -141,7 +140,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			p2 = new WildPixelmonParticipant(target);
 
 		helper.bc = new BattleController(p1, p2);
-		tasks = new EntityAITasks();
 	}
 
 	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
@@ -156,7 +154,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		p2 = new TrainerParticipant(trainer, opponent);
 
 		helper.bc = new BattleController(p1, p2);
-		tasks = new EntityAITasks();
+		resetAI();
 	}
 
 	public void SetBattleController(BattleController bc) {
@@ -164,7 +162,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			helper.loadMoveset();
 
 		helper.bc = bc;
-		tasks = new EntityAITasks();
+		resetAI();
 	}
 
 	public void EndBattle() {
@@ -184,7 +182,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	public void onDeath(DamageSource damagesource) {
 		super.onDeath(damagesource);
-		if (getOwner() != null && mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).isIn(helper)) {
+		if (getOwner() != null && Pixelmon.PokeballManager.getPlayerStorage(getOwner()).isIn(helper)) {
 			String s = "Your " + getName() + " fainted!";
 			ChatHandler.sendChat(getOwner(), s);
 			helper.isFainted = true;
@@ -193,7 +191,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		} else {
 			super.onDeath(damagesource);
 			this.setDead();
-			this.onEntityDeath();
 		}
 	}
 
@@ -229,7 +226,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 		Entity entity = par1DamageSource.getEntity();
 		if (getOwner() != null)
-			mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+			Pixelmon.PokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		if (isValidTarget(entity)) {
 			setAttackTarget((EntityLiving) entity);
 			setTarget(entity);
@@ -242,7 +239,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public void catchInPokeball() {
-		mod_Pixelmon.pokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+		Pixelmon.PokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
 		helper.isInBall = true;
 		unloadEntity();
 	}
@@ -303,7 +300,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		if (helper.moveset.size() >= 4) {
 			ArrayList<Attack> attacks = getAttacksAtLevel(helper.lvl.getLevel());
 			for (int i = 0; i < attacks.size(); i++)
-				getOwner().openGui(mod_Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, dataWatcher.getWatchableObjectInt(19), attacks.get(i).attackIndex, 0);
+				getOwner().openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, dataWatcher.getWatchableObjectInt(19), attacks.get(i).attackIndex, 0);
 		}
 	}
 

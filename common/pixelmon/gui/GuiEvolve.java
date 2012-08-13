@@ -2,6 +2,7 @@ package pixelmon.gui;
 
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.render.GraphicsHelper;
 import net.minecraft.src.*;
 
 public class GuiEvolve extends GuiScreen
@@ -35,6 +36,6 @@ public class GuiEvolve extends GuiScreen
 	
 	public void updateScreen()
 	{
-		mod_Pixelmon.drawModelToScreen(1, 1, 1, mc.displayWidth / 2, mc.displayWidth / 2, b.getEntity(), this, true);
+		GraphicsHelper.drawModelToScreen(1, 1, 1, mc.displayWidth / 2, mc.displayWidth / 2, b.getEntity(), this, true);
 	}
 }
