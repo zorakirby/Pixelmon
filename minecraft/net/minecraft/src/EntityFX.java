@@ -56,7 +56,7 @@ public class EntityFX extends Entity
         return this;
     }
 
-    public EntityFX func_405_d(float par1)
+    public EntityFX multipleParticleScaleBy(float par1)
     {
         this.setSize(0.2F * par1, 0.2F * par1);
         this.particleScale *= par1;

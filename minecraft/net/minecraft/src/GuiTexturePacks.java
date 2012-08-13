@@ -1,6 +1,7 @@
 package net.minecraft.src;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.Sys;
@@ -46,7 +47,35 @@ public class GuiTexturePacks extends GuiScreen
         {
             if (par1GuiButton.id == 5)
             {
-                boolean var2 = false;
+                if (Minecraft.getOs() == EnumOS.MACOS)
+                {
+                    try
+                    {
+                        System.out.println(this.fileLocation);
+                        Runtime.getRuntime().exec(new String[] {"/usr/bin/open", this.fileLocation});
+                        return;
+                    }
+                    catch (IOException var7)
+                    {
+                        var7.printStackTrace();
+                    }
+                }
+                else if (Minecraft.getOs() == EnumOS.WINDOWS)
+                {
+                    String var2 = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] {this.fileLocation});
+
+                    try
+                    {
+                        Runtime.getRuntime().exec(var2);
+                        return;
+                    }
+                    catch (IOException var6)
+                    {
+                        var6.printStackTrace();
+                    }
+                }
+
+                boolean var8 = false;
 
                 try
                 {
@@ -57,12 +86,12 @@ public class GuiTexturePacks extends GuiScreen
                 catch (Throwable var5)
                 {
                     var5.printStackTrace();
-                    var2 = true;
+                    var8 = true;
                 }
 
-                if (var2)
+                if (var8)
                 {
-                    System.out.println("Opening via Sys class!");
+                    System.out.println("Opening via system class!");
                     Sys.openURL("file://" + this.fileLocation);
                 }
             }
@@ -123,72 +152,72 @@ public class GuiTexturePacks extends GuiScreen
         --this.refreshTimer;
     }
 
-    static Minecraft func_22124_a(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73950_a(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_22126_b(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73955_b(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_22119_c(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73958_c(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_22122_d(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73951_d(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_22117_e(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73952_e(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_35307_f(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73962_f(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_35308_g(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73959_g(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_22118_f(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73957_h(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_22116_g(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73956_i(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_22121_h(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73953_j(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static Minecraft func_22123_i(GuiTexturePacks par0GuiTexturePacks)
+    static Minecraft func_73961_k(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.mc;
     }
 
-    static FontRenderer func_22127_j(GuiTexturePacks par0GuiTexturePacks)
+    static FontRenderer func_73960_l(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.fontRenderer;
     }
 
-    static FontRenderer func_22120_k(GuiTexturePacks par0GuiTexturePacks)
+    static FontRenderer func_73963_m(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.fontRenderer;
     }
 
-    static FontRenderer func_22125_l(GuiTexturePacks par0GuiTexturePacks)
+    static FontRenderer func_73954_n(GuiTexturePacks par0GuiTexturePacks)
     {
         return par0GuiTexturePacks.fontRenderer;
     }

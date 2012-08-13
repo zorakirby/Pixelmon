@@ -2,22 +2,22 @@ package net.minecraft.src;
 
 public class MouseFilter
 {
-    private float field_22388_a;
-    private float field_22387_b;
-    private float field_22389_c;
+    private float field_76336_a;
+    private float field_76334_b;
+    private float field_76335_c;
 
-    public float func_22386_a(float par1, float par2)
+    public float func_76333_a(float par1, float par2)
     {
-        this.field_22388_a += par1;
-        par1 = (this.field_22388_a - this.field_22387_b) * par2;
-        this.field_22389_c += (par1 - this.field_22389_c) * 0.5F;
+        this.field_76336_a += par1;
+        par1 = (this.field_76336_a - this.field_76334_b) * par2;
+        this.field_76335_c += (par1 - this.field_76335_c) * 0.5F;
 
-        if (par1 > 0.0F && par1 > this.field_22389_c || par1 < 0.0F && par1 < this.field_22389_c)
+        if (par1 > 0.0F && par1 > this.field_76335_c || par1 < 0.0F && par1 < this.field_76335_c)
         {
-            par1 = this.field_22389_c;
+            par1 = this.field_76335_c;
         }
 
-        this.field_22387_b += par1;
+        this.field_76334_b += par1;
         return par1;
     }
 }

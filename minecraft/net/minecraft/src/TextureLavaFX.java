@@ -4,25 +4,25 @@ import cpw.mods.fml.client.FMLTextureFX;
 
 public class TextureLavaFX extends FMLTextureFX
 {
-    protected float[] field_1147_g;
-    protected float[] field_1146_h;
-    protected float[] field_1145_i;
-    protected float[] field_1144_j;
+    protected float[] field_76876_g = new float[256];
+    protected float[] field_76878_h = new float[256];
+    protected float[] field_76879_i = new float[256];
+    protected float[] field_76877_j = new float[256];
 
     public TextureLavaFX()
     {
         super(Block.lavaMoving.blockIndexInTexture);
-        setup();
+		setup();
     }
 
     @Override
     public void setup()
     {
         super.setup();
-        field_1147_g = new float[tileSizeSquare];
-        field_1146_h = new float[tileSizeSquare];
-        field_1145_i = new float[tileSizeSquare];
-        field_1144_j = new float[tileSizeSquare];
+        field_76876_g = new float[tileSizeSquare];
+        field_76878_h = new float[tileSizeSquare];
+        field_76879_i = new float[tileSizeSquare];
+        field_76877_j = new float[tileSizeSquare];
     }
 
     public void onTick()
@@ -49,34 +49,34 @@ public class TextureLavaFX extends FMLTextureFX
                     {
                         var8 = var6 + var4 & tileSizeMask;
                         var9 = var7 + var5 & tileSizeMask;
-                        var3 += this.field_1147_g[var8 + var9 * tileSizeBase];
+                        var3 += this.field_76876_g[var8 + var9 * tileSizeBase];
                     }
                 }
 
-                this.field_1146_h[var1 + var2 * tileSizeBase] = var3 / 10.0F + (this.field_1145_i[(var1 + 0 & 15) + (var2 + 0 & 15) * tileSizeBase] + this.field_1145_i[(var1 + 1 & 15) + (var2 + 0 & 15) * tileSizeBase] + this.field_1145_i[(var1 + 1 & 15) + (var2 + 1 & 15) * tileSizeBase] + this.field_1145_i[(var1 + 0 & 15) + (var2 + 1 & 15) * tileSizeBase]) / 4.0F * 0.8F;
-                this.field_1145_i[var1 + var2 * tileSizeBase] += this.field_1144_j[var1 + var2 * tileSizeBase] * 0.01F;
+                this.field_76878_h[var1 + var2 * tileSizeBase] = var3 / 10.0F + (this.field_76879_i[(var1 + 0 & tileSizeMask) + (var2 + 0 & tileSizeMask) * tileSizeBase] + this.field_76879_i[(var1 + 1 & tileSizeMask) + (var2 + 0 & tileSizeMask) * tileSizeBase] + this.field_76879_i[(var1 + 1 & tileSizeMask) + (var2 + 1 & tileSizeMask) * tileSizeBase] + this.field_76879_i[(var1 + 0 & tileSizeMask) + (var2 + 1 & tileSizeMask) * tileSizeBase]) / 4.0F * 0.8F;
+                this.field_76879_i[var1 + var2 * tileSizeBase] += this.field_76877_j[var1 + var2 * tileSizeBase] * 0.01F;
 
-                if (this.field_1145_i[var1 + var2 * tileSizeBase] < 0.0F)
+                if (this.field_76879_i[var1 + var2 * tileSizeBase] < 0.0F)
                 {
-                    this.field_1145_i[var1 + var2 * tileSizeBase] = 0.0F;
+                    this.field_76879_i[var1 + var2 * tileSizeBase] = 0.0F;
                 }
 
-                this.field_1144_j[var1 + var2 * tileSizeBase] -= 0.06F;
+                this.field_76877_j[var1 + var2 * tileSizeBase] -= 0.06F;
 
                 if (Math.random() < 0.005D)
                 {
-                    this.field_1144_j[var1 + var2 * tileSizeBase] = 1.5F;
+                    this.field_76877_j[var1 + var2 * tileSizeBase] = 1.5F;
                 }
             }
         }
 
-        float[] var11 = this.field_1146_h;
-        this.field_1146_h = this.field_1147_g;
-        this.field_1147_g = var11;
+        float[] var11 = this.field_76878_h;
+        this.field_76878_h = this.field_76876_g;
+        this.field_76876_g = var11;
 
         for (var2 = 0; var2 < tileSizeSquare; ++var2)
         {
-            var3 = this.field_1147_g[var2] * 2.0F;
+            var3 = this.field_76876_g[var2] * 2.0F;
 
             if (var3 > 1.0F)
             {

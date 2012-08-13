@@ -20,7 +20,7 @@ public class TextureWaterFX extends FMLTextureFX
     public TextureWaterFX()
     {
         super(Block.waterMoving.blockIndexInTexture);
-        setup();
+		setup();
     }
 
     @Override

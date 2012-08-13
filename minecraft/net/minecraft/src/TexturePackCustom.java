@@ -1,169 +1,34 @@
 package net.minecraft.src;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import javax.imageio.ImageIO;
-import net.minecraft.client.Minecraft;
-import org.lwjgl.opengl.GL11;
 
-public class TexturePackCustom extends TexturePackBase
+public class TexturePackCustom extends TexturePackImplementation
 {
-    private ZipFile texturePackZipFile;
+    private ZipFile field_77550_e;
 
-    /**
-     * The allocated OpenGL texture name for this texture pack, or -1 if it hasn't been allocated yet.
-     */
-    private int texturePackName = -1;
-    private BufferedImage texturePackThumbnail;
-    private File texturePackFile;
-
-    public TexturePackCustom(File par1File)
+    public TexturePackCustom(String par1Str, File par2File)
     {
-        this.texturePackFileName = par1File.getName();
-        this.texturePackFile = par1File;
+        super(par1Str, par2File, par2File.getName());
     }
 
-    /**
-     * Truncates the specified string to 34 characters in length and returns it.
-     */
-    private String truncateString(String par1Str)
+    public void func_77533_a(RenderEngine par1RenderEngine)
     {
-        if (par1Str != null && par1Str.length() > 34)
-        {
-            par1Str = par1Str.substring(0, 34);
-        }
-
-        return par1Str;
-    }
-
-    public void func_6485_a(Minecraft par1Minecraft) throws IOException
-    {
-        ZipFile var2 = null;
-        InputStream var3 = null;
+        super.func_77533_a(par1RenderEngine);
 
         try
         {
-            var2 = new ZipFile(this.texturePackFile);
-
-            try
-            {
-                var3 = var2.getInputStream(var2.getEntry("pack.txt"));
-                BufferedReader var4 = new BufferedReader(new InputStreamReader(var3));
-                this.firstDescriptionLine = this.truncateString(var4.readLine());
-                this.secondDescriptionLine = this.truncateString(var4.readLine());
-                var4.close();
-                var3.close();
-            }
-            catch (Exception var20)
-            {
-                ;
-            }
-
-            try
-            {
-                var3 = var2.getInputStream(var2.getEntry("pack.png"));
-                this.texturePackThumbnail = ImageIO.read(var3);
-                var3.close();
-            }
-            catch (Exception var19)
-            {
-                ;
-            }
-
-            var2.close();
+            this.field_77550_e.close();
         }
-        catch (Exception var21)
-        {
-            var21.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                var3.close();
-            }
-            catch (Exception var18)
-            {
-                ;
-            }
-
-            try
-            {
-                var2.close();
-            }
-            catch (Exception var17)
-            {
-                ;
-            }
-        }
-    }
-
-    /**
-     * Unbinds the thumbnail texture for texture pack screen
-     */
-    public void unbindThumbnailTexture(Minecraft par1Minecraft)
-    {
-        if (this.texturePackThumbnail != null)
-        {
-            par1Minecraft.renderEngine.deleteTexture(this.texturePackName);
-        }
-
-        this.closeTexturePackFile();
-    }
-
-    /**
-     * binds the texture corresponding to the pack's thumbnail image
-     */
-    public void bindThumbnailTexture(Minecraft par1Minecraft)
-    {
-        if (this.texturePackThumbnail != null && this.texturePackName < 0)
-        {
-            this.texturePackName = par1Minecraft.renderEngine.allocateAndSetupTexture(this.texturePackThumbnail);
-        }
-
-        if (this.texturePackThumbnail != null)
-        {
-            par1Minecraft.renderEngine.bindTexture(this.texturePackName);
-        }
-        else
-        {
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1Minecraft.renderEngine.getTexture("/gui/unknown_pack.png"));
-        }
-    }
-
-    public void func_6482_a()
-    {
-        try
-        {
-            this.texturePackZipFile = new ZipFile(this.texturePackFile);
-        }
-        catch (Exception var2)
-        {
-            ;
-        }
-    }
-
-    /**
-     * Closes the zipfile associated to this texture pack. Does nothing for the default texture pack.
-     */
-    public void closeTexturePackFile()
-    {
-        try
-        {
-            this.texturePackZipFile.close();
-        }
-        catch (Exception var2)
+        catch (IOException var3)
         {
             ;
         }
 
-        this.texturePackZipFile = null;
+        this.field_77550_e = null;
     }
 
     /**
@@ -171,13 +36,15 @@ public class TexturePackCustom extends TexturePackBase
      */
     public InputStream getResourceAsStream(String par1Str)
     {
+        this.func_77549_g();
+
         try
         {
-            ZipEntry var2 = this.texturePackZipFile.getEntry(par1Str.substring(1));
+            ZipEntry var2 = this.field_77550_e.getEntry(par1Str.substring(1));
 
             if (var2 != null)
             {
-                return this.texturePackZipFile.getInputStream(var2);
+                return this.field_77550_e.getInputStream(var2);
             }
         }
         catch (Exception var3)
@@ -185,6 +52,21 @@ public class TexturePackCustom extends TexturePackBase
             ;
         }
 
-        return TexturePackBase.class.getResourceAsStream(par1Str);
+        return super.getResourceAsStream(par1Str);
+    }
+
+    private void func_77549_g()
+    {
+        if (this.field_77550_e == null)
+        {
+            try
+            {
+                this.field_77550_e = new ZipFile(this.field_77548_a);
+            }
+            catch (IOException var2)
+            {
+                ;
+            }
+        }
     }
 }

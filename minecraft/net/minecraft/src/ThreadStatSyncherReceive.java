@@ -13,13 +13,13 @@ class ThreadStatSyncherReceive extends Thread
     {
         try
         {
-            if (StatsSyncher.func_27422_a(this.syncher) != null)
+            if (StatsSyncher.func_77419_a(this.syncher) != null)
             {
-                StatsSyncher.func_27412_a(this.syncher, StatsSyncher.func_27422_a(this.syncher), StatsSyncher.func_27423_b(this.syncher), StatsSyncher.func_27411_c(this.syncher), StatsSyncher.func_27413_d(this.syncher));
+                StatsSyncher.func_77414_a(this.syncher, StatsSyncher.func_77419_a(this.syncher), StatsSyncher.func_77408_b(this.syncher), StatsSyncher.func_77407_c(this.syncher), StatsSyncher.func_77411_d(this.syncher));
             }
-            else if (StatsSyncher.func_27423_b(this.syncher).exists())
+            else if (StatsSyncher.func_77408_b(this.syncher).exists())
             {
-                StatsSyncher.func_27421_a(this.syncher, StatsSyncher.func_27409_a(this.syncher, StatsSyncher.func_27423_b(this.syncher), StatsSyncher.func_27411_c(this.syncher), StatsSyncher.func_27413_d(this.syncher)));
+                StatsSyncher.func_77416_a(this.syncher, StatsSyncher.func_77410_a(this.syncher, StatsSyncher.func_77408_b(this.syncher), StatsSyncher.func_77407_c(this.syncher), StatsSyncher.func_77411_d(this.syncher)));
             }
         }
         catch (Exception var5)

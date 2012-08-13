@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 
 public class GameSettings
 {
@@ -15,6 +16,7 @@ public class GameSettings
 
     /** GUI scale values */
     private static final String[] GUISCALES = new String[] {"options.guiScale.auto", "options.guiScale.small", "options.guiScale.normal", "options.guiScale.large"};
+    private static final String[] field_74369_af = new String[] {"options.chat.visibility.full", "options.chat.visibility.system", "options.chat.visibility.hidden"};
     private static final String[] PARTICLES = new String[] {"options.particles.all", "options.particles.decreased", "options.particles.minimal"};
 
     /** Limit framerate labels */
@@ -40,6 +42,15 @@ public class GameSettings
 
     /** The name of the selected texture pack. */
     public String skin = "Default";
+    public int chatVisibility = 0;
+    public boolean chatColours = true;
+    public boolean chatLinks = true;
+    public boolean chatLinksPrompt = true;
+    public float chatOpacity = 1.0F;
+    public boolean serverTextures = true;
+    public boolean snooperEnabled = true;
+    public boolean fullScreen = false;
+    public boolean enableVsync = false;
     public KeyBinding keyBindForward = new KeyBinding("key.forward", 17);
     public KeyBinding keyBindLeft = new KeyBinding("key.left", 30);
     public KeyBinding keyBindBack = new KeyBinding("key.back", 31);
@@ -53,6 +64,7 @@ public class GameSettings
     public KeyBinding keyBindUseItem = new KeyBinding("key.use", -99);
     public KeyBinding keyBindPlayerList = new KeyBinding("key.playerlist", 15);
     public KeyBinding keyBindPickBlock = new KeyBinding("key.pickItem", -98);
+    public KeyBinding field_74323_J = new KeyBinding("key.command", 53);
     public KeyBinding[] keyBindings;
     protected Minecraft mc;
     private File optionsFile;
@@ -62,7 +74,7 @@ public class GameSettings
 
     /** true if debug info should be displayed instead of version */
     public boolean showDebugInfo;
-    public boolean field_50119_G;
+    public boolean field_74329_Q;
 
     /** The lastServer string. */
     public String lastServer;
@@ -93,12 +105,12 @@ public class GameSettings
 
     public GameSettings(Minecraft par1Minecraft, File par2File)
     {
-        this.keyBindings = new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock};
+        this.keyBindings = new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.field_74323_J};
         this.difficulty = 2;
         this.hideGUI = false;
         this.thirdPersonView = 0;
         this.showDebugInfo = false;
-        this.field_50119_G = false;
+        this.field_74329_Q = false;
         this.lastServer = "";
         this.noclip = false;
         this.smoothCamera = false;
@@ -117,12 +129,12 @@ public class GameSettings
 
     public GameSettings()
     {
-        this.keyBindings = new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock};
+        this.keyBindings = new KeyBinding[] {this.keyBindAttack, this.keyBindUseItem, this.keyBindForward, this.keyBindLeft, this.keyBindBack, this.keyBindRight, this.keyBindJump, this.keyBindSneak, this.keyBindDrop, this.keyBindInventory, this.keyBindChat, this.keyBindPlayerList, this.keyBindPickBlock, this.field_74323_J};
         this.difficulty = 2;
         this.hideGUI = false;
         this.thirdPersonView = 0;
         this.showDebugInfo = false;
-        this.field_50119_G = false;
+        this.field_74329_Q = false;
         this.lastServer = "";
         this.noclip = false;
         this.smoothCamera = false;
@@ -199,6 +211,11 @@ public class GameSettings
         {
             this.gammaSetting = par2;
         }
+
+        if (par1EnumOptions == EnumOptions.CHAT_OPACITY)
+        {
+            this.chatOpacity = par2;
+        }
     }
 
     /**
@@ -270,17 +287,63 @@ public class GameSettings
             this.mc.renderGlobal.loadRenderers();
         }
 
+        if (par1EnumOptions == EnumOptions.CHAT_VISIBILITY)
+        {
+            this.chatVisibility = (this.chatVisibility + par2) % 3;
+        }
+
+        if (par1EnumOptions == EnumOptions.CHAT_COLOR)
+        {
+            this.chatColours = !this.chatColours;
+        }
+
+        if (par1EnumOptions == EnumOptions.CHAT_LINKS)
+        {
+            this.chatLinks = !this.chatLinks;
+        }
+
+        if (par1EnumOptions == EnumOptions.CHAT_LINKS_PROMPT)
+        {
+            this.chatLinksPrompt = !this.chatLinksPrompt;
+        }
+
+        if (par1EnumOptions == EnumOptions.USE_SERVER_TEXTURES)
+        {
+            this.serverTextures = !this.serverTextures;
+        }
+
+        if (par1EnumOptions == EnumOptions.SNOOPER_ENABLED)
+        {
+            this.snooperEnabled = !this.snooperEnabled;
+        }
+
+        if (par1EnumOptions == EnumOptions.USE_FULLSCREEN)
+        {
+            this.fullScreen = !this.fullScreen;
+
+            if (this.mc.isFullScreen() != this.fullScreen)
+            {
+                this.mc.toggleFullscreen();
+            }
+        }
+
+        if (par1EnumOptions == EnumOptions.ENABLE_VSYNC)
+        {
+            this.enableVsync = !this.enableVsync;
+            Display.setVSyncEnabled(this.enableVsync);
+        }
+
         this.saveOptions();
     }
 
     public float getOptionFloatValue(EnumOptions par1EnumOptions)
     {
-        return par1EnumOptions == EnumOptions.FOV ? this.fovSetting : (par1EnumOptions == EnumOptions.GAMMA ? this.gammaSetting : (par1EnumOptions == EnumOptions.MUSIC ? this.musicVolume : (par1EnumOptions == EnumOptions.SOUND ? this.soundVolume : (par1EnumOptions == EnumOptions.SENSITIVITY ? this.mouseSensitivity : 0.0F))));
+        return par1EnumOptions == EnumOptions.FOV ? this.fovSetting : (par1EnumOptions == EnumOptions.GAMMA ? this.gammaSetting : (par1EnumOptions == EnumOptions.MUSIC ? this.musicVolume : (par1EnumOptions == EnumOptions.SOUND ? this.soundVolume : (par1EnumOptions == EnumOptions.SENSITIVITY ? this.mouseSensitivity : (par1EnumOptions == EnumOptions.CHAT_OPACITY ? this.chatOpacity : 0.0F)))));
     }
 
     public boolean getOptionOrdinalValue(EnumOptions par1EnumOptions)
     {
-        switch (EnumOptionsMappingHelper.enumOptionsMappingHelperArray[par1EnumOptions.ordinal()])
+        switch (EnumOptionsHelper.enumOptionsMappingHelperArray[par1EnumOptions.ordinal()])
         {
             case 1:
                 return this.invertMouse;
@@ -294,12 +357,26 @@ public class GameSettings
                 return this.ambientOcclusion;
             case 6:
                 return this.clouds;
+            case 7:
+                return this.chatColours;
+            case 8:
+                return this.chatLinks;
+            case 9:
+                return this.chatLinksPrompt;
+            case 10:
+                return this.serverTextures;
+            case 11:
+                return this.snooperEnabled;
+            case 12:
+                return this.fullScreen;
+            case 13:
+                return this.enableVsync;
             default:
                 return false;
         }
     }
 
-    private static String func_48571_a(String[] par0ArrayOfStr, int par1)
+    private static String func_74299_a(String[] par0ArrayOfStr, int par1)
     {
         if (par1 < 0 || par1 >= par0ArrayOfStr.length)
         {
@@ -321,7 +398,7 @@ public class GameSettings
         if (par1EnumOptions.getEnumFloat())
         {
             float var5 = this.getOptionFloatValue(par1EnumOptions);
-            return par1EnumOptions == EnumOptions.SENSITIVITY ? (var5 == 0.0F ? var3 + var2.translateKey("options.sensitivity.min") : (var5 == 1.0F ? var3 + var2.translateKey("options.sensitivity.max") : var3 + (int)(var5 * 200.0F) + "%")) : (par1EnumOptions == EnumOptions.FOV ? (var5 == 0.0F ? var3 + var2.translateKey("options.fov.min") : (var5 == 1.0F ? var3 + var2.translateKey("options.fov.max") : var3 + (int)(70.0F + var5 * 40.0F))) : (par1EnumOptions == EnumOptions.GAMMA ? (var5 == 0.0F ? var3 + var2.translateKey("options.gamma.min") : (var5 == 1.0F ? var3 + var2.translateKey("options.gamma.max") : var3 + "+" + (int)(var5 * 100.0F) + "%")) : (var5 == 0.0F ? var3 + var2.translateKey("options.off") : var3 + (int)(var5 * 100.0F) + "%")));
+            return par1EnumOptions == EnumOptions.SENSITIVITY ? (var5 == 0.0F ? var3 + var2.translateKey("options.sensitivity.min") : (var5 == 1.0F ? var3 + var2.translateKey("options.sensitivity.max") : var3 + (int)(var5 * 200.0F) + "%")) : (par1EnumOptions == EnumOptions.FOV ? (var5 == 0.0F ? var3 + var2.translateKey("options.fov.min") : (var5 == 1.0F ? var3 + var2.translateKey("options.fov.max") : var3 + (int)(70.0F + var5 * 40.0F))) : (par1EnumOptions == EnumOptions.GAMMA ? (var5 == 0.0F ? var3 + var2.translateKey("options.gamma.min") : (var5 == 1.0F ? var3 + var2.translateKey("options.gamma.max") : var3 + "+" + (int)(var5 * 100.0F) + "%")) : (par1EnumOptions == EnumOptions.CHAT_OPACITY ? var3 + (int)(var5 * 90.0F + 10.0F) + "%" : (var5 == 0.0F ? var3 + var2.translateKey("options.off") : var3 + (int)(var5 * 100.0F) + "%"))));
         }
         else if (par1EnumOptions.getEnumBoolean())
         {
@@ -330,7 +407,7 @@ public class GameSettings
         }
         else
         {
-            return par1EnumOptions == EnumOptions.RENDER_DISTANCE ? var3 + func_48571_a(RENDER_DISTANCES, this.renderDistance) : (par1EnumOptions == EnumOptions.DIFFICULTY ? var3 + func_48571_a(DIFFICULTIES, this.difficulty) : (par1EnumOptions == EnumOptions.GUI_SCALE ? var3 + func_48571_a(GUISCALES, this.guiScale) : (par1EnumOptions == EnumOptions.PARTICLES ? var3 + func_48571_a(PARTICLES, this.particleSetting) : (par1EnumOptions == EnumOptions.FRAMERATE_LIMIT ? var3 + func_48571_a(LIMIT_FRAMERATES, this.limitFramerate) : (par1EnumOptions == EnumOptions.GRAPHICS ? (this.fancyGraphics ? var3 + var2.translateKey("options.graphics.fancy") : var3 + var2.translateKey("options.graphics.fast")) : var3)))));
+            return par1EnumOptions == EnumOptions.RENDER_DISTANCE ? var3 + func_74299_a(RENDER_DISTANCES, this.renderDistance) : (par1EnumOptions == EnumOptions.DIFFICULTY ? var3 + func_74299_a(DIFFICULTIES, this.difficulty) : (par1EnumOptions == EnumOptions.GUI_SCALE ? var3 + func_74299_a(GUISCALES, this.guiScale) : (par1EnumOptions == EnumOptions.CHAT_VISIBILITY ? var3 + func_74299_a(field_74369_af, this.chatVisibility) : (par1EnumOptions == EnumOptions.PARTICLES ? var3 + func_74299_a(PARTICLES, this.particleSetting) : (par1EnumOptions == EnumOptions.FRAMERATE_LIMIT ? var3 + func_74299_a(LIMIT_FRAMERATES, this.limitFramerate) : (par1EnumOptions == EnumOptions.GRAPHICS ? (this.fancyGraphics ? var3 + var2.translateKey("options.graphics.fancy") : var3 + var2.translateKey("options.graphics.fast")) : var3))))));
         }
     }
 
@@ -455,15 +532,65 @@ public class GameSettings
                         this.language = var3[1];
                     }
 
-                    for (int var4 = 0; var4 < this.keyBindings.length; ++var4)
+                    if (var3[0].equals("chatVisibility"))
                     {
-                        if (var3[0].equals("key_" + this.keyBindings[var4].keyDescription))
+                        this.chatVisibility = Integer.parseInt(var3[1]);
+                    }
+
+                    if (var3[0].equals("chatColors"))
+                    {
+                        this.chatColours = var3[1].equals("true");
+                    }
+
+                    if (var3[0].equals("chatLinks"))
+                    {
+                        this.chatLinks = var3[1].equals("true");
+                    }
+
+                    if (var3[0].equals("chatLinksPrompt"))
+                    {
+                        this.chatLinksPrompt = var3[1].equals("true");
+                    }
+
+                    if (var3[0].equals("chatOpacity"))
+                    {
+                        this.chatOpacity = this.parseFloat(var3[1]);
+                    }
+
+                    if (var3[0].equals("serverTextures"))
+                    {
+                        this.serverTextures = var3[1].equals("true");
+                    }
+
+                    if (var3[0].equals("snooperEnabled"))
+                    {
+                        this.snooperEnabled = var3[1].equals("true");
+                    }
+
+                    if (var3[0].equals("fullscreen"))
+                    {
+                        this.fullScreen = var3[1].equals("true");
+                    }
+
+                    if (var3[0].equals("enableVsync"))
+                    {
+                        this.enableVsync = var3[1].equals("true");
+                    }
+
+                    KeyBinding[] var4 = this.keyBindings;
+                    int var5 = var4.length;
+
+                    for (int var6 = 0; var6 < var5; ++var6)
+                    {
+                        KeyBinding var7 = var4[var6];
+
+                        if (var3[0].equals("key_" + var7.keyDescription))
                         {
-                            this.keyBindings[var4].keyCode = Integer.parseInt(var3[1]);
+                            var7.keyCode = Integer.parseInt(var3[1]);
                         }
                     }
                 }
-                catch (Exception var5)
+                catch (Exception var8)
                 {
                     System.out.println("Skipping bad option: " + var2);
                 }
@@ -472,10 +599,10 @@ public class GameSettings
             KeyBinding.resetKeyBindingArrayAndHash();
             var1.close();
         }
-        catch (Exception var6)
+        catch (Exception var9)
         {
             System.out.println("Failed to load options");
-            var6.printStackTrace();
+            var9.printStackTrace();
         }
     }
 
@@ -515,18 +642,35 @@ public class GameSettings
             var1.println("skin:" + this.skin);
             var1.println("lastServer:" + this.lastServer);
             var1.println("lang:" + this.language);
+            var1.println("chatVisibility:" + this.chatVisibility);
+            var1.println("chatColors:" + this.chatColours);
+            var1.println("chatLinks:" + this.chatLinks);
+            var1.println("chatLinksPrompt:" + this.chatLinksPrompt);
+            var1.println("chatOpacity:" + this.chatOpacity);
+            var1.println("serverTextures:" + this.serverTextures);
+            var1.println("snooperEnabled:" + this.snooperEnabled);
+            var1.println("fullscreen:" + this.fullScreen);
+            var1.println("enableVsync:" + this.enableVsync);
+            KeyBinding[] var2 = this.keyBindings;
+            int var3 = var2.length;
 
-            for (int var2 = 0; var2 < this.keyBindings.length; ++var2)
+            for (int var4 = 0; var4 < var3; ++var4)
             {
-                var1.println("key_" + this.keyBindings[var2].keyDescription + ":" + this.keyBindings[var2].keyCode);
+                KeyBinding var5 = var2[var4];
+                var1.println("key_" + var5.keyDescription + ":" + var5.keyCode);
             }
 
             var1.close();
         }
-        catch (Exception var3)
+        catch (Exception var6)
         {
             System.out.println("Failed to save options");
-            var3.printStackTrace();
+            var6.printStackTrace();
+        }
+
+        if (this.mc.thePlayer != null)
+        {
+            this.mc.thePlayer.sendQueue.addToSendQueue(new Packet204ClientInfo(this.language, this.renderDistance, this.chatVisibility, this.chatColours, this.difficulty));
         }
     }
 

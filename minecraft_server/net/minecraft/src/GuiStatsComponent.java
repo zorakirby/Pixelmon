@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -7,11 +9,12 @@ import java.text.DecimalFormat;
 import javax.swing.JComponent;
 import javax.swing.Timer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.forge.DimensionManager;
+import net.minecraftforge.common.DimensionManager;
 
+@SideOnly(Side.SERVER)
 public class GuiStatsComponent extends JComponent
 {
-    private static final DecimalFormat field_40573_a = new DecimalFormat("########0.000");
+    private static final DecimalFormat field_79020_a = new DecimalFormat("########0.000");
 
     /** An array containing the columns that make up the memory use graph. */
     private int[] memoryUse = new int[256];
@@ -23,11 +26,11 @@ public class GuiStatsComponent extends JComponent
 
     /** An array containing the strings displayed in this stats component. */
     private String[] displayStrings = new String[10];
-    private final MinecraftServer field_40572_e;
+    private final MinecraftServer field_79017_e;
 
     public GuiStatsComponent(MinecraftServer par1MinecraftServer)
     {
-        this.field_40572_e = par1MinecraftServer;
+        this.field_79017_e = par1MinecraftServer;
         this.setPreferredSize(new Dimension(356, 246));
         this.setMinimumSize(new Dimension(356, 246));
         this.setMaximumSize(new Dimension(356, 246));
@@ -40,46 +43,45 @@ public class GuiStatsComponent extends JComponent
      */
     private void updateStats()
     {
+        this.displayStrings = new String[5 + DimensionManager.getIDs().length];
         long var1 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         System.gc();
-        
-        if (displayStrings.length < DimensionManager.getIDs().length + 3)
-        {
-            displayStrings = new String[DimensionManager.getIDs().length + 3];
-        }
-        for(int x = 0; x < displayStrings.length; x++)
-        {
-            displayStrings[x] = "";
-        }
-        
         this.displayStrings[0] = "Memory use: " + var1 / 1024L / 1024L + " mb (" + Runtime.getRuntime().freeMemory() * 100L / Runtime.getRuntime().maxMemory() + "% free)";
-        this.displayStrings[1] = "Threads: " + NetworkManager.numReadThreads + " + " + NetworkManager.numWriteThreads;
-        this.displayStrings[2] = "Avg tick: " + field_40573_a.format(this.func_48551_a(this.field_40572_e.field_40027_f) * 1.0E-6D) + " ms";
-        this.displayStrings[3] = "Avg sent: " + (int)this.func_48551_a(this.field_40572_e.field_48080_u) + ", Avg size: " + (int)this.func_48551_a(this.field_40572_e.field_48079_v);
-        this.displayStrings[4] = "Avg rec: " + (int)this.func_48551_a(this.field_40572_e.field_48078_w) + ", Avg size: " + (int)this.func_48551_a(this.field_40572_e.field_48082_x);
+        this.displayStrings[1] = "Threads: " + TcpConnection.field_74471_a.get() + " + " + TcpConnection.field_74469_b.get();
+        this.displayStrings[2] = "Avg tick: " + field_79020_a.format(this.func_79015_a(this.field_79017_e.tickTimeArray) * 1.0E-6D) + " ms";
+        this.displayStrings[3] = "Avg sent: " + (int)this.func_79015_a(this.field_79017_e.sentPacketCountArray) + ", Avg size: " + (int)this.func_79015_a(this.field_79017_e.sentPacketSizeArray);
+        this.displayStrings[4] = "Avg rec: " + (int)this.func_79015_a(this.field_79017_e.recievedPacketCountArray) + ", Avg size: " + (int)this.func_79015_a(this.field_79017_e.recievedPacketSizeArray);
 
-        int x = 0;
-        for (Integer id : DimensionManager.getIDs())
+        if (this.field_79017_e.theWorldServer != null)
         {
-            displayStrings[2 + ++x] = "Lvl " + id + " tick: " + field_40573_a.format(func_48551_a(field_40572_e.worldTickTimes.get(id)) * 10E-6D) + " ms";
-            WorldServer world = (WorldServer)DimensionManager.getWorld(id);
-            if (world != null && world.chunkProviderServer != null)
+            int x = 0;
+            for (Integer id : DimensionManager.getIDs())
             {
-                displayStrings[2 + x] += ", " + world.chunkProviderServer.func_46040_d();
+                this.displayStrings[5 + x] = "Lvl " + id + " tick: " + field_79020_a.format(this.func_79015_a(this.field_79017_e.worldTickTimes.get(id)) * 1.0E-6D) + " ms";
+
+                WorldServer world = DimensionManager.getWorld(id);
+                if (world != null && world.theChunkProviderServer != null)
+                {
+                    this.displayStrings[5 + x] = this.displayStrings[5 + x] + ", " + world.theChunkProviderServer.makeString();
+                }
+                x++;
             }
         }
 
-        this.memoryUse[this.updateCounter++ & 255] = (int)(this.func_48551_a(this.field_40572_e.field_48079_v) * 100.0D / 12500.0D);
+        this.memoryUse[this.updateCounter++ & 255] = (int)(this.func_79015_a(this.field_79017_e.sentPacketSizeArray) * 100.0D / 12500.0D);
         this.repaint();
     }
 
-    private double func_48551_a(long[] par1ArrayOfLong)
+    private double func_79015_a(long[] par1ArrayOfLong)
     {
         long var2 = 0L;
-        if (par1ArrayOfLong == null) return 0;
-        for (int var4 = 0; var4 < par1ArrayOfLong.length; ++var4)
+        long[] var4 = par1ArrayOfLong;
+        int var5 = par1ArrayOfLong.length;
+
+        for (int var6 = 0; var6 < var5; ++var6)
         {
-            var2 += par1ArrayOfLong[var4];
+            long var7 = var4[var6];
+            var2 += var7;
         }
 
         return (double)var2 / (double)par1ArrayOfLong.length;

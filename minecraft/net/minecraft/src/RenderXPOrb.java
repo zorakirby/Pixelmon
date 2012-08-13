@@ -5,8 +5,8 @@ import org.lwjgl.opengl.GL12;
 
 public class RenderXPOrb extends Render
 {
-    private RenderBlocks field_35439_b = new RenderBlocks();
-    public boolean field_35440_a = true;
+    private RenderBlocks field_77006_b = new RenderBlocks();
+    public boolean field_77007_a = true;
 
     public RenderXPOrb()
     {
@@ -14,7 +14,7 @@ public class RenderXPOrb extends Render
         this.shadowOpaque = 0.75F;
     }
 
-    public void func_35438_a(EntityXPOrb par1EntityXPOrb, double par2, double par4, double par6, float par8, float par9)
+    public void func_77005_a(EntityXPOrb par1EntityXPOrb, double par2, double par4, double par6, float par8, float par9)
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
@@ -64,6 +64,6 @@ public class RenderXPOrb extends Render
      */
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.func_35438_a((EntityXPOrb)par1Entity, par2, par4, par6, par8, par9);
+        this.func_77005_a((EntityXPOrb)par1Entity, par2, par4, par6, par8, par9);
     }
 }

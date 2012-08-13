@@ -4,9 +4,9 @@ public class ScaledResolution
 {
     private int scaledWidth;
     private int scaledHeight;
-    public double scaledWidthD;
-    public double scaledHeightD;
-    public int scaleFactor;
+    private double scaledWidthD;
+    private double scaledHeightD;
+    private int scaleFactor;
 
     public ScaledResolution(GameSettings par1GameSettings, int par2, int par3)
     {
@@ -27,8 +27,8 @@ public class ScaledResolution
 
         this.scaledWidthD = (double)this.scaledWidth / (double)this.scaleFactor;
         this.scaledHeightD = (double)this.scaledHeight / (double)this.scaleFactor;
-        this.scaledWidth = (int)Math.ceil(this.scaledWidthD);
-        this.scaledHeight = (int)Math.ceil(this.scaledHeightD);
+        this.scaledWidth = MathHelper.ceiling_double_int(this.scaledWidthD);
+        this.scaledHeight = MathHelper.ceiling_double_int(this.scaledHeightD);
     }
 
     public int getScaledWidth()
@@ -39,5 +39,20 @@ public class ScaledResolution
     public int getScaledHeight()
     {
         return this.scaledHeight;
+    }
+
+    public double getScaledWidth_double()
+    {
+        return this.scaledWidthD;
+    }
+
+    public double getScaledHeight_double()
+    {
+        return this.scaledHeightD;
+    }
+
+    public int getScaleFactor()
+    {
+        return this.scaleFactor;
     }
 }

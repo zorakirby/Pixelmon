@@ -35,11 +35,14 @@ public class GuiTextField extends Gui
      * If this value is true along isFocused, keyTyped will process the keys.
      */
     private boolean isEnabled = true;
-    private int field_50041_n = 0;
-    private int field_50042_o = 0;
-    private int field_50048_p = 0;
+    private int field_73816_n = 0;
+    private int cursorPosition = 0;
+
+    /** other selection position, maybe the same as the cursor */
+    private int selectionEnd = 0;
     private int enabledColor = 14737632;
     private int disabledColor = 7368816;
+    private boolean field_73823_s = true;
 
     public GuiTextField(FontRenderer par1FontRenderer, int par2, int par3, int par4, int par5)
     {
@@ -72,7 +75,7 @@ public class GuiTextField extends Gui
             this.text = par1Str;
         }
 
-        this.func_50038_e();
+        this.setCursorPositionEnd();
     }
 
     /**
@@ -83,20 +86,26 @@ public class GuiTextField extends Gui
         return this.text;
     }
 
-    public String func_50039_c()
+    /**
+     * @return returns the text between the cursor and selectionEnd
+     */
+    public String getSelectedtext()
     {
-        int var1 = this.field_50042_o < this.field_50048_p ? this.field_50042_o : this.field_50048_p;
-        int var2 = this.field_50042_o < this.field_50048_p ? this.field_50048_p : this.field_50042_o;
+        int var1 = this.cursorPosition < this.selectionEnd ? this.cursorPosition : this.selectionEnd;
+        int var2 = this.cursorPosition < this.selectionEnd ? this.selectionEnd : this.cursorPosition;
         return this.text.substring(var1, var2);
     }
 
-    public void func_50031_b(String par1Str)
+    /**
+     * replaces selected text, or inserts text at the position on the cursor
+     */
+    public void writeText(String par1Str)
     {
         String var2 = "";
         String var3 = ChatAllowedCharacters.filerAllowedCharacters(par1Str);
-        int var4 = this.field_50042_o < this.field_50048_p ? this.field_50042_o : this.field_50048_p;
-        int var5 = this.field_50042_o < this.field_50048_p ? this.field_50048_p : this.field_50042_o;
-        int var6 = this.maxStringLength - this.text.length() - (var4 - this.field_50048_p);
+        int var4 = this.cursorPosition < this.selectionEnd ? this.cursorPosition : this.selectionEnd;
+        int var5 = this.cursorPosition < this.selectionEnd ? this.selectionEnd : this.cursorPosition;
+        int var6 = this.maxStringLength - this.text.length() - (var4 - this.selectionEnd);
         boolean var7 = false;
 
         if (this.text.length() > 0)
@@ -123,37 +132,40 @@ public class GuiTextField extends Gui
         }
 
         this.text = var2;
-        this.func_50023_d(var4 - this.field_50048_p + var8);
+        this.func_73784_d(var4 - this.selectionEnd + var8);
     }
 
-    public void func_50021_a(int par1)
+    public void func_73779_a(int par1)
     {
         if (this.text.length() != 0)
         {
-            if (this.field_50048_p != this.field_50042_o)
+            if (this.selectionEnd != this.cursorPosition)
             {
-                this.func_50031_b("");
+                this.writeText("");
             }
             else
             {
-                this.func_50020_b(this.func_50028_c(par1) - this.field_50042_o);
+                this.deleteFromCursor(this.getNthWordFromCursor(par1) - this.cursorPosition);
             }
         }
     }
 
-    public void func_50020_b(int par1)
+    /**
+     * delete the selected text, otherwsie deletes characters from either side of the cursor. params: delete num
+     */
+    public void deleteFromCursor(int par1)
     {
         if (this.text.length() != 0)
         {
-            if (this.field_50048_p != this.field_50042_o)
+            if (this.selectionEnd != this.cursorPosition)
             {
-                this.func_50031_b("");
+                this.writeText("");
             }
             else
             {
                 boolean var2 = par1 < 0;
-                int var3 = var2 ? this.field_50042_o + par1 : this.field_50042_o;
-                int var4 = var2 ? this.field_50042_o : this.field_50042_o + par1;
+                int var3 = var2 ? this.cursorPosition + par1 : this.cursorPosition;
+                int var4 = var2 ? this.cursorPosition : this.cursorPosition + par1;
                 String var5 = "";
 
                 if (var3 >= 0)
@@ -170,90 +182,110 @@ public class GuiTextField extends Gui
 
                 if (var2)
                 {
-                    this.func_50023_d(par1);
+                    this.func_73784_d(par1);
                 }
             }
         }
     }
 
-    public int func_50028_c(int par1)
+    /**
+     * see @getNthNextWordFromPos() params: N, position
+     */
+    public int getNthWordFromCursor(int par1)
     {
-        return this.func_50024_a(par1, this.func_50035_h());
+        return this.getNthWordFromPos(par1, this.getCursorPosition());
     }
 
-    public int func_50024_a(int par1, int par2)
+    /**
+     * gets the position of the nth word. N may be negative, then it looks backwards. params: N, position
+     */
+    public int getNthWordFromPos(int par1, int par2)
     {
-        int var3 = par2;
-        boolean var4 = par1 < 0;
-        int var5 = Math.abs(par1);
+        return this.func_73798_a(par1, this.getCursorPosition(), true);
+    }
 
-        for (int var6 = 0; var6 < var5; ++var6)
+    public int func_73798_a(int par1, int par2, boolean par3)
+    {
+        int var4 = par2;
+        boolean var5 = par1 < 0;
+        int var6 = Math.abs(par1);
+
+        for (int var7 = 0; var7 < var6; ++var7)
         {
-            if (var4)
+            if (var5)
             {
-                while (var3 > 0 && this.text.charAt(var3 - 1) == 32)
+                while (par3 && var4 > 0 && this.text.charAt(var4 - 1) == 32)
                 {
-                    --var3;
+                    --var4;
                 }
 
-                while (var3 > 0 && this.text.charAt(var3 - 1) != 32)
+                while (var4 > 0 && this.text.charAt(var4 - 1) != 32)
                 {
-                    --var3;
+                    --var4;
                 }
             }
             else
             {
-                int var7 = this.text.length();
-                var3 = this.text.indexOf(32, var3);
+                int var8 = this.text.length();
+                var4 = this.text.indexOf(32, var4);
 
-                if (var3 == -1)
+                if (var4 == -1)
                 {
-                    var3 = var7;
+                    var4 = var8;
                 }
                 else
                 {
-                    while (var3 < var7 && this.text.charAt(var3) == 32)
+                    while (par3 && var4 < var8 && this.text.charAt(var4) == 32)
                     {
-                        ++var3;
+                        ++var4;
                     }
                 }
             }
         }
 
-        return var3;
+        return var4;
     }
 
-    public void func_50023_d(int par1)
+    public void func_73784_d(int par1)
     {
-        this.func_50030_e(this.field_50048_p + par1);
+        this.setCursorPosition(this.selectionEnd + par1);
     }
 
-    public void func_50030_e(int par1)
+    /**
+     * sets the position of the cursor to the provided index
+     */
+    public void setCursorPosition(int par1)
     {
-        this.field_50042_o = par1;
+        this.cursorPosition = par1;
         int var2 = this.text.length();
 
-        if (this.field_50042_o < 0)
+        if (this.cursorPosition < 0)
         {
-            this.field_50042_o = 0;
+            this.cursorPosition = 0;
         }
 
-        if (this.field_50042_o > var2)
+        if (this.cursorPosition > var2)
         {
-            this.field_50042_o = var2;
+            this.cursorPosition = var2;
         }
 
-        this.func_50032_g(this.field_50042_o);
+        this.func_73800_i(this.cursorPosition);
     }
 
-    public void func_50034_d()
+    /**
+     * sets the cursors position to the beginning
+     */
+    public void setCursorPositionZero()
     {
-        this.func_50030_e(0);
+        this.setCursorPosition(0);
     }
 
-    public void func_50038_e()
+    /**
+     * sets the cursors position to after the text
+     */
+    public void setCursorPositionEnd()
     {
-        this.func_50030_e(this.text.length());
+        this.setCursorPosition(this.text.length());
     }
 
     /**
@@ -266,18 +298,18 @@ public class GuiTextField extends Gui
             switch (par1)
             {
                 case 1:
-                    this.func_50038_e();
-                    this.func_50032_g(0);
+                    this.setCursorPositionEnd();
+                    this.func_73800_i(0);
                     return true;
                 case 3:
-                    GuiScreen.setClipboardString(this.func_50039_c());
+                    GuiScreen.setClipboardString(this.getSelectedtext());
                     return true;
                 case 22:
-                    this.func_50031_b(GuiScreen.getClipboardString());
+                    this.writeText(GuiScreen.getClipboardString());
                     return true;
                 case 24:
-                    GuiScreen.setClipboardString(this.func_50039_c());
-                    this.func_50031_b("");
+                    GuiScreen.setClipboardString(this.getSelectedtext());
+                    this.writeText("");
                     return true;
                 default:
                     switch (par2)
@@ -285,22 +317,22 @@ public class GuiTextField extends Gui
                         case 14:
                             if (GuiScreen.isCtrlKeyDown())
                             {
-                                this.func_50021_a(-1);
+                                this.func_73779_a(-1);
                             }
                             else
                             {
-                                this.func_50020_b(-1);
+                                this.deleteFromCursor(-1);
                             }
 
                             return true;
                         case 199:
                             if (GuiScreen.isShiftKeyDown())
                             {
-                                this.func_50032_g(0);
+                                this.func_73800_i(0);
                             }
                             else
                             {
-                                this.func_50034_d();
+                                this.setCursorPositionZero();
                             }
 
                             return true;
@@ -309,20 +341,20 @@ public class GuiTextField extends Gui
                             {
                                 if (GuiScreen.isCtrlKeyDown())
                                 {
-                                    this.func_50032_g(this.func_50024_a(-1, this.func_50036_k()));
+                                    this.func_73800_i(this.getNthWordFromPos(-1, this.getSelectionEnd()));
                                 }
                                 else
                                 {
-                                    this.func_50032_g(this.func_50036_k() - 1);
+                                    this.func_73800_i(this.getSelectionEnd() - 1);
                                 }
                             }
                             else if (GuiScreen.isCtrlKeyDown())
                             {
-                                this.func_50030_e(this.func_50028_c(-1));
+                                this.setCursorPosition(this.getNthWordFromCursor(-1));
                             }
                             else
                             {
-                                this.func_50023_d(-1);
+                                this.func_73784_d(-1);
                             }
 
                             return true;
@@ -331,49 +363,49 @@ public class GuiTextField extends Gui
                             {
                                 if (GuiScreen.isCtrlKeyDown())
                                 {
-                                    this.func_50032_g(this.func_50024_a(1, this.func_50036_k()));
+                                    this.func_73800_i(this.getNthWordFromPos(1, this.getSelectionEnd()));
                                 }
                                 else
                                 {
-                                    this.func_50032_g(this.func_50036_k() + 1);
+                                    this.func_73800_i(this.getSelectionEnd() + 1);
                                 }
                             }
                             else if (GuiScreen.isCtrlKeyDown())
                             {
-                                this.func_50030_e(this.func_50028_c(1));
+                                this.setCursorPosition(this.getNthWordFromCursor(1));
                             }
                             else
                             {
-                                this.func_50023_d(1);
+                                this.func_73784_d(1);
                             }
 
                             return true;
                         case 207:
                             if (GuiScreen.isShiftKeyDown())
                             {
-                                this.func_50032_g(this.text.length());
+                                this.func_73800_i(this.text.length());
                             }
                             else
                             {
-                                this.func_50038_e();
+                                this.setCursorPositionEnd();
                             }
 
                             return true;
                         case 211:
                             if (GuiScreen.isCtrlKeyDown())
                             {
-                                this.func_50021_a(1);
+                                this.func_73779_a(1);
                             }
                             else
                             {
-                                this.func_50020_b(1);
+                                this.deleteFromCursor(1);
                             }
 
                             return true;
                         default:
                             if (ChatAllowedCharacters.isAllowedCharacter(par1))
                             {
-                                this.func_50031_b(Character.toString(par1));
+                                this.writeText(Character.toString(par1));
                                 return true;
                             }
                             else
@@ -410,8 +442,8 @@ public class GuiTextField extends Gui
                 var5 -= 4;
             }
 
-            String var6 = this.fontRenderer.trimStringToWidth(this.text.substring(this.field_50041_n), this.func_50019_l());
-            this.func_50030_e(this.fontRenderer.trimStringToWidth(var6, var5).length() + this.field_50041_n);
+            String var6 = this.fontRenderer.trimStringToWidth(this.text.substring(this.field_73816_n), this.getWidth());
+            this.setCursorPosition(this.fontRenderer.trimStringToWidth(var6, var5).length() + this.field_73816_n);
         }
     }
 
@@ -420,71 +452,77 @@ public class GuiTextField extends Gui
      */
     public void drawTextBox()
     {
-        if (this.getEnableBackgroundDrawing())
+        if (this.func_73778_q())
         {
-            drawRect(this.xPos - 1, this.yPos - 1, this.xPos + this.width + 1, this.yPos + this.height + 1, -6250336);
-            drawRect(this.xPos, this.yPos, this.xPos + this.width, this.yPos + this.height, -16777216);
-        }
-
-        int var1 = this.isEnabled ? this.enabledColor : this.disabledColor;
-        int var2 = this.field_50042_o - this.field_50041_n;
-        int var3 = this.field_50048_p - this.field_50041_n;
-        String var4 = this.fontRenderer.trimStringToWidth(this.text.substring(this.field_50041_n), this.func_50019_l());
-        boolean var5 = var2 >= 0 && var2 <= var4.length();
-        boolean var6 = this.isFocused && this.cursorCounter / 6 % 2 == 0 && var5;
-        int var7 = this.enableBackgroundDrawing ? this.xPos + 4 : this.xPos;
-        int var8 = this.enableBackgroundDrawing ? this.yPos + (this.height - 8) / 2 : this.yPos;
-        int var9 = var7;
-
-        if (var3 > var4.length())
-        {
-            var3 = var4.length();
-        }
-
-        if (var4.length() > 0)
-        {
-            String var10 = var5 ? var4.substring(0, var2) : var4;
-            var9 = this.fontRenderer.drawStringWithShadow(var10, var7, var8, var1);
-        }
-
-        boolean var13 = this.field_50042_o < this.text.length() || this.text.length() >= this.func_50040_g();
-        int var11 = var9;
-
-        if (!var5)
-        {
-            var11 = var2 > 0 ? var7 + this.width : var7;
-        }
-        else if (var13)
-        {
-            var11 = var9 - 1;
-            --var9;
-        }
-
-        if (var4.length() > 0 && var5 && var2 < var4.length())
-        {
-            this.fontRenderer.drawStringWithShadow(var4.substring(var2), var9, var8, var1);
-        }
-
-        if (var6)
-        {
-            if (var13)
+            if (this.getEnableBackgroundDrawing())
             {
-                Gui.drawRect(var11, var8 - 1, var11 + 1, var8 + 1 + this.fontRenderer.FONT_HEIGHT, -3092272);
+                drawRect(this.xPos - 1, this.yPos - 1, this.xPos + this.width + 1, this.yPos + this.height + 1, -6250336);
+                drawRect(this.xPos, this.yPos, this.xPos + this.width, this.yPos + this.height, -16777216);
             }
-            else
-            {
-                this.fontRenderer.drawStringWithShadow("_", var11, var8, var1);
-            }
-        }
 
-        if (var3 != var2)
-        {
-            int var12 = var7 + this.fontRenderer.getStringWidth(var4.substring(0, var3));
-            this.func_50029_c(var11, var8 - 1, var12 - 1, var8 + 1 + this.fontRenderer.FONT_HEIGHT);
+            int var1 = this.isEnabled ? this.enabledColor : this.disabledColor;
+            int var2 = this.cursorPosition - this.field_73816_n;
+            int var3 = this.selectionEnd - this.field_73816_n;
+            String var4 = this.fontRenderer.trimStringToWidth(this.text.substring(this.field_73816_n), this.getWidth());
+            boolean var5 = var2 >= 0 && var2 <= var4.length();
+            boolean var6 = this.isFocused && this.cursorCounter / 6 % 2 == 0 && var5;
+            int var7 = this.enableBackgroundDrawing ? this.xPos + 4 : this.xPos;
+            int var8 = this.enableBackgroundDrawing ? this.yPos + (this.height - 8) / 2 : this.yPos;
+            int var9 = var7;
+
+            if (var3 > var4.length())
+            {
+                var3 = var4.length();
+            }
+
+            if (var4.length() > 0)
+            {
+                String var10 = var5 ? var4.substring(0, var2) : var4;
+                var9 = this.fontRenderer.drawStringWithShadow(var10, var7, var8, var1);
+            }
+
+            boolean var13 = this.cursorPosition < this.text.length() || this.text.length() >= this.getMaxStringLength();
+            int var11 = var9;
+
+            if (!var5)
+            {
+                var11 = var2 > 0 ? var7 + this.width : var7;
+            }
+            else if (var13)
+            {
+                var11 = var9 - 1;
+                --var9;
+            }
+
+            if (var4.length() > 0 && var5 && var2 < var4.length())
+            {
+                this.fontRenderer.drawStringWithShadow(var4.substring(var2), var9, var8, var1);
+            }
+
+            if (var6)
+            {
+                if (var13)
+                {
+                    Gui.drawRect(var11, var8 - 1, var11 + 1, var8 + 1 + this.fontRenderer.FONT_HEIGHT, -3092272);
+                }
+                else
+                {
+                    this.fontRenderer.drawStringWithShadow("_", var11, var8, var1);
+                }
+            }
+
+            if (var3 != var2)
+            {
+                int var12 = var7 + this.fontRenderer.getStringWidth(var4.substring(0, var3));
+                this.drawCursorVertical(var11, var8 - 1, var12 - 1, var8 + 1 + this.fontRenderer.FONT_HEIGHT);
+            }
         }
     }
 
-    private void func_50029_c(int par1, int par2, int par3, int par4)
+    /**
+     * draws the vertical line cursor in the textbox
+     */
+    private void drawCursorVertical(int par1, int par2, int par3, int par4)
     {
         int var5;
 
@@ -527,14 +565,20 @@ public class GuiTextField extends Gui
         }
     }
 
-    public int func_50040_g()
+    /**
+     * returns the maximum number of character that can be contained in this textbox
+     */
+    public int getMaxStringLength()
     {
         return this.maxStringLength;
     }
 
-    public int func_50035_h()
+    /**
+     * returns the current position of the cursor
+     */
+    public int getCursorPosition()
     {
-        return this.field_50042_o;
+        return this.cursorPosition;
     }
 
     /**
@@ -553,6 +597,11 @@ public class GuiTextField extends Gui
         this.enableBackgroundDrawing = par1;
     }
 
+    public void func_73794_g(int par1)
+    {
+        this.enabledColor = par1;
+    }
+
     /**
      * setter for the focused field
      */
@@ -569,22 +618,28 @@ public class GuiTextField extends Gui
     /**
      * getter for the focused field
      */
-    public boolean getIsFocused()
+    public boolean isFocused()
     {
         return this.isFocused;
     }
 
-    public int func_50036_k()
+    /**
+     * the side of the selection that is not the cursor, maye be the same as the cursor
+     */
+    public int getSelectionEnd()
     {
-        return this.field_50048_p;
+        return this.selectionEnd;
     }
 
-    public int func_50019_l()
+    /**
+     * returns the width of the textbox depending on if the the box is enabled
+     */
+    public int getWidth()
     {
         return this.getEnableBackgroundDrawing() ? this.width - 8 : this.width;
     }
 
-    public void func_50032_g(int par1)
+    public void func_73800_i(int par1)
     {
         int var2 = this.text.length();
 
@@ -598,41 +653,41 @@ public class GuiTextField extends Gui
             par1 = 0;
         }
 
-        this.field_50048_p = par1;
+        this.selectionEnd = par1;
 
         if (this.fontRenderer != null)
         {
-            if (this.field_50041_n > var2)
+            if (this.field_73816_n > var2)
             {
-                this.field_50041_n = var2;
+                this.field_73816_n = var2;
             }
 
-            int var3 = this.func_50019_l();
-            String var4 = this.fontRenderer.trimStringToWidth(this.text.substring(this.field_50041_n), var3);
-            int var5 = var4.length() + this.field_50041_n;
+            int var3 = this.getWidth();
+            String var4 = this.fontRenderer.trimStringToWidth(this.text.substring(this.field_73816_n), var3);
+            int var5 = var4.length() + this.field_73816_n;
 
-            if (par1 == this.field_50041_n)
+            if (par1 == this.field_73816_n)
             {
-                this.field_50041_n -= this.fontRenderer.trimStringToWidth(this.text, var3, true).length();
+                this.field_73816_n -= this.fontRenderer.trimStringToWidth(this.text, var3, true).length();
             }
 
             if (par1 > var5)
             {
-                this.field_50041_n += par1 - var5;
+                this.field_73816_n += par1 - var5;
             }
-            else if (par1 <= this.field_50041_n)
+            else if (par1 <= this.field_73816_n)
             {
-                this.field_50041_n -= this.field_50041_n - par1;
-            }
-
-            if (this.field_50041_n < 0)
-            {
-                this.field_50041_n = 0;
+                this.field_73816_n -= this.field_73816_n - par1;
             }
 
-            if (this.field_50041_n > var2)
+            if (this.field_73816_n < 0)
             {
-                this.field_50041_n = var2;
+                this.field_73816_n = 0;
+            }
+
+            if (this.field_73816_n > var2)
+            {
+                this.field_73816_n = var2;
             }
         }
     }
@@ -643,5 +698,15 @@ public class GuiTextField extends Gui
     public void setCanLoseFocus(boolean par1)
     {
         this.canLoseFocus = par1;
+    }
+
+    public boolean func_73778_q()
+    {
+        return this.field_73823_s;
+    }
+
+    public void func_73790_e(boolean par1)
+    {
+        this.field_73823_s = par1;
     }
 }

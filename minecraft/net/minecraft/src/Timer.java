@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import net.minecraft.client.Minecraft;
+
 public class Timer
 {
     /** The number of timer ticks per second of real time */
@@ -41,7 +43,7 @@ public class Timer
      * The time reported by the high-resolution clock at the last sync, in milliseconds
      */
     private long lastSyncHRClock;
-    private long field_28132_i;
+    private long field_74285_i;
 
     /**
      * A ratio used to sync the high-resolution clock to the system clock, updated once per second
@@ -51,7 +53,7 @@ public class Timer
     public Timer(float par1)
     {
         this.ticksPerSecond = par1;
-        this.lastSyncSysClock = System.currentTimeMillis();
+        this.lastSyncSysClock = Minecraft.getSystemTime();
         this.lastSyncHRClock = System.nanoTime() / 1000000L;
     }
 
@@ -60,36 +62,32 @@ public class Timer
      */
     public void updateTimer()
     {
-        long var1 = System.currentTimeMillis();
+        long var1 = Minecraft.getSystemTime();
         long var3 = var1 - this.lastSyncSysClock;
         long var5 = System.nanoTime() / 1000000L;
         double var7 = (double)var5 / 1000.0D;
 
-        if (var3 > 1000L)
+        if (var3 <= 1000L && var3 >= 0L)
         {
-            this.lastHRTime = var7;
-        }
-        else if (var3 < 0L)
-        {
-            this.lastHRTime = var7;
+            this.field_74285_i += var3;
+
+            if (this.field_74285_i > 1000L)
+            {
+                long var9 = var5 - this.lastSyncHRClock;
+                double var11 = (double)this.field_74285_i / (double)var9;
+                this.timeSyncAdjustment += (var11 - this.timeSyncAdjustment) * 0.20000000298023224D;
+                this.lastSyncHRClock = var5;
+                this.field_74285_i = 0L;
+            }
+
+            if (this.field_74285_i < 0L)
+            {
+                this.lastSyncHRClock = var5;
+            }
         }
         else
         {
-            this.field_28132_i += var3;
-
-            if (this.field_28132_i > 1000L)
-            {
-                long var9 = var5 - this.lastSyncHRClock;
-                double var11 = (double)this.field_28132_i / (double)var9;
-                this.timeSyncAdjustment += (var11 - this.timeSyncAdjustment) * 0.20000000298023224D;
-                this.lastSyncHRClock = var5;
-                this.field_28132_i = 0L;
-            }
-
-            if (this.field_28132_i < 0L)
-            {
-                this.lastSyncHRClock = var5;
-            }
+            this.lastHRTime = var7;
         }
 
         this.lastSyncSysClock = var1;

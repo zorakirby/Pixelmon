@@ -12,7 +12,7 @@ public class RenderSlime extends RenderLiving
         this.scaleAmount = par2ModelBase;
     }
 
-    protected int func_40287_a(EntitySlime par1EntitySlime, int par2, float par3)
+    protected int func_77090_a(EntitySlime par1EntitySlime, int par2, float par3)
     {
         if (par2 == 0)
         {
@@ -39,11 +39,10 @@ public class RenderSlime extends RenderLiving
      */
     protected void scaleSlime(EntitySlime par1EntitySlime, float par2)
     {
-        int var3 = par1EntitySlime.getSlimeSize();
-        float var4 = (par1EntitySlime.field_767_b + (par1EntitySlime.field_768_a - par1EntitySlime.field_767_b) * par2) / ((float)var3 * 0.5F + 1.0F);
+        float var3 = (float)par1EntitySlime.getSlimeSize();
+        float var4 = (par1EntitySlime.field_70812_c + (par1EntitySlime.field_70811_b - par1EntitySlime.field_70812_c) * par2) / (var3 * 0.5F + 1.0F);
         float var5 = 1.0F / (var4 + 1.0F);
-        float var6 = (float)var3;
-        GL11.glScalef(var5 * var6, 1.0F / var5 * var6, var5 * var6);
+        GL11.glScalef(var5 * var3, 1.0F / var5 * var3, var5 * var3);
     }
 
     /**
@@ -60,6 +59,6 @@ public class RenderSlime extends RenderLiving
      */
     protected int shouldRenderPass(EntityLiving par1EntityLiving, int par2, float par3)
     {
-        return this.func_40287_a((EntitySlime)par1EntityLiving, par2, par3);
+        return this.func_77090_a((EntitySlime)par1EntityLiving, par2, par3);
     }
 }

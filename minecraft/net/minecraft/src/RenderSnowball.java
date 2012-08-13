@@ -33,23 +33,23 @@ public class RenderSnowball extends Render
 
         if (this.itemIconIndex == 154)
         {
-            int var11 = PotionHelper.func_40358_a(((EntityPotion)par1Entity).getPotionDamage(), false);
+            int var11 = PotionHelper.func_77915_a(((EntityPotion)par1Entity).getPotionDamage(), false);
             float var12 = (float)(var11 >> 16 & 255) / 255.0F;
             float var13 = (float)(var11 >> 8 & 255) / 255.0F;
             float var14 = (float)(var11 & 255) / 255.0F;
             GL11.glColor3f(var12, var13, var14);
             GL11.glPushMatrix();
-            this.func_40265_a(var10, 141);
+            this.func_77026_a(var10, 141);
             GL11.glPopMatrix();
             GL11.glColor3f(1.0F, 1.0F, 1.0F);
         }
 
-        this.func_40265_a(var10, this.itemIconIndex);
+        this.func_77026_a(var10, this.itemIconIndex);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }
 
-    private void func_40265_a(Tessellator par1Tessellator, int par2)
+    private void func_77026_a(Tessellator par1Tessellator, int par2)
     {
         float var3 = (float)(par2 % 16 * 16 + 0) / 256.0F;
         float var4 = (float)(par2 % 16 * 16 + 16) / 256.0F;

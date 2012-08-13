@@ -6,11 +6,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class MD5String
 {
-    private String field_27370_a;
+    private String theString;
 
     public MD5String(String par1Str)
     {
-        this.field_27370_a = par1Str;
+        this.theString = par1Str;
     }
 
     /**
@@ -20,7 +20,7 @@ public class MD5String
     {
         try
         {
-            String var2 = this.field_27370_a + par1Str;
+            String var2 = this.theString + par1Str;
             MessageDigest var3 = MessageDigest.getInstance("MD5");
             var3.update(var2.getBytes(), 0, var2.length());
             return (new BigInteger(1, var3.digest())).toString(16);

@@ -39,9 +39,9 @@ public class TexturedQuad
 
     public void draw(Tessellator par1Tessellator, float par2)
     {
-        Vec3D var3 = this.vertexPositions[1].vector3D.subtract(this.vertexPositions[0].vector3D);
-        Vec3D var4 = this.vertexPositions[1].vector3D.subtract(this.vertexPositions[2].vector3D);
-        Vec3D var5 = var4.crossProduct(var3).normalize();
+        Vec3 var3 = this.vertexPositions[1].vector3D.subtract(this.vertexPositions[0].vector3D);
+        Vec3 var4 = this.vertexPositions[1].vector3D.subtract(this.vertexPositions[2].vector3D);
+        Vec3 var5 = var4.crossProduct(var3).normalize();
         par1Tessellator.startDrawingQuads();
 
         if (this.invertNormal)

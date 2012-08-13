@@ -1,23 +1,20 @@
 package net.minecraft.src;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static net.minecraft.src.forge.IItemRenderer.ItemRenderType.EQUIPPED;
-import static net.minecraft.src.forge.IItemRenderer.ItemRendererHelper.BLOCK_3D;
 import net.minecraft.client.Minecraft;
+import static net.minecraftforge.client.IItemRenderer.ItemRenderType.*;
+import static net.minecraftforge.client.IItemRenderer.ItemRendererHelper.*;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.ForgeHooksClient;
+
 import org.lwjgl.opengl.GL11;
-import net.minecraft.src.forge.IArmorTextureProvider;
-import net.minecraft.src.forge.IItemRenderer;
-import net.minecraft.src.forge.MinecraftForgeClient;
 
 public class RenderPlayer extends RenderLiving
 {
     private ModelBiped modelBipedMain;
     private ModelBiped modelArmorChestplate;
     private ModelBiped modelArmor;
-    private static String[] armorFilenamePrefix = new String[] {"cloth", "chain", "iron", "diamond", "gold"};
+    public static String[] armorFilenamePrefix = new String[] {"cloth", "chain", "iron", "diamond", "gold"};
 
     public RenderPlayer()
     {
@@ -41,14 +38,7 @@ public class RenderPlayer extends RenderLiving
             if (var5 instanceof ItemArmor)
             {
                 ItemArmor var6 = (ItemArmor)var5;
-                if (var5 instanceof IArmorTextureProvider)
-                {
-                    loadTexture(((IArmorTextureProvider)var5).getArmorTextureFile(var4));
-                }
-                else
-                {
-                    this.loadTexture("/armor/" + armorFilenamePrefix[var6.renderIndex] + "_" + (par2 == 2 ? 2 : 1) + ".png");
-                }
+                this.loadTexture(ForgeHooksClient.getArmorTexture(var4, "/armor/" + armorFilenamePrefix[var6.renderIndex] + "_" + (par2 == 2 ? 2 : 1) + ".png"));
                 ModelBiped var7 = par2 == 2 ? this.modelArmor : this.modelArmorChestplate;
                 var7.bipedHead.showModel = par2 == 0;
                 var7.bipedHeadwear.showModel = par2 == 0;
@@ -113,27 +103,16 @@ public class RenderPlayer extends RenderLiving
         {
             float var8 = 1.6F;
             float var9 = 0.016666668F * var8;
-            float var10 = par1EntityPlayer.getDistanceToEntity(this.renderManager.livingPlayer);
-            float var11 = par1EntityPlayer.isSneaking() ? 32.0F : 64.0F;
+            double var10 = par1EntityPlayer.getDistanceSqToEntity(this.renderManager.livingPlayer);
+            float var12 = par1EntityPlayer.isSneaking() ? 32.0F : 64.0F;
 
-            if (var10 < var11)
+            if (var10 < (double)(var12 * var12))
             {
-                String var12 = par1EntityPlayer.username;
+                String var13 = par1EntityPlayer.username;
 
-                if (!par1EntityPlayer.isSneaking())
+                if (par1EntityPlayer.isSneaking())
                 {
-                    if (par1EntityPlayer.isPlayerSleeping())
-                    {
-                        this.renderLivingLabel(par1EntityPlayer, var12, par2, par4 - 1.5D, par6, 64);
-                    }
-                    else
-                    {
-                        this.renderLivingLabel(par1EntityPlayer, var12, par2, par4, par6, 64);
-                    }
-                }
-                else
-                {
-                    FontRenderer var13 = this.getFontRendererFromRenderManager();
+                    FontRenderer var14 = this.getFontRendererFromRenderManager();
                     GL11.glPushMatrix();
                     GL11.glTranslatef((float)par2 + 0.0F, (float)par4 + 2.3F, (float)par6);
                     GL11.glNormal3f(0.0F, 1.0F, 0.0F);
@@ -145,23 +124,31 @@ public class RenderPlayer extends RenderLiving
                     GL11.glDepthMask(false);
                     GL11.glEnable(GL11.GL_BLEND);
                     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                    Tessellator var14 = Tessellator.instance;
+                    Tessellator var15 = Tessellator.instance;
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
-                    var14.startDrawingQuads();
-                    int var15 = var13.getStringWidth(var12) / 2;
-                    var14.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
-                    var14.addVertex((double)(-var15 - 1), -1.0D, 0.0D);
-                    var14.addVertex((double)(-var15 - 1), 8.0D, 0.0D);
-                    var14.addVertex((double)(var15 + 1), 8.0D, 0.0D);
-                    var14.addVertex((double)(var15 + 1), -1.0D, 0.0D);
-                    var14.draw();
+                    var15.startDrawingQuads();
+                    int var16 = var14.getStringWidth(var13) / 2;
+                    var15.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
+                    var15.addVertex((double)(-var16 - 1), -1.0D, 0.0D);
+                    var15.addVertex((double)(-var16 - 1), 8.0D, 0.0D);
+                    var15.addVertex((double)(var16 + 1), 8.0D, 0.0D);
+                    var15.addVertex((double)(var16 + 1), -1.0D, 0.0D);
+                    var15.draw();
                     GL11.glEnable(GL11.GL_TEXTURE_2D);
                     GL11.glDepthMask(true);
-                    var13.drawString(var12, -var13.getStringWidth(var12) / 2, 0, 553648127);
+                    var14.drawString(var13, -var14.getStringWidth(var13) / 2, 0, 553648127);
                     GL11.glEnable(GL11.GL_LIGHTING);
                     GL11.glDisable(GL11.GL_BLEND);
                     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                     GL11.glPopMatrix();
+                }
+                else if (par1EntityPlayer.isPlayerSleeping())
+                {
+                    this.renderLivingLabel(par1EntityPlayer, var13, par2, par4 - 1.5D, par6, 64);
+                }
+                else
+                {
+                    this.renderLivingLabel(par1EntityPlayer, var13, par2, par4, par6, 64);
                 }
             }
         }
@@ -179,7 +166,6 @@ public class RenderPlayer extends RenderLiving
         {
             GL11.glPushMatrix();
             this.modelBipedMain.bipedHead.postRender(0.0625F);
-
             IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(var3, EQUIPPED);
             boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, var3, BLOCK_3D));
 
@@ -187,7 +173,7 @@ public class RenderPlayer extends RenderLiving
             {
                 float var4 = 0.625F;
                 GL11.glTranslatef(0.0F, -0.25F, 0.0F);
-                GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glScalef(var4, -var4, var4);
             }
 
@@ -223,9 +209,9 @@ public class RenderPlayer extends RenderLiving
         {
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, 0.0F, 0.125F);
-            double var22 = par1EntityPlayer.field_20066_r + (par1EntityPlayer.field_20063_u - par1EntityPlayer.field_20066_r) * (double)par2 - (par1EntityPlayer.prevPosX + (par1EntityPlayer.posX - par1EntityPlayer.prevPosX) * (double)par2);
-            double var23 = par1EntityPlayer.field_20065_s + (par1EntityPlayer.field_20062_v - par1EntityPlayer.field_20065_s) * (double)par2 - (par1EntityPlayer.prevPosY + (par1EntityPlayer.posY - par1EntityPlayer.prevPosY) * (double)par2);
-            double var8 = par1EntityPlayer.field_20064_t + (par1EntityPlayer.field_20061_w - par1EntityPlayer.field_20064_t) * (double)par2 - (par1EntityPlayer.prevPosZ + (par1EntityPlayer.posZ - par1EntityPlayer.prevPosZ) * (double)par2);
+            double var22 = par1EntityPlayer.field_71091_bM + (par1EntityPlayer.field_71094_bP - par1EntityPlayer.field_71091_bM) * (double)par2 - (par1EntityPlayer.prevPosX + (par1EntityPlayer.posX - par1EntityPlayer.prevPosX) * (double)par2);
+            double var23 = par1EntityPlayer.field_71096_bN + (par1EntityPlayer.field_71095_bQ - par1EntityPlayer.field_71096_bN) * (double)par2 - (par1EntityPlayer.prevPosY + (par1EntityPlayer.posY - par1EntityPlayer.prevPosY) * (double)par2);
+            double var8 = par1EntityPlayer.field_71097_bO + (par1EntityPlayer.field_71085_bR - par1EntityPlayer.field_71097_bO) * (double)par2 - (par1EntityPlayer.prevPosZ + (par1EntityPlayer.posZ - par1EntityPlayer.prevPosZ) * (double)par2);
             var10 = par1EntityPlayer.prevRenderYawOffset + (par1EntityPlayer.renderYawOffset - par1EntityPlayer.prevRenderYawOffset) * par2;
             double var11 = (double)MathHelper.sin(var10 * (float)Math.PI / 180.0F);
             double var13 = (double)(-MathHelper.cos(var10 * (float)Math.PI / 180.0F));
@@ -284,7 +270,7 @@ public class RenderPlayer extends RenderLiving
             {
                 var20 = var21.getItemUseAction();
             }
-            
+
             IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(var21, EQUIPPED);
             boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, var21, BLOCK_3D));
             
@@ -380,7 +366,7 @@ public class RenderPlayer extends RenderLiving
     {
         if (par1EntityPlayer.isEntityAlive() && par1EntityPlayer.isPlayerSleeping())
         {
-            super.renderLivingAt(par1EntityPlayer, par2 + (double)par1EntityPlayer.field_22063_x, par4 + (double)par1EntityPlayer.field_22062_y, par6 + (double)par1EntityPlayer.field_22061_z);
+            super.renderLivingAt(par1EntityPlayer, par2 + (double)par1EntityPlayer.field_71079_bU, par4 + (double)par1EntityPlayer.field_71082_cx, par6 + (double)par1EntityPlayer.field_71089_bV);
         }
         else
         {
@@ -462,12 +448,5 @@ public class RenderPlayer extends RenderLiving
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
         this.renderPlayer((EntityPlayer)par1Entity, par2, par4, par6, par8, par9);
-    }
-    
-    public static int addNewArmourPrefix(String prefix) {
-        List<String> armours=new ArrayList(Arrays.asList(armorFilenamePrefix));
-        armours.add(prefix);
-        armorFilenamePrefix=armours.toArray(new String[0]);
-        return armours.indexOf(prefix);
     }
 }

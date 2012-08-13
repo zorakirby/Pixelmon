@@ -4,7 +4,8 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderCreeper extends RenderLiving
 {
-    private ModelBase field_27008_a = new ModelCreeper(2.0F);
+    /** The creeper model. */
+    private ModelBase creeperModel = new ModelCreeper(2.0F);
 
     public RenderCreeper()
     {
@@ -68,7 +69,10 @@ public class RenderCreeper extends RenderLiving
         }
     }
 
-    protected int func_27006_a(EntityCreeper par1EntityCreeper, int par2, float par3)
+    /**
+     * A method used to render a creeper's powered form as a pass model.
+     */
+    protected int renderCreeperPassModel(EntityCreeper par1EntityCreeper, int par2, float par3)
     {
         if (par1EntityCreeper.getPowered())
         {
@@ -81,7 +85,7 @@ public class RenderCreeper extends RenderLiving
                 float var5 = var4 * 0.01F;
                 float var6 = var4 * 0.01F;
                 GL11.glTranslatef(var5, var6, 0.0F);
-                this.setRenderPassModel(this.field_27008_a);
+                this.setRenderPassModel(this.creeperModel);
                 GL11.glMatrixMode(GL11.GL_MODELVIEW);
                 GL11.glEnable(GL11.GL_BLEND);
                 float var7 = 0.5F;
@@ -104,7 +108,7 @@ public class RenderCreeper extends RenderLiving
         return -1;
     }
 
-    protected int func_27007_b(EntityCreeper par1EntityCreeper, int par2, float par3)
+    protected int func_77061_b(EntityCreeper par1EntityCreeper, int par2, float par3)
     {
         return -1;
     }
@@ -131,11 +135,11 @@ public class RenderCreeper extends RenderLiving
      */
     protected int shouldRenderPass(EntityLiving par1EntityLiving, int par2, float par3)
     {
-        return this.func_27006_a((EntityCreeper)par1EntityLiving, par2, par3);
+        return this.renderCreeperPassModel((EntityCreeper)par1EntityLiving, par2, par3);
     }
 
     protected int inheritRenderPass(EntityLiving par1EntityLiving, int par2, float par3)
     {
-        return this.func_27007_b((EntityCreeper)par1EntityLiving, par2, par3);
+        return this.func_77061_b((EntityCreeper)par1EntityLiving, par2, par3);
     }
 }

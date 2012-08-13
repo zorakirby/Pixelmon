@@ -2,7 +2,7 @@ package net.minecraft.src;
 
 public class ModelSheep1 extends ModelQuadruped
 {
-    private float field_44016_o;
+    private float field_78152_i;
 
     public ModelSheep1()
     {
@@ -35,8 +35,8 @@ public class ModelSheep1 extends ModelQuadruped
     public void setLivingAnimations(EntityLiving par1EntityLiving, float par2, float par3, float par4)
     {
         super.setLivingAnimations(par1EntityLiving, par2, par3, par4);
-        this.head.rotationPointY = 6.0F + ((EntitySheep)par1EntityLiving).func_44003_c(par4) * 9.0F;
-        this.field_44016_o = ((EntitySheep)par1EntityLiving).func_44002_d(par4);
+        this.head.rotationPointY = 6.0F + ((EntitySheep)par1EntityLiving).func_70894_j(par4) * 9.0F;
+        this.field_78152_i = ((EntitySheep)par1EntityLiving).func_70890_k(par4);
     }
 
     /**
@@ -45,6 +45,6 @@ public class ModelSheep1 extends ModelQuadruped
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6)
     {
         super.setRotationAngles(par1, par2, par3, par4, par5, par6);
-        this.head.rotateAngleX = this.field_44016_o;
+        this.head.rotateAngleX = this.field_78152_i;
     }
 }

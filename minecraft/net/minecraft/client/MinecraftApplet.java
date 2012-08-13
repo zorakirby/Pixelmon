@@ -3,6 +3,8 @@ package net.minecraft.client;
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+
+import cpw.mods.fml.relauncher.FMLRelauncher;
 import net.minecraft.src.CanvasMinecraftApplet;
 import net.minecraft.src.MinecraftAppletImpl;
 import net.minecraft.src.Session;
@@ -20,15 +22,14 @@ public class MinecraftApplet extends Applet
 
     public void init()
     {
+        FMLRelauncher.appletEntry(this);
+    }
+
+    public void fmlInitReentry()
+    {
         this.mcCanvas = new CanvasMinecraftApplet(this);
-        boolean var1 = false;
-
-        if (this.getParameter("fullscreen") != null)
-        {
-            var1 = this.getParameter("fullscreen").equalsIgnoreCase("true");
-        }
-
-        this.mc = new MinecraftAppletImpl(this, this, this.mcCanvas, this, this.getWidth(), this.getHeight(), var1);
+        boolean var1 = "true".equalsIgnoreCase(this.getParameter("fullscreen"));
+        this.mc = new MinecraftAppletImpl(this, this.mcCanvas, this, this.getWidth(), this.getHeight(), var1);
         this.mc.minecraftUri = this.getDocumentBase().getHost();
 
         if (this.getDocumentBase().getPort() > 0)
@@ -40,29 +41,20 @@ public class MinecraftApplet extends Applet
         {
             this.mc.session = new Session(this.getParameter("username"), this.getParameter("sessionid"));
             System.out.println("Setting user: " + this.mc.session.username + ", " + this.mc.session.sessionId);
-
-            if (this.getParameter("mppass") != null)
-            {
-                this.mc.session.mpPassParameter = this.getParameter("mppass");
-            }
         }
         else
         {
             this.mc.session = new Session("Player", "");
         }
 
+        this.mc.setDemo("true".equals(this.getParameter("demo")));
+
         if (this.getParameter("server") != null && this.getParameter("port") != null)
         {
             this.mc.setServer(this.getParameter("server"), Integer.parseInt(this.getParameter("port")));
         }
 
-        this.mc.hideQuitButton = true;
-
-        if ("true".equals(this.getParameter("stand-alone")))
-        {
-            this.mc.hideQuitButton = false;
-        }
-
+        this.mc.hideQuitButton = !"true".equals(this.getParameter("stand-alone"));
         this.setLayout(new BorderLayout());
         this.add(this.mcCanvas, "Center");
         this.mcCanvas.setFocusable(true);
@@ -79,6 +71,11 @@ public class MinecraftApplet extends Applet
     }
 
     public void start()
+    {
+        FMLRelauncher.appletStart(this);
+    }
+
+    public void fmlStartReentry()
     {
         if (this.mc != null)
         {
@@ -125,26 +122,6 @@ public class MinecraftApplet extends Applet
             }
 
             this.mcThread = null;
-        }
-    }
-
-    /**
-     * Removes all the components from the applet and lays it out again. Called on shutdown.
-     */
-    public void clearApplet()
-    {
-        this.mcCanvas = null;
-        this.mc = null;
-        this.mcThread = null;
-
-        try
-        {
-            this.removeAll();
-            this.validate();
-        }
-        catch (Exception var2)
-        {
-            ;
         }
     }
 }

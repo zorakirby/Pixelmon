@@ -13,7 +13,7 @@ public class RenderMinecart extends Render
         this.modelMinecart = new ModelMinecart();
     }
 
-    public void func_152_a(EntityMinecart par1EntityMinecart, double par2, double par4, double par6, float par8, float par9)
+    public void func_77012_a(EntityMinecart par1EntityMinecart, double par2, double par4, double par6, float par8, float par9)
     {
         GL11.glPushMatrix();
         long var10 = (long)par1EntityMinecart.entityId * 493286711L;
@@ -26,13 +26,13 @@ public class RenderMinecart extends Render
         double var17 = par1EntityMinecart.lastTickPosY + (par1EntityMinecart.posY - par1EntityMinecart.lastTickPosY) * (double)par9;
         double var19 = par1EntityMinecart.lastTickPosZ + (par1EntityMinecart.posZ - par1EntityMinecart.lastTickPosZ) * (double)par9;
         double var21 = 0.30000001192092896D;
-        Vec3D var23 = par1EntityMinecart.func_514_g(var15, var17, var19);
+        Vec3 var23 = par1EntityMinecart.func_70489_a(var15, var17, var19);
         float var24 = par1EntityMinecart.prevRotationPitch + (par1EntityMinecart.rotationPitch - par1EntityMinecart.prevRotationPitch) * par9;
 
         if (var23 != null)
         {
-            Vec3D var25 = par1EntityMinecart.func_515_a(var15, var17, var19, var21);
-            Vec3D var26 = par1EntityMinecart.func_515_a(var15, var17, var19, -var21);
+            Vec3 var25 = par1EntityMinecart.func_70495_a(var15, var17, var19, var21);
+            Vec3 var26 = par1EntityMinecart.func_70495_a(var15, var17, var19, -var21);
 
             if (var25 == null)
             {
@@ -47,7 +47,7 @@ public class RenderMinecart extends Render
             par2 += var23.xCoord - var15;
             par4 += (var25.yCoord + var26.yCoord) / 2.0D - var17;
             par6 += var23.zCoord - var19;
-            Vec3D var27 = var26.addVector(-var25.xCoord, -var25.yCoord, -var25.zCoord);
+            Vec3 var27 = var26.addVector(-var25.xCoord, -var25.yCoord, -var25.zCoord);
 
             if (var27.lengthVector() != 0.0D)
             {
@@ -60,8 +60,8 @@ public class RenderMinecart extends Render
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         GL11.glRotatef(180.0F - par8, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(-var24, 0.0F, 0.0F, 1.0F);
-        float var28 = (float)par1EntityMinecart.func_41023_l() - par9;
-        float var30 = (float)par1EntityMinecart.func_41025_i() - par9;
+        float var28 = (float)par1EntityMinecart.func_70496_j() - par9;
+        float var30 = (float)par1EntityMinecart.getDamage() - par9;
 
         if (var30 < 0.0F)
         {
@@ -70,7 +70,7 @@ public class RenderMinecart extends Render
 
         if (var28 > 0.0F)
         {
-            GL11.glRotatef(MathHelper.sin(var28) * var28 * var30 / 10.0F * (float)par1EntityMinecart.func_41030_m(), 1.0F, 0.0F, 0.0F);
+            GL11.glRotatef(MathHelper.sin(var28) * var28 * var30 / 10.0F * (float)par1EntityMinecart.func_70493_k(), 1.0F, 0.0F, 0.0F);
         }
 
         if (par1EntityMinecart.minecartType != 0)
@@ -81,8 +81,7 @@ public class RenderMinecart extends Render
 
             if (par1EntityMinecart.minecartType == 1)
             {
-                GL11.glTranslatef(-0.5F, 0.0F, 0.5F);
-                GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+                GL11.glTranslatef(0.0F, 0.5F, 0.0F);
                 (new RenderBlocks()).renderBlockAsItem(Block.chest, 0, par1EntityMinecart.getBrightness(par9));
                 GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glTranslatef(0.5F, 0.0F, -0.5F);
@@ -91,7 +90,6 @@ public class RenderMinecart extends Render
             else if (par1EntityMinecart.minecartType == 2)
             {
                 GL11.glTranslatef(0.0F, 0.3125F, 0.0F);
-                GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
                 (new RenderBlocks()).renderBlockAsItem(Block.stoneOvenIdle, 0, par1EntityMinecart.getBrightness(par9));
                 GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
                 GL11.glTranslatef(0.0F, -0.3125F, 0.0F);
@@ -115,6 +113,6 @@ public class RenderMinecart extends Render
      */
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.func_152_a((EntityMinecart)par1Entity, par2, par4, par6, par8, par9);
+        this.func_77012_a((EntityMinecart)par1Entity, par2, par4, par6, par8, par9);
     }
 }

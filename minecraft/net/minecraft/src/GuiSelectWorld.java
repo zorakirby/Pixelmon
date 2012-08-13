@@ -35,7 +35,7 @@ public class GuiSelectWorld extends GuiScreen
     /**
      * The game mode text that is displayed with each world on the world selection list.
      */
-    private String[] localizedGameModeText = new String[2];
+    private String[] localizedGameModeText = new String[3];
 
     /** set to true if you arein the process of deleteing a world/save */
     private boolean deleting;
@@ -63,8 +63,9 @@ public class GuiSelectWorld extends GuiScreen
         this.screenTitle = var1.translateKey("selectWorld.title");
         this.localizedWorldText = var1.translateKey("selectWorld.world");
         this.localizedMustConvertText = var1.translateKey("selectWorld.conversion");
-        this.localizedGameModeText[0] = var1.translateKey("gameMode.survival");
-        this.localizedGameModeText[1] = var1.translateKey("gameMode.creative");
+        this.localizedGameModeText[EnumGameType.SURVIVAL.getID()] = var1.translateKey("gameMode.survival");
+        this.localizedGameModeText[EnumGameType.CREATIVE.getID()] = var1.translateKey("gameMode.creative");
+        this.localizedGameModeText[EnumGameType.ADVENTURE.getID()] = var1.translateKey("gameMode.adventure");
         this.loadSaves();
         this.worldSlotContainer = new GuiWorldSlot(this);
         this.worldSlotContainer.registerScrollButtons(this.controlList, 4, 5);
@@ -136,13 +137,8 @@ public class GuiSelectWorld extends GuiScreen
                 if (var2 != null)
                 {
                     this.deleting = true;
-                    StringTranslate var3 = StringTranslate.getInstance();
-                    String var4 = var3.translateKey("selectWorld.deleteQuestion");
-                    String var5 = "\'" + var2 + "\' " + var3.translateKey("selectWorld.deleteWarning");
-                    String var6 = var3.translateKey("selectWorld.deleteButton");
-                    String var7 = var3.translateKey("gui.cancel");
-                    GuiYesNo var8 = new GuiYesNo(this, var4, var5, var6, var7, this.selectedWorld);
-                    this.mc.displayGuiScreen(var8);
+                    GuiYesNo var3 = func_74061_a(this, var2, this.selectedWorld);
+                    this.mc.displayGuiScreen(var3);
                 }
             }
             else if (par1GuiButton.id == 1)
@@ -178,26 +174,21 @@ public class GuiSelectWorld extends GuiScreen
         if (!this.selected)
         {
             this.selected = true;
-            int var2 = ((SaveFormatComparator)this.saveList.get(par1)).getGameType();
+            String var2 = this.getSaveFileName(par1);
 
-            if (var2 == 0)
+            if (var2 == null)
             {
-                this.mc.playerController = new PlayerControllerSP(this.mc);
-            }
-            else
-            {
-                this.mc.playerController = new PlayerControllerCreative(this.mc);
+                var2 = "World" + par1;
             }
 
-            String var3 = this.getSaveFileName(par1);
+            String var3 = this.getSaveName(par1);
 
             if (var3 == null)
             {
                 var3 = "World" + par1;
             }
 
-            this.mc.startWorld(var3, this.getSaveName(par1), (WorldSettings)null);
-            this.mc.displayGuiScreen((GuiScreen)null);
+            this.mc.launchIntegratedServer(var2, var3, (WorldSettings)null);
         }
     }
 
@@ -227,6 +218,17 @@ public class GuiSelectWorld extends GuiScreen
         this.worldSlotContainer.drawScreen(par1, par2, par3);
         this.drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 16777215);
         super.drawScreen(par1, par2, par3);
+    }
+
+    public static GuiYesNo func_74061_a(GuiScreen par0GuiScreen, String par1Str, int par2)
+    {
+        StringTranslate var3 = StringTranslate.getInstance();
+        String var4 = var3.translateKey("selectWorld.deleteQuestion");
+        String var5 = "\'" + par1Str + "\' " + var3.translateKey("selectWorld.deleteWarning");
+        String var6 = var3.translateKey("selectWorld.deleteButton");
+        String var7 = var3.translateKey("gui.cancel");
+        GuiYesNo var8 = new GuiYesNo(par0GuiScreen, var4, var5, var6, var7, par2);
+        return var8;
     }
 
     static List getSize(GuiSelectWorld par0GuiSelectWorld)

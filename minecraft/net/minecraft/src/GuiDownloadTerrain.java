@@ -45,11 +45,6 @@ public class GuiDownloadTerrain extends GuiScreen
     }
 
     /**
-     * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
-     */
-    protected void actionPerformed(GuiButton par1GuiButton) {}
-
-    /**
      * Draws the screen and all the components in it.
      */
     public void drawScreen(int par1, int par2, float par3)

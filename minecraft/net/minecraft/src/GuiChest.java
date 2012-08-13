@@ -25,7 +25,7 @@ public class GuiChest extends GuiContainer
     }
 
     /**
-     * Draw the foreground layer for the GuiContainer (everythin in front of the items)
+     * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
     protected void drawGuiContainerForegroundLayer()
     {

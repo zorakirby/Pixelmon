@@ -10,7 +10,7 @@ public class TileEntityRenderer
     /**
      * A mapping of TileEntitySpecialRenderers used for each TileEntity that has one
      */
-    private Map specialRendererMap = new HashMap();
+    public Map specialRendererMap = new HashMap();
 
     /** The static instance of TileEntityRenderer */
     public static TileEntityRenderer instance = new TileEntityRenderer();
@@ -51,6 +51,7 @@ public class TileEntityRenderer
         this.specialRendererMap.put(TileEntityMobSpawner.class, new TileEntityMobSpawnerRenderer());
         this.specialRendererMap.put(TileEntityPiston.class, new TileEntityRendererPiston());
         this.specialRendererMap.put(TileEntityChest.class, new TileEntityChestRenderer());
+        this.specialRendererMap.put(TileEntityEnderChest.class, new TileEntityEnderChestRenderer());
         this.specialRendererMap.put(TileEntityEnchantmentTable.class, new RenderEnchantmentTable());
         this.specialRendererMap.put(TileEntityEndPortal.class, new RenderEndPortal());
         Iterator var1 = this.specialRendererMap.values().iterator();
@@ -117,8 +118,6 @@ public class TileEntityRenderer
         this.playerZ = par4EntityLiving.lastTickPosZ + (par4EntityLiving.posZ - par4EntityLiving.lastTickPosZ) * (double)par5;
     }
 
-    public void func_40742_a() {}
-
     /**
      * Render this TileEntity at its current position from the player
      */
@@ -170,10 +169,5 @@ public class TileEntityRenderer
     public FontRenderer getFontRenderer()
     {
         return this.fontRenderer;
-    }
-    
-    public static void setTileEntityRenderer(Class<? extends TileEntity> tileEntityClass, TileEntitySpecialRenderer renderer) {
-        instance.specialRendererMap.put(tileEntityClass,renderer);
-        renderer.setTileEntityRenderer(instance);
     }
 }

@@ -10,11 +10,26 @@ public class GuiConnecting extends GuiScreen
     /** True if the connection attempt has been cancelled. */
     private boolean cancelled = false;
 
+    public GuiConnecting(Minecraft par1Minecraft, ServerData par2ServerData)
+    {
+        this.mc = par1Minecraft;
+        ServerAddress var3 = ServerAddress.func_78860_a(par2ServerData.serverIP);
+        par1Minecraft.loadWorld((WorldClient)null);
+        par1Minecraft.setServerData(par2ServerData);
+        this.spawnNewServerThread(var3.getIP(), var3.getPort());
+    }
+
     public GuiConnecting(Minecraft par1Minecraft, String par2Str, int par3)
     {
-        System.out.println("Connecting to " + par2Str + ", " + par3);
-        par1Minecraft.changeWorld1((World)null);
-        (new ThreadConnectToServer(this, par1Minecraft, par2Str, par3)).start();
+        this.mc = par1Minecraft;
+        par1Minecraft.loadWorld((WorldClient)null);
+        this.spawnNewServerThread(par2Str, par3);
+    }
+
+    private void spawnNewServerThread(String par1Str, int par2)
+    {
+        System.out.println("Connecting to " + par1Str + ", " + par2);
+        (new ThreadConnectToServer(this, par1Str, par2)).start();
     }
 
     /**
@@ -77,7 +92,7 @@ public class GuiConnecting extends GuiScreen
         else
         {
             this.drawCenteredString(this.fontRenderer, var4.translateKey("connect.authorizing"), this.width / 2, this.height / 2 - 50, 16777215);
-            this.drawCenteredString(this.fontRenderer, this.clientHandler.field_1209_a, this.width / 2, this.height / 2 - 10, 16777215);
+            this.drawCenteredString(this.fontRenderer, this.clientHandler.field_72560_a, this.width / 2, this.height / 2 - 10, 16777215);
         }
 
         super.drawScreen(par1, par2, par3);
@@ -91,12 +106,19 @@ public class GuiConnecting extends GuiScreen
         return par0GuiConnecting.clientHandler = par1NetClientHandler;
     }
 
-    /**
-     * Returns true if the connection attempt has been cancelled, false otherwise.
-     */
+    static Minecraft func_74256_a(GuiConnecting par0GuiConnecting)
+    {
+        return par0GuiConnecting.mc;
+    }
+
     static boolean isCancelled(GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.cancelled;
+    }
+
+    static Minecraft func_74254_c(GuiConnecting par0GuiConnecting)
+    {
+        return par0GuiConnecting.mc;
     }
 
     /**
@@ -105,5 +127,20 @@ public class GuiConnecting extends GuiScreen
     static NetClientHandler getNetClientHandler(GuiConnecting par0GuiConnecting)
     {
         return par0GuiConnecting.clientHandler;
+    }
+
+    static Minecraft func_74249_e(GuiConnecting par0GuiConnecting)
+    {
+        return par0GuiConnecting.mc;
+    }
+
+    static Minecraft func_74250_f(GuiConnecting par0GuiConnecting)
+    {
+        return par0GuiConnecting.mc;
+    }
+
+    static Minecraft func_74251_g(GuiConnecting par0GuiConnecting)
+    {
+        return par0GuiConnecting.mc;
     }
 }

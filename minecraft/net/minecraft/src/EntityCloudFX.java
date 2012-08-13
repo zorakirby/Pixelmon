@@ -2,7 +2,7 @@ package net.minecraft.src;
 
 public class EntityCloudFX extends EntityFX
 {
-    float field_35135_a;
+    float field_70569_a;
 
     public EntityCloudFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
     {
@@ -17,7 +17,7 @@ public class EntityCloudFX extends EntityFX
         this.particleRed = this.particleGreen = this.particleBlue = 1.0F - (float)(Math.random() * 0.30000001192092896D);
         this.particleScale *= 0.75F;
         this.particleScale *= var14;
-        this.field_35135_a = this.particleScale;
+        this.field_70569_a = this.particleScale;
         this.particleMaxAge = (int)(8.0D / (Math.random() * 0.8D + 0.3D));
         this.particleMaxAge = (int)((float)this.particleMaxAge * var14);
         this.noClip = false;
@@ -37,7 +37,7 @@ public class EntityCloudFX extends EntityFX
             var8 = 1.0F;
         }
 
-        this.particleScale = this.field_35135_a * var8;
+        this.particleScale = this.field_70569_a * var8;
         super.renderParticle(par1Tessellator, par2, par3, par4, par5, par6, par7);
     }
 

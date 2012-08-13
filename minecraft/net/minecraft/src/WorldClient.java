@@ -2,17 +2,12 @@ package net.minecraft.src;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.Random;
 import java.util.Set;
+import net.minecraft.client.Minecraft;
 
 public class WorldClient extends World
 {
-    /**
-     * Contains a list of blocks to to receive and process after they've been 'accepted' by the client (i.e., not
-     * invalidated).
-     */
-    private LinkedList blocksToReceive = new LinkedList();
-
     /** The packets that need to be sent to the server. */
     private NetClientHandler sendQueue;
 
@@ -32,13 +27,15 @@ public class WorldClient extends World
      * spawn up to 10 pending entities with each subsequent tick until the spawn queue is empty.
      */
     private Set entitySpawnQueue = new HashSet();
+    private final Minecraft mc = Minecraft.getMinecraft();
+    private final Set previousActiveChunkSet = new HashSet();
 
-    public WorldClient(NetClientHandler par1NetClientHandler, WorldSettings par2WorldSettings, int par3, int par4)
+    public WorldClient(NetClientHandler par1NetClientHandler, WorldSettings par2WorldSettings, int par3, int par4, Profiler par5Profiler)
     {
-        super(new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(par3), par2WorldSettings);
+        super(new SaveHandlerMP(), "MpServer", WorldProvider.getProviderForDimension(par3), par2WorldSettings, par5Profiler);
         this.sendQueue = par1NetClientHandler;
         this.difficultySetting = par4;
-        this.setSpawnPoint(new ChunkCoordinates(8, 64, 8));
+        this.setSpawnLocation(8, 64, 8);
         this.mapStorage = par1NetClientHandler.mapStorage;
     }
 
@@ -47,10 +44,11 @@ public class WorldClient extends World
      */
     public void tick()
     {
+        super.tick();
         this.setWorldTime(this.getWorldTime() + 1L);
-        int var1;
+        this.theProfiler.startSection("reEntryProcessing");
 
-        for (var1 = 0; var1 < 10 && !this.entitySpawnQueue.isEmpty(); ++var1)
+        for (int var1 = 0; var1 < 10 && !this.entitySpawnQueue.isEmpty(); ++var1)
         {
             Entity var2 = (Entity)this.entitySpawnQueue.iterator().next();
             this.entitySpawnQueue.remove(var2);
@@ -61,40 +59,20 @@ public class WorldClient extends World
             }
         }
 
+        this.theProfiler.endStartSection("connection");
         this.sendQueue.processReadPackets();
-
-        for (var1 = 0; var1 < this.blocksToReceive.size(); ++var1)
-        {
-            WorldBlockPositionType var3 = (WorldBlockPositionType)this.blocksToReceive.get(var1);
-
-            if (--var3.acceptCountdown == 0)
-            {
-                super.setBlockAndMetadata(var3.posX, var3.posY, var3.posZ, var3.blockID, var3.metadata);
-                super.markBlockNeedsUpdate(var3.posX, var3.posY, var3.posZ);
-                this.blocksToReceive.remove(var1--);
-            }
-        }
-
+        this.theProfiler.endStartSection("chunkCache");
         this.clientChunkProvider.unload100OldestChunks();
+        this.theProfiler.endStartSection("tiles");
         this.tickBlocksAndAmbiance();
+        this.theProfiler.endSection();
     }
 
     /**
      * Invalidates an AABB region of blocks from the receive queue, in the event that the block has been modified
      * client-side in the intervening 80 receive ticks.
      */
-    public void invalidateBlockReceiveRegion(int par1, int par2, int par3, int par4, int par5, int par6)
-    {
-        for (int var7 = 0; var7 < this.blocksToReceive.size(); ++var7)
-        {
-            WorldBlockPositionType var8 = (WorldBlockPositionType)this.blocksToReceive.get(var7);
-
-            if (var8.posX >= par1 && var8.posY >= par2 && var8.posZ >= par3 && var8.posX <= par4 && var8.posY <= par5 && var8.posZ <= par6)
-            {
-                this.blocksToReceive.remove(var7--);
-            }
-        }
-    }
+    public void invalidateBlockReceiveRegion(int par1, int par2, int par3, int par4, int par5, int par6) {}
 
     /**
      * Creates the chunk provider for this world. Called in the constructor. Retrieves provider from worldProvider?
@@ -106,45 +84,43 @@ public class WorldClient extends World
     }
 
     /**
-     * Sets a new spawn location by finding an uncovered block at a random (x,z) location in the chunk.
-     */
-    public void setSpawnLocation()
-    {
-        this.setSpawnPoint(new ChunkCoordinates(8, 64, 8));
-    }
-
-    /**
      * plays random cave ambient sounds and runs updateTick on random blocks within each chunk in the vacinity of a
      * player
      */
     protected void tickBlocksAndAmbiance()
     {
-        this.func_48461_r();
-        Iterator var1 = this.activeChunkSet.iterator();
+        super.tickBlocksAndAmbiance();
+        this.previousActiveChunkSet.retainAll(this.activeChunkSet);
 
-        while (var1.hasNext())
+        if (this.previousActiveChunkSet.size() == this.activeChunkSet.size())
         {
-            ChunkCoordIntPair var2 = (ChunkCoordIntPair)var1.next();
-            int var3 = var2.chunkXPos * 16;
-            int var4 = var2.chunkZPosition * 16;
-            Profiler.startSection("getChunk");
-            Chunk var5 = this.getChunkFromChunkCoords(var2.chunkXPos, var2.chunkZPosition);
-            this.func_48458_a(var3, var4, var5);
-            Profiler.endSection();
+            this.previousActiveChunkSet.clear();
         }
-    }
 
-    /**
-     * Schedules a tick to a block with a delay (Most commonly the tick rate)
-     */
-    public void scheduleBlockUpdate(int par1, int par2, int par3, int par4, int par5) {}
+        int var1 = 0;
+        Iterator var2 = this.activeChunkSet.iterator();
 
-    /**
-     * Runs through the list of updates to run and ticks them
-     */
-    public boolean tickUpdates(boolean par1)
-    {
-        return false;
+        while (var2.hasNext())
+        {
+            ChunkCoordIntPair var3 = (ChunkCoordIntPair)var2.next();
+
+            if (!this.previousActiveChunkSet.contains(var3))
+            {
+                int var4 = var3.chunkXPos * 16;
+                int var5 = var3.chunkZPos * 16;
+                this.theProfiler.startSection("getChunk");
+                Chunk var6 = this.getChunkFromChunkCoords(var3.chunkXPos, var3.chunkZPos);
+                this.moodSoundAndLightCheck(var4, var5, var6);
+                this.theProfiler.endSection();
+                this.previousActiveChunkSet.add(var3);
+                ++var1;
+
+                if (var1 >= 10)
+                {
+                    return;
+                }
+            }
+        }
     }
 
     public void doPreChunk(int par1, int par2, boolean par3)
@@ -286,7 +262,7 @@ public class WorldClient extends World
      */
     protected void updateWeather()
     {
-        if (!this.worldProvider.hasNoSky)
+        if (!this.provider.hasNoSky)
         {
             if (this.lastLightningBolt > 0)
             {
@@ -335,5 +311,128 @@ public class WorldClient extends World
                 this.thunderingStrength = 1.0F;
             }
         }
+    }
+
+    public void func_73029_E(int par1, int par2, int par3)
+    {
+        byte var4 = 16;
+        Random var5 = new Random();
+
+        for (int var6 = 0; var6 < 1000; ++var6)
+        {
+            int var7 = par1 + this.rand.nextInt(var4) - this.rand.nextInt(var4);
+            int var8 = par2 + this.rand.nextInt(var4) - this.rand.nextInt(var4);
+            int var9 = par3 + this.rand.nextInt(var4) - this.rand.nextInt(var4);
+            int var10 = this.getBlockId(var7, var8, var9);
+
+            if (var10 == 0 && this.rand.nextInt(8) > var8 && this.provider.getWorldHasVoidParticles())
+            {
+                this.spawnParticle("depthsuspend", (double)((float)var7 + this.rand.nextFloat()), (double)((float)var8 + this.rand.nextFloat()), (double)((float)var9 + this.rand.nextFloat()), 0.0D, 0.0D, 0.0D);
+            }
+            else if (var10 > 0)
+            {
+                Block.blocksList[var10].randomDisplayTick(this, var7, var8, var9, var5);
+            }
+        }
+    }
+
+    /**
+     * also releases skins.
+     */
+    public void removeAllEntities()
+    {
+        this.loadedEntityList.removeAll(this.unloadedEntityList);
+        int var1;
+        Entity var2;
+        int var3;
+        int var4;
+
+        for (var1 = 0; var1 < this.unloadedEntityList.size(); ++var1)
+        {
+            var2 = (Entity)this.unloadedEntityList.get(var1);
+            var3 = var2.chunkCoordX;
+            var4 = var2.chunkCoordZ;
+
+            if (var2.addedToChunk && this.chunkExists(var3, var4))
+            {
+                this.getChunkFromChunkCoords(var3, var4).removeEntity(var2);
+            }
+        }
+
+        for (var1 = 0; var1 < this.unloadedEntityList.size(); ++var1)
+        {
+            this.releaseEntitySkin((Entity)this.unloadedEntityList.get(var1));
+        }
+
+        this.unloadedEntityList.clear();
+
+        for (var1 = 0; var1 < this.loadedEntityList.size(); ++var1)
+        {
+            var2 = (Entity)this.loadedEntityList.get(var1);
+
+            if (var2.ridingEntity != null)
+            {
+                if (!var2.ridingEntity.isDead && var2.ridingEntity.riddenByEntity == var2)
+                {
+                    continue;
+                }
+
+                var2.ridingEntity.riddenByEntity = null;
+                var2.ridingEntity = null;
+            }
+
+            if (var2.isDead)
+            {
+                var3 = var2.chunkCoordX;
+                var4 = var2.chunkCoordZ;
+
+                if (var2.addedToChunk && this.chunkExists(var3, var4))
+                {
+                    this.getChunkFromChunkCoords(var3, var4).removeEntity(var2);
+                }
+
+                this.loadedEntityList.remove(var1--);
+                this.releaseEntitySkin(var2);
+            }
+        }
+    }
+
+    /**
+     * Adds some basic stats of the world to the given crash report.
+     */
+    public CrashReport addWorldInfoToCrashReport(CrashReport par1CrashReport)
+    {
+        par1CrashReport = super.addWorldInfoToCrashReport(par1CrashReport);
+        par1CrashReport.addCrashSectionCallable("Forced Entities", new CallableMPL1(this));
+        par1CrashReport.addCrashSectionCallable("Retry Entities", new CallableMPL2(this));
+        return par1CrashReport;
+    }
+
+    /**
+     * par8 is loudness, all pars passed to minecraftInstance.sndManager.playSound
+     */
+    public void playSound(double par1, double par3, double par5, String par7Str, float par8, float par9)
+    {
+        float var10 = 16.0F;
+
+        if (par8 > 1.0F)
+        {
+            var10 *= par8;
+        }
+
+        if (this.mc.renderViewEntity.getDistanceSq(par1, par3, par5) < (double)(var10 * var10))
+        {
+            this.mc.sndManager.playSound(par7Str, (float)par1, (float)par3, (float)par5, par8, par9);
+        }
+    }
+
+    static Set getEntityList(WorldClient par0WorldClient)
+    {
+        return par0WorldClient.entityList;
+    }
+
+    static Set getEntitySpawnQueue(WorldClient par0WorldClient)
+    {
+        return par0WorldClient.entitySpawnQueue;
     }
 }

@@ -9,7 +9,7 @@ public class RenderGhast extends RenderLiving
         super(new ModelGhast(), 0.5F);
     }
 
-    protected void func_4014_a(EntityGhast par1EntityGhast, float par2)
+    protected void func_77069_a(EntityGhast par1EntityGhast, float par2)
     {
         float var4 = ((float)par1EntityGhast.prevAttackCounter + (float)(par1EntityGhast.attackCounter - par1EntityGhast.prevAttackCounter) * par2) / 20.0F;
 
@@ -31,6 +31,6 @@ public class RenderGhast extends RenderLiving
      */
     protected void preRenderCallback(EntityLiving par1EntityLiving, float par2)
     {
-        this.func_4014_a((EntityGhast)par1EntityLiving, par2);
+        this.func_77069_a((EntityGhast)par1EntityLiving, par2);
     }
 }

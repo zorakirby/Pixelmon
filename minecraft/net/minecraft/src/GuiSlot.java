@@ -12,20 +12,20 @@ public abstract class GuiSlot
     /**
      * The width of the GuiScreen. Affects the container rendering, but not the overlays.
      */
-    private final int width;
+    private int width;
 
     /**
      * The height of the GuiScreen. Affects the container rendering, but not the overlays or the scrolling.
      */
-    private final int height;
+    private int height;
 
     /** The top of the slot container. Affects the overlays and scrolling. */
-    protected final int top;
+    protected int top;
 
     /** The bottom of the slot container. Affects the overlays and scrolling. */
-    protected final int bottom;
-    private final int right;
-    private final int left;
+    protected int bottom;
+    private int right;
+    private int left;
 
     /** The height of a slot. */
     protected final int slotHeight;
@@ -59,9 +59,9 @@ public abstract class GuiSlot
 
     /** the time when this button was last clicked. */
     private long lastClicked = 0L;
-    private boolean field_25123_p = true;
-    private boolean field_27262_q;
-    private int field_27261_r;
+    private boolean field_77244_r = true;
+    private boolean field_77243_s;
+    private int field_77242_t;
 
     public GuiSlot(Minecraft par1Minecraft, int par2, int par3, int par4, int par5, int par6)
     {
@@ -75,19 +75,29 @@ public abstract class GuiSlot
         this.right = par2;
     }
 
-    public void func_27258_a(boolean par1)
+    public void func_77207_a(int par1, int par2, int par3, int par4)
     {
-        this.field_25123_p = par1;
+        this.width = par1;
+        this.height = par2;
+        this.top = par3;
+        this.bottom = par4;
+        this.left = 0;
+        this.right = par1;
     }
 
-    protected void func_27259_a(boolean par1, int par2)
+    public void func_77216_a(boolean par1)
     {
-        this.field_27262_q = par1;
-        this.field_27261_r = par2;
+        this.field_77244_r = par1;
+    }
+
+    protected void func_77223_a(boolean par1, int par2)
+    {
+        this.field_77243_s = par1;
+        this.field_77242_t = par2;
 
         if (!par1)
         {
-            this.field_27261_r = 0;
+            this.field_77242_t = 0;
         }
     }
 
@@ -111,24 +121,24 @@ public abstract class GuiSlot
      */
     protected int getContentHeight()
     {
-        return this.getSize() * this.slotHeight + this.field_27261_r;
+        return this.getSize() * this.slotHeight + this.field_77242_t;
     }
 
     protected abstract void drawBackground();
 
     protected abstract void drawSlot(int var1, int var2, int var3, int var4, Tessellator var5);
 
-    protected void func_27260_a(int par1, int par2, Tessellator par3Tessellator) {}
+    protected void func_77222_a(int par1, int par2, Tessellator par3Tessellator) {}
 
-    protected void func_27255_a(int par1, int par2) {}
+    protected void func_77224_a(int par1, int par2) {}
 
-    protected void func_27257_b(int par1, int par2) {}
+    protected void func_77215_b(int par1, int par2) {}
 
-    public int func_27256_c(int par1, int par2)
+    public int func_77210_c(int par1, int par2)
     {
         int var3 = this.width / 2 - 110;
         int var4 = this.width / 2 + 110;
-        int var5 = par2 - this.top - this.field_27261_r + (int)this.amountScrolled - 4;
+        int var5 = par2 - this.top - this.field_77242_t + (int)this.amountScrolled - 4;
         int var6 = var5 / this.slotHeight;
         return par1 >= var3 && par1 <= var4 && var6 >= 0 && var5 >= 0 && var6 < this.getSize() ? var6 : -1;
     }
@@ -147,7 +157,7 @@ public abstract class GuiSlot
      */
     private void bindAmountScrolled()
     {
-        int var1 = this.getContentHeight() - (this.bottom - this.top - 4);
+        int var1 = this.func_77209_d();
 
         if (var1 < 0)
         {
@@ -163,6 +173,18 @@ public abstract class GuiSlot
         {
             this.amountScrolled = (float)var1;
         }
+    }
+
+    public int func_77209_d()
+    {
+        return this.getContentHeight() - (this.bottom - this.top - 4);
+    }
+
+    public void func_77208_b(int par1)
+    {
+        this.amountScrolled += (float)par1;
+        this.bindAmountScrolled();
+        this.initialClickY = -2.0F;
     }
 
     public void actionPerformed(GuiButton par1GuiButton)
@@ -193,7 +215,7 @@ public abstract class GuiSlot
         this.mouseY = par2;
         this.drawBackground();
         int var4 = this.getSize();
-        int var5 = this.width / 2 + 124;
+        int var5 = this.func_77225_g();
         int var6 = var5 + 6;
         int var9;
         int var10;
@@ -211,26 +233,26 @@ public abstract class GuiSlot
                 {
                     int var8 = this.width / 2 - 110;
                     var9 = this.width / 2 + 110;
-                    var10 = par2 - this.top - this.field_27261_r + (int)this.amountScrolled - 4;
+                    var10 = par2 - this.top - this.field_77242_t + (int)this.amountScrolled - 4;
                     var11 = var10 / this.slotHeight;
 
                     if (par1 >= var8 && par1 <= var9 && var11 >= 0 && var10 >= 0 && var11 < var4)
                     {
-                        boolean var12 = var11 == this.selectedElement && System.currentTimeMillis() - this.lastClicked < 250L;
+                        boolean var12 = var11 == this.selectedElement && Minecraft.getSystemTime() - this.lastClicked < 250L;
                         this.elementClicked(var11, var12);
                         this.selectedElement = var11;
-                        this.lastClicked = System.currentTimeMillis();
+                        this.lastClicked = Minecraft.getSystemTime();
                     }
                     else if (par1 >= var8 && par1 <= var9 && var10 < 0)
                     {
-                        this.func_27255_a(par1 - var8, par2 - this.top + (int)this.amountScrolled - 4);
+                        this.func_77224_a(par1 - var8, par2 - this.top + (int)this.amountScrolled - 4);
                         var7 = false;
                     }
 
                     if (par1 >= var5 && par1 <= var6)
                     {
                         this.scrollMultiplier = -1.0F;
-                        var19 = this.getContentHeight() - (this.bottom - this.top - 4);
+                        var19 = this.func_77209_d();
 
                         if (var19 < 1)
                         {
@@ -317,21 +339,21 @@ public abstract class GuiSlot
         var9 = this.width / 2 - 92 - 16;
         var10 = this.top + 4 - (int)this.amountScrolled;
 
-        if (this.field_27262_q)
+        if (this.field_77243_s)
         {
-            this.func_27260_a(var9, var10, var18);
+            this.func_77222_a(var9, var10, var18);
         }
 
         int var14;
 
         for (var11 = 0; var11 < var4; ++var11)
         {
-            var19 = var10 + var11 * this.slotHeight + this.field_27261_r;
+            var19 = var10 + var11 * this.slotHeight + this.field_77242_t;
             var13 = this.slotHeight - 4;
 
             if (var19 <= this.bottom && var19 + var13 >= this.top)
             {
-                if (this.field_25123_p && this.isSelected(var11))
+                if (this.field_77244_r && this.isSelected(var11))
                 {
                     var14 = this.width / 2 - 110;
                     int var15 = this.width / 2 + 110;
@@ -381,7 +403,7 @@ public abstract class GuiSlot
         var18.addVertexWithUV((double)this.right, (double)(this.bottom - var20), 0.0D, 1.0D, 0.0D);
         var18.addVertexWithUV((double)this.left, (double)(this.bottom - var20), 0.0D, 0.0D, 0.0D);
         var18.draw();
-        var19 = this.getContentHeight() - (this.bottom - this.top - 4);
+        var19 = this.func_77209_d();
 
         if (var19 > 0)
         {
@@ -427,11 +449,16 @@ public abstract class GuiSlot
             var18.draw();
         }
 
-        this.func_27257_b(par1, par2);
+        this.func_77215_b(par1, par2);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glShadeModel(GL11.GL_FLAT);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_BLEND);
+    }
+
+    protected int func_77225_g()
+    {
+        return this.width / 2 + 124;
     }
 
     /**

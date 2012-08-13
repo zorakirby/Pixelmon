@@ -5,11 +5,6 @@ import net.minecraft.client.Minecraft;
 public class EntityClientPlayerMP extends EntityPlayerSP
 {
     public NetClientHandler sendQueue;
-
-    /**
-     * Tick counter that resets every 20 ticks, used for sending inventory updates
-     */
-    private int inventoryUpdateTickCounter = 0;
     private double oldPosX;
 
     /** Old Minimum Y of the bounding box */
@@ -25,9 +20,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /** should the player stop sneaking? */
     private boolean shouldStopSneaking = false;
     private boolean wasSneaking = false;
-
-    /** The time since the client player moved */
-    private int timeSinceMoved = 0;
+    private int field_71168_co = 0;
 
     /** has the client player's health been set? */
     private boolean hasSetHealth = false;
@@ -68,11 +61,6 @@ public class EntityClientPlayerMP extends EntityPlayerSP
      */
     public void sendMotionUpdates()
     {
-        if (this.inventoryUpdateTickCounter++ == 20)
-        {
-            this.inventoryUpdateTickCounter = 0;
-        }
-
         boolean var1 = this.isSprinting();
 
         if (var1 != this.wasSneaking)
@@ -107,16 +95,15 @@ public class EntityClientPlayerMP extends EntityPlayerSP
 
         double var3 = this.posX - this.oldPosX;
         double var5 = this.boundingBox.minY - this.oldMinY;
-        double var7 = this.posY - this.oldPosY;
-        double var9 = this.posZ - this.oldPosZ;
-        double var11 = (double)(this.rotationYaw - this.oldRotationYaw);
-        double var13 = (double)(this.rotationPitch - this.oldRotationPitch);
-        boolean var15 = var5 != 0.0D || var7 != 0.0D || var3 != 0.0D || var9 != 0.0D;
-        boolean var16 = var11 != 0.0D || var13 != 0.0D;
+        double var7 = this.posZ - this.oldPosZ;
+        double var9 = (double)(this.rotationYaw - this.oldRotationYaw);
+        double var11 = (double)(this.rotationPitch - this.oldRotationPitch);
+        boolean var13 = var3 * var3 + var5 * var5 + var7 * var7 > 9.0E-4D || this.field_71168_co >= 20;
+        boolean var14 = var9 != 0.0D || var11 != 0.0D;
 
         if (this.ridingEntity != null)
         {
-            if (var16)
+            if (var14)
             {
                 this.sendQueue.addToSendQueue(new Packet11PlayerPosition(this.motionX, -999.0D, -999.0D, this.motionZ, this.onGround));
             }
@@ -125,48 +112,38 @@ public class EntityClientPlayerMP extends EntityPlayerSP
                 this.sendQueue.addToSendQueue(new Packet13PlayerLookMove(this.motionX, -999.0D, -999.0D, this.motionZ, this.rotationYaw, this.rotationPitch, this.onGround));
             }
 
-            var15 = false;
+            var13 = false;
         }
-        else if (var15 && var16)
+        else if (var13 && var14)
         {
             this.sendQueue.addToSendQueue(new Packet13PlayerLookMove(this.posX, this.boundingBox.minY, this.posY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround));
-            this.timeSinceMoved = 0;
         }
-        else if (var15)
+        else if (var13)
         {
             this.sendQueue.addToSendQueue(new Packet11PlayerPosition(this.posX, this.boundingBox.minY, this.posY, this.posZ, this.onGround));
-            this.timeSinceMoved = 0;
         }
-        else if (var16)
+        else if (var14)
         {
             this.sendQueue.addToSendQueue(new Packet12PlayerLook(this.rotationYaw, this.rotationPitch, this.onGround));
-            this.timeSinceMoved = 0;
         }
-        else
+        else if (this.wasOnGround != this.onGround)
         {
             this.sendQueue.addToSendQueue(new Packet10Flying(this.onGround));
-
-            if (this.wasOnGround == this.onGround && this.timeSinceMoved <= 200)
-            {
-                ++this.timeSinceMoved;
-            }
-            else
-            {
-                this.timeSinceMoved = 0;
-            }
         }
 
+        ++this.field_71168_co;
         this.wasOnGround = this.onGround;
 
-        if (var15)
+        if (var13)
         {
             this.oldPosX = this.posX;
             this.oldMinY = this.boundingBox.minY;
             this.oldPosY = this.posY;
             this.oldPosZ = this.posZ;
+            this.field_71168_co = 0;
         }
 
-        if (var16)
+        if (var14)
         {
             this.oldRotationYaw = this.rotationYaw;
             this.oldRotationPitch = this.rotationPitch;
@@ -192,11 +169,6 @@ public class EntityClientPlayerMP extends EntityPlayerSP
      */
     public void sendChatMessage(String par1Str)
     {
-        if (this.mc.ingameGUI.getSentMessageList().size() == 0 || !((String)this.mc.ingameGUI.getSentMessageList().get(this.mc.ingameGUI.getSentMessageList().size() - 1)).equals(par1Str))
-        {
-            this.mc.ingameGUI.getSentMessageList().add(par1Str);
-        }
-
         this.sendQueue.addToSendQueue(new Packet3Chat(par1Str));
     }
 
@@ -211,7 +183,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
 
     public void respawnPlayer()
     {
-        this.sendQueue.addToSendQueue(new Packet9Respawn(this.dimension, (byte)this.worldObj.difficultySetting, this.worldObj.getWorldInfo().getTerrainType(), this.worldObj.getHeight(), 0));
+        this.sendQueue.addToSendQueue(new Packet205ClientCommand(1));
     }
 
     /**
@@ -277,8 +249,16 @@ public class EntityClientPlayerMP extends EntityPlayerSP
         }
     }
 
-    public void func_50009_aI()
+    /**
+     * Sends the player's abilities to the server (if there is one).
+     */
+    public void sendPlayerAbilities()
     {
         this.sendQueue.addToSendQueue(new Packet202PlayerAbilities(this.capabilities));
+    }
+
+    public boolean func_71066_bF()
+    {
+        return true;
     }
 }

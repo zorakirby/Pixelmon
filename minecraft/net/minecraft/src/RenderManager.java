@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 public class RenderManager
 {
     /** A map of entity classes and the associated renderer. */
-    private Map entityRenderMap = new HashMap();
+    public Map entityRenderMap = new HashMap();
 
     /** The static instance of RenderManager. */
     public static RenderManager instance = new RenderManager();
@@ -31,9 +31,9 @@ public class RenderManager
 
     /** Reference to the GameSettings object. */
     public GameSettings options;
-    public double field_1222_l;
-    public double field_1221_m;
-    public double field_1220_n;
+    public double viewerPosX;
+    public double viewerPosY;
+    public double viewerPosZ;
 
     private RenderManager()
     {
@@ -127,11 +127,11 @@ public class RenderManager
             int x = MathHelper.floor_double(par4EntityLiving.posX);
             int y = MathHelper.floor_double(par4EntityLiving.posY);
             int z = MathHelper.floor_double(par4EntityLiving.posZ);
-            Block block = Block.blocksList[par1World.getBlockId(x,  y, z)];
+            Block block = Block.blocksList[par1World.getBlockId(x, y, z)];
 
             if (block != null && block.isBed(par1World, x, y, z, par4EntityLiving))
             {
-                int var9 = block.getBedDirection(par1World, x, y, z);
+                int var9 = block.getBedDirection(par1World, x, y, z);;
                 this.playerViewY = (float)(var9 * 90 + 180);
                 this.playerViewX = 0.0F;
             }
@@ -147,9 +147,9 @@ public class RenderManager
             this.playerViewY += 180.0F;
         }
 
-        this.field_1222_l = par4EntityLiving.lastTickPosX + (par4EntityLiving.posX - par4EntityLiving.lastTickPosX) * (double)par6;
-        this.field_1221_m = par4EntityLiving.lastTickPosY + (par4EntityLiving.posY - par4EntityLiving.lastTickPosY) * (double)par6;
-        this.field_1220_n = par4EntityLiving.lastTickPosZ + (par4EntityLiving.posZ - par4EntityLiving.lastTickPosZ) * (double)par6;
+        this.viewerPosX = par4EntityLiving.lastTickPosX + (par4EntityLiving.posX - par4EntityLiving.lastTickPosX) * (double)par6;
+        this.viewerPosY = par4EntityLiving.lastTickPosY + (par4EntityLiving.posY - par4EntityLiving.lastTickPosY) * (double)par6;
+        this.viewerPosZ = par4EntityLiving.lastTickPosZ + (par4EntityLiving.posZ - par4EntityLiving.lastTickPosZ) * (double)par6;
     }
 
     /**
@@ -200,9 +200,9 @@ public class RenderManager
 
     public double getDistanceToCamera(double par1, double par3, double par5)
     {
-        double var7 = par1 - this.field_1222_l;
-        double var9 = par3 - this.field_1221_m;
-        double var11 = par5 - this.field_1220_n;
+        double var7 = par1 - this.viewerPosX;
+        double var9 = par3 - this.viewerPosY;
+        double var11 = par5 - this.viewerPosZ;
         return var7 * var7 + var9 * var9 + var11 * var11;
     }
 
@@ -212,9 +212,5 @@ public class RenderManager
     public FontRenderer getFontRenderer()
     {
         return this.fontRenderer;
-    }
-    
-    public Map<Class<? extends Entity>, Render> getRendererList() {
-        return entityRenderMap;
     }
 }

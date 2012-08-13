@@ -9,7 +9,7 @@ public class RenderPainting extends Render
     /** RNG. */
     private Random rand = new Random();
 
-    public void func_158_a(EntityPainting par1EntityPainting, double par2, double par4, double par6, float par8, float par9)
+    public void func_77009_a(EntityPainting par1EntityPainting, double par2, double par4, double par6, float par8, float par9)
     {
         this.rand.setSeed(187L);
         GL11.glPushMatrix();
@@ -20,12 +20,12 @@ public class RenderPainting extends Render
         EnumArt var10 = par1EntityPainting.art;
         float var11 = 0.0625F;
         GL11.glScalef(var11, var11, var11);
-        this.func_159_a(par1EntityPainting, var10.sizeX, var10.sizeY, var10.offsetX, var10.offsetY);
+        this.func_77010_a(par1EntityPainting, var10.sizeX, var10.sizeY, var10.offsetX, var10.offsetY);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }
 
-    private void func_159_a(EntityPainting par1EntityPainting, int par2, int par3, int par4, int par5)
+    private void func_77010_a(EntityPainting par1EntityPainting, int par2, int par3, int par4, int par5)
     {
         float var6 = (float)(-par2) / 2.0F;
         float var7 = (float)(-par3) / 2.0F;
@@ -40,7 +40,7 @@ public class RenderPainting extends Render
                 float var13 = var6 + (float)(var10 * 16);
                 float var14 = var7 + (float)((var11 + 1) * 16);
                 float var15 = var7 + (float)(var11 * 16);
-                this.func_160_a(par1EntityPainting, (var12 + var13) / 2.0F, (var14 + var15) / 2.0F);
+                this.func_77008_a(par1EntityPainting, (var12 + var13) / 2.0F, (var14 + var15) / 2.0F);
                 float var16 = (float)(par4 + par2 - var10 * 16) / 256.0F;
                 float var17 = (float)(par4 + par2 - (var10 + 1) * 16) / 256.0F;
                 float var18 = (float)(par5 + par3 - var11 * 16) / 256.0F;
@@ -94,7 +94,7 @@ public class RenderPainting extends Render
         }
     }
 
-    private void func_160_a(EntityPainting par1EntityPainting, float par2, float par3)
+    private void func_77008_a(EntityPainting par1EntityPainting, float par2, float par3)
     {
         int var4 = MathHelper.floor_double(par1EntityPainting.posX);
         int var5 = MathHelper.floor_double(par1EntityPainting.posY + (double)(par3 / 16.0F));
@@ -135,6 +135,6 @@ public class RenderPainting extends Render
      */
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.func_158_a((EntityPainting)par1Entity, par2, par4, par6, par8, par9);
+        this.func_77009_a((EntityPainting)par1Entity, par2, par4, par6, par8, par9);
     }
 }

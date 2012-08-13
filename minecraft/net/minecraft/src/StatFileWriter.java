@@ -14,9 +14,9 @@ import java.util.Map.Entry;
 
 public class StatFileWriter
 {
-    private Map field_25102_a = new HashMap();
-    private Map field_25101_b = new HashMap();
-    private boolean field_27189_c = false;
+    private Map field_77457_a = new HashMap();
+    private Map field_77455_b = new HashMap();
+    private boolean field_77456_c = false;
     private StatsSyncher statsSyncher;
 
     public StatFileWriter(Session par1Session, File par2File)
@@ -52,9 +52,9 @@ public class StatFileWriter
 
     public void readStat(StatBase par1StatBase, int par2)
     {
-        this.writeStatToMap(this.field_25101_b, par1StatBase, par2);
-        this.writeStatToMap(this.field_25102_a, par1StatBase, par2);
-        this.field_27189_c = true;
+        this.writeStatToMap(this.field_77455_b, par1StatBase, par2);
+        this.writeStatToMap(this.field_77457_a, par1StatBase, par2);
+        this.field_77456_c = true;
     }
 
     private void writeStatToMap(Map par1Map, StatBase par2StatBase, int par3)
@@ -64,9 +64,9 @@ public class StatFileWriter
         par1Map.put(par2StatBase, Integer.valueOf(var5 + par3));
     }
 
-    public Map func_27176_a()
+    public Map func_77445_b()
     {
-        return new HashMap(this.field_25101_b);
+        return new HashMap(this.field_77455_b);
     }
 
     /**
@@ -76,19 +76,19 @@ public class StatFileWriter
     {
         if (par1Map != null)
         {
-            this.field_27189_c = true;
+            this.field_77456_c = true;
             Iterator var2 = par1Map.keySet().iterator();
 
             while (var2.hasNext())
             {
                 StatBase var3 = (StatBase)var2.next();
-                this.writeStatToMap(this.field_25101_b, var3, ((Integer)par1Map.get(var3)).intValue());
-                this.writeStatToMap(this.field_25102_a, var3, ((Integer)par1Map.get(var3)).intValue());
+                this.writeStatToMap(this.field_77455_b, var3, ((Integer)par1Map.get(var3)).intValue());
+                this.writeStatToMap(this.field_77457_a, var3, ((Integer)par1Map.get(var3)).intValue());
             }
         }
     }
 
-    public void func_27180_b(Map par1Map)
+    public void func_77452_b(Map par1Map)
     {
         if (par1Map != null)
         {
@@ -97,29 +97,29 @@ public class StatFileWriter
             while (var2.hasNext())
             {
                 StatBase var3 = (StatBase)var2.next();
-                Integer var4 = (Integer)this.field_25101_b.get(var3);
+                Integer var4 = (Integer)this.field_77455_b.get(var3);
                 int var5 = var4 == null ? 0 : var4.intValue();
-                this.field_25102_a.put(var3, Integer.valueOf(((Integer)par1Map.get(var3)).intValue() + var5));
+                this.field_77457_a.put(var3, Integer.valueOf(((Integer)par1Map.get(var3)).intValue() + var5));
             }
         }
     }
 
-    public void func_27187_c(Map par1Map)
+    public void func_77448_c(Map par1Map)
     {
         if (par1Map != null)
         {
-            this.field_27189_c = true;
+            this.field_77456_c = true;
             Iterator var2 = par1Map.keySet().iterator();
 
             while (var2.hasNext())
             {
                 StatBase var3 = (StatBase)var2.next();
-                this.writeStatToMap(this.field_25101_b, var3, ((Integer)par1Map.get(var3)).intValue());
+                this.writeStatToMap(this.field_77455_b, var3, ((Integer)par1Map.get(var3)).intValue());
             }
         }
     }
 
-    public static Map func_27177_a(String par0Str)
+    public static Map func_77453_b(String par0Str)
     {
         HashMap var1 = new HashMap();
 
@@ -169,7 +169,7 @@ public class StatFileWriter
         return var1;
     }
 
-    public static String func_27185_a(String par0Str, String par1Str, Map par2Map)
+    public static String func_77441_a(String par0Str, String par1Str, Map par2Map)
     {
         StringBuilder var3 = new StringBuilder();
         StringBuilder var4 = new StringBuilder();
@@ -191,13 +191,13 @@ public class StatFileWriter
         {
             StatBase var7 = (StatBase)var6.next();
 
-            if (!var5)
+            if (var5)
             {
-                var3.append("},");
+                var5 = false;
             }
             else
             {
-                var5 = false;
+                var3.append("},");
             }
 
             var3.append("\r\n    {\"").append(var7.statId).append("\":").append(par2Map.get(var7));
@@ -222,7 +222,7 @@ public class StatFileWriter
      */
     public boolean hasAchievementUnlocked(Achievement par1Achievement)
     {
-        return this.field_25102_a.containsKey(par1Achievement);
+        return this.field_77457_a.containsKey(par1Achievement);
     }
 
     /**
@@ -235,24 +235,22 @@ public class StatFileWriter
 
     public int writeStat(StatBase par1StatBase)
     {
-        Integer var2 = (Integer)this.field_25102_a.get(par1StatBase);
+        Integer var2 = (Integer)this.field_77457_a.get(par1StatBase);
         return var2 == null ? 0 : var2.intValue();
     }
 
-    public void func_27175_b() {}
-
     public void syncStats()
     {
-        this.statsSyncher.syncStatsFileWithMap(this.func_27176_a());
+        this.statsSyncher.syncStatsFileWithMap(this.func_77445_b());
     }
 
-    public void func_27178_d()
+    public void func_77449_e()
     {
-        if (this.field_27189_c && this.statsSyncher.func_27420_b())
+        if (this.field_77456_c && this.statsSyncher.func_77425_c())
         {
-            this.statsSyncher.beginSendStats(this.func_27176_a());
+            this.statsSyncher.beginSendStats(this.func_77445_b());
         }
 
-        this.statsSyncher.func_27425_c();
+        this.statsSyncher.func_77422_e();
     }
 }

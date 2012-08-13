@@ -41,9 +41,4 @@ public class ModelBoat extends ModelBase
             this.boatSides[var8].render(par7);
         }
     }
-
-    /**
-     * Sets the models various rotation angles.
-     */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6) {}
 }

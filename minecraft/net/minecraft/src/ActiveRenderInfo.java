@@ -74,7 +74,7 @@ public class ActiveRenderInfo
     /**
      * Returns a vector representing the projection along the given entity's view for the given distance
      */
-    public static Vec3D projectViewFromEntity(EntityLiving par0EntityLiving, double par1)
+    public static Vec3 projectViewFromEntity(EntityLiving par0EntityLiving, double par1)
     {
         double var3 = par0EntityLiving.prevPosX + (par0EntityLiving.posX - par0EntityLiving.prevPosX) * par1;
         double var5 = par0EntityLiving.prevPosY + (par0EntityLiving.posY - par0EntityLiving.prevPosY) * par1 + (double)par0EntityLiving.getEyeHeight();
@@ -82,7 +82,7 @@ public class ActiveRenderInfo
         double var9 = var3 + (double)(objectX * 1.0F);
         double var11 = var5 + (double)(objectY * 1.0F);
         double var13 = var7 + (double)(objectZ * 1.0F);
-        return Vec3D.createVector(var9, var11, var13);
+        return Vec3.getVec3Pool().getVecFromPool(var9, var11, var13);
     }
 
     /**
@@ -91,7 +91,7 @@ public class ActiveRenderInfo
      */
     public static int getBlockIdAtEntityViewpoint(World par0World, EntityLiving par1EntityLiving, float par2)
     {
-        Vec3D var3 = projectViewFromEntity(par1EntityLiving, (double)par2);
+        Vec3 var3 = projectViewFromEntity(par1EntityLiving, (double)par2);
         ChunkPosition var4 = new ChunkPosition(var3);
         int var5 = par0World.getBlockId(var4.x, var4.y, var4.z);
 

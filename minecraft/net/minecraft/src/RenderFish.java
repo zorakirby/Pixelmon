@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -39,46 +40,44 @@ public class RenderFish extends Render
 
         if (par1EntityFishHook.angler != null)
         {
-            float var20 = (par1EntityFishHook.angler.prevRotationYaw + (par1EntityFishHook.angler.rotationYaw - par1EntityFishHook.angler.prevRotationYaw) * par9) * (float)Math.PI / 180.0F;
-            double var21 = (double)MathHelper.sin(var20);
-            double var23 = (double)MathHelper.cos(var20);
-            float var25 = par1EntityFishHook.angler.getSwingProgress(par9);
-            float var26 = MathHelper.sin(MathHelper.sqrt_float(var25) * (float)Math.PI);
-            Vec3D var27 = Vec3D.createVector(-0.5D, 0.03D, 0.8D);
-            var27.rotateAroundX(-(par1EntityFishHook.angler.prevRotationPitch + (par1EntityFishHook.angler.rotationPitch - par1EntityFishHook.angler.prevRotationPitch) * par9) * (float)Math.PI / 180.0F);
-            var27.rotateAroundY(-(par1EntityFishHook.angler.prevRotationYaw + (par1EntityFishHook.angler.rotationYaw - par1EntityFishHook.angler.prevRotationYaw) * par9) * (float)Math.PI / 180.0F);
-            var27.rotateAroundY(var26 * 0.5F);
-            var27.rotateAroundX(-var26 * 0.7F);
-            double var28 = par1EntityFishHook.angler.prevPosX + (par1EntityFishHook.angler.posX - par1EntityFishHook.angler.prevPosX) * (double)par9 + var27.xCoord;
-            double var30 = par1EntityFishHook.angler.prevPosY + (par1EntityFishHook.angler.posY - par1EntityFishHook.angler.prevPosY) * (double)par9 + var27.yCoord;
-            double var32 = par1EntityFishHook.angler.prevPosZ + (par1EntityFishHook.angler.posZ - par1EntityFishHook.angler.prevPosZ) * (double)par9 + var27.zCoord;
+            float var20 = par1EntityFishHook.angler.getSwingProgress(par9);
+            float var21 = MathHelper.sin(MathHelper.sqrt_float(var20) * (float)Math.PI);
+            Vec3 var22 = Vec3.getVec3Pool().getVecFromPool(-0.5D, 0.03D, 0.8D);
+            var22.rotateAroundX(-(par1EntityFishHook.angler.prevRotationPitch + (par1EntityFishHook.angler.rotationPitch - par1EntityFishHook.angler.prevRotationPitch) * par9) * (float)Math.PI / 180.0F);
+            var22.rotateAroundY(-(par1EntityFishHook.angler.prevRotationYaw + (par1EntityFishHook.angler.rotationYaw - par1EntityFishHook.angler.prevRotationYaw) * par9) * (float)Math.PI / 180.0F);
+            var22.rotateAroundY(var21 * 0.5F);
+            var22.rotateAroundX(-var21 * 0.7F);
+            double var23 = par1EntityFishHook.angler.prevPosX + (par1EntityFishHook.angler.posX - par1EntityFishHook.angler.prevPosX) * (double)par9 + var22.xCoord;
+            double var25 = par1EntityFishHook.angler.prevPosY + (par1EntityFishHook.angler.posY - par1EntityFishHook.angler.prevPosY) * (double)par9 + var22.yCoord;
+            double var27 = par1EntityFishHook.angler.prevPosZ + (par1EntityFishHook.angler.posZ - par1EntityFishHook.angler.prevPosZ) * (double)par9 + var22.zCoord;
+            double var29 = par1EntityFishHook.angler != Minecraft.getMinecraft().thePlayer ? (double)par1EntityFishHook.angler.getEyeHeight() : 0.0D;
 
-            if (this.renderManager.options.thirdPersonView > 0)
+            if (this.renderManager.options.thirdPersonView > 0 || par1EntityFishHook.angler != Minecraft.getMinecraft().thePlayer)
             {
-                var20 = (par1EntityFishHook.angler.prevRenderYawOffset + (par1EntityFishHook.angler.renderYawOffset - par1EntityFishHook.angler.prevRenderYawOffset) * par9) * (float)Math.PI / 180.0F;
-                var21 = (double)MathHelper.sin(var20);
-                var23 = (double)MathHelper.cos(var20);
-                var28 = par1EntityFishHook.angler.prevPosX + (par1EntityFishHook.angler.posX - par1EntityFishHook.angler.prevPosX) * (double)par9 - var23 * 0.35D - var21 * 0.85D;
-                var30 = par1EntityFishHook.angler.prevPosY + (par1EntityFishHook.angler.posY - par1EntityFishHook.angler.prevPosY) * (double)par9 - 0.45D;
-                var32 = par1EntityFishHook.angler.prevPosZ + (par1EntityFishHook.angler.posZ - par1EntityFishHook.angler.prevPosZ) * (double)par9 - var21 * 0.35D + var23 * 0.85D;
+                float var31 = (par1EntityFishHook.angler.prevRenderYawOffset + (par1EntityFishHook.angler.renderYawOffset - par1EntityFishHook.angler.prevRenderYawOffset) * par9) * (float)Math.PI / 180.0F;
+                double var32 = (double)MathHelper.sin(var31);
+                double var34 = (double)MathHelper.cos(var31);
+                var23 = par1EntityFishHook.angler.prevPosX + (par1EntityFishHook.angler.posX - par1EntityFishHook.angler.prevPosX) * (double)par9 - var34 * 0.35D - var32 * 0.85D;
+                var25 = par1EntityFishHook.angler.prevPosY + var29 + (par1EntityFishHook.angler.posY - par1EntityFishHook.angler.prevPosY) * (double)par9 - 0.45D;
+                var27 = par1EntityFishHook.angler.prevPosZ + (par1EntityFishHook.angler.posZ - par1EntityFishHook.angler.prevPosZ) * (double)par9 - var32 * 0.35D + var34 * 0.85D;
             }
 
-            double var34 = par1EntityFishHook.prevPosX + (par1EntityFishHook.posX - par1EntityFishHook.prevPosX) * (double)par9;
-            double var36 = par1EntityFishHook.prevPosY + (par1EntityFishHook.posY - par1EntityFishHook.prevPosY) * (double)par9 + 0.25D;
-            double var38 = par1EntityFishHook.prevPosZ + (par1EntityFishHook.posZ - par1EntityFishHook.prevPosZ) * (double)par9;
-            double var40 = (double)((float)(var28 - var34));
-            double var42 = (double)((float)(var30 - var36));
-            double var44 = (double)((float)(var32 - var38));
+            double var46 = par1EntityFishHook.prevPosX + (par1EntityFishHook.posX - par1EntityFishHook.prevPosX) * (double)par9;
+            double var33 = par1EntityFishHook.prevPosY + (par1EntityFishHook.posY - par1EntityFishHook.prevPosY) * (double)par9 + 0.25D;
+            double var35 = par1EntityFishHook.prevPosZ + (par1EntityFishHook.posZ - par1EntityFishHook.prevPosZ) * (double)par9;
+            double var37 = (double)((float)(var23 - var46));
+            double var39 = (double)((float)(var25 - var33));
+            double var41 = (double)((float)(var27 - var35));
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glDisable(GL11.GL_LIGHTING);
             var12.startDrawing(3);
             var12.setColorOpaque_I(0);
-            byte var46 = 16;
+            byte var43 = 16;
 
-            for (int var47 = 0; var47 <= var46; ++var47)
+            for (int var44 = 0; var44 <= var43; ++var44)
             {
-                float var48 = (float)var47 / (float)var46;
-                var12.addVertex(par2 + var40 * (double)var48, par4 + var42 * (double)(var48 * var48 + var48) * 0.5D + 0.25D, par6 + var44 * (double)var48);
+                float var45 = (float)var44 / (float)var43;
+                var12.addVertex(par2 + var37 * (double)var45, par4 + var39 * (double)(var45 * var45 + var45) * 0.5D + 0.25D, par6 + var41 * (double)var45);
             }
 
             var12.draw();

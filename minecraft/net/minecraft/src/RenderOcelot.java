@@ -9,12 +9,12 @@ public class RenderOcelot extends RenderLiving
         super(par1ModelBase, par2);
     }
 
-    public void func_48424_a(EntityOcelot par1EntityOcelot, double par2, double par4, double par6, float par8, float par9)
+    public void func_77117_a(EntityOcelot par1EntityOcelot, double par2, double par4, double par6, float par8, float par9)
     {
         super.doRenderLiving(par1EntityOcelot, par2, par4, par6, par8, par9);
     }
 
-    protected void func_48423_a(EntityOcelot par1EntityOcelot, float par2)
+    protected void func_77116_a(EntityOcelot par1EntityOcelot, float par2)
     {
         super.preRenderCallback(par1EntityOcelot, par2);
 
@@ -30,12 +30,12 @@ public class RenderOcelot extends RenderLiving
      */
     protected void preRenderCallback(EntityLiving par1EntityLiving, float par2)
     {
-        this.func_48423_a((EntityOcelot)par1EntityLiving, par2);
+        this.func_77116_a((EntityOcelot)par1EntityLiving, par2);
     }
 
     public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
     {
-        this.func_48424_a((EntityOcelot)par1EntityLiving, par2, par4, par6, par8, par9);
+        this.func_77117_a((EntityOcelot)par1EntityLiving, par2, par4, par6, par8, par9);
     }
 
     /**
@@ -46,6 +46,6 @@ public class RenderOcelot extends RenderLiving
      */
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.func_48424_a((EntityOcelot)par1Entity, par2, par4, par6, par8, par9);
+        this.func_77117_a((EntityOcelot)par1Entity, par2, par4, par6, par8, par9);
     }
 }

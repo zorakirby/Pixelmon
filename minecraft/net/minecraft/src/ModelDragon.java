@@ -239,14 +239,6 @@ public class ModelDragon extends ModelBase
     }
 
     /**
-     * Sets the models various rotation angles.
-     */
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6)
-    {
-        super.setRotationAngles(par1, par2, par3, par4, par5, par6);
-    }
-
-    /**
      * Updates the rotations in the parameters for rotations greater than 180 degrees or less than -180 degrees. It adds
      * or subtracts 360 degrees, so that the appearance is the same, although the numbers are then simplified to range
      * -180 to 180

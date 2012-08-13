@@ -32,12 +32,12 @@ public class RenderHelper
         float var0 = 0.4F;
         float var1 = 0.6F;
         float var2 = 0.0F;
-        Vec3D var3 = Vec3D.createVector(0.20000000298023224D, 1.0D, -0.699999988079071D).normalize();
+        Vec3 var3 = Vec3.getVec3Pool().getVecFromPool(0.20000000298023224D, 1.0D, -0.699999988079071D).normalize();
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, setColorBuffer(var3.xCoord, var3.yCoord, var3.zCoord, 0.0D));
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, setColorBuffer(var1, var1, var1, 1.0F));
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, setColorBuffer(0.0F, 0.0F, 0.0F, 1.0F));
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, setColorBuffer(var2, var2, var2, 1.0F));
-        var3 = Vec3D.createVector(-0.20000000298023224D, 1.0D, 0.699999988079071D).normalize();
+        var3 = Vec3.getVec3Pool().getVecFromPool(-0.20000000298023224D, 1.0D, 0.699999988079071D).normalize();
         GL11.glLight(GL11.GL_LIGHT1, GL11.GL_POSITION, setColorBuffer(var3.xCoord, var3.yCoord, var3.zCoord, 0.0D));
         GL11.glLight(GL11.GL_LIGHT1, GL11.GL_DIFFUSE, setColorBuffer(var1, var1, var1, 1.0F));
         GL11.glLight(GL11.GL_LIGHT1, GL11.GL_AMBIENT, setColorBuffer(0.0F, 0.0F, 0.0F, 1.0F));

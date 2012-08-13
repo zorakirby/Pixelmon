@@ -10,15 +10,7 @@ public class GuiCrafting extends GuiContainer
     }
 
     /**
-     * Called when the screen is unloaded. Used to disable keyboard repeat events
-     */
-    public void onGuiClosed()
-    {
-        super.onGuiClosed();
-    }
-
-    /**
-     * Draw the foreground layer for the GuiContainer (everythin in front of the items)
+     * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
     protected void drawGuiContainerForegroundLayer()
     {

@@ -131,4 +131,9 @@ public class ChunkProviderClient implements IChunkProvider
     {
         return null;
     }
+
+    public int getLoadedChunkCount()
+    {
+        return this.chunkListing.size();
+    }
 }

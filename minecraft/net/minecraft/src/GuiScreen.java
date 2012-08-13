@@ -6,6 +6,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
@@ -39,9 +40,11 @@ public class GuiScreen extends Gui
      */
     public void drawScreen(int par1, int par2, float par3)
     {
-        for (int var4 = 0; var4 < this.controlList.size(); ++var4)
+        Iterator var4 = this.controlList.iterator();
+
+        while (var4.hasNext())
         {
-            GuiButton var5 = (GuiButton)this.controlList.get(var4);
+            GuiButton var5 = (GuiButton)var4.next();
             var5.drawButton(this.mc, par1, par2);
         }
     }
@@ -272,7 +275,7 @@ public class GuiScreen extends Gui
 
     public static boolean isCtrlKeyDown()
     {
-        return Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157);
+        return Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157) || Minecraft.getOs() == EnumOS.MACOS && (Keyboard.isKeyDown(219) || Keyboard.isKeyDown(220));
     }
 
     public static boolean isShiftKeyDown()

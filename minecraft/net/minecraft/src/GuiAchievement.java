@@ -40,7 +40,7 @@ public class GuiAchievement extends Gui
     {
         this.achievementGetLocalText = StatCollector.translateToLocal("achievement.get");
         this.achievementStatName = StatCollector.translateToLocal(par1Achievement.getName());
-        this.achievementTime = System.currentTimeMillis();
+        this.achievementTime = Minecraft.getSystemTime();
         this.theAchievement = par1Achievement;
         this.haveAchiement = false;
     }
@@ -52,7 +52,7 @@ public class GuiAchievement extends Gui
     {
         this.achievementGetLocalText = StatCollector.translateToLocal(par1Achievement.getName());
         this.achievementStatName = par1Achievement.getDescription();
-        this.achievementTime = System.currentTimeMillis() - 2500L;
+        this.achievementTime = Minecraft.getSystemTime() - 2500L;
         this.theAchievement = par1Achievement;
         this.haveAchiement = true;
     }
@@ -88,7 +88,7 @@ public class GuiAchievement extends Gui
     {
         if (this.theAchievement != null && this.achievementTime != 0L)
         {
-            double var1 = (double)(System.currentTimeMillis() - this.achievementTime) / 3000.0D;
+            double var1 = (double)(Minecraft.getSystemTime() - this.achievementTime) / 3000.0D;
 
             if (!this.haveAchiement && (var1 < 0.0D || var1 > 1.0D))
             {

@@ -17,17 +17,6 @@ public class RenderWolf extends RenderLiving
         return par1EntityWolf.getTailRotation();
     }
 
-    protected void func_25006_b(EntityWolf par1EntityWolf, float par2) {}
-
-    /**
-     * Allows the render to do any OpenGL state modifications necessary before the model is rendered. Args:
-     * entityLiving, partialTickTime
-     */
-    protected void preRenderCallback(EntityLiving par1EntityLiving, float par2)
-    {
-        this.func_25006_b((EntityWolf)par1EntityLiving, par2);
-    }
-
     /**
      * Defines what float the third param in setRotationAngles of ModelBase is
      */

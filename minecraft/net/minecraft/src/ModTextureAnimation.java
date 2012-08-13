@@ -112,7 +112,7 @@ public class ModTextureAnimation extends FMLTextureFX
         }
     }
     
-    public void onTick()
+    public void func_783_a()
     {
         if (++ticks >= tickRate)
         {

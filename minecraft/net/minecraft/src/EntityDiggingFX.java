@@ -14,7 +14,7 @@ public class EntityDiggingFX extends EntityFX
         this.particleScale /= 2.0F;
     }
 
-    public EntityDiggingFX func_4041_a(int par1, int par2, int par3)
+    public EntityDiggingFX func_70596_a(int par1, int par2, int par3)
     {
         if (this.blockInstance == Block.grass)
         {

@@ -16,12 +16,4 @@ public class GuiPlayerInfo
         this.name = par1Str;
         this.nameinLowerCase = par1Str.toLowerCase();
     }
-
-    /**
-     * Returns true if the current player name starts with string specified value.
-     */
-    public boolean nameStartsWith(String par1Str)
-    {
-        return this.nameinLowerCase.startsWith(par1Str);
-    }
 }

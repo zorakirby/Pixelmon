@@ -2,10 +2,10 @@ package net.minecraft.src;
 
 public class EntityEnchantmentTableParticleFX extends EntityFX
 {
-    private float field_40107_a;
-    private double field_40109_aw;
-    private double field_40108_ax;
-    private double field_40106_ay;
+    private float field_70565_a;
+    private double field_70568_aq;
+    private double field_70567_ar;
+    private double field_70566_as;
 
     public EntityEnchantmentTableParticleFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
     {
@@ -13,11 +13,11 @@ public class EntityEnchantmentTableParticleFX extends EntityFX
         this.motionX = par8;
         this.motionY = par10;
         this.motionZ = par12;
-        this.field_40109_aw = this.posX = par2;
-        this.field_40108_ax = this.posY = par4;
-        this.field_40106_ay = this.posZ = par6;
+        this.field_70568_aq = this.posX = par2;
+        this.field_70567_ar = this.posY = par4;
+        this.field_70566_as = this.posZ = par6;
         float var14 = this.rand.nextFloat() * 0.6F + 0.4F;
-        this.field_40107_a = this.particleScale = this.rand.nextFloat() * 0.5F + 0.2F;
+        this.field_70565_a = this.particleScale = this.rand.nextFloat() * 0.5F + 0.2F;
         this.particleRed = this.particleGreen = this.particleBlue = 1.0F * var14;
         this.particleGreen *= 0.9F;
         this.particleRed *= 0.9F;
@@ -69,9 +69,9 @@ public class EntityEnchantmentTableParticleFX extends EntityFX
         float var2 = 1.0F - var1;
         var2 *= var2;
         var2 *= var2;
-        this.posX = this.field_40109_aw + this.motionX * (double)var1;
-        this.posY = this.field_40108_ax + this.motionY * (double)var1 - (double)(var2 * 1.2F);
-        this.posZ = this.field_40106_ay + this.motionZ * (double)var1;
+        this.posX = this.field_70568_aq + this.motionX * (double)var1;
+        this.posY = this.field_70567_ar + this.motionY * (double)var1 - (double)(var2 * 1.2F);
+        this.posZ = this.field_70566_as + this.motionZ * (double)var1;
 
         if (this.particleAge++ >= this.particleMaxAge)
         {

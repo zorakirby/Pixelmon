@@ -9,18 +9,18 @@ public class GuiEnchantment extends GuiContainer
 {
     /** The book model used on the GUI. */
     private static ModelBook bookModel = new ModelBook();
-    private Random field_40230_x = new Random();
+    private Random field_74216_x = new Random();
 
     /** ContainerEnchantment object associated with this gui */
     private ContainerEnchantment containerEnchantment;
-    public int field_40227_h;
-    public float field_40229_i;
-    public float field_40225_j;
-    public float field_40226_k;
-    public float field_40223_l;
-    public float field_40224_m;
-    public float field_40221_n;
-    ItemStack field_40222_o;
+    public int field_74214_o;
+    public float field_74213_p;
+    public float field_74212_q;
+    public float field_74211_r;
+    public float field_74210_s;
+    public float field_74209_t;
+    public float field_74208_u;
+    ItemStack field_74207_v;
 
     public GuiEnchantment(InventoryPlayer par1InventoryPlayer, World par2World, int par3, int par4, int par5)
     {
@@ -29,15 +29,7 @@ public class GuiEnchantment extends GuiContainer
     }
 
     /**
-     * Called when the screen is unloaded. Used to disable keyboard repeat events
-     */
-    public void onGuiClosed()
-    {
-        super.onGuiClosed();
-    }
-
-    /**
-     * Draw the foreground layer for the GuiContainer (everythin in front of the items)
+     * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
     protected void drawGuiContainerForegroundLayer()
     {
@@ -51,7 +43,7 @@ public class GuiEnchantment extends GuiContainer
     public void updateScreen()
     {
         super.updateScreen();
-        this.func_40219_x_();
+        this.func_74205_h();
     }
 
     /**
@@ -91,7 +83,7 @@ public class GuiEnchantment extends GuiContainer
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
         ScaledResolution var7 = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-        GL11.glViewport((var7.getScaledWidth() - 320) / 2 * var7.scaleFactor, (var7.getScaledHeight() - 240) / 2 * var7.scaleFactor, 320 * var7.scaleFactor, 240 * var7.scaleFactor);
+        GL11.glViewport((var7.getScaledWidth() - 320) / 2 * var7.getScaleFactor(), (var7.getScaledHeight() - 240) / 2 * var7.getScaleFactor(), 320 * var7.getScaleFactor(), 240 * var7.getScaleFactor());
         GL11.glTranslatef(-0.34F, 0.23F, 0.0F);
         GLU.gluPerspective(90.0F, 1.3333334F, 9.0F, 80.0F);
         float var8 = 1.0F;
@@ -105,14 +97,14 @@ public class GuiEnchantment extends GuiContainer
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
         this.mc.renderEngine.bindTexture(this.mc.renderEngine.getTexture("/item/book.png"));
         GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
-        float var10 = this.field_40221_n + (this.field_40224_m - this.field_40221_n) * par1;
+        float var10 = this.field_74208_u + (this.field_74209_t - this.field_74208_u) * par1;
         GL11.glTranslatef((1.0F - var10) * 0.2F, (1.0F - var10) * 0.1F, (1.0F - var10) * 0.25F);
         GL11.glRotatef(-(1.0F - var10) * 90.0F - 90.0F, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
-        float var11 = this.field_40225_j + (this.field_40229_i - this.field_40225_j) * par1 + 0.25F;
-        float var12 = this.field_40225_j + (this.field_40229_i - this.field_40225_j) * par1 + 0.75F;
-        var11 = (var11 - (float)MathHelper.func_40346_b((double)var11)) * 1.6F - 0.3F;
-        var12 = (var12 - (float)MathHelper.func_40346_b((double)var12)) * 1.6F - 0.3F;
+        float var11 = this.field_74212_q + (this.field_74213_p - this.field_74212_q) * par1 + 0.25F;
+        float var12 = this.field_74212_q + (this.field_74213_p - this.field_74212_q) * par1 + 0.75F;
+        var11 = (var11 - (float)MathHelper.truncateDoubleToInt((double)var11)) * 1.6F - 0.3F;
+        var12 = (var12 - (float)MathHelper.truncateDoubleToInt((double)var12)) * 1.6F - 0.3F;
 
         if (var11 < 0.0F)
         {
@@ -198,24 +190,24 @@ public class GuiEnchantment extends GuiContainer
         }
     }
 
-    public void func_40219_x_()
+    public void func_74205_h()
     {
         ItemStack var1 = this.inventorySlots.getSlot(0).getStack();
 
-        if (!ItemStack.areItemStacksEqual(var1, this.field_40222_o))
+        if (!ItemStack.areItemStacksEqual(var1, this.field_74207_v))
         {
-            this.field_40222_o = var1;
+            this.field_74207_v = var1;
 
             do
             {
-                this.field_40226_k += (float)(this.field_40230_x.nextInt(4) - this.field_40230_x.nextInt(4));
+                this.field_74211_r += (float)(this.field_74216_x.nextInt(4) - this.field_74216_x.nextInt(4));
             }
-            while (this.field_40229_i <= this.field_40226_k + 1.0F && this.field_40229_i >= this.field_40226_k - 1.0F);
+            while (this.field_74213_p <= this.field_74211_r + 1.0F && this.field_74213_p >= this.field_74211_r - 1.0F);
         }
 
-        ++this.field_40227_h;
-        this.field_40225_j = this.field_40229_i;
-        this.field_40221_n = this.field_40224_m;
+        ++this.field_74214_o;
+        this.field_74212_q = this.field_74213_p;
+        this.field_74208_u = this.field_74209_t;
         boolean var2 = false;
 
         for (int var3 = 0; var3 < 3; ++var3)
@@ -228,24 +220,24 @@ public class GuiEnchantment extends GuiContainer
 
         if (var2)
         {
-            this.field_40224_m += 0.2F;
+            this.field_74209_t += 0.2F;
         }
         else
         {
-            this.field_40224_m -= 0.2F;
+            this.field_74209_t -= 0.2F;
         }
 
-        if (this.field_40224_m < 0.0F)
+        if (this.field_74209_t < 0.0F)
         {
-            this.field_40224_m = 0.0F;
+            this.field_74209_t = 0.0F;
         }
 
-        if (this.field_40224_m > 1.0F)
+        if (this.field_74209_t > 1.0F)
         {
-            this.field_40224_m = 1.0F;
+            this.field_74209_t = 1.0F;
         }
 
-        float var5 = (this.field_40226_k - this.field_40229_i) * 0.4F;
+        float var5 = (this.field_74211_r - this.field_74213_p) * 0.4F;
         float var4 = 0.2F;
 
         if (var5 < -var4)
@@ -258,7 +250,7 @@ public class GuiEnchantment extends GuiContainer
             var5 = var4;
         }
 
-        this.field_40223_l += (var5 - this.field_40223_l) * 0.9F;
-        this.field_40229_i += this.field_40223_l;
+        this.field_74210_s += (var5 - this.field_74210_s) * 0.9F;
+        this.field_74213_p += this.field_74210_s;
     }
 }

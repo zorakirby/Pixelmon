@@ -6,55 +6,60 @@ import org.lwjgl.opengl.GL11;
 
 public class LoadingScreenRenderer implements IProgressUpdate
 {
-    private String field_1004_a = "";
+    private String field_73727_a = "";
 
     /** A reference to the Minecraft object. */
     private Minecraft mc;
 
     /**
-     * The text currently displayed (i.e. the argument to the last call to printText or func_597_c)
+     * The text currently displayed (i.e. the argument to the last call to printText or func_73722_d)
      */
     private String currentlyDisplayedText = "";
-    private long field_1006_d = System.currentTimeMillis();
-    private boolean field_1005_e = false;
+    private long field_73723_d = Minecraft.getSystemTime();
+    private boolean field_73724_e = false;
 
     public LoadingScreenRenderer(Minecraft par1Minecraft)
     {
         this.mc = par1Minecraft;
     }
 
-    public void printText(String par1Str)
+    /**
+     * this string, followed by "working..." and then the "% complete" are the 3 lines shown. This resets progress to 0,
+     * and the WorkingString to "working...".
+     */
+    public void resetProgressAndMessage(String par1Str)
     {
-        this.field_1005_e = false;
-        this.func_597_c(par1Str);
+        this.field_73724_e = false;
+        this.func_73722_d(par1Str);
     }
 
     /**
-     * Shows the 'Saving level' string.
+     * "Saving level", or the loading,or downloading equivelent
      */
-    public void displaySavingString(String par1Str)
+    public void displayProgressMessage(String par1Str)
     {
-        this.field_1005_e = true;
-        this.func_597_c(this.currentlyDisplayedText);
+        this.field_73724_e = true;
+        this.func_73722_d(par1Str);
     }
 
-    public void func_597_c(String par1Str)
+    public void func_73722_d(String par1Str)
     {
+        this.currentlyDisplayedText = par1Str;
+
         if (!this.mc.running)
         {
-            if (!this.field_1005_e)
+            if (!this.field_73724_e)
             {
                 throw new MinecraftError();
             }
         }
         else
         {
-            this.currentlyDisplayedText = par1Str;
             ScaledResolution var2 = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
             GL11.glClear(256);
             GL11.glMatrixMode(GL11.GL_PROJECTION);
             GL11.glLoadIdentity();
-            GL11.glOrtho(0.0D, var2.scaledWidthD, var2.scaledHeightD, 0.0D, 100.0D, 300.0D);
+            GL11.glOrtho(0.0D, var2.getScaledWidth_double(), var2.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
             GL11.glMatrixMode(GL11.GL_MODELVIEW);
             GL11.glLoadIdentity();
             GL11.glTranslatef(0.0F, 0.0F, -200.0F);
@@ -62,23 +67,23 @@ public class LoadingScreenRenderer implements IProgressUpdate
     }
 
     /**
-     * Displays a string on the loading screen supposed to indicate what is being done currently.
+     * This is called with "Working..." by resetProgressAndMessage
      */
-    public void displayLoadingString(String par1Str)
+    public void resetProgresAndWorkingMessage(String par1Str)
     {
         if (!this.mc.running)
         {
-            if (!this.field_1005_e)
+            if (!this.field_73724_e)
             {
                 throw new MinecraftError();
             }
         }
         else
         {
-            this.field_1006_d = 0L;
-            this.field_1004_a = par1Str;
+            this.field_73723_d = 0L;
+            this.field_73727_a = par1Str;
             this.setLoadingProgress(-1);
-            this.field_1006_d = 0L;
+            this.field_73723_d = 0L;
         }
     }
 
@@ -89,25 +94,25 @@ public class LoadingScreenRenderer implements IProgressUpdate
     {
         if (!this.mc.running)
         {
-            if (!this.field_1005_e)
+            if (!this.field_73724_e)
             {
                 throw new MinecraftError();
             }
         }
         else
         {
-            long var2 = System.currentTimeMillis();
+            long var2 = Minecraft.getSystemTime();
 
-            if (var2 - this.field_1006_d >= 100L)
+            if (var2 - this.field_73723_d >= 100L)
             {
-                this.field_1006_d = var2;
+                this.field_73723_d = var2;
                 ScaledResolution var4 = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
                 int var5 = var4.getScaledWidth();
                 int var6 = var4.getScaledHeight();
                 GL11.glClear(256);
                 GL11.glMatrixMode(GL11.GL_PROJECTION);
                 GL11.glLoadIdentity();
-                GL11.glOrtho(0.0D, var4.scaledWidthD, var4.scaledHeightD, 0.0D, 100.0D, 300.0D);
+                GL11.glOrtho(0.0D, var4.getScaledWidth_double(), var4.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
                 GL11.glMatrixMode(GL11.GL_MODELVIEW);
                 GL11.glLoadIdentity();
                 GL11.glTranslatef(0.0F, 0.0F, -200.0F);
@@ -147,7 +152,7 @@ public class LoadingScreenRenderer implements IProgressUpdate
                 }
 
                 this.mc.fontRenderer.drawStringWithShadow(this.currentlyDisplayedText, (var5 - this.mc.fontRenderer.getStringWidth(this.currentlyDisplayedText)) / 2, var6 / 2 - 4 - 16, 16777215);
-                this.mc.fontRenderer.drawStringWithShadow(this.field_1004_a, (var5 - this.mc.fontRenderer.getStringWidth(this.field_1004_a)) / 2, var6 / 2 - 4 + 8, 16777215);
+                this.mc.fontRenderer.drawStringWithShadow(this.field_73727_a, (var5 - this.mc.fontRenderer.getStringWidth(this.field_73727_a)) / 2, var6 / 2 - 4 + 8, 16777215);
                 Display.update();
 
                 try
@@ -161,4 +166,9 @@ public class LoadingScreenRenderer implements IProgressUpdate
             }
         }
     }
+
+    /**
+     * called when there is no more progress to be had, both on completion and failure
+     */
+    public void onNoMoreProgress() {}
 }

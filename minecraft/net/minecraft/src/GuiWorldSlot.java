@@ -79,11 +79,16 @@ class GuiWorldSlot extends GuiSlot
         }
         else
         {
-            var9 = GuiSelectWorld.getLocalizedGameMode(this.parentWorldGui)[var6.getGameType()];
+            var9 = GuiSelectWorld.getLocalizedGameMode(this.parentWorldGui)[var6.func_75790_f().getID()];
 
             if (var6.isHardcoreModeEnabled())
             {
-                var9 = "\u00a74" + StatCollector.translateToLocal("gameMode.hardcore") + "\u00a78";
+                var9 = "\u00a74" + StatCollector.translateToLocal("gameMode.hardcore") + "\u00a7r";
+            }
+
+            if (var6.func_75783_h())
+            {
+                var9 = var9 + ", " + StatCollector.translateToLocal("selectWorld.cheats");
             }
         }
 

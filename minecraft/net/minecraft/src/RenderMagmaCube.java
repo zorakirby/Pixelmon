@@ -4,21 +4,21 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderMagmaCube extends RenderLiving
 {
-    private int field_40276_c;
+    private int field_77120_a;
 
     public RenderMagmaCube()
     {
         super(new ModelMagmaCube(), 0.25F);
-        this.field_40276_c = ((ModelMagmaCube)this.mainModel).func_40343_a();
+        this.field_77120_a = ((ModelMagmaCube)this.mainModel).func_78107_a();
     }
 
     public void renderMagmaCube(EntityMagmaCube par1EntityMagmaCube, double par2, double par4, double par6, float par8, float par9)
     {
-        int var10 = ((ModelMagmaCube)this.mainModel).func_40343_a();
+        int var10 = ((ModelMagmaCube)this.mainModel).func_78107_a();
 
-        if (var10 != this.field_40276_c)
+        if (var10 != this.field_77120_a)
         {
-            this.field_40276_c = var10;
+            this.field_77120_a = var10;
             this.mainModel = new ModelMagmaCube();
             System.out.println("new lava slime model");
         }
@@ -29,7 +29,7 @@ public class RenderMagmaCube extends RenderLiving
     protected void scaleMagmaCube(EntityMagmaCube par1EntityMagmaCube, float par2)
     {
         int var3 = par1EntityMagmaCube.getSlimeSize();
-        float var4 = (par1EntityMagmaCube.field_767_b + (par1EntityMagmaCube.field_768_a - par1EntityMagmaCube.field_767_b) * par2) / ((float)var3 * 0.5F + 1.0F);
+        float var4 = (par1EntityMagmaCube.field_70812_c + (par1EntityMagmaCube.field_70811_b - par1EntityMagmaCube.field_70812_c) * par2) / ((float)var3 * 0.5F + 1.0F);
         float var5 = 1.0F / (var4 + 1.0F);
         float var6 = (float)var3;
         GL11.glScalef(var5 * var6, 1.0F / var5 * var6, var5 * var6);

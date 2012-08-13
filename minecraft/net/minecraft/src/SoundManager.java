@@ -3,8 +3,17 @@ package net.minecraft.src;
 import java.io.File;
 import java.util.Random;
 
-import net.minecraft.src.forge.ForgeHooksClient;
-import net.minecraft.src.forge.ModCompatibilityClient;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.ModCompatibilityClient;
+import net.minecraftforge.client.event.sound.PlaySoundEffectEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.client.event.sound.PlayStreamingEvent;
+import net.minecraftforge.client.event.sound.SoundEvent;
+import net.minecraftforge.client.event.sound.PlayBackgroundMusicEvent;
+import net.minecraftforge.client.event.sound.SoundLoadEvent;
+import net.minecraftforge.client.event.sound.SoundSetupEvent;
+import net.minecraftforge.common.MinecraftForge;
+import static net.minecraftforge.client.event.sound.SoundEvent.*;
 import paulscode.sound.SoundSystem;
 import paulscode.sound.SoundSystemConfig;
 import paulscode.sound.codecs.CodecJOrbis;
@@ -14,16 +23,16 @@ import paulscode.sound.libraries.LibraryLWJGLOpenAL;
 public class SoundManager
 {
     /** A reference to the sound system. */
-    private static SoundSystem sndSystem;
+    public static SoundSystem sndSystem;
 
     /** Sound pool containing sounds. */
-    private SoundPool soundPoolSounds = new SoundPool();
+    public SoundPool soundPoolSounds = new SoundPool();
 
     /** Sound pool containing streaming audio. */
-    private SoundPool soundPoolStreaming = new SoundPool();
+    public SoundPool soundPoolStreaming = new SoundPool();
 
     /** Sound pool containing music. */
-    private SoundPool soundPoolMusic = new SoundPool();
+    public SoundPool soundPoolMusic = new SoundPool();
 
     /**
      * The last ID used when a sound is played, passed into SoundSystem to give active sounds a unique ID
@@ -39,7 +48,7 @@ public class SoundManager
     /** RNG. */
     private Random rand = new Random();
     private int ticksBeforeMusic;
-    
+
     public static int MUSIC_INTERVAL = 12000;
 
     public SoundManager()
@@ -60,7 +69,7 @@ public class SoundManager
             this.tryToSetLibraryAndCodecs();
         }
         ModCompatibilityClient.audioModLoad(this);
-        ForgeHooksClient.onLoadSoundSettings(this);
+        MinecraftForge.EVENT_BUS.post(new SoundLoadEvent(this));
     }
 
     /**
@@ -81,7 +90,7 @@ public class SoundManager
             SoundSystemConfig.setCodec("mus", CodecMus.class);
             SoundSystemConfig.setCodec("wav", CodecWav.class);
             ModCompatibilityClient.audioModAddCodecs();
-            ForgeHooksClient.onSetupAudio(this);
+            MinecraftForge.EVENT_BUS.post(new SoundSetupEvent(this));
             sndSystem = new SoundSystem();
             this.options.soundVolume = var1;
             this.options.musicVolume = var2;
@@ -171,7 +180,7 @@ public class SoundManager
 
                 SoundPoolEntry var1 = this.soundPoolMusic.getRandomSound();
                 var1 = ModCompatibilityClient.audioModPickBackgroundMusic(this, var1);
-                var1 = ForgeHooksClient.onPlayBackgroundMusic(this, var1);
+                var1 = SoundEvent.getResult(new PlayBackgroundMusicEvent(this, var1));
 
                 if (var1 != null)
                 {
@@ -225,7 +234,7 @@ public class SoundManager
             if (par1Str != null)
             {
                 SoundPoolEntry var8 = this.soundPoolStreaming.getRandomSoundFromSoundPool(par1Str);
-                var8 = ForgeHooksClient.onPlayStreaming(this, var8, par1Str, par2, par3, par4);
+                var8 = SoundEvent.getResult(new PlayStreamingEvent(this, var8, par1Str, par2, par3, par4));
 
                 if (var8 != null && par5 > 0.0F)
                 {
@@ -251,7 +260,7 @@ public class SoundManager
         if (loaded && this.options.soundVolume != 0.0F)
         {
             SoundPoolEntry var7 = this.soundPoolSounds.getRandomSoundFromSoundPool(par1Str);
-            var7 = ForgeHooksClient.onPlaySound(this, var7, par1Str, par2, par3, par4, par5, par6);
+            var7 = SoundEvent.getResult(new PlaySoundEvent(this, var7, par1Str, par2, par3, par4, par5, par6));
 
             if (var7 != null && par5 > 0.0F)
             {
@@ -287,7 +296,7 @@ public class SoundManager
         if (loaded && this.options.soundVolume != 0.0F)
         {
             SoundPoolEntry var4 = this.soundPoolSounds.getRandomSoundFromSoundPool(par1Str);
-            var4 = ForgeHooksClient.onPlaySoundEffect(this, var4, par1Str, par2, par3);
+            var4 = SoundEvent.getResult(new PlaySoundEffectEvent(this, var4, par1Str, par2, par3));
 
             if (var4 != null)
             {
@@ -306,26 +315,5 @@ public class SoundManager
                 sndSystem.play(var5);
             }
         }
-    }
-
-    /** Getters for private class members **/
-    public static SoundSystem getSoundSystem()
-    {
-        return sndSystem;
-    }
-
-    public SoundPool getSoundsPool()
-    {
-        return soundPoolSounds;
-    }
-    
-    public SoundPool getStreamingPool()
-    {
-        return soundPoolStreaming;
-    }
-    
-    public SoundPool getMusicPool()
-    {
-        return soundPoolMusic;
     }
 }

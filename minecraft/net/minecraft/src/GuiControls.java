@@ -1,6 +1,6 @@
 package net.minecraft.src;
 
-import net.minecraft.src.forge.GuiControlsScrollPanel;
+import net.minecraftforge.client.GuiControlsScrollPanel;
 
 public class GuiControls extends GuiScreen
 {
@@ -17,7 +17,7 @@ public class GuiControls extends GuiScreen
 
     /** The ID of the  button that has been pressed. */
     private int buttonId = -1;
-    
+
     private GuiControlsScrollPanel scrollPane;
 
     public GuiControls(GuiScreen par1GuiScreen, GameSettings par2GameSettings)
@@ -26,7 +26,7 @@ public class GuiControls extends GuiScreen
         this.options = par2GameSettings;
     }
 
-    private int func_20080_j()
+    private int func_73907_g()
     {
         return this.width / 2 - 155;
     }
@@ -38,7 +38,7 @@ public class GuiControls extends GuiScreen
     {
         scrollPane = new GuiControlsScrollPanel(this, options, mc);
         StringTranslate var1 = StringTranslate.getInstance();
-        int var2 = this.func_20080_j();
+        int var2 = this.func_73907_g();
 
         this.controlList.add(new GuiButton(200, this.width / 2 - 100, this.height - 28, var1.translateKey("gui.done")));
         scrollPane.registerScrollButtons(controlList, 7, 8);

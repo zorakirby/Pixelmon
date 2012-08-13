@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import net.minecraft.client.Minecraft;
+
 public class EntityOtherPlayerMP extends EntityPlayer
 {
     private boolean isItemInUse = false;
@@ -19,11 +21,11 @@ public class EntityOtherPlayerMP extends EntityPlayer
 
         if (par2Str != null && par2Str.length() > 0)
         {
-            this.skinUrl = "http://s3.amazonaws.com/MinecraftSkins/" + par2Str + ".png";
+            this.skinUrl = "http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(par2Str) + ".png";
         }
 
         this.noClip = true;
-        this.field_22062_y = 0.25F;
+        this.field_71082_cx = 0.25F;
         this.renderDistanceWeight = 10.0D;
     }
 
@@ -57,14 +59,20 @@ public class EntityOtherPlayerMP extends EntityPlayer
         this.otherPlayerMPPosRotationIncrements = par9;
     }
 
+    public void updateCloak()
+    {
+        this.playerCloakUrl = "http://skins.minecraft.net/MinecraftCloaks/" + StringUtils.stripControlCodes(this.username) + ".png";
+        this.cloakUrl = this.playerCloakUrl;
+    }
+
     /**
      * Called to update the entity's position/logic.
      */
     public void onUpdate()
     {
-        this.field_22062_y = 0.0F;
+        this.field_71082_cx = 0.0F;
         super.onUpdate();
-        this.field_705_Q = this.field_704_R;
+        this.prevLegYaw = this.legYaw;
         double var1 = this.posX - this.prevPosX;
         double var3 = this.posZ - this.prevPosZ;
         float var5 = MathHelper.sqrt_double(var1 * var1 + var3 * var3) * 4.0F;
@@ -74,8 +82,8 @@ public class EntityOtherPlayerMP extends EntityPlayer
             var5 = 1.0F;
         }
 
-        this.field_704_R += (var5 - this.field_704_R) * 0.4F;
-        this.field_703_S += this.field_704_R;
+        this.legYaw += (var5 - this.legYaw) * 0.4F;
+        this.field_70754_ba += this.legYaw;
 
         if (!this.isItemInUse && this.isEating() && this.inventory.mainInventory[this.inventory.currentItem] != null)
         {
@@ -150,33 +158,33 @@ public class EntityOtherPlayerMP extends EntityPlayer
         this.cameraPitch += (var2 - this.cameraPitch) * 0.8F;
     }
 
-    /**
-     * Parameters: item slot, item ID, item damage. If slot >= 0 a new item will be generated with the specified item ID
-     * damage.
-     */
-    public void outfitWithItem(int par1, int par2, int par3)
+    public void func_70062_b(int par1, ItemStack par2ItemStack)
     {
-        ItemStack var4 = null;
-
-        if (par2 >= 0)
-        {
-            var4 = new ItemStack(par2, 1, par3);
-        }
-
         if (par1 == 0)
         {
-            this.inventory.mainInventory[this.inventory.currentItem] = var4;
+            this.inventory.mainInventory[this.inventory.currentItem] = par2ItemStack;
         }
         else
         {
-            this.inventory.armorInventory[par1 - 1] = var4;
+            this.inventory.armorInventory[par1 - 1] = par2ItemStack;
         }
     }
-
-    public void func_6420_o() {}
 
     public float getEyeHeight()
     {
         return 1.82F;
+    }
+
+    public void sendChatToPlayer(String par1Str)
+    {
+        Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(par1Str);
+    }
+
+    /**
+     * Returns true if the command sender is allowed to use the given command.
+     */
+    public boolean canCommandSenderUseCommand(String par1Str)
+    {
+        return false;
     }
 }

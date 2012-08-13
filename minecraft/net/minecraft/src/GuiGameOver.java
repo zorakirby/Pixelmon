@@ -19,7 +19,14 @@ public class GuiGameOver extends GuiScreen
 
         if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled())
         {
-            this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.deleteWorld")));
+            if (this.mc.isIntegratedServerRunning())
+            {
+                this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.deleteWorld")));
+            }
+            else
+            {
+                this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96, StatCollector.translateToLocal("deathScreen.leaveServer")));
+            }
         }
         else
         {
@@ -53,29 +60,12 @@ public class GuiGameOver extends GuiScreen
         switch (par1GuiButton.id)
         {
             case 1:
-                if (this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled())
-                {
-                    String var2 = this.mc.theWorld.getSaveHandler().getSaveDirectoryName();
-                    this.mc.exitToMainMenu("Deleting world");
-                    ISaveFormat var3 = this.mc.getSaveLoader();
-                    var3.flushCache();
-                    var3.deleteWorldDirectory(var2);
-                    this.mc.displayGuiScreen(new GuiMainMenu());
-                }
-                else
-                {
-                    this.mc.thePlayer.respawnPlayer();
-                    this.mc.displayGuiScreen((GuiScreen)null);
-                }
-
+                this.mc.thePlayer.respawnPlayer();
+                this.mc.displayGuiScreen((GuiScreen)null);
                 break;
             case 2:
-                if (this.mc.isMultiplayerWorld())
-                {
-                    this.mc.theWorld.sendQuittingDisconnectingPacket();
-                }
-
-                this.mc.changeWorld1((World)null);
+                this.mc.theWorld.sendQuittingDisconnectingPacket();
+                this.mc.loadWorld((WorldClient)null);
                 this.mc.displayGuiScreen(new GuiMainMenu());
         }
     }

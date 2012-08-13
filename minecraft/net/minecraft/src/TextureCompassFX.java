@@ -3,7 +3,6 @@ package net.minecraft.src;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
 import cpw.mods.fml.client.FMLTextureFX;
 import net.minecraft.client.Minecraft;
 
@@ -13,9 +12,9 @@ public class TextureCompassFX extends FMLTextureFX
     private Minecraft mc;
 
     /** Holds the image of the compass from items.png in rgb format. */
-    private int[] compassIconImageData;
-    private double field_4229_i;
-    private double field_4228_j;
+    private int[] compassIconImageData = new int[256];
+    private double field_76868_i;
+    private double field_76866_j;
 
     public TextureCompassFX(Minecraft par1Minecraft)
     {
@@ -23,8 +22,7 @@ public class TextureCompassFX extends FMLTextureFX
         this.mc = par1Minecraft;
         this.tileImage = 1;
         setup();
-    }
-
+	}
     @Override
     public void setup()
     {
@@ -32,7 +30,7 @@ public class TextureCompassFX extends FMLTextureFX
         compassIconImageData = new int[tileSizeSquare];
         try
         {
-            BufferedImage var2 = ImageIO.read(mc.texturePackList.selectedTexturePack.getResourceAsStream("/gui/items.png"));
+            BufferedImage var2 = ImageIO.read(mc.texturePackList.getSelectedTexturePack().getResourceAsStream("/gui/items.png"));
             int var3 = this.iconIndex % 16 * tileSizeBase;
             int var4 = this.iconIndex / 16 * tileSizeBase;
             var2.getRGB(var3, var4, tileSizeBase, tileSizeBase, this.compassIconImageData, 0, tileSizeBase);
@@ -77,7 +75,7 @@ public class TextureCompassFX extends FMLTextureFX
             double var25 = (double)var21.posZ - this.mc.thePlayer.posZ;
             var20 = (double)(this.mc.thePlayer.rotationYaw - 90.0F) * Math.PI / 180.0D - Math.atan2(var25, var23);
 
-            if (!this.mc.theWorld.worldProvider.func_48217_e())
+            if (!this.mc.theWorld.provider.isSurfaceWorld())
             {
                 var20 = Math.random() * Math.PI * 2.0D;
             }
@@ -85,7 +83,7 @@ public class TextureCompassFX extends FMLTextureFX
 
         double var22;
 
-        for (var22 = var20 - this.field_4229_i; var22 < -Math.PI; var22 += (Math.PI * 2D))
+        for (var22 = var20 - this.field_76868_i; var22 < -Math.PI; var22 += (Math.PI * 2D))
         {
             ;
         }
@@ -105,11 +103,11 @@ public class TextureCompassFX extends FMLTextureFX
             var22 = 1.0D;
         }
 
-        this.field_4228_j += var22 * 0.1D;
-        this.field_4228_j *= 0.8D;
-        this.field_4229_i += this.field_4228_j;
-        double var24 = Math.sin(this.field_4229_i);
-        double var26 = Math.cos(this.field_4229_i);
+        this.field_76866_j += var22 * 0.1D;
+        this.field_76866_j *= 0.8D;
+        this.field_76868_i += this.field_76866_j;
+        double var24 = Math.sin(this.field_76868_i);
+        double var26 = Math.cos(this.field_76868_i);
         int var9;
         int var10;
         int var11;

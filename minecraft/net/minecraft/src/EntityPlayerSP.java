@@ -20,9 +20,9 @@ public class EntityPlayerSP extends EntityPlayer
     public float renderArmPitch;
     public float prevRenderArmYaw;
     public float prevRenderArmPitch;
-    private MouseFilter field_21903_bJ = new MouseFilter();
-    private MouseFilter field_21904_bK = new MouseFilter();
-    private MouseFilter field_21902_bL = new MouseFilter();
+    private MouseFilter field_71162_ch = new MouseFilter();
+    private MouseFilter field_71160_ci = new MouseFilter();
+    private MouseFilter field_71161_cj = new MouseFilter();
 
     public EntityPlayerSP(Minecraft par1Minecraft, World par2World, Session par3Session, int par4)
     {
@@ -32,7 +32,7 @@ public class EntityPlayerSP extends EntityPlayer
 
         if (par3Session != null && par3Session.username != null && par3Session.username.length() > 0)
         {
-            this.skinUrl = "http://s3.amazonaws.com/MinecraftSkins/" + par3Session.username + ".png";
+            this.skinUrl = "http://skins.minecraft.net/MinecraftSkins/" + StringUtils.stripControlCodes(par3Session.username) + ".png";
         }
 
         this.username = par3Session.username;
@@ -87,7 +87,7 @@ public class EntityPlayerSP extends EntityPlayer
             --this.sprintToggleTimer;
         }
 
-        if (this.mc.playerController.func_35643_e())
+        if (this.mc.playerController.func_78747_a())
         {
             this.posX = this.posZ = 0.5D;
             this.posX = 0.0D;
@@ -104,15 +104,9 @@ public class EntityPlayerSP extends EntityPlayer
             }
 
             this.prevTimeInPortal = this.timeInPortal;
-            boolean var1;
 
             if (this.inPortal)
             {
-                if (!this.worldObj.isRemote && this.ridingEntity != null)
-                {
-                    this.mountEntity((Entity)null);
-                }
-
                 if (this.mc.currentScreen != null)
                 {
                     this.mc.displayGuiScreen((GuiScreen)null);
@@ -128,26 +122,6 @@ public class EntityPlayerSP extends EntityPlayer
                 if (this.timeInPortal >= 1.0F)
                 {
                     this.timeInPortal = 1.0F;
-
-                    if (!this.worldObj.isRemote)
-                    {
-                        this.timeUntilPortal = 10;
-                        this.mc.sndManager.playSoundFX("portal.travel", 1.0F, this.rand.nextFloat() * 0.4F + 0.8F);
-                        var1 = false;
-                        byte var5;
-
-                        if (this.dimension == -1)
-                        {
-                            var5 = 0;
-                        }
-                        else
-                        {
-                            var5 = -1;
-                        }
-
-                        this.mc.usePortal(var5);
-                        this.triggerAchievement(AchievementList.portal);
-                    }
                 }
 
                 this.inPortal = false;
@@ -179,7 +153,7 @@ public class EntityPlayerSP extends EntityPlayer
                 --this.timeUntilPortal;
             }
 
-            var1 = this.movementInput.jump;
+            boolean var1 = this.movementInput.jump;
             float var2 = 0.8F;
             boolean var3 = this.movementInput.moveForward >= var2;
             this.movementInput.updatePlayerMoveState();
@@ -200,7 +174,7 @@ public class EntityPlayerSP extends EntityPlayer
             this.pushOutOfBlocks(this.posX - (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
             this.pushOutOfBlocks(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ - (double)this.width * 0.35D);
             this.pushOutOfBlocks(this.posX + (double)this.width * 0.35D, this.boundingBox.minY + 0.5D, this.posZ + (double)this.width * 0.35D);
-            boolean var4 = (float)this.getFoodStats().getFoodLevel() > 6.0F;
+            boolean var4 = (float)this.getFoodStats().getFoodLevel() > 6.0F || this.capabilities.allowFlying;
 
             if (this.onGround && !var3 && this.movementInput.moveForward >= var2 && !this.isSprinting() && var4 && !this.isUsingItem() && !this.isPotionActive(Potion.blindness))
             {
@@ -234,7 +208,7 @@ public class EntityPlayerSP extends EntityPlayer
                 else
                 {
                     this.capabilities.isFlying = !this.capabilities.isFlying;
-                    this.func_50009_aI();
+                    this.sendPlayerAbilities();
                     this.flyToggleTimer = 0;
                 }
             }
@@ -257,25 +231,7 @@ public class EntityPlayerSP extends EntityPlayer
             if (this.onGround && this.capabilities.isFlying)
             {
                 this.capabilities.isFlying = false;
-                this.func_50009_aI();
-            }
-        }
-    }
-
-    public void travelToTheEnd(int par1)
-    {
-        if (!this.worldObj.isRemote)
-        {
-            if (this.dimension == 1 && par1 == 1)
-            {
-                this.triggerAchievement(AchievementList.theEnd2);
-                this.mc.displayGuiScreen(new GuiWinGame());
-            }
-            else
-            {
-                this.triggerAchievement(AchievementList.theEnd);
-                this.mc.sndManager.playSoundFX("portal.travel", 1.0F, this.rand.nextFloat() * 0.4F + 0.8F);
-                this.mc.usePortal(1);
+                this.sendPlayerAbilities();
             }
         }
     }
@@ -323,6 +279,12 @@ public class EntityPlayerSP extends EntityPlayer
         par1NBTTagCompound.setInteger("Score", this.score);
     }
 
+    public void updateCloak()
+    {
+        this.playerCloakUrl = "http://skins.minecraft.net/MinecraftCloaks/" + StringUtils.stripControlCodes(this.username) + ".png";
+        this.cloakUrl = this.playerCloakUrl;
+    }
+
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
@@ -350,6 +312,23 @@ public class EntityPlayerSP extends EntityPlayer
     }
 
     /**
+     * Displays the GUI for interacting with a book.
+     */
+    public void displayGUIBook(ItemStack par1ItemStack)
+    {
+        Item var2 = par1ItemStack.getItem();
+
+        if (var2 == Item.writtenBook)
+        {
+            this.mc.displayGuiScreen(new GuiScreenBook(this, par1ItemStack, false));
+        }
+        else if (var2 == Item.writableBook)
+        {
+            this.mc.displayGuiScreen(new GuiScreenBook(this, par1ItemStack, true));
+        }
+    }
+
+    /**
      * Displays the GUI for interacting with a chest inventory. Args: chestInventory
      */
     public void displayGUIChest(IInventory par1IInventory)
@@ -360,7 +339,7 @@ public class EntityPlayerSP extends EntityPlayer
     /**
      * Displays the crafting GUI for a workbench.
      */
-    public void displayWorkbenchGUI(int par1, int par2, int par3)
+    public void displayGUIWorkbench(int par1, int par2, int par3)
     {
         this.mc.displayGuiScreen(new GuiCrafting(this.inventory, this.worldObj, par1, par2, par3));
     }
@@ -394,6 +373,11 @@ public class EntityPlayerSP extends EntityPlayer
         this.mc.displayGuiScreen(new GuiDispenser(this.inventory, par1TileEntityDispenser));
     }
 
+    public void displayGUIMerchant(IMerchant par1IMerchant)
+    {
+        this.mc.displayGuiScreen(new GuiMerchant(this.inventory, par1IMerchant, this.worldObj));
+    }
+
     /**
      * Called when the player performs a critical hit on the Entity. Args: entity that was hit critically
      */
@@ -417,11 +401,6 @@ public class EntityPlayerSP extends EntityPlayer
     }
 
     /**
-     * Sends a chat message from the player. Args: chatMessage
-     */
-    public void sendChatMessage(String par1Str) {}
-
-    /**
      * Returns if this entity is sneaking.
      */
     public boolean isSneaking()
@@ -442,32 +421,25 @@ public class EntityPlayerSP extends EntityPlayer
 
             if (var2 < 0)
             {
-                this.heartsLife = this.heartsHalvesLife / 2;
+                this.hurtResistantTime = this.maxHurtResistantTime / 2;
             }
         }
         else
         {
-            this.naturalArmorRating = var2;
+            this.lastDamage = var2;
             this.setEntityHealth(this.getHealth());
-            this.heartsLife = this.heartsHalvesLife;
+            this.hurtResistantTime = this.maxHurtResistantTime;
             this.damageEntity(DamageSource.generic, var2);
             this.hurtTime = this.maxHurtTime = 10;
         }
     }
-
-    public void respawnPlayer()
-    {
-        this.mc.respawn(false, 0, false);
-    }
-
-    public void func_6420_o() {}
 
     /**
      * Add a chat message to the player
      */
     public void addChatMessage(String par1Str)
     {
-        this.mc.ingameGUI.addChatMessageTranslate(par1Str);
+        this.mc.ingameGUI.getChatGUI().func_73757_a(par1Str, new Object[0]);
     }
 
     /**
@@ -590,5 +562,18 @@ public class EntityPlayerSP extends EntityPlayer
         this.experience = par1;
         this.experienceTotal = par2;
         this.experienceLevel = par3;
+    }
+
+    public void sendChatToPlayer(String par1Str)
+    {
+        this.mc.ingameGUI.getChatGUI().printChatMessage(par1Str);
+    }
+
+    /**
+     * Returns true if the command sender is allowed to use the given command.
+     */
+    public boolean canCommandSenderUseCommand(String par1Str)
+    {
+        return this.worldObj.getWorldInfo().areCommandsAllowed();
     }
 }

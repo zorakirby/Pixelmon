@@ -3,8 +3,9 @@ package net.minecraft.src;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
-import net.minecraft.src.forge.MinecraftForge;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.AchievementPage;
+import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -31,16 +32,16 @@ public class GuiAchievements extends GuiScreen
 
     /** The current mouse y coordinate */
     protected int mouseY = 0;
-    protected double field_27116_m;
-    protected double field_27115_n;
+    protected double field_74117_m;
+    protected double field_74115_n;
 
     /** The x position of the achievement map */
     protected double guiMapX;
 
     /** The y position of the achievement map */
     protected double guiMapY;
-    protected double field_27112_q;
-    protected double field_27111_r;
+    protected double field_74124_q;
+    protected double field_74123_r;
 
     /** Whether the Mouse Button is down or not */
     private int isMouseButtonDown = 0;
@@ -55,13 +56,12 @@ public class GuiAchievements extends GuiScreen
         this.statFileWriter = par1StatFileWriter;
         short var2 = 141;
         short var3 = 141;
-        this.field_27116_m = this.guiMapX = this.field_27112_q = (double)(AchievementList.openInventory.displayColumn * 24 - var2 / 2 - 12);
-        this.field_27115_n = this.guiMapY = this.field_27111_r = (double)(AchievementList.openInventory.displayRow * 24 - var3 / 2);
-
+        this.field_74117_m = this.guiMapX = this.field_74124_q = (double)(AchievementList.openInventory.displayColumn * 24 - var2 / 2 - 12);
+        this.field_74115_n = this.guiMapY = this.field_74123_r = (double)(AchievementList.openInventory.displayRow * 24 - var3 / 2);
         minecraftAchievements.clear();
         for (Object achievement : AchievementList.achievementList)
         {
-            if (!MinecraftForge.isAchievementInPages((Achievement)achievement))
+            if (!AchievementPage.isAchievementInPages((Achievement)achievement))
             {
                 minecraftAchievements.add((Achievement)achievement);
             }
@@ -75,8 +75,7 @@ public class GuiAchievements extends GuiScreen
     {
         this.controlList.clear();
         this.controlList.add(new GuiSmallButton(1, this.width / 2 + 24, this.height / 2 + 74, 80, 20, StatCollector.translateToLocal("gui.done")));
-        button = new GuiSmallButton(2, (width - achievementsPaneWidth) / 2 + 24, height / 2 + 74, 125, 20, getAchievementPageTitle(currentPage));
-        this.controlList.add(button);
+        this.controlList.add(button = new GuiSmallButton(2, (width - achievementsPaneWidth) / 2 + 24, height / 2 + 74, 125, 20, AchievementPage.getTitle(currentPage)));
     }
 
     /**
@@ -89,15 +88,15 @@ public class GuiAchievements extends GuiScreen
             this.mc.displayGuiScreen((GuiScreen)null);
             this.mc.setIngameFocus();
         }
-        
+
         if (par1GuiButton.id == 2) 
         {
             currentPage++;
-            if (currentPage >= MinecraftForge.getAchievementPages().size())
+            if (currentPage >= AchievementPage.getAchievementPages().size())
             {
                 currentPage = -1;
             }
-            button.displayString = getAchievementPageTitle(currentPage);
+            button.displayString = AchievementPage.getTitle(currentPage);
         }
 
         super.actionPerformed(par1GuiButton);
@@ -141,32 +140,32 @@ public class GuiAchievements extends GuiScreen
                 {
                     this.guiMapX -= (double)(par1 - this.mouseX);
                     this.guiMapY -= (double)(par2 - this.mouseY);
-                    this.field_27112_q = this.field_27116_m = this.guiMapX;
-                    this.field_27111_r = this.field_27115_n = this.guiMapY;
+                    this.field_74124_q = this.field_74117_m = this.guiMapX;
+                    this.field_74123_r = this.field_74115_n = this.guiMapY;
                 }
 
                 this.mouseX = par1;
                 this.mouseY = par2;
             }
 
-            if (this.field_27112_q < (double)guiMapTop)
+            if (this.field_74124_q < (double)guiMapTop)
             {
-                this.field_27112_q = (double)guiMapTop;
+                this.field_74124_q = (double)guiMapTop;
             }
 
-            if (this.field_27111_r < (double)guiMapLeft)
+            if (this.field_74123_r < (double)guiMapLeft)
             {
-                this.field_27111_r = (double)guiMapLeft;
+                this.field_74123_r = (double)guiMapLeft;
             }
 
-            if (this.field_27112_q >= (double)guiMapBottom)
+            if (this.field_74124_q >= (double)guiMapBottom)
             {
-                this.field_27112_q = (double)(guiMapBottom - 1);
+                this.field_74124_q = (double)(guiMapBottom - 1);
             }
 
-            if (this.field_27111_r >= (double)guiMapRight)
+            if (this.field_74123_r >= (double)guiMapRight)
             {
-                this.field_27111_r = (double)(guiMapRight - 1);
+                this.field_74123_r = (double)(guiMapRight - 1);
             }
         }
         else
@@ -178,7 +177,7 @@ public class GuiAchievements extends GuiScreen
         this.genAchievementBackground(par1, par2, par3);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        this.func_27110_k();
+        this.drawTitle();
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
@@ -188,10 +187,10 @@ public class GuiAchievements extends GuiScreen
      */
     public void updateScreen()
     {
-        this.field_27116_m = this.guiMapX;
-        this.field_27115_n = this.guiMapY;
-        double var1 = this.field_27112_q - this.guiMapX;
-        double var3 = this.field_27111_r - this.guiMapY;
+        this.field_74117_m = this.guiMapX;
+        this.field_74115_n = this.guiMapY;
+        double var1 = this.field_74124_q - this.guiMapX;
+        double var3 = this.field_74123_r - this.guiMapY;
 
         if (var1 * var1 + var3 * var3 < 4.0D)
         {
@@ -205,7 +204,10 @@ public class GuiAchievements extends GuiScreen
         }
     }
 
-    protected void func_27110_k()
+    /**
+     * Draws the "Achievements" title at the top of the GUI.
+     */
+    protected void drawTitle()
     {
         int var1 = (this.width - this.achievementsPaneWidth) / 2;
         int var2 = (this.height - this.achievementsPaneHeight) / 2;
@@ -214,8 +216,8 @@ public class GuiAchievements extends GuiScreen
 
     protected void genAchievementBackground(int par1, int par2, float par3)
     {
-        int var4 = MathHelper.floor_double(this.field_27116_m + (this.guiMapX - this.field_27116_m) * (double)par3);
-        int var5 = MathHelper.floor_double(this.field_27115_n + (this.guiMapY - this.field_27115_n) * (double)par3);
+        int var4 = MathHelper.floor_double(this.field_74117_m + (this.guiMapX - this.field_74117_m) * (double)par3);
+        int var5 = MathHelper.floor_double(this.field_74115_n + (this.guiMapY - this.field_74115_n) * (double)par3);
 
         if (var4 < guiMapTop)
         {
@@ -319,7 +321,7 @@ public class GuiAchievements extends GuiScreen
         int var27;
         int var30;
 
-        List<Achievement> achievementList = (currentPage == -1 ? minecraftAchievements : MinecraftForge.getAchievementPage(currentPage).getAchievements());
+        List<Achievement> achievementList = (currentPage == -1 ? minecraftAchievements : AchievementPage.getAchievementPage(currentPage).getAchievements());
         for (var22 = 0; var22 < achievementList.size(); ++var22)
         {
             Achievement var33 = achievementList.get(var22);
@@ -332,7 +334,7 @@ public class GuiAchievements extends GuiScreen
                 var27 = var33.parentAchievement.displayRow * 24 - var5 + 11 + var11;
                 boolean var28 = this.statFileWriter.hasAchievementUnlocked(var33);
                 boolean var29 = this.statFileWriter.canUnlockAchievement(var33);
-                var30 = Math.sin((double)(System.currentTimeMillis() % 600L) / 600.0D * Math.PI * 2.0D) > 0.6D ? 255 : 130;
+                var30 = Math.sin((double)(Minecraft.getSystemTime() % 600L) / 600.0D * Math.PI * 2.0D) > 0.6D ? 255 : 130;
                 int var31 = -16777216;
 
                 if (var28)
@@ -375,7 +377,7 @@ public class GuiAchievements extends GuiScreen
                 }
                 else if (this.statFileWriter.canUnlockAchievement(var35))
                 {
-                    var38 = Math.sin((double)(System.currentTimeMillis() % 600L) / 600.0D * Math.PI * 2.0D) < 0.6D ? 0.6F : 0.8F;
+                    var38 = Math.sin((double)(Minecraft.getSystemTime() % 600L) / 600.0D * Math.PI * 2.0D) < 0.6D ? 0.6F : 0.8F;
                     GL11.glColor4f(var38, var38, var38, 1.0F);
                 }
                 else
@@ -401,7 +403,7 @@ public class GuiAchievements extends GuiScreen
                 {
                     float var40 = 0.1F;
                     GL11.glColor4f(var40, var40, var40, 1.0F);
-                    var37.field_27004_a = false;
+                    var37.field_77024_a = false;
                 }
 
                 GL11.glEnable(GL11.GL_LIGHTING);
@@ -411,7 +413,7 @@ public class GuiAchievements extends GuiScreen
 
                 if (!this.statFileWriter.canUnlockAchievement(var35))
                 {
-                    var37.field_27004_a = true;
+                    var37.field_77024_a = true;
                 }
 
                 GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -483,13 +485,5 @@ public class GuiAchievements extends GuiScreen
     public boolean doesGuiPauseGame()
     {
         return true;
-    }
-    
-    /**
-     * FORGE: Gets the name for an achievement page by its index
-     */
-    public static String getAchievementPageTitle(int index)
-    {
-        return index == -1 ? "Minecraft" : MinecraftForge.getAchievementPage(index).getName();
     }
 }

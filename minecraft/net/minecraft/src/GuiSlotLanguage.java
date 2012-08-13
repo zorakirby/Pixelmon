@@ -6,23 +6,23 @@ import java.util.TreeMap;
 
 class GuiSlotLanguage extends GuiSlot
 {
-    private ArrayList field_44013_b;
-    private TreeMap field_44014_c;
+    private ArrayList field_77251_g;
+    private TreeMap field_77253_h;
 
-    final GuiLanguage field_44015_a;
+    final GuiLanguage field_77252_a;
 
     public GuiSlotLanguage(GuiLanguage par1GuiLanguage)
     {
         super(par1GuiLanguage.mc, par1GuiLanguage.width, par1GuiLanguage.height, 32, par1GuiLanguage.height - 65 + 4, 18);
-        this.field_44015_a = par1GuiLanguage;
-        this.field_44014_c = StringTranslate.getInstance().getLanguageList();
-        this.field_44013_b = new ArrayList();
-        Iterator var2 = this.field_44014_c.keySet().iterator();
+        this.field_77252_a = par1GuiLanguage;
+        this.field_77253_h = StringTranslate.getInstance().getLanguageList();
+        this.field_77251_g = new ArrayList();
+        Iterator var2 = this.field_77253_h.keySet().iterator();
 
         while (var2.hasNext())
         {
             String var3 = (String)var2.next();
-            this.field_44013_b.add(var3);
+            this.field_77251_g.add(var3);
         }
     }
 
@@ -31,7 +31,7 @@ class GuiSlotLanguage extends GuiSlot
      */
     protected int getSize()
     {
-        return this.field_44013_b.size();
+        return this.field_77251_g.size();
     }
 
     /**
@@ -39,11 +39,12 @@ class GuiSlotLanguage extends GuiSlot
      */
     protected void elementClicked(int par1, boolean par2)
     {
-        StringTranslate.getInstance().setLanguage((String)this.field_44013_b.get(par1));
-        this.field_44015_a.mc.fontRenderer.setUnicodeFlag(StringTranslate.getInstance().isUnicode());
-        GuiLanguage.Returns(this.field_44015_a).language = (String)this.field_44013_b.get(par1);
-        this.field_44015_a.fontRenderer.setBidiFlag(StringTranslate.isBidrectional(GuiLanguage.Returns(this.field_44015_a).language));
-        GuiLanguage.getDoneButton(this.field_44015_a).displayString = StringTranslate.getInstance().translateKey("gui.done");
+        StringTranslate.getInstance().setLanguage((String)this.field_77251_g.get(par1));
+        this.field_77252_a.mc.fontRenderer.setUnicodeFlag(StringTranslate.getInstance().isUnicode());
+        GuiLanguage.Returns(this.field_77252_a).language = (String)this.field_77251_g.get(par1);
+        this.field_77252_a.fontRenderer.setBidiFlag(StringTranslate.isBidirectional(GuiLanguage.Returns(this.field_77252_a).language));
+        GuiLanguage.getDoneButton(this.field_77252_a).displayString = StringTranslate.getInstance().translateKey("gui.done");
+        GuiLanguage.Returns(this.field_77252_a).saveOptions();
     }
 
     /**
@@ -51,7 +52,7 @@ class GuiSlotLanguage extends GuiSlot
      */
     protected boolean isSelected(int par1)
     {
-        return ((String)this.field_44013_b.get(par1)).equals(StringTranslate.getInstance().getCurrentLanguage());
+        return ((String)this.field_77251_g.get(par1)).equals(StringTranslate.getInstance().getCurrentLanguage());
     }
 
     /**
@@ -64,13 +65,13 @@ class GuiSlotLanguage extends GuiSlot
 
     protected void drawBackground()
     {
-        this.field_44015_a.drawDefaultBackground();
+        this.field_77252_a.drawDefaultBackground();
     }
 
     protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
     {
-        this.field_44015_a.fontRenderer.setBidiFlag(true);
-        this.field_44015_a.drawCenteredString(this.field_44015_a.fontRenderer, (String)this.field_44014_c.get(this.field_44013_b.get(par1)), this.field_44015_a.width / 2, par3 + 1, 16777215);
-        this.field_44015_a.fontRenderer.setBidiFlag(StringTranslate.isBidrectional(GuiLanguage.Returns(this.field_44015_a).language));
+        this.field_77252_a.fontRenderer.setBidiFlag(true);
+        this.field_77252_a.drawCenteredString(this.field_77252_a.fontRenderer, (String)this.field_77253_h.get(this.field_77251_g.get(par1)), this.field_77252_a.width / 2, par3 + 1, 16777215);
+        this.field_77252_a.fontRenderer.setBidiFlag(StringTranslate.isBidirectional(GuiLanguage.Returns(this.field_77252_a).language));
     }
 }

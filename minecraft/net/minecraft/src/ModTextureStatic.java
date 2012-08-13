@@ -81,7 +81,7 @@ public class ModTextureStatic extends FMLTextureFX
         update();
     }
     
-    public void onTick()
+    public void func_783_a()
     {
         if (oldanaglyph != anaglyphEnabled)
         {
@@ -97,9 +97,9 @@ public class ModTextureStatic extends FMLTextureFX
         }
     }
 
-    public void bindImage(RenderEngine par1RenderEngine)
+    public void func_782_a(RenderEngine p_782_1_)
     {
-        GL11.glBindTexture(GL_TEXTURE_2D, par1RenderEngine.getTexture(targetTex));
+        GL11.glBindTexture(GL_TEXTURE_2D, p_782_1_.getTexture(targetTex));
     }
     
     public void update()

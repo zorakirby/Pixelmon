@@ -13,11 +13,6 @@ public class GuiErrorScreen extends GuiScreen
     private String message2;
 
     /**
-     * Adds the buttons (and other controls) to the screen in question.
-     */
-    public void initGui() {}
-
-    /**
      * Draws the screen and all the components in it.
      */
     public void drawScreen(int par1, int par2, float par3)

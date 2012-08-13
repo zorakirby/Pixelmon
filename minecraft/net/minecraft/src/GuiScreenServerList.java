@@ -11,15 +11,13 @@ public class GuiScreenServerList extends GuiScreen
 
     /** Needed a change as a local variable was conflicting on construct */
     private final GuiScreen guiScreen;
-
-    /** This GUI's instance to the server list's storage */
-    private final ServerNBTStorage serverListStorage;
+    private final ServerData field_73993_c;
     private GuiTextField serverTextField;
 
-    public GuiScreenServerList(GuiScreen par1GuiScreen, ServerNBTStorage par2ServerNBTStorage)
+    public GuiScreenServerList(GuiScreen par1GuiScreen, ServerData par2ServerData)
     {
         this.guiScreen = par1GuiScreen;
-        this.serverListStorage = par2ServerNBTStorage;
+        this.field_73993_c = par2ServerData;
     }
 
     /**
@@ -69,7 +67,7 @@ public class GuiScreenServerList extends GuiScreen
             }
             else if (par1GuiButton.id == 0)
             {
-                this.serverListStorage.host = this.serverTextField.getText();
+                this.field_73993_c.serverIP = this.serverTextField.getText();
                 this.guiScreen.confirmClicked(true, 0);
             }
         }
@@ -80,14 +78,14 @@ public class GuiScreenServerList extends GuiScreen
      */
     protected void keyTyped(char par1, int par2)
     {
-        this.serverTextField.textboxKeyTyped(par1, par2);
-
-        if (par1 == 28)
+        if (this.serverTextField.textboxKeyTyped(par1, par2))
+        {
+            ((GuiButton)this.controlList.get(0)).enabled = this.serverTextField.getText().length() > 0 && this.serverTextField.getText().split(":").length > 0;
+        }
+        else if (par2 == 28)
         {
             this.actionPerformed((GuiButton)this.controlList.get(0));
         }
-
-        ((GuiButton)this.controlList.get(0)).enabled = this.serverTextField.getText().length() > 0 && this.serverTextField.getText().split(":").length > 0;
     }
 
     /**

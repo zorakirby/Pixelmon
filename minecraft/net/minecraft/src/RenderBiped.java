@@ -1,16 +1,15 @@
 package net.minecraft.src;
 
-import static net.minecraft.src.forge.IItemRenderer.ItemRenderType.EQUIPPED;
-import static net.minecraft.src.forge.IItemRenderer.ItemRendererHelper.BLOCK_3D;
-import net.minecraft.src.forge.IItemRenderer;
-import net.minecraft.src.forge.MinecraftForgeClient;
-
 import org.lwjgl.opengl.GL11;
+import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED;
+import static net.minecraftforge.client.IItemRenderer.ItemRendererHelper.BLOCK_3D;
+import net.minecraftforge.client.IItemRenderer;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 public class RenderBiped extends RenderLiving
 {
     protected ModelBiped modelBipedMain;
-    protected float field_40296_d;
+    protected float field_77070_b;
 
     public RenderBiped(ModelBiped par1ModelBiped, float par2)
     {
@@ -22,7 +21,7 @@ public class RenderBiped extends RenderLiving
     {
         super(par1ModelBiped, par2);
         this.modelBipedMain = par1ModelBiped;
-        this.field_40296_d = par3;
+        this.field_77070_b = par3;
     }
 
     protected void renderEquippedItems(EntityLiving par1EntityLiving, float par2)
@@ -39,7 +38,7 @@ public class RenderBiped extends RenderLiving
 
             IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(var3, EQUIPPED);
             boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, var3, BLOCK_3D));
-            
+
             if (var3.getItem() instanceof ItemBlock && (is3D || RenderBlocks.renderItemIn3d(Block.blocksList[var3.itemID].getRenderType())))
             {
                 var4 = 0.5F;

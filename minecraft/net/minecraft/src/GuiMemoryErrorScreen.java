@@ -3,11 +3,6 @@ package net.minecraft.src;
 public class GuiMemoryErrorScreen extends GuiScreen
 {
     /**
-     * Called from the main game loop to update the screen.
-     */
-    public void updateScreen() {}
-
-    /**
      * Adds the buttons (and other controls) to the screen in question.
      */
     public void initGui()

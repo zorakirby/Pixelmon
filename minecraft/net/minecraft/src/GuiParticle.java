@@ -1,6 +1,7 @@
 package net.minecraft.src;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
@@ -33,10 +34,11 @@ public class GuiParticle extends Gui
     public void draw(float par1)
     {
         this.mc.renderEngine.bindTexture(this.mc.renderEngine.getTexture("/gui/particles.png"));
+        Iterator var2 = this.particles.iterator();
 
-        for (int var2 = 0; var2 < this.particles.size(); ++var2)
+        while (var2.hasNext())
         {
-            Particle var3 = (Particle)this.particles.get(var2);
+            Particle var3 = (Particle)var2.next();
             int var4 = (int)(var3.prevPosX + (var3.posX - var3.prevPosX) * (double)par1 - 4.0D);
             int var5 = (int)(var3.prevPosY + (var3.posY - var3.prevPosY) * (double)par1 - 4.0D);
             float var6 = (float)(var3.prevTintAlpha + (var3.tintAlpha - var3.prevTintAlpha) * (double)par1);

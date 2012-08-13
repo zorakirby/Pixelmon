@@ -32,20 +32,20 @@ public class FMLTextureFX extends TextureFX implements ITextureFX
     public int tileSizeSquareMask = 255;
     public boolean errored = false;
     protected Logger log = FMLCommonHandler.instance().getFMLLogger();
-    
+
     public FMLTextureFX(int icon)
     {
         super(icon);
     }
-    
+
     @Override public void setErrored(boolean err){ errored = err; }
     @Override public boolean getErrored(){ return errored; }
-    @Override 
+    @Override
     public void onTexturePackChanged(RenderEngine engine, TexturePackBase texturepack, Dimension dimensions)
     {
         onTextureDimensionsUpdate(dimensions.width, dimensions.height);
     }
-    @Override 
+    @Override
     public void onTextureDimensionsUpdate(int width, int height)
     {
         tileSizeBase = width >> 4;
@@ -60,7 +60,7 @@ public class FMLTextureFX extends TextureFX implements ITextureFX
     {
         imageData = new byte[tileSizeSquare << 2];
     }
-    
+
     public boolean unregister(RenderEngine engine, List<TextureFX> effects)
     {
         effects.remove(this);

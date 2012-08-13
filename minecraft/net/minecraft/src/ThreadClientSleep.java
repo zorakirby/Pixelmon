@@ -11,8 +11,6 @@ public class ThreadClientSleep extends Thread
     {
         super(par2Str);
         this.mc = par1Minecraft;
-        this.setDaemon(true);
-        this.start();
     }
 
     public void run()

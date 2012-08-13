@@ -109,7 +109,7 @@ public class Tessellator
     private int normal;
 
     /** The static instance of the Tessellator. */
-    public static Tessellator instance = new Tessellator();
+    public static Tessellator instance = new Tessellator(2097152);
 
     /** Whether this tessellator is currently in draw mode. */
     public boolean isDrawing = false;
@@ -129,20 +129,27 @@ public class Tessellator
     /** Number of vertex buffer objects allocated for use. */
     private static int vboCount = 10;
 
-    static 
+    /** The size of the buffers used (in integers). */
+    private int bufferSize;
+
+    private Tessellator(int par1)
+    {
+    }
+    
+    public Tessellator()
+    {
+    }
+    
+    static
     {
         instance.defaultTexture = true;
         useVBO = tryVBO && GLContext.getCapabilities().GL_ARB_vertex_buffer_object;
+
         if (useVBO)
         {
             vertexBuffers = GLAllocation.createDirectIntBuffer(vboCount);
             ARBVertexBufferObject.glGenBuffersARB(vertexBuffers);
         }
-    }
-    
-    public Tessellator()
-    {
-        this.rawBuffer = null;
     }
 
     /**
@@ -164,16 +171,16 @@ public class Tessellator
                 int vtc = 0;
                 if (drawMode == 7 && convertQuadsToTriangles)
                 {
-                    Math.min(vertexCount - offs, trivertsInBuffer);
+                    vtc = Math.min(vertexCount - offs, trivertsInBuffer);
                 }
                 else
                 {
                     vtc = Math.min(vertexCount - offs, nativeBufferSize >> 5);
                 }
                 this.intBuffer.clear();
-                intBuffer.put(rawBuffer, offs * 8, vtc * 8);
+                this.intBuffer.put(this.rawBuffer, offs * 8, vtc * 8);
                 this.byteBuffer.position(0);
-                byteBuffer.limit(vtc * 32);
+                this.byteBuffer.limit(vtc * 32);
                 offs += vtc;
 
                 if (this.useVBO)
@@ -291,13 +298,13 @@ public class Tessellator
                     GL11.glDisableClientState(GL11.GL_NORMAL_ARRAY);
                 }
             }
-            
+
             if (rawBufferSize > 0x20000 && rawBufferIndex < (rawBufferSize << 3))
             {
                 rawBufferSize = 0;
                 rawBuffer = null;
             }
-            
+
             int var1 = this.rawBufferIndex * 4;
             this.reset();
             return var1;

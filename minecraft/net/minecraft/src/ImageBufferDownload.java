@@ -26,9 +26,9 @@ public class ImageBufferDownload implements ImageBuffer
             var3.drawImage(par1BufferedImage, 0, 0, (ImageObserver)null);
             var3.dispose();
             this.imageData = ((DataBufferInt)var2.getRaster().getDataBuffer()).getData();
-            this.func_884_b(0, 0, 32, 16);
-            this.func_885_a(32, 0, 64, 32);
-            this.func_884_b(0, 16, 64, 32);
+            this.func_78433_b(0, 0, 32, 16);
+            this.func_78434_a(32, 0, 64, 32);
+            this.func_78433_b(0, 16, 64, 32);
             boolean var4 = false;
             int var5;
             int var6;
@@ -67,9 +67,9 @@ public class ImageBufferDownload implements ImageBuffer
         }
     }
 
-    private void func_885_a(int par1, int par2, int par3, int par4)
+    private void func_78434_a(int par1, int par2, int par3, int par4)
     {
-        if (!this.func_886_c(par1, par2, par3, par4))
+        if (!this.func_78435_c(par1, par2, par3, par4))
         {
             for (int var5 = par1; var5 < par3; ++var5)
             {
@@ -81,7 +81,7 @@ public class ImageBufferDownload implements ImageBuffer
         }
     }
 
-    private void func_884_b(int par1, int par2, int par3, int par4)
+    private void func_78433_b(int par1, int par2, int par3, int par4)
     {
         for (int var5 = par1; var5 < par3; ++var5)
         {
@@ -92,7 +92,7 @@ public class ImageBufferDownload implements ImageBuffer
         }
     }
 
-    private boolean func_886_c(int par1, int par2, int par3, int par4)
+    private boolean func_78435_c(int par1, int par2, int par3, int par4)
     {
         for (int var5 = par1; var5 < par3; ++var5)
         {

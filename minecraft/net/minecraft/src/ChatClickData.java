@@ -12,24 +12,24 @@ public class ChatClickData
     public static final Pattern pattern = Pattern.compile("^(?:(https?)://)?([-\\w_\\.]{2,}\\.[a-z]{2,3})(/\\S*)?$");
     private final FontRenderer fontR;
     private final ChatLine line;
-    private final int field_50093_d;
-    private final int field_50094_e;
-    private final String field_50091_f;
-    private final String field_50092_g;
+    private final int field_78312_d;
+    private final int field_78313_e;
+    private final String field_78310_f;
+    private final String field_78311_g;
 
     public ChatClickData(FontRenderer par1FontRenderer, ChatLine par2ChatLine, int par3, int par4)
     {
         this.fontR = par1FontRenderer;
         this.line = par2ChatLine;
-        this.field_50093_d = par3;
-        this.field_50094_e = par4;
-        this.field_50091_f = par1FontRenderer.trimStringToWidth(par2ChatLine.message, par3);
-        this.field_50092_g = this.func_50090_c();
+        this.field_78312_d = par3;
+        this.field_78313_e = par4;
+        this.field_78310_f = par1FontRenderer.trimStringToWidth(par2ChatLine.getChatLineString(), par3);
+        this.field_78311_g = this.func_78307_h();
     }
 
-    public String func_50088_a()
+    public String func_78309_f()
     {
-        return this.field_50092_g;
+        return this.field_78311_g;
     }
 
     /**
@@ -37,7 +37,7 @@ public class ChatClickData
      */
     public URI getURI()
     {
-        String var1 = this.func_50088_a();
+        String var1 = this.func_78309_f();
 
         if (var1 == null)
         {
@@ -70,23 +70,22 @@ public class ChatClickData
         }
     }
 
-    private String func_50090_c()
+    private String func_78307_h()
     {
-        int var1 = this.field_50091_f.lastIndexOf(" ", this.field_50091_f.length()) + 1;
+        int var1 = this.field_78310_f.lastIndexOf(" ", this.field_78310_f.length()) + 1;
 
         if (var1 < 0)
         {
             var1 = 0;
         }
 
-        int var2 = this.line.message.indexOf(" ", var1);
+        int var2 = this.line.getChatLineString().indexOf(" ", var1);
 
         if (var2 < 0)
         {
-            var2 = this.line.message.length();
+            var2 = this.line.getChatLineString().length();
         }
 
-        FontRenderer var10000 = this.fontR;
-        return FontRenderer.stripColorCodes(this.line.message.substring(var1, var2));
+        return StringUtils.stripControlCodes(this.line.getChatLineString().substring(var1, var2));
     }
 }

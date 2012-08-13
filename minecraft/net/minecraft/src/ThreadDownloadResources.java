@@ -57,8 +57,8 @@ public class ThreadDownloadResources extends Thread
                     if (var8.getNodeType() == 1)
                     {
                         Element var9 = (Element)var8;
-                        String var10 = ((Element)var9.getElementsByTagName("Key").item(0)).getChildNodes().item(0).getNodeValue();
-                        long var11 = Long.parseLong(((Element)var9.getElementsByTagName("Size").item(0)).getChildNodes().item(0).getNodeValue());
+                        String var10 = var9.getElementsByTagName("Key").item(0).getChildNodes().item(0).getNodeValue();
+                        long var11 = Long.parseLong(var9.getElementsByTagName("Size").item(0).getChildNodes().item(0).getNodeValue());
 
                         if (var11 > 0L)
                         {
@@ -94,22 +94,26 @@ public class ThreadDownloadResources extends Thread
     private void loadResource(File par1File, String par2Str)
     {
         File[] var3 = par1File.listFiles();
+        File[] var4 = var3;
+        int var5 = var3.length;
 
-        for (int var4 = 0; var4 < var3.length; ++var4)
+        for (int var6 = 0; var6 < var5; ++var6)
         {
-            if (var3[var4].isDirectory())
+            File var7 = var4[var6];
+
+            if (var7.isDirectory())
             {
-                this.loadResource(var3[var4], par2Str + var3[var4].getName() + "/");
+                this.loadResource(var7, par2Str + var7.getName() + "/");
             }
             else
             {
                 try
                 {
-                    this.mc.installResource(par2Str + var3[var4].getName(), var3[var4]);
+                    this.mc.installResource(par2Str + var7.getName(), var7);
                 }
-                catch (Exception var6)
+                catch (Exception var9)
                 {
-                    System.out.println("Failed to add " + par2Str + var3[var4].getName());
+                    System.out.println("Failed to add " + par2Str + var7.getName());
                 }
             }
         }

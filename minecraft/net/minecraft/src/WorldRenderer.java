@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import net.minecraft.src.forge.ForgeHooksClient;
+import net.minecraftforge.client.ForgeHooksClient;
 
 import org.lwjgl.opengl.GL11;
 
@@ -13,6 +13,7 @@ public class WorldRenderer
     /** Reference to the World object. */
     public World worldObj;
     private int glRenderList = -1;
+    //private static Tessellator tessellator = Tessellator.instance;
     public static int chunksUpdated = 0;
     public int posX;
     public int posY;
@@ -111,7 +112,7 @@ public class WorldRenderer
             float var4 = 6.0F;
             this.rendererBoundingBox = AxisAlignedBB.getBoundingBox((double)((float)par1 - var4), (double)((float)par2 - var4), (double)((float)par3 - var4), (double)((float)(par1 + 16) + var4), (double)((float)(par2 + 16) + var4), (double)((float)(par3 + 16) + var4));
             GL11.glNewList(this.glRenderList + 2, GL11.GL_COMPILE);
-            RenderItem.renderAABB(AxisAlignedBB.getBoundingBoxFromPool((double)((float)this.posXClip - var4), (double)((float)this.posYClip - var4), (double)((float)this.posZClip - var4), (double)((float)(this.posXClip + 16) + var4), (double)((float)(this.posYClip + 16) + var4), (double)((float)(this.posZClip + 16) + var4)));
+            RenderItem.renderAABB(AxisAlignedBB.getAABBPool().addOrModifyAABBInPool((double)((float)this.posXClip - var4), (double)((float)this.posYClip - var4), (double)((float)this.posZClip - var4), (double)((float)(this.posXClip + 16) + var4), (double)((float)(this.posYClip + 16) + var4), (double)((float)(this.posZClip + 16) + var4)));
             GL11.glEndList();
             this.markDirty();
         }
@@ -149,7 +150,7 @@ public class WorldRenderer
             byte var8 = 1;
             ChunkCache var9 = new ChunkCache(this.worldObj, var1 - var8, var2 - var8, var3 - var8, var4 + var8, var5 + var8, var6 + var8);
 
-            if (!var9.func_48452_a())
+            if (!var9.extendedLevelsInChunkCache())
             {
                 ++chunksUpdated;
                 RenderBlocks var10 = new RenderBlocks(var9);
@@ -186,30 +187,34 @@ public class WorldRenderer
                                         Tessellator.instance.setTranslation((double)(-this.posX), (double)(-this.posY), (double)(-this.posZ));
                                     }
 
-                                    if (var11 == 0 && Block.blocksList[var18] != null && Block.blocksList[var18].hasTileEntity(var9.getBlockMetadata(var17, var15, var16)))
-                                    {
-                                        TileEntity var23 = var9.getBlockTileEntity(var17, var15, var16);
+                                    Block var23 = Block.blocksList[var18];
 
-                                        if (TileEntityRenderer.instance.hasSpecialRenderer(var23))
+                                    if (var23 != null)
+                                    {
+                                        if (var11 == 0 && var23.hasTileEntity(var9.getBlockMetadata(var17, var15, var16)))
                                         {
-                                            this.tileEntityRenderers.add(var23);
+                                            TileEntity var20 = var9.getBlockTileEntity(var17, var15, var16);
+
+                                            if (TileEntityRenderer.instance.hasSpecialRenderer(var20))
+                                            {
+                                                this.tileEntityRenderers.add(var20);
+                                            }
                                         }
-                                    }
 
-                                    Block var24 = Block.blocksList[var18];
-                                    int var20 = var24.getRenderBlockPass();
+                                        int var24 = var23.getRenderBlockPass();
 
-                                    if (var20 > var11)
-                                    {
-                                        var12 = true;
+                                        if (var24 > var11)
+                                        {
+                                            var12 = true;
+                                        }
+                                        if (!var23.canRenderInPass(var11))
+                                        {
+                                            continue;
+                                        }
+                                        ForgeHooksClient.beforeBlockRender(var23, var10);
+                                        var13 |= var10.renderBlockByRenderType(var23, var17, var15, var16);
+                                        ForgeHooksClient.afterBlockRender(var23, var10);
                                     }
-                                    if (!ForgeHooksClient.canRenderInPass(var24, var11))
-                                    {
-                                        continue;
-                                    }
-                                    ForgeHooksClient.beforeBlockRender(var24, var10);
-                                    var13 |= var10.renderBlockByRenderType(var24, var17, var15, var16);
-                                    ForgeHooksClient.afterBlockRender(var24, var10);
                                 }
                             }
                         }

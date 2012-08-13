@@ -8,7 +8,6 @@ public class Session
     public static List registeredBlocksList = new ArrayList();
     public String username;
     public String sessionId;
-    public String mpPassParameter;
 
     public Session(String par1Str, String par2Str)
     {
@@ -26,7 +25,7 @@ public class Session
         registeredBlocksList.add(Block.wood);
         registeredBlocksList.add(Block.leaves);
         registeredBlocksList.add(Block.torchWood);
-        registeredBlocksList.add(Block.stairSingle);
+        registeredBlocksList.add(Block.stoneSingleSlab);
         registeredBlocksList.add(Block.glass);
         registeredBlocksList.add(Block.cobblestoneMossy);
         registeredBlocksList.add(Block.sapling);

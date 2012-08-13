@@ -2,7 +2,7 @@ package net.minecraft.src;
 
 public class EntitySpellParticleFX extends EntityFX
 {
-    private int field_40111_a = 128;
+    private int field_70590_a = 128;
 
     public EntitySpellParticleFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
     {
@@ -51,7 +51,7 @@ public class EntitySpellParticleFX extends EntityFX
             this.setDead();
         }
 
-        this.setParticleTextureIndex(this.field_40111_a + (7 - this.particleAge * 8 / this.particleMaxAge));
+        this.setParticleTextureIndex(this.field_70590_a + (7 - this.particleAge * 8 / this.particleMaxAge));
         this.motionY += 0.004D;
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
@@ -72,8 +72,8 @@ public class EntitySpellParticleFX extends EntityFX
         }
     }
 
-    public void func_40110_b(int par1)
+    public void func_70589_b(int par1)
     {
-        this.field_40111_a = par1;
+        this.field_70590_a = par1;
     }
 }

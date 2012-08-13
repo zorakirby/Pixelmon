@@ -4,15 +4,16 @@ import cpw.mods.fml.client.FMLTextureFX;
 
 public class TextureFlamesFX extends FMLTextureFX
 {
-    protected float[] field_1133_g = new float[320];
-    protected float[] field_1132_h = new float[320];
+    protected float[] field_76869_g = new float[320];
+    protected float[] field_76870_h = new float[320];
     private int fireTileSize = 20;
     private int fireGridSize = 320;
+
 
     public TextureFlamesFX(int par1)
     {
         super(Block.fire.blockIndexInTexture + par1 * 16);
-        setup();
+		setup();
     }
 
     @Override
@@ -21,8 +22,8 @@ public class TextureFlamesFX extends FMLTextureFX
         super.setup();
         fireTileSize = tileSizeBase + (tileSizeBase >> 2);
         fireGridSize = fireTileSize * tileSizeBase;
-        field_1133_g = new float[fireGridSize];
-        field_1132_h = new float[fireGridSize];
+        field_76869_g = new float[fireGridSize];
+        field_76870_h = new float[fireGridSize];
     }
 
     public void onTick()
@@ -41,7 +42,7 @@ public class TextureFlamesFX extends FMLTextureFX
             {
                 var3 = fireTileSize - (tileSizeBase >> 3);
 
-                var4 = this.field_1133_g[var1 + (var2 + 1) % fireTileSize * tileSizeBase] * (float)var3;
+                var4 = this.field_76869_g[var1 + (var2 + 1) % fireTileSize * tileSizeBase] * (float)var3;
 
                 for (int var5 = var1 - 1; var5 <= var1 + 1; ++var5)
                 {
@@ -49,29 +50,29 @@ public class TextureFlamesFX extends FMLTextureFX
                     {
                         if (var5 >= 0 && var6 >= 0 && var5 < tileSizeBase && var6 < fireTileSize)
                         {
-                            var4 += this.field_1133_g[var5 + var6 * tileSizeBase];
+                            var4 += this.field_76869_g[var5 + var6 * tileSizeBase];
                         }
 
                         ++var3;
                     }
                 }
 
-                this.field_1132_h[var1 + var2 * tileSizeBase] = var4 / ((float)var3 * fireFactor2);
+                this.field_76870_h[var1 + var2 * tileSizeBase] = var4 / ((float)var3 * fireFactor2);
 
                 if (var2 >= fireTileSize - (tileSizeBase >> 4))
                 {
-                    this.field_1132_h[var1 + var2 * tileSizeBase] = (float)(Math.random() * Math.random() * Math.random() * fireFactor1 + Math.random() * 0.1F + 0.2F);
+                    this.field_76870_h[var1 + var2 * tileSizeBase] = (float)(Math.random() * Math.random() * Math.random() * fireFactor1 + Math.random() * 0.1F + 0.2F);
                 }
             }
         }
 
-        float[] var13 = this.field_1132_h;
-        this.field_1132_h = this.field_1133_g;
-        this.field_1133_g = var13;
+        float[] var13 = this.field_76870_h;
+        this.field_76870_h = this.field_76869_g;
+        this.field_76869_g = var13;
 
         for (var3 = 0; var3 < tileSizeSquare; ++var3)
         {
-            var4 = this.field_1133_g[var3] * 1.8F;
+            var4 = this.field_76869_g[var3] * 1.8F;
 
             if (var4 > 1.0F)
             {

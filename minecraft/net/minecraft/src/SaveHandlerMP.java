@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 import java.io.File;
-import java.util.List;
 
 public class SaveHandlerMP implements ISaveHandler
 {
@@ -16,7 +15,7 @@ public class SaveHandlerMP implements ISaveHandler
     /**
      * Checks the session lock to prevent save collisions
      */
-    public void checkSessionLock() {}
+    public void checkSessionLock() throws MinecraftException {}
 
     /**
      * Returns the chunk loader with the provided world provider
@@ -27,14 +26,27 @@ public class SaveHandlerMP implements ISaveHandler
     }
 
     /**
-     * saves level.dat and backs up the existing one to level.dat_old
+     * Saves the given World Info with the given NBTTagCompound as the Player.
      */
-    public void saveWorldInfoAndPlayer(WorldInfo par1WorldInfo, List par2List) {}
+    public void saveWorldInfoWithPlayer(WorldInfo par1WorldInfo, NBTTagCompound par2NBTTagCompound) {}
 
     /**
      * Saves the passed in world info.
      */
     public void saveWorldInfo(WorldInfo par1WorldInfo) {}
+
+    /**
+     * returns null if no saveHandler is relevent (eg. SMP)
+     */
+    public IPlayerFileData getSaveHandler()
+    {
+        return null;
+    }
+
+    /**
+     * Called to flush all changes to disk, waiting for them to complete.
+     */
+    public void flush() {}
 
     /**
      * Gets the file location of the given map

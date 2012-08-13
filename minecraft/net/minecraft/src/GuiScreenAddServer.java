@@ -8,12 +8,12 @@ public class GuiScreenAddServer extends GuiScreen
     private GuiScreen parentGui;
     private GuiTextField serverAddress;
     private GuiTextField serverName;
-    private ServerNBTStorage serverNBTStorage;
+    private ServerData field_73996_d;
 
-    public GuiScreenAddServer(GuiScreen par1GuiScreen, ServerNBTStorage par2ServerNBTStorage)
+    public GuiScreenAddServer(GuiScreen par1GuiScreen, ServerData par2ServerData)
     {
         this.parentGui = par1GuiScreen;
-        this.serverNBTStorage = par2ServerNBTStorage;
+        this.field_73996_d = par2ServerData;
     }
 
     /**
@@ -37,10 +37,10 @@ public class GuiScreenAddServer extends GuiScreen
         this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + 12, var1.translateKey("gui.cancel")));
         this.serverName = new GuiTextField(this.fontRenderer, this.width / 2 - 100, 76, 200, 20);
         this.serverName.setFocused(true);
-        this.serverName.setText(this.serverNBTStorage.name);
+        this.serverName.setText(this.field_73996_d.serverName);
         this.serverAddress = new GuiTextField(this.fontRenderer, this.width / 2 - 100, 116, 200, 20);
         this.serverAddress.setMaxStringLength(128);
-        this.serverAddress.setText(this.serverNBTStorage.host);
+        this.serverAddress.setText(this.field_73996_d.serverIP);
         ((GuiButton)this.controlList.get(0)).enabled = this.serverAddress.getText().length() > 0 && this.serverAddress.getText().split(":").length > 0 && this.serverName.getText().length() > 0;
     }
 
@@ -65,8 +65,8 @@ public class GuiScreenAddServer extends GuiScreen
             }
             else if (par1GuiButton.id == 0)
             {
-                this.serverNBTStorage.name = this.serverName.getText();
-                this.serverNBTStorage.host = this.serverAddress.getText();
+                this.field_73996_d.serverName = this.serverName.getText();
+                this.field_73996_d.serverIP = this.serverAddress.getText();
                 this.parentGui.confirmClicked(true, 0);
             }
         }
@@ -82,7 +82,7 @@ public class GuiScreenAddServer extends GuiScreen
 
         if (par1 == 9)
         {
-            if (this.serverName.getIsFocused())
+            if (this.serverName.isFocused())
             {
                 this.serverName.setFocused(false);
                 this.serverAddress.setFocused(true);

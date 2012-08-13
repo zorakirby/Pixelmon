@@ -2,14 +2,20 @@ package net.minecraft.src;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
+
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 import cpw.mods.fml.client.GuiModList;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -24,7 +30,7 @@ public class GuiMainMenu extends GuiScreen
 
     /** The splash message. */
     private String splashText = "missingno";
-    private GuiButton multiplayerButton;
+    private GuiButton field_73973_d;
 
     /** Timer used to rotate the panorama, increases every tick. */
     private int panoramaTimer = 0;
@@ -33,34 +39,51 @@ public class GuiMainMenu extends GuiScreen
      * Texture allocated for the current viewport of the main menu's panorama background.
      */
     private int viewportTexture;
+    private static final String[] field_73978_o = new String[] {"/title/bg/panorama0.png", "/title/bg/panorama1.png", "/title/bg/panorama2.png", "/title/bg/panorama3.png", "/title/bg/panorama4.png", "/title/bg/panorama5.png"};
 
     public GuiMainMenu()
     {
+        BufferedReader var1 = null;
+
         try
         {
-            ArrayList var1 = new ArrayList();
-            BufferedReader var2 = new BufferedReader(new InputStreamReader(GuiMainMenu.class.getResourceAsStream("/title/splashes.txt"), Charset.forName("UTF-8")));
-            String var3 = "";
+            ArrayList var2 = new ArrayList();
+            var1 = new BufferedReader(new InputStreamReader(GuiMainMenu.class.getResourceAsStream("/title/splashes.txt"), Charset.forName("UTF-8")));
+            String var3;
 
-            while ((var3 = var2.readLine()) != null)
+            while ((var3 = var1.readLine()) != null)
             {
                 var3 = var3.trim();
 
                 if (var3.length() > 0)
                 {
-                    var1.add(var3);
+                    var2.add(var3);
                 }
             }
 
             do
             {
-                this.splashText = (String)var1.get(rand.nextInt(var1.size()));
+                this.splashText = (String)var2.get(rand.nextInt(var2.size()));
             }
             while (this.splashText.hashCode() == 125780783);
         }
-        catch (Exception var4)
+        catch (IOException var12)
         {
             ;
+        }
+        finally
+        {
+            if (var1 != null)
+            {
+                try
+                {
+                    var1.close();
+                }
+                catch (IOException var11)
+                {
+                    ;
+                }
+            }
         }
 
         this.updateCounter = rand.nextFloat();
@@ -115,8 +138,16 @@ public class GuiMainMenu extends GuiScreen
 
         StringTranslate var2 = StringTranslate.getInstance();
         int var4 = this.height / 4 + 48;
-        this.controlList.add(new GuiButton(1, this.width / 2 - 100, var4, var2.translateKey("menu.singleplayer")));
-        this.controlList.add(this.multiplayerButton = new GuiButton(2, this.width / 2 - 100, var4 + 24, var2.translateKey("menu.multiplayer")));
+
+        if (this.mc.isDemo())
+        {
+            this.func_73972_b(var4, 24, var2);
+        }
+        else
+        {
+            this.func_73969_a(var4, 24, var2);
+        }
+
         this.controlList.add(new GuiButton(3, this.width / 2 - 100, var4 + 48, 98, 20, var2.translateKey("menu.mods")));
         this.controlList.add(new GuiButton(6, this.width / 2 + 2, var4 + 48, 98, 20, "Mods"));
 
@@ -131,10 +162,24 @@ public class GuiMainMenu extends GuiScreen
         }
 
         this.controlList.add(new GuiButtonLanguage(5, this.width / 2 - 124, var4 + 72 + 12));
+    }
 
-        if (this.mc.session == null)
+    private void func_73969_a(int par1, int par2, StringTranslate par3StringTranslate)
+    {
+        this.controlList.add(new GuiButton(1, this.width / 2 - 100, par1, par3StringTranslate.translateKey("menu.singleplayer")));
+        this.controlList.add(new GuiButton(2, this.width / 2 - 100, par1 + par2 * 1, par3StringTranslate.translateKey("menu.multiplayer")));
+    }
+
+    private void func_73972_b(int par1, int par2, StringTranslate par3StringTranslate)
+    {
+        this.controlList.add(new GuiButton(11, this.width / 2 - 100, par1, par3StringTranslate.translateKey("menu.playdemo")));
+        this.controlList.add(this.field_73973_d = new GuiButton(12, this.width / 2 - 100, par1 + par2 * 1, par3StringTranslate.translateKey("menu.resetdemo")));
+        ISaveFormat var4 = this.mc.getSaveLoader();
+        WorldInfo var5 = var4.getWorldInfo("Demo_World");
+
+        if (var5 == null)
         {
-            this.multiplayerButton.enabled = false;
+            this.field_73973_d.enabled = false;
         }
     }
 
@@ -172,10 +217,38 @@ public class GuiMainMenu extends GuiScreen
         {
             this.mc.shutdown();
         }
-        
+
         if (par1GuiButton.id == 6)
         {
             this.mc.displayGuiScreen(new GuiModList(this));
+        }
+
+        if (par1GuiButton.id == 11)
+        {
+            this.mc.launchIntegratedServer("Demo_World", "Demo_World", DemoWorldServer.demoWorldSettings);
+        }
+
+        if (par1GuiButton.id == 12)
+        {
+            ISaveFormat var2 = this.mc.getSaveLoader();
+            WorldInfo var3 = var2.getWorldInfo("Demo_World");
+
+            if (var3 != null)
+            {
+                GuiYesNo var4 = GuiSelectWorld.func_74061_a(this, var3.getWorldName(), 12);
+                this.mc.displayGuiScreen(var4);
+            }
+        }
+    }
+
+    public void confirmClicked(boolean par1, int par2)
+    {
+        if (par1 && par2 == 12)
+        {
+            ISaveFormat var3 = this.mc.getSaveLoader();
+            var3.flushCache();
+            var3.deleteWorldDirectory("Demo_World");
+            this.mc.displayGuiScreen(this);
         }
     }
 
@@ -240,7 +313,7 @@ public class GuiMainMenu extends GuiScreen
                     GL11.glRotatef(-90.0F, 1.0F, 0.0F, 0.0F);
                 }
 
-                GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/title/bg/panorama" + var10 + ".png"));
+                GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture(field_73978_o[var10]));
                 var4.startDrawingQuads();
                 var4.setColorRGBA_I(16777215, 255 / (var6 + 1));
                 float var11 = 0.0F;
@@ -366,17 +439,28 @@ public class GuiMainMenu extends GuiScreen
         GL11.glPushMatrix();
         GL11.glTranslatef((float)(this.width / 2 + 90), 70.0F, 0.0F);
         GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);
-        float var8 = 1.8F - MathHelper.abs(MathHelper.sin((float)(System.currentTimeMillis() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
+        float var8 = 1.8F - MathHelper.abs(MathHelper.sin((float)(Minecraft.getSystemTime() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
         var8 = var8 * 100.0F / (float)(this.fontRenderer.getStringWidth(this.splashText) + 32);
         GL11.glScalef(var8, var8, var8);
         this.drawCenteredString(this.fontRenderer, this.splashText, 0, -8, 16776960);
         GL11.glPopMatrix();
-        String[] brandings=FMLCommonHandler.instance().getBrandingStrings("Minecraft 1.2.5");
-        for (int i=0; i<brandings.length; i++) {
-            this.drawString(this.fontRenderer, brandings[i], 2, this.height - ( 10 + i * (this.fontRenderer.FONT_HEIGHT +1)), 16777215);
+        String var9 = "Minecraft 1.3.1";
+
+        if (this.mc.isDemo())
+        {
+            var9 = var9 + " Demo";
         }
-        String var9 = "Copyright Mojang AB. Do not distribute!";
-        this.drawString(this.fontRenderer, var9, this.width - this.fontRenderer.getStringWidth(var9) - 2, this.height - 10, 16777215);
+
+        List<String> brandings=Lists.reverse(FMLCommonHandler.instance().getBrandings());
+        for (int i=0; i<brandings.size(); i++) {
+            String brd = brandings.get(i);
+            if (!Strings.isNullOrEmpty(brd))
+            {
+                this.drawString(this.fontRenderer, brd, 2, this.height - ( 10 + i * (this.fontRenderer.FONT_HEIGHT + 1)), 16777215);
+            }
+        }
+        String var10 = "Copyright Mojang AB. Do not distribute!";
+        this.drawString(this.fontRenderer, var10, this.width - this.fontRenderer.getStringWidth(var10) - 2, this.height - 10, 16777215);
         super.drawScreen(par1, par2, par3);
     }
 }

@@ -31,7 +31,7 @@ public class GuiSleepMP extends GuiChat
             }
 
             this.inputField.setText("");
-            this.mc.ingameGUI.func_50014_d();
+            this.mc.ingameGUI.getChatGUI().func_73764_c();
         }
         else
         {
@@ -59,10 +59,7 @@ public class GuiSleepMP extends GuiChat
      */
     private void wakeEntity()
     {
-        if (this.mc.thePlayer instanceof EntityClientPlayerMP)
-        {
-            NetClientHandler var1 = ((EntityClientPlayerMP)this.mc.thePlayer).sendQueue;
-            var1.addToSendQueue(new Packet19EntityAction(this.mc.thePlayer, 3));
-        }
+        NetClientHandler var1 = this.mc.thePlayer.sendQueue;
+        var1.addToSendQueue(new Packet19EntityAction(this.mc.thePlayer, 3));
     }
 }

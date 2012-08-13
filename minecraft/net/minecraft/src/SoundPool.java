@@ -44,6 +44,7 @@ public class SoundPool
             throw new RuntimeException(ex);
         }
     }
+    
     /**
      * URL version of addSound, as the back-end sound engine has full support for various types of URLs
      * 
@@ -100,6 +101,6 @@ public class SoundPool
      */
     public SoundPoolEntry getRandomSound()
     {
-        return this.allSoundPoolEntries.size() == 0 ? null : (SoundPoolEntry)this.allSoundPoolEntries.get(this.rand.nextInt(this.allSoundPoolEntries.size()));
+        return this.allSoundPoolEntries.isEmpty() ? null : (SoundPoolEntry)this.allSoundPoolEntries.get(this.rand.nextInt(this.allSoundPoolEntries.size()));
     }
 }

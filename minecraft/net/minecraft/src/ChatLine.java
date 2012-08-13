@@ -2,15 +2,34 @@ package net.minecraft.src;
 
 public class ChatLine
 {
-    /** The chat message. */
-    public String message;
+    /** GUI Update Counter value this Line was created at */
+    private final int updateCounterCreated;
+    private final String lineString;
 
-    /** Counts the number of screen updates. */
-    public int updateCounter;
+    /**
+     * int value to refer to existing Chat Lines, can be 0 which means unreferrable
+     */
+    private final int chatLineID;
 
-    public ChatLine(String par1Str)
+    public ChatLine(int par1, String par2Str, int par3)
     {
-        this.message = par1Str;
-        this.updateCounter = 0;
+        this.lineString = par2Str;
+        this.updateCounterCreated = par1;
+        this.chatLineID = par3;
+    }
+
+    public String getChatLineString()
+    {
+        return this.lineString;
+    }
+
+    public int getUpdatedCounter()
+    {
+        return this.updateCounterCreated;
+    }
+
+    public int getChatLineID()
+    {
+        return this.chatLineID;
     }
 }

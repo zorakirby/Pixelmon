@@ -5,18 +5,17 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.lwjgl.opengl.GL11;
 
 public class GLAllocation
 {
-    /**
-     * An ArrayList that stores the first index and the length of each display list.
-     */
-    private static List displayLists = new ArrayList();
-
-    /** An ArrayList that stores all the generated texture names. */
-    private static List textureNames = new ArrayList();
+    private static final Map field_74531_a = new HashMap();
+    private static final List field_74530_b = new ArrayList();
 
     /**
      * Generates the specified number of display lists and returns the first index.
@@ -24,8 +23,7 @@ public class GLAllocation
     public static synchronized int generateDisplayLists(int par0)
     {
         int var1 = GL11.glGenLists(par0);
-        displayLists.add(Integer.valueOf(var1));
-        displayLists.add(Integer.valueOf(par0));
+        field_74531_a.put(Integer.valueOf(var1), Integer.valueOf(par0));
         return var1;
     }
 
@@ -38,16 +36,13 @@ public class GLAllocation
 
         for (int var1 = par0IntBuffer.position(); var1 < par0IntBuffer.limit(); ++var1)
         {
-            textureNames.add(Integer.valueOf(par0IntBuffer.get(var1)));
+            field_74530_b.add(Integer.valueOf(par0IntBuffer.get(var1)));
         }
     }
 
     public static synchronized void deleteDisplayLists(int par0)
     {
-        int var1 = displayLists.indexOf(Integer.valueOf(par0));
-        GL11.glDeleteLists(((Integer)displayLists.get(var1)).intValue(), ((Integer)displayLists.get(var1 + 1)).intValue());
-        displayLists.remove(var1);
-        displayLists.remove(var1);
+        GL11.glDeleteLists(par0, ((Integer)field_74531_a.remove(Integer.valueOf(par0))).intValue());
     }
 
     /**
@@ -55,24 +50,24 @@ public class GLAllocation
      */
     public static synchronized void deleteTexturesAndDisplayLists()
     {
-        for (int var0 = 0; var0 < displayLists.size(); var0 += 2)
+        Iterator var0 = field_74531_a.entrySet().iterator();
+
+        while (var0.hasNext())
         {
-            GL11.glDeleteLists(((Integer)displayLists.get(var0)).intValue(), ((Integer)displayLists.get(var0 + 1)).intValue());
+            Entry var1 = (Entry)var0.next();
+            GL11.glDeleteLists(((Integer)var1.getKey()).intValue(), ((Integer)var1.getValue()).intValue());
         }
 
-        IntBuffer var2 = createDirectIntBuffer(textureNames.size());
-        var2.flip();
-        GL11.glDeleteTextures(var2);
+        field_74531_a.clear();
+        var0 = field_74530_b.iterator();
 
-        for (int var1 = 0; var1 < textureNames.size(); ++var1)
+        while (var0.hasNext())
         {
-            var2.put(((Integer)textureNames.get(var1)).intValue());
+            int var2 = ((Integer)var0.next()).intValue();
+            GL11.glDeleteTextures(var2);
         }
 
-        var2.flip();
-        GL11.glDeleteTextures(var2);
-        displayLists.clear();
-        textureNames.clear();
+        field_74530_b.clear();
     }
 
     /**
@@ -80,8 +75,7 @@ public class GLAllocation
      */
     public static synchronized ByteBuffer createDirectByteBuffer(int par0)
     {
-        ByteBuffer var1 = ByteBuffer.allocateDirect(par0).order(ByteOrder.nativeOrder());
-        return var1;
+        return ByteBuffer.allocateDirect(par0).order(ByteOrder.nativeOrder());
     }
 
     /**

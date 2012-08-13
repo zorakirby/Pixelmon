@@ -14,8 +14,8 @@ public class RenderChicken extends RenderLiving
 
     protected float getWingRotation(EntityChicken par1EntityChicken, float par2)
     {
-        float var3 = par1EntityChicken.field_756_e + (par1EntityChicken.field_752_b - par1EntityChicken.field_756_e) * par2;
-        float var4 = par1EntityChicken.field_757_d + (par1EntityChicken.destPos - par1EntityChicken.field_757_d) * par2;
+        float var3 = par1EntityChicken.field_70888_h + (par1EntityChicken.field_70886_e - par1EntityChicken.field_70888_h) * par2;
+        float var4 = par1EntityChicken.field_70884_g + (par1EntityChicken.destPos - par1EntityChicken.field_70884_g) * par2;
         return (MathHelper.sin(var3) + 1.0F) * var4;
     }
 

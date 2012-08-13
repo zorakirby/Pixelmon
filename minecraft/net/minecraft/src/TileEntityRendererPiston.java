@@ -1,7 +1,7 @@
 package net.minecraft.src;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.forge.ForgeHooksClient;
+import net.minecraftforge.client.ForgeHooksClient;
 
 import org.lwjgl.opengl.GL11;
 
@@ -31,6 +31,7 @@ public class TileEntityRendererPiston extends TileEntitySpecialRenderer
             {
                 GL11.glShadeModel(GL11.GL_FLAT);
             }
+
             ForgeHooksClient.beforeBlockRender(var9, blockRenderer);
             var10.startDrawingQuads();
             var10.setTranslation((double)((float)par2 - (float)par1TileEntityPiston.xCoord + par1TileEntityPiston.getOffsetX(par8)), (double)((float)par4 - (float)par1TileEntityPiston.yCoord + par1TileEntityPiston.getOffsetY(par8)), (double)((float)par6 - (float)par1TileEntityPiston.zCoord + par1TileEntityPiston.getOffsetZ(par8)));

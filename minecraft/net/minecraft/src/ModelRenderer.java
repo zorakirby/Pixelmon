@@ -1,6 +1,7 @@
 package net.minecraft.src;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.lwjgl.opengl.GL11;
 
@@ -89,7 +90,7 @@ public class ModelRenderer
         par1Str = this.boxName + "." + par1Str;
         TextureOffset var8 = this.baseModel.getTextureOffset(par1Str);
         this.setTextureOffset(var8.textureOffsetX, var8.textureOffsetY);
-        this.cubeList.add((new ModelBox(this, this.textureOffsetX, this.textureOffsetY, par2, par3, par4, par5, par6, par7, 0.0F)).func_40671_a(par1Str));
+        this.cubeList.add((new ModelBox(this, this.textureOffsetX, this.textureOffsetY, par2, par3, par4, par5, par6, par7, 0.0F)).func_78244_a(par1Str));
         return this;
     }
 
@@ -125,7 +126,8 @@ public class ModelRenderer
                     this.compileDisplayList(par1);
                 }
 
-                int var2;
+                Iterator var2;
+                ModelRenderer var3;
 
                 if (this.rotateAngleX == 0.0F && this.rotateAngleY == 0.0F && this.rotateAngleZ == 0.0F)
                 {
@@ -135,9 +137,12 @@ public class ModelRenderer
 
                         if (this.childModels != null)
                         {
-                            for (var2 = 0; var2 < this.childModels.size(); ++var2)
+                            var2 = this.childModels.iterator();
+
+                            while (var2.hasNext())
                             {
-                                ((ModelRenderer)this.childModels.get(var2)).render(par1);
+                                var3 = (ModelRenderer)var2.next();
+                                var3.render(par1);
                             }
                         }
                     }
@@ -148,9 +153,12 @@ public class ModelRenderer
 
                         if (this.childModels != null)
                         {
-                            for (var2 = 0; var2 < this.childModels.size(); ++var2)
+                            var2 = this.childModels.iterator();
+
+                            while (var2.hasNext())
                             {
-                                ((ModelRenderer)this.childModels.get(var2)).render(par1);
+                                var3 = (ModelRenderer)var2.next();
+                                var3.render(par1);
                             }
                         }
 
@@ -181,9 +189,12 @@ public class ModelRenderer
 
                     if (this.childModels != null)
                     {
-                        for (var2 = 0; var2 < this.childModels.size(); ++var2)
+                        var2 = this.childModels.iterator();
+
+                        while (var2.hasNext())
                         {
-                            ((ModelRenderer)this.childModels.get(var2)).render(par1);
+                            var3 = (ModelRenderer)var2.next();
+                            var3.render(par1);
                         }
                     }
 
@@ -280,10 +291,12 @@ public class ModelRenderer
         this.displayList = GLAllocation.generateDisplayLists(1);
         GL11.glNewList(this.displayList, GL11.GL_COMPILE);
         Tessellator var2 = Tessellator.instance;
+        Iterator var3 = this.cubeList.iterator();
 
-        for (int var3 = 0; var3 < this.cubeList.size(); ++var3)
+        while (var3.hasNext())
         {
-            ((ModelBox)this.cubeList.get(var3)).render(var2, par1);
+            ModelBox var4 = (ModelBox)var3.next();
+            var4.render(var2, par1);
         }
 
         GL11.glEndList();

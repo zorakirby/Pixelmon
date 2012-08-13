@@ -5,28 +5,22 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Panel;
 import java.awt.TextArea;
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-
-import org.lwjgl.Sys;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 
 public class PanelCrashReport extends Panel
 {
-    public PanelCrashReport(UnexpectedThrowable par1UnexpectedThrowable)
+    public PanelCrashReport(CrashReport par1CrashReport)
     {
-        FMLCommonHandler.instance().getFMLLogger().log(Level.SEVERE, "A critical error has occurred.", par1UnexpectedThrowable.exception);
-        FMLCommonHandler.instance().getFMLLogger().log(Level.SEVERE, Loader.instance().getCrashInformation());
         this.setBackground(new Color(3028036));
         this.setLayout(new BorderLayout());
         StringWriter var2 = new StringWriter();
-        par1UnexpectedThrowable.exception.printStackTrace(new PrintWriter(var2));
+        par1CrashReport.func_71505_b().printStackTrace(new PrintWriter(var2));
         String var3 = var2.toString();
         String var4 = "";
         String var5 = "";
@@ -35,22 +29,17 @@ public class PanelCrashReport extends Panel
         {
             var5 = var5 + "Generated " + (new SimpleDateFormat()).format(new Date()) + "\n";
             var5 = var5 + "\n";
-            var5 = var5 + "Minecraft: Minecraft 1.2.5\n";
-            var5 = var5 + "OS: " + System.getProperty("os.name") + " (" + System.getProperty("os.arch") + ") version " + System.getProperty("os.version") + "\n";
-            var5 = var5 + "Java: " + System.getProperty("java.version") + ", " + System.getProperty("java.vendor") + "\n";
-            var5 = var5 + "VM: " + System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.info") + "), " + System.getProperty("java.vm.vendor") + "\n";
-            var5 = var5 + "LWJGL: " + Sys.getVersion() + "\n";
+            var5 = var5 + par1CrashReport.getSections();
             var4 = GL11.glGetString(GL11.GL_VENDOR);
-            var5 = var5 + "OpenGL: " + GL11.glGetString(GL11.GL_RENDERER) + " version " + GL11.glGetString(GL11.GL_VERSION) + ", " + GL11.glGetString(GL11.GL_VENDOR) + "\n";
         }
         catch (Throwable var8)
         {
             var5 = var5 + "[failed to get system properties (" + var8 + ")]\n";
         }
 
-        var5 = var5 + "\n";
+        var5 = var5 + "\n\n";
         var5 = var5 + var3;
-        String var6 = Loader.instance().getCrashInformation();
+        String var6 = "";
         var6 = var6 + "\n";
         var6 = var6 + "\n";
 
@@ -80,7 +69,24 @@ public class PanelCrashReport extends Panel
             var6 = var6 + "      Minecraft has crashed!      \n";
             var6 = var6 + "      ----------------------      \n";
             var6 = var6 + "\n";
-            var6 = var6 + "Minecraft has stopped running because it encountered a problem.\n";
+            var6 = var6 + "Minecraft has stopped running because it encountered a problem; " + par1CrashReport.getDescription() + "\n";
+            File var7 = par1CrashReport.getFile();
+
+            if (var7 == null)
+            {
+                par1CrashReport.saveToFile(new File(new File(Minecraft.getMinecraftDir(), "crash-reports"), "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-client.txt"));
+                var7 = par1CrashReport.getFile();
+            }
+
+            if (var7 != null)
+            {
+                var6 = var6 + "This error has been saved to " + var7.getAbsolutePath() + " for your convenience. Please include a copy of this file if you report this crash to anyone.";
+            }
+            else
+            {
+                var6 = var6 + "We were unable to save this report to a file.";
+            }
+
             var6 = var6 + "\n";
         }
 
@@ -92,12 +98,12 @@ public class PanelCrashReport extends Panel
         var6 = var6 + "--- END ERROR REPORT " + Integer.toHexString(var6.hashCode()) + " ----------\n";
         var6 = var6 + "\n";
         var6 = var6 + "\n";
-        TextArea var7 = new TextArea(var6, 0, 0, 1);
-        var7.setFont(new Font("Monospaced", 0, 12));
+        TextArea var9 = new TextArea(var6, 0, 0, 1);
+        var9.setFont(new Font("Monospaced", 0, 12));
         this.add(new CanvasMojangLogo(), "North");
         this.add(new CanvasCrashReport(80), "East");
         this.add(new CanvasCrashReport(80), "West");
         this.add(new CanvasCrashReport(100), "South");
-        this.add(var7, "Center");
+        this.add(var9, "Center");
     }
 }

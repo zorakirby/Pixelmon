@@ -15,8 +15,8 @@ public class GuiWinGame extends GuiScreen
 
     /** List of lines on the ending poem and credits. */
     private List lines;
-    private int field_41042_d = 0;
-    private float field_41043_e = 0.5F;
+    private int field_73989_c = 0;
+    private float field_73987_d = 0.5F;
 
     /**
      * Called from the main game loop to update the screen.
@@ -24,7 +24,7 @@ public class GuiWinGame extends GuiScreen
     public void updateScreen()
     {
         ++this.updateCounter;
-        float var1 = (float)(this.field_41042_d + this.height + this.height + 24) / this.field_41043_e;
+        float var1 = (float)(this.field_73989_c + this.height + this.height + 24) / this.field_73987_d;
 
         if ((float)this.updateCounter > var1)
         {
@@ -48,16 +48,8 @@ public class GuiWinGame extends GuiScreen
      */
     private void respawnPlayer()
     {
-        if (this.mc.theWorld.isRemote)
-        {
-            EntityClientPlayerMP var1 = (EntityClientPlayerMP)this.mc.thePlayer;
-            var1.sendQueue.addToSendQueue(new Packet9Respawn(var1.dimension, (byte)this.mc.theWorld.difficultySetting, this.mc.theWorld.getWorldInfo().getTerrainType(), this.mc.theWorld.getHeight(), 0));
-        }
-        else
-        {
-            this.mc.displayGuiScreen((GuiScreen)null);
-            this.mc.respawn(this.mc.theWorld.isRemote, 0, true);
-        }
+        this.mc.thePlayer.sendQueue.addToSendQueue(new Packet205ClientCommand(1));
+        this.mc.displayGuiScreen((GuiScreen)null);
     }
 
     /**
@@ -91,7 +83,7 @@ public class GuiWinGame extends GuiScreen
                     String var7;
                     String var8;
 
-                    for (var1 = var1.replaceAll("PLAYERNAME", this.mc.session.username); var1.indexOf(var2) >= 0; var1 = var7 + "\u00a7f\u00a7k" + "XXXXXXXX".substring(0, var5.nextInt(4) + 3) + var8)
+                    for (var1 = var1.replaceAll("PLAYERNAME", this.mc.session.username); var1.contains(var2); var1 = var7 + "\u00a7f\u00a7k" + "XXXXXXXX".substring(0, var5.nextInt(4) + 3) + var8)
                     {
                         var6 = var1.indexOf(var2);
                         var7 = var1.substring(0, var6);
@@ -117,7 +109,7 @@ public class GuiWinGame extends GuiScreen
                     this.lines.add("");
                 }
 
-                this.field_41042_d = this.lines.size() * 12;
+                this.field_73989_c = this.lines.size() * 12;
             }
             catch (Exception var9)
             {
@@ -126,23 +118,18 @@ public class GuiWinGame extends GuiScreen
         }
     }
 
-    /**
-     * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
-     */
-    protected void actionPerformed(GuiButton par1GuiButton) {}
-
-    private void func_41040_b(int par1, int par2, float par3)
+    private void func_73986_b(int par1, int par2, float par3)
     {
         Tessellator var4 = Tessellator.instance;
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("%blur%/gui/background.png"));
         var4.startDrawingQuads();
         var4.setColorRGBA_F(1.0F, 1.0F, 1.0F, 1.0F);
         int var5 = this.width;
-        float var6 = 0.0F - ((float)this.updateCounter + par3) * 0.5F * this.field_41043_e;
-        float var7 = (float)this.height - ((float)this.updateCounter + par3) * 0.5F * this.field_41043_e;
+        float var6 = 0.0F - ((float)this.updateCounter + par3) * 0.5F * this.field_73987_d;
+        float var7 = (float)this.height - ((float)this.updateCounter + par3) * 0.5F * this.field_73987_d;
         float var8 = 0.015625F;
         float var9 = ((float)this.updateCounter + par3 - 0.0F) * 0.02F;
-        float var10 = (float)(this.field_41042_d + this.height + this.height + 24) / this.field_41043_e;
+        float var10 = (float)(this.field_73989_c + this.height + this.height + 24) / this.field_73987_d;
         float var11 = (var10 - 20.0F - ((float)this.updateCounter + par3)) * 0.005F;
 
         if (var11 < var9)
@@ -170,12 +157,12 @@ public class GuiWinGame extends GuiScreen
      */
     public void drawScreen(int par1, int par2, float par3)
     {
-        this.func_41040_b(par1, par2, par3);
+        this.func_73986_b(par1, par2, par3);
         Tessellator var4 = Tessellator.instance;
         short var5 = 274;
         int var6 = this.width / 2 - var5 / 2;
         int var7 = this.height + 50;
-        float var8 = -((float)this.updateCounter + par3) * this.field_41043_e;
+        float var8 = -((float)this.updateCounter + par3) * this.field_73987_d;
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, var8, 0.0F);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/title/mclogo.png"));
@@ -209,9 +196,7 @@ public class GuiWinGame extends GuiScreen
                 else
                 {
                     this.fontRenderer.fontRandom.setSeed((long)var10 * 4238972211L + (long)(this.updateCounter / 4));
-                    this.fontRenderer.renderString(var12, var6 + 1, var9 + 1, 16777215, true);
-                    this.fontRenderer.fontRandom.setSeed((long)var10 * 4238972211L + (long)(this.updateCounter / 4));
-                    this.fontRenderer.renderString(var12, var6, var9, 16777215, false);
+                    this.fontRenderer.drawStringWithShadow(var12, var6, var9, 16777215);
                 }
             }
 

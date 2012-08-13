@@ -33,9 +33,9 @@ public class RenderFallingSand extends Render
             var12.setTranslation(0.0D, 0.0D, 0.0D);
             var12.draw();
         }
-        else
+        else if (var10 != null)
         {
-            this.renderBlocks.renderBlockFallingSand(var10, var11, MathHelper.floor_double(par1EntityFallingSand.posX), MathHelper.floor_double(par1EntityFallingSand.posY), MathHelper.floor_double(par1EntityFallingSand.posZ));
+            this.renderBlocks.func_78588_a(var10, var11, MathHelper.floor_double(par1EntityFallingSand.posX), MathHelper.floor_double(par1EntityFallingSand.posY), MathHelper.floor_double(par1EntityFallingSand.posZ), par1EntityFallingSand.field_70285_b);
         }
 
         GL11.glEnable(GL11.GL_LIGHTING);

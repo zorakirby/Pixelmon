@@ -5,11 +5,11 @@ import org.lwjgl.opengl.GL12;
 
 public class RenderFireball extends Render
 {
-    private float field_40269_a;
+    private float field_77002_a;
 
     public RenderFireball(float par1)
     {
-        this.field_40269_a = par1;
+        this.field_77002_a = par1;
     }
 
     public void doRenderFireball(EntityFireball par1EntityFireball, double par2, double par4, double par6, float par8, float par9)
@@ -17,7 +17,7 @@ public class RenderFireball extends Render
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        float var10 = this.field_40269_a;
+        float var10 = this.field_77002_a;
         GL11.glScalef(var10 / 1.0F, var10 / 1.0F, var10 / 1.0F);
         byte var11 = 46;
         this.loadTexture("/gui/items.png");

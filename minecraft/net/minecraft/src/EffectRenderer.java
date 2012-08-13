@@ -2,12 +2,18 @@ package net.minecraft.src;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
+
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.common.ForgeHooks;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.src.forge.*;
 
 public class EffectRenderer
 {
@@ -19,8 +25,8 @@ public class EffectRenderer
     /** RNG. */
     private Random rand = new Random();
 
-    private Hashtable<String, ArrayList<EntityFX>> effectList = new Hashtable<String, ArrayList<EntityFX>>();
-    
+    private Multimap<String, EntityFX> effectList = ArrayListMultimap.create();
+
     public EffectRenderer(World par1World, RenderEngine par2RenderEngine)
     {
         if (par1World != null)
@@ -63,22 +69,15 @@ public class EffectRenderer
                 }
             }
         }
-        
-        for (String key : effectList.keySet())
+
+        Iterator<Entry<String, EntityFX>> itr = effectList.entries().iterator();
+        while (itr.hasNext())
         {
-            ArrayList<EntityFX> entry = effectList.get(key);
-            for (int y = 0; y < entry.size(); y++) 
+            EntityFX fx = itr.next().getValue();
+            fx.onUpdate();
+            if (fx.isDead)
             {
-                EntityFX var3 = entry.get(y);
-                var3.onUpdate();
-                if (var3.isDead) 
-                {
-                    entry.remove(y--);
-                }
-            }
-            if (effectList.size() == 0)
-            {
-                effectList.remove(key);
+                itr.remove();
             }
         }
     }
@@ -99,7 +98,7 @@ public class EffectRenderer
 
         for (int var8 = 0; var8 < 3; ++var8)
         {
-            if (this.fxLayers[var8].size() != 0)
+            if (!this.fxLayers[var8].isEmpty())
             {
                 int var9 = 0;
 
@@ -134,25 +133,28 @@ public class EffectRenderer
             }
         }
 
-        Tessellator tessallator = Tessellator.instance;
-        
-        for (Entry<String, ArrayList<EntityFX>> entry : effectList.entrySet())
+        for (String key : effectList.keySet())
         {
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, renderer.getTexture(entry.getKey()));
-            tessallator.startDrawingQuads();
-            for (EntityFX entryfx : entry.getValue())
-            {
-                if (entryfx.getFXLayer() != 3)
+            ForgeHooksClient.bindTexture(key, 0);
+            for (EntityFX entry : effectList.get(key))
+            {                
+                Tessellator tessallator = Tessellator.instance;
+                //GL11.glBindTexture(GL11.GL_TEXTURE_2D, renderer.getTexture(key));
+                tessallator.startDrawingQuads();
+    
+                if (entry.getFXLayer() != 3)
                 {
-                    tessallator.setBrightness(entryfx.getBrightnessForRender(par2));
-                    entryfx.renderParticle(tessallator, par2, var3, var7, var4, var5, var6);
+                    tessallator.setBrightness(entry.getBrightnessForRender(par2));
+                    entry.renderParticle(tessallator, par2, var3, var7, var4, var5, var6);
                 }
+    
+                tessallator.draw();
             }
-            tessallator.draw();
+            ForgeHooksClient.unbindTexture();
         }
     }
 
-    public void func_1187_b(Entity par1Entity, float par2)
+    public void func_78872_b(Entity par1Entity, float par2)
     {
         float var4 = MathHelper.cos(par1Entity.rotationYaw * 0.017453292F);
         float var5 = MathHelper.sin(par1Entity.rotationYaw * 0.017453292F);
@@ -161,7 +163,7 @@ public class EffectRenderer
         float var8 = MathHelper.cos(par1Entity.rotationPitch * 0.017453292F);
         byte var9 = 3;
 
-        if (this.fxLayers[var9].size() != 0)
+        if (!this.fxLayers[var9].isEmpty())
         {
             Tessellator var10 = Tessellator.instance;
 
@@ -182,11 +184,7 @@ public class EffectRenderer
         {
             this.fxLayers[var2].clear();
         }
-        
-        for (ArrayList<EntityFX> entry : effectList.values())
-        {
-            entry.clear();
-        }
+
         effectList.clear();
     }
 
@@ -207,7 +205,7 @@ public class EffectRenderer
                         double var13 = (double)par2 + ((double)var9 + 0.5D) / (double)var7;
                         double var15 = (double)par3 + ((double)var10 + 0.5D) / (double)var7;
                         int var17 = this.rand.nextInt(6);
-                        this.addEffect((new EntityDiggingFX(this.worldObj, var11, var13, var15, var11 - (double)par1 - 0.5D, var13 - (double)par2 - 0.5D, var15 - (double)par3 - 0.5D, var6, var17, par5)).func_4041_a(par1, par2, par3), var6);
+                        this.addEffect((new EntityDiggingFX(this.worldObj, var11, var13, var15, var11 - (double)par1 - 0.5D, var13 - (double)par2 - 0.5D, var15 - (double)par3 - 0.5D, var6, var17, par5)).func_70596_a(par1, par2, par3), var6);
                     }
                 }
             }
@@ -259,7 +257,7 @@ public class EffectRenderer
                 var8 = (double)par1 + var6.maxX + (double)var7;
             }
 
-            this.addEffect((new EntityDiggingFX(this.worldObj, var8, var10, var12, 0.0D, 0.0D, 0.0D, var6, par4, this.worldObj.getBlockMetadata(par1, par2, par3))).func_4041_a(par1, par2, par3).multiplyVelocity(0.2F).func_405_d(0.6F), var6);
+            this.addEffect((new EntityDiggingFX(this.worldObj, var8, var10, var12, 0.0D, 0.0D, 0.0D, var6, par4, this.worldObj.getBlockMetadata(par1, par2, par3))).func_70596_a(par1, par2, par3).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F), var6);
         }
     }
 
@@ -270,16 +268,25 @@ public class EffectRenderer
         {
             size += x.size();
         }
-        for (ArrayList<EntityFX> entry : effectList.values())
-        {
-            size += entry.size();
-        }
+        size += effectList.size();
         return Integer.toString(size);
     }
-     
-    public void addEffect(EntityFX effect, Object effectObject)
+
+    public void addEffect(EntityFX effect, Object obj)
     {
-        if (effectObject == null || !(effect instanceof EntityDiggingFX || effect instanceof EntityBreakingFX))
+        if (obj == null || !(obj instanceof Block || obj instanceof Item))
+        {
+            addEffect(effect);
+            return;
+        }
+
+        if (obj instanceof Item && ((Item)obj).isDefaultTexture)
+        {
+            addEffect(effect);
+            return;
+        }
+
+        if (obj instanceof Block && ((Block)obj).isDefaultTexture)
         {
             addEffect(effect);
             return;
@@ -294,14 +301,7 @@ public class EffectRenderer
         {
             texture = "/gui/items.png";
         }        
-        texture = ForgeHooksClient.getTexture(texture, effectObject);
-        
-        ArrayList<EntityFX> set = effectList.get(texture);
-        if (set == null)
-        {
-            set = new ArrayList<EntityFX>();
-            effectList.put(texture, set);
-        }
-        set.add(effect);
+        texture = ForgeHooks.getTexture(texture, obj);
+        effectList.put(texture, effect);
     }
 }

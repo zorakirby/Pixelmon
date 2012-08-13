@@ -43,17 +43,17 @@ public abstract class GuiScrollingList
         this.right = width + this.left;
     }
 
-    public void func_27258_a(boolean par1)
+    public void func_27258_a(boolean p_27258_1_)
     {
-        this.field_25123_p = par1;
+        this.field_25123_p = p_27258_1_;
     }
 
-    protected void func_27259_a(boolean par1, int par2)
+    protected void func_27259_a(boolean p_27259_1_, int p_27259_2_)
     {
-        this.field_27262_q = par1;
-        this.field_27261_r = par2;
+        this.field_27262_q = p_27259_1_;
+        this.field_27261_r = p_27259_2_;
 
-        if (!par1)
+        if (!p_27259_1_)
         {
             this.field_27261_r = 0;
         }
@@ -74,25 +74,25 @@ public abstract class GuiScrollingList
 
     protected abstract void drawSlot(int var1, int var2, int var3, int var4, Tessellator var5);
 
-    protected void func_27260_a(int par1, int par2, Tessellator par3Tessellator) {}
+    protected void func_27260_a(int p_27260_1_, int p_27260_2_, Tessellator p_27260_3_) {}
 
-    protected void func_27255_a(int par1, int par2) {}
+    protected void func_27255_a(int p_27255_1_, int p_27255_2_) {}
 
-    protected void func_27257_b(int par1, int par2) {}
+    protected void func_27257_b(int p_27257_1_, int p_27257_2_) {}
 
-    public int func_27256_c(int par1, int par2)
+    public int func_27256_c(int p_27256_1_, int p_27256_2_)
     {
         int var3 = this.listWidth / 2 - 110;
         int var4 = this.listWidth / 2 + 110;
-        int var5 = par2 - this.top - this.field_27261_r + (int)this.scrollDistance - 4;
+        int var5 = p_27256_2_ - this.top - this.field_27261_r + (int)this.scrollDistance - 4;
         int var6 = var5 / this.slotHeight;
-        return par1 >= var3 && par1 <= var4 && var6 >= 0 && var5 >= 0 && var6 < this.getSize() ? var6 : -1;
+        return p_27256_1_ >= var3 && p_27256_1_ <= var4 && var6 >= 0 && var5 >= 0 && var6 < this.getSize() ? var6 : -1;
     }
 
-    public void registerScrollButtons(List par1List, int par2, int par3)
+    public void registerScrollButtons(List p_22240_1_, int p_22240_2_, int p_22240_3_)
     {
-        this.scrollUpActionId = par2;
-        this.scrollDownActionId = par3;
+        this.scrollUpActionId = p_22240_2_;
+        this.scrollDownActionId = p_22240_3_;
     }
 
     private void applyScrollLimits()
@@ -134,7 +134,7 @@ public abstract class GuiScrollingList
         }
     }
 
-    public void drawScreen(int mouseX, int mouseY, float par3)
+    public void drawScreen(int mouseX, int mouseY, float p_22243_3_)
     {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
@@ -380,19 +380,19 @@ public abstract class GuiScrollingList
         GL11.glDisable(GL11.GL_BLEND);
     }
 
-    private void overlayBackground(int par1, int par2, int par3, int par4)
+    private void overlayBackground(int p_22239_1_, int p_22239_2_, int p_22239_3_, int p_22239_4_)
     {
         Tessellator var5 = Tessellator.instance;
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.client.renderEngine.getTexture("/gui/background.png"));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         float var6 = 32.0F;
         var5.startDrawingQuads();
-        var5.setColorRGBA_I(4210752, par4);
-        var5.addVertexWithUV(0.0D, (double)par2, 0.0D, 0.0D, (double)((float)par2 / var6));
-        var5.addVertexWithUV((double)this.listWidth + 30, (double)par2, 0.0D, (double)((float)(this.listWidth + 30) / var6), (double)((float)par2 / var6));
-        var5.setColorRGBA_I(4210752, par3);
-        var5.addVertexWithUV((double)this.listWidth + 30, (double)par1, 0.0D, (double)((float)(this.listWidth + 30) / var6), (double)((float)par1 / var6));
-        var5.addVertexWithUV(0.0D, (double)par1, 0.0D, 0.0D, (double)((float)par1 / var6));
+        var5.setColorRGBA_I(4210752, p_22239_4_);
+        var5.addVertexWithUV(0.0D, (double)p_22239_2_, 0.0D, 0.0D, (double)((float)p_22239_2_ / var6));
+        var5.addVertexWithUV((double)this.listWidth + 30, (double)p_22239_2_, 0.0D, (double)((float)(this.listWidth + 30) / var6), (double)((float)p_22239_2_ / var6));
+        var5.setColorRGBA_I(4210752, p_22239_3_);
+        var5.addVertexWithUV((double)this.listWidth + 30, (double)p_22239_1_, 0.0D, (double)((float)(this.listWidth + 30) / var6), (double)((float)p_22239_1_ / var6));
+        var5.addVertexWithUV(0.0D, (double)p_22239_1_, 0.0D, 0.0D, (double)((float)p_22239_1_ / var6));
         var5.draw();
     }
 }

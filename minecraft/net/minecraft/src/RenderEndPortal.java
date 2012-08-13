@@ -2,13 +2,14 @@ package net.minecraft.src;
 
 import java.nio.FloatBuffer;
 import java.util.Random;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 public class RenderEndPortal extends TileEntitySpecialRenderer
 {
-    FloatBuffer field_40448_a = GLAllocation.createDirectFloatBuffer(16);
+    FloatBuffer field_76908_a = GLAllocation.createDirectFloatBuffer(16);
 
-    public void func_40446_a(TileEntityEndPortal par1TileEntityEndPortal, double par2, double par4, double par6, float par8)
+    public void func_76906_a(TileEntityEndPortal par1TileEntityEndPortal, double par2, double par4, double par6, float par8)
     {
         float var9 = (float)this.tileEntityRenderer.playerX;
         float var10 = (float)this.tileEntityRenderer.playerY;
@@ -52,10 +53,10 @@ public class RenderEndPortal extends TileEntitySpecialRenderer
             GL11.glTexGeni(GL11.GL_T, GL11.GL_TEXTURE_GEN_MODE, GL11.GL_OBJECT_LINEAR);
             GL11.glTexGeni(GL11.GL_R, GL11.GL_TEXTURE_GEN_MODE, GL11.GL_OBJECT_LINEAR);
             GL11.glTexGeni(GL11.GL_Q, GL11.GL_TEXTURE_GEN_MODE, GL11.GL_EYE_LINEAR);
-            GL11.glTexGen(GL11.GL_S, GL11.GL_OBJECT_PLANE, this.func_40447_a(1.0F, 0.0F, 0.0F, 0.0F));
-            GL11.glTexGen(GL11.GL_T, GL11.GL_OBJECT_PLANE, this.func_40447_a(0.0F, 0.0F, 1.0F, 0.0F));
-            GL11.glTexGen(GL11.GL_R, GL11.GL_OBJECT_PLANE, this.func_40447_a(0.0F, 0.0F, 0.0F, 1.0F));
-            GL11.glTexGen(GL11.GL_Q, GL11.GL_EYE_PLANE, this.func_40447_a(0.0F, 1.0F, 0.0F, 0.0F));
+            GL11.glTexGen(GL11.GL_S, GL11.GL_OBJECT_PLANE, this.func_76907_a(1.0F, 0.0F, 0.0F, 0.0F));
+            GL11.glTexGen(GL11.GL_T, GL11.GL_OBJECT_PLANE, this.func_76907_a(0.0F, 0.0F, 1.0F, 0.0F));
+            GL11.glTexGen(GL11.GL_R, GL11.GL_OBJECT_PLANE, this.func_76907_a(0.0F, 0.0F, 0.0F, 1.0F));
+            GL11.glTexGen(GL11.GL_Q, GL11.GL_EYE_PLANE, this.func_76907_a(0.0F, 1.0F, 0.0F, 0.0F));
             GL11.glEnable(GL11.GL_TEXTURE_GEN_S);
             GL11.glEnable(GL11.GL_TEXTURE_GEN_T);
             GL11.glEnable(GL11.GL_TEXTURE_GEN_R);
@@ -64,7 +65,7 @@ public class RenderEndPortal extends TileEntitySpecialRenderer
             GL11.glMatrixMode(GL11.GL_TEXTURE);
             GL11.glPushMatrix();
             GL11.glLoadIdentity();
-            GL11.glTranslatef(0.0F, (float)(System.currentTimeMillis() % 700000L) / 700000.0F, 0.0F);
+            GL11.glTranslatef(0.0F, (float)(Minecraft.getSystemTime() % 700000L) / 700000.0F, 0.0F);
             GL11.glScalef(var16, var16, var16);
             GL11.glTranslatef(0.5F, 0.5F, 0.0F);
             GL11.glRotatef((float)(var14 * var14 * 4321 + var14 * 9) * 2.0F, 0.0F, 0.0F, 1.0F);
@@ -103,16 +104,16 @@ public class RenderEndPortal extends TileEntitySpecialRenderer
         GL11.glEnable(GL11.GL_LIGHTING);
     }
 
-    private FloatBuffer func_40447_a(float par1, float par2, float par3, float par4)
+    private FloatBuffer func_76907_a(float par1, float par2, float par3, float par4)
     {
-        this.field_40448_a.clear();
-        this.field_40448_a.put(par1).put(par2).put(par3).put(par4);
-        this.field_40448_a.flip();
-        return this.field_40448_a;
+        this.field_76908_a.clear();
+        this.field_76908_a.put(par1).put(par2).put(par3).put(par4);
+        this.field_76908_a.flip();
+        return this.field_76908_a;
     }
 
     public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
     {
-        this.func_40446_a((TileEntityEndPortal)par1TileEntity, par2, par4, par6, par8);
+        this.func_76906_a((TileEntityEndPortal)par1TileEntity, par2, par4, par6, par8);
     }
 }

@@ -19,15 +19,21 @@ import java.util.logging.Logger;
 
 import net.minecraft.server.MinecraftServer;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ReflectionHelper;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.modloader.ModLoaderHelper;
 import cpw.mods.fml.common.modloader.ModLoaderModContainer;
-import cpw.mods.fml.common.registry.FMLRegistry;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.server.FMLServerHandler;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class ModLoader
 {
+    public static final String fmlMarker = "This is an FML marker";
     /**
      * Not used on the server.
      *
@@ -37,16 +43,16 @@ public class ModLoader
      */
     public static void addAchievementDesc(Achievement achievement, String name, String description)
     {
-        String achName=achievement.getName();
+        String achName=achievement.statName;
         addLocalization(achName, name);
         addLocalization(achName+".desc", description);
     }
 
     /**
      * This method is a call in hook from modified external code. Implemented elsewhere.
-     * 
+     *
      * {@link FMLCommonHandler#fuelLookup(int, int)}
-     * 
+     *
      * @param id
      * @param metadata
      * @return
@@ -83,7 +89,7 @@ public class ModLoader
      */
     public static void addBiome(BiomeGenBase biome)
     {
-        FMLRegistry.addBiome(biome);
+        GameRegistry.addBiome(biome);
     }
 
     /**
@@ -106,7 +112,7 @@ public class ModLoader
      */
     public static void addLocalization(String key, String lang, String value)
     {
-        FMLCommonHandler.instance().addStringLocalization(key, lang, value);
+        LanguageRegistry.instance().addStringLocalization(key, lang, value);
     }
 
     /**
@@ -129,12 +135,12 @@ public class ModLoader
      */
     public static void addName(Object instance, String lang, String name)
     {
-        FMLCommonHandler.instance().addNameForObject(instance, lang, name);
+        LanguageRegistry.instance().addNameForObject(instance, lang, name);
     }
 
     /**
      * Unimplemented on the server as it does not render textures
-     * 
+     *
      * @param fileToOverride
      * @param fileToAdd
      * @return
@@ -146,7 +152,7 @@ public class ModLoader
 
     /**
      * Unimplemented on the server as it does not render textures
-     * 
+     *
      * @param path
      * @param overlayPath
      * @param index
@@ -164,7 +170,7 @@ public class ModLoader
      */
     public static void addRecipe(ItemStack output, Object... params)
     {
-        FMLRegistry.addRecipe(output, params);
+        GameRegistry.addRecipe(output, params);
     }
 
     /**
@@ -175,7 +181,7 @@ public class ModLoader
      */
     public static void addShapelessRecipe(ItemStack output, Object... params)
     {
-        FMLRegistry.addShapelessRecipe(output, params);
+        GameRegistry.addShapelessRecipe(output, params);
     }
 
     /**
@@ -186,7 +192,7 @@ public class ModLoader
      */
     public static void addSmelting(int input, ItemStack output)
     {
-        FMLRegistry.addSmelting(input, output);
+        GameRegistry.addSmelting(input, output, 1.0f);
     }
 
     /**
@@ -200,7 +206,7 @@ public class ModLoader
      */
     public static void addSpawn(Class <? extends EntityLiving > entityClass, int weightedProb, int min, int max, EnumCreatureType spawnList)
     {
-        FMLRegistry.addSpawn(entityClass, weightedProb, min, max, spawnList, FMLServerHandler.instance().getDefaultOverworldBiomes());
+        EntityRegistry.addSpawn(entityClass, weightedProb, min, max, spawnList, WorldType.base12Biomes);
     }
 
     /**
@@ -214,7 +220,7 @@ public class ModLoader
      */
     public static void addSpawn(Class<? extends EntityLiving> entityClass, int weightedProb, int min, int max, EnumCreatureType spawnList, BiomeGenBase... biomes)
     {
-        FMLRegistry.addSpawn(entityClass, weightedProb, min, max, spawnList, biomes);
+        EntityRegistry.addSpawn(entityClass, weightedProb, min, max, spawnList, biomes);
     }
 
     /**
@@ -228,11 +234,12 @@ public class ModLoader
      */
     public static void addSpawn(String entityName, int weightedProb, int min, int max, EnumCreatureType spawnList)
     {
-        FMLRegistry.addSpawn(entityName, weightedProb, min, max, spawnList, FMLServerHandler.instance().getDefaultOverworldBiomes());
+        EntityRegistry.addSpawn(entityName, weightedProb, min, max, spawnList, WorldType.base12Biomes);
     }
 
     /**
      * Add a mob to the spawn list
+     *
      * @param entityName
      * @param weightedProb
      * @param min
@@ -242,13 +249,13 @@ public class ModLoader
      */
     public static void addSpawn(String entityName, int weightedProb, int min, int max, EnumCreatureType spawnList, BiomeGenBase... biomes)
     {
-        FMLRegistry.addSpawn(entityName, weightedProb, min, max, spawnList, biomes);
+        EntityRegistry.addSpawn(entityName, weightedProb, min, max, spawnList, biomes);
     }
 
     /**
      * This method is a call in hook from modified external code. Implemented elsewhere.
      * {@link FMLServerHandler#tryDispensingEntity(World, double, double, double, byte, byte, ItemStack)}
-     * 
+     *
      * @param world
      * @param x
      * @param y
@@ -274,7 +281,7 @@ public class ModLoader
      */
     public static void genericContainerRemoval(World world, int x, int y, int z)
     {
-        TileEntity te = world.getBlockTileEntity(x, y, z);
+/*        TileEntity te = world.func_603_b(x, y, z);
 
         if (!(te instanceof IInventory))
         {
@@ -283,44 +290,44 @@ public class ModLoader
 
         IInventory inv = (IInventory)te;
 
-        for (int l = 0; l < inv.getSizeInventory(); l++)
+        for (int l = 0; l < inv.func_83_a(); l++)
         {
-            ItemStack itemstack = inv.getStackInSlot(l);
+            ItemStack itemstack = inv.func_82_a(l);
 
             if (itemstack == null)
             {
                 continue;
             }
 
-            float f = world.rand.nextFloat() * 0.8F + 0.1F;
-            float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
-            float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
+            float f = world.field_803_m.nextFloat() * 0.8F + 0.1F;
+            float f1 = world.field_803_m.nextFloat() * 0.8F + 0.1F;
+            float f2 = world.field_803_m.nextFloat() * 0.8F + 0.1F;
 
-            while (itemstack.stackSize > 0)
+            while (itemstack.field_853_a > 0)
             {
-                int i1 = world.rand.nextInt(21) + 10;
+                int i1 = world.field_803_m.nextInt(21) + 10;
 
-                if (i1 > itemstack.stackSize)
+                if (i1 > itemstack.field_853_a)
                 {
-                    i1 = itemstack.stackSize ;
+                    i1 = itemstack.field_853_a ;
                 }
 
-                itemstack.stackSize  -= i1;
-                EntityItem entityitem = new EntityItem(world, (float)te.xCoord + f, (float)te.yCoord + f1, (float)te.zCoord + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
+                itemstack.field_853_a  -= i1;
+                EntityItem entityitem = new EntityItem(world, (float)te.field_478_b + f, (float)te.field_483_c + f1, (float)te.field_482_d + f2, new ItemStack(itemstack.field_855_c, i1, itemstack.func_21125_h()));
                 float f3 = 0.05F;
-                entityitem.motionX = (float)world.rand.nextGaussian() * f3;
-                entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
-                entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
+                entityitem.field_319_o = (float)world.field_803_m.nextGaussian() * f3;
+                entityitem.field_318_p = (float)world.field_803_m.nextGaussian() * f3 + 0.2F;
+                entityitem.field_317_q = (float)world.field_803_m.nextGaussian() * f3;
 
-                if (itemstack.hasTagCompound())
+                if (itemstack.func_40608_n())
                 {
-                    entityitem.item.setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
+                    entityitem.field_429_a.func_40604_d((NBTTagCompound)itemstack.func_40607_o().func_40468_b());
                 }
 
-                world.spawnEntityInWorld(entityitem);
+                world.func_526_a(entityitem);
             }
         }
-    }
+*/    }
 
     /**
      * Get a list of all BaseMod loaded into the system
@@ -340,7 +347,7 @@ public class ModLoader
      */
     public static Logger getLogger()
     {
-        return FMLCommonHandler.instance().getFMLLogger();
+        return FMLLog.getLogger();
     }
 
     public static Object getMinecraftInstance()
@@ -355,7 +362,7 @@ public class ModLoader
      */
     public static MinecraftServer getMinecraftServerInstance()
     {
-        return FMLServerHandler.instance().getServer();
+        return FMLCommonHandler.instance().getMinecraftServerInstance();
     }
     /**
      * Get a value from a field using reflection
@@ -368,13 +375,13 @@ public class ModLoader
      */
     public static <T, E> T getPrivateValue(Class<? super E> instanceclass, E instance, int fieldindex)
     {
-        return ReflectionHelper.getPrivateValue(instanceclass, instance, fieldindex);
+        return ObfuscationReflectionHelper.getPrivateValue(instanceclass, instance, fieldindex);
     }
 
     /**
      * Get a value from a field using reflection
-     * {@link ReflectionHelper#getPrivateValue(Class, Object, String)}
-     * 
+     * {@link ObfuscationReflectionHelper#getPrivateValue(Class, Object, String)}
+     *
      * @param instanceclass
      * @param instance
      * @param field
@@ -382,12 +389,12 @@ public class ModLoader
      */
     public static <T, E> T getPrivateValue(Class<? super E> instanceclass, E instance, String field)
     {
-        return ReflectionHelper.getPrivateValue(instanceclass, instance, field);
+        return ObfuscationReflectionHelper.getPrivateValue(instanceclass, instance, field);
     }
 
     /**
      * Stubbed method on the server to return a unique model id
-     * 
+     *
      */
     public static int getUniqueBlockModelID(BaseMod mod, boolean inventoryRenderer)
     {
@@ -402,25 +409,25 @@ public class ModLoader
      */
     public static int getUniqueEntityId()
     {
-        return FMLCommonHandler.instance().nextUniqueEntityListId();
+        return EntityRegistry.findGlobalUniqueEntityId();
     }
 
     public static int getUniqueSpriteIndex(String path)
     {
         return -1;
     }
-    
+
     /**
      * To properly implement packet 250 protocol you should always check your
      * channel is active prior to sending the packet
-     * 
+     *
      * @param player
      * @param channel
      * @return
      */
     public static boolean isChannelActive(EntityPlayer player, String channel)
     {
-        return FMLCommonHandler.instance().isChannelActive(channel, player);
+        return NetworkRegistry.instance().isChannelActive(channel, (Player) player);
     }
 
     public static boolean isGUIOpen(Class<?> gui)
@@ -431,7 +438,7 @@ public class ModLoader
     /**
      * Is the named mod loaded?
      * {@link Loader#isModLoaded(String)}
-     * 
+     *
      * @param modname
      * @return
      */
@@ -483,7 +490,7 @@ public class ModLoader
     /**
      * This method is a call in hook from modified external code. Implemented elsewhere.
      * {@link FMLServerHandler#handlePacket250(Packet250CustomPayload, EntityPlayer)}
-     * 
+     *
      * @param packet
      */
     @Deprecated
@@ -504,40 +511,40 @@ public class ModLoader
 
     /**
      * Register a new block
-     * 
+     *
      * @param block
      */
     public static void registerBlock(Block block)
     {
-        FMLRegistry.registerBlock(block);
+        GameRegistry.registerBlock(block);
     }
 
     /**
      * Register a new block
-     * 
+     *
      * @param block
      * @param itemclass
      */
     public static void registerBlock(Block block, Class<? extends ItemBlock> itemclass)
     {
-        FMLRegistry.registerBlock(block, itemclass);
+        GameRegistry.registerBlock(block, itemclass);
     }
 
     /**
      * Register a new entity ID
-     * 
+     *
      * @param entityClass
      * @param entityName
      * @param id
      */
     public static void registerEntityID(Class<? extends Entity> entityClass, String entityName, int id)
     {
-        FMLRegistry.registerEntityID(entityClass, entityName, id);
+        EntityRegistry.registerGlobalEntityID(entityClass, entityName, id);
     }
 
     /**
      * Register a new entity ID
-     * 
+     *
      * @param entityClass
      * @param entityName
      * @param id
@@ -546,7 +553,7 @@ public class ModLoader
      */
     public static void registerEntityID(Class<? extends Entity> entityClass, String entityName, int id, int background, int foreground)
     {
-        FMLRegistry.registerEntityID(entityClass, entityName, id, background, foreground);
+        EntityRegistry.registerGlobalEntityID(entityClass, entityName, id, background, foreground);
     }
 
     public static void registerKey(BaseMod mod, Object keyHandler, boolean allowRepeat)
@@ -559,85 +566,85 @@ public class ModLoader
      * channel with Forge Mod Loader, not with clients connecting- use
      * BaseMod.onClientLogin to tell them about your custom channel
      * {@link FMLCommonHandler#registerChannel(cpw.mods.fml.common.ModContainer, String)}
-     * 
+     *
      * @param mod
      * @param channel
      */
     public static void registerPacketChannel(BaseMod mod, String channel)
     {
-        FMLCommonHandler.instance().registerChannel(ModLoaderModContainer.findContainerFor(mod), channel);
+        NetworkRegistry.instance().registerChannel(ModLoaderHelper.buildPacketHandlerFor(mod), channel);
     }
 
     /**
      * Register a new tile entity class
-     * 
+     *
      * @param tileEntityClass
      * @param id
      */
     public static void registerTileEntity(Class<? extends TileEntity> tileEntityClass, String id)
     {
-        FMLRegistry.registerTileEntity(tileEntityClass, id);
+        GameRegistry.registerTileEntity(tileEntityClass, id);
     }
 
     public static void registerTileEntity(Class<? extends TileEntity> tileEntityClass, String id, Object renderer)
     {
-        FMLRegistry.instance().registerTileEntity(tileEntityClass, id);
+        GameRegistry.registerTileEntity(tileEntityClass, id);
     }
 
     /**
      * Remove a biome from the list of generated biomes
-     *  
+     *
      * @param biome
      */
     public static void removeBiome(BiomeGenBase biome)
     {
-        FMLServerHandler.instance().removeBiomeFromDefaultWorldGenerator(biome);
+        GameRegistry.removeBiome(biome);
     }
 
     /**
      * Remove a spawn
-     * 
+     *
      * @param entityClass
      * @param spawnList
      */
     public static void removeSpawn(Class<? extends EntityLiving> entityClass, EnumCreatureType spawnList)
     {
-        FMLRegistry.removeSpawn(entityClass, spawnList, FMLServerHandler.instance().getDefaultOverworldBiomes());
+        EntityRegistry.removeSpawn(entityClass, spawnList, WorldType.base12Biomes);
     }
 
     /**
      * Remove a spawn
-     * 
+     *
      * @param entityClass
      * @param spawnList
      * @param biomes
      */
     public static void removeSpawn(Class<? extends EntityLiving> entityClass, EnumCreatureType spawnList, BiomeGenBase... biomes)
     {
-        FMLRegistry.removeSpawn(entityClass, spawnList, biomes);
+        EntityRegistry.removeSpawn(entityClass, spawnList, biomes);
     }
 
     /**
      * Remove a spawn
-     * 
+     *
      * @param entityName
      * @param spawnList
      */
     public static void removeSpawn(String entityName, EnumCreatureType spawnList)
     {
-        FMLRegistry.removeSpawn(entityName, spawnList, FMLServerHandler.instance().getDefaultOverworldBiomes());
+        EntityRegistry.removeSpawn(entityName, spawnList, WorldType.base12Biomes);
     }
 
     /**
      * Remove a spawn
-     * 
+     *
      * @param entityName
      * @param spawnList
      * @param biomes
      */
     public static void removeSpawn(String entityName, EnumCreatureType spawnList, BiomeGenBase... biomes)
     {
-        FMLRegistry.removeSpawn(entityName, spawnList, biomes);
+        EntityRegistry.removeSpawn(entityName, spawnList, biomes);
     }
 
     @Deprecated
@@ -667,10 +674,14 @@ public class ModLoader
     {
     }
 
+    public static void sendPacket(Packet packet) {
+        // TODO
+//        FMLClientHandler.instance().sendPacket(packet);
+    }
     /**
      * Send a chat message to the server
      * {@link FMLServerHandler#handleChatPacket(Packet3Chat, EntityPlayer)}
-     * 
+     *
      * @param text
      */
     @Deprecated
@@ -697,7 +708,7 @@ public class ModLoader
         ModLoaderHelper.updateStandardTicks(mod, enable, useClock);
     }
 
-    
+
     public static void setInGUIHook(BaseMod mod, boolean enable, boolean useClock)
     {
         ModLoaderHelper.updateGUITicks(mod, enable, useClock);
@@ -705,8 +716,8 @@ public class ModLoader
 
     /**
      * Set a private field to a value using reflection
-     * {@link ReflectionHelper#setPrivateValue(Class, Object, int, Object)}
-     * 
+     * {@link ObfuscationReflectionHelper#setPrivateValue(Class, Object, int, Object)}
+     *
      * @param instanceclass
      * @param instance
      * @param fieldindex
@@ -714,13 +725,13 @@ public class ModLoader
      */
     public static <T, E> void setPrivateValue(Class<? super T> instanceclass, T instance, int fieldindex, E value)
     {
-        ReflectionHelper.setPrivateValue(instanceclass, instance, fieldindex, value);
+        ObfuscationReflectionHelper.setPrivateValue(instanceclass, instance, value, fieldindex);
     }
 
     /**
      * Set a private field to a value using reflection
-     * {@link ReflectionHelper#setPrivateValue(Class, Object, String, Object)}
-     * 
+     * {@link ObfuscationReflectionHelper#setPrivateValue(Class, Object, String, Object)}
+     *
      * @param instanceclass
      * @param instance
      * @param field
@@ -728,13 +739,13 @@ public class ModLoader
      */
     public static <T, E> void setPrivateValue(Class<? super T> instanceclass, T instance, String field, E value)
     {
-        ReflectionHelper.setPrivateValue(instanceclass, instance, field, value);
+        ObfuscationReflectionHelper.setPrivateValue(instanceclass, instance, value, field);
     }
 
     /**
      * This method is a call in hook from modified external code. Implemented elsewhere.
      * {@link FMLServerHandler#onItemCrafted(EntityPlayer, ItemStack, IInventory)}
-     * 
+     *
      * @param player
      * @param item
      * @param matrix
@@ -747,7 +758,7 @@ public class ModLoader
     /**
      * This method is a call in hook from modified external code. Implemented elsewhere.
      * {@link FMLServerHandler#onItemSmelted(EntityPlayer, ItemStack)}
-     * 
+     *
      * @param player
      * @param item
      */
@@ -759,6 +770,7 @@ public class ModLoader
     /**
      * Throw the offered exception. Likely will stop the game.
      * {@link FMLServerHandler#raiseException(Throwable, String, boolean)}
+     *
      * @param message
      * @param e
      */
@@ -766,7 +778,7 @@ public class ModLoader
     {
         FMLCommonHandler.instance().raiseException(e, message, true);
     }
-    
+
     public static void throwException(Throwable e)
     {
         throwException("Exception in ModLoader", e);

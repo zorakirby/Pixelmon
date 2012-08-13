@@ -15,8 +15,8 @@ public class TexturePortalFX extends FMLTextureFX
     public TexturePortalFX()
     {
         super(Block.portal.blockIndexInTexture);
-        setup();
-    }
+		setup();
+	}
 
     @Override
     public void setup()
@@ -81,7 +81,6 @@ public class TexturePortalFX extends FMLTextureFX
                 }
             }
         }
-        portalTickCounter = 0;
     }
 
     public void onTick()

@@ -22,22 +22,15 @@ class MusInputStream extends InputStream
         this.hash = var4.hashCode();
     }
 
-    public int read()
+    public int read() throws IOException
     {
         int var1 = this.read(this.buffer, 0, 1);
         return var1 < 0 ? var1 : this.buffer[0];
     }
 
-    public int read(byte[] par1ArrayOfByte, int par2, int par3)
+    public int read(byte[] par1ArrayOfByte, int par2, int par3) throws IOException
     {
-        try
-        {
-            par3 = this.inputStream.read(par1ArrayOfByte, par2, par3);
-        }
-        catch (IOException e)
-        {
-            return 0;
-        }
+        par3 = this.inputStream.read(par1ArrayOfByte, par2, par3);
 
         for (int var4 = 0; var4 < par3; ++var4)
         {
