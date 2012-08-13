@@ -6,12 +6,15 @@ public class AttackAnimationParser {
 	public static ArrayList<IAttackAnimation> GetAnimation(String animationListString){
 		ArrayList<IAttackAnimation> animations = new ArrayList<IAttackAnimation>();
 		String[] animationList = animationListString.split(";");
-		for(String animationString: animationList){
-			if (AttackAnimationType.isAttackAnimationType(animationString)){
-				if (AttackAnimationType.getAttackModifierType(animationString) == AttackAnimationType.LeapForward)
-					animations.add(new AttackAnimationLeapForward());					
-			}
-		}
+		 for(String animationString: animationList){
+			 if (AttackAnimationType.isAttackAnimationType(animationString)){
+			 if (AttackAnimationType.getAttackModifierType(animationString) == AttackAnimationType.LeapForward)
+			 animations.add(new AttackAnimationLeapForward());
+			 }else{
+			 animations.add(new AttackAnimationHelper(animationString));
+			 }
+			 }
+
 		if (animations.size()==0) animations.add(new AttackAnimationLeapForward());
 		return animations;
 	}
