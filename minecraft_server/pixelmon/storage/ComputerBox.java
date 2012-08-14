@@ -16,7 +16,7 @@ import net.minecraft.src.NBTTagCompound;
 
 public class ComputerBox {
 	public boolean hasChanged = false;
-	public static final int boxLimit = 30;
+	static final int boxLimit = 30;
 	public int position;
 	private NBTTagCompound[] storedPokemon = new NBTTagCompound[boxLimit];
 
@@ -48,7 +48,8 @@ public class ComputerBox {
 		n.setBoolean("IsInBall", true);
 		n.setBoolean("IsShiny", p.getIsShiny());
 		int pos = getNextSpace();
-		n.setInteger("StoragePosition", pos);
+		n.setInteger("PixelmonOrder", pos);
+		n.setInteger("BoxNumber", position);
 		if (n.getShort("Health")>0)n.setBoolean("IsFainted",false);
 		storedPokemon[pos] = n;
 		hasChanged = true;
@@ -78,6 +79,10 @@ public class ComputerBox {
 	public void setStoredPokemon(NBTTagCompound[] pokemon){
 		storedPokemon = pokemon;
 	}
+	
+	public NBTTagCompound getNBTByPosition(int pos){
+		return storedPokemon[pos];
+	}
 
 	public void load(NBTTagCompound boxTag) {
 		for (int i = 0; i < boxLimit; i++)
@@ -87,7 +92,7 @@ public class ComputerBox {
 		while (i.hasNext()) {
 			NBTTagCompound tag = i.next();
 			tag.setName(tag.getString("Name"));
-			int pos = tag.getInteger("StoragePosition");
+			int pos = tag.getInteger("PixelmonOrder");
 			storedPokemon[pos] = tag;
 		}
 		hasChanged = false;

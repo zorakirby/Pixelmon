@@ -5,9 +5,9 @@ import java.util.List;
 import pixelmon.AI.EntityAINearestPixelmonTarget;
 import pixelmon.AI.EntityAIStartBattle;
 import pixelmon.battles.BattleController;
+import pixelmon.config.PixelmonItems;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-import pixelmon.items.PixelmonItems;
 
 import net.minecraft.src.*;
 

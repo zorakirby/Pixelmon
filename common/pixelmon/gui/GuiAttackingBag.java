@@ -13,9 +13,9 @@ import net.minecraft.src.ModLoader;
 import org.lwjgl.input.Keyboard;
 
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.items.ItemPokeBall;
-import pixelmon.items.PixelmonItems;
 
 public class GuiAttackingBag extends GuiScreen{
 	

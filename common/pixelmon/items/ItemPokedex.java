@@ -1,5 +1,6 @@
 package pixelmon.items;
 
+import pixelmon.Pixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.gui.pokedex.GuiPokedex;
 import net.minecraft.src.*;
@@ -14,7 +15,7 @@ public class ItemPokedex extends Item
 	
 	public ItemStack onItemRightClick(ItemStack i, World world, EntityPlayer player)
 	{
-		player.openGui(mod_Pixelmon.instance, EnumGui.Pokedex.getIndex(), world, 0, 0, 0);
+		player.openGui(Pixelmon.instance, EnumGui.Pokedex.getIndex(), world, 0, 0, 0);
 		return i;
 	}
 	

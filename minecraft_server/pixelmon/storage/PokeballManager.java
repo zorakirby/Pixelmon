@@ -20,22 +20,27 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.server.FMLServerHandler;
 
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.AnvilSaveHandler;
 import net.minecraft.src.Chunk;
 import net.minecraft.src.CompressedStreamTools;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityList;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.ISaveHandler;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;
+import net.minecraft.src.SaveHandler;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_Pixelmon;
 import net.minecraft.src.forge.IConnectionHandler;
 import net.minecraft.src.forge.ISaveEventHandler;
-import net.minecraft.src.forge.MinecraftForge;
 
 public class PokeballManager implements ISaveEventHandler {
 	private File workingDir;
@@ -50,29 +55,21 @@ public class PokeballManager implements ISaveEventHandler {
 	}
 
 	public PlayerStorage getPlayerStorage(EntityPlayer owner) {
-		if (owner.worldObj.isRemote){
-			if (serverStorage==null){
-				serverStorage = new PlayerStorage(owner);
-			}
-			return serverStorage;
-		}
-		if (playerPokemonList.size() == 0)
-			loadPlayer(ModLoader.getMinecraftInstance().thePlayer);
+
 		for (PlayerStorage p : playerPokemonList) {
 			if (p.player.username.equals(owner.username))
 				return p;
 		}
-		return null;
+		loadPlayer(owner);
+		return getPlayerStorage(owner);
 	}
-
-	private PlayerStorage serverStorage = null;
 
 	@SuppressWarnings("unchecked")
 	public void loadPlayer(EntityPlayer player) {
-		File saveDirPath = new File(getSaveFolder());
+		File saveDirPath = new File(getSaveFolder(player));
 		if (!saveDirPath.exists())
 			saveDirPath.mkdirs();
-		File playerFile = new File(getSaveFolder() + "client.pk");
+		File playerFile = new File(getSaveFolder(player) + player.username + ".pk");
 		if (playerFile.exists()) {
 			PlayerStorage p = new PlayerStorage(player);
 			try {
@@ -86,21 +83,31 @@ public class PokeballManager implements ISaveEventHandler {
 		} else {
 			PlayerStorage p = new PlayerStorage(player);
 			playerPokemonList.add(p);
-			player.openGui(mod_Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), player.worldObj, 0, 0, 0);
 		}
 	}
 
 	public void save() {
 		try {
-			if (playerPokemonList.size() == 0)
-				loadPlayer(ModLoader.getMinecraftInstance().thePlayer);
 			for (int i = 0; i < playerPokemonList.size(); i++) {
-				if (playerPokemonList.get(i).count() == 0)
-					playerPokemonList.get(i).player.openGui(mod_Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ModLoader.getMinecraftInstance().theWorld,
-							0, 0, 0);
 				EntityPlayer player = playerPokemonList.get(i).player;
-				File playerSaveFile = new File(getSaveFolder() + "client.pk");
-				CompressedStreamTools.write(getData(player), new DataOutputStream(new FileOutputStream(playerSaveFile)));
+				boolean playerConnected = false;
+				for (String playerName : FMLServerHandler.instance().getServer().getPlayerNamesAsList())
+					if (player.username.equals(playerName)) {
+						playerConnected = true;
+						break;
+					}
+
+				if (playerConnected) {
+					File playerSaveFile = new File(getSaveFolder(player) + player.username + ".pk");
+					FileOutputStream f = new FileOutputStream(playerSaveFile);
+					DataOutputStream s = new DataOutputStream(f);
+					CompressedStreamTools.write(getData(player), s);
+					s.close();
+					f.close();
+				} else {
+					playerPokemonList.remove(i);
+					i--;
+				}
 			}
 			// CompressedStreamTools.write(data, getFile());
 		} catch (Exception e) {
@@ -118,16 +125,24 @@ public class PokeballManager implements ISaveEventHandler {
 		return null;
 	}
 
-	private String getSaveFolder() {
-		return ModLoader.getMinecraftInstance().getMinecraftDir() + "/saves/"
-				+ ModLoader.getMinecraftInstance().theWorld.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
+	private String getSaveFolder(EntityPlayer player) {
+		try {
+			return ModLoader.getPrivateValue(SaveHandler.class, (SaveHandler) player.worldObj.getSaveHandler(), "b") + "/pokemon/";
+		} catch (Throwable e) {
+			//System.err.println(e);
+			try {
+				return ModLoader.getPrivateValue(SaveHandler.class, (SaveHandler) player.worldObj.getSaveHandler(), "worldDirectory") + "/pokemon/";
+			} catch (Throwable f) {
+				System.err.println(f);
+
+			}
+		}
+		return null;
 	}
 
 	@Override
 	public void onWorldLoad(World world) {
 		playerPokemonList.clear();
-		mod_Pixelmon.serverStorageDisplay.clear();
-		mod_Pixelmon.firstJoin=true;
 	}
 
 	@Override

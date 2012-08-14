@@ -5,6 +5,8 @@ import net.minecraft.src.Gui;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.google.common.eventbus.Subscribe;
+
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.storage.PokeballManager;
 
@@ -21,9 +23,10 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StringTranslate;
 import net.minecraft.src.Tessellator;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 
-public class GuiPixelmonOverlay extends Gui{
-
+public class GuiPixelmonOverlay extends Gui {
+	public static boolean isGuiMinimized = false;
 	public FontRenderer fontRenderer;
 	public int selectedPixelmon;
 
@@ -31,10 +34,9 @@ public class GuiPixelmonOverlay extends Gui{
 		fontRenderer = ModLoader.getMinecraftInstance().fontRenderer;
 	}
 
-	public void onRenderWorldLast(RenderGlobal renderer, float partialTicks) {
-
-		ScaledResolution var5 = new ScaledResolution(ModLoader.getMinecraftInstance().gameSettings, ModLoader.getMinecraftInstance().displayWidth,
-				ModLoader.getMinecraftInstance().displayHeight);
+	@Subscribe
+	public void onRenderWorldLast(RenderWorldLastEvent event){
+		ScaledResolution var5 = new ScaledResolution(ModLoader.getMinecraftInstance().gameSettings, ModLoader.getMinecraftInstance().displayWidth, ModLoader.getMinecraftInstance().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -44,13 +46,13 @@ public class GuiPixelmonOverlay extends Gui{
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_LIGHTING);
 		int var4;
-		if (mod_Pixelmon.isGuiMinimized)
+		if (isGuiMinimized)
 			var4 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlaySimple.png");
 		else
 			var4 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
 		ModLoader.getMinecraftInstance().renderEngine.bindTexture(var4);
 		ModLoader.getMinecraftInstance().entityRenderer.setupOverlayRendering();
-		if (mod_Pixelmon.isGuiMinimized)
+		if (isGuiMinimized)
 			this.drawTexturedModalRect(0, var7 / 6, 0, 0, 60, 182);
 		else
 			this.drawTexturedModalRect(0, var7 / 6, 0, 0, 147, 182);
@@ -58,80 +60,45 @@ public class GuiPixelmonOverlay extends Gui{
 
 		fontRenderer.setUnicodeFlag(true);
 		int i = 0;
-		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-			for (PixelmonDataPacket p : mod_Pixelmon.serverStorageDisplay.pokemon) {
-				int offset = 0;
-				if (p != null) {
-					i = p.order;
-					if (!mod_Pixelmon.isGuiMinimized) {
-						fontRenderer.drawString(p.nickname, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
-						ModLoader.getMinecraftInstance().renderEngine.bindTexture(var4);
-						if (p.isMale)
-							this.drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
-						else
-							this.drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 218, 5, 9);
 
-					}
-					String numString = "";
-					if (p.nationalPokedexNumber < 10)
-						numString = "00" + p.nationalPokedexNumber;
-					else if (p.nationalPokedexNumber < 100)
-						numString = "0" + p.nationalPokedexNumber;
+		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
+			int offset = 0;
+			if (p != null) {
+				i = p.order;
+				if (!isGuiMinimized) {
+					fontRenderer.drawString(p.nickname, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
+					ModLoader.getMinecraftInstance().renderEngine.bindTexture(var4);
+					if (p.isMale)
+						this.drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
 					else
-						numString = "" + p.nationalPokedexNumber;
-					int var9 ;
-					if (p.isShiny)var9= ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
-					else var9= ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-					drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
-					if (!mod_Pixelmon.isGuiMinimized) {
-						fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-						if (p.health <= 0) {
-							fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT
-									+ 7 + offset, 0xFFFFFF);
-						} else {
-							fontRenderer.drawString("HP " + p.health + "/" + p.hp, 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30
-									+ fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-						}
+						this.drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 218, 5, 9);
+
+				}
+				String numString = "";
+				if (p.nationalPokedexNumber < 10)
+					numString = "00" + p.nationalPokedexNumber;
+				else if (p.nationalPokedexNumber < 100)
+					numString = "0" + p.nationalPokedexNumber;
+				else
+					numString = "" + p.nationalPokedexNumber;
+				int var9;
+				if (p.isShiny)
+					var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+				else
+					var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+				drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
+				if (!isGuiMinimized) {
+					fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
+					if (p.health <= 0) {
+						fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
+					} else {
+						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
 					}
 				}
-				i++;
 			}
-		} else {
-			for (NBTTagCompound n : mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getList()) {
-				int offset = 0;
-				if (n != null) {
-					if (n.getBoolean("IsFainted") && n.getShort("Health")>0) n.setBoolean("IsFainted", false);
-					i = n.getInteger("PixelmonOrder");
-					if (!mod_Pixelmon.isGuiMinimized) {
-						if (n.getString("Nickname") == null || n.getString("Nickname").equalsIgnoreCase("")) {
-							n.setString("Nickname", n.getName());
-						}
-						fontRenderer.drawString(n.getString("Nickname"), 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
-						ModLoader.getMinecraftInstance().renderEngine.bindTexture(var4);
-						if (n.getBoolean("IsMale"))
-							this.drawTexturedModalRect(fontRenderer.getStringWidth(n.getString("Nickname")) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
-						else
-							this.drawTexturedModalRect(fontRenderer.getStringWidth(n.getString("Nickname")) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 218, 5, 9);
-					}
-					int var9;
-					if (n.hasKey("IsShiny") && n.getBoolean("IsShiny")) var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + n.getString("NationalPokedexNumber"));
-					else var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + n.getString("NationalPokedexNumber"));
-					drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
-					if (!mod_Pixelmon.isGuiMinimized) {
-						fontRenderer.drawString("Lvl " + n.getInteger("Level"), 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-						if (n.getBoolean("IsFainted") && n.getShort("Health")<=0) {
-							fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + n.getInteger("Level")), var7 / 6 + i * 30
-									+ fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-						} else {
-							fontRenderer.drawString("HP " + n.getShort("Health") + "/" + n.getInteger("StatsHP"),
-									33 + fontRenderer.getStringWidth("Lvl " + n.getInteger("Level")),
-									var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-						}
-					}
-				}
-				i++;
-			}
+			i++;
 		}
+
 		ModLoader.getMinecraftInstance().renderEngine.bindTexture(var4);
 		this.drawTexturedModalRect(2, var7 / 6 + 4 + selectedPixelmon * 30, 45, 209, 40, 40);
 		fontRenderer.setUnicodeFlag(false);
@@ -148,19 +115,10 @@ public class GuiPixelmonOverlay extends Gui{
 		selectedPixelmon++;
 		if (selectedPixelmon >= 6)
 			selectedPixelmon = 0;
-		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-			while (mod_Pixelmon.serverStorageDisplay.pokemon[selectedPixelmon] == null) {
-				selectedPixelmon++;
-				if (selectedPixelmon >= 6)
-					selectedPixelmon = 0;
-			}
-
-		} else {
-			while (mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getList()[selectedPixelmon] == null) {
-				selectedPixelmon++;
-				if (selectedPixelmon >= 6)
-					selectedPixelmon = 0;
-			}
+		while (ServerStorageDisplay.pokemon[selectedPixelmon] == null) {
+			selectedPixelmon++;
+			if (selectedPixelmon >= 6)
+				selectedPixelmon = 0;
 		}
 
 	}
@@ -169,18 +127,10 @@ public class GuiPixelmonOverlay extends Gui{
 		selectedPixelmon--;
 		if (selectedPixelmon < 0)
 			selectedPixelmon = 5;
-		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-			while (mod_Pixelmon.serverStorageDisplay.pokemon[selectedPixelmon] == null) {
-				selectedPixelmon--;
-				if (selectedPixelmon < 0)
-					selectedPixelmon = 5;
-			}
-		} else {
-			while (mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getList()[selectedPixelmon] == null) {
-				selectedPixelmon--;
-				if (selectedPixelmon < 0)
-					selectedPixelmon = 5;
-			}
+		while (ServerStorageDisplay.pokemon[selectedPixelmon] == null) {
+			selectedPixelmon--;
+			if (selectedPixelmon < 0)
+				selectedPixelmon = 5;
 		}
 	}
 

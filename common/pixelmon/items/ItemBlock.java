@@ -2,7 +2,7 @@ package pixelmon.items;
 
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
-import pixelmon.blocks.PixelmonBlocks;
+import pixelmon.config.PixelmonBlocks;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockBed;
 import net.minecraft.src.EntityPlayer;

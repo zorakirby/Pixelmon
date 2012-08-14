@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.gui.FontScaler;
+import pixelmon.render.GraphicsHelper;
 import net.minecraft.src.*;
 
 public class GuiPokedex extends GuiContainer
@@ -82,13 +84,13 @@ public class GuiPokedex extends GuiContainer
         s = selectedEntry.description;
         fontRenderer.drawSplitString(s, left + 104, top + 141 - 3, 141, 0x575757);
         s = "Height: ";
-        s += selectedEntry.getDisplayHeight(mod_Pixelmon.isInMetric);
+        s += selectedEntry.getDisplayHeight(PixelmonConfig.isInMetric);
         fontRenderer.drawString(s, left + 164, top + 69 - 10, 0x575757);
         s = "Weight: ";
-        s += selectedEntry.getDisplayWeight(mod_Pixelmon.isInMetric);
+        s += selectedEntry.getDisplayWeight(PixelmonConfig.isInMetric);
         fontRenderer.drawString(s, left + 164, top + 69 + 0, 0x575757);
         s = "Rarity: ";
-        s += selectedEntry.getDisplayRarity(mod_Pixelmon.isInMetric);
+        s += selectedEntry.getDisplayRarity(PixelmonConfig.isInMetric);
         fontRenderer.drawString(s, left + 164, top + 69 + 10, 0x575757);
         this.pokedexSlotContainer.drawScreen(mouseX,mouseY,mfloat);
     }
@@ -118,7 +120,7 @@ public class GuiPokedex extends GuiContainer
     //int count=0;
     protected void drawModelToScreen(float size, int xPos, int yPos)
     {
-    	mod_Pixelmon.drawModelToScreen(size, xSize, ySize, xPos, yPos, selectedEntity, this, true);
+    	GraphicsHelper.drawModelToScreen(size, xSize, ySize, xPos, yPos, selectedEntity, this, true);
     }
     
 

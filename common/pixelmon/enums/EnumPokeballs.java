@@ -1,6 +1,6 @@
 package pixelmon.enums;
 
-import pixelmon.items.PixelmonItems;
+import pixelmon.config.PixelmonItems;
 import net.minecraft.src.Item;
 
 public enum EnumPokeballs {

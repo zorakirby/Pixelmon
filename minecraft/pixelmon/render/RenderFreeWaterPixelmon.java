@@ -8,10 +8,10 @@ import net.minecraft.src.ModelBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.RenderLiving;
 import net.minecraft.src.Tessellator;
-import net.minecraft.src.mod_Pixelmon;
 
 import org.lwjgl.opengl.GL11;
 
+import pixelmon.Pixelmon;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
@@ -30,7 +30,7 @@ public class RenderFreeWaterPixelmon extends RenderLiving{
 	        {
 	        	drawHealthBar(entityLiving, d, d1, d2, f, f1);
 				if (entityLiving instanceof EntityWaterPixelmon)
-					if (mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper)entityLiving).getHelper()))
+					if (Pixelmon.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper)entityLiving).getHelper()))
 						drawExpBar(entityLiving, d, d1, d2, f, f1);
 				drawNameTag(entityLiving, d, d1, d2);
 	        }
@@ -41,7 +41,7 @@ public class RenderFreeWaterPixelmon extends RenderLiving{
 		if (Minecraft.isGuiEnabled()
 				&& (entityliving instanceof EntityWaterPixelmon)) {
 			EntityWaterPixelmon entitypixelmon = (EntityWaterPixelmon) entityliving;
-			NBTTagCompound nbt = mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getNBT(entitypixelmon.getHelper().getPokemonId());
+			NBTTagCompound nbt = Pixelmon.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getNBT(entitypixelmon.getHelper().getPokemonId());
 			boolean flag;
 			if(nbt == null){
 				flag = true;
@@ -51,7 +51,7 @@ public class RenderFreeWaterPixelmon extends RenderLiving{
 			}
 			String s = " Lv: " + entitypixelmon.helper.getLvl().getLevel() + " ";
 			s += (flag ? entitypixelmon.name : nbt.getString("Nickname"));
-			if (mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(entitypixelmon.helper)) {
+			if (Pixelmon.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(entitypixelmon.helper)) {
 				s += " (" + ModLoader.getMinecraftInstance().thePlayer.username + ")";
 			} else {
 				s += " (Wild)";

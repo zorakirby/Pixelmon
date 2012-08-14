@@ -17,6 +17,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.TrainerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonItems;
 import pixelmon.database.BattleStats;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
@@ -32,7 +33,6 @@ import pixelmon.enums.EnumType;
 import pixelmon.gui.GuiScreenPokeChecker;
 import pixelmon.gui.pokedex.GuiPokedex;
 import pixelmon.items.ItemEvolutionStone;
-import pixelmon.items.PixelmonItems;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;

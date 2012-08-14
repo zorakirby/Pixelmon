@@ -1,10 +1,14 @@
-package pixelmon.items;
+package pixelmon.config;
 
 import net.minecraft.src.Item;
 import net.minecraft.src.ModLoader;
-import pixelmon.blocks.PixelmonBlocks;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.items.ItemBlock;
+import pixelmon.items.ItemEvolutionStone;
+import pixelmon.items.ItemPokeBall;
+import pixelmon.items.ItemPokedex;
+import pixelmon.items.PixelmonItem;
 
 public class PixelmonItems {
 	private static final int pIMG = ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokeball.png");

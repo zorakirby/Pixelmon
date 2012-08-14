@@ -1,5 +1,8 @@
-package pixelmon.blocks;
+package pixelmon.config;
 
+import pixelmon.blocks.BlockEvolutionStoneOre;
+import pixelmon.blocks.BlockHealer;
+import pixelmon.blocks.BlockPC;
 import pixelmon.render.RenderTileEntityPC;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.src.Block;

@@ -2,7 +2,8 @@ package pixelmon.blocks;
 
 import java.util.Random;
 
-import pixelmon.items.PixelmonItems;
+import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonItems;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;

@@ -3,6 +3,7 @@ package pixelmon.render;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPotion;
 import net.minecraft.src.Item;
+import net.minecraft.src.ModLoader;
 import net.minecraft.src.PotionHelper;
 import net.minecraft.src.Render;
 import net.minecraft.src.RenderEngine;
@@ -10,8 +11,9 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.RenderLiving;
 import net.minecraft.src.RenderSnowball;
 import net.minecraft.src.Tessellator;
-import net.minecraft.src.mod_Pixelmon;
-import net.minecraft.src.forge.MinecraftForgeClient;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -37,13 +39,12 @@ public class RenderPokeball extends Render {
 		GL11.glTranslated(x, y, z);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(180, 1, 0, 1);
-		if (pokeball.isCaptured){
-			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getCaptureTexture());
-		}
-		else if (pokeball.flashRed){
-			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getFlashRedTexture());
-		}else{
-			MinecraftForgeClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getTexture());
+		if (pokeball.isCaptured) {
+			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getCaptureTexture(), 0);
+		} else if (pokeball.flashRed) {
+			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getFlashRedTexture(), 0);
+		} else {
+			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getTexture(), 0);
 		}
 		RenderHelper.enableStandardItemLighting();
 		float factor = (float) (1.0 / 16.0);

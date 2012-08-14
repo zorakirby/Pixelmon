@@ -3,7 +3,7 @@ package pixelmon;
 import java.util.logging.Level;
 
 import pixelmon.PacketHandler;
-import pixelmon.blocks.PixelmonBlocks;
+import pixelmon.config.PixelmonBlocks;
 import pixelmon.storage.PokeballManager;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;

@@ -8,6 +8,7 @@ import cpw.mods.fml.common.network.Player;
 import pixelmon.Pixelmon;
 import pixelmon.PixelmonEntityList;
 import pixelmon.PixelmonServerStore;
+import pixelmon.ServerStorageDisplay;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
@@ -25,15 +26,15 @@ public class PacketHandler implements IPacketHandler {
 	@Override
 	public void onPacketData(NetworkManager manager,
 			Packet250CustomPayload packet, Player player) {
-		DataInputStream dataStream = new DataInputStream(new ByteArrayInputStream(data));
+		DataInputStream dataStream = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
 			int packetID = dataStream.readInt();
 			if (packetID == EnumPackets.AddToStorage.getIndex()) {
-				Pixelmon.serverStorageDisplay.add(dataStream);
+				ServerStorageDisplay.add(dataStream);
 			} else if (packetID == EnumPackets.RemoveFromStorage.getIndex()) {
-				Pixelmon.serverStorageDisplay.remove(dataStream.readInt());
+				ServerStorageDisplay.remove(dataStream.readInt());
 			} else if (packetID == EnumPackets.UpdateStorage.getIndex()) {
-				Pixelmon.serverStorageDisplay.update(dataStream);
+				ServerStorageDisplay.update(dataStream);
 			} else if (packetID == EnumPackets.AddToTempStore.getIndex()) {
 				PixelmonServerStore.addToList(dataStream);
 			} else if (packetID == EnumPackets.BattleFinished.getIndex()) {

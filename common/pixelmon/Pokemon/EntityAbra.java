@@ -11,8 +11,6 @@ import net.minecraft.src.EntityAIWatchClosest;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
-
 
 public class EntityAbra extends EntityGroundPixelmon
 {
@@ -28,7 +26,7 @@ public class EntityAbra extends EntityGroundPixelmon
 		name = "Abra";
 		isImmuneToFire = false;
 		super.init();
-		tasks = new EntityAITasks();
+		tasks.field_75782_a.clear();
 		tasks.addTask(1, new EntityAISwimming(this));
 	}
 

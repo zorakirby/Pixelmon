@@ -5,8 +5,8 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
-import pixelmon.blocks.PixelmonBlocks;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.config.PixelmonBlocks;
 import pixelmon.models.ModelPC;
 
 public class RenderTileEntityPC extends TileEntitySpecialRenderer {

@@ -59,19 +59,8 @@ public class GuiRenamePokemon extends GuiScreen {
 		case 1:
 			mc.displayGuiScreen(parentGuiScreen);
 		case 0:
-			if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
 				ModLoader.sendPacket(PacketCreator.createStringPacket(EnumPackets.RenamePokemon, targetPacket.pokemonID, theGuiTextField.getText()));
 				targetPacket.nickname = theGuiTextField.getText();
-			} else {
-				target.nickname = theGuiTextField.getText();
-				NBTTagCompound nbt = mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getNBT(target.getPokemonId());
-				if (nbt != null) {
-					nbt.setString("Nickname", theGuiTextField.getText());
-				}
-				if (theGuiTextField.getText().trim() == target.getName())
-					target.nickname= null;
-				mod_Pixelmon.pokeballManager.save();
-			}
 			parentGuiScreen.initGui();
 			mc.displayGuiScreen(parentGuiScreen);
 		}

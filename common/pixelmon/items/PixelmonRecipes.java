@@ -1,11 +1,11 @@
 package pixelmon.items;
 
-import pixelmon.blocks.PixelmonBlocks;
+import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonItems;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.mod_Pixelmon;
 
 public class PixelmonRecipes {
 

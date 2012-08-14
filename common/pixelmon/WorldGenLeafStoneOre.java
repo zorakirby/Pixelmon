@@ -2,7 +2,7 @@ package pixelmon;
 
 import java.util.Random;
 
-import pixelmon.blocks.PixelmonBlocks;
+import pixelmon.config.PixelmonBlocks;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.World;

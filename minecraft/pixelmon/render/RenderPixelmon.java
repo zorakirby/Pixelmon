@@ -8,10 +8,11 @@ import net.minecraft.src.ModelBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.RenderLiving;
 import net.minecraft.src.Tessellator;
-import net.minecraft.src.mod_Pixelmon;
 
 import org.lwjgl.opengl.GL11;
 
+import pixelmon.Pixelmon;
+import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
@@ -29,11 +30,11 @@ public class RenderPixelmon extends RenderLiving {
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
-		if (var10 <= (float) 8 || ((BaseEntityPixelmon) entityLiving).hasOwner() || mod_Pixelmon.serverStorageDisplay.contains(((BaseEntityPixelmon) entityLiving).getPokemonId())) {
+		if (var10 <= (float) 8 || ((BaseEntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((BaseEntityPixelmon) entityLiving).getPokemonId())) {
 			lvlInstance = ((BaseEntityPixelmon) entityLiving).helper.getLvl();
 			drawHealthBar(entityLiving, d, d1, d2, f, f1);
 			if (entityLiving instanceof BaseEntityPixelmon)
-				if (mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper) entityLiving).getHelper()))
+				if (Pixelmon.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper) entityLiving).getHelper()))
 					drawExpBar(entityLiving, d, d1, d2, f, f1);
 			drawNameTag(entityLiving, d, d1, d2);
 		}
@@ -46,53 +47,28 @@ public class RenderPixelmon extends RenderLiving {
 
 	public void drawNameTag(EntityLiving entityliving, double par2, double par4, double par6) {
 		if (Minecraft.isGuiEnabled() && (entityliving instanceof BaseEntityPixelmon)) {
-			if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-				BaseEntityPixelmon entitypixelmon = (BaseEntityPixelmon) entityliving;
-				PixelmonDataPacket p =  null;
-				if (mod_Pixelmon.serverStorageDisplay.contains(entitypixelmon.getHelper().getPokemonId()))
-					p = mod_Pixelmon.serverStorageDisplay.get(entitypixelmon.getHelper().getPokemonId());
-				boolean flag;
-				if (p == null) {
-					flag = true;
-				} else {
-					flag = MathHelper.stringNullOrLengthZero(p.nickname);
-				}
-				String s ="";
-				if (lvlInstance!=null)
-					s = " Lv: " + lvlInstance.getLevel() + " ";
-				s += (flag ? entitypixelmon.name : p.nickname);
-				if (entitypixelmon.getHelper().getOwner()!=null) {
-					s += " (" + entitypixelmon.getHelper().getOwner().username + ")";
-				} else {
-					s += " (Wild)";
-				}
-				if (!entitypixelmon.isSneaking()) {
-					renderLivingLabel(entitypixelmon, s, par2, par4, par6, 64);
-				}
+			BaseEntityPixelmon entitypixelmon = (BaseEntityPixelmon) entityliving;
+			PixelmonDataPacket p = null;
+			if (ServerStorageDisplay.contains(entitypixelmon.getHelper().getPokemonId()))
+				p = ServerStorageDisplay.get(entitypixelmon.getHelper().getPokemonId());
+			boolean flag;
+			if (p == null) {
+				flag = true;
 			} else {
-				BaseEntityPixelmon entitypixelmon = (BaseEntityPixelmon) entityliving;
-				NBTTagCompound nbt = mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getNBT(entitypixelmon.getHelper().getPokemonId());
-				boolean flag;
-				if (nbt == null) {
-					flag = true;
-				} else {
-					flag = MathHelper.stringNullOrLengthZero(nbt.getString("Nickname"));
-				}
-				String s = " Lv: " + lvlInstance.getLevel() + " ";
-				s += (flag ? entitypixelmon.name : nbt.getString("Nickname"));
-				if (mod_Pixelmon.pokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(entitypixelmon.helper)
-						|| mod_Pixelmon.serverStorageDisplay.contains(entitypixelmon.getPokemonId())) {
-					s += " (" + ModLoader.getMinecraftInstance().thePlayer.username + ")";
-				} else if (entitypixelmon.trainer != null) {
-					s += " (" + entitypixelmon.trainer + ")";
-				} else {
-					s += " (Wild)";
-				}
-				if (!entitypixelmon.isSneaking()) {
-					renderLivingLabel(entitypixelmon, s, par2, par4, par6, 64);
-				}
+				flag = MathHelper.stringNullOrLengthZero(p.nickname);
 			}
-
+			String s = "";
+			if (lvlInstance != null)
+				s = " Lv: " + lvlInstance.getLevel() + " ";
+			s += (flag ? entitypixelmon.name : p.nickname);
+			if (entitypixelmon.getHelper().getOwner() != null) {
+				s += " (" + entitypixelmon.getHelper().getOwner().username + ")";
+			} else {
+				s += " (Wild)";
+			}
+			if (!entitypixelmon.isSneaking()) {
+				renderLivingLabel(entitypixelmon, s, par2, par4, par6, 64);
+			}
 		}
 	}
 
