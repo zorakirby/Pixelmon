@@ -7,7 +7,6 @@ import pixelmon.config.PixelmonBlocks;
 import net.minecraft.src.Block;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldGenerator;
-import net.minecraft.src.mod_Pixelmon;
 
 public class WorldGenLeafStoneOre extends WorldGenerator{
 	

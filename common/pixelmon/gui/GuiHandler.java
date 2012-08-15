@@ -29,37 +29,12 @@ public class GuiHandler implements IGuiHandler {
 		if (ID == EnumGui.ChooseStarter.getIndex())
 			return new GuiChooseStarter();
 		else if (ID == EnumGui.LearnMove.getIndex())
-			return new GuiLearnMove(PixelmonStorage.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getAlreadyExists(x, ModLoader.getMinecraftInstance().theWorld)
-					.getHelper(), DatabaseMoves.getAttack(y));
+			return new GuiLearnMove(x, player, DatabaseMoves.getAttack(y));
 		else if (ID == EnumGui.ChooseAttack.getIndex()) {
-			if (world.isRemote) {
-				return new GuiAttacking(x, y, z);
-			} else {
-				PixelmonEntityHelper pixelmon1 = null, pixelmon2 = null;
-				BattleController bc = BattleRegistry.getBattle(x);
-				if (y == 1) {
-					pixelmon1 = bc.participant1.currentPokemon();
-					pixelmon2 = bc.participant2.currentPokemon();
-				} else {
-					pixelmon1 = bc.participant2.currentPokemon();
-					pixelmon2 = bc.participant1.currentPokemon();
-				}
-
-				return new GuiAttacking(bc, pixelmon1, pixelmon2);
-			}
+			return new GuiAttacking(x, y, z);
 		} else if (ID == EnumGui.ChoosePokemon.getIndex()) {
-			if (world.isRemote) {
-				PixelmonDataPacket p = ServerStorageDisplay.get(y);
-				return new GuiChoosePokemon(p,x,null);
-			} else {
-				BattleController bc = BattleRegistry.getBattle(x);
-				PixelmonEntityHelper p;
-				if (y == 1)
-					p = bc.participant1.currentPokemon();
-				else
-					p = bc.participant2.currentPokemon();
-				return new GuiChoosePokemon(bc, p, null);
-			}
+			PixelmonDataPacket p = ServerStorageDisplay.get(y);
+			return new GuiChoosePokemon(p,x,null);
 		} else if (ID == EnumGui.Pokedex.getIndex()) {
 			return new GuiPokedex();
 		} else if (ID == EnumGui.PC.getIndex()) {
@@ -67,9 +42,7 @@ public class GuiHandler implements IGuiHandler {
 		} else if (ID == EnumGui.Healer.getIndex()) {
 			return new GuiHealer();
 		} else if (ID == EnumGui.PokeChecker.getIndex()) {
-			if (ModLoader.getMinecraftInstance().theWorld.isRemote)
-				return new GuiScreenPokeChecker(ServerStorageDisplay.get(x));
-			return new GuiScreenPokeChecker(Pixelmon.PokeballManager.getPlayerStorage(player).getAlreadyExists(x, world).getHelper());
+			return new GuiScreenPokeChecker(ServerStorageDisplay.get(x));
 		}
 		return null;
 	}

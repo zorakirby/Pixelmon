@@ -7,18 +7,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
+
 import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.CustomSpawner;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityEggInfo;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EnumCreatureType;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.Render;
 import net.minecraft.src.RenderLiving;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
-import net.minecraft.src.forge.MinecraftForge;
+import net.minecraftforge.common.MinecraftForge;
 import pixelmon.Pokemon.*;
 import pixelmon.Trainers.EntityTrainerBugCatcher;
 import pixelmon.Trainers.EntityTrainerYoungster;
@@ -47,7 +49,7 @@ public class PixelmonEntityList {
 	private static Map<Integer, ClassType> IDtoTypeMapping = new HashMap<Integer, ClassType>();
 
 	/** provides a mapping between an Entity Class and an entity ID */
-	private static Map<Class<?>, Integer> classToIDMapping = new HashMap<Class<?>, Integer>();
+	private static Map<Class<? extends Entity>, Integer> classToIDMapping = new HashMap<Class<? extends Entity>, Integer>();
 
 	/** Maps entity names to their numeric identifiers */
 	private static Map<String, Integer> stringToIDMapping = new HashMap<String, Integer>();
@@ -59,7 +61,7 @@ public class PixelmonEntityList {
 	 * adds a mapping between Entity classes and both a string representation
 	 * and an ID
 	 */
-	private static void addMapping(Class<?> par0Class, String par1Str, int par2, RenderLiving renderer, ClassType type) {
+	private static void addMapping(Class<? extends Entity> par0Class, String par1Str, int par2, RenderLiving renderer, ClassType type) {
 		stringToClassMapping.put(par1Str, par0Class);
 		classToStringMapping.put(par0Class, par1Str);
 		IDtoClassMapping.put(Integer.valueOf(par2), par0Class);
@@ -247,30 +249,20 @@ public class PixelmonEntityList {
 		Iterator i = IDtoClassMapping.entrySet().iterator();
 		while (i.hasNext()) {
 			Map.Entry entry = (Map.Entry) i.next();
-			ModLoader.registerEntityID((Class) entry.getValue(), getStringFromID((Integer) entry.getKey()), (Integer) entry.getKey());
-			MinecraftForge.registerEntity((Class) entry.getValue(), mod_Pixelmon.instance, (Integer) entry.getKey(), 50, 1, true);
+			String name = getStringFromID((Integer) entry.getKey());
+			EntityRegistry.registerModEntity((Class) entry.getValue(), name, (Integer) entry.getKey(), Pixelmon.instance, 50, 1, true);
 		}
 	}
 
-	public static void despawnPixelmon(CustomSpawner myCustomSpawner) {
-		List<Class> pokemonList = new ArrayList<Class>();
-		Iterator i = IDtoClassMapping.entrySet().iterator();
-		while (i.hasNext()) {
-			Map.Entry entry = (Map.Entry) i.next();
-			pokemonList.add((Class) entry.getValue());
-		}
-		myCustomSpawner.despawnMob(ModLoader.getMinecraftInstance().theWorld, pokemonList);
-	}
-
-	public static void addRenderer(Map map) {
+	public static void addRenderer() {
 		Iterator i = classToRendererMapping.entrySet().iterator();
 		while (i.hasNext()) {
 			Map.Entry entry = (Map.Entry) i.next();
-			map.put(entry.getKey(), entry.getValue());
+			RenderingRegistry.instance().registerEntityRenderingHandler((Class<? extends Entity>)entry.getKey(), (Render)entry.getValue());
 		}
 	}
 
-	public static void addSpawns(CustomSpawner myCustomSpawner) {
+	public static void addSpawns() {
 		Iterator i = IDtoClassMapping.entrySet().iterator();
 		while (i.hasNext()) {
 			Map.Entry entry = (Map.Entry) i.next();
@@ -284,13 +276,13 @@ public class PixelmonEntityList {
 				int groupMax = DatabaseStats.GetMaxGroupSize(name);
 				EnumCreatureType creaturetype = DatabaseStats.GetCreatureType(name);
 				if (rarity != -1) {
-					myCustomSpawner.AddCustomSpawn((Class) entry.getValue(), rarity, groupMin, groupMax, creaturetype, biomes);
+					EntityRegistry.addSpawn((Class) entry.getValue(), rarity, groupMin, groupMax, creaturetype, biomes);
 				}
 				if (new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg").exists())
 					ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/" + name.toLowerCase() + ".ogg", new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg"));
 			} else if (type == ClassType.Trainer) {
 				biomes = DatabaseTrainers.GetSpawnBiomes(name);
-				myCustomSpawner.AddCustomSpawn((Class) entry.getValue(), 10, 1, 1, EnumCreatureType.creature, biomes);
+				EntityRegistry.addSpawn((Class) entry.getValue(), 10, 1, 1, EnumCreatureType.creature, biomes);
 			}
 		}
 	}

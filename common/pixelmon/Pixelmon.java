@@ -4,6 +4,7 @@ import java.util.logging.Level;
 
 import pixelmon.PacketHandler;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonItems;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
@@ -29,6 +30,9 @@ public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
 	
+	@SidedProxy(clientSide = "pixelmon.ClientProxy", serverSide = "pixelmon.CommonProxy")
+	public static CommonProxy proxy;
+	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event){
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
@@ -46,6 +50,13 @@ public class Pixelmon {
 	
 	@Init
 	public void load(FMLInitializationEvent event){
+		PixelmonBlocks.registerBlocks();
+		PixelmonBlocks.setTextureIds();
+		PixelmonItems.addNames();
+		
+		PixelmonEntityList.registerEntities();
+		PixelmonEntityList.addSpawns();
+		proxy.registerRenderers();
 		
 	}
 	

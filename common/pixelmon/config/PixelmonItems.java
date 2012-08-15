@@ -1,7 +1,9 @@
 package pixelmon.config;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.src.Item;
 import net.minecraft.src.ModLoader;
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.items.ItemBlock;
@@ -9,6 +11,7 @@ import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.PixelmonItem;
+import pixelmon.render.RenderPokeball;
 
 public class PixelmonItems {
 	private static final int pIMG = ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokeball.png");
@@ -64,4 +67,7 @@ public class PixelmonItems {
 		ModLoader.addName(healerItem, "Healer");
 	}
 
+	public static void addRenderers(){
+		RenderingRegistry.instance().registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
+	}
 }

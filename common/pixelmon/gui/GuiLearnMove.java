@@ -13,21 +13,24 @@ import net.minecraft.src.*;
 
 public class GuiLearnMove extends GuiScreen {
 
-	private PixelmonEntityHelper user;
+	private int pokemonId;
+	private EntityPlayer player;
 	private Attack moveToLearn;
-
-	public GuiLearnMove(PixelmonEntityHelper helper, Attack a) {
-		user = helper;
-		moveToLearn = a;
+	private PixelmonDataPacket dataPacket;
+	
+	public GuiLearnMove(int x, EntityPlayer player, Attack attack) {
+		pokemonId = x;
+		this.player = player;
+		moveToLearn = attack;
 	}
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
 		controlList.clear();
 
-		PixelmonDataPacket p = ServerStorageDisplay.get(user.getPokemonId());
-		for (int i = 0; i < p.numMoves; i++) {
-			controlList.add(new GuiButton(i, width / 2 - 100, height / 4 + i * 24 + 20 + 12, p.moveset[i].attackName));
+		dataPacket = ServerStorageDisplay.get(pokemonId);
+		for (int i = 0; i < dataPacket.numMoves; i++) {
+			controlList.add(new GuiButton(i, width / 2 - 100, height / 4 + i * 24 + 20 + 12, dataPacket.moveset[i].attackName));
 		}
 
 		controlList.add(new GuiButton(10, width / 2 - 100, height / 4 + 96 + 20 + 12, "Cancel"));
@@ -35,12 +38,12 @@ public class GuiLearnMove extends GuiScreen {
 
 	private void teachMove(int index, Attack a) {
 		if (index == 10) {
-			ChatHandler.sendChat(user.getOwner(), "Decided not to teach " + user.getName() + " " + a.attackName + ".");
+			ChatHandler.sendChat(player, "Decided not to teach " + dataPacket.name + " " + a.attackName + ".");
 			return;
 		}
 		
-		PixelmonDataPacket p = ServerStorageDisplay.get(user.getPokemonId());
-		ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.ReplaceMove, user.getPokemonId(), moveToLearn.attackIndex, index));
+		PixelmonDataPacket p = ServerStorageDisplay.get(pokemonId);
+		ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonId, moveToLearn.attackIndex, index));
 	}
 
 	public void actionPerformed(GuiButton b) {
@@ -51,8 +54,8 @@ public class GuiLearnMove extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		drawDefaultBackground();
 		super.drawScreen(par1, par2, par3);
-		drawCenteredString(fontRenderer, "Your " + user.getName() + " wants to learn the move " + moveToLearn.attackName + ",", width / 2, 10, 0xFFFFFF);
-		drawCenteredString(fontRenderer, "but " + user.getName() + " already knows four moves. Which move should be forgotten?", width / 2, 20, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "Your " + dataPacket.name + " wants to learn the move " + moveToLearn.attackName + ",", width / 2, 10, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "but " + dataPacket.name + " already knows four moves. Which move should be forgotten?", width / 2, 20, 0xFFFFFF);
 	}
 
 }
