@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import pixelmon.comm.PacketHandler;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.config.PixelmonItems;
+import pixelmon.database.DatabaseHelper;
+import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
@@ -35,11 +37,23 @@ public class Pixelmon {
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event){
+		if (!DatabaseHelper.has()) {
+			ModLoader.throwException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!", new java.lang.Error(
+					"Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!"));
+		}
+		if (!(ModLoader.isModLoaded("Forge")))
+			ModLoader.throwException("Can not start Pixelmon without Minecraft Forge!!! Please download it!!!", new java.lang.Error(
+					"Can not start Pixelmon without Minecraft Forge!!! Please download it!!!"));
+		if (ModLoader.isModLoaded("Pokemobs"))
+			System.exit(1);
+		
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		event.getModMetadata().version = "Pixelmon 1.6 for 1.3.1";
 		try{
 			cfg.load();
 			PixelmonBlocks.load(cfg);
+			IDListPixelmon.load(cfg);
+			IDListTrainer.load(cfg);
 			
 		}catch(Exception e){
 			FMLLog.log(Level.SEVERE, e, "Can't load the pixelmon configuration file");

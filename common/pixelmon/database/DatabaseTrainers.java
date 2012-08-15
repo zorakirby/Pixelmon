@@ -75,7 +75,7 @@ public class DatabaseTrainers {
 			Class.forName("org.sqlite.JDBC");
 			conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Trainers where Name='" + trainerName + "'");
+			ResultSet rs = stat.executeQuery("select * from Trainers where TrainerType='" + trainerName + "'");
 			while (rs.next()) {
 				BiomeGenBase[] biomes;
 				String biomeString = rs.getString("SpawnBiome");

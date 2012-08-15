@@ -45,20 +45,27 @@ public class ClientProxy extends CommonProxy {
 			Map.Entry entry = (Map.Entry) i.next();
 			String name = (String) entry.getValue();
 			int id = (Integer) entry.getKey();
+			ClassType type = PixelmonEntityList.getClassTypeFromID((Integer) entry.getKey());
 			Class pokeClass = null;
 			try {
-				pokeClass = Class.forName("pixelmon.entities.pokemon.Entity" + name);
+				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
+					pokeClass = Class.forName("pixelmon.entities.pokemon.Entity" + name);
+				else if (type == ClassType.Trainer)
+					pokeClass = Class.forName("pixelmon.entities.trainers.EntityTrainer" + name);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 
 			ModelBase model = null;
 			try {
-
-				Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + name);
+				Class<?> var3 = null;
+				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
+					var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + name);
+				else if (type == ClassType.Trainer)
+					var3 = (Class<?>) Class.forName("pixelmon.models.trainers.Model" + name);
 
 				if (var3 != null) {
-					model = (ModelBase) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] {});
+					model = (ModelBase) var3.getConstructor(new Class[] { }).newInstance(new Object[] {});
 				}
 			} catch (Exception var4) {
 				var4.printStackTrace();
@@ -67,10 +74,9 @@ public class ClientProxy extends CommonProxy {
 				return;
 
 			RenderLiving renderer;
-			ClassType ctype = PixelmonEntityList.getClassTypeFromID(id);
-			if (ctype == ClassType.Pixelmon)
+			if (type == ClassType.Pixelmon)
 				renderer = new RenderPixelmon(model, 0.5f);
-			else if (ctype == ClassType.WaterPixelmon)
+			else if (type == ClassType.WaterPixelmon)
 				renderer = new RenderFreeWaterPixelmon(model, 0.5f);
 			else
 				renderer = new RenderTrainer(model, 0.5f);

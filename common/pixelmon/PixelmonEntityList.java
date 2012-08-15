@@ -208,8 +208,12 @@ public class PixelmonEntityList {
 		while (i.hasNext()) {
 			Map.Entry entry = (Map.Entry) i.next();
 			String name =  (String)entry.getValue();
+			ClassType type = getClassTypeFromID((Integer) entry.getKey());
 			try {
-				EntityRegistry.registerModEntity((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), name, (Integer) entry.getKey(), Pixelmon.instance, 50, 1, true);
+				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
+					EntityRegistry.registerModEntity((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), name, (Integer) entry.getKey(), Pixelmon.instance, 50, 1, true);
+				else if (type == ClassType.Trainer)
+					EntityRegistry.registerModEntity((Class) Class.forName("pixelmon.entities.trainers.EntityTrainer" + entry.getValue()), name, (Integer) entry.getKey(), Pixelmon.instance, 50, 1, true);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -240,7 +244,11 @@ public class PixelmonEntityList {
 //					ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/" + name.toLowerCase() + ".ogg", new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg"));
 			} else if (type == ClassType.Trainer) {
 				biomes = DatabaseTrainers.GetSpawnBiomes(name);
-				EntityRegistry.addSpawn((Class) entry.getValue(), 10, 1, 1, EnumCreatureType.creature, biomes);
+				try {
+					EntityRegistry.addSpawn((Class) Class.forName("pixelmon.entities.trainers.EntityTrainer" + entry.getValue()),  10, 1, 1, EnumCreatureType.creature, biomes);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

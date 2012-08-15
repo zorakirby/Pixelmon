@@ -29,13 +29,13 @@ public class DatabaseHelper
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
-			File f = new File("./database/pixelmon.db").getAbsoluteFile();
-			Connection c = DriverManager.getConnection("jdbc:sqlite:" + "./database/pixelmon.db");
+			File f = new File("database/pixelmon.db").getAbsoluteFile();
+			Connection c = DriverManager.getConnection("jdbc:sqlite:" + "database/pixelmon.db");
 			if (c ==null){
-				System.out.println("Could not find the Pixelmon database at " + "./database/pixelmon.db");
+				System.out.println("Could not find the Pixelmon database at " + "database/pixelmon.db");
 				return false;
 			}else{
-				System.out.println("Found Database at " + "./database/pixelmon.db");
+				System.out.println("Found Database at " + "database/pixelmon.db");
 			}
 			return true;
 		} catch (java.lang.NoClassDefFoundError e)
@@ -62,7 +62,7 @@ public class DatabaseHelper
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:" + "./database/pixelmon.db");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:" + "database/pixelmon.db");
 			con.setReadOnly(true);
 			return con;
 
