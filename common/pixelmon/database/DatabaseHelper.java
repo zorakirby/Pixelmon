@@ -7,7 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import pixelmon.CommonProxy;
+
+import cpw.mods.fml.common.network.FMLNetworkHandler;
+
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.SaveHandler;
 
 /**
  * A simple little helper to handle errors and get info from SQLite
@@ -15,7 +20,6 @@ import net.minecraft.src.ModLoader;
  */
 public class DatabaseHelper
 {
-	
 	/**
 	 * A check to make sure the user has the SQLite Jar, currently ignores the <code>SQLExcpetion</code> that has to do with drivers because it seems to always throw that
 	 * @return True if they do, otherwise false
@@ -25,13 +29,13 @@ public class DatabaseHelper
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
-			File f = new File(ModLoader.getMinecraftInstance().getMinecraftDir() + "/database/pixelmon.db").getAbsoluteFile();
-			Connection c = DriverManager.getConnection("jdbc:sqlite:" + ModLoader.getMinecraftInstance().getMinecraftDir() + "/database/pixelmon.db");
+			File f = new File("./database/pixelmon.db").getAbsoluteFile();
+			Connection c = DriverManager.getConnection("jdbc:sqlite:" + "./database/pixelmon.db");
 			if (c ==null){
-				System.out.println("Could not find the Pixelmon database at " + ModLoader.getMinecraftInstance().getMinecraftDir() + "/database/pixelmon.db");
+				System.out.println("Could not find the Pixelmon database at " + "./database/pixelmon.db");
 				return false;
 			}else{
-				System.out.println("Found Database at " + ModLoader.getMinecraftInstance().getMinecraftDir() + "/database/pixelmon.db");
+				System.out.println("Found Database at " + "./database/pixelmon.db");
 			}
 			return true;
 		} catch (java.lang.NoClassDefFoundError e)
@@ -58,7 +62,7 @@ public class DatabaseHelper
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:" + ModLoader.getMinecraftInstance().getMinecraftDir() + "/database/pixelmon.db");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:" + "./database/pixelmon.db");
 			con.setReadOnly(true);
 			return con;
 

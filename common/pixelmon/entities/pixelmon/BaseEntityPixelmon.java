@@ -20,10 +20,6 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumType;
-import pixelmon.gui.GuiHandler;
-import pixelmon.gui.GuiLearnMove;
-import pixelmon.gui.GuiScreenPokeChecker;
-import pixelmon.gui.pokedex.GuiPokedex;
 import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.AxisAlignedBB;
@@ -35,11 +31,9 @@ import net.minecraft.src.EntityAIOwnerHurtByTarget;
 import net.minecraft.src.EntityAIOwnerHurtTarget;
 import net.minecraft.src.EntityAITasks;
 import net.minecraft.src.EntityAnimal;
-import net.minecraft.src.EntityCrit2FX;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.EntityPlayerSP;
 import net.minecraft.src.EntityTameable;
 import net.minecraft.src.EnumSkyBlock;
 import net.minecraft.src.ItemStack;
@@ -88,8 +82,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		helper.getLvl();
 		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height);
 		length = helper.stats.BaseStats.Length;
-		if (helper.stats.BaseStats.IsRideable)
-			ridingHelper = new RidingHelper(this, worldObj);
+//		if (helper.stats.BaseStats.IsRideable)
+//			ridingHelper = new RidingHelper(this, worldObj);
 
 	}
 
@@ -285,10 +279,10 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		return worldObj;
 	}
 
-	public void renderLevelUpEffects() {
-		EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this, "magicCrit");
-		ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
-	}
+//	public void renderLevelUpEffects() {
+//		EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this, "magicCrit");
+//		ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
+//	}
 
 	public boolean LearnsAttackAtLevel(int level) {
 		return DatabaseMoves.LearnsAttackAtLevel(name, level);
@@ -441,36 +435,36 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		super.jump();
 	}
 
-	@Override
-	public double getMountedYOffset() {
-		if (ridingHelper != null)
-			return ridingHelper.getMountedYOffset();
-		else
-			return super.getMountedYOffset();
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		if (ridingHelper != null)
-			ridingHelper.onLivingUpdate();
-	}
-
-	@Override
-	public void moveEntity(double d, double d1, double d2) {
-		if (ridingHelper != null)
-			ridingHelper.moveEntity(d, d1, d2);
-		else
-			super.moveEntity(d, d1, d2);
-	}
-
-	@Override
-	public void updateRidden() {
-		if (ridingHelper != null)
-			ridingHelper.updateRidden();
-		else
-			super.updateRidden();
-	}
+//	@Override
+//	public double getMountedYOffset() {
+//		if (ridingHelper != null)
+//			return ridingHelper.getMountedYOffset();
+//		else
+//			return super.getMountedYOffset();
+//	}
+//
+//	@Override
+//	public void onLivingUpdate() {
+//		super.onLivingUpdate();
+//		if (ridingHelper != null)
+//			ridingHelper.onLivingUpdate();
+//	}
+//
+//	@Override
+//	public void moveEntity(double d, double d1, double d2) {
+//		if (ridingHelper != null)
+//			ridingHelper.moveEntity(d, d1, d2);
+//		else
+//			super.moveEntity(d, d1, d2);
+//	}
+//
+//	@Override
+//	public void updateRidden() {
+//		if (ridingHelper != null)
+//			ridingHelper.updateRidden();
+//		else
+//			super.updateRidden();
+//	}
 
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);

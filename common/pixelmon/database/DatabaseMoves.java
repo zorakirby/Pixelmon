@@ -51,7 +51,7 @@ public class DatabaseMoves {
 						moves.add(move);
 				}
 				}catch(Exception e){
-					ChatHandler.sendChat(ModLoader.getMinecraftInstance().thePlayer,"Problem loading moves for " + pixelmonName + ". " + movesString);
+					System.out.println("Problem loading moves for " + pixelmonName + ". " + movesString);
 				}
 			}
 			
@@ -68,7 +68,7 @@ public class DatabaseMoves {
 				a.setSTAB(m.STAB);
 				attacks.add(a);
 				}catch(Exception e){
-					ChatHandler.sendChat(ModLoader.getMinecraftInstance().thePlayer,"Problem loading move " + m.moveName + " for " + pixelmonName);
+					System.out.println("Problem loading move " + m.moveName + " for " + pixelmonName);
 				}
 			}
 		} catch (Exception e) {

@@ -2,7 +2,6 @@ package pixelmon.items;
 
 import pixelmon.Pixelmon;
 import pixelmon.enums.EnumGui;
-import pixelmon.gui.pokedex.GuiPokedex;
 import net.minecraft.src.*;
 
 public class ItemPokedex extends Item

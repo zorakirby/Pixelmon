@@ -6,15 +6,16 @@ import java.util.Random;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.ChunkPosition;
-import net.minecraft.src.Item;
+import net.minecraft.src.Direction;
+import net.minecraft.src.Facing;
 import net.minecraft.src.ItemDoor;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.StructureBoundingBox;
 import net.minecraft.src.StructurePieceBlockSelector;
-import net.minecraft.src.StructurePieceTreasure;
 import net.minecraft.src.TileEntityChest;
-import net.minecraft.src.WeightedRandom;
+import net.minecraft.src.TileEntityDispenser;
+import net.minecraft.src.WeightedRandomChestContent;
 import net.minecraft.src.World;
+import net.minecraft.src.BlockDirectional;
 
 public abstract class StructureComponent
 {
@@ -218,7 +219,7 @@ public abstract class StructureComponent
         }
         else if (par1 != Block.doorWood.blockID && par1 != Block.doorSteel.blockID)
         {
-            if (par1 != Block.stairCompactCobblestone.blockID && par1 != Block.stairCompactPlanks.blockID && par1 != Block.stairsNetherBrick.blockID && par1 != Block.stairsStoneBrickSmooth.blockID)
+            if (par1 != Block.stairCompactCobblestone.blockID && par1 != Block.stairCompactPlanks.blockID && par1 != Block.stairsNetherBrick.blockID && par1 != Block.stairsStoneBrickSmooth.blockID && par1 != Block.stairsSandStone.blockID)
             {
                 if (par1 == Block.ladder.blockID)
                 {
@@ -338,6 +339,114 @@ public abstract class StructureComponent
                         }
                     }
                 }
+                else if (par1 != Block.tripWireSource.blockID && (Block.blocksList[par1] == null || !(Block.blocksList[par1] instanceof BlockDirectional)))
+                {
+                    if (par1 == Block.pistonBase.blockID || par1 == Block.pistonStickyBase.blockID || par1 == Block.lever.blockID || par1 == Block.dispenser.blockID)
+                    {
+                        if (this.coordBaseMode == 0)
+                        {
+                            if (par2 == 2 || par2 == 3)
+                            {
+                                return Facing.faceToSide[par2];
+                            }
+                        }
+                        else if (this.coordBaseMode == 1)
+                        {
+                            if (par2 == 2)
+                            {
+                                return 4;
+                            }
+
+                            if (par2 == 3)
+                            {
+                                return 5;
+                            }
+
+                            if (par2 == 4)
+                            {
+                                return 2;
+                            }
+
+                            if (par2 == 5)
+                            {
+                                return 3;
+                            }
+                        }
+                        else if (this.coordBaseMode == 3)
+                        {
+                            if (par2 == 2)
+                            {
+                                return 5;
+                            }
+
+                            if (par2 == 3)
+                            {
+                                return 4;
+                            }
+
+                            if (par2 == 4)
+                            {
+                                return 2;
+                            }
+
+                            if (par2 == 5)
+                            {
+                                return 3;
+                            }
+                        }
+                    }
+                }
+                else if (this.coordBaseMode == 0)
+                {
+                    if (par2 == 0 || par2 == 2)
+                    {
+                        return Direction.footInvisibleFaceRemap[par2];
+                    }
+                }
+                else if (this.coordBaseMode == 1)
+                {
+                    if (par2 == 2)
+                    {
+                        return 1;
+                    }
+
+                    if (par2 == 0)
+                    {
+                        return 3;
+                    }
+
+                    if (par2 == 1)
+                    {
+                        return 2;
+                    }
+
+                    if (par2 == 3)
+                    {
+                        return 0;
+                    }
+                }
+                else if (this.coordBaseMode == 3)
+                {
+                    if (par2 == 2)
+                    {
+                        return 3;
+                    }
+
+                    if (par2 == 0)
+                    {
+                        return 1;
+                    }
+
+                    if (par2 == 1)
+                    {
+                        return 2;
+                    }
+
+                    if (par2 == 3)
+                    {
+                        return 0;
+                    }
+                }
             }
             else if (this.coordBaseMode == 0)
             {
@@ -447,6 +556,20 @@ public abstract class StructureComponent
         return !par5StructureBoundingBox.isVecInside(var6, var7, var8) ? 0 : par1World.getBlockId(var6, var7, var8);
     }
 
+    protected void func_74878_a(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8)
+    {
+        for (int var9 = par4; var9 <= par7; ++var9)
+        {
+            for (int var10 = par3; var10 <= par6; ++var10)
+            {
+                for (int var11 = par5; var11 <= par8; ++var11)
+                {
+                    this.placeBlockAtCurrentPosition(par1World, 0, 0, var10, var9, var11, par2StructureBoundingBox);
+                }
+            }
+        }
+    }
+
     /**
      * arguments: (World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
      * maxZ, int placeBlockId, int replaceBlockId, boolean alwaysreplace)
@@ -468,6 +591,30 @@ public abstract class StructureComponent
                         else
                         {
                             this.placeBlockAtCurrentPosition(par1World, par9, 0, var13, var12, var14, par2StructureBoundingBox);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    protected void func_74872_a(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, int par9, int par10, int par11, int par12, boolean par13)
+    {
+        for (int var14 = par4; var14 <= par7; ++var14)
+        {
+            for (int var15 = par3; var15 <= par6; ++var15)
+            {
+                for (int var16 = par5; var16 <= par8; ++var16)
+                {
+                    if (!par13 || this.getBlockIdAtCurrentPosition(par1World, var15, var14, var16, par2StructureBoundingBox) != 0)
+                    {
+                        if (var14 != par4 && var14 != par7 && var15 != par3 && var15 != par6 && var16 != par5 && var16 != par8)
+                        {
+                            this.placeBlockAtCurrentPosition(par1World, par11, par12, var15, var14, var16, par2StructureBoundingBox);
+                        }
+                        else
+                        {
+                            this.placeBlockAtCurrentPosition(par1World, par9, par10, var15, var14, var16, par2StructureBoundingBox);
                         }
                     }
                 }
@@ -612,7 +759,7 @@ public abstract class StructureComponent
         }
     }
 
-    protected void createTreasureChestAtCurrentPosition(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, StructurePieceTreasure[] par7ArrayOfStructurePieceTreasure, int par8)
+    protected boolean func_74879_a(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, WeightedRandomChestContent[] par7ArrayOfWeightedRandomChestContent, int par8)
     {
         int var9 = this.getXWithOffset(par4, par6);
         int var10 = this.getYWithOffset(par5);
@@ -625,29 +772,38 @@ public abstract class StructureComponent
 
             if (var12 != null)
             {
-                fillTreasureChestWithLoot(par3Random, par7ArrayOfStructurePieceTreasure, var12, par8);
+                WeightedRandomChestContent.func_76293_a(par3Random, par7ArrayOfWeightedRandomChestContent, var12, par8);
             }
+
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    private static void fillTreasureChestWithLoot(Random par0Random, StructurePieceTreasure[] par1ArrayOfStructurePieceTreasure, TileEntityChest par2TileEntityChest, int par3)
+    protected boolean func_74869_a(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, int par7, WeightedRandomChestContent[] par8ArrayOfWeightedRandomChestContent, int par9)
     {
-        for (int var4 = 0; var4 < par3; ++var4)
-        {
-            StructurePieceTreasure var5 = (StructurePieceTreasure)WeightedRandom.getRandomItem(par0Random, par1ArrayOfStructurePieceTreasure);
-            int var6 = var5.minItemStack + par0Random.nextInt(var5.maxItemStack - var5.minItemStack + 1);
+        int var10 = this.getXWithOffset(par4, par6);
+        int var11 = this.getYWithOffset(par5);
+        int var12 = this.getZWithOffset(par4, par6);
 
-            if (Item.itemsList[var5.itemID].getItemStackLimit() >= var6)
+        if (par2StructureBoundingBox.isVecInside(var10, var11, var12) && par1World.getBlockId(var10, var11, var12) != Block.dispenser.blockID)
+        {
+            par1World.setBlockAndMetadataWithNotify(var10, var11, var12, Block.dispenser.blockID, this.getMetadataWithOffset(Block.dispenser.blockID, par7));
+            TileEntityDispenser var13 = (TileEntityDispenser)par1World.getBlockTileEntity(var10, var11, var12);
+
+            if (var13 != null)
             {
-                par2TileEntityChest.setInventorySlotContents(par0Random.nextInt(par2TileEntityChest.getSizeInventory()), new ItemStack(var5.itemID, var6, var5.itemMetadata));
+                WeightedRandomChestContent.func_76294_a(par3Random, par8ArrayOfWeightedRandomChestContent, var13, par9);
             }
-            else
-            {
-                for (int var7 = 0; var7 < var6; ++var7)
-                {
-                    par2TileEntityChest.setInventorySlotContents(par0Random.nextInt(par2TileEntityChest.getSizeInventory()), new ItemStack(var5.itemID, 1, var5.itemMetadata));
-                }
-            }
+
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

@@ -35,7 +35,6 @@ import net.minecraft.src.EntityAITasks;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.EntityPlayerSP;
 import net.minecraft.src.EntityWaterMob;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
@@ -82,7 +81,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		length = helper.stats.BaseStats.Length;
 		helper.getLvl();
 		this.field_21080_l = 1.0F / (this.rand.nextFloat() + 1.0F) * swimFrequency;
-		ridingHelper = new RidingHelper(this, worldObj);
+		//ridingHelper = new RidingHelper(this, worldObj);
 	}
 
 	@Override
@@ -204,8 +203,8 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		if (ridingHelper != null)
-			ridingHelper.onLivingUpdate();
+//		if (ridingHelper != null)
+//			ridingHelper.onLivingUpdate();
 		if (!isSwimming || worldObj.isRemote) {
 			motionX = motionY = motionZ = 0;
 			return;
@@ -416,29 +415,29 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		super.jump();
 	}
 
-	@Override
-	public double getMountedYOffset() {
-		if (ridingHelper != null)
-			return ridingHelper.getMountedYOffset();
-		else
-			return super.getMountedYOffset();
-	}
-
-	@Override
-	public void moveEntity(double d, double d1, double d2) {
-		if (ridingHelper != null)
-			ridingHelper.moveEntity(d, d1, d2);
-		else
-			super.moveEntity(d, d1, d2);
-	}
-
-	@Override
-	public void updateRidden() {
-		if (ridingHelper != null)
-			ridingHelper.updateRidden();
-		else
-			super.updateRidden();
-	}
+//	@Override
+//	public double getMountedYOffset() {
+//		if (ridingHelper != null)
+//			return ridingHelper.getMountedYOffset();
+//		else
+//			return super.getMountedYOffset();
+//	}
+//
+//	@Override
+//	public void moveEntity(double d, double d1, double d2) {
+//		if (ridingHelper != null)
+//			ridingHelper.moveEntity(d, d1, d2);
+//		else
+//			super.moveEntity(d, d1, d2);
+//	}
+//
+//	@Override
+//	public void updateRidden() {
+//		if (ridingHelper != null)
+//			ridingHelper.updateRidden();
+//		else
+//			super.updateRidden();
+//	}
 
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);

@@ -3,13 +3,10 @@ package pixelmon.config;
 import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
-import pixelmon.render.RenderTileEntityPC;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.src.Block;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.RenderBlocks;
 import net.minecraftforge.common.Configuration;
 
 public class PixelmonBlocks {

@@ -2,7 +2,6 @@ package pixelmon.entities.pokeballs;
 
 import java.util.Random;
 
-import org.lwjgl.util.vector.Vector3f;
 
 import pixelmon.Pixelmon;
 import pixelmon.RandomHelper;
@@ -14,11 +13,9 @@ import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PokeballManager;
 import net.minecraft.src.Block;
-import net.minecraft.src.EntityCrit2FX;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.EntityReddustFX;
 import net.minecraft.src.EntityThrowable;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -237,19 +234,19 @@ public class EntityPokeBall extends EntityThrowable {
 	}
 
 	private void spawnCaptureParticles() {
-		for (int i = RandomHelper.getRandomNumberBetween(5, 7); i > 0; i--) {
-			EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this, "crit");
-			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
-		}
+//		for (int i = RandomHelper.getRandomNumberBetween(5, 7); i > 0; i--) {
+//			EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this, "crit");
+//			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
+//		}
 	}
 
 	private void spawnFailParticles() {
 
-		for (int i = 0; i < 30; i++) {
-			EntityReddustFX entityred = new EntityReddustFX(worldObj, posX, posY, posZ, 1, 0, 0);
-			entityred.setVelocity(worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5);
-			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityred);
-		}
+//		for (int i = 0; i < 30; i++) {
+//			EntityReddustFX entityred = new EntityReddustFX(worldObj, posX, posY, posZ, 1, 0, 0);
+//			entityred.setVelocity(worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5);
+//			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityred);
+//		}
 	}
 
 	private int b;

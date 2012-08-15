@@ -12,7 +12,7 @@ public class WildPokemonHelper {
 		{
 			Class<? extends BaseEntityPixelmon> entity = (Class<? extends BaseEntityPixelmon>) Class.forName("Pokemon.Entity" + name); 
 			return  (IHaveHelper) entity.getConstructor(new Class[] { World.class })
-					.newInstance(new Object[] { ModLoader.getMinecraftInstance().theWorld });
+					.newInstance(new Object[] { world });
 		} catch (Exception e) 
 		{
 			System.err.println("Can not find class Entity" + name );
