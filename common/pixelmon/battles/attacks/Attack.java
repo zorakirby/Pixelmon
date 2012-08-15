@@ -7,7 +7,6 @@ import java.util.Random;
 
 import pixelmon.Pixelmon;
 import pixelmon.RandomHelper;
-import pixelmon.battles.attacks.animations.AttackAnimationParser;
 import pixelmon.battles.attacks.animations.IAttackAnimation;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
@@ -21,6 +20,7 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumType;
+import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.*;
 
@@ -161,9 +161,9 @@ public class Attack {
 				e.ApplyMissEffect(user, target);
 		}
 		if (user.getOwner() != null)
-			Pixelmon.PokeballManager.getPlayerStorage(user.getOwner()).updateNBT(user);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)user.getOwner()).updateNBT(user);
 		if (target.getOwner() != null)
-			Pixelmon.PokeballManager.getPlayerStorage(target.getOwner()).updateNBT(target);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)target.getOwner()).updateNBT(target);
 		if (user.getTrainer() != null)
 			user.getTrainer().pokemonStorage.updateNBT(user);
 		if (target.getTrainer() != null)

@@ -28,7 +28,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 public class GuiPixelmonOverlay extends Gui {
 	public static boolean isGuiMinimized = false;
 	public FontRenderer fontRenderer;
-	public int selectedPixelmon;
+	public static int selectedPixelmon;
 
 	public GuiPixelmonOverlay() {
 		fontRenderer = ModLoader.getMinecraftInstance().fontRenderer;
@@ -111,7 +111,7 @@ public class GuiPixelmonOverlay extends Gui {
 
 	}
 
-	public void selectNextPixelmon() {
+	public static void selectNextPixelmon() {
 		selectedPixelmon++;
 		if (selectedPixelmon >= 6)
 			selectedPixelmon = 0;
@@ -123,7 +123,7 @@ public class GuiPixelmonOverlay extends Gui {
 
 	}
 
-	public void selectPreviousPixelmon() {
+	public static void selectPreviousPixelmon() {
 		selectedPixelmon--;
 		if (selectedPixelmon < 0)
 			selectedPixelmon = 5;

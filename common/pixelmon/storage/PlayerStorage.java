@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import pixelmon.Pixelmon;
 import pixelmon.PixelmonEntityList;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
@@ -15,25 +16,26 @@ import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
-import net.minecraft.src.forge.MinecraftForge;
+import net.minecraftforge.common.MinecraftForge;
 
 public class PlayerStorage {
 	public NBTTagCompound[] partyPokemon = new NBTTagCompound[6];
 	private static final int carryLimit = 6;
-	public EntityPlayer player;
+	public EntityPlayerMP player;
 	public EntityTrainer trainer;
 	private PokeballManagerMode mode;
 	public boolean guiOpened = false;
 
-	public PlayerStorage(EntityPlayer player) {
+	public PlayerStorage(EntityPlayerMP player) {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
 	}
@@ -70,7 +72,7 @@ public class PlayerStorage {
 			p.loadMoveset();
 		if (!hasSpace()) {
 			ChatHandler.sendChat(p.getOwner(), "Your party is full, " + p.getName() + " is sent to your computer!");
-			mod_Pixelmon.computerManager.getPlayerStorage(player).addToComputer(p);
+			PixelmonStorage.ComputerManager.getPlayerStorage(player).addToComputer(p);
 			return;
 		}
 		if (mode == PokeballManagerMode.Player)
@@ -112,7 +114,7 @@ public class PlayerStorage {
 		if (n.getShort("Health") > 0)
 			n.setBoolean("IsFainted", false);
 		if (mode == PokeballManagerMode.Player)
-			ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username, new PixelmonDataPacket(n, mod_Pixelmon.instance, EnumPackets.AddToStorage).getPacket());
+			((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.AddToStorage).getPacket());
 	}
 
 	public void retrieve(IHaveHelper currentPixelmon) {
@@ -182,21 +184,21 @@ public class PlayerStorage {
 					nbt.setString("id", entityCapturedPixelmon.getName());
 					nbt.setName(entityCapturedPixelmon.getName());
 					if (mode == PokeballManagerMode.Player)
-						ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username, new PixelmonDataPacket(nbt, mod_Pixelmon.instance, EnumPackets.UpdateStorage).getPacket());
+						player.serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 				}
 			}
 		}
 	}
 
 	public void changePokemon(int pos, NBTTagCompound n) {
-		if (partyPokemon[pos] != null){
+		if (partyPokemon[pos] != null) {
 			if (mode == PokeballManagerMode.Player)
-				ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username, PacketCreator.createPacket(EnumPackets.RemoveFromStorage, partyPokemon[pos].getInteger("pixelmonID")));
+				player.serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.RemoveFromStorage, partyPokemon[pos].getInteger("pixelmonID")));
 		}
 		if (n != null) {
 			n.setInteger("PixelmonOrder", pos);
 			if (mode == PokeballManagerMode.Player)
-				ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username, new PixelmonDataPacket(n,mod_Pixelmon.instance, EnumPackets.AddToStorage).getPacket());
+				player.serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.AddToStorage).getPacket());
 		}
 		partyPokemon[pos] = n;
 	}
@@ -254,7 +256,7 @@ public class PlayerStorage {
 					nbt.setString("id", helper.getName());
 					nbt.setName(helper.getName());
 					if (mode == PokeballManagerMode.Player)
-						ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username, new PixelmonDataPacket(nbt, mod_Pixelmon.instance, EnumPackets.UpdateStorage).getPacket());
+						player.serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 				}
 			}
 		}
@@ -323,8 +325,7 @@ public class PlayerStorage {
 				pokemonData.setName(pokemonData.getString("Name"));
 				partyPokemon[pokemonData.getInteger("PixelmonOrder")] = pokemonData;
 				if (mode == PokeballManagerMode.Player)
-					ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username,
-						new PixelmonDataPacket(pokemonData, mod_Pixelmon.instance, EnumPackets.AddToStorage).getPacket());
+					player.serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(pokemonData, EnumPackets.AddToStorage).getPacket());
 			}
 		} while (true);
 	}
@@ -369,6 +370,6 @@ public class PlayerStorage {
 			nbt.setInteger("PixelmonMovePP" + i, nbt.getInteger("PixelmonMovePPBase" + i));
 		}
 		if (mode == PokeballManagerMode.Player)
-			ModLoader.getMinecraftServerInstance().configManager.sendPacketToPlayer(player.username, new PixelmonDataPacket(nbt, mod_Pixelmon.instance, EnumPackets.UpdateStorage).getPacket());
+			player.serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 	}
 }

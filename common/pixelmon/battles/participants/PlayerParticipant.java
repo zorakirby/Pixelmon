@@ -2,6 +2,7 @@ package pixelmon.battles.participants;
 
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import pixelmon.Pixelmon;
@@ -13,13 +14,14 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
+import pixelmon.storage.PixelmonStorage;
 
 public class PlayerParticipant implements IBattleParticipant {
-	public EntityPlayer player;
+	public EntityPlayerMP player;
 	PixelmonEntityHelper currentPixelmon;
 	BattleController bc;
 	
-	public PlayerParticipant(EntityPlayer p, PixelmonEntityHelper firstPixelmon) {
+	public PlayerParticipant(EntityPlayerMP p, PixelmonEntityHelper firstPixelmon) {
 		player = p;
 		currentPixelmon = firstPixelmon;
 	}
@@ -36,7 +38,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean hasMorePokemon() {
-		if (Pixelmon.PokeballManager.getPlayerStorage(player).countAblePokemon() > 0)
+		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).countAblePokemon() > 0)
 			return true;
 		return false;
 	}
@@ -81,8 +83,8 @@ public class PlayerParticipant implements IBattleParticipant {
 		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "That's enough " + currentPixelmon.getName() + "!");
 		currentPixelmon.catchInPokeball();
 
-		Pixelmon.PokeballManager.getPlayerStorage(currentPixelmon.getOwner()).retrieve((IHaveHelper) currentPixelmon.getIHaveHelper());
-		IHaveHelper newPixelmon = Pixelmon.PokeballManager.getPlayerStorage(currentPixelmon.getOwner()).sendOut(newPixelmonId,
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)currentPixelmon.getOwner()).retrieve((IHaveHelper) currentPixelmon.getIHaveHelper());
+		IHaveHelper newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)currentPixelmon.getOwner()).sendOut(newPixelmonId,
 				currentPixelmon.getOwner().worldObj);
 		((EntityLiving)newPixelmon).setLocationAndAngles(((EntityLiving)currentPixelmon.getEntity()).posX, ((EntityLiving)currentPixelmon.getEntity()).posY, ((EntityLiving)currentPixelmon.getEntity()).posZ, ((EntityLiving)currentPixelmon.getEntity()).rotationYaw, 0.0F);
 		newPixelmon.getHelper().setMotion(0, 0, 0);
@@ -94,7 +96,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean checkPokemon() {
-		for (NBTTagCompound n : Pixelmon.PokeballManager.getPlayerStorage(currentPokemon().getOwner()).partyPokemon) {
+		for (NBTTagCompound n : PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)currentPokemon().getOwner()).partyPokemon) {
 			if (n!=null && n.getInteger("PixelmonNumberMoves") == 0) {
 				ChatHandler.sendChat(currentPixelmon.getOwner(), "Couldn't load pokemon's moves");
 				return false;
@@ -110,6 +112,6 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		Pixelmon.PokeballManager.getPlayerStorage(currentPixelmon.getOwner()).getNBT(currentPixelmon.getPokemonId()).setBoolean("IsFainted", true);		
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)currentPixelmon.getOwner()).getNBT(currentPixelmon.getPokemonId()).setBoolean("IsFainted", true);		
 	}
 }

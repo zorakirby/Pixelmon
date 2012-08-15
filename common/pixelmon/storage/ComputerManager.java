@@ -12,8 +12,6 @@ import java.util.Iterator;
 
 import com.google.common.eventbus.Subscribe;
 
-import cpw.mods.fml.server.FMLServerHandler;
-
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
@@ -72,7 +70,7 @@ public class ComputerManager{
 			for (int i = 0; i < playerComputerList.size(); i++) {
 				EntityPlayer player = playerComputerList.get(i).player;
 				boolean playerConnected = false;
-				for (String playerName : FMLServerHandler.instance().getServer().getAllUsernames())
+				for (String playerName : ModLoader.getMinecraftServerInstance().getAllUsernames())
 					if (player.username.equals(playerName)) {
 						playerConnected = true;
 						break;

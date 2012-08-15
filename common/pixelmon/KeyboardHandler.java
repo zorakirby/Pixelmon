@@ -2,6 +2,8 @@ package pixelmon;
 
 import java.util.Random;
 
+import org.lwjgl.input.Keyboard;
+
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
@@ -9,86 +11,38 @@ import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.storage.PixelmonStorage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.KeyBinding;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet250CustomPayload;
-import net.minecraft.src.mod_Pixelmon;
 
 public class KeyboardHandler {
+	public static final KeyBinding minmizePixelmonKey = new KeyBinding("Minimize Pixelmon Overlay", Keyboard.KEY_O);
+	public static final KeyBinding sendPixelmonKey = new KeyBinding("Send/Recieve Pixelmon", Keyboard.KEY_P);
+	public static final KeyBinding nextPixelmonKey = new KeyBinding("Next Pixelmon", 27);
+	public static final KeyBinding previousPixelmonKey = new KeyBinding("Previous Pixelmon", 26);
+	// Debug Key
+	public static final KeyBinding debugKey = new KeyBinding("Debug Key [Pixelmon]", Keyboard.KEY_F1);
 
 	public static void handleKeyboardEvent(KeyBinding event) {
 		if (ModLoader.getMinecraftInstance().theWorld == null)
 			return;
 		if (ModLoader.getMinecraftInstance().currentScreen != null)
 			return;
-		if (event == mod_Pixelmon.nextPixelmonKey) {
-			mod_Pixelmon.pixelmonOverlay.selectNextPixelmon();
-		} else if (event == mod_Pixelmon.previousPixelmonKey) {
-			mod_Pixelmon.pixelmonOverlay.selectPreviousPixelmon();
-		} else if (event == mod_Pixelmon.sendPixelmonKey) {
-			if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-				ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.SendPokemon, mod_Pixelmon.serverStorageDisplay.pokemon[mod_Pixelmon.pixelmonOverlay.selectedPixelmon].pokemonID));
-			} else {
-				Minecraft mc = ModLoader.getMinecraftInstance();
-				NBTTagCompound nbt = mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getNBT(
-						mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon));
-				if (!mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).EntityAlreadyExists(
-						mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon), mc.theWorld)
-						&& (mod_Pixelmon.currentPokeball == null || mod_Pixelmon.currentPokeball.isDead)
-						&& !mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).isFainted(
-								mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon))) {
-					mc.theWorld.playSoundAtEntity(mc.thePlayer, "random.bow", 0.5F, 0.4F / ((new Random()).nextFloat() * 0.4F + 0.8F));
-					mod_Pixelmon.currentPokeball = new EntityPokeBall(mc.theWorld, mc.thePlayer, mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer)
-							.sendOut(mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon), mc.theWorld).getHelper(), EnumPokeballs.PokeBall);
-					boolean flag = MathHelper.stringNullOrLengthZero(nbt.getString("Nickname"));
-					mc.ingameGUI.addChatMessage("You sent out " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");
-					mc.theWorld.spawnEntityInWorld(mod_Pixelmon.currentPokeball);
-				} else if (mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).isFainted(
-						mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon))) {
-					boolean flag = MathHelper.stringNullOrLengthZero(nbt.getString("Nickname"));
-					mc.ingameGUI.addChatMessage((flag ? nbt.getString("Name") : nbt.getString("Nickname")) + " is unable to battle!");
-				} else if (mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).EntityAlreadyExists(
-						mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon), mc.theWorld)) {
-					IHaveHelper pixelmon = mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getAlreadyExists(
-							mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).getIDFromPosition(mod_Pixelmon.pixelmonOverlay.selectedPixelmon), mc.theWorld);
-					if (pixelmon == null) {
-						return;
-					}
-					if (mod_Pixelmon.battleRegistry.getBattle(ModLoader.getMinecraftInstance().thePlayer) != null
-							&& mod_Pixelmon.battleRegistry.getBattle(ModLoader.getMinecraftInstance().thePlayer).participant1.currentPokemon().getPokemonId() == pixelmon.getPokemonId()
-							|| mod_Pixelmon.battleRegistry.getBattle(ModLoader.getMinecraftInstance().thePlayer) != null
-							&& mod_Pixelmon.battleRegistry.getBattle(ModLoader.getMinecraftInstance().thePlayer).participant2.currentPokemon().getPokemonId() == pixelmon.getPokemonId()) {
-						mc.ingameGUI.addChatMessage(pixelmon.getHelper().getName() + " is in a battle!");
-						return;
-					}
-					if (pixelmon instanceof BaseEntityPixelmon) {
-						if (((BaseEntityPixelmon) pixelmon).riddenByEntity != null) {
-							mc.ingameGUI.addChatMessage("You are on " + pixelmon.getHelper().getName() + "'s back!");
-						}
-					} else if (pixelmon instanceof EntityWaterPixelmon) {
-						if (((EntityWaterPixelmon) pixelmon).riddenByEntity != null) {
-							mc.ingameGUI.addChatMessage("You are on " + pixelmon.getHelper().getName() + "'s back!");
-						}
-					}
-					if (pixelmon.getHelper().getOwner() == null)
-						pixelmon.unloadEntity();
-					else if (pixelmon.getHelper().getOwner() == ModLoader.getMinecraftInstance().thePlayer) {
-						mod_Pixelmon.pokeballManager.getPlayerStorage(mc.thePlayer).retrieve(pixelmon);
-						pixelmon.catchInPokeball();
-						boolean flag = MathHelper.stringNullOrLengthZero(nbt.getString("Nickname"));
-						mc.ingameGUI.addChatMessage("You retrieved " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");
-					}
-
-				}
-			}
-		} else if (event == mod_Pixelmon.minmizePixelmonKey) {
-			mod_Pixelmon.isGuiMinimized = !mod_Pixelmon.isGuiMinimized;
-		} else if (event == mod_Pixelmon.debugKey) {
+		if (event == nextPixelmonKey) {
+			GuiPixelmonOverlay.selectNextPixelmon();
+		} else if (event == previousPixelmonKey) {
+			GuiPixelmonOverlay.selectPreviousPixelmon();
+		} else if (event == sendPixelmonKey) {
+			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
+		} else if (event == minmizePixelmonKey) {
+			GuiPixelmonOverlay.isGuiMinimized = !GuiPixelmonOverlay.isGuiMinimized;
+		} else if (event == debugKey) {
 			Minecraft mc = ModLoader.getMinecraftInstance();
-			mod_Pixelmon.debugKeyFunction(mc);
+			PixelmonDebug.debugKeyFunction(mc);
 		}
 	}
 }

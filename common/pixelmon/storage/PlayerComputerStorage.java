@@ -10,7 +10,6 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTBase;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.mod_Pixelmon;
 
 public class PlayerComputerStorage {
 	private ComputerBox[] storageBoxes = new ComputerBox[boxCount];

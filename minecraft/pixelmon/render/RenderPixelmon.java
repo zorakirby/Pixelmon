@@ -31,11 +31,10 @@ public class RenderPixelmon extends RenderLiving {
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
 		if (var10 <= (float) 8 || ((BaseEntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((BaseEntityPixelmon) entityLiving).getPokemonId())) {
-			lvlInstance = ((BaseEntityPixelmon) entityLiving).helper.getLvl();
+			lvlInstance = ((BaseEntityPixelmon) entityLiving).helper.getClientLvl();
 			drawHealthBar(entityLiving, d, d1, d2, f, f1);
-			if (entityLiving instanceof BaseEntityPixelmon)
-				if (Pixelmon.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper) entityLiving).getHelper()))
-					drawExpBar(entityLiving, d, d1, d2, f, f1);
+			if (ServerStorageDisplay.contains(((BaseEntityPixelmon)entityLiving).getPokemonId()))
+				drawExpBar(entityLiving, d, d1, d2, f, f1);
 			drawNameTag(entityLiving, d, d1, d2);
 		}
 

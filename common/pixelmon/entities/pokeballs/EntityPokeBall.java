@@ -11,11 +11,13 @@ import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PokeballManager;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityCrit2FX;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityReddustFX;
 import net.minecraft.src.EntityThrowable;
 import net.minecraft.src.Item;
@@ -72,52 +74,26 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
-		if (!worldObj.isRemote) {
-			if (!isEmpty) {
-				if (movingobjectposition != null && !worldObj.isRemote) {
-					if (pixelmon != null) {
-						if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0 && worldObj.getBlockId((int) posX, (int) posY, (int) posZ) != Block.snow.blockID)
-							pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
-						else
-							pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
-						pixelmon.setMotion(0, 0, 0);
-						pixelmon.releaseFromPokeball();
-						if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)
-								&& !Pixelmon.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper()))
-							pixelmon.StartBattle(((IHaveHelper) movingobjectposition.entityHit).getHelper());
-						if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer)
-							pixelmon.StartBattle((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
-						else
-							pixelmon.clearAttackTarget();
-						if (thrower instanceof EntityPlayer) {
 
-						}
-						spawnCaptureParticles();
-					}
-					setDead();
+		if (movingobjectposition != null) {
+			if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
+				IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
+				p = entitypixelmon.getHelper();
+				if (p.getOwner() == (EntityPlayer) thrower) {
+					ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
+					spawnFailParticles();
+					return;
 				}
-			} else {
-				if (movingobjectposition != null) {
-					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
-						IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
-						p = entitypixelmon.getHelper();
-						if (p.getOwner() == (EntityPlayer) thrower) {
-							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
-							spawnFailParticles();
-							return;
-						}
-						doCaptureCalc(p);
-						isWaiting = true;
-						motionX = motionZ = 0;
-						motionY = -0.1;
-					}
+				doCaptureCalc(p);
+				isWaiting = true;
+				motionX = motionZ = 0;
+				motionY = -0.1;
+			}
 
-					else {
-						if (!isWaiting) {
-							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
-							setDead();
-						}
-					}
+			else {
+				if (!isWaiting) {
+					entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+					setDead();
 				}
 			}
 		}
@@ -209,7 +185,7 @@ public class EntityPokeBall extends EntityThrowable {
 				p.setOwner((EntityPlayer) thrower);
 				p.caughtBall = getType();
 				p.clearAttackTarget();
-				Pixelmon.PokeballManager.getPlayerStorage((EntityPlayer) thrower).addToParty(p);
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).addToParty(p);
 				p.catchInPokeball();
 				isWaiting = false;
 				setDead();
@@ -244,7 +220,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private void catchPokemon() {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-			
+
 			spawnCaptureParticles();
 			isCaptured = true;
 			waitTime = 0;

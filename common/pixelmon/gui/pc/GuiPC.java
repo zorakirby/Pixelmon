@@ -21,12 +21,13 @@ import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiScreenPokeCheckerPC;
 import pixelmon.storage.ComputerBox;
 import pixelmon.storage.ComputerManager;
+import pixelmon.storage.PlayerComputerStorage;
 
 public class GuiPC extends GuiContainer {
 
 	private int boxNumber, trashX, trashY, checkX, checkY;
 	private SlotPC mouseSlot;
-	private SlotPCPC[][] pcSlots = new SlotPCPC[ComputerManager.boxCount][ComputerBox.boxLimit];
+	private SlotPCPC[][] pcSlots = new SlotPCPC[PlayerComputerStorage.boxCount][ComputerBox.boxLimit];
 	private SlotPCParty[] partySlots = new SlotPCParty[6];
 
 	public GuiPC() {
@@ -79,10 +80,7 @@ public class GuiPC extends GuiContainer {
 	}
 
 	public void sort() {
-		if (!ModLoader.getMinecraftInstance().theWorld.isRemote) {
-			return;
-		}
-		SlotPCPC[][] temp = new SlotPCPC[ComputerManager.boxCount][ComputerBox.boxLimit];
+		SlotPCPC[][] temp = new SlotPCPC[PlayerComputerStorage.boxCount][ComputerBox.boxLimit];
 		for (int i = 0; i < pcSlots.length; i++) {
 			for (int j = 0; j < pcSlots[i].length; j++) {
 				PixelmonDataPacket p = pcSlots[i][j].pokemonData;

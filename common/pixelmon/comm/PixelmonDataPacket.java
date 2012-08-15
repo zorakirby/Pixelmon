@@ -50,9 +50,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		
 	}
 
-	public PixelmonDataPacket(NBTTagCompound p, NetworkMod mod, EnumPackets packetType) {
+	public PixelmonDataPacket(NBTTagCompound p, EnumPackets packetType) {
 		this.packetType = packetType;
-		//modID = MinecraftForge.getModID(mod);
 		pokemonID = p.getInteger("pixelmonID");
 		BaseStats b = DatabaseStats.GetBaseStats(p.getString("Name"));
 		nationalPokedexNumber = b.nationalPokedexNumber;
@@ -82,9 +81,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			boxNumber = p.getInteger("BoxNumber");
 	}
 
-	public PixelmonDataPacket(PixelmonEntityHelper p, NetworkMod mod, EnumPackets packetType) {
+	public PixelmonDataPacket(PixelmonEntityHelper p, EnumPackets packetType) {
 		this.packetType = packetType;
-		//modID = MinecraftForge.getModID(mod);
 		pokemonID = p.getPokemonId();
 		nationalPokedexNumber = p.stats.BaseStats.nationalPokedexNumber;
 		name = p.getName();

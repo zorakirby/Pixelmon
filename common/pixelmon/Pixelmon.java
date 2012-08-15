@@ -4,7 +4,6 @@ import java.util.logging.Level;
 
 import pixelmon.PacketHandler;
 import pixelmon.config.PixelmonBlocks;
-import pixelmon.storage.PokeballManager;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
@@ -29,7 +28,6 @@ import cpw.mods.fml.common.network.NetworkMod;
 public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
-	public static PokeballManager PokeballManager = new PokeballManager();
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event){

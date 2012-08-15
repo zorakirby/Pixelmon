@@ -1,7 +1,7 @@
 package pixelmon;
 
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.forge.Configuration;
+import net.minecraftforge.common.Configuration;
 
 public class IDListPixelmon {
 	public static int abraId;

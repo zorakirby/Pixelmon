@@ -24,6 +24,7 @@ import pixelmon.entities.pixelmon.helpers.LevelHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
 import pixelmon.enums.EnumType;
+import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PokeballManager;
 
 import net.minecraft.src.AxisAlignedBB;
@@ -33,6 +34,7 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAITasks;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityPlayerSP;
 import net.minecraft.src.EntityWaterMob;
 import net.minecraft.src.ModLoader;
@@ -126,12 +128,12 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
-			p1 = new PlayerParticipant(getOwner(), helper);
+			p1 = new PlayerParticipant((EntityPlayerMP)getOwner(), helper);
 		else
 			p1 = new WildPixelmonParticipant(helper);
 
 		if (target.getOwner() != null)
-			p2 = new PlayerParticipant(target.getOwner(), target);
+			p2 = new PlayerParticipant((EntityPlayerMP)target.getOwner(), target);
 		else
 			p2 = new WildPixelmonParticipant(target);
 
@@ -144,7 +146,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 			helper.loadMoveset();
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
-			p1 = new PlayerParticipant(getOwner(), helper);
+			p1 = new PlayerParticipant((EntityPlayerMP)getOwner(), helper);
 		else
 			p1 = new WildPixelmonParticipant(helper);
 
@@ -292,7 +294,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public void catchInPokeball() {
-		Pixelmon.PokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT(helper);
 		helper.isInBall = true;
 		unloadEntity();
 	}
@@ -450,7 +452,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 		Entity entity = par1DamageSource.getEntity();
 		if (getOwner() != null)
-			Pixelmon.PokeballManager.getPlayerStorage(getOwner()).updateNBT(helper);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT(helper);
 		if (isValidTarget(entity)) {
 			setAttackTarget((EntityLiving) entity);
 			setTarget(entity);

@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.eventbus.Subscribe;
+
 import pixelmon.PixelmonEntityList;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
@@ -20,7 +22,6 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.server.FMLServerHandler;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.AnvilSaveHandler;
@@ -38,11 +39,9 @@ import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;
 import net.minecraft.src.SaveHandler;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Pixelmon;
-import net.minecraft.src.forge.IConnectionHandler;
-import net.minecraft.src.forge.ISaveEventHandler;
+import net.minecraftforge.event.world.WorldEvent;
 
-public class PokeballManager implements ISaveEventHandler {
+public class PokeballManager{
 	private File workingDir;
 
 	private ArrayList<PlayerStorage> playerPokemonList = new ArrayList<PlayerStorage>();
@@ -54,7 +53,7 @@ public class PokeballManager implements ISaveEventHandler {
 	public PokeballManager() {
 	}
 
-	public PlayerStorage getPlayerStorage(EntityPlayer owner) {
+	public PlayerStorage getPlayerStorage(EntityPlayerMP owner) {
 
 		for (PlayerStorage p : playerPokemonList) {
 			if (p.player.username.equals(owner.username))
@@ -65,7 +64,7 @@ public class PokeballManager implements ISaveEventHandler {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void loadPlayer(EntityPlayer player) {
+	public void loadPlayer(EntityPlayerMP player) {
 		File saveDirPath = new File(getSaveFolder(player));
 		if (!saveDirPath.exists())
 			saveDirPath.mkdirs();
@@ -91,7 +90,7 @@ public class PokeballManager implements ISaveEventHandler {
 			for (int i = 0; i < playerPokemonList.size(); i++) {
 				EntityPlayer player = playerPokemonList.get(i).player;
 				boolean playerConnected = false;
-				for (String playerName : FMLServerHandler.instance().getServer().getPlayerNamesAsList())
+				for (String playerName : ModLoader.getMinecraftServerInstance().getAllUsernames())
 					if (player.username.equals(playerName)) {
 						playerConnected = true;
 						break;
@@ -140,35 +139,13 @@ public class PokeballManager implements ISaveEventHandler {
 		return null;
 	}
 
-	@Override
-	public void onWorldLoad(World world) {
+	@Subscribe
+	public void onWorldLoad(WorldEvent.Load event) {
 		playerPokemonList.clear();
 	}
 
-	@Override
-	public void onWorldSave(World world) {
+	@Subscribe
+	public void onWorldSave(WorldEvent.Save event) {
 		save();
-	}
-
-	@Override
-	public void onChunkLoad(World world, Chunk chunk) {
-	}
-
-	@Override
-	public void onChunkUnload(World world, Chunk chunk) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onChunkSaveData(World world, Chunk chunk, NBTTagCompound data) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onChunkLoadData(World world, Chunk chunk, NBTTagCompound data) {
-		// TODO Auto-generated method stub
-
 	}
 }

@@ -13,6 +13,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
 import pixelmon.gui.pc.GuiPC;
 import pixelmon.gui.pokedex.GuiPokedex;
+import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
@@ -28,7 +29,7 @@ public class GuiHandler implements IGuiHandler {
 		if (ID == EnumGui.ChooseStarter.getIndex())
 			return new GuiChooseStarter();
 		else if (ID == EnumGui.LearnMove.getIndex())
-			return new GuiLearnMove(Pixelmon.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getAlreadyExists(x, ModLoader.getMinecraftInstance().theWorld)
+			return new GuiLearnMove(PixelmonStorage.PokeballManager.getPlayerStorage(ModLoader.getMinecraftInstance().thePlayer).getAlreadyExists(x, ModLoader.getMinecraftInstance().theWorld)
 					.getHelper(), DatabaseMoves.getAttack(y));
 		else if (ID == EnumGui.ChooseAttack.getIndex()) {
 			if (world.isRemote) {

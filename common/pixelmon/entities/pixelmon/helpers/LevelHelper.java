@@ -10,8 +10,10 @@ import pixelmon.database.ExperienceGroup;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.enums.EnumGui;
+import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 
@@ -25,14 +27,14 @@ public class LevelHelper {
 	public int maxHealth = 10;
 	public int health;
 
+	public LevelHelper() {
+		exp = 0;
+	}
+
 	public LevelHelper(PixelmonEntityHelper p) {
 		this.pixelmon = p;
 		exp = 0;
 		setScale();
-	}
-
-	public LevelHelper() {
-		exp = 0;
 	}
 
 	protected void updateStats() {
@@ -43,13 +45,14 @@ public class LevelHelper {
 	public void writeToNBT(NBTTagCompound var1) {
 		var1.setInteger("Level", level);
 		var1.setInteger("EXP", exp);
-		var1.setInteger("EXPToNextLevel", exp);
+		var1.setInteger("EXPToNextLevel", expToNextLevel);
 	}
 
 	public void readFromNBT(NBTTagCompound var1) {
 		level = var1.getInteger("Level");
 		exp = var1.getInteger("EXP");
 		expToNextLevel = getExpForLevel(level + 1) - getExpForLevel(level);
+		updateEntityString();
 	}
 
 	public int getLevel() {
@@ -64,8 +67,13 @@ public class LevelHelper {
 		float oldHp = pixelmon.stats.HP;
 		updateStats();
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
-		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
+		float newHealth;
+		if (oldHp == 0)
+			newHealth = pixelmon.getMaxHealth();
+		else
+			newHealth = ((float) pixelmon.getHealth()) * percentGain;
 		pixelmon.setHealth((int) Math.ceil(newHealth));
+		updateEntityString();
 	}
 
 	private int getExpForLevel(int level2) {
@@ -120,11 +128,13 @@ public class LevelHelper {
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
 		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
 		pixelmon.setHealth((int) Math.ceil(newHealth));
-		if (pixelmon.getOwner() != null){
-			Pixelmon.PokeballManager.getPlayerStorage(pixelmon.getOwner()).updateNBT(pixelmon);
-			ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + level + "!");
-		}
+		if (pixelmon.getOwner() != null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).updateNBT(pixelmon);
 		String name = "";
+		if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).contains(pixelmon.getPokemonId())) {
+			ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + level + "!");
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).updateNBT(pixelmon);
+		}
 		name = pixelmon.getName();
 
 		if (DatabaseMoves.LearnsAttackAtLevel(name, level)) {
@@ -139,6 +149,7 @@ public class LevelHelper {
 			}
 		}
 		setScale();
+		updateEntityString();
 	}
 
 	public void awardEXP(int i) {
@@ -164,10 +175,12 @@ public class LevelHelper {
 			exp -= expToNextLevel;
 			expToNextLevel = getExpForLevel(level + 1) - getExpForLevel(level);
 		}
+		updateEntityString();
 	}
 
 	public void setEXP(int i) {
 		exp = i;
+		updateEntityString();
 	}
 
 	private void setScale() {
@@ -189,6 +202,11 @@ public class LevelHelper {
 		l.health = Integer.parseInt(splits[3]);
 		l.maxHealth = Integer.parseInt(splits[4]);
 		return l;
+	}
+
+	public void updateEntityString() {
+		String lvlString = "" + exp + ";" + expToNextLevel + ";" + level + ";" + (int) pixelmon.getHealth() + ";" + pixelmon.stats.HP;
+		pixelmon.updateLvlString(lvlString);
 	}
 
 	public void recalculateXP() {

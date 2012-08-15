@@ -251,7 +251,6 @@ public class EntityWolf extends EntityTameable
     {
         return this.isShaking;
     }
-
     @SideOnly(Side.CLIENT)
 
     /**

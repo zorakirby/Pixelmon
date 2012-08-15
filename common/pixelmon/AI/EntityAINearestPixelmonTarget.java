@@ -11,7 +11,6 @@ import net.minecraft.src.EntityAINearestAttackableTargetSorter;
 import net.minecraft.src.EntityAITarget;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityPlayerSP;
 
 public class EntityAINearestPixelmonTarget extends EntityAIPixelmonTarget {
 	EntityLiving targetEntity;
