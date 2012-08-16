@@ -5,9 +5,9 @@ import java.io.IOException;
 
 import cpw.mods.fml.common.network.Player;
 
-import pixelmon.PixelmonEntityList;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;

@@ -2,8 +2,8 @@ package pixelmon.entities;
 
 import java.util.Random;
 
-import pixelmon.PixelmonEntityList;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.TrainerInfo;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;

@@ -69,6 +69,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		}
 		dataWatcher.addObject(18, "");
 		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
+		helper.giScale = helper.stats.BaseStats.giScale;
 		type.add(helper.stats.BaseStats.Type1);
 		if (helper.stats.BaseStats.Type2 != EnumType.Mystery)
 			type.add(helper.stats.BaseStats.Type2);

@@ -3,8 +3,9 @@ package pixelmon;
 import java.util.Iterator;
 import java.util.Map;
 
-import pixelmon.PixelmonEntityList.ClassType;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonEntityList;
+import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumGui;
@@ -27,6 +28,9 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.RenderLiving;
 import net.minecraft.src.World;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -34,9 +38,23 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers() {
 
-		RenderingRegistry.instance().registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
+		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
 
 		addPokemonRenderers();
+	}
+	
+	@Override
+	public void preloadTextures(){
+		Iterator i = PixelmonEntityList.idToStringMapping.entrySet().iterator();
+		while (i.hasNext()) {
+			Map.Entry entry = (Map.Entry) i.next();
+			String name = (String) entry.getValue();
+			ClassType type = PixelmonEntityList.getClassTypeFromID((Integer) entry.getKey());
+			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon){
+				MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon-shiny/shiny" + name.toLowerCase() + ".png");
+				MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png");
+			}
+		}
 	}
 
 	private void addPokemonRenderers() {
@@ -81,7 +99,7 @@ public class ClientProxy extends CommonProxy {
 			else
 				renderer = new RenderTrainer(model, 0.5f);
 
-			RenderingRegistry.instance().registerEntityRenderingHandler(pokeClass, renderer);
+			RenderingRegistry.registerEntityRenderingHandler(pokeClass, renderer);
 		}
 	}
 

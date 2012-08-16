@@ -1,4 +1,4 @@
-package pixelmon;
+package pixelmon.config;
 
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;

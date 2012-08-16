@@ -3,6 +3,9 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 import java.util.Random;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
 import pixelmon.*;
 import pixelmon.battles.*;
 import pixelmon.battles.attacks.Attack;
@@ -56,7 +59,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		super(par1World);
 		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
 		targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-		dataWatcher.addObject(18, lvlString);
+		dataWatcher.addObject(18, "");
 		dataWatcher.addObject(19, -1); // pokemonId
 		dataWatcher.addObject(20, (short) 0);
 		getNavigator().setAvoidsWater(true);
@@ -70,6 +73,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		}
 		moveSpeed = getMoveSpeed();// + getMoveSpeed();
 		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
+		helper.giScale = helper.stats.BaseStats.giScale;
 		health = 11;
 		if (rand.nextInt(100) < helper.stats.BaseStats.MalePercent)
 			helper.isMale = true;
@@ -165,6 +169,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		helper.bc = null;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
 		if (dataWatcher.getWatchableObjectShort(20) == 1)
@@ -174,7 +179,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public EntityTrainer trainer;
-	public String lvlString = "";
 
 	public void onDeath(DamageSource damagesource) {
 		super.onDeath(damagesource);

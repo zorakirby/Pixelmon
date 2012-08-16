@@ -47,6 +47,7 @@ public class DatabaseStats {
 				stats.SpawnLevel = rs.getInt("SpawnLevel");
 				stats.SpawnLevelRange= rs.getInt("SpawnLevelRange");
 				stats.IsRideable = rs.getBoolean("IsRideable");
+				stats.giScale = rs.getFloat("GIScale");
 				rs.getString("Type2");
 				if (!rs.wasNull())
 					stats.Type2 = EnumType.parseType(rs.getString("Type2"));

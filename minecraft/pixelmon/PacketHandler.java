@@ -6,9 +6,9 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 
 import pixelmon.Pixelmon;
-import pixelmon.PixelmonEntityList;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 
 import net.minecraft.src.EntityPlayer;

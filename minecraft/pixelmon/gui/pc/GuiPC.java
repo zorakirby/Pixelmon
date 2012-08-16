@@ -10,12 +10,12 @@ import net.minecraft.src.Tessellator;
 
 import org.lwjgl.opengl.GL11;
 
-import pixelmon.PixelmonEntityList;
 import pixelmon.PixelmonServerStore;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiScreenPokeCheckerPC;

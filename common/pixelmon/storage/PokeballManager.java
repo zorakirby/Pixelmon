@@ -14,8 +14,8 @@ import java.util.Random;
 
 import com.google.common.eventbus.Subscribe;
 
-import pixelmon.PixelmonEntityList;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;

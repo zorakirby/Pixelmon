@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Random;
 
 import pixelmon.Pixelmon;
-import pixelmon.PixelmonEntityList;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;

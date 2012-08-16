@@ -25,6 +25,7 @@ public class BaseStats {
 	public boolean IsRideable;
 	public float Width;
 	public float Length;
+	public float giScale;
 
 	public String getNationalPokedexNumberString() {
 		if (nationalPokedexNumber < 10)

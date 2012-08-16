@@ -1,4 +1,4 @@
-package pixelmon;
+package pixelmon.config;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 import net.minecraftforge.common.MinecraftForge;
+import pixelmon.Pixelmon;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.entities.pokemon.*;
@@ -211,9 +212,9 @@ public class PixelmonEntityList {
 			ClassType type = getClassTypeFromID((Integer) entry.getKey());
 			try {
 				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
-					EntityRegistry.registerModEntity((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), name, (Integer) entry.getKey(), Pixelmon.instance, 50, 1, true);
+					EntityRegistry.registerModEntity((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), name, (Integer) entry.getKey(), Pixelmon.instance, 80, 1, true);
 				else if (type == ClassType.Trainer)
-					EntityRegistry.registerModEntity((Class) Class.forName("pixelmon.entities.trainers.EntityTrainer" + entry.getValue()), name, (Integer) entry.getKey(), Pixelmon.instance, 50, 1, true);
+					EntityRegistry.registerModEntity((Class) Class.forName("pixelmon.entities.trainers.EntityTrainer" + entry.getValue()), name, (Integer) entry.getKey(), Pixelmon.instance, 80, 1, true);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

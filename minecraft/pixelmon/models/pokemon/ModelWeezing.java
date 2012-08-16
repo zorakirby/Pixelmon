@@ -594,7 +594,7 @@ public class ModelWeezing extends ModelBase
       Main_body.addChild(blow_hole_11_part_1);
       Main_body.addChild(blow_hole_11_part_2);
       Main_body.addChild(blow_hole_11_part_3);
-      Main_body.addChild(blow_hole_11_part_4);
+      //Main_body.addChild(blow_hole_11_part_4);
       Main_body.addChild(blow_hole_10_part_1);
       Main_body.addChild(blow_hole_10_part_2);
       Main_body.addChild(blow_hole_10_part_3);

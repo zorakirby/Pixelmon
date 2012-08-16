@@ -3,7 +3,10 @@ package pixelmon;
 import java.util.logging.Level;
 
 import pixelmon.comm.PacketHandler;
+import pixelmon.config.IDListPixelmon;
+import pixelmon.config.IDListTrainer;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
 import pixelmon.database.DatabaseHelper;
 import net.minecraft.src.ModLoader;
@@ -71,6 +74,7 @@ public class Pixelmon {
 		PixelmonEntityList.registerEntities();
 		PixelmonEntityList.addSpawns();
 		proxy.registerRenderers();
+		proxy.preloadTextures();
 		
 	}
 	
