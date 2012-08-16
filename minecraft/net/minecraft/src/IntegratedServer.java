@@ -67,7 +67,7 @@ public class IntegratedServer extends MinecraftServer
      */
     protected boolean startServer() throws IOException
     {
-        logger.info("Starting integrated minecraft server version 1.3.1");
+        logger.info("Starting integrated minecraft server version 1.3.2");
         this.setOnlineMode(false);
         this.setSpawnAnimals(true);
         this.setSpawnNpcs(true);
@@ -157,9 +157,16 @@ public class IntegratedServer extends MinecraftServer
      */
     public CrashReport addServerInfoToCrashReport(CrashReport par1CrashReport)
     {
+        par1CrashReport = super.addServerInfoToCrashReport(par1CrashReport);
         par1CrashReport.addCrashSectionCallable("Type", new CallableType3(this));
         par1CrashReport.addCrashSectionCallable("Is Modded", new CallableIsModded(this));
-        return super.addServerInfoToCrashReport(par1CrashReport);
+        return par1CrashReport;
+    }
+
+    public void addServerStatsToSnooper(PlayerUsageSnooper par1PlayerUsageSnooper)
+    {
+        super.addServerStatsToSnooper(par1PlayerUsageSnooper);
+        par1PlayerUsageSnooper.addData("snooper_partner", this.mc.getPlayerUsageSnooper().func_80006_f());
     }
 
     /**

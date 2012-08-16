@@ -269,35 +269,43 @@ public class GuiMultiplayer extends GuiScreen
     {
         int var3 = this.selectedServer;
 
-        if (isShiftKeyDown() && par2 == 200)
+        if (par2 == 59)
         {
-            if (var3 > 0 && var3 < this.field_74030_m.countServers())
+            this.mc.gameSettings.field_80005_w = !this.mc.gameSettings.field_80005_w;
+            this.mc.gameSettings.saveOptions();
+        }
+        else
+        {
+            if (isShiftKeyDown() && par2 == 200)
             {
-                this.field_74030_m.swapServers(var3, var3 - 1);
-                --this.selectedServer;
+                if (var3 > 0 && var3 < this.field_74030_m.countServers())
+                {
+                    this.field_74030_m.swapServers(var3, var3 - 1);
+                    --this.selectedServer;
 
+                    if (var3 < this.field_74030_m.countServers() - 1)
+                    {
+                        this.serverSlotContainer.func_77208_b(-this.serverSlotContainer.slotHeight);
+                    }
+                }
+            }
+            else if (isShiftKeyDown() && par2 == 208)
+            {
                 if (var3 < this.field_74030_m.countServers() - 1)
                 {
-                    this.serverSlotContainer.func_77208_b(-this.serverSlotContainer.slotHeight);
-                }
-            }
-        }
-        else if (isShiftKeyDown() && par2 == 208)
-        {
-            if (var3 < this.field_74030_m.countServers() - 1)
-            {
-                this.field_74030_m.swapServers(var3, var3 + 1);
-                ++this.selectedServer;
+                    this.field_74030_m.swapServers(var3, var3 + 1);
+                    ++this.selectedServer;
 
-                if (var3 > 0)
-                {
-                    this.serverSlotContainer.func_77208_b(this.serverSlotContainer.slotHeight);
+                    if (var3 > 0)
+                    {
+                        this.serverSlotContainer.func_77208_b(this.serverSlotContainer.slotHeight);
+                    }
                 }
             }
-        }
-        else if (par1 == 13)
-        {
-            this.actionPerformed((GuiButton)this.controlList.get(2));
+            else if (par1 == 13)
+            {
+                this.actionPerformed((GuiButton)this.controlList.get(2));
+            }
         }
     }
 

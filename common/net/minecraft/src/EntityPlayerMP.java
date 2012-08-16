@@ -832,7 +832,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      */
     public boolean canCommandSenderUseCommand(String par1Str)
     {
-        return "seed".equals(par1Str) && !this.mcServer.isDedicatedServer() ? true : this.mcServer.getConfigurationManager().areCommandsAllowed(this.username);
+        return "seed".equals(par1Str) && !this.mcServer.isDedicatedServer() ? true : (!"tell".equals(par1Str) && !"help".equals(par1Str) && !"me".equals(par1Str) ? this.mcServer.getConfigurationManager().areCommandsAllowed(this.username) : true);
     }
 
     public String func_71114_r()

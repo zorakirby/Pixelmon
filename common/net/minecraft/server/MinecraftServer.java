@@ -330,7 +330,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                 {
                     if (!par1)
                     {
-                        logger.info("Saving chunks for level \'" + var5.getWorldInfo().getWorldName() + "\'/" + var5.provider);
+                        logger.info("Saving chunks for level \'" + var5.getWorldInfo().getWorldName() + "\'/" + var5.provider.func_80004_l());
                     }
 
                     try
@@ -613,12 +613,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                     if (!var4.updatingLighting())
                     {
                         this.theProfiler.endSection();
-
-                        if (!var4.playerEntities.isEmpty())
-                        {
-                            var4.updateEntities();
-                        }
-
+                        var4.updateEntities();
                         this.theProfiler.startSection("tracker");
                         var4.getEntityTracker().processOutstandingEntries();
                         this.theProfiler.endSection();
@@ -714,7 +709,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
 
     public String getMinecraftVersion()
     {
-        return "1.3.1";
+        return "1.3.2";
     }
 
     public int getPlayerListSize()
@@ -1244,6 +1239,12 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     public void enableProfiling()
     {
         this.startProfiling = true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public PlayerUsageSnooper func_80003_ah()
+    {
+        return this.usageSnooper;
     }
 
     public static ServerConfigurationManager func_71196_a(MinecraftServer par0MinecraftServer)

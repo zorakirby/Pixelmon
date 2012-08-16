@@ -1,7 +1,7 @@
 package net.minecraft.src;
 
 import net.minecraft.client.Minecraft;
-import static net.minecraftforge.common.Orientation.*;
+import static net.minecraftforge.common.ForgeDirection.*;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;

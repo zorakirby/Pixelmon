@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-class RailLogic
+public class RailLogic
 {
     /** Reference to the World object. */
     private World worldObj;
@@ -490,7 +490,7 @@ class RailLogic
     /**
      * get number of adjacent tracks
      */
-    public static int getNAdjacentTracks(RailLogic par0RailLogic)
+    static int getNAdjacentTracks(RailLogic par0RailLogic)
     {
         return par0RailLogic.getAdjacentTracks();
     }

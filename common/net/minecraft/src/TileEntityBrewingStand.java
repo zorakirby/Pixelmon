@@ -5,7 +5,7 @@ import cpw.mods.fml.common.asm.SideOnly;
 import java.util.List;
 
 import net.minecraftforge.common.ISidedInventory;
-import net.minecraftforge.common.Orientation;
+import net.minecraftforge.common.ForgeDirection;
 
 public class TileEntityBrewingStand extends TileEntity implements IInventory, ISidedInventory
 {
@@ -330,14 +330,14 @@ public class TileEntityBrewingStand extends TileEntity implements IInventory, IS
     }
 
     @Override
-    public int getStartInventorySide(Orientation side)
+    public int getStartInventorySide(ForgeDirection side)
     {
-        return (side == Orientation.UP ? 3 : 0);
+        return (side == ForgeDirection.UP ? 3 : 0);
     }
 
     @Override
-    public int getSizeInventorySide(Orientation side)
+    public int getSizeInventorySide(ForgeDirection side)
     {
-        return (side == Orientation.UP ? 1 : 3);
+        return (side == ForgeDirection.UP ? 1 : 3);
     }
 }

@@ -39,13 +39,14 @@ public class DedicatedServer extends MinecraftServer implements IServer
         var1.setDaemon(true);
         var1.start();
         ConsoleLogManager.init();
-        logger.info("Starting minecraft server version 1.3.1");
-        FMLCommonHandler.instance().onServerStart(this);
+        logger.info("Starting minecraft server version 1.3.2");
 
         if (Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L)
         {
             logger.warning("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar minecraft_server.jar\"");
         }
+
+        FMLCommonHandler.instance().onServerStart(this);
 
         logger.info("Loading properties");
         this.settings = new PropertyManager(new File("server.properties"));
@@ -222,8 +223,9 @@ public class DedicatedServer extends MinecraftServer implements IServer
      */
     public CrashReport addServerInfoToCrashReport(CrashReport par1CrashReport)
     {
+        par1CrashReport = super.addServerInfoToCrashReport(par1CrashReport);
         par1CrashReport.addCrashSectionCallable("Type", new CallableType(this));
-        return super.addServerInfoToCrashReport(par1CrashReport);
+        return par1CrashReport;
     }
 
     /**

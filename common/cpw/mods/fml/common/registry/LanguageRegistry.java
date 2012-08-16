@@ -20,6 +20,10 @@ public class LanguageRegistry
         return INSTANCE;
     }
 
+    public void addStringLocalization(String key, String value)
+    {
+        addStringLocalization(key, "en_US", value);
+    }
     public void addStringLocalization(String key, String lang, String value)
     {
         Properties langPack=modLanguageData.get(lang);
@@ -28,8 +32,14 @@ public class LanguageRegistry
             modLanguageData.put(lang, langPack);
         }
         langPack.put(key,value);
+    }
 
-        loadLanguageTable(StringTranslate.getInstance().translateTable, lang);
+    public static void reloadLanguageTable()
+    {
+        // reload language table by forcing lang to null and reloading the properties file
+        String lang = StringTranslate.getInstance().getCurrentLanguage();
+        StringTranslate.getInstance().currentLanguage = null;
+        StringTranslate.getInstance().setLanguage(lang);
     }
 
 
@@ -46,7 +56,12 @@ public class LanguageRegistry
             throw new IllegalArgumentException(String.format("Illegal object for naming %s",objectToName));
         }
         objectName+=".name";
-        addStringLocalization(lang, lang, name);
+        addStringLocalization(objectName, lang, name);
+    }
+    
+    public static void addName(Object objectToName, String name)
+    {
+        instance().addNameForObject(objectToName, "en_US", name);
     }
 
     public void loadLanguageTable(Properties languagePack, String lang)

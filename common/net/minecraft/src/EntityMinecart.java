@@ -1065,7 +1065,7 @@ public class EntityMinecart extends Entity implements IInventory
     /**
      * Is this minecart powered (Fuel > 0)
      */
-    public boolean isMinecartPowered()
+    protected boolean isMinecartPowered()
     {
         return (this.dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }

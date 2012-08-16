@@ -3,8 +3,8 @@ package net.minecraft.src;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import java.util.Random;
-import net.minecraftforge.common.Orientation;
-import static net.minecraftforge.common.Orientation.*;
+import net.minecraftforge.common.ForgeDirection;
+import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockFire extends Block
 {
@@ -214,7 +214,7 @@ public class BlockFire extends Block
     {
         tryToCatchBlockOnFire(par1World, par2, par3, par4, par5, par6Random, par7, UP);
     }
-    private void tryToCatchBlockOnFire(World par1World, int par2, int par3, int par4, int par5, Random par6Random, int par7, Orientation face)
+    private void tryToCatchBlockOnFire(World par1World, int par2, int par3, int par4, int par5, Random par6Random, int par7, ForgeDirection face)
     {
         int var8 = 0;
         Block block = Block.blocksList[par1World.getBlockId(par2, par3, par4)];
@@ -450,7 +450,7 @@ public class BlockFire extends Block
      * @param face The side the fire is coming from
      * @return True if the face can catch fire.
      */
-    public boolean canBlockCatchFire(IBlockAccess world, int x, int y, int z, Orientation face)
+    public boolean canBlockCatchFire(IBlockAccess world, int x, int y, int z, ForgeDirection face)
     {
         Block block = Block.blocksList[world.getBlockId(x, y, z)];
         if (block != null)
@@ -471,7 +471,7 @@ public class BlockFire extends Block
      * @param face The side the fire is coming from
      * @return The chance of the block catching fire, or oldChance if it is higher
      */
-    public int getChanceToEncourageFire(World world, int x, int y, int z, int oldChance, Orientation face)
+    public int getChanceToEncourageFire(World world, int x, int y, int z, int oldChance, ForgeDirection face)
     {
         int newChance = 0;
         Block block = Block.blocksList[world.getBlockId(x, y, z)];

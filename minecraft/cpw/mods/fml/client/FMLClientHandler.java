@@ -113,6 +113,7 @@ import cpw.mods.fml.common.network.EntitySpawnAdjustmentPacket;
 import cpw.mods.fml.common.network.EntitySpawnPacket;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import cpw.mods.fml.common.registry.IThrowableEntity;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 
 /**
@@ -146,8 +147,6 @@ public class FMLClientHandler implements IFMLSidedHandler
      */
     private Minecraft client;
 
-
-    private boolean firstTick;
     /**
      * Called to start the whole game off from
      * {@link MinecraftServer#startServer}
@@ -210,6 +209,7 @@ public class FMLClientHandler implements IFMLSidedHandler
      * Also initializes key bindings
      *
      */
+    @SuppressWarnings("deprecation")
     public void finishMinecraftLoading()
     {
         try
@@ -221,12 +221,15 @@ public class FMLClientHandler implements IFMLSidedHandler
             haltGame("There was a severe problem during mod loading that has caused the game to fail", le);
             return;
         }
+        LanguageRegistry.reloadLanguageTable();
         RenderingRegistry.instance().loadEntityRenderers((Map<Class<? extends Entity>, Render>)RenderManager.instance.entityRenderMap);
 
-        KeyBindingRegistry.uploadKeyBindingsToGame(client.gameSettings);
+        KeyBindingRegistry.instance().uploadKeyBindingsToGame(client.gameSettings);
+    }
 
-        // Mark this as a "first tick"
-        firstTick = true;
+    public void reloadTextureFX()
+    {
+        TextureFXManager.instance().loadTextures(client.texturePackList.getSelectedTexturePack());
     }
     /**
      * Get the server instance
@@ -396,6 +399,6 @@ public class FMLClientHandler implements IFMLSidedHandler
     @Override
     public void sendPacket(Packet packet)
     {
-        client.thePlayer.sendQueue.quitWithPacket(packet);
+        client.thePlayer.sendQueue.addToSendQueue(packet);
     }
 }

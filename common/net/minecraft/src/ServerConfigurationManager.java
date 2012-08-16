@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.DimensionManager;
 
 public abstract class ServerConfigurationManager
 {
@@ -317,6 +318,7 @@ public abstract class ServerConfigurationManager
 
         EntityPlayerMP var6 = new EntityPlayerMP(this.mcServer, this.mcServer.worldServerForDimension(par1EntityPlayerMP.dimension), par1EntityPlayerMP.username, (ItemInWorldManager)var5);
         var6.clonePlayer(par1EntityPlayerMP, par3);
+        var6.dimension = par2;
         var6.entityId = par1EntityPlayerMP.entityId;
         var6.serverForThisPlayer = par1EntityPlayerMP.serverForThisPlayer;
         WorldServer var7 = this.mcServer.worldServerForDimension(par1EntityPlayerMP.dimension);
@@ -359,6 +361,11 @@ public abstract class ServerConfigurationManager
 
     public void transferPlayerToDimension(EntityPlayerMP par1EntityPlayerMP, int par2)
     {
+        transferPlayerToDimension(par1EntityPlayerMP, par2, new Teleporter());
+    }
+
+    public void transferPlayerToDimension(EntityPlayerMP par1EntityPlayerMP, int par2, Teleporter teleporter)
+    {
         int var3 = par1EntityPlayerMP.dimension;
         WorldServer var4 = this.mcServer.worldServerForDimension(par1EntityPlayerMP.dimension);
         par1EntityPlayerMP.dimension = par2;
@@ -366,33 +373,14 @@ public abstract class ServerConfigurationManager
         par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet9Respawn(par1EntityPlayerMP.dimension, (byte)par1EntityPlayerMP.worldObj.difficultySetting, var5.getWorldInfo().getTerrainType(), var5.getHeight(), par1EntityPlayerMP.theItemInWorldManager.getGameType()));
         var4.removeEntity(par1EntityPlayerMP);
         par1EntityPlayerMP.isDead = false;
-        double var6 = par1EntityPlayerMP.posX;
-        double var8 = par1EntityPlayerMP.posZ;
-        double var10 = 8.0D;
 
-        if (par1EntityPlayerMP.dimension == -1)
-        {
-            var6 /= var10;
-            var8 /= var10;
-            par1EntityPlayerMP.setLocationAndAngles(var6, par1EntityPlayerMP.posY, var8, par1EntityPlayerMP.rotationYaw, par1EntityPlayerMP.rotationPitch);
+        WorldProvider pOld = DimensionManager.getProvider(var3);
+        WorldProvider pNew = DimensionManager.getProvider(par2);
+        double moveFactor = pOld.getMovementFactor() / pNew.getMovementFactor();
+        double var6 = par1EntityPlayerMP.posX * moveFactor;
+        double var8 = par1EntityPlayerMP.posZ * moveFactor;
 
-            if (par1EntityPlayerMP.isEntityAlive())
-            {
-                var4.updateEntityWithOptionalForce(par1EntityPlayerMP, false);
-            }
-        }
-        else if (par1EntityPlayerMP.dimension == 0)
-        {
-            var6 *= var10;
-            var8 *= var10;
-            par1EntityPlayerMP.setLocationAndAngles(var6, par1EntityPlayerMP.posY, var8, par1EntityPlayerMP.rotationYaw, par1EntityPlayerMP.rotationPitch);
-
-            if (par1EntityPlayerMP.isEntityAlive())
-            {
-                var4.updateEntityWithOptionalForce(par1EntityPlayerMP, false);
-            }
-        }
-        else
+        if (par1EntityPlayerMP.dimension == 1)
         {
             ChunkCoordinates var12 = var5.getEntrancePortalLocation();
             var6 = (double)var12.posX;
@@ -416,7 +404,7 @@ public abstract class ServerConfigurationManager
                 var5.spawnEntityInWorld(par1EntityPlayerMP);
                 par1EntityPlayerMP.setLocationAndAngles(var6, par1EntityPlayerMP.posY, var8, par1EntityPlayerMP.rotationYaw, par1EntityPlayerMP.rotationPitch);
                 var5.updateEntityWithOptionalForce(par1EntityPlayerMP, false);
-                (new Teleporter()).placeInPortal(var5, par1EntityPlayerMP);
+                teleporter.placeInPortal(var5, par1EntityPlayerMP);
             }
         }
 
@@ -454,12 +442,9 @@ public abstract class ServerConfigurationManager
 
     public void sendPacketToAllPlayers(Packet par1Packet)
     {
-        Iterator var2 = this.playerEntityList.iterator();
-
-        while (var2.hasNext())
+        for (int var2 = 0; var2 < this.playerEntityList.size(); ++var2)
         {
-            EntityPlayerMP var3 = (EntityPlayerMP)var2.next();
-            var3.serverForThisPlayer.sendPacketToPlayer(par1Packet);
+            ((EntityPlayerMP)this.playerEntityList.get(var2)).serverForThisPlayer.sendPacketToPlayer(par1Packet);
         }
     }
 

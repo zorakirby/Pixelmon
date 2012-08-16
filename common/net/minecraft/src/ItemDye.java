@@ -55,7 +55,7 @@ public class ItemDye extends Item
                 var11 = par3World.getBlockId(par4, par5, par6);
 
                 BonemealEvent event = new BonemealEvent(par2EntityPlayer, par3World, var11, par4, par5, par6);
-                if (!MinecraftForge.EVENT_BUS.post(event))
+                if (MinecraftForge.EVENT_BUS.post(event))
                 {
                     return false;
                 }

@@ -133,4 +133,9 @@ public class WorldProviderEnd extends WorldProvider
     {
         return true;
     }
+
+    public String func_80004_l()
+    {
+        return "The End";
+    }
 }

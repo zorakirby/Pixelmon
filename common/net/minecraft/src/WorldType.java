@@ -46,12 +46,12 @@ public class WorldType
 
     protected BiomeGenBase[] biomesForWorldType;
 
-    private WorldType(int par1, String par2Str)
+    public WorldType(int par1, String par2Str)
     {
         this(par1, par2Str, 0);
     }
 
-    private WorldType(int par1, String par2Str, int par3)
+    public WorldType(int par1, String par2Str, int par3)
     {
         this.worldType = par2Str;
         this.generatorVersion = par3;

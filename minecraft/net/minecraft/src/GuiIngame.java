@@ -391,7 +391,7 @@ public class GuiIngame extends Gui
         {
             this.mc.mcProfiler.startSection("debug");
             GL11.glPushMatrix();
-            var8.drawStringWithShadow("Minecraft 1.3.1 (" + this.mc.debug + ")", 2, 2, 16777215);
+            var8.drawStringWithShadow("Minecraft 1.3.2 (" + this.mc.debug + ")", 2, 2, 16777215);
             var8.drawStringWithShadow(this.mc.debugInfoRenders(), 2, 12, 16777215);
             var8.drawStringWithShadow(this.mc.getEntityDebug(), 2, 22, 16777215);
             var8.drawStringWithShadow(this.mc.debugInfoEntities(), 2, 32, 16777215);

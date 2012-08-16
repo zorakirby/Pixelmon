@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.BiMap;
@@ -142,6 +143,10 @@ public class FMLModContainer implements ModContainer
             modMetadata.dependencies = dependencies;
             modMetadata.dependants = dependants;
         }
+        if (Strings.isNullOrEmpty(modMetadata.name))
+        {
+            modMetadata.name = getModId();
+        }
     }
 
     @Override
@@ -220,16 +225,19 @@ public class FMLModContainer implements ModContainer
         {
             for (Annotation a : m.getAnnotations())
             {
-                Class<?>[] paramTypes = new Class[] { modTypeAnnotations.get(a.annotationType()) };
+                if (modTypeAnnotations.containsKey(a.annotationType()))
+                {
+                    Class<?>[] paramTypes = new Class[] { modTypeAnnotations.get(a.annotationType()) };
 
-                if (Arrays.equals(m.getParameterTypes(), paramTypes))
-                {
-                    m.setAccessible(true);
-                    anns.put(a.annotationType(), m);
-                }
-                else
-                {
-                    FMLLog.severe("The mod %s appears to have an invalid method annotation %s. This annotation can only apply to methods with argument types %s -it will not be called", getModId(), a.annotationType().getSimpleName(), Arrays.toString(paramTypes));
+                    if (Arrays.equals(m.getParameterTypes(), paramTypes))
+                    {
+                        m.setAccessible(true);
+                        anns.put(a.annotationType(), m);
+                    }
+                    else
+                    {
+                        FMLLog.severe("The mod %s appears to have an invalid method annotation %s. This annotation can only apply to methods with argument types %s -it will not be called", getModId(), a.annotationType().getSimpleName(), Arrays.toString(paramTypes));
+                    }
                 }
             }
         }

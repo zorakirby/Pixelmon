@@ -89,4 +89,9 @@ public class WorldProviderHell extends WorldProvider
     {
         return true;
     }
+
+    public String func_80004_l()
+    {
+        return "Nether";
+    }
 }

@@ -55,7 +55,7 @@ public class DedicatedServer extends MinecraftServer implements IServer {
       var1.setDaemon(true);
       var1.start();
       ConsoleLogManager.func_73699_a();
-      field_71306_a.info("Starting minecraft server version 1.3.1");
+      field_71306_a.info("Starting minecraft server version 1.3.2");
       if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L) {
          field_71306_a.warning("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar minecraft_server.jar\"");
       }
@@ -187,8 +187,9 @@ public class DedicatedServer extends MinecraftServer implements IServer {
    }
 
    protected CrashReport func_71230_b(CrashReport p_71230_1_) {
+      p_71230_1_ = super.func_71230_b(p_71230_1_);
       p_71230_1_.func_71500_a("Type", new CallableType(this));
-      return super.func_71230_b(p_71230_1_);
+      return p_71230_1_;
    }
 
    protected void func_71240_o() {

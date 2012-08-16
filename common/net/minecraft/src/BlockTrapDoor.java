@@ -1,6 +1,6 @@
 package net.minecraft.src;
 
-import net.minecraftforge.common.Orientation;
+import net.minecraftforge.common.ForgeDirection;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 
@@ -192,7 +192,7 @@ public class BlockTrapDoor extends Block
                 --var7;
             }
 
-            if (!(isValidSupportBlock(par1World.getBlockId(var7, par3, var8)) || par1World.isBlockSolidOnSide(var7, par3, var8, Orientation.getOrientation((var6 & 3) + 2))))
+            if (!(isValidSupportBlock(par1World.getBlockId(var7, par3, var8)) || par1World.isBlockSolidOnSide(var7, par3, var8, ForgeDirection.getOrientation((var6 & 3) + 2))))
             {
                 par1World.setBlockWithNotify(par2, par3, par4, 0);
                 this.dropBlockAsItem(par1World, par2, par3, par4, var6, 0);
@@ -286,7 +286,7 @@ public class BlockTrapDoor extends Block
                 --par2;
             }
 
-            return isValidSupportBlock(par1World.getBlockId(par2, par3, par4)) || par1World.isBlockSolidOnSide(par2, par3, par4, Orientation.UP);
+            return isValidSupportBlock(par1World.getBlockId(par2, par3, par4)) || par1World.isBlockSolidOnSide(par2, par3, par4, ForgeDirection.UP);
         }
     }
 

@@ -2,8 +2,8 @@ package net.minecraft.src;
 
 import java.util.Random;
 
-import net.minecraftforge.common.Orientation;
-import static net.minecraftforge.common.Orientation.*;
+import net.minecraftforge.common.ForgeDirection;
+import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockRail extends Block
 {

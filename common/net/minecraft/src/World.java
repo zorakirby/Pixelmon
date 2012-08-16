@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.Set;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Orientation;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
@@ -2613,7 +2613,7 @@ public abstract class World implements IBlockAccess
      */
     public boolean doesBlockHaveSolidTopSurface(int par1, int par2, int par3)
     {
-        return isBlockSolidOnSide(par1, par2, par3, Orientation.UP);
+        return isBlockSolidOnSide(par1, par2, par3, ForgeDirection.UP);
     }
 
     /**
@@ -4006,7 +4006,7 @@ public abstract class World implements IBlockAccess
      * @param side The Side in question
      * @return True if the side is solid
      */
-    public boolean isBlockSolidOnSide(int X, int Y, int Z, Orientation side)
+    public boolean isBlockSolidOnSide(int X, int Y, int Z, ForgeDirection side)
     {
         return isBlockSolidOnSide(X, Y, Z, side, false);
     }
@@ -4022,7 +4022,7 @@ public abstract class World implements IBlockAccess
      * @param _default The defult to return if the block doesn't exist.
      * @return True if the side is solid
      */
-    public boolean isBlockSolidOnSide(int X, int Y, int Z, Orientation side, boolean _default)
+    public boolean isBlockSolidOnSide(int X, int Y, int Z, ForgeDirection side, boolean _default)
     {
         if (X < -30000000 || Z < -30000000 || X >= 30000000 || Z >= 30000000)
         {

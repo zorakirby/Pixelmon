@@ -9,7 +9,6 @@ import java.text.DecimalFormat;
 import javax.swing.JComponent;
 import javax.swing.Timer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.DimensionManager;
 
 @SideOnly(Side.SERVER)
 public class GuiStatsComponent extends JComponent
@@ -43,7 +42,6 @@ public class GuiStatsComponent extends JComponent
      */
     private void updateStats()
     {
-        this.displayStrings = new String[5 + DimensionManager.getIDs().length];
         long var1 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         System.gc();
         this.displayStrings[0] = "Memory use: " + var1 / 1024L / 1024L + " mb (" + Runtime.getRuntime().freeMemory() * 100L / Runtime.getRuntime().maxMemory() + "% free)";
@@ -54,17 +52,14 @@ public class GuiStatsComponent extends JComponent
 
         if (this.field_79017_e.theWorldServer != null)
         {
-            int x = 0;
-            for (Integer id : DimensionManager.getIDs())
+            for (int var3 = 0; var3 < this.field_79017_e.theWorldServer.length; ++var3)
             {
-                this.displayStrings[5 + x] = "Lvl " + id + " tick: " + field_79020_a.format(this.func_79015_a(this.field_79017_e.worldTickTimes.get(id)) * 1.0E-6D) + " ms";
+                this.displayStrings[5 + var3] = "Lvl " + var3 + " tick: " + field_79020_a.format(this.func_79015_a(this.field_79017_e.timeOfLastDimenstionTick[var3]) * 1.0E-6D) + " ms";
 
-                WorldServer world = DimensionManager.getWorld(id);
-                if (world != null && world.theChunkProviderServer != null)
+                if (this.field_79017_e.theWorldServer[var3] != null && this.field_79017_e.theWorldServer[var3].theChunkProviderServer != null)
                 {
-                    this.displayStrings[5 + x] = this.displayStrings[5 + x] + ", " + world.theChunkProviderServer.makeString();
+                    this.displayStrings[5 + var3] = this.displayStrings[5 + var3] + ", " + this.field_79017_e.theWorldServer[var3].theChunkProviderServer.makeString();
                 }
-                x++;
             }
         }
 

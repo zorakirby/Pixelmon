@@ -3,8 +3,8 @@ package net.minecraft.src;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import java.util.Random;
-import net.minecraftforge.common.Orientation;
-import static net.minecraftforge.common.Orientation.*;
+import net.minecraftforge.common.ForgeDirection;
+import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockLadder extends Block
 {

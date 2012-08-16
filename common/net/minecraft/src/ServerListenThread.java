@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class ServerListenThread extends Thread
                 catch (Exception var6)
                 {
                     var3.raiseErrorAndDisconnect("Internal server error");
+                    FMLLog.log(Level.SEVERE, var6, "Error handling login related packet - connection from %s refused", var3.clientUsername);
                     minecraftLogger.log(Level.WARNING, "Failed to handle packet: " + var6, var6);
                 }
 

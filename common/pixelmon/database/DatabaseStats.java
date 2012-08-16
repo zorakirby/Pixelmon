@@ -74,8 +74,18 @@ public class DatabaseStats {
 			while (rs.next()) {
 				BiomeGenBase[] biomes;
 				String biomeString = rs.getString("SpawnBiomes");
-				if (rs.wasNull())
-					return null;
+				if (rs.wasNull()){
+					biomes = BiomeGenBase.biomeList;
+					ArrayList<BiomeGenBase> biomeList = new ArrayList<BiomeGenBase>();
+					for (int i=0; i < biomes.length; i++)
+						if (biomes[i]!=null)biomeList.add(biomes[i]);
+					
+					BiomeGenBase[] biomes2 = new BiomeGenBase[biomeList.size()];
+					int j=0;
+					for(BiomeGenBase b: biomeList)
+						biomes2[j++]=b;
+					return biomes2;
+				}
 				String[] biomeList = biomeString.split(";");
 				biomes = new BiomeGenBase[biomeList.length];
 				int i = 0;

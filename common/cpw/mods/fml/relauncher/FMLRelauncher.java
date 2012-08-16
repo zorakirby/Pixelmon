@@ -65,6 +65,10 @@ public class FMLRelauncher
     }
     private void showWindow(boolean showIt)
     {
+        if (RelaunchLibraryManager.downloadMonitor!=null)
+        {
+            return;
+        }
         try
         {
             RelaunchLibraryManager.downloadMonitor = new Downloader();
@@ -192,9 +196,15 @@ public class FMLRelauncher
 
     private void relaunchApplet(Applet minecraftApplet)
     {
+        showWindow(true);
         appletClass = ReflectionHelper.getClass(classLoader, "net.minecraft.client.MinecraftApplet");
         if (minecraftApplet.getClass().getClassLoader() == classLoader)
         {
+            if (popupWindow!=null)
+            {
+                popupWindow.setVisible(false);
+                popupWindow.dispose();
+            }
             try
             {
                 newApplet = minecraftApplet;
@@ -253,6 +263,11 @@ public class FMLRelauncher
     {
         if (applet.getClass().getClassLoader() == classLoader)
         {
+            if (popupWindow!=null)
+            {
+                popupWindow.setVisible(false);
+                popupWindow.dispose();
+            }
             try
             {
                 ReflectionHelper.findMethod(appletClass, newApplet, new String[] {"fmlStartReentry"}).invoke(newApplet);

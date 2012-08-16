@@ -95,6 +95,11 @@ public class NetServerHandler extends NetHandler
         if (!this.field_72584_h && !this.playerEntity.playerHasConqueredTheEnd)
         {
             this.playerEntity.onUpdateEntity();
+
+            if (this.playerEntity.ridingEntity == null)
+            {
+                this.playerEntity.setLocationAndAngles(this.lastPosX, this.lastPosY, this.lastPosZ, this.playerEntity.rotationYaw, this.playerEntity.rotationPitch);
+            }
         }
 
         this.mcServer.theProfiler.endSection();
@@ -158,7 +163,7 @@ public class NetServerHandler extends NetHandler
 
                     if (par1Packet10Flying.moving && par1Packet10Flying.yPosition == -999.0D && par1Packet10Flying.stance == -999.0D)
                     {
-                        if (par1Packet10Flying.xPosition > 1.0D || par1Packet10Flying.zPosition > 1.0D)
+                        if (Math.abs(par1Packet10Flying.xPosition) > 1.0D || Math.abs(par1Packet10Flying.zPosition) > 1.0D)
                         {
                             System.err.println(this.playerEntity.username + " was caught trying to crash the server with an invalid position.");
                             this.kickPlayerFromServer("Nope!");
@@ -675,11 +680,7 @@ public class NetServerHandler extends NetHandler
      */
     private void handleSlashCommand(String par1Str)
     {
-        if (this.mcServer.getConfigurationManager().areCommandsAllowed(this.playerEntity.username) || "/seed".equals(par1Str))
-        {
-            logger.info(this.playerEntity.username + " issued server command: " + par1Str);
-            this.mcServer.getCommandManager().executeCommand(this.playerEntity, par1Str);
-        }
+        this.mcServer.getCommandManager().executeCommand(this.playerEntity, par1Str);
     }
 
     public void handleAnimation(Packet18Animation par1Packet18Animation)

@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class EntityAnimal extends EntityAgeable implements IAnimals
 {
-    private int inLove;
+    public int inLove;
 
     /**
      * This is representation of a counter for reproduction progress. (Note that this is different from the inLove which

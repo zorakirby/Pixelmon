@@ -279,4 +279,12 @@ public class TileEntity
     public void onChunkUnload()
     {
     }
+
+    /**
+     *  @return The maximum distance between the player and the TileEntity at which the TileEntitySpecialRenderer will be called
+     */
+    public double getRenderDistance()
+    {
+        return 64;
+    }
 }

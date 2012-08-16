@@ -9,8 +9,8 @@ import java.util.Random;
 
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Orientation;
-import static net.minecraftforge.common.Orientation.*;
+import net.minecraftforge.common.ForgeDirection;
+import static net.minecraftforge.common.ForgeDirection.*;
 
 public class Block
 {
@@ -298,7 +298,7 @@ public class Block
      * Blocks with this attribute will not notify all near blocks when it's metadata change. The default behavior is
      * always notify every neightbor block when anything changes.
      */
-    public Block setRequiresSelfNotify()
+    protected Block setRequiresSelfNotify()
     {
         requiresSelfNotify[this.blockID] = true;
         return this;
@@ -1313,7 +1313,7 @@ public class Block
      * @param size The side to check
      * @return True if the block is solid on the specified side.
      */
-    public boolean isBlockSolidOnSide(World world, int x, int y, int z, Orientation side) 
+    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) 
     {
         int meta = world.getBlockMetadata(x, y, z);
         if (this instanceof BlockStep)
@@ -1437,7 +1437,7 @@ public class Block
      * @param face The face that the fire is coming from
      * @return A number ranging from 0 to 300 relating used to determine if the block will be consumed by fire
      */
-    public int getFlammability(IBlockAccess world, int x, int y, int z, int metadata, Orientation face)
+    public int getFlammability(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
     {
         return blockFlammability[blockID];
     }
@@ -1454,7 +1454,7 @@ public class Block
      * @param face The face that the fire is coming from
      * @return True if the face can be on fire, false otherwise.
      */
-    public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, Orientation face)
+    public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face)
     {
         return getFlammability(world, x, y, z, metadata, face) > 0;
     }
@@ -1471,7 +1471,7 @@ public class Block
      * @param face The face that the fire is coming from
      * @return A number that is used to determine the speed of fire growth around the block
      */
-    public int getFireSpreadSpeed(World world, int x, int y, int z, int metadata, Orientation face)
+    public int getFireSpreadSpeed(World world, int x, int y, int z, int metadata, ForgeDirection face)
     {
         return blockFireSpreadSpeed[blockID];
     }
@@ -1489,7 +1489,7 @@ public class Block
      * @param side The face that the fire is coming from
      * @return 
      */
-    public boolean isFireSource(World world, int x, int y, int z, int metadata, Orientation side)
+    public boolean isFireSource(World world, int x, int y, int z, int metadata, ForgeDirection side)
     {
         if (blockID == Block.netherrack.blockID && side == UP)
         {

@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import cpw.mods.fml.common.FMLLog;
 import net.minecraft.server.MinecraftServer;
 
 public abstract class NetworkListenThread
@@ -54,6 +56,7 @@ public abstract class NetworkListenThread
             }
             catch (Exception var4)
             {
+                FMLLog.log(Level.SEVERE, var4, "A critical server error occured handling a packet, kicking %s", var2);
                 logger.log(Level.WARNING, "Failed to handle packet: " + var4, var4);
                 var2.kickPlayerFromServer("Internal server error");
             }

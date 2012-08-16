@@ -68,7 +68,7 @@ public class PlayerUsageSnooper
         this.addData("os_version", System.getProperty("os.version"));
         this.addData("os_architecture", System.getProperty("os.arch"));
         this.addData("java_version", System.getProperty("java.version"));
-        this.addData("version", "1.3.1");
+        this.addData("version", "1.3.2");
         this.playerStatsCollector.addServerTypeToSnooper(this);
     }
 
@@ -143,6 +143,12 @@ public class PlayerUsageSnooper
     public void stopSnooper()
     {
         this.threadTrigger.cancel();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public String func_80006_f()
+    {
+        return this.uniqueID;
     }
 
     static IPlayerUsage getStatsCollectorFor(PlayerUsageSnooper par0PlayerUsageSnooper)

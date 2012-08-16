@@ -251,6 +251,22 @@ public abstract class WorldProvider
         return false;
     }
 
+    public abstract String func_80004_l();
+
+    /*======================================= Forge Start =========================================*/
+    private int dimensionID = 0;
+
+    /**
+     * Sets the providers current dimension ID, used in default getSaveFolder()
+     * Added to allow default providers to be registered for multiple dimensions.
+     * 
+     * @param dim Dimension ID
+     */
+    public void setDimension(int dim)
+    {
+        this.dimensionID = dim;
+    }
+
     /**
      * Returns the sub-folder of the world folder that this WorldProvider saves to.
      * EXA: DIM1, DIM-1
@@ -258,15 +274,7 @@ public abstract class WorldProvider
      */
     public String getSaveFolder()
     {
-        if (this instanceof WorldProviderEnd)
-        {
-            return "DIM1";
-        }
-        else if (this instanceof WorldProviderHell)
-        {
-            return "DIM-1";
-        }
-        return null;
+        return (dimensionID == 0 ? null : "DIM" + dimensionID);
     }
 
     /**

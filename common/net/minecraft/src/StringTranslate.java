@@ -23,7 +23,7 @@ public class StringTranslate
      */
     public Properties translateTable = new Properties();
     private TreeMap languageList;
-    private String currentLanguage;
+    public String currentLanguage;
     private boolean isUnicode;
 
     public StringTranslate(String par1Str)
@@ -91,6 +91,7 @@ public class StringTranslate
                 }
             }
         }
+        LanguageRegistry.instance().loadLanguageTable(par1Properties, par2Str);
     }
 
     public void setLanguage(String par1Str)
@@ -147,10 +148,8 @@ public class StringTranslate
             this.currentLanguage = par1Str;
             this.translateTable = var2;
         }
-        LanguageRegistry.instance().loadLanguageTable(this.translateTable, this.currentLanguage);
     }
 
-    @SideOnly(Side.CLIENT)
     public String getCurrentLanguage()
     {
         return this.currentLanguage;

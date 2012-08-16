@@ -836,6 +836,10 @@ public class Item
      */
     public ItemStack getContainerItemStack(ItemStack itemStack)
     {
+        if (!hasContainerItem())
+        {
+            return null;
+        }
         return new ItemStack(getContainerItem());
     }
 }

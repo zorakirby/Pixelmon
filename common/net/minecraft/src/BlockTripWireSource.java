@@ -2,8 +2,8 @@ package net.minecraft.src;
 
 import java.util.Random;
 
-import net.minecraftforge.common.Orientation;
-import static net.minecraftforge.common.Orientation.*;
+import net.minecraftforge.common.ForgeDirection;
+import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockTripWireSource extends Block
 {
@@ -61,7 +61,7 @@ public class BlockTripWireSource extends Block
      */
     public boolean canPlaceBlockOnSide(World par1World, int par2, int par3, int par4, int par5)
     {
-        Orientation dir = Orientation.getOrientation(par5);
+        ForgeDirection dir = ForgeDirection.getOrientation(par5);
         return (dir == NORTH && par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH)) ||
                (dir == SOUTH && par1World.isBlockSolidOnSide(par2, par3, par4 - 1, SOUTH)) ||
                (dir == WEST  && par1World.isBlockSolidOnSide(par2 + 1, par3, par4, WEST )) ||

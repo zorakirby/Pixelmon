@@ -318,7 +318,7 @@ public class FMLNetworkHandler
         }
         Packet250CustomPayload pkt = new Packet250CustomPayload();
         pkt.channel = "FML";
-        pkt.data = FMLPacket.makePacket(Type.ENTITYSPAWN, er, entity);
+        pkt.data = FMLPacket.makePacket(Type.ENTITYSPAWN, er, entity, instance().findNetworkModHandler(er.getContainer()));
         pkt.length = pkt.data.length;
         return pkt;
     }

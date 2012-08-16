@@ -1,7 +1,7 @@
 package net.minecraft.src;
 
-import net.minecraftforge.common.Orientation;
-import static net.minecraftforge.common.Orientation.*;
+import net.minecraftforge.common.ForgeDirection;
+import static net.minecraftforge.common.ForgeDirection.*;
 
 public class BlockLever extends Block
 {
@@ -50,7 +50,7 @@ public class BlockLever extends Block
      */
     public boolean canPlaceBlockOnSide(World par1World, int par2, int par3, int par4, int par5)
     {
-        Orientation dir = Orientation.getOrientation(par5);
+        ForgeDirection dir = ForgeDirection.getOrientation(par5);
         return (dir == DOWN  && par1World.isBlockSolidOnSide(par2, par3 + 1, par4, DOWN )) ||
                (dir == UP    && par1World.isBlockSolidOnSide(par2, par3 - 1, par4, UP   )) ||
                (dir == NORTH && par1World.isBlockSolidOnSide(par2, par3, par4 + 1, NORTH)) ||
