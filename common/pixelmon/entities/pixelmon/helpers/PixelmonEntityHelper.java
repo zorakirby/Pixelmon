@@ -17,6 +17,7 @@ import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.database.Stats;
+import pixelmon.entities.EntityOwnedItem;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
@@ -60,6 +61,7 @@ public class PixelmonEntityHelper {
 	public BattleController bc;
 	public LevelHelper lvl;
 	public float giScale = 1;
+	public ItemStack heldItem;
 
 	public PixelmonEntityHelper(IHaveHelper pixelmon) {
 		this.pixelmon = pixelmon;
@@ -243,6 +245,16 @@ public class PixelmonEntityHelper {
 	public Entity getEntity() {
 		return (Entity) pixelmon;
 	}
+	
+	public void setHeldItem(ItemStack var1)
+	{
+		heldItem = var1;
+	}
+	
+	public ItemStack getHeldItem()
+	{
+		return heldItem;
+	}
 
 	protected void copyTo(PixelmonEntityHelper entity) {
 		entity.setTamed(true);
@@ -251,6 +263,7 @@ public class PixelmonEntityHelper {
 		entity.moveset.clear();
 		entity.isMale = isMale;
 		entity.setIsShiny(getIsShiny());
+		entity.setHeldItem(getHeldItem());
 		for (int i = 0; i < moveset.size(); i++)
 			entity.moveset.add(moveset.get(i));
 		entity.stats.IVs.CopyIVs(stats.IVs);
@@ -306,7 +319,7 @@ public class PixelmonEntityHelper {
 					itemstack.stackSize--;
 				flag = true;
 			}
-			if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex
+			else if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex
 					&& getOwner() != null) {
 				if (getOwner() != null)
 					getOwner().openGui(Pixelmon.instance,
@@ -314,7 +327,7 @@ public class PixelmonEntityHelper {
 							getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
-			if (itemstack.itemID == PixelmonItems.potion.shiftedIndex
+			else if (itemstack.itemID == PixelmonItems.potion.shiftedIndex
 					&& getOwner() == entity) {
 				if (getHealth() + 20 > stats.HP)
 					setHealth(stats.HP);
@@ -330,7 +343,7 @@ public class PixelmonEntityHelper {
 					setHealth(stats.HP);
 				flag = true;
 			}
-			// if (itemstack.itemID == mod_Pixelmon.pokeDex.shiftedIndex) {
+			// else if (itemstack.itemID == mod_Pixelmon.pokeDex.shiftedIndex) {
 			// if (getOwner() == entity) {
 			// getOwner().openGui(mod_Pixelmon.instance,
 			// EnumGui.Pokedex.getIndex(), getOwner().worldObj, getPokemonId(),
@@ -338,7 +351,7 @@ public class PixelmonEntityHelper {
 			// flag = true;
 			// }
 			// }
-			if (itemstack.getItem() instanceof ItemEvolutionStone
+			else if (itemstack.getItem() instanceof ItemEvolutionStone
 					&& getOwner() == entity) {
 				ItemEvolutionStone i = (ItemEvolutionStone) itemstack.getItem();
 				for (EvolutionInfo e : getEvolveList()) {
@@ -357,6 +370,17 @@ public class PixelmonEntityHelper {
 						break;
 					}
 				}
+			}
+			else if(itemstack.itemID > 255)
+			{
+				if(this.getHeldItem() != null)
+				{
+					EntityLiving living = (EntityLiving)pixelmon;
+					EntityOwnedItem owned = new EntityOwnedItem(living.worldObj, living.posX, living.posY + 1d, living.posZ, heldItem, entity.username);
+					living.worldObj.spawnEntityInWorld(owned);
+				}
+				this.setHeldItem(new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
+				itemstack.stackSize--;
 			}
 			if (itemstack.stackSize <= 0)
 				entity.inventory.setInventorySlotContents(
