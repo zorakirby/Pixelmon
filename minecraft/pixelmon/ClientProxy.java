@@ -45,6 +45,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
+		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
 		addPokemonRenderers();
 	}
 	

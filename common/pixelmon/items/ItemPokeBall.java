@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -20,6 +21,9 @@ public class ItemPokeBall extends Item {
 		setMaxDamage(0xf4240);
 		this.type = type;
 		playerPokeballs = new HashMap<EntityPlayer, EntityPokeBall>();
+		setIconIndex(type.getIconIndex());
+		setTextureFile("/pixelmon/image/pitems.png");
+		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
 
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {

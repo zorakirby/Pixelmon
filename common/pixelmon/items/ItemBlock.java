@@ -1,10 +1,12 @@
 package pixelmon.items;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.config.PixelmonBlocks;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockBed;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -13,9 +15,12 @@ import net.minecraft.src.World;
 
 public class ItemBlock extends Item {
 	Block block;
-	public ItemBlock(int par1, Block block) {
+	public ItemBlock(int par1, Block block, int iconIndex) {
 		super(par1);
 		this.block = block;
+		setTabToDisplayOn(CreativeTabs.tabMisc);
+		setIconIndex(iconIndex);
+		setTextureFile("/pixelmon/image/pitems.png");
 	}
 
 	/**
