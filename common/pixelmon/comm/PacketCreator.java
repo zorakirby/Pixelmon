@@ -24,7 +24,7 @@ public class PacketCreator {
 		return packet;
 	}
 
-	public static Packet createPacket(EnumPackets epacket, int i1, int i2, int i3) {
+	public static Packet250CustomPayload createPacket(EnumPackets epacket, int i1, int i2, int i3) {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream data = new DataOutputStream(bytes);
 		Packet250CustomPayload packet = new Packet250CustomPayload();
@@ -42,7 +42,7 @@ public class PacketCreator {
 		return packet;
 	}
 	
-	public static Packet createStringPacket(EnumPackets epacket, int i1, String s1){
+	public static Packet250CustomPayload createStringPacket(EnumPackets epacket, int i1, String s1){
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream data = new DataOutputStream(bytes);
 		Packet250CustomPayload packet = new Packet250CustomPayload();

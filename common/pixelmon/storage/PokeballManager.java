@@ -39,6 +39,7 @@ import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;
 import net.minecraft.src.SaveHandler;
 import net.minecraft.src.World;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 
 public class PokeballManager{
@@ -125,26 +126,15 @@ public class PokeballManager{
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
-		try {
-			return ModLoader.getPrivateValue(SaveHandler.class, (SaveHandler) player.worldObj.getSaveHandler(), "b") + "/pokemon/";
-		} catch (Throwable e) {
-			//System.err.println(e);
-			try {
-				return ModLoader.getPrivateValue(SaveHandler.class, (SaveHandler) player.worldObj.getSaveHandler(), "worldDirectory") + "/pokemon/";
-			} catch (Throwable f) {
-				System.err.println(f);
-
-			}
-		}
-		return null;
+		return "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
 	}
 
-	@Subscribe
+	@ForgeSubscribe
 	public void onWorldLoad(WorldEvent.Load event) {
 		playerPokemonList.clear();
 	}
 
-	@Subscribe
+	@ForgeSubscribe
 	public void onWorldSave(WorldEvent.Save event) {
 		save();
 	}

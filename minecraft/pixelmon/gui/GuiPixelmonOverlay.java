@@ -1,4 +1,4 @@
-package pixelmon;
+package pixelmon.gui;
 
 import net.minecraft.src.Gui;
 
@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL12;
 
 import com.google.common.eventbus.Subscribe;
 
+import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.storage.PokeballManager;
 
@@ -24,6 +25,7 @@ import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StringTranslate;
 import net.minecraft.src.Tessellator;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.ForgeSubscribe;
 
 public class GuiPixelmonOverlay extends Gui {
 	public static boolean isGuiMinimized = false;
@@ -34,7 +36,7 @@ public class GuiPixelmonOverlay extends Gui {
 		fontRenderer = ModLoader.getMinecraftInstance().fontRenderer;
 	}
 
-	@Subscribe
+	@ForgeSubscribe
 	public void onRenderWorldLast(RenderWorldLastEvent event){
 		ScaledResolution var5 = new ScaledResolution(ModLoader.getMinecraftInstance().gameSettings, ModLoader.getMinecraftInstance().displayWidth, ModLoader.getMinecraftInstance().displayHeight);
 		int var6 = var5.getScaledWidth();

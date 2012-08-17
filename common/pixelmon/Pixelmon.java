@@ -12,6 +12,8 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.gui.GuiPixelmonOverlay;
+import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,8 +35,12 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
-@Mod(modid = "Pixelmon", name = "Iron Chests", version = "4.0")
-@NetworkMod(channels = { "IronChest" }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "4.0")
+@NetworkMod(channels = { "Pixelmon" }, clientSideRequired = true, serverSideRequired = false,
+clientPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandler=ClientPacketHandler.class),
+serverPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandler=PacketHandler.class))
+
 public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
@@ -71,6 +77,7 @@ public class Pixelmon {
 	
 	@Init
 	public void load(FMLInitializationEvent event){
+		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		PixelmonBlocks.registerBlocks();
 		PixelmonBlocks.setTextureIds();
 		PixelmonItems.addNames();
@@ -81,6 +88,9 @@ public class Pixelmon {
 		proxy.registerRenderers();
 		proxy.preloadTextures();
 		PixelmonRecipes.addRecipes();
+		
+		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
+		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		
 	}
 	

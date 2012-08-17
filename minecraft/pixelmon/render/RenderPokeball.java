@@ -34,7 +34,6 @@ public class RenderPokeball extends Render {
 	}
 
 	private void doRender(EntityPokeBall pokeball, double x, double y, double z, float f, float f1) {
-
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, z);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

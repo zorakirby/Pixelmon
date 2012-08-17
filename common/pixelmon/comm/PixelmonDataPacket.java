@@ -20,7 +20,6 @@ import net.minecraft.src.Packet;
 import net.minecraftforge.common.MinecraftForge;
 
 public class PixelmonDataPacket extends PixelmonPacket {
-	public int modID;
 	public int pokemonID;
 	public int nationalPokedexNumber;
 	public String name;
@@ -111,8 +110,14 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		SpecialDefence = p.stats.SpecialDefence;		
 	}
 
-	public void writeData(DataOutputStream data) throws IOException {
-		data.writeInt(modID);
+	@Override
+	public int getID() {
+		return packetType.getIndex();
+	}
+
+	@Override
+	public void writePacketData(DataOutputStream data)
+			throws IOException {
 		data.writeInt(pokemonID);
 		data.writeShort(nationalPokedexNumber);
 		Packet.writeString(name, data);
@@ -138,10 +143,12 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeShort(SpecialDefence);
 		data.writeShort(boxNumber);
 		data.writeBoolean(isShiny);
+		
 	}
 
-	public void readData(DataInputStream data) throws IOException {
-		modID = data.readInt();
+	@Override
+	public void readPacketData(DataInputStream data)
+			throws IOException {
 		pokemonID = data.readInt();
 		nationalPokedexNumber = data.readShort();
 		name = Packet.readString(data, 64);
@@ -168,10 +175,5 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		SpecialDefence = data.readShort();
 		boxNumber = data.readShort();
 		isShiny = data.readBoolean();
-	}
-
-	@Override
-	public int getID() {
-		return packetType.getIndex();
 	}
 }

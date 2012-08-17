@@ -11,6 +11,7 @@ import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.KeyBinding;

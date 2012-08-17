@@ -9,7 +9,7 @@ import java.util.List;
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet250CustomPayload;
 
-public abstract class PixelmonPacket
+public abstract class PixelmonPacket extends Packet250CustomPayload
 {
 	EnumPackets packetType;
 	
@@ -20,7 +20,7 @@ public abstract class PixelmonPacket
         try
         {
             data.writeByte(getID());
-            writeData(data);
+            writePacketData(data);
         }
         catch (IOException e)
         {
@@ -33,9 +33,12 @@ public abstract class PixelmonPacket
         return pkt;
     }
 
-    public abstract void writeData(DataOutputStream data) throws IOException;
-    public abstract void readData(DataInputStream data) throws IOException;
-    public abstract int getID();
+	@Override
+	public abstract void writePacketData(DataOutputStream par1DataOutputStream) throws IOException;
+	@Override
+	public abstract void readPacketData(DataInputStream par1DataInputStream) throws IOException;
+
+	public abstract int getID();
     public String toString(boolean full)
     {
         return toString();

@@ -12,7 +12,7 @@ public class PixelmonServerStore {
 	public static void addToList(DataInputStream dataStream) {
 		PixelmonDataPacket packet = new PixelmonDataPacket();
 		try {
-			packet.readData(dataStream);
+			packet.readPacketData(dataStream);
 			store.add(packet);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -11,7 +11,7 @@ public class ServerStorageDisplay {
 	public static void add(DataInputStream dataStream) {
 		PixelmonDataPacket packet = new PixelmonDataPacket();
 		try {
-			packet.readData(dataStream);
+			packet.readPacketData(dataStream);
 			pokemon[packet.order] = packet;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -29,7 +29,7 @@ public class ServerStorageDisplay {
 	public static void update(DataInputStream dataStream) {
 		PixelmonDataPacket packet = new PixelmonDataPacket();
 		try {
-			packet.readData(dataStream);
+			packet.readPacketData(dataStream);
 		}catch(IOException e){
 			e.printStackTrace();
 		}

@@ -36,7 +36,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 	public void onPacketData(NetworkManager manager, Packet250CustomPayload packet, Player player) {
 		DataInputStream dataStream = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
-			int packetID = dataStream.readInt();
+			int packetID = dataStream.readByte();
 			for (PacketHandlerBase p : handlers) {
 				if (p.handlesPacket(packetID)) {
 					p.handlePacket(packetID, player, dataStream);

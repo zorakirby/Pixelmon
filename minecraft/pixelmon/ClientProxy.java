@@ -68,6 +68,8 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
+	
+	
 	private void addPokemonRenderers() {
 		Iterator i = PixelmonEntityList.idToStringMapping.entrySet().iterator();
 		while (i.hasNext()) {
