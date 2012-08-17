@@ -11,6 +11,7 @@ import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiAttacking;
 import pixelmon.gui.GuiChoosePokemon;
@@ -41,7 +42,11 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers() {
-
+		for (EnumPokeballs p : EnumPokeballs.values()){
+			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getTexture());
+			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getFlashRedTexture());
+			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getCaptureTexture());
+		}
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());

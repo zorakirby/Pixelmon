@@ -124,7 +124,6 @@ public class PixelmonEntityList {
 	}
 
 	static {
-
 		// Pokemon
 		addMapping("Abra", IDListPixelmon.abraId, ClassType.Pixelmon);
 		addMapping("Arbok", IDListPixelmon.arbokId, ClassType.Pixelmon);
