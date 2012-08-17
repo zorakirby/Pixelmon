@@ -17,11 +17,11 @@ public class PixelmonItems {
 	public static final Item greatBall = new ItemPokeBall(10001, EnumPokeballs.GreatBall).setItemName("GreatBall");
 	public static final Item ultraBall = new ItemPokeBall(10002, EnumPokeballs.UltraBall).setItemName("UltraBall");
 	public static final Item masterBall = new ItemPokeBall(10003, EnumPokeballs.MasterBall).setItemName("MasterBall");
-	public static final Item pokeChecker = new PixelmonItem(10004).setItemName("PokeChecker").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokechecker.png")).setMaxStackSize(1);
-	public static final Item pokeDex = new ItemPokedex(10027).setItemName("Pokedex").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/pokedex.png")).setMaxStackSize(1);
-	public static final Item rareCandy = new PixelmonItem(10005).setItemName("Rare Candy").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/rarecandy.png"));
-	public static final Item potion = new PixelmonItem(10006).setItemName("Potion").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/potion.png")).setMaxStackSize(16);
-	public static final Item coalDust = new PixelmonItem(10007).setItemName("CoalDust").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/coaldust.png"));
+	public static final Item pokeChecker = new PixelmonItem(10004).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
+	public static final Item pokeDex = new ItemPokedex(10027).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
+	public static final Item rareCandy = new PixelmonItem(10005).setItemName("Rare Candy").setIconIndex(5);
+	public static final Item potion = new PixelmonItem(10006).setItemName("Potion").setIconIndex(2).setMaxStackSize(16);
+	public static final Item coalDust = new PixelmonItem(10007).setItemName("CoalDust").setIconIndex(4);
 	public static final Item fireStone = new ItemEvolutionStone(10008, EnumEvolutionStone.FIRESTONE, 3).setItemName("FireStone");
 	public static final Item waterStone = new ItemEvolutionStone(10009, EnumEvolutionStone.WATERSTONE, 1).setItemName("WaterStone");
 	public static final Item moonStone = new ItemEvolutionStone(10010, EnumEvolutionStone.MOONSTONE, 4).setItemName("MoonStone");
@@ -31,8 +31,8 @@ public class PixelmonItems {
 	public static final Item healerItem = new ItemBlock(10014, PixelmonBlocks.healer, 54).setItemName("Healer");
 	// 9 ids needed for the 9 stones, shards starting on next open id and are
 	// the stone they make's id + 10
-	public static final Item thunderStoneShard = new PixelmonItem(10021).setItemName("ThunderStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/thunderstoneshard.png"));
-	public static final Item leafStoneShard = new PixelmonItem(10022).setItemName("LeafStoneShard").setIconIndex(ModLoader.addOverride("/gui/items.png", "/pixelmon/image/leafstoneshard.png"));
+	public static final Item thunderStoneShard = new PixelmonItem(10021).setItemName("ThunderStoneShard").setIconIndex(7);
+	public static final Item leafStoneShard = new PixelmonItem(10022).setItemName("LeafStoneShard").setIconIndex(39);
 
 	public static void addNames() {
 		ModLoader.addName(pokeBall, "PokeBall");
