@@ -1,5 +1,6 @@
 package pixelmon.config;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.src.Item;
 import net.minecraft.src.ModLoader;
 import pixelmon.entities.pokeballs.EntityPokeBall;

@@ -14,8 +14,6 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 	
-	
-	
 	public GuiHandler guiHandler = new GuiHandler();
 	
 	@Override

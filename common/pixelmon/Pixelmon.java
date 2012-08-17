@@ -8,6 +8,7 @@ import pixelmon.config.IDListTrainer;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
@@ -75,6 +76,7 @@ public class Pixelmon {
 		PixelmonEntityList.addSpawns();
 		proxy.registerRenderers();
 		proxy.preloadTextures();
+		PixelmonRecipes.addRecipes();
 		
 	}
 	

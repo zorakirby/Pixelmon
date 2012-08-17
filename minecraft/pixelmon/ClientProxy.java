@@ -3,6 +3,8 @@ package pixelmon;
 import java.util.Iterator;
 import java.util.Map;
 
+import pixelmon.blocks.TileEntityHealer;
+import pixelmon.blocks.TileEntityPC;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonEntityList.ClassType;
@@ -21,6 +23,8 @@ import pixelmon.gui.pokedex.GuiPokedex;
 import pixelmon.render.RenderFreeWaterPixelmon;
 import pixelmon.render.RenderPixelmon;
 import pixelmon.render.RenderPokeball;
+import pixelmon.render.RenderTileEntityHealer;
+import pixelmon.render.RenderTileEntityPC;
 import pixelmon.render.RenderTrainer;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
@@ -39,7 +43,8 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderers() {
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
-
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
 		addPokemonRenderers();
 	}
 	

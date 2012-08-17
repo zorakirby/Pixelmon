@@ -1,8 +1,11 @@
 package pixelmon.config;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
+import pixelmon.blocks.TileEntityHealer;
+import pixelmon.blocks.TileEntityPC;
 import net.minecraft.src.Block;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
@@ -17,10 +20,15 @@ public class PixelmonBlocks {
 	public static int waterStoneOreId;
 	public static int pcId;
 
+	@cpw.mods.fml.common.Mod.Block(name = "Healer")
 	public static Block healer;
+	@cpw.mods.fml.common.Mod.Block(name = "Thunderstone Ore")
 	public static Block thunderStoneOre;
+	@cpw.mods.fml.common.Mod.Block(name = "LeafStone Ore")
 	public static Block leafStoneOre;
+	@cpw.mods.fml.common.Mod.Block(name = "WaterStone Ore")
 	public static Block waterStoneOre;
+	@cpw.mods.fml.common.Mod.Block(name = "Pokemon PC")
 	public static Block pc;
 
 	public static void load(Configuration configuration) {
@@ -38,11 +46,14 @@ public class PixelmonBlocks {
 	}
 
 	public static void registerBlocks() {
-		ModLoader.registerBlock(healer);
-		ModLoader.registerBlock(thunderStoneOre);
-		ModLoader.registerBlock(leafStoneOre);
-		ModLoader.registerBlock(waterStoneOre);
-		ModLoader.registerBlock(pc);
+		GameRegistry.registerBlock(healer);
+		GameRegistry.registerBlock(thunderStoneOre);
+		GameRegistry.registerBlock(leafStoneOre);
+		GameRegistry.registerBlock(waterStoneOre);
+		GameRegistry.registerBlock(pc);
+		
+		GameRegistry.registerTileEntity(TileEntityPC.class, "Pokemon PC");
+		GameRegistry.registerTileEntity(TileEntityHealer.class, "Healer");
 	}
 
 	public static void addNames() {

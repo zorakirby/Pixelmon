@@ -23,12 +23,13 @@ public class ItemBlock extends Item {
 	 * clicking, he will have one of those. Return True if something happen and
 	 * false if it don't. This is for ITEMS, not BLOCKS !
 	 */
-	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int x, int y, int z, int par7) {
-		if (par7 != 1) {
+	@Override
+	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side) {
+		if (side != 1) {
 			return false;
 		} else {
 			++y;
-			int var6 = MathHelper.floor_double((double) (par2EntityPlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+			int var6 = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 			int var9 = 0;
 			if (var6 == 0) {
 				var9 = 2;
@@ -46,14 +47,14 @@ public class ItemBlock extends Item {
 				var9 = 0;
 			}
 
-			if (par2EntityPlayer.canPlayerEdit(x, y, z) && par2EntityPlayer.canPlayerEdit(x, y + 1, z)) {
-				if (par3World.isAirBlock(x, y, z) && par3World.isAirBlock(x, y + 1, z) && par3World.isBlockNormalCube(x, y - 1, z) && par3World.getBlockId(x, y - 1, z) != block.blockID) {
-					par3World.setBlockAndMetadataWithNotify(x, y, z, block.blockID, var9);
-					if (par3World.getBlockId(x, y, z) == block.blockID && block instanceof BlockPC) {
-						par3World.setBlockAndMetadataWithNotify(x, y + 1, z, block.blockID, var9 - 6);
+			if (player.canPlayerEdit(x, y, z) && player.canPlayerEdit(x, y + 1, z)) {
+				if (world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z) && world.isBlockNormalCube(x, y - 1, z) && world.getBlockId(x, y - 1, z) != block.blockID) {
+					world.setBlockAndMetadataWithNotify(x, y, z, block.blockID, var9);
+					if (world.getBlockId(x, y, z) == block.blockID && block instanceof BlockPC) {
+						world.setBlockAndMetadataWithNotify(x, y + 1, z, block.blockID, var9 - 6);
 					}
 
-					--par1ItemStack.stackSize;
+					--stack.stackSize;
 					return true;
 				} else {
 					return false;
