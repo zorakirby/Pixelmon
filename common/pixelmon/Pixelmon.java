@@ -6,10 +6,12 @@ import pixelmon.comm.PacketHandler;
 import pixelmon.config.IDListPixelmon;
 import pixelmon.config.IDListTrainer;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +27,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -74,6 +77,7 @@ public class Pixelmon {
 		
 		PixelmonEntityList.registerEntities();
 		PixelmonEntityList.addSpawns();
+		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", IDListPixelmon.i++ , Pixelmon.instance, 80, 1, true);
 		proxy.registerRenderers();
 		proxy.preloadTextures();
 		PixelmonRecipes.addRecipes();
