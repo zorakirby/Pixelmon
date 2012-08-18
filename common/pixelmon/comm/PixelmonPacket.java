@@ -19,7 +19,7 @@ public abstract class PixelmonPacket extends Packet250CustomPayload
         DataOutputStream data = new DataOutputStream(bytes);
         try
         {
-            data.writeByte(getID());
+            data.writeInt(getID());
             writePacketData(data);
         }
         catch (IOException e)

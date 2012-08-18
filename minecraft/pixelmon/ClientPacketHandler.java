@@ -27,7 +27,7 @@ public class ClientPacketHandler implements IPacketHandler {
 		DataInputStream dataStream = new DataInputStream(new ByteArrayInputStream(packet.data));
 		
 		try {
-			int packetID = dataStream.readByte();
+			int packetID = dataStream.readInt();
 			if (packetID == EnumPackets.AddToStorage.getIndex()) {
 				ServerStorageDisplay.add(dataStream);
 			} else if (packetID == EnumPackets.RemoveFromStorage.getIndex()) {

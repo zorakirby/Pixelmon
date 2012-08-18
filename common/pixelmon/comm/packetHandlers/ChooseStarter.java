@@ -26,7 +26,8 @@ public class ChooseStarter extends PacketHandlerBase {
 	@Override
 	public void handlePacket(int index, Player play, DataInputStream dataStream) throws IOException {
 		EntityPlayer player = (EntityPlayer)play;
-		IHaveHelper p = (IHaveHelper) PixelmonEntityList.createEntityByName(StarterList.getStarterStringList()[dataStream.readInt()], player.worldObj);
+		int pokemonIndex = dataStream.readInt();
+		IHaveHelper p = (IHaveHelper) PixelmonEntityList.createEntityByName(StarterList.getStarterStringList()[pokemonIndex], player.worldObj);
 		p.getHelper().getLvl().setLevel(5);
 		p.getHelper().loadMoveset();
 		p.getHelper().caughtBall = EnumPokeballs.MasterBall;

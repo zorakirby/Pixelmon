@@ -37,7 +37,7 @@ public class SendPokemonKey extends KeyHandler {
 
 	@Override
 	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.WORLD);
+		return EnumSet.of(TickType.CLIENT, TickType.WORLD);
 	}
 
 }
