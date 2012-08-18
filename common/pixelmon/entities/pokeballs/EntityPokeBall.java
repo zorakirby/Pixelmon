@@ -72,25 +72,50 @@ public class EntityPokeBall extends EntityThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
 
-		if (movingobjectposition != null) {
-			if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
-				IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
-				p = entitypixelmon.getHelper();
-				if (p.getOwner() == (EntityPlayer) thrower) {
-					ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
-					spawnFailParticles();
-					return;
-				}
-				doCaptureCalc(p);
-				isWaiting = true;
-				motionX = motionZ = 0;
-				motionY = -0.1;
-			}
+		if (!isEmpty) {
+			if (movingobjectposition != null && !worldObj.isRemote) {
+				if (pixelmon != null) {
+					if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0 && worldObj.getBlockId((int) posX, (int) posY, (int) posZ) != Block.snow.blockID)
+						pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
+					else
+						pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
+					pixelmon.setMotion(0, 0, 0);
+					pixelmon.releaseFromPokeball();
+					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)
+							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper()))
+						pixelmon.StartBattle(((IHaveHelper) movingobjectposition.entityHit).getHelper());
+					if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer)
+						pixelmon.StartBattle((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
+					else
+						pixelmon.clearAttackTarget();
+					if (thrower instanceof EntityPlayer) {
 
-			else {
-				if (!isWaiting) {
-					entityDropItem(new ItemStack(getType().getItem()), 0.0F);
-					setDead();
+					}
+					// spawnCaptureParticles();
+				}
+				setDead();
+			}
+		} else {
+			if (movingobjectposition != null) {
+				if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
+					IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
+					p = entitypixelmon.getHelper();
+					if (p.getOwner() == (EntityPlayer) thrower) {
+						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
+						// spawnFailParticles();
+						return;
+					}
+					doCaptureCalc(p);
+					isWaiting = true;
+					motionX = motionZ = 0;
+					motionY = -0.1;
+				}
+
+				else {
+					if (!isWaiting) {
+						entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+						setDead();
+					}
 				}
 			}
 		}

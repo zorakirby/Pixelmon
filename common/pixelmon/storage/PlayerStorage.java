@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.common.registry.EntityRegistry;
+
 import pixelmon.Pixelmon;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
@@ -82,7 +84,7 @@ public class PlayerStorage {
 		NBTTagCompound n = new NBTTagCompound();
 		int id = 0;
 		if (mode == PokeballManagerMode.Player)
-			id = ModLoader.getUniqueEntityId();
+			id = EntityRegistry.findGlobalUniqueEntityId();
 		else if (mode == PokeballManagerMode.Trainer)
 			id = new Random().nextInt(10000) * -1 - 1;
 		boolean isUsed = false;

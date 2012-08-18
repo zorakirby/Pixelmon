@@ -107,19 +107,9 @@ public class ComputerManager{
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
-		try {
-			return ModLoader.getPrivateValue(SaveHandler.class, (SaveHandler) player.worldObj.getSaveHandler(), "b") + "/pokemon/";
-		} catch (Throwable e) {
-			//System.err.println(e);
-			try {
-				return ModLoader.getPrivateValue(SaveHandler.class, (SaveHandler) player.worldObj.getSaveHandler(), "worldDirectory") + "/pokemon/";
-			} catch (Throwable f) {
-				System.err.println(f);
-
-			}
-		}
-		return null;
+		return "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
 	}
+
 	
 	@Subscribe
 	public void onWorldLoad(WorldEvent.Load event) {

@@ -95,6 +95,7 @@ public class Pixelmon {
 		
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
+		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
 		
 	}

@@ -44,43 +44,27 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 	}
 
 	@Override
-	public void playerLoggedIn(Player player, NetHandler netHandler, NetworkManager manager) {
-		
-	}
+	public void playerLoggedIn(Player player, NetHandler netHandler, NetworkManager manager) { }
 
 	@Override
 	public String connectionReceived(NetLoginHandler netHandler, NetworkManager manager) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void connectionOpened(NetHandler netClientHandler, String server, int port, NetworkManager manager) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void connectionOpened(NetHandler netClientHandler, String server, int port, NetworkManager manager) { }
 
 	@Override
-	public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, NetworkManager manager) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, NetworkManager manager) {	}
 
 	@Override
-	public void connectionClosed(NetworkManager manager) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void connectionClosed(NetworkManager manager) { }
 
 	@Override
-	public void clientLoggedIn(NetHandler clientHandler, NetworkManager manager, Packet1Login login) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void clientLoggedIn(NetHandler clientHandler, NetworkManager manager, Packet1Login login) { }
 
 }
