@@ -92,7 +92,7 @@ public class PokeballManager{
 			for (int i = 0; i < playerPokemonList.size(); i++) {
 				EntityPlayer player = playerPokemonList.get(i).player;
 				boolean playerConnected = false;
-				for (String playerName : ModLoader.getMinecraftServerInstance().getAllUsernames())
+				for (String playerName : MinecraftServer.getServer().getAllUsernames())
 					if (player.username.equals(playerName)) {
 						playerConnected = true;
 						break;

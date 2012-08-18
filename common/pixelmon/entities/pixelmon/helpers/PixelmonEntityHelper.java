@@ -371,7 +371,7 @@ public class PixelmonEntityHelper {
 					}
 				}
 			}
-			else if(itemstack.itemID > 255)
+			else 
 			{
 				if(this.getHeldItem() != null)
 				{
@@ -417,6 +417,10 @@ public class PixelmonEntityHelper {
 		setIsShiny(var1.getBoolean("IsShiny"));
 		battleStats.readFromNBT(var1);
 		moveset.readFromNBT(var1);
+		if(var1.hasKey("Held Item"))
+		{
+			heldItem = ItemStack.loadItemStackFromNBT(var1.getCompoundTag("Held Item"));
+		}
 		if (var1.hasKey("CaughtBall"))
 			caughtBall = EnumPokeballs.getFromIndex(var1
 					.getInteger("CaughtBall"));
@@ -444,6 +448,10 @@ public class PixelmonEntityHelper {
 		battleStats.writeToNBT(var1);
 		moveset.writeToNBT(var1);
 		stats.writeToNBT(var1);
+		if(heldItem != null)
+		{
+			var1.setCompoundTag("Held Item", heldItem.writeToNBT(new NBTTagCompound()));
+		}
 	}
 
 	public boolean getIsDead() {

@@ -89,6 +89,10 @@ public class GuiPixelmonOverlay extends Gui {
 				else
 					var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
+				if(p.heldItem != null)
+				{
+					//drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0, 0, )
+				}
 				if (!isGuiMinimized) {
 					fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
 					if (p.health <= 0) {
