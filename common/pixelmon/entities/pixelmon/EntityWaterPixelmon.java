@@ -3,6 +3,9 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 import java.util.Random;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
 import pixelmon.Pixelmon;
 import pixelmon.WorldHelper;
 import pixelmon.battles.BattleController;
@@ -82,7 +85,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		length = helper.stats.BaseStats.Length;
 		helper.getLvl();
 		this.field_21080_l = 1.0F / (this.rand.nextFloat() + 1.0F) * swimFrequency;
-		//ridingHelper = new RidingHelper(this, worldObj);
+		// ridingHelper = new RidingHelper(this, worldObj);
 	}
 
 	@Override
@@ -128,12 +131,12 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP)getOwner(), helper);
+			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), helper);
 		else
 			p1 = new WildPixelmonParticipant(helper);
 
 		if (target.getOwner() != null)
-			p2 = new PlayerParticipant((EntityPlayerMP)target.getOwner(), target);
+			p2 = new PlayerParticipant((EntityPlayerMP) target.getOwner(), target);
 		else
 			p2 = new WildPixelmonParticipant(target);
 
@@ -146,7 +149,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 			helper.loadMoveset();
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP)getOwner(), helper);
+			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), helper);
 		else
 			p1 = new WildPixelmonParticipant(helper);
 
@@ -204,8 +207,8 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-//		if (ridingHelper != null)
-//			ridingHelper.onLivingUpdate();
+		// if (ridingHelper != null)
+		// ridingHelper.onLivingUpdate();
 		if (!isSwimming || worldObj.isRemote) {
 			motionX = motionY = motionZ = 0;
 			return;
@@ -294,7 +297,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public void catchInPokeball() {
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT(helper);
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(helper);
 		helper.isInBall = true;
 		unloadEntity();
 	}
@@ -416,29 +419,29 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		super.jump();
 	}
 
-//	@Override
-//	public double getMountedYOffset() {
-//		if (ridingHelper != null)
-//			return ridingHelper.getMountedYOffset();
-//		else
-//			return super.getMountedYOffset();
-//	}
-//
-//	@Override
-//	public void moveEntity(double d, double d1, double d2) {
-//		if (ridingHelper != null)
-//			ridingHelper.moveEntity(d, d1, d2);
-//		else
-//			super.moveEntity(d, d1, d2);
-//	}
-//
-//	@Override
-//	public void updateRidden() {
-//		if (ridingHelper != null)
-//			ridingHelper.updateRidden();
-//		else
-//			super.updateRidden();
-//	}
+	// @Override
+	// public double getMountedYOffset() {
+	// if (ridingHelper != null)
+	// return ridingHelper.getMountedYOffset();
+	// else
+	// return super.getMountedYOffset();
+	// }
+	//
+	// @Override
+	// public void moveEntity(double d, double d1, double d2) {
+	// if (ridingHelper != null)
+	// ridingHelper.moveEntity(d, d1, d2);
+	// else
+	// super.moveEntity(d, d1, d2);
+	// }
+	//
+	// @Override
+	// public void updateRidden() {
+	// if (ridingHelper != null)
+	// ridingHelper.updateRidden();
+	// else
+	// super.updateRidden();
+	// }
 
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);
@@ -449,15 +452,18 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
-		boolean flag = super.attackEntityFrom(par1DamageSource, par2);
-		Entity entity = par1DamageSource.getEntity();
-		if (getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT(helper);
-		if (isValidTarget(entity)) {
-			setAttackTarget((EntityLiving) entity);
-			setTarget(entity);
+		if (!worldObj.isRemote) {
+			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
+			Entity entity = par1DamageSource.getEntity();
+			if (getOwner() != null)
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(helper);
+			if (isValidTarget(entity)) {
+				setAttackTarget((EntityLiving) entity);
+				setTarget(entity);
+			}
+			return flag;
 		}
-		return flag;
+		return false;
 	}
 
 	/**

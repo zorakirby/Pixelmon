@@ -21,6 +21,9 @@ import pixelmon.gui.GuiLearnMove;
 import pixelmon.gui.GuiScreenPokeChecker;
 import pixelmon.gui.pc.GuiPC;
 import pixelmon.gui.pokedex.GuiPokedex;
+import pixelmon.keybindings.MinimizeMaximizeOverlayKey;
+import pixelmon.keybindings.NextPokemonKey;
+import pixelmon.keybindings.PreviousPokemonKey;
 import pixelmon.keybindings.SendPokemonKey;
 import pixelmon.render.RenderFreeWaterPixelmon;
 import pixelmon.render.RenderPixelmon;
@@ -73,6 +76,9 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerKeyBindings(){
 		KeyBindingRegistry.registerKeyBinding(new SendPokemonKey());
+		KeyBindingRegistry.registerKeyBinding(new NextPokemonKey());
+		KeyBindingRegistry.registerKeyBinding(new PreviousPokemonKey());
+		KeyBindingRegistry.registerKeyBinding(new MinimizeMaximizeOverlayKey());
 	}
 	
 	

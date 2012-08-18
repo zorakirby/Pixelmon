@@ -38,7 +38,7 @@ import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 @Mod(modid = "Pixelmon", name = "Pixelmon", version = "4.0")
-@NetworkMod(channels = { "Pixelmon" }, clientSideRequired = true, serverSideRequired = false,
+@NetworkMod(clientSideRequired = true, serverSideRequired = false,
 clientPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandler=ClientPacketHandler.class),
 serverPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandler=PacketHandler.class))
 

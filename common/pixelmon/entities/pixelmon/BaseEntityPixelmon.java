@@ -86,8 +86,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		helper.getLvl();
 		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height);
 		length = helper.stats.BaseStats.Length;
-//		if (helper.stats.BaseStats.IsRideable)
-//			ridingHelper = new RidingHelper(this, worldObj);
+		// if (helper.stats.BaseStats.IsRideable)
+		// ridingHelper = new RidingHelper(this, worldObj);
 
 	}
 
@@ -130,12 +130,12 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP)getOwner(), helper);
+			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), helper);
 		else
 			p1 = new WildPixelmonParticipant(helper);
 
 		if (target.getOwner() != null)
-			p2 = new PlayerParticipant((EntityPlayerMP)target.getOwner(), target);
+			p2 = new PlayerParticipant((EntityPlayerMP) target.getOwner(), target);
 		else
 			p2 = new WildPixelmonParticipant(target);
 
@@ -147,7 +147,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			helper.loadMoveset();
 		IBattleParticipant p1, p2;
 		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP)getOwner(), helper);
+			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), helper);
 		else
 			p1 = new WildPixelmonParticipant(helper);
 
@@ -182,7 +182,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	public void onDeath(DamageSource damagesource) {
 		super.onDeath(damagesource);
-		if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).isIn(helper)) {
+		if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).isIn(helper)) {
 			String s = "Your " + getName() + " fainted!";
 			ChatHandler.sendChat(getOwner(), s);
 			helper.isFainted = true;
@@ -223,15 +223,18 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	// Random Crap I
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
-		boolean flag = super.attackEntityFrom(par1DamageSource, par2);
-		Entity entity = par1DamageSource.getEntity();
-		if (getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT(helper);
-		if (isValidTarget(entity)) {
-			setAttackTarget((EntityLiving) entity);
-			setTarget(entity);
+		if (!worldObj.isRemote) {
+			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
+			Entity entity = par1DamageSource.getEntity();
+			if (getOwner() != null)
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(helper);
+			if (isValidTarget(entity)) {
+				setAttackTarget((EntityLiving) entity);
+				setTarget(entity);
+			}
+			return flag;
 		}
-		return flag;
+		return false;
 	}
 
 	public boolean interact(EntityPlayer entity) {
@@ -239,7 +242,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public void catchInPokeball() {
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT(helper);
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(helper);
 		helper.isInBall = true;
 		unloadEntity();
 	}
@@ -283,10 +286,11 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		return worldObj;
 	}
 
-//	public void renderLevelUpEffects() {
-//		EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this, "magicCrit");
-//		ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
-//	}
+	// public void renderLevelUpEffects() {
+	// EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this,
+	// "magicCrit");
+	// ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
+	// }
 
 	public boolean LearnsAttackAtLevel(int level) {
 		return DatabaseMoves.LearnsAttackAtLevel(name, level);
@@ -439,36 +443,36 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		super.jump();
 	}
 
-//	@Override
-//	public double getMountedYOffset() {
-//		if (ridingHelper != null)
-//			return ridingHelper.getMountedYOffset();
-//		else
-//			return super.getMountedYOffset();
-//	}
-//
-//	@Override
-//	public void onLivingUpdate() {
-//		super.onLivingUpdate();
-//		if (ridingHelper != null)
-//			ridingHelper.onLivingUpdate();
-//	}
-//
-//	@Override
-//	public void moveEntity(double d, double d1, double d2) {
-//		if (ridingHelper != null)
-//			ridingHelper.moveEntity(d, d1, d2);
-//		else
-//			super.moveEntity(d, d1, d2);
-//	}
-//
-//	@Override
-//	public void updateRidden() {
-//		if (ridingHelper != null)
-//			ridingHelper.updateRidden();
-//		else
-//			super.updateRidden();
-//	}
+	// @Override
+	// public double getMountedYOffset() {
+	// if (ridingHelper != null)
+	// return ridingHelper.getMountedYOffset();
+	// else
+	// return super.getMountedYOffset();
+	// }
+	//
+	// @Override
+	// public void onLivingUpdate() {
+	// super.onLivingUpdate();
+	// if (ridingHelper != null)
+	// ridingHelper.onLivingUpdate();
+	// }
+	//
+	// @Override
+	// public void moveEntity(double d, double d1, double d2) {
+	// if (ridingHelper != null)
+	// ridingHelper.moveEntity(d, d1, d2);
+	// else
+	// super.moveEntity(d, d1, d2);
+	// }
+	//
+	// @Override
+	// public void updateRidden() {
+	// if (ridingHelper != null)
+	// ridingHelper.updateRidden();
+	// else
+	// super.updateRidden();
+	// }
 
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);
