@@ -34,7 +34,9 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void registerPacketHandlers() {
-		
+	}
+
+	public void registerKeyBindings() {		
 	}
 
 }

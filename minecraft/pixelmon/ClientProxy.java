@@ -21,6 +21,7 @@ import pixelmon.gui.GuiLearnMove;
 import pixelmon.gui.GuiScreenPokeChecker;
 import pixelmon.gui.pc.GuiPC;
 import pixelmon.gui.pokedex.GuiPokedex;
+import pixelmon.keybindings.SendPokemonKey;
 import pixelmon.render.RenderFreeWaterPixelmon;
 import pixelmon.render.RenderPixelmon;
 import pixelmon.render.RenderPokeball;
@@ -37,6 +38,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
@@ -68,6 +70,10 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
+	@Override
+	public void registerKeyBindings(){
+		KeyBindingRegistry.registerKeyBinding(new SendPokemonKey());
+	}
 	
 	
 	private void addPokemonRenderers() {

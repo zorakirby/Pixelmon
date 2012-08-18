@@ -2,6 +2,8 @@ package pixelmon;
 
 import java.util.Random;
 
+import javax.swing.text.html.MinimalHTMLWriter;
+
 import org.lwjgl.input.Keyboard;
 
 import pixelmon.comm.EnumPackets;
@@ -21,13 +23,17 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet250CustomPayload;
 
 public class KeyboardHandler {
-	public static final KeyBinding minmizePixelmonKey = new KeyBinding("Minimize Pixelmon Overlay", Keyboard.KEY_O);
+	public static final KeyBinding minimizePixelmonKey = new KeyBinding("Minimize Pixelmon Overlay", Keyboard.KEY_O);
 	public static final KeyBinding sendPixelmonKey = new KeyBinding("Send/Recieve Pixelmon", Keyboard.KEY_P);
 	public static final KeyBinding nextPixelmonKey = new KeyBinding("Next Pixelmon", 27);
 	public static final KeyBinding previousPixelmonKey = new KeyBinding("Previous Pixelmon", 26);
 	// Debug Key
 	public static final KeyBinding debugKey = new KeyBinding("Debug Key [Pixelmon]", Keyboard.KEY_F1);
 
+	public static void registerKeys(){
+		
+	}
+	
 	public static void handleKeyboardEvent(KeyBinding event) {
 		if (ModLoader.getMinecraftInstance().theWorld == null)
 			return;
@@ -39,7 +45,7 @@ public class KeyboardHandler {
 			GuiPixelmonOverlay.selectPreviousPixelmon();
 		} else if (event == sendPixelmonKey) {
 			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
-		} else if (event == minmizePixelmonKey) {
+		} else if (event == minimizePixelmonKey) {
 			GuiPixelmonOverlay.isGuiMinimized = !GuiPixelmonOverlay.isGuiMinimized;
 //		} else if (event == debugKey) {
 //			Minecraft mc = ModLoader.getMinecraftInstance();

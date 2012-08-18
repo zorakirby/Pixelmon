@@ -84,6 +84,8 @@ public class Pixelmon {
 		PixelmonBlocks.setTextureIds();
 		PixelmonItems.addNames();
 		
+		proxy.registerKeyBindings();
+		
 		PixelmonEntityList.registerEntities();
 		PixelmonEntityList.addSpawns();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", IDListPixelmon.i++ , Pixelmon.instance, 80, 1, true);
