@@ -14,6 +14,7 @@ import pixelmon.enums.EnumType;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.DataWatcher;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet;
@@ -42,6 +43,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public int nextLvlXP;
 	public int boxNumber=0;
 	public boolean isShiny;
+	public ItemStack heldItem;
 	
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
 	
@@ -76,6 +78,10 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		Defence = p.getInteger("StatsDefence");
 		SpecialAttack = p.getInteger("StatsSpecialAttack");
 		SpecialDefence = p.getInteger("StatsSpecialDefence");
+		if(p.hasKey("Held Item"))
+		{
+			heldItem = ItemStack.loadItemStackFromNBT(p.getCompoundTag("Held Item"));
+		}
 		if (p.hasKey("BoxNumber"))
 			boxNumber = p.getInteger("BoxNumber");
 	}
@@ -107,7 +113,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		Attack = p.stats.Attack;
 		Defence = p.stats.Defence;
 		SpecialAttack = p.stats.SpecialAttack;
-		SpecialDefence = p.stats.SpecialDefence;		
+		SpecialDefence = p.stats.SpecialDefence;	
+		heldItem = p.heldItem;
 	}
 
 	@Override
@@ -143,7 +150,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeShort(SpecialDefence);
 		data.writeShort(boxNumber);
 		data.writeBoolean(isShiny);
-		
+		Packet.writeItemStack(heldItem, data);
 	}
 
 	@Override
@@ -175,5 +182,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		SpecialDefence = data.readShort();
 		boxNumber = data.readShort();
 		isShiny = data.readBoolean();
+		heldItem = Packet.readItemStack(data);
 	}
 }

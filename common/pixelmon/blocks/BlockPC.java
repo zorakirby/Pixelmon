@@ -61,17 +61,17 @@ public class BlockPC extends BlockContainer {
 
         if (var6 == 1)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 5);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1);
         }
 
         if (var6 == 2)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
         }
 
         if (var6 == 3)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 4);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3);
         }
     }
     
@@ -104,7 +104,6 @@ public class BlockPC extends BlockContainer {
             {
                 var9 = 4;
             }
-
             par1World.setBlockMetadataWithNotify(par2, par3, par4, var9);
         }
     }

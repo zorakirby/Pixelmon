@@ -107,21 +107,25 @@ public class BlockHealer extends BlockContainer {
 	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving) {
 		int i = MathHelper.floor_double((double) ((par5EntityLiving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
 
-		if (i == 0) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 2);
-		}
+		if (i == 0)
+        {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2);
+        }
 
-		if (i == 1) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 5);
-		}
+        if (i == 1)
+        {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1);
+        }
 
-		if (i == 2) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 3);
-		}
+        if (i == 2)
+        {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
+        }
 
-		if (i == 3) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 4);
-		}
+        if (i == 3)
+        {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3);
+        }
 	}
 
 	@Override
