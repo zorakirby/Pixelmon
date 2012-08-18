@@ -2,6 +2,7 @@ package pixelmon;
 
 import java.util.logging.Level;
 
+import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
 import pixelmon.config.IDListPixelmon;
 import pixelmon.config.IDListTrainer;
@@ -78,6 +79,7 @@ public class Pixelmon {
 	@Init
 	public void load(FMLInitializationEvent event){
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
+		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 		PixelmonBlocks.registerBlocks();
 		PixelmonBlocks.setTextureIds();
 		PixelmonItems.addNames();
@@ -91,6 +93,7 @@ public class Pixelmon {
 		
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
+		MinecraftForge.EVENT_BUS.register(new SleepHandler());
 		
 	}
 	

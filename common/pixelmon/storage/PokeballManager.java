@@ -22,6 +22,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.Player;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.AnvilSaveHandler;
@@ -137,5 +138,10 @@ public class PokeballManager{
 	@ForgeSubscribe
 	public void onWorldSave(WorldEvent.Save event) {
 		save();
+	}
+
+	public boolean hasPlayerFile(Player player) {
+		File playerSaveFile = new File(getSaveFolder((EntityPlayerMP)player) + ((EntityPlayerMP)player).username + ".pk");
+		return playerSaveFile.exists();
 	}
 }
