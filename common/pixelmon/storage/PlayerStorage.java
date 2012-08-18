@@ -84,7 +84,7 @@ public class PlayerStorage {
 		NBTTagCompound n = new NBTTagCompound();
 		int id = 0;
 		if (mode == PokeballManagerMode.Player)
-			id = EntityRegistry.findGlobalUniqueEntityId();
+			id = new Random().nextInt(1000000);
 		else if (mode == PokeballManagerMode.Trainer)
 			id = new Random().nextInt(10000) * -1 - 1;
 		boolean isUsed = false;
@@ -93,7 +93,7 @@ public class PlayerStorage {
 			for (NBTTagCompound nbt : partyPokemon) {
 				if (nbt != null) {
 					if (mode == PokeballManagerMode.Player) {
-						id = ModLoader.getUniqueEntityId();
+						id = new Random().nextInt(1000000);
 					} else if (mode == PokeballManagerMode.Trainer) {
 						id = new Random().nextInt(10000) * -1 - 1;
 					}

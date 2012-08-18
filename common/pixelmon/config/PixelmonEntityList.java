@@ -227,7 +227,7 @@ public class PixelmonEntityList {
 			String name = (String) entry.getValue();
 			ClassType type = getClassTypeFromID((Integer) entry.getKey());
 			BiomeGenBase[] biomes;
-			if (type == ClassType.Pixelmon) {
+			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
 				biomes = DatabaseStats.GetSpawnBiomes(name);
 				int rarity = DatabaseStats.GetRarity(name);
 				int groupMin = DatabaseStats.GetMinGroupSize(name);

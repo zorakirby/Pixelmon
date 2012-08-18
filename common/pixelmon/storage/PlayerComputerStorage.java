@@ -1,6 +1,7 @@
 package pixelmon.storage;
 
 import java.util.Iterator;
+import java.util.Random;
 
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
@@ -36,7 +37,7 @@ public class PlayerComputerStorage {
 	}
 
 	public int getId() {
-		int id = ModLoader.getUniqueEntityId();
+		int id = new Random().nextInt(1000000);
 		boolean isUsed = false;
 		do {
 			isUsed = false;
@@ -44,7 +45,7 @@ public class PlayerComputerStorage {
 				for (NBTTagCompound nbt : c.getStoredPokemon()) {
 					if (nbt != null) {
 						if (nbt.getInteger("pixelmonID") == id) {
-							id = ModLoader.getUniqueEntityId();
+							id = new Random().nextInt(1000000);
 							isUsed = true;
 						}
 					}
@@ -54,7 +55,7 @@ public class PlayerComputerStorage {
 				for (int i = 0; i < ComputerBox.boxLimit; i++) {
 					if (c.getStoredPokemon()[i] != null) {
 						if (c.getStoredPokemon()[i].getInteger("pixelmonID") == id) {
-							id = ModLoader.getUniqueEntityId();
+							id = new Random().nextInt(1000000);
 							isUsed = true;
 						}
 					}
