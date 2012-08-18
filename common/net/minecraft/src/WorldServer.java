@@ -36,7 +36,7 @@ public class WorldServer extends World
 
     /** is false if there are no players */
     private boolean allPlayersSleeping;
-    private int field_80003_Q = 0;
+    private int field_80004_Q = 0;
 
     /**
      * Double buffer of ServerBlockEventList[] for holding pending BlockEventData's
@@ -424,14 +424,14 @@ public class WorldServer extends World
     {
         if (this.playerEntities.isEmpty())
         {
-            if (this.field_80003_Q++ >= 60)
+            if (this.field_80004_Q++ >= 60)
             {
                 return;
             }
         }
         else
         {
-            this.field_80003_Q = 0;
+            this.field_80004_Q = 0;
         }
 
         super.updateEntities();

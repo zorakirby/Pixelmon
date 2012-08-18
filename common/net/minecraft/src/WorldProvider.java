@@ -251,7 +251,7 @@ public abstract class WorldProvider
         return false;
     }
 
-    public abstract String func_80004_l();
+    public abstract String func_80007_l();
 
     /*======================================= Forge Start =========================================*/
     private int dimensionID = 0;

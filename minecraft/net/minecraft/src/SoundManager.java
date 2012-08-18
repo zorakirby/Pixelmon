@@ -6,8 +6,11 @@ import java.util.Random;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.ModCompatibilityClient;
 import net.minecraftforge.client.event.sound.PlaySoundEffectEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEffectSourceEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.client.event.sound.PlaySoundSourceEvent;
 import net.minecraftforge.client.event.sound.PlayStreamingEvent;
+import net.minecraftforge.client.event.sound.PlayStreamingSourceEvent;
 import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.client.event.sound.PlayBackgroundMusicEvent;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
@@ -246,6 +249,7 @@ public class SoundManager
                     float var9 = 16.0F;
                     sndSystem.newStreamingSource(true, var7, var8.soundUrl, var8.soundName, false, par2, par3, par4, 2, var9 * 4.0F);
                     sndSystem.setVolume(var7, 0.5F * this.options.soundVolume);
+                    MinecraftForge.EVENT_BUS.post(new PlayStreamingSourceEvent(this, var7, par2, par3, par4));
                     sndSystem.play(var7);
                 }
             }
@@ -282,6 +286,7 @@ public class SoundManager
                 }
 
                 sndSystem.setVolume(var8, par5 * this.options.soundVolume);
+                MinecraftForge.EVENT_BUS.post(new PlaySoundSourceEvent(this, var8, par2, par3, par4));
                 sndSystem.play(var8);
             }
         }
@@ -312,6 +317,7 @@ public class SoundManager
                 par2 *= 0.25F;
                 sndSystem.setPitch(var5, par3);
                 sndSystem.setVolume(var5, par2 * this.options.soundVolume);
+                MinecraftForge.EVENT_BUS.post(new PlaySoundEffectSourceEvent(this, var5));
                 sndSystem.play(var5);
             }
         }

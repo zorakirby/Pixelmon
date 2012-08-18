@@ -330,7 +330,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                 {
                     if (!par1)
                     {
-                        logger.info("Saving chunks for level \'" + var5.getWorldInfo().getWorldName() + "\'/" + var5.provider.func_80004_l());
+                        logger.info("Saving chunks for level \'" + var5.getWorldInfo().getWorldName() + "\'/" + var5.provider.func_80007_l());
                     }
 
                     try

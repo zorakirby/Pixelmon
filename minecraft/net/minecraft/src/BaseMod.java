@@ -34,10 +34,12 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
 {
     // CALLBACK MECHANISMS
 
+    private boolean fml_lastWorld = false;
+
     public final boolean doTickInGame(TickType tick, boolean tickEnd, Object... data)
     {
         Minecraft mc = FMLClientHandler.instance().getClient();
-        boolean hasWorld = true;
+        boolean hasWorld = mc.theWorld != null;
         // World and render ticks
         if (tickEnd && ( tick==TickType.RENDER || tick==TickType.CLIENT ) && hasWorld) {
             return onTickInGame((Float) data[0], mc);
@@ -48,6 +50,16 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
     public final boolean doTickInGUI(TickType tick, boolean tickEnd, Object... data)
     {
         Minecraft mc = FMLClientHandler.instance().getClient();
+        boolean hasWorld = mc.theWorld != null;
+        if (!hasWorld && !fml_lastWorld)
+        {
+            fml_lastWorld = true;
+        }
+        else if (!hasWorld && fml_lastWorld)
+        {
+            return true;
+        }
+
         if (tickEnd && ( tick==TickType.RENDER || tick==TickType.CLIENT)) {
             return onTickInGUI((Float) data[0], mc, mc.currentScreen);
         }
