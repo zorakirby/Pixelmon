@@ -9,6 +9,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.gui.GuiPixelmonOverlay;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.KeyBinding;
 import net.minecraft.src.ModLoader;
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
@@ -28,6 +29,10 @@ public class SendPokemonKey extends KeyHandler {
 	@Override
 	public void keyDown(EnumSet<TickType> types, KeyBinding kb,
 			boolean tickEnd, boolean isRepeat) {
+		if(Minecraft.getMinecraft().currentScreen != null)
+		{
+			return;
+		}
 		ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
 	}
 

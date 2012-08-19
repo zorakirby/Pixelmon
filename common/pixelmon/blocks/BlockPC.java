@@ -43,76 +43,26 @@ public class BlockPC extends BlockContainer {
 	  return -1;
 	}
 	
-	@Override
-	public boolean onBlockActivated(World world, int par2, int par3, int par4, EntityPlayer player, int par6, float par7, float par8, float par9) {
-		player.openGui(Pixelmon.instance, EnumGui.PC.getIndex(), world, 0, 0, 0);
-		return true;
+	public void onBlockDestroyedByPlayer(World var1, int var2, int var3, int var4, int var5)
+	{
+		if(var1.getBlockId(var2, var3 + 1, var4) == blockID)
+		{
+			var1.setBlockAndMetadataWithNotify(var2, var3 + 1, var4, 0, 0);
+		}
+		if(var1.getBlockId(var2, var3 - 1, var4) == blockID)
+		{
+			var1.setBlockAndMetadataWithNotify(var2, var3 - 1, var4, 0, 0);
+		}
 	}
 	
-   	
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving)
-    {
-        int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-
-        if (var6 == 0)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2);
-        }
-
-        if (var6 == 1)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1);
-        }
-
-        if (var6 == 2)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0);
-        }
-
-        if (var6 == 3)
-        {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3);
-        }
-    }
-    
-    private void setDefaultDirection(World par1World, int par2, int par3, int par4)
-    {
-        if (!par1World.isRemote)
-        {
-            int var5 = par1World.getBlockId(par2, par3, par4 - 1);
-            int var6 = par1World.getBlockId(par2, par3, par4 + 1);
-            int var7 = par1World.getBlockId(par2 - 1, par3, par4);
-            int var8 = par1World.getBlockId(par2 + 1, par3, par4);
-            byte var9 = 3;
-
-            if (Block.opaqueCubeLookup[var5] && !Block.opaqueCubeLookup[var6])
-            {
-                var9 = 3;
-            }
-
-            if (Block.opaqueCubeLookup[var6] && !Block.opaqueCubeLookup[var5])
-            {
-                var9 = 2;
-            }
-
-            if (Block.opaqueCubeLookup[var7] && !Block.opaqueCubeLookup[var8])
-            {
-                var9 = 5;
-            }
-
-            if (Block.opaqueCubeLookup[var8] && !Block.opaqueCubeLookup[var7])
-            {
-                var9 = 4;
-            }
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, var9);
-        }
-    }
-    
-    public void onBlockAdded(World par1World, int par2, int par3, int par4)
-    {
-        super.onBlockAdded(par1World, par2, par3, par4);
-        this.setDefaultDirection(par1World, par2, par3, par4);
-    }
+	@Override
+	public boolean onBlockActivated(World world, int par2, int par3, int par4, EntityPlayer player, int par6, float par7, float par8, float par9) {
+		if(!world.isRemote)
+		{
+			player.openGui(Pixelmon.instance, EnumGui.PC.getIndex(), world, 0, 0, 0);
+		}
+		return true;
+	}
     
 	@Override
 	public TileEntity createNewTileEntity(World var1) {

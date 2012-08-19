@@ -319,7 +319,7 @@ public class PixelmonEntityHelper {
 					itemstack.stackSize--;
 				flag = true;
 			}
-			else if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex
+			if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex
 					&& getOwner() != null) {
 				if (getOwner() != null)
 					getOwner().openGui(Pixelmon.instance,
@@ -327,7 +327,7 @@ public class PixelmonEntityHelper {
 							getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
-			else if (itemstack.itemID == PixelmonItems.potion.shiftedIndex
+			if (itemstack.itemID == PixelmonItems.potion.shiftedIndex
 					&& getOwner() == entity) {
 				if (getHealth() + 20 > stats.HP)
 					setHealth(stats.HP);
@@ -351,7 +351,7 @@ public class PixelmonEntityHelper {
 			// flag = true;
 			// }
 			// }
-			else if (itemstack.getItem() instanceof ItemEvolutionStone
+			if (itemstack.getItem() instanceof ItemEvolutionStone
 					&& getOwner() == entity) {
 				ItemEvolutionStone i = (ItemEvolutionStone) itemstack.getItem();
 				for (EvolutionInfo e : getEvolveList()) {
@@ -371,17 +371,6 @@ public class PixelmonEntityHelper {
 					}
 				}
 			}
-			else 
-			{
-				if(this.getHeldItem() != null)
-				{
-					EntityLiving living = (EntityLiving)pixelmon;
-					EntityOwnedItem owned = new EntityOwnedItem(living.worldObj, living.posX, living.posY + 1d, living.posZ, heldItem, entity.username);
-					living.worldObj.spawnEntityInWorld(owned);
-				}
-				this.setHeldItem(new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
-				itemstack.stackSize--;
-			}
 			if (itemstack.stackSize <= 0)
 				entity.inventory.setInventorySlotContents(
 						entity.inventory.currentItem, null);
@@ -389,6 +378,19 @@ public class PixelmonEntityHelper {
 		}
 
 		return false;
+	}
+	
+	public void dropHeldItem(EntityPlayer entity)
+	{
+		if(this.getHeldItem() != null && !entity.worldObj.isRemote && getOwner() == entity)
+		{
+			ItemStack item = getHeldItem().copy();
+			item.stackSize = 1;
+			EntityLiving living = (EntityLiving)pixelmon;
+			EntityOwnedItem owned = new EntityOwnedItem(living.worldObj, living.posX, living.posY + 1d, living.posZ, item, entity.username);
+			living.worldObj.spawnEntityInWorld(owned);
+			setHeldItem(null);
+		}
 	}
 
 	public boolean isValidTarget(Entity entity) {

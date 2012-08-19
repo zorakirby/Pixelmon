@@ -112,6 +112,10 @@ public class PlayerStorage {
 		n.setBoolean("IsInBall", true);
 		n.setBoolean("IsShiny", p.getIsShiny());
 		n.setInteger("PixelmonOrder", getNextOpen());
+		if(p.getHeldItem() != null)
+		{
+			n.setCompoundTag("Held Item", p.getHeldItem().writeToNBT(new NBTTagCompound()));
+		}
 		partyPokemon[getNextOpen()] = n;
 		if (n.getShort("Health") > 0)
 			n.setBoolean("IsFainted", false);
