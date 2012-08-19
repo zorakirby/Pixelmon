@@ -17,7 +17,6 @@ import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.database.Stats;
-import pixelmon.entities.EntityOwnedItem;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
@@ -31,6 +30,7 @@ import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityLookHelper;
 import net.minecraft.src.EntityPlayer;
@@ -263,7 +263,7 @@ public class PixelmonEntityHelper {
 		entity.moveset.clear();
 		entity.isMale = isMale;
 		entity.setIsShiny(getIsShiny());
-		entity.setHeldItem(getHeldItem());
+		entity.setHeldItem(getHeldItem().copy());
 		for (int i = 0; i < moveset.size(); i++)
 			entity.moveset.add(moveset.get(i));
 		entity.stats.IVs.CopyIVs(stats.IVs);
@@ -308,10 +308,8 @@ public class PixelmonEntityHelper {
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer entity1 = (EntityPlayer) entity;
 			ItemStack itemstack = entity1.getCurrentEquippedItem();
-			if (itemstack == null)
-				return false;
 			boolean flag = false;
-			if (itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex
+			if (itemstack != null && itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex
 					&& getOwner() == entity) {
 				getLvl().awardEXP(
 						getLvl().getExpToNextLevel() - getLvl().getExp());
@@ -319,7 +317,7 @@ public class PixelmonEntityHelper {
 					itemstack.stackSize--;
 				flag = true;
 			}
-			if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex
+			if (itemstack != null && itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex
 					&& getOwner() != null) {
 				if (getOwner() != null)
 					getOwner().openGui(Pixelmon.instance,
@@ -327,7 +325,7 @@ public class PixelmonEntityHelper {
 							getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
-			if (itemstack.itemID == PixelmonItems.potion.shiftedIndex
+			if (itemstack != null && itemstack.itemID == PixelmonItems.potion.shiftedIndex
 					&& getOwner() == entity) {
 				if (getHealth() + 20 > stats.HP)
 					setHealth(stats.HP);
@@ -343,7 +341,7 @@ public class PixelmonEntityHelper {
 					setHealth(stats.HP);
 				flag = true;
 			}
-			// else if (itemstack.itemID == mod_Pixelmon.pokeDex.shiftedIndex) {
+			// if (itemstack.itemID == mod_Pixelmon.pokeDex.shiftedIndex) {
 			// if (getOwner() == entity) {
 			// getOwner().openGui(mod_Pixelmon.instance,
 			// EnumGui.Pokedex.getIndex(), getOwner().worldObj, getPokemonId(),
@@ -351,7 +349,7 @@ public class PixelmonEntityHelper {
 			// flag = true;
 			// }
 			// }
-			if (itemstack.getItem() instanceof ItemEvolutionStone
+			if (itemstack != null && itemstack.getItem() instanceof ItemEvolutionStone
 					&& getOwner() == entity) {
 				ItemEvolutionStone i = (ItemEvolutionStone) itemstack.getItem();
 				for (EvolutionInfo e : getEvolveList()) {
@@ -371,26 +369,46 @@ public class PixelmonEntityHelper {
 					}
 				}
 			}
-			if (itemstack.stackSize <= 0)
+			if(!flag && getOwner() == entity)
+			{
+				if(getHeldItem() != null )
+				{
+					if(pixelmon instanceof EntityWaterPixelmon)
+					{
+						if(!((EntityWaterPixelmon) pixelmon).worldObj.isRemote)
+						{
+							((EntityWaterPixelmon) pixelmon).entityDropItem(heldItem.copy(), 1f);
+						}
+					}
+					else if(pixelmon instanceof BaseEntityPixelmon)
+					{
+						if(!((BaseEntityPixelmon) pixelmon).worldObj.isRemote)
+						{
+							((BaseEntityPixelmon) pixelmon).entityDropItem(heldItem.copy(), 1f);
+						}
+					}
+					setHeldItem(null);
+				}
+				if(itemstack != null)
+				{
+					ItemStack itemstack1 = itemstack.copy();
+					itemstack1.stackSize = 1;
+					itemstack.stackSize--;
+					this.setHeldItem(itemstack1);
+				}
+				if(entity instanceof EntityPlayerMP)
+				{
+					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
+				}
+				flag = true;
+			}
+			if (itemstack != null && itemstack.stackSize <= 0)
 				entity.inventory.setInventorySlotContents(
 						entity.inventory.currentItem, null);
 			return flag;
 		}
 
 		return false;
-	}
-	
-	public void dropHeldItem(EntityPlayer entity)
-	{
-		if(this.getHeldItem() != null && !entity.worldObj.isRemote && getOwner() == entity)
-		{
-			ItemStack item = getHeldItem().copy();
-			item.stackSize = 1;
-			EntityLiving living = (EntityLiving)pixelmon;
-			EntityOwnedItem owned = new EntityOwnedItem(living.worldObj, living.posX, living.posY + 1d, living.posZ, item, entity.username);
-			living.worldObj.spawnEntityInWorld(owned);
-			setHeldItem(null);
-		}
 	}
 
 	public boolean isValidTarget(Entity entity) {
@@ -421,7 +439,14 @@ public class PixelmonEntityHelper {
 		moveset.readFromNBT(var1);
 		if(var1.hasKey("Held Item"))
 		{
-			heldItem = ItemStack.loadItemStackFromNBT(var1.getCompoundTag("Held Item"));
+			if(var1.getCompoundTag("Held Item").hasKey("Remove"))
+			{
+				heldItem = null;
+			}
+			else
+			{
+				heldItem = ItemStack.loadItemStackFromNBT(var1.getCompoundTag("Held Item"));
+			}
 		}
 		if (var1.hasKey("CaughtBall"))
 			caughtBall = EnumPokeballs.getFromIndex(var1
@@ -453,6 +478,12 @@ public class PixelmonEntityHelper {
 		if(heldItem != null)
 		{
 			var1.setCompoundTag("Held Item", heldItem.writeToNBT(new NBTTagCompound()));
+		}
+		else
+		{
+			NBTTagCompound comp = new NBTTagCompound();
+			comp.setBoolean("Remove", true);
+			var1.setCompoundTag("Held Item", comp);
 		}
 	}
 

@@ -496,14 +496,6 @@ public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
 		return (new int[] { -1, 0, 0 });
 	}
 
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-		super.writeEntityToNBT(nbttagcompound);
-	}
-
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-		super.readEntityFromNBT(nbttagcompound);
-	}
-
 	protected String getLivingSound() {
 		return null;
 	}

@@ -25,23 +25,50 @@ public class DatabaseStats {
 			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + pixelmonName + "'");
 
 			BaseStats stats = new BaseStats();
-			boolean error = false;
-			while (rs.next()) {
+			String error = "";
+			boolean hasError = false;
+			while (rs.next()) 
+			{
 				stats.HP = rs.getInt("BaseHP");
-				if (rs.wasNull()) error=true;
+				if (rs.wasNull())
+				{
+					error+="[HP]"; 
+					hasError = true;
+				}
 				stats.Attack = rs.getInt("BaseAttack");
-				if (rs.wasNull()) error=true;
+				if (rs.wasNull()) 
+				{
+					error+="[ATTACK]"; 
+					hasError = true;
+				}
 				stats.Defence = rs.getInt("BaseDefence");
-				if (rs.wasNull()) error=true;
+				if (rs.wasNull())
+				{
+					error+="[DEFENSE]"; 
+					hasError = true;
+				}
 				stats.Speed = rs.getInt("BaseSpeed");
-				if (rs.wasNull()) error=true;
+				if (rs.wasNull())
+				{
+					error+="[SPEED]"; 
+					hasError = true;
+				}
 				stats.SpAtt = rs.getInt("BaseSpAttack");
-				if (rs.wasNull()) error=true;
+				if (rs.wasNull()) 
+				{
+					error+="[SPATTACK]"; 
+					hasError = true;
+				}
 				stats.SpDef = rs.getInt("BaseSpDefence");
-				if (rs.wasNull()) error=true;
-				if (error=true)
-					System.out.println("Error in BaseStats");
-				
+				if (rs.wasNull()) 
+				{
+					error+="[SPDEFENSE]";
+					hasError = true;
+				}
+				if (hasError)
+				{
+					System.out.println("Error in BaseStats "+ "[" + error + "]" + " For Pokemon : " + pixelmonName);
+				}
 				stats.CatchRate = rs.getInt("CatchRate");
 				if (rs.wasNull()) 
 					System.out.println("Error in CatchRate");

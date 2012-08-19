@@ -48,7 +48,6 @@ public class PixelmonConfig {
 			{
 				Integer i = (Integer)it.next(); 
 				Class c1 = (Class)EntityList.IDtoClassMapping.get(i);
-				System.out.println(c1.getName());
 				if(IHaveHelper.class.isAssignableFrom(c1) || EntityTrainer.class.isAssignableFrom(c1))
 				{
 					continue;
