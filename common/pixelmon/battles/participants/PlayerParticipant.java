@@ -50,7 +50,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		currentPixelmon.battleStats.clearBattleStats();
 		currentPixelmon.EndBattle();
-		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BattleFinished, 0));
+		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 	}
 
 	@Override
@@ -70,6 +70,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
+		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 		int x = 0, y = 0;
 		x = currentPokemon().getPokemonId();
 		PixelmonDataPacket p = new PixelmonDataPacket(participant2.currentPokemon(), EnumPackets.AddToTempStore);

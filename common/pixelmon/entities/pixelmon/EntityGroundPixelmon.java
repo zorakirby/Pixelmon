@@ -1,5 +1,6 @@
 package pixelmon.entities.pixelmon;
 
+import pixelmon.AI.EntityAIIsInBattle;
 import pixelmon.AI.EntityAINearestPixelmonTarget;
 import pixelmon.AI.EntityAIStartBattle;
 import pixelmon.battles.BattleController;
@@ -41,30 +42,6 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 		tasks.addTask(6, new EntityAIWatchClosest(this,
 				pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
 		tasks.addTask(7, new EntityAILookIdle(this));
-	}
-	
-	public void resetAI(){
-		tasks.field_75782_a.clear();
-		tasks.addTask(3, new EntityAISwimming(this));
-	}
-	public void StartBattle(PixelmonEntityHelper target){
-		super.StartBattle(target);
-		resetAI();
-	}
-	
-	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent){
-		super.StartBattle(trainer, opponent);
-		resetAI();
-	}
-	
-	public void SetBattleController(BattleController bc) {
-		super.SetBattleController(bc);
-		resetAI();
-	}
-	
-	public void EndBattle(){
-		helper.bc = null;
-		loadAI();
-	}
-	
+		tasks.addTask(8, new EntityAIIsInBattle(helper));
+	}	
 }

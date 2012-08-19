@@ -2,6 +2,7 @@ package pixelmon.entities.pixelmon;
 
 import java.util.List;
 
+import pixelmon.AI.EntityAIIsInBattle;
 import pixelmon.AI.EntityAINearestPixelmonTarget;
 import pixelmon.AI.EntityAIStartBattle;
 import pixelmon.battles.BattleController;
@@ -42,15 +43,9 @@ public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
 
 	public void init() {
 		super.init();
-		loadAI();
-	}
-
-	public void resetAI(){
-		tasks.field_75782_a.clear();
 	}
 	
 	public void loadAI() {
-		resetAI();
 		if (helper.aggression > 0) {
 			tasks.addTask(0, new EntityAIMoveTowardsTarget(this, moveSpeed, 15));
 			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50 - helper.aggression, true));
@@ -60,22 +55,7 @@ public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
 		tasks.addTask(4, new EntityAITempt(this, moveSpeed, PixelmonItems.rareCandy.shiftedIndex, false));
 		tasks.addTask(6, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
 		tasks.addTask(7, new EntityAILookIdle(this));
-	}
-
-	public void StartBattle(PixelmonEntityHelper target) {
-		super.StartBattle(target);
-	}
-
-	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
-		super.StartBattle(trainer, opponent);
-	}
-
-	public void SetBattleController(BattleController bc) {
-		super.SetBattleController(bc);
-	}
-
-	public void EndBattle() {
-		helper.bc = null;
+		tasks.addTask(8, new EntityAIIsInBattle(helper));
 	}
 
 	protected void fall(float f) {

@@ -287,7 +287,7 @@ public class BattleController {
 					return;
 				t = 1;// traded
 				b = pixelmon12.stats.BaseStats.BaseExp;
-				e = HeldItemHelper.isItemLuckyEgg(pixelmon22) ? 1.5 : 1;// holding lucky egg
+				e = 1;//HeldItemHelper.isItemLuckyEgg(pixelmon22) ? 1.5 : 1;// holding lucky egg
 				L = pixelmon12.getLvl().getLevel();
 				Lp = user.getInteger("Level");
 				s = users.size();

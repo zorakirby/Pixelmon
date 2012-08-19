@@ -122,8 +122,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	public abstract void loadAI();
 
-	public abstract void resetAI();
-
 	public void StartBattle(PixelmonEntityHelper target) {
 		if (helper.moveset.size() == 0)
 			helper.loadMoveset();
@@ -154,7 +152,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		p2 = new TrainerParticipant(trainer, opponent);
 
 		helper.bc = new BattleController(p1, p2);
-		resetAI();
 	}
 
 	public void SetBattleController(BattleController bc) {
@@ -162,7 +159,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			helper.loadMoveset();
 
 		helper.bc = bc;
-		resetAI();
 	}
 
 	public void EndBattle() {
@@ -181,16 +177,18 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	public EntityTrainer trainer;
 
 	public void onDeath(DamageSource damagesource) {
-		super.onDeath(damagesource);
-		if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).isIn(helper)) {
-			String s = "Your " + getName() + " fainted!";
-			ChatHandler.sendChat(getOwner(), s);
-			helper.isFainted = true;
-			health = 0;
-			catchInPokeball();
-		} else {
+		if (worldObj.isRemote) {
 			super.onDeath(damagesource);
-			this.setDead();
+			if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).isIn(helper)) {
+				String s = "Your " + getName() + " fainted!";
+				ChatHandler.sendChat(getOwner(), s);
+				helper.isFainted = true;
+				health = 0;
+				catchInPokeball();
+			} else {
+				super.onDeath(damagesource);
+				this.setDead();
+			}
 		}
 	}
 
@@ -314,7 +312,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		int var3 = MathHelper.floor_double(this.posZ);
 		return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
 	}
-	
+
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		if (trainer != null && !isStorage)
@@ -358,14 +356,12 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			this.posZ = ((EntityWaterPixelmon) currentPixelmon).posZ;
 		}
 	}
-	
-	public PixelmonEntityHelper getHelper()
-	{
+
+	public PixelmonEntityHelper getHelper() {
 		return helper;
 	}
-	
-	public ItemStack getHeldItem()
-	{
+
+	public ItemStack getHeldItem() {
 		return getHelper().getHeldItem();
 	}
 

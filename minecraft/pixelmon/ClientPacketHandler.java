@@ -36,7 +36,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				ServerStorageDisplay.update(dataStream);
 			} else if (packetID == EnumPackets.AddToTempStore.getIndex()) {
 				PixelmonServerStore.addToList(dataStream);
-			} else if (packetID == EnumPackets.BattleFinished.getIndex()) {
+			} else if (packetID == EnumPackets.ClearTempStore.getIndex()) {
 				PixelmonServerStore.clearList();
 			}
 		} catch (IOException e) {
