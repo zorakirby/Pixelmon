@@ -335,10 +335,12 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound var1) {
+	public void writeEntityToNBT(NBTTagCompound var1) {
 		if (getPokemonId() < -1)
+		{
 			return;
-		super.writeToNBT(var1);
+		}
+		super.writeEntityToNBT(var1);
 		helper.writeToNBT(var1);
 	}
 
@@ -346,13 +348,13 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	public void writeEntityToStorageNBT(NBTTagCompound var1) {
 		isStorage = true;
-		writeToNBT(var1);
+		writeEntityToNBT(var1);
 		isStorage = false;
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound var1) {
-		super.readFromNBT(var1);
+		super.readEntityFromNBT(var1);
 		helper.readFromNBT(var1);
 	}
 

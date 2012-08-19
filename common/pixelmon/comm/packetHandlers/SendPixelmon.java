@@ -19,14 +19,13 @@ import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.items.ItemPokeBall;
 import pixelmon.storage.PixelmonStorage;
 
 public class SendPixelmon extends PacketHandlerBase {
-	public static HashMap<EntityPlayer, EntityPokeBall> playerPokeballs;
 
 	public SendPixelmon(){
 		packetsHandled.add(EnumPackets.SendPokemon);
-		playerPokeballs = new HashMap<EntityPlayer, EntityPokeBall>();
 	}
 
 	@Override
@@ -36,13 +35,14 @@ public class SendPixelmon extends PacketHandlerBase {
 		NBTTagCompound nbt = PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(pokemonId);
 		if (!PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj)
 				&& !PixelmonStorage.PokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
-			
-			if (playerPokeballs.get(player)!=null && !playerPokeballs.get(player).isDead)
+			if(ItemPokeBall.ballTimer > 0)
+			{
 				return;
+			}
+			ItemPokeBall.ballTimer = 40;
 			
 			PixelmonEntityHelper helper = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj).getHelper();
 			EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, helper, helper.caughtBall);
-			playerPokeballs.put(player, pokeball);
 			
 			boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
 			ChatHandler.sendChat(player, "You sent out " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");

@@ -9,9 +9,11 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.BattleStats;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.helpers.HeldItemHelper;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
@@ -21,6 +23,7 @@ import pixelmon.storage.PokeballManager;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 
@@ -284,12 +287,12 @@ public class BattleController {
 					return;
 				t = 1;// traded
 				b = pixelmon12.stats.BaseStats.BaseExp;
-				e = 1;// holding lucky egg
+				e = HeldItemHelper.isItemLuckyEgg(pixelmon22) ? 1.5 : 1;// holding lucky egg
 				L = pixelmon12.getLvl().getLevel();
 				Lp = user.getInteger("Level");
 				s = users.size();
 				p = 1;
-
+				
 				double exp = ((a * b * L) / (5 * s) * (Math.pow(2 * L + 10, 2.5) / Math.pow(L + Lp + 10, 2.5)) + 1) * t * e * p;
 				if (userIndex == pixelmon22.getPokemonId()) {
 					pixelmon22.getLvl().awardEXP((int) exp);

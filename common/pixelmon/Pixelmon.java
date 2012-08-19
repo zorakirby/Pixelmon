@@ -15,11 +15,15 @@ import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.storage.PixelmonStorage;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.ServerCommandManager;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Metadata;
+import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -29,6 +33,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -82,7 +87,7 @@ public class Pixelmon {
 		
 		PixelmonEntityList.registerEntities();
 		PixelmonEntityList.addSpawns();
-		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", IDListPixelmon.i++ , Pixelmon.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", IDListPixelmon.i ++ , Pixelmon.instance, 80, 1, true);
 		proxy.registerRenderers();
 		proxy.preloadTextures();
 		PixelmonRecipes.addRecipes();
@@ -96,5 +101,14 @@ public class Pixelmon {
 	@PostInit
 	public void modsLoaded(FMLPostInitializationEvent event){
 		PixelmonConfig.removeSpawns();
+	}
+	
+	@ServerStarting
+	public void onServerStatr(FMLServerStartingEvent event)
+	{
+		if(MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager)
+		{
+			((ServerCommandManager)MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
+		}
 	}
 }

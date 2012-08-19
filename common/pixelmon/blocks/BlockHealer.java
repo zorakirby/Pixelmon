@@ -3,6 +3,7 @@ package pixelmon.blocks;
 import java.util.Random;
 
 import pixelmon.Pixelmon;
+import pixelmon.config.PixelmonItems;
 import pixelmon.enums.EnumGui;
 
 import net.minecraft.src.Block;
@@ -30,12 +31,12 @@ public class BlockHealer extends BlockContainer {
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return -1;
+		return PixelmonItems.healerItem.shiftedIndex;
 	}
 
 	@Override
 	public int quantityDropped(Random random) {
-		return 0;
+		return 1;
 	}
 
 	@Override

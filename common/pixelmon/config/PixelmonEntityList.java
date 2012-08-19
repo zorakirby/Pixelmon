@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.Entity;
@@ -206,8 +207,23 @@ public class PixelmonEntityList {
 	}
 
 	public static void registerEntities() {
-		Iterator i = idToStringMapping.entrySet().iterator();
-		while (i.hasNext()) {
+		Iterator it = idToStringMapping.keySet().iterator();
+		while(it.hasNext())
+		{
+			Integer i = (Integer)it.next();
+			String name = idToStringMapping.get(i);
+			ClassType type = getClassTypeFromID(i);
+			LanguageRegistry.instance().addStringLocalization("entity" + name + ".name", "en_US", name);
+			try {
+				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
+					EntityRegistry.registerGlobalEntityID((Class<? extends Entity>)Class.forName("pixelmon.entities.pokemon.Entity" + name), name, ModLoader.getUniqueEntityId());
+				else if (type == ClassType.Trainer)
+					EntityRegistry.registerGlobalEntityID((Class<? extends Entity>)Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, ModLoader.getUniqueEntityId());
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		/*while (i.hasNext()) {
 			Map.Entry entry = (Map.Entry) i.next();
 			String name =  (String)entry.getValue();
 			ClassType type = getClassTypeFromID((Integer) entry.getKey());
@@ -219,7 +235,7 @@ public class PixelmonEntityList {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 
 	public static void addSpawns() {

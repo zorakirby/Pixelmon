@@ -10,6 +10,7 @@ import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEvolutionStone;
+import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.PixelmonItem;
@@ -33,6 +34,7 @@ public class PixelmonItems {
 	public static int healerItemID;
 	public static int thunderStoneShardID;
 	public static int leafStoneShardID;
+	public static int heldItemsID;
 	
 	@Mod.Item(name = "PokeBall", typeClass = "pixelmon.items.ItemPokeBall")
 	public static Item pokeBall;
@@ -54,6 +56,8 @@ public class PixelmonItems {
 	public static Item potion;
 	@Mod.Item(name = "Coal Dust", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item coalDust;
+	@Mod.Item(name = "Held Items", typeClass = "pixelmon.items.ItemHeld")
+	public static Item heldItem;
 	
 	@Mod.Item(name = "Fire Stone", typeClass = "pixelmon.items.ItemEvolutionStone")
 	public static Item fireStone;
@@ -85,6 +89,7 @@ public class PixelmonItems {
 		pokeCheckerID = cfg.getOrCreateIntProperty("PokeChecker", "item", 10004).getInt();
 		pokeDexID = cfg.getOrCreateIntProperty("PokeDex", "item", 10027).getInt();
 		rareCandyID = cfg.getOrCreateIntProperty("RareCandy", "item", 10005).getInt();
+		heldItemsID = cfg.getOrCreateIntProperty("Held Items", "item", 10035).getInt();
 		potionID = cfg.getOrCreateIntProperty("Potion", "item", 10006).getInt();
 		coalDustID = cfg.getOrCreateIntProperty("CoalDust", "item", 10007).getInt();
 		fireStoneID = cfg.getOrCreateIntProperty("FireStone", "item", 10008).getInt();
@@ -103,6 +108,7 @@ public class PixelmonItems {
 		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(5);
+		heldItem = new ItemHeld(0).setItemName("Held Items").setIconIndex(0);
 		potion = new PixelmonItem(potionID).setItemName("Potion").setIconIndex(2).setMaxStackSize(16);
 		coalDust = new PixelmonItem(coalDustID).setItemName("CoalDust").setIconIndex(4);
 		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.FIRESTONE, 3).setItemName("FireStone");

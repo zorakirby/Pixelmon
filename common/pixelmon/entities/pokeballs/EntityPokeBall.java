@@ -10,6 +10,7 @@ import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.items.ItemPokeBall;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PokeballManager;
 import net.minecraft.src.Block;
@@ -19,6 +20,7 @@ import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityThrowable;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.MovingObjectPosition;
@@ -74,8 +76,11 @@ public class EntityPokeBall extends EntityThrowable {
 
 		if (!isEmpty) {
 			if (movingobjectposition != null && !worldObj.isRemote) {
+				ItemPokeBall.ballTimer = 0;
 				if (pixelmon != null) {
-					if (worldObj.getBlockId((int) posX, (int) posY, (int) posZ) > 0 && worldObj.getBlockId((int) posX, (int) posY, (int) posZ) != Block.snow.blockID)
+
+					Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
+					if (mat != null && mat.isSolid())
 						pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
 					else
 						pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
@@ -97,6 +102,7 @@ public class EntityPokeBall extends EntityThrowable {
 			}
 		} else {
 			if (movingobjectposition != null) {
+				ItemPokeBall.ballTimer = 0;
 				if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
 					IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
 					p = entitypixelmon.getHelper();
@@ -112,7 +118,8 @@ public class EntityPokeBall extends EntityThrowable {
 				}
 
 				else {
-					if (!isWaiting) {
+					Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
+					if (!isWaiting && mat != null && mat.isSolid()) {
 						entityDropItem(new ItemStack(getType().getItem()), 0.0F);
 						setDead();
 					}
