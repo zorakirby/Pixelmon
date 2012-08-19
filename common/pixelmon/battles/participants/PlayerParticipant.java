@@ -10,6 +10,9 @@ import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
+import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
@@ -47,14 +50,12 @@ public class PlayerParticipant implements IBattleParticipant {
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		currentPixelmon.battleStats.clearBattleStats();
 		currentPixelmon.EndBattle();
+		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BattleFinished, 0));
 	}
 
 	@Override
 	public void getNextPokemon() {
-		int y=0;
-		if (bc.participant1==this) y=1;
-		player.openGui(Pixelmon.instance, EnumGui.ChoosePokemon.getIndex(), player.worldObj,
-				BattleRegistry.getIndex(bc), y, 0);
+		player.openGui(Pixelmon.instance, EnumGui.ChoosePokemon.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), currentPokemon().getPokemonId(), 0);
 	}
 
 	@Override
@@ -69,11 +70,14 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		int y = 0;
-		if (currentPixelmon.bc.participant1.currentPokemon() == currentPixelmon)
-			y = 1;
-		player.openGui(Pixelmon.instance, EnumGui.ChooseAttack.getIndex(), player.worldObj,
-				BattleRegistry.getIndex(bc), y, 0);
+		int x = 0, y = 0;
+		x = currentPokemon().getPokemonId();
+		PixelmonDataPacket p = new PixelmonDataPacket(participant2.currentPokemon(), EnumPackets.AddToTempStore);
+		y = 0;
+		player.serverForThisPlayer.sendPacketToPlayer(p.getPacket());
+
+		bc.waitForMove(this);
+		player.openGui(Pixelmon.instance, EnumGui.ChooseAttack.getIndex(), player.worldObj, x, y, BattleRegistry.getIndex(bc));
 		return null;
 	}
 

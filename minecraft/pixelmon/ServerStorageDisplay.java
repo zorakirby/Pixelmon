@@ -51,7 +51,8 @@ public class ServerStorageDisplay {
 
 	public static PixelmonDataPacket get(int id) {
 		for(PixelmonDataPacket p:pokemon)
-			if (p.pokemonID == id) return p;
+			if (p!=null)
+				if (p.pokemonID == id) return p;
 		return null;
 	}
 
