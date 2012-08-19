@@ -10,6 +10,9 @@ public class ItemPokedex extends Item
 	public ItemPokedex(int par1) 
 	{
 		super(par1);
+		setIconIndex(22);
+		setTextureFile("/pixelmon/image/pitems.png");
+		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
 	
 	public ItemStack onItemRightClick(ItemStack i, World world, EntityPlayer player)
