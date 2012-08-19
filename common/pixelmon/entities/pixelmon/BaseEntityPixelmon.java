@@ -314,14 +314,15 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		int var3 = MathHelper.floor_double(this.posZ);
 		return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
 	}
-
-	public void writeEntityToNBT(NBTTagCompound var1) {
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt) {
 		if (trainer != null && !isStorage)
 			return;
-		super.writeEntityToNBT(var1);
-		helper.writeToNBT(var1);
+		super.writeEntityToNBT(nbt);
+		helper.writeToNBT(nbt);
 		if (getOwner() != null)
-			var1.setString("pixelmonOwner", getOwnerName());
+			nbt.setString("pixelmonOwner", getOwnerName());
 	}
 
 	boolean isStorage = false;
@@ -332,10 +333,11 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		isStorage = false;
 	}
 
-	public void readEntityFromNBT(NBTTagCompound var1) {
-		super.readEntityFromNBT(var1);
-		helper.readFromNBT(var1);
-		if (var1.hasKey("pixelmonOwner"))
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt) {
+		super.readEntityFromNBT(nbt);
+		helper.readFromNBT(nbt);
+		if (nbt.hasKey("pixelmonOwner"))
 			super.setOwner("pixelmonOwner");
 	}
 

@@ -25,27 +25,65 @@ public class DatabaseStats {
 			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + pixelmonName + "'");
 
 			BaseStats stats = new BaseStats();
+			boolean error = false;
 			while (rs.next()) {
 				stats.HP = rs.getInt("BaseHP");
+				if (rs.wasNull()) error=true;
 				stats.Attack = rs.getInt("BaseAttack");
+				if (rs.wasNull()) error=true;
 				stats.Defence = rs.getInt("BaseDefence");
+				if (rs.wasNull()) error=true;
 				stats.Speed = rs.getInt("BaseSpeed");
+				if (rs.wasNull()) error=true;
 				stats.SpAtt = rs.getInt("BaseSpAttack");
+				if (rs.wasNull()) error=true;
 				stats.SpDef = rs.getInt("BaseSpDefence");
+				if (rs.wasNull()) error=true;
+				if (error=true)
+					System.out.println("Error in BaseStats");
+				
 				stats.CatchRate = rs.getInt("CatchRate");
+				if (rs.wasNull()) 
+					System.out.println("Error in CatchRate");
+				
 				stats.MalePercent = rs.getInt("MalePercent");
+				if (rs.wasNull()) 
+					System.out.println("Error in MalePercent");
+				
 				stats.EvolveLevel = rs.getInt("EvolveLevel");
+				if (rs.wasNull()) 
+					System.out.println("Error in EvolveLevel");
 				stats.EvolveInto = rs.getString("EvolveInto");
 				stats.CanFly = rs.getInt("CanFly") == 1;
+				if (rs.wasNull()) 
+					System.out.println("Error in CanFly");
 				stats.Height = rs.getFloat("Height");
+				if (rs.wasNull()) 
+					System.out.println("Error in Height");
 				stats.Width = rs.getFloat("Width");
+				if (rs.wasNull()) 
+					System.out.println("Error in Width");
 				stats.Length = rs.getFloat("Length");
+				if (rs.wasNull()) 
+					System.out.println("Error in Length");
 				stats.Type1 = EnumType.parseType(rs.getString("Type1"));
+				if (rs.wasNull()) 
+					System.out.println("Error in Type");
 				stats.BaseExp = rs.getInt("BaseExp");
+				if (rs.wasNull()) 
+					System.out.println("Error in BaseExp");
 				stats.ExperienceGroup = ExperienceGroup.getExperienceGroup(rs.getString("ExperienceGroup"));
+				if (rs.wasNull()|| stats.ExperienceGroup == null) 
+					System.out.println("Error in ExperienceGroup");
 				stats.nationalPokedexNumber = rs.getInt("NationalPokedexNumber");
+				if (rs.wasNull()) 
+					System.out.println("Error in NationalPokedexNumber");
 				stats.SpawnLevel = rs.getInt("SpawnLevel");
+				if (rs.wasNull()) 
+					System.out.println("Error in SpawnLevel");
 				stats.SpawnLevelRange= rs.getInt("SpawnLevelRange");
+				if (rs.wasNull()) 
+					System.out.println("Error in SpawnLevelRange");
 				stats.IsRideable = rs.getBoolean("IsRideable");
 				stats.giScale = rs.getFloat("GIScale");
 				rs.getString("Type2");
