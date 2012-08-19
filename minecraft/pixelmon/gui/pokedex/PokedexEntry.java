@@ -34,7 +34,7 @@ public class PokedexEntry
 		description = s1;
 		try 
 		{
-			entity = (Class<? extends EntityLiving>) Class.forName("pixelmon.Pokemon.Entity" + name);
+			entity = (Class<? extends EntityLiving>) Class.forName("pixelmon.entities.pokemon.Entity" + name);
 		} catch (ClassNotFoundException e) 
 		{
 			name = "???";
