@@ -358,9 +358,15 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			this.posZ = ((EntityWaterPixelmon) currentPixelmon).posZ;
 		}
 	}
-
-	public PixelmonEntityHelper getHelper() {
+	
+	public PixelmonEntityHelper getHelper()
+	{
 		return helper;
+	}
+	
+	public ItemStack getHeldItem()
+	{
+		return getHelper().getHeldItem();
 	}
 
 	public void onUpdate() {
