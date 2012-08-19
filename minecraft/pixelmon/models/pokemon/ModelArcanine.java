@@ -584,6 +584,12 @@ public class ModelArcanine extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+	head.rotateAngleX = f4 / 57.29578F;
+	head.rotateAngleY = f3 / 57.29578F;
+	backlegL.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.3F * f1;
+	backlegR.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * 1.3F * f1;
+	frontlegR.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * 1.3F * f1;
+	frontlegL.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.3F * f1;
   }
 
 }
