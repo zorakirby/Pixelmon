@@ -196,6 +196,8 @@ public class PixelmonEntityList {
 		addMapping("Koffing", IDListPixelmon.koffingId, ClassType.Pixelmon);
 		addMapping("Weezing", IDListPixelmon.weezingId, ClassType.Pixelmon);
 		addMapping("Primeape", IDListPixelmon.primeapeId, ClassType.Pixelmon);
+		addMapping("Arcanine", IDListPixelmon.arcanineId, ClassType.Pixelmon);
+		addMapping("Paras", IDListPixelmon.parasId, ClassType.Pixelmon);
 
 		// Trainers
 		addMapping("Youngster", IDListTrainer.trainerYoungsterId, ClassType.Trainer);
