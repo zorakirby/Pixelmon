@@ -24,6 +24,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.SaveHandler;
 import net.minecraft.src.World;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 
 public class ComputerManager{
@@ -111,12 +112,12 @@ public class ComputerManager{
 	}
 
 	
-	@Subscribe
+	@ForgeSubscribe
 	public void onWorldLoad(WorldEvent.Load event) {
 		playerComputerList.clear();
 	}
 
-	@Subscribe
+	@ForgeSubscribe
 	public void onWorldSave(WorldEvent.Save event) {
 		save();
 	}
