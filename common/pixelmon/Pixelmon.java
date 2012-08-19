@@ -20,6 +20,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
@@ -33,6 +34,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
 
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
@@ -61,25 +63,17 @@ public class Pixelmon {
 		if (ModLoader.isModLoaded("Pokemobs"))
 			System.exit(1);
 		
-		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		event.getModMetadata().version = "Pixelmon 1.6 for 1.3.1";
-		try{
-			cfg.load();
-			PixelmonBlocks.load(cfg);
-			IDListPixelmon.load(cfg);
-			IDListTrainer.load(cfg);
-			
-		}catch(Exception e){
-			FMLLog.log(Level.SEVERE, e, "Can't load the pixelmon configuration file");
-		}finally{
-			cfg.save();
-		}
+
+		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
 	}
 	
 	@Init
 	public void load(FMLInitializationEvent event){
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
+		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
+		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		PixelmonBlocks.registerBlocks();
 		PixelmonBlocks.setTextureIds();
 		PixelmonItems.addNames();
@@ -97,11 +91,10 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
-		
 	}
 	
 	@PostInit
 	public void modsLoaded(FMLPostInitializationEvent event){
-		
+		PixelmonConfig.removeSpawns();
 	}
 }

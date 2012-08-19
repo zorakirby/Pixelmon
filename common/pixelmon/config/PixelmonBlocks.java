@@ -1,11 +1,13 @@
 package pixelmon.config;
 
+import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.items.ItemBlock;
 import net.minecraft.src.Block;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
@@ -20,15 +22,15 @@ public class PixelmonBlocks {
 	public static int waterStoneOreId;
 	public static int pcId;
 
-	@cpw.mods.fml.common.Mod.Block(name = "Healer")
+	@Mod.Block(name = "Healer", itemTypeClass = ItemBlock.class)
 	public static Block healer;
-	@cpw.mods.fml.common.Mod.Block(name = "Thunderstone Ore")
+	@Mod.Block(name = "Thunderstone Ore")
 	public static Block thunderStoneOre;
-	@cpw.mods.fml.common.Mod.Block(name = "LeafStone Ore")
+	@Mod.Block(name = "LeafStone Ore")
 	public static Block leafStoneOre;
-	@cpw.mods.fml.common.Mod.Block(name = "WaterStone Ore")
+	@Mod.Block(name = "WaterStone Ore")
 	public static Block waterStoneOre;
-	@cpw.mods.fml.common.Mod.Block(name = "Pokemon PC")
+	@Mod.Block(name = "Pokemon PC", itemTypeClass = ItemBlock.class)
 	public static Block pc;
 
 	public static void load(Configuration configuration) {
@@ -69,15 +71,4 @@ public class PixelmonBlocks {
 		leafStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Leafstone.png");
 		waterStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Waterstone.png");
 	}
-
-	public static void getModelIds() {
-		//((BlockPC)pc).renderType =  FMLClientHandler.instance().obtainBlockModelIdFor(mod_Pixelmon.instance,false);	
-	}
-	
-//	public static boolean renderWorldBlock(RenderBlocks renderer, IBlockAccess world, int x, int y, int z, Block block, int modelID) {
-//		if (modelID == ((BlockPC)pc).renderType){
-//			//return (new RenderTileEntityPC()).renderAModelAt(tile, d, d1, d2, f)
-//		return false;
-//	}
-//	}
 }

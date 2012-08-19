@@ -85,13 +85,13 @@ public class GuiPixelmonOverlay extends Gui {
 					numString = "" + p.nationalPokedexNumber;
 				int var9;
 				if (p.isShiny)
-					var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 				else
-					var9 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 				if(p.heldItem != null)
 				{
-					//drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0, 0, )
+					//stub
 				}
 				if (!isGuiMinimized) {
 					fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);

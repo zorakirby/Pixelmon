@@ -12,31 +12,45 @@ import net.minecraft.src.World;
 
 public class ItemPokeBall extends Item {
 	private EnumPokeballs type;
+	
+	public static int ballTimer = 0;
 
-	public static HashMap<EntityPlayer, EntityPokeBall> playerPokeballs;
+	public static HashMap<EntityPlayer, Integer> playerTimers;
 
 	public ItemPokeBall(int i, EnumPokeballs type) {
 		super(i);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);
 		this.type = type;
-		playerPokeballs = new HashMap<EntityPlayer, EntityPokeBall>();
+		playerTimers = new HashMap<EntityPlayer, Integer>();
 		setIconIndex(type.getIconIndex());
 		setTextureFile("/pixelmon/image/pitems.png");
 		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
 
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		if (playerPokeballs.get(entityplayer) != null && !playerPokeballs.get(entityplayer).isDead)
+		
+		if(ballTimer > 0)
+		{
 			return itemstack;
-
-		itemstack.stackSize--;
-		world.playSoundAtEntity(entityplayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-		if (!world.isRemote) {
-			EntityPokeBall pokeball = new EntityPokeBall(world, entityplayer, type);
-			playerPokeballs.put(entityplayer, pokeball);
-			world.spawnEntityInWorld(pokeball);
 		}
+		if(!world.isRemote)
+		{
+			ballTimer = 40;
+		}
+		
+		if(!entityplayer.capabilities.isCreativeMode)
+		{
+			--itemstack.stackSize;
+		}
+		
+		world.playSoundAtEntity(entityplayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		
+		if(!world.isRemote)
+		{
+			world.spawnEntityInWorld(new EntityPokeBall(world, entityplayer, type));
+		}
+		
 		return itemstack;
 	}
 }
