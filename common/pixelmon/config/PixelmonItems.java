@@ -108,7 +108,6 @@ public class PixelmonItems {
 		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(5);
-		heldItem = new ItemHeld(0).setItemName("Held Items").setIconIndex(0);
 		potion = new PixelmonItem(potionID).setItemName("Potion").setIconIndex(2).setMaxStackSize(16);
 		coalDust = new PixelmonItem(coalDustID).setItemName("CoalDust").setIconIndex(4);
 		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.FIRESTONE, 3).setItemName("FireStone");

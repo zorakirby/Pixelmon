@@ -110,7 +110,6 @@ public class PokeballManager{
 					i--;
 				}
 			}
-			// CompressedStreamTools.write(data, getFile());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

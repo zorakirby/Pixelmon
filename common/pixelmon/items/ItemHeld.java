@@ -1,5 +1,6 @@
 package pixelmon.items;
 
+import pixelmon.enums.EnumHeldItems;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
@@ -11,20 +12,28 @@ import net.minecraft.src.ItemStack;
  *
  */
 
-public final class ItemHeld extends PixelmonItem {
+public abstract class ItemHeld extends PixelmonItem {
+	private EnumHeldItems heldItemType;
+	private boolean effectsBattles = false;
 	
-	public ItemHeld(int id)
+	public ItemHeld(EnumHeldItems heldItemType)
 	{
-		super(id);
-	}
-	
-	public int getIconFromDamage(int damage)
-	{
-		return iconIndex;
+		super(0);
+		this.heldItemType = heldItemType;
 	}
 	
 	public String getItemNameIS(ItemStack item)
 	{
 		return getItemName() + "." + item.getItemDamage();
 	}
+	
+	public EnumHeldItems getHeldItemType(){
+		return heldItemType;
+	}
+	
+	public boolean doesEffectBattles(){
+		return effectsBattles;
+	}
+	
+	public abstract void ApplyEffect();
 }
