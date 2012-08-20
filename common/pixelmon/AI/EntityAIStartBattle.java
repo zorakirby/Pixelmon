@@ -17,7 +17,7 @@ public class EntityAIStartBattle extends EntityAIBase {
 		if (((BaseEntityPixelmon)theEntity).getAttackTarget() instanceof EntityPlayer) 
 			return true;
 		if (((BaseEntityPixelmon)theEntity).getAttackTarget().getDistanceSqToEntity((Entity)this.theEntity) < 2){
-			theEntity.StartBattle(((BaseEntityPixelmon)((BaseEntityPixelmon)theEntity).getAttackTarget()).helper);
+			theEntity.getHelper().StartBattle(((BaseEntityPixelmon)((BaseEntityPixelmon)theEntity).getAttackTarget()).helper);
 			return true;
 		}
 		return false;

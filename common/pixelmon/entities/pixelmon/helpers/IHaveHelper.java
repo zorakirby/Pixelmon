@@ -10,10 +10,6 @@ import net.minecraft.src.World;
 
 public interface IHaveHelper {
 
-	void SetBattleController(BattleController battleController);
-
-	void EndBattle();
-
 	void catchInPokeball();
 
 	void writeEntityToNBT(NBTTagCompound nbt);
@@ -21,10 +17,6 @@ public interface IHaveHelper {
 	void setLocationAndAngles(double posX, double posY, double posZ, float rotationYaw, float f);
 
 	void releaseFromPokeball();
-
-	void StartBattle(EntityTrainer entityHit, EntityPlayer opponent);
-
-	void StartBattle(PixelmonEntityHelper entityHit);
 
 	void setPositionAndRotation(double posX, double posY, double posZ, float rotationYaw, float rotationPitch);
 
