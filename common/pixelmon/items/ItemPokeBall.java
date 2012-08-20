@@ -48,7 +48,7 @@ public class ItemPokeBall extends Item {
 		
 		if(!world.isRemote)
 		{
-			world.spawnEntityInWorld(new EntityPokeBall(world, entityplayer, type));
+			world.spawnEntityInWorld(new EntityPokeBall(world, entityplayer, type, !entityplayer.capabilities.isCreativeMode));
 		}
 		
 		return itemstack;

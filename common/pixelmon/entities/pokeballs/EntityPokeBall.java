@@ -37,17 +37,19 @@ public class EntityPokeBall extends EntityThrowable {
 	private PixelmonEntityHelper pixelmon;
 	private boolean isEmpty;
 	private float endRotationYaw = 0;
+	public boolean dropItem;
 
 	public EntityPokeBall(World world) {
 		super(world);
 		dataWatcher.addObject(10, EnumPokeballs.PokeBall.getIndex());
 	}
 
-	public EntityPokeBall(World world, EntityLiving entityliving, EnumPokeballs type) {
+	public EntityPokeBall(World world, EntityLiving entityliving, EnumPokeballs type, boolean dropItem) {
 		super(world, entityliving);
 		thrower = entityliving;
 		dataWatcher.addObject(10, type.getIndex());
 		isEmpty = true;
+		this.dropItem = dropItem;
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, PixelmonEntityHelper e, EnumPokeballs type) {
@@ -121,7 +123,10 @@ public class EntityPokeBall extends EntityThrowable {
 				else {
 					Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
 					if (!isWaiting && mat != null && mat.isSolid()) {
-						entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+						if(dropItem)
+						{
+							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+						}
 						setDead();
 					}
 				}
