@@ -193,7 +193,9 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public boolean interact(EntityPlayer entity) {
-		return helper.interact(entity);
+		if (!worldObj.isRemote)
+			return helper.interact(entity);
+		else return false;
 	}
 
 	public void catchInPokeball() {
