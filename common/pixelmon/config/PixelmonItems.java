@@ -7,6 +7,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumEvolutionStone;
+import pixelmon.enums.EnumHeldItems;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEvolutionStone;
@@ -34,7 +35,13 @@ public class PixelmonItems {
 	public static int healerItemID;
 	public static int thunderStoneShardID;
 	public static int leafStoneShardID;
-	public static int heldItemsID;
+	
+	public static int luckyEggID;
+	public static int expShareID;
+	
+	public static int berryOranID;
+	public static int berryRawstID;
+	public static int berryLeppaID;
 	
 	@Mod.Item(name = "PokeBall", typeClass = "pixelmon.items.ItemPokeBall")
 	public static Item pokeBall;
@@ -56,8 +63,6 @@ public class PixelmonItems {
 	public static Item potion;
 	@Mod.Item(name = "Coal Dust", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item coalDust;
-	@Mod.Item(name = "Held Items", typeClass = "pixelmon.items.ItemHeld")
-	public static Item heldItem;
 	
 	@Mod.Item(name = "Fire Stone", typeClass = "pixelmon.items.ItemEvolutionStone")
 	public static Item fireStone;
@@ -79,6 +84,18 @@ public class PixelmonItems {
 	public static Item thunderStoneShard;
 	@Mod.Item(name = "Leaf Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item leafStoneShard;
+	
+	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.ItemHeld")
+	public static Item luckyEgg;
+	@Mod.Item(name = "EXP Share", typeClass = "pixelmon.items.ItemHeld")
+	public static Item expShare;
+	
+	@Mod.Item(name = "Oran Berry", typeClass = "pixelmon.items.ItemHeld")
+	public static Item berryOran;
+	@Mod.Item(name = "Rawst Berry", typeClass = "pixelmon.items.ItemHeld")
+	public static Item berryRawst;
+	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.ItemHeld")
+	public static Item berryLeppa;
 
 	public static void load(Configuration cfg)
 	{
@@ -89,7 +106,6 @@ public class PixelmonItems {
 		pokeCheckerID = cfg.getOrCreateIntProperty("PokeChecker", "item", 10004).getInt();
 		pokeDexID = cfg.getOrCreateIntProperty("PokeDex", "item", 10027).getInt();
 		rareCandyID = cfg.getOrCreateIntProperty("RareCandy", "item", 10005).getInt();
-		heldItemsID = cfg.getOrCreateIntProperty("Held Items", "item", 10035).getInt();
 		potionID = cfg.getOrCreateIntProperty("Potion", "item", 10006).getInt();
 		coalDustID = cfg.getOrCreateIntProperty("CoalDust", "item", 10007).getInt();
 		fireStoneID = cfg.getOrCreateIntProperty("FireStone", "item", 10008).getInt();
@@ -101,6 +117,11 @@ public class PixelmonItems {
 		healerItemID = cfg.getOrCreateIntProperty("HealerItem", "item", 10014).getInt();
 		thunderStoneShardID = cfg.getOrCreateIntProperty("ThunderStoneShard", "item", 10021).getInt();
 		leafStoneShardID = cfg.getOrCreateIntProperty("LeafStoneShard", "item", 10022).getInt();
+		luckyEggID = cfg.getOrCreateIntProperty("LuckyEgg", "item", 10035).getInt();
+		expShareID = cfg.getOrCreateIntProperty("EXPShare", "item", 10036).getInt();
+		berryOranID = cfg.getOrCreateIntProperty("OranBerry", "item", 10040).getInt();
+		berryRawstID = cfg.getOrCreateIntProperty("RawstBerry", "item", 10041).getInt();
+		berryLeppaID = cfg.getOrCreateIntProperty("LeppaBerry", "item", 10042).getInt();
 		pokeBall = new ItemPokeBall(pokeBallID, EnumPokeballs.PokeBall).setItemName("PokeBall");
 		greatBall = new ItemPokeBall(greatBallID, EnumPokeballs.GreatBall).setItemName("GreatBall");
 		ultraBall = new ItemPokeBall(ultraBallID, EnumPokeballs.UltraBall).setItemName("UltraBall");
@@ -119,6 +140,11 @@ public class PixelmonItems {
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 54).setItemName("Healer");
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID).setItemName("ThunderStoneShard").setIconIndex(7);
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(39);
+		luckyEgg = new ItemHeld(luckyEggID, EnumHeldItems.luckyEgg).setItemName("LuckyEgg").setIconIndex(11);
+		expShare = new ItemHeld(expShareID, EnumHeldItems.expShare).setItemName("ExpShare").setIconIndex(0);
+		berryOran = new ItemHeld(berryOranID, EnumHeldItems.oran).setItemName("OranBerry").setIconIndex(9);
+		berryLeppa = new ItemHeld(berryLeppaID, EnumHeldItems.leppa).setItemName("LeppaBerry").setIconIndex(25);
+		berryRawst = new ItemHeld(berryRawstID, EnumHeldItems.rawst).setItemName("RawstBerry").setIconIndex(41);
 	}
 	
 	public static void addNames() {
@@ -140,5 +166,10 @@ public class PixelmonItems {
 		ModLoader.addName(leafStoneShard, "Leaf Stone Shard");	
 		ModLoader.addName(pcItem, "PC");
 		ModLoader.addName(healerItem, "Healer");
+		ModLoader.addName(luckyEgg, "Lucky Egg");
+		ModLoader.addName(expShare, "Experience Share");
+		ModLoader.addName(berryLeppa, "Leppa Berry");
+		ModLoader.addName(berryOran, "Oran Berry");
+		ModLoader.addName(berryRawst, "Rawst Berry");
 	}
 }
