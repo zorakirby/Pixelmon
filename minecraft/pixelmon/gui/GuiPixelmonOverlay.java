@@ -106,7 +106,7 @@ public class GuiPixelmonOverlay extends Gui {
 			i++;
 		}
 
-		ModLoader.getMinecraftInstance().renderEngine.bindTexture(var4);
+		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
 		this.drawTexturedModalRect(2, var7 / 6 + 4 + selectedPixelmon * 30, 45, 209, 40, 40);
 		fontRenderer.setUnicodeFlag(false);
 

@@ -80,7 +80,6 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		PixelmonBlocks.registerBlocks();
-		PixelmonBlocks.setTextureIds();
 		PixelmonItems.addNames();
 		
 		proxy.registerKeyBindings();
