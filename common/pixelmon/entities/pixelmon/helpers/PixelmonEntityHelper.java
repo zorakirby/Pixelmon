@@ -293,7 +293,8 @@ public class PixelmonEntityHelper {
 		entity.moveset.clear();
 		entity.isMale = isMale;
 		entity.setIsShiny(getIsShiny());
-		entity.setHeldItem(getHeldItem().copy());
+		if (getHeldItem()!=null)
+			entity.setHeldItem(getHeldItem().copy());
 		for (int i = 0; i < moveset.size(); i++)
 			entity.moveset.add(moveset.get(i));
 		entity.stats.IVs.CopyIVs(stats.IVs);
