@@ -53,7 +53,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public int refreshRate = 100;
 	protected int depthRangeStart = 0;
 	protected int depthRangeEnd = 100;
-	private boolean isSwimming = true;
+	public boolean isSwimming = true;
 	public PixelmonEntityHelper helper = new PixelmonEntityHelper(this);
 	private RidingHelper ridingHelper;
 	private float length = 1.0f;
@@ -125,56 +125,8 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		return this.boundingBox;
 	}
 
-	public void StartBattle(PixelmonEntityHelper target) {
-		if (helper.moveset.size() == 0)
-			helper.loadMoveset();
-
-		IBattleParticipant p1, p2;
-		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), helper);
-		else
-			p1 = new WildPixelmonParticipant(helper);
-
-		if (target.getOwner() != null)
-			p2 = new PlayerParticipant((EntityPlayerMP) target.getOwner(), target);
-		else
-			p2 = new WildPixelmonParticipant(target);
-
-		helper.bc = new BattleController(p1, p2);
-		isSwimming = false;
-	}
-
-	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
-		if (helper.moveset.size() == 0)
-			helper.loadMoveset();
-		IBattleParticipant p1, p2;
-		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), helper);
-		else
-			p1 = new WildPixelmonParticipant(helper);
-
-		p2 = new TrainerParticipant(trainer, opponent);
-
-		helper.bc = new BattleController(p1, p2);
-		isSwimming = false;
-	}
-
 	protected boolean isValidTarget(Entity entity) {
 		return helper.isValidTarget(entity);
-	}
-
-	@Override
-	public void SetBattleController(BattleController battleController) {
-		helper.bc = battleController;
-		if (helper.moveset.size() == 0)
-			helper.loadMoveset();
-		isSwimming = false;
-	}
-
-	@Override
-	public void EndBattle() {
-		helper.bc = null;
-		isSwimming = true;
 	}
 
 	public boolean interact(EntityPlayer entity) {
@@ -336,8 +288,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound var1) {
-		if (getPokemonId() < -1)
-		{
+		if (getPokemonId() < -1) {
 			return;
 		}
 		super.writeEntityToNBT(var1);

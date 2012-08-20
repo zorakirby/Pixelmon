@@ -122,49 +122,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	public abstract void loadAI();
 
-	public void StartBattle(PixelmonEntityHelper target) {
-		if (helper.moveset.size() == 0)
-			helper.loadMoveset();
-
-		IBattleParticipant p1, p2;
-		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), helper);
-		else
-			p1 = new WildPixelmonParticipant(helper);
-
-		if (target.getOwner() != null)
-			p2 = new PlayerParticipant((EntityPlayerMP) target.getOwner(), target);
-		else
-			p2 = new WildPixelmonParticipant(target);
-
-		helper.bc = new BattleController(p1, p2);
-	}
-
-	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
-		if (helper.moveset.size() == 0)
-			helper.loadMoveset();
-		IBattleParticipant p1, p2;
-		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), helper);
-		else
-			p1 = new WildPixelmonParticipant(helper);
-
-		p2 = new TrainerParticipant(trainer, opponent);
-
-		helper.bc = new BattleController(p1, p2);
-	}
-
-	public void SetBattleController(BattleController bc) {
-		if (helper.moveset.size() == 0)
-			helper.loadMoveset();
-
-		helper.bc = bc;
-	}
-
-	public void EndBattle() {
-		helper.bc = null;
-	}
-
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
