@@ -301,7 +301,7 @@ public class GuiPC extends GuiContainer {
 				drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 				if(slot.pokemonData.heldItem != null)
 				{
-					drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 16, slot.y + 16, 8, 8, 0, 0, 8f / 256f, 8f / 256f);
+					drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
 				}
 			}
 			for (int a = 0; a < partySlots.length; a++) {
@@ -324,7 +324,7 @@ public class GuiPC extends GuiContainer {
 				drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 				if(slot.pokemonData.heldItem != null)
 				{
-					drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 16, slot.y + 16, 8, 8, 0, 0, 8f / 256f, 8f / 256f);
+					drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
 				}
 			}
 			image = 0;
@@ -342,6 +342,10 @@ public class GuiPC extends GuiContainer {
 				else
 					image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(image, mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+				if(mouseSlot.pokemonData.heldItem != null)
+				{
+					drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), mouseSlot.x + 22, mouseSlot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
+				}
 				if (p.nickname == null || p.nickname.equalsIgnoreCase("")) {
 					p.nickname = p.name;
 				}

@@ -13,7 +13,6 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.BattleStats;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.HeldItemHelper;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;

@@ -156,6 +156,6 @@ public class IDListPixelmon {
 		primeapeId = Integer.parseInt(configuration.getOrCreateIntProperty("Primeape", "pokemon", i++).value);
 		arcanineId = Integer.parseInt(configuration.getOrCreateIntProperty("Arcanine", "pokemon", i++).value);
 		parasId = Integer.parseInt(configuration.getOrCreateIntProperty("Paras", "pokemon", i++).value);
-		
+		electrodeId = Integer.parseInt(configuration.getOrCreateIntProperty("Electrode", "pokemon", i++).value);
 	}
 }

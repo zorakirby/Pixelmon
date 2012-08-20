@@ -1,5 +1,6 @@
 package pixelmon.items;
 
+import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumHeldItems;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -12,19 +13,16 @@ import net.minecraft.src.ItemStack;
  *
  */
 
-public abstract class ItemHeld extends PixelmonItem {
+public class ItemHeld extends PixelmonItem 
+{
 	private EnumHeldItems heldItemType;
-	private boolean effectsBattles = false;
+	private boolean effectsBattles;
 	
-	public ItemHeld(EnumHeldItems heldItemType)
+	public ItemHeld(int id, EnumHeldItems heldItemType)
 	{
-		super(0);
+		super(id);
 		this.heldItemType = heldItemType;
-	}
-	
-	public String getItemNameIS(ItemStack item)
-	{
-		return getItemName() + "." + item.getItemDamage();
+		effectsBattles = heldItemType.getBattleModifier();
 	}
 	
 	public EnumHeldItems getHeldItemType(){
@@ -35,5 +33,19 @@ public abstract class ItemHeld extends PixelmonItem {
 		return effectsBattles;
 	}
 	
-	public abstract void ApplyEffect();
+	public static void useItem(PixelmonEntityHelper helper, EnumHeldItems item)
+	{
+		if(helper.getHeldItem() != null && helper.getHeldItem().getItem() != null && helper.getHeldItem().getItem() instanceof ItemHeld)
+		{
+			if(((ItemHeld)helper.getHeldItem().getItem()).heldItemType == item && ((ItemHeld)helper.getHeldItem().getItem()).effectEntity(helper))
+			{
+				helper.setHeldItem(null);
+			}
+		}
+	}
+	
+	public boolean effectEntity(PixelmonEntityHelper helper1)
+	{
+		return false;
+	}
 }
