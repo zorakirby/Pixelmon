@@ -35,6 +35,20 @@ public class DatabaseHelper {
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
+			if(!getDir().exists())
+			{
+				getDir().mkdir();
+				downloadDatabase();
+			}
+			else
+			{
+				File databaseFile = new File(getDir(), "Pixelmon.db");
+				if(!databaseFile.exists())
+				{
+					downloadDatabase();
+				}
+			}
+			
 			Connection c = DriverManager.getConnection("jdbc:sqlite:" + getDir() + "/Pixelmon.db");
 			if(c == null)
 			{
@@ -99,6 +113,19 @@ public class DatabaseHelper {
 			}
 		}
 		return  new File(ClientProxy.getMinecraftDir(), "database");
+	}
+	
+	public static void downloadDatabase()
+	{
+		String databaseURL = "https://dl.dropbox.com/s/8crv95bumdjy6wt/Pixelmon.db?dl=1";
+		try
+		{
+			System.out.println("Attempting to download the Database!");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Failec to download the Database!");
+		}
 	}
 
 	/**

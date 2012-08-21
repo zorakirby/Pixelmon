@@ -12,11 +12,12 @@ import java.util.HashMap;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import pixelmon.ClientProxy;
+import pixelmon.database.DatabaseHelper;
 import pixelmon.structure.Generation;
 import pixelmon.structure.Structure;
 import pixelmon.structure.StructurePiece;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.CompressedStreamTools;
 import net.minecraft.src.EntityList;
@@ -28,6 +29,7 @@ import net.minecraft.src.World;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.ServerStarting;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 /**
@@ -51,7 +53,7 @@ public class GenerationExporter
 	{		
 		MinecraftServer var2 = MinecraftServer.getServer();
 		ServerCommandManager var3 = (ServerCommandManager)var2.getCommandManager();
-		if(var3 != null)
+		if(var3 != null && !ObfuscationReflectionHelper.obfuscation)
 		{
 			var3.registerCommand(new CommandGen());
 		}
@@ -146,7 +148,7 @@ public class GenerationExporter
 		Structure var3 = new Structure(var2);
 		try
 		{
-			File var4 = new File(Minecraft.getMinecraftDir(), "pixelmon");
+			File var4 = new File(ClientProxy.getMinecraftDir(), "pixelmon");
 			var4.mkdir();
 			File var5 = new File(var4, "structure");
 			var5.mkdir();
@@ -165,7 +167,7 @@ public class GenerationExporter
 	{
 		try
 		{
-			File var4 = new File(Minecraft.getMinecraftDir(), "pixelmon");
+			File var4 = new File(ClientProxy.getMinecraftDir(), "pixelmon");
 			var4.mkdir();
 			File var5 = new File(var4, "structure");
 			var5.mkdir();

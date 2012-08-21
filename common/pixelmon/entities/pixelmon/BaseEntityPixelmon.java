@@ -140,7 +140,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 				String s = "Your " + getName() + " fainted!";
 				ChatHandler.sendChat(getOwner(), s);
 				helper.isFainted = true;
-				health = 0;
+				helper.setHealth(0);
 				catchInPokeball();
 			} else {
 				super.onDeath(damagesource);
