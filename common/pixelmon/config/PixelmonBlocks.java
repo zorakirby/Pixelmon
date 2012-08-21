@@ -65,10 +65,4 @@ public class PixelmonBlocks {
 		ModLoader.addName(waterStoneOre, "Water Stone Ore");
 		ModLoader.addName(pc, "PC");
 	}
-
-	public static void setTextureIds() {
-		thunderStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Thunderstone.png");
-		leafStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Leafstone.png");
-		waterStoneOre.blockIndexInTexture = ModLoader.addOverride("/terrain.png", "/pixelmon/block/Waterstone.png");
-	}
 }
