@@ -1,5 +1,6 @@
 package pixelmon;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import pixelmon.gui.GuiChoosePokemon;
 import pixelmon.gui.GuiChooseStarter;
 import pixelmon.gui.GuiHealer;
 import pixelmon.gui.GuiLearnMove;
+import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.gui.GuiScreenPokeChecker;
 import pixelmon.gui.pc.GuiPC;
 import pixelmon.gui.pokedex.GuiPokedex;
@@ -31,6 +33,7 @@ import pixelmon.render.RenderPokeball;
 import pixelmon.render.RenderTileEntityHealer;
 import pixelmon.render.RenderTileEntityPC;
 import pixelmon.render.RenderTrainer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
@@ -46,7 +49,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
 	@Override
-	public void registerRenderers() {
+	public void registerRenderers() 
+	{
 		for (EnumPokeballs p : EnumPokeballs.values()){
 			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getTexture());
 			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getFlashRedTexture());
@@ -57,6 +61,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
 		addPokemonRenderers();
+		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 	}
 	
 	@Override
@@ -149,5 +154,10 @@ public class ClientProxy extends CommonProxy {
 			return new GuiScreenPokeChecker(ServerStorageDisplay.get(x));
 		}
 		return null;
+	}
+	
+	public static File getMinecraftDir()
+	{
+		return Minecraft.getMinecraftDir();
 	}
 }

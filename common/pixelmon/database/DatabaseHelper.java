@@ -11,13 +11,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import pixelmon.CommonProxy;
+import pixelmon.ClientProxy;
 
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.ModLoader;
-import net.minecraft.src.SaveHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
@@ -34,7 +32,24 @@ public class DatabaseHelper {
 	 * @return True if they do, otherwise false
 	 */
 	public static boolean has() {
-		try {
+		try
+		{
+			Class.forName("org.sqlite.JDBC");
+			Connection c = DriverManager.getConnection("jdbc:sqlite:" + getDir() + "/Pixelmon.db");
+			if(c == null)
+			{
+				return false;
+			}
+			return true;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		/*try {
 			Class.forName("org.sqlite.JDBC");
 			Connection c = DriverManager.getConnection("jdbc:sqlite:" + Minecraft.getMinecraftDir() + "/database/Pixelmon.db");
 			if (c == null) {
@@ -53,7 +68,7 @@ public class DatabaseHelper {
 		} catch (ClassNotFoundException e) {
 			System.out.println("Could not find SQLite Jar !!");
 			return false;
-		}
+		}*/
 	}
 
 	/**
@@ -64,7 +79,7 @@ public class DatabaseHelper {
 	public static Connection getConnection() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:" + Minecraft.getMinecraftDir() + "/database/Pixelmon.db");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:" + getDir() + "/Pixelmon.db");
 			con.setReadOnly(true);
 			return con;
 
@@ -72,7 +87,18 @@ public class DatabaseHelper {
 			System.out.println("Could not get a connection to pixelmon.db");
 			return null;
 		}
-
+	}
+	
+	public static File getDir()
+	{
+		if(MinecraftServer.getServer() != null)
+		{
+			if(!MinecraftServer.getServer().isSinglePlayer())
+			{
+				return MinecraftServer.getServer().getFile("database");
+			}
+		}
+		return  new File(ClientProxy.getMinecraftDir(), "database");
 	}
 
 	/**
