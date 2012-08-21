@@ -1,7 +1,11 @@
 package pixelmon.config;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
@@ -59,10 +63,20 @@ public class PixelmonBlocks {
 	}
 
 	public static void addNames() {
-		ModLoader.addName(healer, "Healer");
-		ModLoader.addName(thunderStoneOre, "Thunder Stone Ore");
-		ModLoader.addName(leafStoneOre, "Leaf Stone Ore");
-		ModLoader.addName(waterStoneOre, "Water Stone Ore");
-		ModLoader.addName(pc, "PC");
+		try
+		{
+			for(Field field : PixelmonBlocks.class.getFields())
+			{
+				if(field.isAnnotationPresent(Mod.Block.class))
+				{
+					Block block = (Block)field.get(null);
+					LanguageRegistry.addName(block, field.getAnnotation(Mod.Block.class).name());
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

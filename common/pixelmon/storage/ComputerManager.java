@@ -71,7 +71,7 @@ public class ComputerManager{
 			for (int i = 0; i < playerComputerList.size(); i++) {
 				EntityPlayer player = playerComputerList.get(i).player;
 				boolean playerConnected = false;
-				for (String playerName : ModLoader.getMinecraftServerInstance().getAllUsernames())
+				for (String playerName : MinecraftServer.getServer().getAllUsernames())
 					if (player.username.equals(playerName)) {
 						playerConnected = true;
 						break;

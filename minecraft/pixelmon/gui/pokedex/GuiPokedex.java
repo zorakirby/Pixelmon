@@ -77,7 +77,7 @@ public class GuiPokedex extends GuiContainer
         mc.renderEngine.bindTexture(i);
         drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
         this.fontRenderer.drawString("Pokedex", left + 6, top + 5, 0xFFFFFF);
-        String s = selectedEntry.getDisplayNumber() + " " + selectedEntry.name;
+        String s = selectedEntry.getDisplayNumber(false) + " " + selectedEntry.name;
         fontRenderer.drawString(s, left + 174 - fontRenderer.getStringWidth(s) / 2, top + 38 - 3, 0x575757);
         s = "Description";
         fontRenderer.drawString(s, left + 141 - fontRenderer.getStringWidth(s) / 2, top + 125, 0x575757);

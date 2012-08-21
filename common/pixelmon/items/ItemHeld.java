@@ -13,7 +13,7 @@ import net.minecraft.src.ItemStack;
  *
  */
 
-public class ItemHeld extends PixelmonItem 
+public abstract class ItemHeld extends PixelmonItem 
 {
 	private EnumHeldItems heldItemType;
 	private boolean effectsBattles;
@@ -42,6 +42,15 @@ public class ItemHeld extends PixelmonItem
 				helper.setHeldItem(null);
 			}
 		}
+	}
+	
+	public static boolean isItemOfType(ItemStack item, EnumHeldItems type)
+	{
+		if(item.getItem() == null || !(item.getItem() instanceof ItemHeld))
+		{
+			return false;
+		}
+		else return ((ItemHeld)item.getItem()).heldItemType == type;
 	}
 	
 	public boolean effectEntity(PixelmonEntityHelper helper1)

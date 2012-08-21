@@ -1,7 +1,11 @@
 package pixelmon.config;
 
+import java.lang.reflect.Field;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
@@ -9,9 +13,14 @@ import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.items.ItemBerryLeppa;
+import pixelmon.items.ItemBerryOran;
+import pixelmon.items.ItemBerryRawst;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEvolutionStone;
+import pixelmon.items.ItemExpShare;
 import pixelmon.items.ItemHeld;
+import pixelmon.items.ItemLuckyEgg;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.PixelmonItem;
@@ -85,16 +94,16 @@ public class PixelmonItems {
 	@Mod.Item(name = "Leaf Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item leafStoneShard;
 	
-	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.ItemHeld")
+	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.ItemLuckyEgg")
 	public static Item luckyEgg;
-	@Mod.Item(name = "EXP Share", typeClass = "pixelmon.items.ItemHeld")
+	@Mod.Item(name = "EXP Share", typeClass = "pixelmon.items.ItemExpShare")
 	public static Item expShare;
 	
-	@Mod.Item(name = "Oran Berry", typeClass = "pixelmon.items.ItemHeld")
+	@Mod.Item(name = "Oran Berry", typeClass = "pixelmon.items.ItemBerryOran")
 	public static Item berryOran;
-	@Mod.Item(name = "Rawst Berry", typeClass = "pixelmon.items.ItemHeld")
+	@Mod.Item(name = "Rawst Berry", typeClass = "pixelmon.items.ItemBerryRawst")
 	public static Item berryRawst;
-	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.ItemHeld")
+	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.ItemBerryLeppa")
 	public static Item berryLeppa;
 
 	public static void load(Configuration cfg)
@@ -140,15 +149,30 @@ public class PixelmonItems {
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 54).setItemName("Healer");
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID).setItemName("ThunderStoneShard").setIconIndex(7);
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(39);
-		luckyEgg = new ItemHeld(luckyEggID, EnumHeldItems.luckyEgg).setItemName("LuckyEgg").setIconIndex(11);
-		expShare = new ItemHeld(expShareID, EnumHeldItems.expShare).setItemName("ExpShare").setIconIndex(0);
-		berryOran = new ItemHeld(berryOranID, EnumHeldItems.oran).setItemName("OranBerry").setIconIndex(9);
-		berryLeppa = new ItemHeld(berryLeppaID, EnumHeldItems.leppa).setItemName("LeppaBerry").setIconIndex(25);
-		berryRawst = new ItemHeld(berryRawstID, EnumHeldItems.rawst).setItemName("RawstBerry").setIconIndex(41);
+		luckyEgg = new ItemLuckyEgg(luckyEggID).setItemName("LuckyEgg").setIconIndex(11);
+		expShare = new ItemExpShare(expShareID).setItemName("ExpShare").setIconIndex(0);
+		berryOran = new ItemBerryOran(berryOranID).setItemName("OranBerry").setIconIndex(9);
+		berryLeppa = new ItemBerryLeppa(berryLeppaID).setItemName("LeppaBerry").setIconIndex(25);
+		berryRawst = new ItemBerryRawst(berryRawstID).setItemName("RawstBerry").setIconIndex(41);
 	}
 	
 	public static void addNames() {
-		ModLoader.addName(pokeBall, "PokeBall");
+		try
+		{
+			for(Field field : PixelmonItems.class.getFields())
+			{
+				if(field.isAnnotationPresent(Mod.Item.class))
+				{
+					Item item = (Item)field.get(null);
+					LanguageRegistry.addName(item, field.getAnnotation(Mod.Item.class).name());
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		/*ModLoader.addName(pokeBall, "PokeBall");
 		ModLoader.addName(greatBall, "GreatBall");
 		ModLoader.addName(ultraBall, "UltraBall");
 		ModLoader.addName(masterBall, "MasterBall");
@@ -170,6 +194,6 @@ public class PixelmonItems {
 		ModLoader.addName(expShare, "Experience Share");
 		ModLoader.addName(berryLeppa, "Leppa Berry");
 		ModLoader.addName(berryOran, "Oran Berry");
-		ModLoader.addName(berryRawst, "Rawst Berry");
+		ModLoader.addName(berryRawst, "Rawst Berry");*/
 	}
 }
