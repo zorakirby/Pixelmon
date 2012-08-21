@@ -87,8 +87,12 @@ public class RenderFreeWaterPixelmon extends RenderLiving {
 			byte byte0 = -20;
 			GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 			tessellator.startDrawingQuads();
-			float f5 = lvlInstance.getExp();
-			float f6 = lvlInstance.getExpToNextLevel();
+			float f5 = 0;
+			float f6 = 0;
+			if(lvlInstance != null){
+				f5 = lvlInstance.getExp();
+				f6 = lvlInstance.getExpToNextLevel();
+			}
 			if (f5 >= f6)
 				f5 = 56;
 			float f8 = 50F * (f5 / f6);

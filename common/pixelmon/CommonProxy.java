@@ -8,7 +8,6 @@ import pixelmon.config.PixelmonBlocks;
 import pixelmon.gui.GuiHandler;
 
 public class CommonProxy implements IGuiHandler {
-
 	public void registerRenderers() {
 	}
 

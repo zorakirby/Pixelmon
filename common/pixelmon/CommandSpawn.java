@@ -30,19 +30,11 @@ public class CommandSpawn extends CommandBase {
 		{
 			try
 			{
-				MovingObjectPosition var3 = Minecraft.getMinecraft().objectMouseOver;
 				EntityPlayer var4 = getCommandSenderAsPlayer(var1);
 				String var5 = String.valueOf(Character.toUpperCase(var2[0].charAt(0)));
 				var5 += var2[0].substring(1);
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, var4.worldObj);
-				if(var3 != null && var3.typeOfHit == EnumMovingObjectType.TILE)
-				{
-					var6.setPosition(var3.blockX, var3.blockY + 1, var3.blockZ);
-				}
-				else
-				{
-					var6.setPosition(var4.posX, var4.posY + 1, var4.posZ);
-				}
+				var6.setPosition(var4.posX, var4.posY + 1, var4.posZ);
 				var4.worldObj.spawnEntityInWorld(var6);
 			}
 			catch(Exception e)
