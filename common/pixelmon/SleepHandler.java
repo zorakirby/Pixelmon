@@ -8,6 +8,8 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 public class SleepHandler {
 	@ForgeSubscribe
 	public void onSleep(PlayerSleepInBedEvent event){
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)event.entityPlayer).healAllPokemon();
+		if(event.entityPlayer instanceof EntityPlayerMP){
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)event.entityPlayer).healAllPokemon();
+		}
 	}
 }

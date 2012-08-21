@@ -13,14 +13,13 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.ServerCommandManager;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Metadata;
 import cpw.mods.fml.common.Mod.ServerStarting;
@@ -60,13 +59,9 @@ public class Pixelmon {
 	public void preInit(FMLPreInitializationEvent event){
 		
 		if (!DatabaseHelper.has()) {
-			ModLoader.throwException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!", new java.lang.Error(
-					"Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!"));
+			throw new RuntimeException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!");
 		}
-		if (!(ModLoader.isModLoaded("Forge")))
-			ModLoader.throwException("Can not start Pixelmon without Minecraft Forge!!! Please download it!!!", new java.lang.Error(
-					"Can not start Pixelmon without Minecraft Forge!!! Please download it!!!"));
-		if (ModLoader.isModLoaded("Pokemobs"))
+		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 		
 		event.getModMetadata().version = "Pixelmon 1.6 for 1.3.1";
@@ -92,7 +87,6 @@ public class Pixelmon {
 		proxy.preloadTextures();
 		PixelmonRecipes.addRecipes();
 		
-		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
