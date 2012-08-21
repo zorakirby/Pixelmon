@@ -58,6 +58,7 @@ public class Pixelmon {
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event){
+		
 		if (!DatabaseHelper.has()) {
 			ModLoader.throwException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!", new java.lang.Error(
 					"Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!"));

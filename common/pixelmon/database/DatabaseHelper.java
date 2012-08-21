@@ -1,6 +1,10 @@
 package pixelmon.database;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,142 +15,134 @@ import pixelmon.CommonProxy;
 
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.SaveHandler;
+import net.minecraftforge.common.MinecraftForge;
 
 /**
  * A simple little helper to handle errors and get info from SQLite
+ * 
  * @author Grethen
  */
-public class DatabaseHelper
-{
+public class DatabaseHelper {
 	/**
-	 * A check to make sure the user has the SQLite Jar, currently ignores the <code>SQLExcpetion</code> that has to do with drivers because it seems to always throw that
+	 * A check to make sure the user has the SQLite Jar, currently ignores the
+	 * <code>SQLExcpetion</code> that has to do with drivers because it seems to
+	 * always throw that
+	 * 
 	 * @return True if they do, otherwise false
 	 */
-	public static boolean has()
-	{
-		try
-		{
+	public static boolean has() {
+		try {
 			Class.forName("org.sqlite.JDBC");
-			File f = new File("database/pixelmon.db").getAbsoluteFile();
-			Connection c = DriverManager.getConnection("jdbc:sqlite:" + "database/pixelmon.db");
-			if (c ==null){
-				System.out.println("Could not find the Pixelmon database at " + "database/pixelmon.db");
+			Connection c = DriverManager.getConnection("jdbc:sqlite:" + Minecraft.getMinecraftDir() + "/database/Pixelmon.db");
+			if (c == null) {
+				System.out.println("Could not find the Pixelmon database at " + Minecraft.getMinecraftDir() + "/database/Pixelmon.db");
 				return false;
-			}else{
-				System.out.println("Found Database at " + "database/pixelmon.db");
+			} else {
+				System.out.println("Found Database at " + Minecraft.getMinecraftDir() + "/database/Pixelmon.db");
 			}
 			return true;
-		} catch (java.lang.NoClassDefFoundError e)
-		{
+		} catch (java.lang.NoClassDefFoundError e) {
 			System.out.println("Could not find SQLite Jar");
 			return false;
-		} catch (java.sql.SQLException e)
-		{
+		} catch (java.sql.SQLException e) {
 			System.out.println(e.getMessage());
 			return false;
 		} catch (ClassNotFoundException e) {
-			System.out.println("Could not find SQLite Jar");
+			System.out.println("Could not find SQLite Jar !!");
 			return false;
 		}
 	}
-	
-	
+
 	/**
 	 * Gets the connection to the path
+	 * 
 	 * @return The connection associated with the path
 	 */
-	public static Connection getConnection()
-	{
-		try
-		{
+	public static Connection getConnection() {
+		try {
 			Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:" + "database/pixelmon.db");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:" + Minecraft.getMinecraftDir() + "/database/Pixelmon.db");
 			con.setReadOnly(true);
 			return con;
 
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println("Could not get a connection to pixelmon.db");
 			return null;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Gets a <code>Statement</code> from the given <code>Connection</code>
-	 * @param c - The <code>Connection</code> to use
+	 * 
+	 * @param c
+	 *            - The <code>Connection</code> to use
 	 * @return The <code>Statement</code> from the <code>Connection</code>
 	 */
-	public static Statement getStatement(Connection c)
-	{
-		try 
-		{
+	public static Statement getStatement(Connection c) {
+		try {
 			return c.createStatement();
-		} catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			System.out.println("Could not create statement for database");
 			return null;
 		}
 	}
-	
+
 	/**
-	 * @return The <code>Statement</code> from the default <code>Connection</code>
+	 * @return The <code>Statement</code> from the default
+	 *         <code>Connection</code>
 	 */
-	public static Statement getStatement()
-	{
+	public static Statement getStatement() {
 		return getStatement(getConnection());
 	}
-	
+
 	/**
-	 * Gets a <code>ResultSet</code> from the given <code>Statement</code> and query
-	 * @param s - The <code>Statement</code> to use
-	 * @param query - The query to look for
+	 * Gets a <code>ResultSet</code> from the given <code>Statement</code> and
+	 * query
+	 * 
+	 * @param s
+	 *            - The <code>Statement</code> to use
+	 * @param query
+	 *            - The query to look for
 	 * @return The <code>ResultSet</code>
 	 */
-	public static ResultSet getResultSet(Statement s, String query)
-	{
-		try
-		{
+	public static ResultSet getResultSet(Statement s, String query) {
+		try {
 			return s.executeQuery(query);
-		} catch(SQLException e)
-		{
+		} catch (SQLException e) {
 			System.out.println("Could not create ResultSet for query " + query + " for database because " + e.getMessage());
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Gets a <code>ResultSet</code> from the default <code>Statement</code>
-	 * @param query - The query to look for
+	 * 
+	 * @param query
+	 *            - The query to look for
 	 * @return The <code>ResultSet</code>
 	 */
-	public static ResultSet getResultSet(String query)
-	{
+	public static ResultSet getResultSet(String query) {
 		return getResultSet(getStatement(), query);
 	}
-	
-	public static void finish(Connection c, Statement s)
-	{
-		try 
-		{
+
+	public static void finish(Connection c, Statement s) {
+		try {
 			s.close();
 			c.close();
-		} catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public static void finish(ResultSet r)
-	{
-		try
-		{
+
+	public static void finish(ResultSet r) {
+		try {
 			finish(r.getStatement().getConnection(), r.getStatement());
-		} catch (SQLException e)
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
