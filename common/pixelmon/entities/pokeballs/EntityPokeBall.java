@@ -18,11 +18,11 @@ import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityThrowable;
+import net.minecraft.src.EnumMovingObjectType;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.MovingObjectPosition;
 import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
@@ -81,12 +81,19 @@ public class EntityPokeBall extends EntityThrowable {
 			if (movingobjectposition != null && !worldObj.isRemote) {
 				ItemPokeBall.ballTimer = 0;
 				if (pixelmon != null) {
-
-					Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
-					if (mat != null && mat.isSolid())
-						pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
+					if(movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
+					{
+						Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
+						if(mat != null && mat.isSolid())
+						{
+							pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
+						}
+						else return;
+					}
 					else
+					{
 						pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
+					}
 					pixelmon.setMotion(0, 0, 0);
 					pixelmon.releaseFromPokeball();
 					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)
@@ -119,7 +126,6 @@ public class EntityPokeBall extends EntityThrowable {
 					motionX = motionZ = 0;
 					motionY = -0.1;
 				}
-
 				else {
 					Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
 					if (!isWaiting && mat != null && mat.isSolid()) {
@@ -150,7 +156,11 @@ public class EntityPokeBall extends EntityThrowable {
 			if (waitTime == 0 && !isUnloaded) {
 				initialScale = p.scale;
 				initPos = p.getPosition();
-				diff = Vec3.createVectorHelper(posX, posY, posZ).subtract(initPos);
+				Vec3 current = Vec3.createVectorHelper(posX, posY, posZ);
+				current.xCoord -= initPos.xCoord;
+				current.yCoord -= initPos.yCoord;
+				current.zCoord -= initPos.zCoord;
+				diff = current;
 				p.scale = initialScale / 1.1f;
 			}
 			if (waitTime == 1 && !isUnloaded) {

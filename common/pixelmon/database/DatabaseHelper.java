@@ -1,6 +1,9 @@
 package pixelmon.database;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -35,6 +38,20 @@ public class DatabaseHelper {
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
+			if(!getDir().exists())
+			{
+				getDir().mkdir();
+				downloadDatabase();
+			}
+			else
+			{
+				File databaseFile = new File(getDir(), "Pixelmon.db");
+				if(!databaseFile.exists())
+				{
+					downloadDatabase();
+				}
+			}
+			
 			Connection c = DriverManager.getConnection("jdbc:sqlite:" + getDir() + "/Pixelmon.db");
 			if(c == null)
 			{
@@ -99,6 +116,43 @@ public class DatabaseHelper {
 			}
 		}
 		return  new File(ClientProxy.getMinecraftDir(), "database");
+	}
+	
+	public static void downloadDatabase()
+	{
+		try
+		{
+			System.out.println("Attempting to download the Database!");
+			String databaseURL = "https://dl.dropbox.com/s/8crv95bumdjy6wt/Pixelmon.db?dl=1";
+			URL url = new URL(databaseURL);
+			File databaseFile = new File(getDir(), "Pixelmon.db");
+			databaseFile.createNewFile();
+			byte[] array = new byte[4096];
+	        DataInputStream urlStream = new DataInputStream(url.openStream());
+	        DataOutputStream fileStream = new DataOutputStream(new FileOutputStream(databaseFile));
+	        boolean var8 = false;
+
+	        do
+	        {
+	            int data;
+
+	            if ((data = urlStream.read(array)) < 0)
+	            {
+	                urlStream.close();
+	                fileStream.close();
+	                break;
+	            }
+
+	            fileStream.write(array, 0, data);
+	        }
+	        while (true);
+	        System.out.println("Database Downloaded!");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Failed to download the Database!");
+			e.printStackTrace();
+		}
 	}
 
 	/**

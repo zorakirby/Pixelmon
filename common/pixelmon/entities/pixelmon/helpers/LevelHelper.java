@@ -128,14 +128,16 @@ public class LevelHelper {
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
 		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
 		pixelmon.setHealth((int) Math.ceil(newHealth));
-		if (pixelmon.getOwner() != null)
+		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP)
+		{
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).updateNBT(pixelmon);
-		String name = "";
-		if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).contains(pixelmon.getPokemonId())) {
-			ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + level + "!");
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).updateNBT(pixelmon);
+			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).contains(pixelmon.getPokemonId())) 
+			{
+				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + level + "!");
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).updateNBT(pixelmon);
+			}
 		}
-		name = pixelmon.getName();
+		String name = pixelmon.getName();
 
 		if (DatabaseMoves.LearnsAttackAtLevel(name, level)) {
 			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, level);

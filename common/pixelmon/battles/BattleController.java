@@ -16,6 +16,8 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumHeldItems;
+import pixelmon.items.ItemHeld;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PokeballManager;
 
@@ -56,11 +58,7 @@ public class BattleController {
 
 	private void setPositions() {
 	}
-
-	@SuppressWarnings("unused")
-	private void moveToPositions() {
-	}
-
+	
 	enum MoveStage {
 		PickAttacks, FirstMove, SecondMove
 	};
@@ -286,7 +284,7 @@ public class BattleController {
 					return;
 				t = 1;// traded
 				b = pixelmon12.stats.BaseStats.BaseExp;
-				e = 1;//HeldItemHelper.isItemLuckyEgg(pixelmon22) ? 1.5 : 1;// holding lucky egg
+				e = ItemHeld.isItemOfType(pixelmon22.getHeldItem(), EnumHeldItems.luckyEgg) ? 1.5 : 1;
 				L = pixelmon12.getLvl().getLevel();
 				Lp = user.getInteger("Level");
 				s = users.size();

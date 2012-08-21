@@ -65,9 +65,17 @@ public class PokedexEntry
 		return this;
 	}
 	
-	public String getDisplayNumber()
+	public String getDisplayNumber(boolean flag)
 	{
-		String s = String.valueOf(pokedexNumber);
+		String s = "";
+		if(flag)
+		{
+			s = String.valueOf(pokedexNumber);
+		}
+		else
+		{
+			s =  String.valueOf(pokedexNumber - 1);
+		}
 		int i = s.length();
 		StringBuilder sb = new StringBuilder();
 		int i1 = 3 - i;

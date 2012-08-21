@@ -155,7 +155,7 @@ public class PixelmonEntityList {
 		addMapping("Goldeen", IDListPixelmon.goldeenId, ClassType.WaterPixelmon);
 		addMapping("Growlithe", IDListPixelmon.growlitheId, ClassType.Pixelmon);
 		addMapping("Gyarados", IDListPixelmon.gyaradosId, ClassType.WaterPixelmon);
-		addMapping("Horsea", IDListPixelmon.horseaId, ClassType.WaterPixelmon, 0x3366FF, 0xFFFFCC);
+		addMapping("Horsea", IDListPixelmon.horseaId, ClassType.WaterPixelmon);
 		addMapping("Ivysaur", IDListPixelmon.ivysaurId, ClassType.Pixelmon);
 		addMapping("Jolteon", IDListPixelmon.jolteonId, ClassType.Pixelmon);
 		addMapping("Jigglypuff", IDListPixelmon.jigglypuffId, ClassType.Pixelmon);

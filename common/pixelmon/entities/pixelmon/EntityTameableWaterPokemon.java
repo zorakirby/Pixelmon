@@ -1,5 +1,6 @@
 package pixelmon.entities.pixelmon;
 
+import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityAISit;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityWaterMob;
@@ -138,5 +139,4 @@ public abstract class EntityTameableWaterPokemon extends EntityWaterMob {
     {
         return this.worldObj.getPlayerEntityByName(this.getOwnerName());
     }
-
 }
