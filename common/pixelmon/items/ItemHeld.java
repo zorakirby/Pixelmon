@@ -33,7 +33,7 @@ public abstract class ItemHeld extends PixelmonItem
 		return effectsBattles;
 	}
 	
-	public static void useItem(PixelmonEntityHelper helper, EnumHeldItems item)
+	public static void useItem(PixelmonEntityHelper helper, PixelmonEntityHelper helper1, EnumHeldItems item)
 	{
 		if(helper.getHeldItem() != null && helper.getHeldItem().getItem() != null && helper.getHeldItem().getItem() instanceof ItemHeld)
 		{
@@ -46,7 +46,7 @@ public abstract class ItemHeld extends PixelmonItem
 	
 	public static boolean isItemOfType(ItemStack item, EnumHeldItems type)
 	{
-		if(item.getItem() == null || !(item.getItem() instanceof ItemHeld))
+		if(item != null && item.getItem() == null && !(item.getItem() instanceof ItemHeld))
 		{
 			return false;
 		}
@@ -56,5 +56,17 @@ public abstract class ItemHeld extends PixelmonItem
 	public boolean effectEntity(PixelmonEntityHelper helper1)
 	{
 		return false;
+	}
+	
+	public static void useBattleItems(PixelmonEntityHelper helper1, PixelmonEntityHelper helper2)
+	{
+		for(EnumHeldItems item : EnumHeldItems.values())
+		{
+			if(!item.getBattleModifier())
+			{
+				continue;
+			}
+			useItem(helper1, helper2, item);
+		}
 	}
 }
