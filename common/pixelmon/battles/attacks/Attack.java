@@ -20,6 +20,7 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumType;
+import pixelmon.items.ItemHeld;
 import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.*;
@@ -169,6 +170,7 @@ public class Attack {
 		if (target.getTrainer() != null)
 			target.getTrainer().pokemonStorage.updateNBT(target);
 		pp--;
+		ItemHeld.useBattleItems(user, target);
 		return;
 	}
 

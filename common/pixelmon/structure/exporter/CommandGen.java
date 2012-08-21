@@ -3,12 +3,11 @@ package pixelmon.structure.exporter;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.CommandBase;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ICommandSender;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.MovingObjectPosition;
-import net.minecraft.src.Vec3;
 
 /**
  * 
@@ -35,7 +34,7 @@ public class CommandGen extends CommandBase {
 		}
 		String var3 = null;
 		EntityPlayer var4 = (EntityPlayer)var1;
-		MovingObjectPosition var5 = ModLoader.getMinecraftInstance().objectMouseOver;
+		MovingObjectPosition var5 = Minecraft.getMinecraft().objectMouseOver;
 		try
 		{
 			if(var2.length == 1 && var2[0].equals("list"))

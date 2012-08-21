@@ -9,7 +9,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.items.ItemHeld;
 
 public enum EnumHeldItems {
-	expShare, luckyEgg,
+	expShare(false), luckyEgg(false),
 	oran, rawst, leppa;
 	
 	private boolean effectsBattle;
