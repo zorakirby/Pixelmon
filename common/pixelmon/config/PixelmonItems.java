@@ -133,8 +133,8 @@ public class PixelmonItems {
 		berryRawstID = cfg.getOrCreateIntProperty("RawstBerry", "item", 10041).getInt();
 		berryLeppaID = cfg.getOrCreateIntProperty("LeppaBerry", "item", 10042).getInt();
 		pokeBall = new ItemPokeBall(pokeBallID, EnumPokeballs.PokeBall).setItemName("PokeBall");
-		greatBall = new ItemPokeBall(greatBallID, EnumPokeballs.GreatBall).setItemName("GreatBall");
 		ultraBall = new ItemPokeBall(ultraBallID, EnumPokeballs.UltraBall).setItemName("UltraBall");
+		greatBall = new ItemPokeBall(greatBallID, EnumPokeballs.GreatBall).setItemName("GreatBall");
 		masterBall = new ItemPokeBall(masterBallID, EnumPokeballs.MasterBall).setItemName("MasterBall");
 		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
