@@ -1,5 +1,6 @@
 package pixelmon.items;
 
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ModLoader;
 import pixelmon.comm.PixelmonDataPacket;
@@ -12,6 +13,7 @@ public class ItemPotion extends PixelmonItem {
 	public ItemPotion(int par1) {
 		super(par1);
 		SetUsableInBattle(true);
+		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
 
 	@Override

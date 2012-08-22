@@ -21,7 +21,7 @@ public class ItemPokeBall extends PixelmonItem {
 
 	public ItemPokeBall(int i, EnumPokeballs type) {
 		super(i);
-		SetUsableInBattle(true);
+		SetUsableInBattle(false); // update this when the effect is properly added
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);
 		this.type = type;

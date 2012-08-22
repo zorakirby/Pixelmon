@@ -69,7 +69,7 @@ public class PixelmonItems {
 	
 	@Mod.Item(name = "Rare Candy", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item rareCandy;
-	@Mod.Item(name = "Potion", typeClass = "pixelmon.items.PixelmonItem")
+	@Mod.Item(name = "Potion", typeClass = "pixelmon.items.ItemPotion")
 	public static Item potion;
 	@Mod.Item(name = "Coal Dust", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item coalDust;
