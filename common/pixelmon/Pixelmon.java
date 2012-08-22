@@ -75,18 +75,11 @@ public class Pixelmon {
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
-		PixelmonBlocks.registerBlocks();
-		PixelmonItems.addNames();
-		
 		proxy.registerKeyBindings();
-		
-		PixelmonEntityList.registerEntities();
-		PixelmonEntityList.addSpawns();
-		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", IDListPixelmon.i ++ , Pixelmon.instance, 80, 1, true);
 		proxy.registerRenderers();
 		proxy.preloadTextures();
 		PixelmonRecipes.addRecipes();
-		
+		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", IDListPixelmon.i ++ , Pixelmon.instance, 80, 1, true);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());

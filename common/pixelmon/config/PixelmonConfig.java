@@ -36,6 +36,12 @@ public class PixelmonConfig {
 		IDListTrainer.load(config);
 		allowNonPixelmonMobs = config.getOrCreateBooleanProperty("Allow vanilla mobs", "general", false).getBoolean(false);
 		config.save();
+		
+		PixelmonItems.addNames();
+		PixelmonBlocks.addNames();
+		PixelmonBlocks.registerBlocks();
+		PixelmonEntityList.registerEntities();
+		PixelmonEntityList.addSpawns();		
 	}
 	
 	public static void removeSpawns()
