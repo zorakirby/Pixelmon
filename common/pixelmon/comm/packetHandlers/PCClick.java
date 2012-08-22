@@ -9,6 +9,7 @@ import cpw.mods.fml.common.network.Player;
 import pixelmon.Pixelmon;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.ComputerBox;
 import pixelmon.storage.PixelmonStorage;
@@ -20,15 +21,15 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NetworkManager;
 
-public class PCClick extends PacketHandlerBase{
-	
+public class PCClick extends PacketHandlerBase {
+
 	public HashMap<EntityPlayer, NBTTagCompound> mousePokemon;
-	
-	public PCClick(){
+
+	public PCClick() {
 		packetsHandled.add(EnumPackets.PCClick);
 		mousePokemon = new HashMap<EntityPlayer, NBTTagCompound>();
 	}
-	
+
 	@Override
 	public void handlePacket(int index, Player pl, DataInputStream data) throws IOException {
 		EntityPlayer player = (EntityPlayer)pl;
@@ -60,6 +61,12 @@ public class PCClick extends PacketHandlerBase{
 			int useless = data.readInt();
 			int boxPos = data.readInt();
 			NBTTagCompound n1 = mousePokemon.get(player);
+			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).EntityAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj))
+			{
+				IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).getAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj);
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).retrieve(pixelmon);
+				pixelmon.catchInPokeball();
+			}	
 			NBTTagCompound n = PixelmonStorage.ComputerManager.getPlayerStorage(player).getBox(box).getNBTByPosition(boxPos);
 			mousePokemon.put(player, n);
 			PixelmonStorage.ComputerManager.getPlayerStorage(player).changePokemon(box, boxPos, n1);
@@ -69,6 +76,12 @@ public class PCClick extends PacketHandlerBase{
 			int box1 = data.readInt();
 			int boxPos = data.readInt();
 			NBTTagCompound n = mousePokemon.get(player);
+			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).EntityAlreadyExists(n.getInteger("pixelmonID"), player.worldObj))
+			{
+				IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).getAlreadyExists(n.getInteger("pixelmonID"), player.worldObj);
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).retrieve(pixelmon);
+				pixelmon.catchInPokeball();
+			}	
 			mousePokemon.put(player, null);
 			PixelmonStorage.ComputerManager.getPlayerStorage(player).changePokemon(box1, boxPos, n);
 			return;
@@ -87,5 +100,4 @@ public class PCClick extends PacketHandlerBase{
 		}	
 		
 	}
-
 }
