@@ -7,6 +7,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
+import net.minecraft.src.ItemPotion;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import pixelmon.entities.pokeballs.EntityPokeBall;
@@ -138,7 +139,7 @@ public class PixelmonItems {
 		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(5);
-		potion = new PixelmonItem(potionID).setItemName("Potion").setIconIndex(2).setMaxStackSize(16);
+		potion = new ItemPotion(potionID).setItemName("Potion").setIconIndex(2).setMaxStackSize(16);
 		coalDust = new PixelmonItem(coalDustID).setItemName("CoalDust").setIconIndex(4);
 		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.FIRESTONE, 3).setItemName("FireStone");
 		waterStone = new ItemEvolutionStone(waterStoneID, EnumEvolutionStone.WATERSTONE, 1).setItemName("WaterStone");
@@ -172,28 +173,5 @@ public class PixelmonItems {
 		{
 			e.printStackTrace();
 		}
-		/*ModLoader.addName(pokeBall, "PokeBall");
-		ModLoader.addName(greatBall, "GreatBall");
-		ModLoader.addName(ultraBall, "UltraBall");
-		ModLoader.addName(masterBall, "MasterBall");
-		ModLoader.addName(pokeChecker, "PokeChecker");
-		ModLoader.addName(rareCandy, "Rare Candy");
-		ModLoader.addName(potion, "Potion");
-		ModLoader.addName(coalDust, "Coal Dust");
-		ModLoader.addName(pokeDex, "Pokedex");		
-		ModLoader.addName(fireStone, "Fire Stone");
-		ModLoader.addName(leafStone, "Leaf Stone");
-		ModLoader.addName(waterStone, "Water Stone");
-		ModLoader.addName(thunderStone, "Thunder Stone");
-		ModLoader.addName(moonStone, "Moon Stone");
-		ModLoader.addName(thunderStoneShard, "Thunder Stone Shard");
-		ModLoader.addName(leafStoneShard, "Leaf Stone Shard");	
-		ModLoader.addName(pcItem, "PC");
-		ModLoader.addName(healerItem, "Healer");
-		ModLoader.addName(luckyEgg, "Lucky Egg");
-		ModLoader.addName(expShare, "Experience Share");
-		ModLoader.addName(berryLeppa, "Leppa Berry");
-		ModLoader.addName(berryOran, "Oran Berry");
-		ModLoader.addName(berryRawst, "Rawst Berry");*/
 	}
 }

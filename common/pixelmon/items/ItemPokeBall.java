@@ -2,6 +2,7 @@ package pixelmon.items;
 
 import java.util.HashMap;
 
+import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
 import net.minecraft.src.CreativeTabs;
@@ -53,5 +54,10 @@ public class ItemPokeBall extends PixelmonItem {
 		}
 		
 		return itemstack;
+	}
+	
+	@Override
+	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+		
 	}
 }
