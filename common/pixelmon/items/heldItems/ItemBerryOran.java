@@ -1,13 +1,15 @@
-package pixelmon.items;
+package pixelmon.items.heldItems;
 
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumHeldItems;
+import pixelmon.items.ItemHeld;
 
 public class ItemBerryOran extends ItemHeld {
 
 	public ItemBerryOran(int id) 
 	{
 		super(id, EnumHeldItems.oran);
+		SetUsableInBattle(true);
 	}
 	
 	public boolean effectEntity(PixelmonEntityHelper helper)

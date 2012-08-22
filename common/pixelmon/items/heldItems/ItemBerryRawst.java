@@ -1,15 +1,16 @@
-package pixelmon.items;
+package pixelmon.items.heldItems;
 
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumHeldItems;
+import pixelmon.items.ItemHeld;
 
 public class ItemBerryRawst extends ItemHeld {
 
 	public ItemBerryRawst(int id) {
 		super(id, EnumHeldItems.rawst);
-		// TODO Auto-generated constructor stub
+		SetUsableInBattle(true);
 	}
 	
 	public boolean effectEntity(PixelmonEntityHelper helper)

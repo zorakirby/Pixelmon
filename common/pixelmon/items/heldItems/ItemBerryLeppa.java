@@ -1,14 +1,16 @@
-package pixelmon.items;
+package pixelmon.items.heldItems;
 
 import pixelmon.battles.attacks.Attack;
+import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumHeldItems;
+import pixelmon.items.ItemHeld;
 
 public class ItemBerryLeppa extends ItemHeld {
 
 	public ItemBerryLeppa(int id) {
 		super(id, EnumHeldItems.leppa);
-		// TODO Auto-generated constructor stub
+		SetUsableInBattle(true);
 	}
 	
 	public boolean effectEntity(PixelmonEntityHelper helper)

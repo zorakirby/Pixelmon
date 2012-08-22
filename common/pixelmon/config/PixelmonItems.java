@@ -13,17 +13,17 @@ import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.enums.EnumPokeballs;
-import pixelmon.items.ItemBerryLeppa;
-import pixelmon.items.ItemBerryOran;
-import pixelmon.items.ItemBerryRawst;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEvolutionStone;
-import pixelmon.items.ItemExpShare;
 import pixelmon.items.ItemHeld;
-import pixelmon.items.ItemLuckyEgg;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.PixelmonItem;
+import pixelmon.items.heldItems.ItemBerryLeppa;
+import pixelmon.items.heldItems.ItemBerryOran;
+import pixelmon.items.heldItems.ItemBerryRawst;
+import pixelmon.items.heldItems.ItemExpShare;
+import pixelmon.items.heldItems.ItemLuckyEgg;
 
 public class PixelmonItems {
 	public static int pokeBallID;

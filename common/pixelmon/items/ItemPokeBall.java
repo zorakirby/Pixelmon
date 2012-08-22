@@ -10,7 +10,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 
-public class ItemPokeBall extends Item {
+public class ItemPokeBall extends PixelmonItem {
 	private EnumPokeballs type;
 	
 	public static int ballTimer = 0;
@@ -19,6 +19,7 @@ public class ItemPokeBall extends Item {
 
 	public ItemPokeBall(int i, EnumPokeballs type) {
 		super(i);
+		SetUsableInBattle(true);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);
 		this.type = type;
