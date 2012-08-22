@@ -30,7 +30,7 @@ public class GuiAttacking extends GuiScreen {
 	private BattleController bc;
 
 	private PixelmonDataPacket userPacket, targetPacket;
-	private int battleControllerIndex;
+	public int battleControllerIndex;
 
 	public GuiAttacking(int pokemon1Index, int pokemon2Index, int battleControllerIndex) {
 		userPacket = ServerStorageDisplay.get(pokemon1Index);

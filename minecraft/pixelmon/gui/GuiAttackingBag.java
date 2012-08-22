@@ -12,10 +12,13 @@ import net.minecraft.src.ModLoader;
 
 import org.lwjgl.input.Keyboard;
 
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.items.ItemPokeBall;
+import pixelmon.items.PixelmonItem;
 
 public class GuiAttackingBag extends GuiScreen {
 
@@ -39,7 +42,7 @@ public class GuiAttackingBag extends GuiScreen {
 				continue;
 			}
 			Item it = i.getItem();
-			if (it instanceof ItemPokeBall || (it.shiftedIndex == PixelmonItems.potion.shiftedIndex)) {
+			if (it instanceof PixelmonItem && ((PixelmonItem)it).isUsableInBattle()) {
 				if (getBagSlot(i) == null) {
 					GuiAttackingBagSlot bs = new GuiAttackingBagSlot(i);
 					for (int z = 0; z < i.stackSize; z++) {
@@ -82,19 +85,7 @@ public class GuiAttackingBag extends GuiScreen {
 				return;
 			}
 			Item item = selected.getItem().getItem();
-			PixelmonDataPacket mine = parent.getMyPixelmonPacket();
-			PixelmonDataPacket other = parent.getOtherPixelmonPacket();
-			if (item.shiftedIndex == PixelmonItems.potion.shiftedIndex) {
-				if (mine.health + 20 >= mine.hp) {
-					mine.health = mine.hp;
-				} else {
-					mine.health = mine.health + 20;
-				}
-			} else if (item instanceof ItemPokeBall) {
-				// addpokeball action stuff in here
-			}
-
-			ModLoader.getMinecraftInstance().thePlayer.inventory.consumeInventoryItem(item.shiftedIndex);
+			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.battleControllerIndex,0));
 			mc.displayGuiScreen(parent);
 		}
 	}
