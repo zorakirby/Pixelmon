@@ -1,5 +1,7 @@
 package pixelmon.items.heldItems;
 
+import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumHeldItems;
@@ -19,6 +21,15 @@ public class ItemBerryOran extends ItemHeld {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+		if (userPokemon.getHealth()+10 > userPokemon.stats.HP)
+			userPokemon.setHealth(userPokemon.stats.HP);
+		else
+			userPokemon.setHealth(userPokemon.getHealth() + 10);
+		ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getName() + " gained 10 health!");
 	}
 
 }

@@ -25,5 +25,16 @@ public class ItemBerryRawst extends ItemHeld {
 		}
 		return false;
 	}
+	
+	@Override
+	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+		for (int i = 0; i < userPokemon.status.size(); i++) {
+			StatusEffectBase base = userPokemon.status.get(i);
+			if (base.type == StatusEffectType.Burn) {
+				userPokemon.status.remove(i);
+				ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getName() + " was healed of it's burn!");
+			}
+		}
+	}
 
 }

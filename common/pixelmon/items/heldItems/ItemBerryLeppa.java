@@ -1,6 +1,8 @@
 package pixelmon.items.heldItems;
 
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
@@ -29,4 +31,8 @@ public class ItemBerryLeppa extends ItemHeld {
 		return false;
 	}
 
+	@Override
+	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+		
+	}
 }
