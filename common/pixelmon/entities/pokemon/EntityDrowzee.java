@@ -2,12 +2,12 @@ package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 
-public class EntityKakuna extends EntityGroundPixelmon
+public class EntityDrowzee extends EntityGroundPixelmon
 {
 	
-	public EntityKakuna(World world)
+	public EntityDrowzee(World world)
 	{
 		super(world);
 		init();
@@ -15,15 +15,12 @@ public class EntityKakuna extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Kakuna";
+		name = "Drowzee";
 		isImmuneToFire = false;
-		helper.hoverHeight=1f;
 		super.init();
-		helper.giScale = 0.3F;
 	}
-	
+
 	public void evolve() 
-	{		
-		
+	{
 	}
 }
