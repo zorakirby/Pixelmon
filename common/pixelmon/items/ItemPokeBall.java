@@ -2,6 +2,7 @@ package pixelmon.items;
 
 import java.util.HashMap;
 
+import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
@@ -58,6 +59,8 @@ public class ItemPokeBall extends PixelmonItem {
 	
 	@Override
 	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+		ChatHandler.sendChat(userPokemon.getOwner(), "Using pokeballs in battle is not implemented yet");
+		//EntityPokeBall p = new EntityPokeBall(userPokemon.getEntity().worldObj, userPokemon.getOwner(), type, !userPokemon.getOwner().capabilities.isCreativeMode);
 		
 	}
 }
