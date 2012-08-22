@@ -60,61 +60,31 @@ public class GuiScreenPokeChecker extends GuiScreen {
 		// drawCenteredString(fontRenderer, "Lv: " + target.getLevel() +
 		// target.getName(), width / 2, 35, 0xcccccc);
 		drawCenteredString(fontRenderer, "PokeChecker", width / 2, height / 7, 0xffffff);
-		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-			drawCenteredString(fontRenderer, "Lv: " + targetPacket.lvl + " " + targetPacket.nickname + " (" + targetPacket.name + ")", width / 2, height / 7 + 15, 0xcccccc);
-			this.drawHorizontalLine(width / 5, height / 7 + 20, width * 4 / 5, 0xffffff);
-			// STATS
-			drawCenteredString(fontRenderer, "Stats", width / 3, height / 7 + 25, 0xdddddd);
-			String s = (targetPacket.type2 == EnumType.Mystery ? "Type:" : "Types:");
-			drawCenteredString(fontRenderer, s, width / 3, height / 7 + 40, 0xdddddd);
-			if (targetPacket.type2 == EnumType.Mystery) {
-				drawCenteredString(fontRenderer, targetPacket.type1.getName(), width / 3, height / 7 + 50, targetPacket.type1.getColor());
-			}
-			else{
-				int swidth = fontRenderer.splitStringWidth(targetPacket.type1.getName(), 10);
-				drawCenteredString(fontRenderer, targetPacket.type1.getName(), width / 3 - (swidth / 2), height / 7 + 50, targetPacket.type1.getColor());
-				drawString(fontRenderer, targetPacket.type2.getName(), width / 3 + 3, height / 7 + 50, targetPacket.type2.getColor());
-			}
-			drawCenteredString(fontRenderer, "Health: " + targetPacket.health + "/" + targetPacket.hp, width / 3, height / 7 + 60, 0xdddddd);
-			drawCenteredString(fontRenderer, "Exp: " + targetPacket.lvl + "/" + targetPacket.nextLvlXP, width / 3, height / 7 + 70, 0xdddddd);
-			drawCenteredString(fontRenderer, "Attack: " + targetPacket.Attack, width / 3, height / 7 + 80, 0xdddddd);
-			drawCenteredString(fontRenderer, "Defence: " + targetPacket.Defence, width / 3, height / 7 + 90, 0xdddddd);
-			drawCenteredString(fontRenderer, "Special Attack: " + targetPacket.SpecialAttack, width / 3, height / 7 + 100, 0xdddddd);
-			drawCenteredString(fontRenderer, "Special Defence: " + targetPacket.SpecialDefence, width / 3, height / 7 + 110, 0xdddddd);
-			// MOVES
-			drawCenteredString(fontRenderer, "Moves", width * 2 / 3, height / 7 + 25, 0xdddddd);
-			for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
-				drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10),
-						targetPacket.moveset[i2].type.getColor());
-			}
+		drawCenteredString(fontRenderer, "Lv: " + targetPacket.lvl + " " + targetPacket.nickname + " (" + targetPacket.name + ")", width / 2, height / 7 + 15, 0xcccccc);
+		this.drawHorizontalLine(width / 5, height / 7 + 20, width * 4 / 5, 0xffffff);
+		// STATS
+		drawCenteredString(fontRenderer, "Stats", width / 3, height / 7 + 25, 0xdddddd);
+		String s = (targetPacket.type2 == EnumType.Mystery ? "Type:" : "Types:");
+		drawCenteredString(fontRenderer, s, width / 3, height / 7 + 40, 0xdddddd);
+		if (targetPacket.type2 == EnumType.Mystery) {
+			drawCenteredString(fontRenderer, targetPacket.type1.getName(), width / 3, height / 7 + 50, targetPacket.type1.getColor());
 		} else {
-			drawCenteredString(fontRenderer, "Lv: " + target.getLvl().getLevel() + " " + target.getDisplayName() + " (" + target.getName() + ")", width / 2, height / 7 + 15, 0xcccccc);
-			this.drawHorizontalLine(width / 5, height / 7 + 20, width * 4 / 5, 0xffffff);
-			// STATS
-			drawCenteredString(fontRenderer, "Stats", width / 3, height / 7 + 25, 0xdddddd);
-			String s = (target.getType().size() == 1 ? "Type:" : "Types:");
-			drawCenteredString(fontRenderer, s, width / 3, height / 7 + 40, 0xdddddd);
-			if (target.getType().size() == 1) {
-				drawCenteredString(fontRenderer, target.getType().get(0).getName(), width / 3, height / 7 + 50, target.getType().get(0).getColor());
-			}
-			if (target.getType().size() == 2) {
-				int swidth = fontRenderer.splitStringWidth(target.getType().get(0).getName(), 10);
-				drawCenteredString(fontRenderer, target.getType().get(0).getName(), width / 3 - (swidth / 2), height / 7 + 50, target.getType().get(0).getColor());
-				drawString(fontRenderer, target.getType().get(1).getName(), width / 3 + 3, height / 7 + 50, target.getType().get(1).getColor());
-			}
-			drawCenteredString(fontRenderer, "Health: " + target.getHealth() + "/" + target.getMaxHealth(), width / 3, height / 7 + 60, 0xdddddd);
-			drawCenteredString(fontRenderer, "Exp: " + target.getLvl().getExp() + "/" + target.getLvl().getExpToNextLevel(), width / 3, height / 7 + 70, 0xdddddd);
-			drawCenteredString(fontRenderer, "Attack: " + target.stats.Attack, width / 3, height / 7 + 80, 0xdddddd);
-			drawCenteredString(fontRenderer, "Defence: " + target.stats.Defence, width / 3, height / 7 + 90, 0xdddddd);
-			drawCenteredString(fontRenderer, "Special Attack: " + target.stats.SpecialAttack, width / 3, height / 7 + 100, 0xdddddd);
-			drawCenteredString(fontRenderer, "Special Defence: " + target.stats.SpecialDefence, width / 3, height / 7 + 110, 0xdddddd);
-			// MOVES
-			drawCenteredString(fontRenderer, "Moves", width * 2 / 3, height / 7 + 25, 0xdddddd);
-			for (int i2 = 0; i2 < target.moveset.size(); i2++) {
-				drawCenteredString(fontRenderer, (((Attack) target.moveset.get(i2))).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10),
-						((Attack) target.moveset.get(i2)).attackType.getColor());
-			}
+			int swidth = fontRenderer.splitStringWidth(targetPacket.type1.getName(), 10);
+			drawCenteredString(fontRenderer, targetPacket.type1.getName(), width / 3 - (swidth / 2), height / 7 + 50, targetPacket.type1.getColor());
+			drawString(fontRenderer, targetPacket.type2.getName(), width / 3 + 3, height / 7 + 50, targetPacket.type2.getColor());
 		}
+		drawCenteredString(fontRenderer, "Health: " + targetPacket.health + "/" + targetPacket.hp, width / 3, height / 7 + 60, 0xdddddd);
+		drawCenteredString(fontRenderer, "Exp: " + targetPacket.lvl + "/" + targetPacket.nextLvlXP, width / 3, height / 7 + 70, 0xdddddd);
+		drawCenteredString(fontRenderer, "Attack: " + targetPacket.Attack, width / 3, height / 7 + 80, 0xdddddd);
+		drawCenteredString(fontRenderer, "Defence: " + targetPacket.Defence, width / 3, height / 7 + 90, 0xdddddd);
+		drawCenteredString(fontRenderer, "Special Attack: " + targetPacket.SpecialAttack, width / 3, height / 7 + 100, 0xdddddd);
+		drawCenteredString(fontRenderer, "Special Defence: " + targetPacket.SpecialDefence, width / 3, height / 7 + 110, 0xdddddd);
+		// MOVES
+		drawCenteredString(fontRenderer, "Moves", width * 2 / 3, height / 7 + 25, 0xdddddd);
+		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
+			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10), targetPacket.moveset[i2].type.getColor());
+		}
+
 		super.drawScreen(i, i1, f);
 	}
 }

@@ -74,16 +74,16 @@ public class PCClick extends PacketHandlerBase{
 			return;
 		}
 		else if(box == -5){
-			PlayerComputerStorage s = PixelmonStorage.ComputerManager.getPlayerStorage(player);
-			for(ComputerBox b : s.getBoxList()){
-				for(NBTTagCompound n: b.getStoredPokemon()){
-					if (n != null) {
-						PixelmonDataPacket p = new PixelmonDataPacket(n, EnumPackets.AddToTempStore);
-						((EntityPlayerMP)player).serverForThisPlayer.sendPacketToPlayer(p.getPacket());
-					}
-				}
-			}
-			player.openGui(Pixelmon.instance, EnumGui.PC.getIndex(), player.worldObj, player.chunkCoordX, player.chunkCoordY, player.chunkCoordZ);
+//			PlayerComputerStorage s = PixelmonStorage.ComputerManager.getPlayerStorage(player);
+//			for(ComputerBox b : s.getBoxList()){
+//				for(NBTTagCompound n: b.getStoredPokemon()){
+//					if (n != null) {
+//						PixelmonDataPacket p = new PixelmonDataPacket(n, EnumPackets.AddToTempStore);
+//						((EntityPlayerMP)player).serverForThisPlayer.sendPacketToPlayer(p.getPacket());
+//					}
+//				}
+//			}
+//			player.openGui(Pixelmon.instance, EnumGui.PC.getIndex(), player.worldObj, 0,0,0);
 		}	
 		
 	}

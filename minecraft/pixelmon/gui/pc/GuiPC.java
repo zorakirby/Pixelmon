@@ -2,6 +2,7 @@ package pixelmon.gui.pc;
 
 import java.awt.Rectangle;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.ModLoader;
@@ -45,7 +46,7 @@ public class GuiPC extends GuiContainer {
 		checkX = width / 2 - 140;
 
 		mouseSlot = new SlotPC(0, 0, (PixelmonDataPacket) null);
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < PlayerComputerStorage.boxCount; i++) {
 			for (int j = 0; j < ComputerBox.boxLimit; j++) {
 				int x = j % 6;
 				int y = j / 6;
@@ -181,15 +182,15 @@ public class GuiPC extends GuiContainer {
 				return;
 
 			} else if (new Rectangle(trashX, trashY, 32, 32).contains(par1, par2)) {
-				if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-					if (mouseSlot.pokemonData != null) {
-						ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -2));
-					}
+				if (mouseSlot.pokemonData != null) {
+					ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -2));
 				}
+
 				mouseSlot.clearPokemon();
 				return;
 			} else if (new Rectangle(checkX, checkY, 32, 32).contains(par1, par2)) {
 				if (mouseSlot.pokemonData != null) {
+					goingToPokeChecker = true;
 					mc.displayGuiScreen(new GuiScreenPokeCheckerPC(mouseSlot.pokemonData, this, 0, 0));
 				}
 				return;
@@ -199,6 +200,8 @@ public class GuiPC extends GuiContainer {
 			}
 		}
 	}
+
+	private boolean goingToPokeChecker = false;
 
 	protected void mouseMovedOrUp(int par1, int par2, int par3) {
 		super.mouseMovedOrUp(par1, par2, par3);
@@ -211,14 +214,16 @@ public class GuiPC extends GuiContainer {
 
 	public void onGuiClosed() {
 		super.onGuiClosed();
+		if (!goingToPokeChecker) {
 
-		PixelmonServerStore.store.clear();
-		if (mouseSlot.pokemonData != null) {
-			for (int i = 0; i < pcSlots.length; i++) {
-				for (int j = 0; j < pcSlots[i].length; j++) {
-					if (pcSlots[i][j].pokemonData == null) {
-						ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -4, i, j));
-						break;
+			PixelmonServerStore.store.clear();
+			if (mouseSlot.pokemonData != null) {
+				for (int i = 0; i < pcSlots.length; i++) {
+					for (int j = 0; j < pcSlots[i].length; j++) {
+						if (pcSlots[i][j].pokemonData == null) {
+							ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -4, i, j));
+							break;
+						}
 					}
 				}
 			}
@@ -247,11 +252,6 @@ public class GuiPC extends GuiContainer {
 		return false;
 	}
 
-	public void switchBackFromGui(int box, int i) {
-		mouseSlot.pokemon = pcSlots[box][i].pokemon;
-		pcSlots[box][i].clearPokemon();
-	}
-
 	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureHandle);
@@ -270,138 +270,95 @@ public class GuiPC extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
 		int w = width;
 		int h = height;
-		int partyTexture = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/gui/pcPartyBox.png");
-		ModLoader.getMinecraftInstance().renderEngine.bindTexture(partyTexture);
+		int partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcPartyBox.png");
+		Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
 		drawTexturedModalRect(width / 2 - 91, height / 6 + 151, 0, 0, 182, 29);
 		int i = 0;
-		partyTexture = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/gui/pcBox.png");
-		ModLoader.getMinecraftInstance().renderEngine.bindTexture(partyTexture);
+		partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcBox.png");
+		Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
 		drawTexturedModalRect(width / 2 - 91, height / 6, 0, 0, 182, 141);
 		drawTexturedModalRect(trashX, trashY, 0, 256 - 32, 32, 32);
-		drawImageQuad(ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/image/pokechecker.png"), checkX, checkY, 32f, 32f, 0f, 0f, 1f, 1f);
-		if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-			int image = 0;
-			for (int a = 0; a < pcSlots[boxNumber].length; a++) {
-				image = 0;
-				SlotPCPC slot = pcSlots[boxNumber][a];
-				if (slot.pokemonData == null) {
-					continue;
-				}
-				String numString = "";
-				if (slot.pokemonData.nationalPokedexNumber < 10)
-					numString = "00" + slot.pokemonData.nationalPokedexNumber;
-				else if (slot.pokemonData.nationalPokedexNumber < 100)
-					numString = "0" + slot.pokemonData.nationalPokedexNumber;
-				else
-					numString = "" + slot.pokemonData.nationalPokedexNumber;
-				if (slot.pokemonData.isShiny)
-					image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
-				else
-					image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-				drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
-				if(slot.pokemonData.heldItem != null)
-				{
-					drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
-				}
-			}
-			for (int a = 0; a < partySlots.length; a++) {
-				image = 0;
-				SlotPCParty slot = partySlots[a];
-				if (slot.pokemonData == null) {
-					continue;
-				}
-				String numString = "";
-				if (slot.pokemonData.nationalPokedexNumber < 10)
-					numString = "00" + slot.pokemonData.nationalPokedexNumber;
-				else if (slot.pokemonData.nationalPokedexNumber < 100)
-					numString = "0" + slot.pokemonData.nationalPokedexNumber;
-				else
-					numString = "" + slot.pokemonData.nationalPokedexNumber;
-				if (slot.pokemonData.isShiny)
-					image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
-				else
-					image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-				drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
-				if(slot.pokemonData.heldItem != null)
-				{
-					drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
-				}
-			}
+		drawImageQuad(Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pokechecker.png"), checkX, checkY, 32f, 32f, 0f, 0f, 1f, 1f);
+		int image = 0;
+		for (int a = 0; a < pcSlots[boxNumber].length; a++) {
 			image = 0;
-			if (mouseSlot.pokemonData != null) {
-				PixelmonDataPacket p = mouseSlot.pokemonData;
-				String numString = "";
-				if (p.nationalPokedexNumber < 10)
-					numString = "00" + p.nationalPokedexNumber;
-				else if (p.nationalPokedexNumber < 100)
-					numString = "0" + p.nationalPokedexNumber;
-				else
-					numString = "" + p.nationalPokedexNumber;
-				if (p.isShiny)
-					image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
-				else
-					image = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-				drawImageQuad(image, mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
-				if(mouseSlot.pokemonData.heldItem != null)
-				{
-					drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), mouseSlot.x + 22, mouseSlot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
-				}
-				if (p.nickname == null || p.nickname.equalsIgnoreCase("")) {
-					p.nickname = p.name;
-				}
-				fontRenderer.drawString(p.nickname, mouseSlot.x + 30, mouseSlot.y + 10, 0xFFFFFF);
-				partyTexture = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
-				ModLoader.getMinecraftInstance().renderEngine.bindTexture(partyTexture);
-				if (p.isMale)
-					drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 208, 5, 9);
-				else
-					drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 218, 5, 9);
-				fontRenderer.drawString("Lvl " + p.lvl, mouseSlot.x + 30, mouseSlot.y + 20, 0xFFFFFF);
-				if (p.isFainted) {
-					fontRenderer.drawString("Fainted", mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
-				} else {
-					fontRenderer.drawString("HP " + p.health + "/" + p.hp, mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
-				}
+			SlotPCPC slot = pcSlots[boxNumber][a];
+			if (slot.pokemonData == null) {
+				continue;
 			}
-		} else {
-			for (int a = 0; a < pcSlots[boxNumber].length; a++) {
-				SlotPCPC slot = pcSlots[boxNumber][a];
-				if (slot.pokemon == null) {
-					continue;
-				}
-				int image = slot.getRenderInt();
-				drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+			String numString = "";
+			if (slot.pokemonData.nationalPokedexNumber < 10)
+				numString = "00" + slot.pokemonData.nationalPokedexNumber;
+			else if (slot.pokemonData.nationalPokedexNumber < 100)
+				numString = "0" + slot.pokemonData.nationalPokedexNumber;
+			else
+				numString = "" + slot.pokemonData.nationalPokedexNumber;
+			if (slot.pokemonData.isShiny)
+				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+			else
+				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+			drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+			if (slot.pokemonData.heldItem != null) {
+				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
 			}
-			for (int a = 0; a < partySlots.length; a++) {
-				SlotPCParty slot = partySlots[a];
-				if (slot.pokemon == null) {
-					continue;
-				}
-				int image = slot.getRenderInt();
-				drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+		}
+		for (int a = 0; a < partySlots.length; a++) {
+			image = 0;
+			SlotPCParty slot = partySlots[a];
+			if (slot.pokemonData == null) {
+				continue;
 			}
-			if (mouseSlot.pokemon != null) {
-				int image = mouseSlot.getRenderInt();
-				drawImageQuad(image, mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
-				NBTTagCompound n = mouseSlot.pokemon;
-				if (n.getString("Nickname") == null || n.getString("Nickname").equalsIgnoreCase("")) {
-					n.setString("Nickname", n.getName());
-				}
-				fontRenderer.drawString(n.getString("Nickname"), mouseSlot.x + 30, mouseSlot.y + 10, 0xFFFFFF);
-				partyTexture = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
-				ModLoader.getMinecraftInstance().renderEngine.bindTexture(partyTexture);
-				if (n.getBoolean("IsMale"))
-					drawTexturedModalRect(fontRenderer.getStringWidth(n.getString("Nickname")) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 208, 5, 9);
-				else
-					drawTexturedModalRect(fontRenderer.getStringWidth(n.getString("Nickname")) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 218, 5, 9);
-				fontRenderer.drawString("Lvl " + n.getInteger("Level"), mouseSlot.x + 30, mouseSlot.y + 20, 0xFFFFFF);
-				if (n.getBoolean("IsFainted")) {
-					fontRenderer.drawString("Fainted", mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + n.getInteger("Level")), mouseSlot.y + 20, 0xFFFFFF);
-				} else {
-					fontRenderer.drawString("HP " + n.getShort("Health") + "/" + n.getInteger("StatsHP"), mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + n.getInteger("Level")),
-							mouseSlot.y + 20, 0xFFFFFF);
-				}
+			String numString = "";
+			if (slot.pokemonData.nationalPokedexNumber < 10)
+				numString = "00" + slot.pokemonData.nationalPokedexNumber;
+			else if (slot.pokemonData.nationalPokedexNumber < 100)
+				numString = "0" + slot.pokemonData.nationalPokedexNumber;
+			else
+				numString = "" + slot.pokemonData.nationalPokedexNumber;
+			if (slot.pokemonData.isShiny)
+				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+			else
+				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+			drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+			if (slot.pokemonData.heldItem != null) {
+				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
 			}
+		}
+		image = 0;
+		if (mouseSlot.pokemonData != null) {
+			PixelmonDataPacket p = mouseSlot.pokemonData;
+			String numString = "";
+			if (p.nationalPokedexNumber < 10)
+				numString = "00" + p.nationalPokedexNumber;
+			else if (p.nationalPokedexNumber < 100)
+				numString = "0" + p.nationalPokedexNumber;
+			else
+				numString = "" + p.nationalPokedexNumber;
+			if (p.isShiny)
+				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+			else
+				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+			drawImageQuad(image, mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+			if (mouseSlot.pokemonData.heldItem != null) {
+				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), mouseSlot.x + 22, mouseSlot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
+			}
+			if (p.nickname == null || p.nickname.equalsIgnoreCase("")) {
+				p.nickname = p.name;
+			}
+			fontRenderer.drawString(p.nickname, mouseSlot.x + 30, mouseSlot.y + 10, 0xFFFFFF);
+			partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
+			Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
+			if (p.isMale)
+				drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 208, 5, 9);
+			else
+				drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 218, 5, 9);
+			fontRenderer.drawString("Lvl " + p.lvl, mouseSlot.x + 30, mouseSlot.y + 20, 0xFFFFFF);
+			if (p.isFainted) {
+				fontRenderer.drawString("Fainted", mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
+			} else {
+				fontRenderer.drawString("HP " + p.health + "/" + p.hp, mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
+			}
+
 		}
 		fontRenderer.drawString("Box: " + (boxNumber + 1), width / 2 - 18, height / 6 - 20, 0xffffff);
 
