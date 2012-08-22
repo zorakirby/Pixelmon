@@ -13,7 +13,6 @@ public class ItemPotion extends PixelmonItem {
 	public ItemPotion(int par1) {
 		super(par1);
 		SetUsableInBattle(true);
-		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
 
 	@Override
@@ -25,6 +24,5 @@ public class ItemPotion extends PixelmonItem {
 		}
 		if (userPokemon.getOwner()!=null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)userPokemon.getOwner()).updateNBT(userPokemon);
-
 	}
 }
