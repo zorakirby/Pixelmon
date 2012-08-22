@@ -19,7 +19,7 @@ public class PixelmonItem extends Item {
 	}
 
 	public boolean isUsableInBattle() {
-		return false;
+		return isUsableInBattle;
 	}
 
 	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {	}

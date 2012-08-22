@@ -156,4 +156,9 @@ public class GuiPixelmonOverlay extends Gui {
 		var9.draw();
 	}
 
+	public static void checkSelection() {
+		if (ServerStorageDisplay.pokemon[selectedPixelmon]==null)
+			selectPreviousPixelmon();
+	}
+
 }

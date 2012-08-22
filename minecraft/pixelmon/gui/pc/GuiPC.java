@@ -19,6 +19,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.gui.ContainerEmpty;
+import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.gui.GuiScreenPokeCheckerPC;
 import pixelmon.storage.ComputerBox;
 import pixelmon.storage.ComputerManager;
@@ -227,7 +228,11 @@ public class GuiPC extends GuiContainer {
 					}
 				}
 			}
+			
+			GuiPixelmonOverlay.checkSelection();
 		}
+		goingToPokeChecker = false;
+		
 	}
 
 	public void actionPerformed(GuiButton button) {
