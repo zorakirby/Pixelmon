@@ -95,16 +95,16 @@ public class PixelmonItems {
 	@Mod.Item(name = "Leaf Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item leafStoneShard;
 	
-	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.ItemLuckyEgg")
+	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.heldItems.ItemLuckyEgg")
 	public static Item luckyEgg;
-	@Mod.Item(name = "EXP Share", typeClass = "pixelmon.items.ItemExpShare")
+	@Mod.Item(name = "EXP Share", typeClass = "pixelmon.items.heldItems.ItemExpShare")
 	public static Item expShare;
 	
-	@Mod.Item(name = "Oran Berry", typeClass = "pixelmon.items.ItemBerryOran")
+	@Mod.Item(name = "Oran Berry", typeClass = "pixelmon.items.heldItems.ItemBerryOran")
 	public static Item berryOran;
-	@Mod.Item(name = "Rawst Berry", typeClass = "pixelmon.items.ItemBerryRawst")
+	@Mod.Item(name = "Rawst Berry", typeClass = "pixelmon.items.heldItems.ItemBerryRawst")
 	public static Item berryRawst;
-	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.ItemBerryLeppa")
+	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.heldItems.ItemBerryLeppa")
 	public static Item berryLeppa;
 
 	public static void load(Configuration cfg)
