@@ -42,6 +42,8 @@ import net.minecraft.src.RenderLiving;
 import net.minecraft.src.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.world.WorldEvent;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -80,6 +82,8 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerKeyBindings(){
+		MinecraftForge.EVENT_BUS.register(this);
+
 		KeyBindingRegistry.registerKeyBinding(new SendPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new NextPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new PreviousPokemonKey());
@@ -159,5 +163,11 @@ public class ClientProxy extends CommonProxy {
 	public static File getMinecraftDir()
 	{
 		return Minecraft.getMinecraftDir();
+	}
+	
+	@ForgeSubscribe
+	public void onWorldLoad(WorldEvent.Load event) {
+		ServerStorageDisplay.clear();
+		PixelmonServerStore.clearList();
 	}
 }
