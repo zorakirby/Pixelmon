@@ -110,7 +110,7 @@ public class DatabaseHelper {
 		try
 		{
 			long currentVersion = getChecksum(new DataInputStream(new FileInputStream(new File(getDir(), "Pixelmon.db"))));
-			long releasedVersion = getChecksum(new DataInputStream(new URL("https://dl.dropbox.com/s/8crv95bumdjy6wt/Pixelmon.db?dl=1").openStream()));
+			long releasedVersion = getChecksum(new DataInputStream(new URL("https://dl.dropbox.com/u/78327099/Pixelmon.db").openStream()));
 			if(currentVersion != releasedVersion)
 			{
 				downloadDatabase();
