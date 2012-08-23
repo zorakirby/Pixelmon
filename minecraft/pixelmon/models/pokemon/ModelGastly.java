@@ -20,8 +20,6 @@ public class ModelGastly extends ModelBase
     ModelRenderer body2;
     ModelRenderer body3;
     ModelRenderer body4;
-    ModelRenderer ghosttrail1;
-    ModelRenderer ghosttrail2;
     ModelRenderer righteye;
     ModelRenderer lefteye;
     ModelRenderer ghosttrailpartical1;
@@ -59,18 +57,6 @@ public class ModelGastly extends ModelBase
       body4.setTextureSize(64, 32);
       body4.mirror = true;
       setRotation(body4, 0F, 0F, 0F);
-      ghosttrail1 = new ModelRenderer(this, 32, 6);
-      ghosttrail1.addBox(0F, -5F, 0F, 0, 10, 16);
-      ghosttrail1.setRotationPoint(0F, 11F, -6F);
-      ghosttrail1.setTextureSize(64, 32);
-      ghosttrail1.mirror = true;
-      setRotation(ghosttrail1, 0F, 0F, 0F);
-      ghosttrail2 = new ModelRenderer(this, 32, 6);
-      ghosttrail2.addBox(0F, -5F, 0F, 0, 10, 16);
-      ghosttrail2.setRotationPoint(0F, 11F, -6F);
-      ghosttrail2.setTextureSize(64, 32);
-      ghosttrail2.mirror = true;
-      setRotation(ghosttrail2, 0F, 0F, 1.570796F);
       righteye = new ModelRenderer(this, 0, 25);
       righteye.addBox(-3F, -3F, 0F, 3, 3, 0);
       righteye.setRotationPoint(-0.4F, 10.5F, -6.6F);
@@ -129,8 +115,6 @@ public class ModelGastly extends ModelBase
     body2.render(f5);
     body3.render(f5);
     body4.render(f5);
-    ghosttrail1.render(f5);
-    ghosttrail2.render(f5);
     righteye.render(f5);
     lefteye.render(f5);
     ghosttrailpartical1.render(f5);

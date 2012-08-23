@@ -38,7 +38,7 @@ public class EntityKoffing extends EntityGroundPixelmon {
 			if (particlesOn)
 				count = (new Random()).nextInt(3);
 			else
-				count = (new Random()).nextInt(9);
+				count = (new Random()).nextInt(27);
 		}
 		count--;
 		if (particlesOn) Minecraft.getMinecraft().effectRenderer.addEffect(new EntityKoffingParticle(worldObj, posX + (double) var6, posY + hoverTimer + 1.5F, posZ + (double) var7, 0D, 0D, 0D));
