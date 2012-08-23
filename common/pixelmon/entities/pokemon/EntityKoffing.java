@@ -50,7 +50,6 @@ public class EntityKoffing  extends EntityGroundPixelmon
 		helper.doesHover = true;
 		helper.hoverHeight=1f;
 		super.init();
-		helper.giScale = 0.33F;
 	}
 	
 	

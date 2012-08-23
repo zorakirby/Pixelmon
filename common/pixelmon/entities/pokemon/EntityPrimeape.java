@@ -17,7 +17,6 @@ public class EntityPrimeape  extends EntityGroundPixelmon
 		name = "Primeape";
 		isImmuneToFire = false;
 		super.init();
-		helper.giScale = 0.39F;
 	}
 	
 	public void evolve() 

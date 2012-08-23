@@ -19,7 +19,6 @@ public class EntityKakuna extends EntityGroundPixelmon
 		isImmuneToFire = false;
 		helper.hoverHeight=1f;
 		super.init();
-		helper.giScale = 0.3F;
 	}
 	
 	public void evolve() 

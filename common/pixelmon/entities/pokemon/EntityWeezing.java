@@ -20,7 +20,6 @@ public class EntityWeezing  extends EntityGroundPixelmon
 		helper.doesHover = true;
 		helper.hoverHeight=1f;
 		super.init();
-		helper.giScale = 0.8F; 
 	}
 	
 	public void evolve() 
