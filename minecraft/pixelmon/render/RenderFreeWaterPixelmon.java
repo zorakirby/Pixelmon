@@ -33,7 +33,8 @@ public class RenderFreeWaterPixelmon extends RenderLiving {
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
 
-		if (var10 <= (float) 8) {
+		if (var10 <= (float) 10) {
+			lvlInstance = ((EntityWaterPixelmon) entityLiving).helper.getClientLvl();
 			drawHealthBar(entityLiving, d, d1, d2, f, f1);
 			if (ServerStorageDisplay.contains(((EntityWaterPixelmon) entityLiving).getPokemonId()))
 				drawExpBar(entityLiving, d, d1, d2, f, f1);

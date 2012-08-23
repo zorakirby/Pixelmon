@@ -86,8 +86,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		helper.getLvl();
 		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height + helper.hoverHeight);
 		length = helper.stats.BaseStats.Length;
-		// if (helper.stats.BaseStats.IsRideable)
-		// ridingHelper = new RidingHelper(this, worldObj);
+		if (helper.stats.BaseStats.IsRideable)
+			ridingHelper = new RidingHelper(this, worldObj);
 
 	}
 
@@ -99,11 +99,11 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		float halfWidth = this.width / 2.0F;
 		float halfLength = this.length / 2.0F;
 		if (helper != null)
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
-				+ (double) this.ySize + (double) height + helper.hoverHeight, par5 + (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
+					- (double) this.yOffset + (double) this.ySize + (double) height + helper.hoverHeight, par5 + (double) halfLength);
 		else
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
-					+ (double) this.ySize + (double) height, par5 + (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
+					- (double) this.yOffset + (double) this.ySize + (double) height, par5 + (double) halfLength);
 	}
 
 	/**
@@ -182,8 +182,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	// Random Crap I
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
-		if(health - par2 < 0)
-		{
+		if (health - par2 < 0) {
 			par2 = health;
 		}
 		if (!worldObj.isRemote) {
@@ -203,7 +202,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	public boolean interact(EntityPlayer entity) {
 		if (!worldObj.isRemote)
 			return helper.interact(entity);
-		else return false;
+		else
+			return false;
 	}
 
 	public void catchInPokeball() {
@@ -414,36 +414,36 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		super.jump();
 	}
 
-	// @Override
-	// public double getMountedYOffset() {
-	// if (ridingHelper != null)
-	// return ridingHelper.getMountedYOffset();
-	// else
-	// return super.getMountedYOffset();
-	// }
-	//
-	// @Override
-	// public void onLivingUpdate() {
-	// super.onLivingUpdate();
-	// if (ridingHelper != null)
-	// ridingHelper.onLivingUpdate();
-	// }
-	//
-	// @Override
-	// public void moveEntity(double d, double d1, double d2) {
-	// if (ridingHelper != null)
-	// ridingHelper.moveEntity(d, d1, d2);
-	// else
-	// super.moveEntity(d, d1, d2);
-	// }
-	//
-	// @Override
-	// public void updateRidden() {
-	// if (ridingHelper != null)
-	// ridingHelper.updateRidden();
-	// else
-	// super.updateRidden();
-	// }
+	@Override
+	public double getMountedYOffset() {
+		if (ridingHelper != null)
+			return ridingHelper.getMountedYOffset();
+		else
+			return super.getMountedYOffset();
+	}
+
+	@Override
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+		if (ridingHelper != null)
+			ridingHelper.onLivingUpdate();
+	}
+
+	@Override
+	public void moveEntity(double d, double d1, double d2) {
+		if (ridingHelper != null)
+			ridingHelper.moveEntity(d, d1, d2);
+		else
+			super.moveEntity(d, d1, d2);
+	}
+
+	@Override
+	public void updateRidden() {
+		if (ridingHelper != null)
+			ridingHelper.updateRidden();
+		else
+			super.updateRidden();
+	}
 
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);

@@ -335,6 +335,14 @@ public class PixelmonEntityHelper {
 			EntityPlayer entity1 = (EntityPlayer) entity;
 			ItemStack itemstack = entity1.getCurrentEquippedItem();
 			boolean flag = false;
+//			if (itemstack == null) {
+//				if (stats.BaseStats.IsRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)entity).isIn(this)) {
+//					entity.mountEntity((EntityLiving) pixelmon);
+//					return true;
+//				}
+//				return false;
+//			}
+			
 			if (itemstack != null && itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex && getOwner() == entity) {
 				getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
 				if (!entity.capabilities.isCreativeMode)
