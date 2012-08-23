@@ -98,8 +98,12 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		this.posZ = par5;
 		float halfWidth = this.width / 2.0F;
 		float halfLength = this.length / 2.0F;
-		this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
+		if (helper != null)
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
 				+ (double) this.ySize + (double) height + helper.hoverHeight, par5 + (double) halfLength);
+		else
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
+					+ (double) this.ySize + (double) height, par5 + (double) halfLength);
 	}
 
 	/**
