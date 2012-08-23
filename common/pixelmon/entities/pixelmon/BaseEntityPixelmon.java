@@ -84,7 +84,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			type.add(helper.stats.BaseStats.Type2);
 
 		helper.getLvl();
-		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height);
+		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height + helper.hoverHeight);
 		length = helper.stats.BaseStats.Length;
 		// if (helper.stats.BaseStats.IsRideable)
 		// ridingHelper = new RidingHelper(this, worldObj);
@@ -99,7 +99,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		float halfWidth = this.width / 2.0F;
 		float halfLength = this.length / 2.0F;
 		this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3 - (double) this.yOffset
-				+ (double) this.ySize + (double) height, par5 + (double) halfLength);
+				+ (double) this.ySize + (double) height + helper.hoverHeight, par5 + (double) halfLength);
 	}
 
 	/**
