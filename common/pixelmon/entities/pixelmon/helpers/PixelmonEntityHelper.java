@@ -331,7 +331,7 @@ public class PixelmonEntityHelper {
 	}
 
 	public boolean interact(EntityPlayer entity) {
-		if (entity instanceof EntityPlayer) {
+		if (entity instanceof EntityPlayerMP) {
 			EntityPlayer entity1 = (EntityPlayer) entity;
 			ItemStack itemstack = entity1.getCurrentEquippedItem();
 			boolean flag = false;
