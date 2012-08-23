@@ -160,7 +160,7 @@ public class DatabaseHelper {
 		try
 		{
 			System.out.println("Attempting to download the Database!");
-			String databaseURL = "https://dl.dropbox.com/s/8crv95bumdjy6wt/Pixelmon.db?dl=1";
+			String databaseURL = "https://dl.dropbox.com/u/78327099/Pixelmon.db";
 			URL url = new URL(databaseURL);
 			File databaseFile = new File(getDir(), "Pixelmon.db");
 			databaseFile.createNewFile();
