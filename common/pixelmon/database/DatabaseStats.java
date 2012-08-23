@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumEvolutionStone;
@@ -130,48 +131,7 @@ public class DatabaseStats {
 		return null;
 	}
 
-	public static BiomeGenBase[] GetSpawnBiomes(String pixelmonName) {
-		Connection conn = null;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DatabaseHelper.getConnection();
-			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + pixelmonName + "'");
-			while (rs.next()) {
-				BiomeGenBase[] biomes;
-				String biomeString = rs.getString("SpawnBiomes");
-				if (rs.wasNull()){
-					biomes = BiomeGenBase.biomeList;
-					ArrayList<BiomeGenBase> biomeList = new ArrayList<BiomeGenBase>();
-					for (int i=0; i < biomes.length; i++)
-						if (biomes[i]!=null)biomeList.add(biomes[i]);
-					
-					BiomeGenBase[] biomes2 = new BiomeGenBase[biomeList.size()];
-					int j=0;
-					for(BiomeGenBase b: biomeList)
-						biomes2[j++]=b;
-					return biomes2;
-				}
-				String[] biomeList = biomeString.split(";");
-				biomes = new BiomeGenBase[biomeList.length];
-				int i = 0;
-				for (String biomeName : biomeList) {
-					EnumBiomes e = EnumBiomes.parseBiome(biomeName);
-					biomes[i] = e.getBiome();
-					i++;
-				}
-				return biomes;
-			}
-		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-		}
-		return null;
-	}
+	
 
 	public static int GetRarity(String pixelmonName) {
 		Connection conn = null;
@@ -308,5 +268,48 @@ public class DatabaseStats {
 				}
 		}
 		return -1;
+	}
+	
+	public static BiomeGenBase[] GetSpawnBiomes(String pixelmonName) {
+		Connection conn = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DatabaseHelper.getConnection();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + pixelmonName + "'");
+			while (rs.next()) {
+				BiomeGenBase[] biomes;
+				String biomeString = rs.getString("SpawnBiomes");
+				if (rs.wasNull()){
+					biomes = BiomeGenBase.biomeList;
+					ArrayList<BiomeGenBase> biomeList = new ArrayList<BiomeGenBase>();
+					for (int i=0; i < biomes.length; i++)
+						if (biomes[i]!=null)biomeList.add(biomes[i]);
+					
+					BiomeGenBase[] biomes2 = new BiomeGenBase[biomeList.size()];
+					int j=0;
+					for(BiomeGenBase b: biomeList)
+						biomes2[j++]=b;
+					return biomes2;
+				}
+				String[] biomeList = biomeString.split(";");
+				biomes = new BiomeGenBase[biomeList.length];
+				int i = 0;
+				for (String biomeName : biomeList) {
+					EnumBiomes e = EnumBiomes.parseBiome(biomeName);
+					biomes[i] = e.getBiome();
+					i++;
+				}
+				return biomes;
+			}
+		} catch (Exception e) {
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		}
+		return null;
 	}
 }

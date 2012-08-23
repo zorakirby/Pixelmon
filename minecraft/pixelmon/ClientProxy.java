@@ -67,6 +67,11 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@Override
+	public World GetClientWorld() {
+		return Minecraft.getMinecraft().theWorld;
+	}
+	
+	@Override
 	public void preloadTextures(){
 		Iterator i = PixelmonEntityList.idToStringMapping.entrySet().iterator();
 		while (i.hasNext()) {

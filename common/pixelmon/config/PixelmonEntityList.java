@@ -27,6 +27,7 @@ import pixelmon.entities.pokemon.*;
 import pixelmon.entities.trainers.EntityTrainerBugCatcher;
 import pixelmon.entities.trainers.EntityTrainerYoungster;
 import pixelmon.entities.trainers.EntityTrainerYoungster02;
+import pixelmon.spawning.SpawnRegistry;
 
 public class PixelmonEntityList {
 	private static Map<Integer, ClassType> IDtoTypeMapping = new HashMap<Integer, ClassType>();
@@ -36,7 +37,7 @@ public class PixelmonEntityList {
 
 	/** This is a HashMap of the Creative Entity Eggs/Spawners. */
 	public static HashMap<String, Integer[]> entityEggs = new HashMap<String, Integer[]>();
-	
+
 	/**
 	 * adds a mapping between Entity classes and both a string representation
 	 * and an ID
@@ -45,12 +46,11 @@ public class PixelmonEntityList {
 		IDtoTypeMapping.put(Integer.valueOf(par2), type);
 		idToStringMapping.put(Integer.valueOf(par2), par1Str);
 	}
-	
-	private static void addMapping(String par1Str, int par2, ClassType type, int par4, int par5)
-	{
+
+	private static void addMapping(String par1Str, int par2, ClassType type, int par4, int par5) {
 		IDtoTypeMapping.put(Integer.valueOf(par2), type);
 		idToStringMapping.put(Integer.valueOf(par2), par1Str);
-		entityEggs.put(par1Str, new Integer[]{par4, par5});
+		entityEggs.put(par1Str, new Integer[] { par4, par5 });
 	}
 
 	/**
@@ -213,33 +213,34 @@ public class PixelmonEntityList {
 
 		// Trainers
 		addMapping("Youngster", IDListTrainer.trainerYoungsterId, ClassType.Trainer);
-		//Missing Database Entry
+		// Missing Database Entry
 		addMapping("Youngster", IDListTrainer.trainerYoungster2Id, ClassType.Trainer);
 		addMapping("BugCatcher", IDListTrainer.trainerBugCatcherId, ClassType.Trainer);
 	}
 
 	public static void registerEntities() {
 		Iterator it = idToStringMapping.keySet().iterator();
-		while(it.hasNext())
-		{
-			Integer i = (Integer)it.next();
+		while (it.hasNext()) {
+			Integer i = (Integer) it.next();
 			String name = idToStringMapping.get(i);
 			ClassType type = getClassTypeFromID(i);
-			//System.out.println(name + "[" + i.intValue() + ", " + type.name() + "]");
+			// System.out.println(name + "[" + i.intValue() + ", " + type.name()
+			// + "]");
 			LanguageRegistry.instance().addStringLocalization("entity." + name + ".name", "en_US", name);
 			Integer[] eggInfo = entityEggs.get(name);
 			try {
-				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon){
-					if(eggInfo != null)
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>)Class.forName("pixelmon.entities.pokemon.Entity" + name), name, ModLoader.getUniqueEntityId(), eggInfo[0], eggInfo[1]);
+				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
+					if (eggInfo != null)
+						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, ModLoader.getUniqueEntityId(), eggInfo[0],
+								eggInfo[1]);
 					else
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>)Class.forName("pixelmon.entities.pokemon.Entity" + name), name, ModLoader.getUniqueEntityId());
-				}
-				else if (type == ClassType.Trainer)
-					if(eggInfo != null)
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>)Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, ModLoader.getUniqueEntityId(), eggInfo[0], eggInfo[1]);
+						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, ModLoader.getUniqueEntityId());
+				} else if (type == ClassType.Trainer)
+					if (eggInfo != null)
+						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, ModLoader.getUniqueEntityId(),
+								eggInfo[0], eggInfo[1]);
 					else
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>)Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, ModLoader.getUniqueEntityId());
+						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, ModLoader.getUniqueEntityId());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -247,35 +248,51 @@ public class PixelmonEntityList {
 	}
 
 	public static void addSpawns() {
+		System.out.println("[PIXELMON] Registering entity spawns");
 		Iterator i = idToStringMapping.entrySet().iterator();
 		while (i.hasNext()) {
 			Map.Entry entry = (Map.Entry) i.next();
 			String name = (String) entry.getValue();
 			ClassType type = getClassTypeFromID((Integer) entry.getKey());
-			BiomeGenBase[] biomes;
-			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
-				biomes = DatabaseStats.GetSpawnBiomes(name);
-				int rarity = DatabaseStats.GetRarity(name);
-				int groupMin = DatabaseStats.GetMinGroupSize(name);
-				int groupMax = DatabaseStats.GetMaxGroupSize(name);
-				EnumCreatureType creaturetype = DatabaseStats.GetCreatureType(name);
-				if (rarity != -1) {
-					try {
-						EntityRegistry.addSpawn((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), rarity, groupMin, groupMax, creaturetype, biomes);
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-					}
-				}
-//				if (new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg").exists())
-//					ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/" + name.toLowerCase() + ".ogg", new File("resources/newsound/pixelmon/" + name.toLowerCase() + ".ogg"));
-			} else if (type == ClassType.Trainer) {
-				biomes = DatabaseTrainers.GetSpawnBiomes(name);
-				try {
-					EntityRegistry.addSpawn((Class) Class.forName("pixelmon.entities.trainers.EntityTrainer" + entry.getValue()),  10, 1, 1, EnumCreatureType.creature, biomes);
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
+			int rarity = DatabaseStats.GetRarity(name);
+			if (rarity > 0)
+				SpawnRegistry.addSpawn(entry, name, type);
+
+			// BiomeGenBase[] biomes;
+			// if (type == ClassType.Pixelmon || type ==
+			// ClassType.WaterPixelmon) {
+			// biomes = DatabaseStats.GetSpawnBiomes(name);
+			// int groupMin = DatabaseStats.GetMinGroupSize(name);
+			// int groupMax = DatabaseStats.GetMaxGroupSize(name);
+			// EnumCreatureType creaturetype =
+			// DatabaseStats.GetCreatureType(name);
+			// if (rarity != -1) {
+			// try {
+			// EntityRegistry.addSpawn((Class)
+			// Class.forName("pixelmon.entities.pokemon.Entity" +
+			// entry.getValue()), rarity, groupMin, groupMax, creaturetype,
+			// biomes);
+			// } catch (ClassNotFoundException e) {
+			// e.printStackTrace();
+			// }
+			// }
+			// // if (new File("resources/newsound/pixelmon/" +
+			// name.toLowerCase() + ".ogg").exists())
+			// //
+			// ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/"
+			// + name.toLowerCase() + ".ogg", new
+			// File("resources/newsound/pixelmon/" + name.toLowerCase() +
+			// ".ogg"));
+			// } else if (type == ClassType.Trainer) {
+			// biomes = DatabaseTrainers.GetSpawnBiomes(name);
+			// try {
+			// EntityRegistry.addSpawn((Class)
+			// Class.forName("pixelmon.entities.trainers.EntityTrainer" +
+			// entry.getValue()), 10, 1, 1, EnumCreatureType.creature, biomes);
+			// } catch (ClassNotFoundException e) {
+			// e.printStackTrace();
+			// }
+			// }
 		}
 	}
 

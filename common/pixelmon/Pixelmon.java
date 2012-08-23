@@ -13,11 +13,14 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.spawning.ChunkDataEvents;
+import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ServerCommandManager;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.ChunkDataEvent;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -83,6 +86,8 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
+		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
+		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
 	}
 	
 	@PostInit
