@@ -23,81 +23,98 @@ import net.minecraft.src.NetworkManager;
 
 public class PCClick extends PacketHandlerBase {
 
-	public HashMap<EntityPlayer, NBTTagCompound> mousePokemon;
+	private class MapEntry {
+		public NBTTagCompound nbt;
+		public int originalBox;
+		public int originalPosition;
+
+		public MapEntry(NBTTagCompound nbt, int origBox, int origPos) {
+			this.nbt = nbt;
+			originalBox = origBox;
+			originalPosition = origPos;
+		}
+	}
+
+	public HashMap<EntityPlayer, MapEntry> mousePokemon;
 
 	public PCClick() {
 		packetsHandled.add(EnumPackets.PCClick);
-		mousePokemon = new HashMap<EntityPlayer, NBTTagCompound>();
+		mousePokemon = new HashMap<EntityPlayer, MapEntry>();
 	}
 
 	@Override
 	public void handlePacket(int index, Player pl, DataInputStream data) throws IOException {
-		EntityPlayer player = (EntityPlayer)pl;
+		EntityPlayer player = (EntityPlayer) pl;
 		int box = data.readInt();
-		if(box == -2){
+		if (box == -2) {
 			mousePokemon.put(player, null);
 			return;
-		}
-		else if(box == -1){
+		} else if (box == -1) {
 			int useless = data.readInt();
 			int pos = data.readInt();
-			int id = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).getIDFromPosition(pos);
-			NBTTagCompound n = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).getNBT(id);
-			NBTTagCompound n1 = mousePokemon.get(player);
-			mousePokemon.put(player, n);
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).changePokemon(pos, n1);
+			int id = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getIDFromPosition(pos);
+			NBTTagCompound n = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getNBT(id);
+			NBTTagCompound n1 =null;
+			if (mousePokemon.get(player)!=null)
+				n1 = mousePokemon.get(player).nbt;
+			mousePokemon.put(player, new MapEntry(n, box, pos));
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).changePokemon(pos, n1);
 			return;
 		}
-		//not used
-		else if(box == -3){
+		// not used
+		else if (box == -3) {
 			int box1 = data.readInt();
 			int boxPos = data.readInt();
-			NBTTagCompound n = mousePokemon.get(player);
+			NBTTagCompound n = mousePokemon.get(player).nbt;
 			mousePokemon.put(player, null);
-			PixelmonStorage.ComputerManager.getPlayerStorage((EntityPlayerMP)player).changePokemon(box1, boxPos, n);
+			PixelmonStorage.ComputerManager.getPlayerStorage((EntityPlayerMP) player).changePokemon(box1, boxPos, n);
 			return;
-		}
-		else if(box >= 0 && box <= 8){
+		} else if (box >= 0 && box <= 8) {
 			int useless = data.readInt();
 			int boxPos = data.readInt();
-			NBTTagCompound n1 = mousePokemon.get(player);
-			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).EntityAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj))
-			{
-				IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).getAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj);
-				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).retrieve(pixelmon);
-				pixelmon.catchInPokeball();
-			}	
+			NBTTagCompound n1 =null;
+			if (mousePokemon.get(player) != null) {
+				n1 = mousePokemon.get(player).nbt;
+				if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj)) {
+					IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj);
+					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).retrieve(pixelmon);
+					pixelmon.catchInPokeball();
+				}
+			}
 			NBTTagCompound n = PixelmonStorage.ComputerManager.getPlayerStorage(player).getBox(box).getNBTByPosition(boxPos);
-			mousePokemon.put(player, n);
+			mousePokemon.put(player, new MapEntry(n, box, boxPos));
 			PixelmonStorage.ComputerManager.getPlayerStorage(player).changePokemon(box, boxPos, n1);
 			return;
-		}
-		else if(box == -4){
-			int box1 = data.readInt();
-			int boxPos = data.readInt();
-			NBTTagCompound n = mousePokemon.get(player);
-			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).EntityAlreadyExists(n.getInteger("pixelmonID"), player.worldObj))
-			{
-				IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).getAlreadyExists(n.getInteger("pixelmonID"), player.worldObj);
-				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).retrieve(pixelmon);
+		} else if (box == -4) {
+			if (mousePokemon.get(player) == null)
+				return;
+			MapEntry e = mousePokemon.get(player);
+			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(e.nbt.getInteger("pixelmonID"), player.worldObj)) {
+				IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(e.nbt.getInteger("pixelmonID"), player.worldObj);
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).retrieve(pixelmon);
 				pixelmon.catchInPokeball();
-			}	
+			}
 			mousePokemon.put(player, null);
-			PixelmonStorage.ComputerManager.getPlayerStorage(player).changePokemon(box1, boxPos, n);
+			if (e.originalBox == -1)
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).changePokemon(e.originalPosition, e.nbt);
+			else
+				PixelmonStorage.ComputerManager.getPlayerStorage(player).changePokemon(e.originalBox, e.originalPosition, e.nbt);
 			return;
+		} else if (box == -5) {
+			// PlayerComputerStorage s =
+			// PixelmonStorage.ComputerManager.getPlayerStorage(player);
+			// for(ComputerBox b : s.getBoxList()){
+			// for(NBTTagCompound n: b.getStoredPokemon()){
+			// if (n != null) {
+			// PixelmonDataPacket p = new PixelmonDataPacket(n,
+			// EnumPackets.AddToTempStore);
+			// ((EntityPlayerMP)player).serverForThisPlayer.sendPacketToPlayer(p.getPacket());
+			// }
+			// }
+			// }
+			// player.openGui(Pixelmon.instance, EnumGui.PC.getIndex(),
+			// player.worldObj, 0,0,0);
 		}
-		else if(box == -5){
-//			PlayerComputerStorage s = PixelmonStorage.ComputerManager.getPlayerStorage(player);
-//			for(ComputerBox b : s.getBoxList()){
-//				for(NBTTagCompound n: b.getStoredPokemon()){
-//					if (n != null) {
-//						PixelmonDataPacket p = new PixelmonDataPacket(n, EnumPackets.AddToTempStore);
-//						((EntityPlayerMP)player).serverForThisPlayer.sendPacketToPlayer(p.getPacket());
-//					}
-//				}
-//			}
-//			player.openGui(Pixelmon.instance, EnumGui.PC.getIndex(), player.worldObj, 0,0,0);
-		}	
-		
+
 	}
 }

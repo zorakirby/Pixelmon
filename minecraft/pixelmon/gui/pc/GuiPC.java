@@ -55,7 +55,7 @@ public class GuiPC extends GuiContainer {
 				y *= 28;
 				x += width / 2 - 90;
 				y += height / 6 - 5;
-				pcSlots[i][j] = new SlotPCPC(x, y, i, j, null);
+				pcSlots[i][j] = new SlotPCPC(x, y, i, j);
 				PixelmonDataPacket p = null;
 				if (j < PixelmonServerStore.store.size()) {
 					p = PixelmonServerStore.store.get(j);
@@ -71,7 +71,7 @@ public class GuiPC extends GuiContainer {
 			x *= 30;
 			x += width / 2 - 90;
 			int y = height / 6 + 145;
-			partySlots[i] = new SlotPCParty(x, y, i, null);
+			partySlots[i] = new SlotPCParty(x, y, i);
 			PixelmonDataPacket p = ServerStorageDisplay.pokemon[i];
 			if (p != null) {
 				partySlots[i].setPokemon(p);
@@ -89,7 +89,7 @@ public class GuiPC extends GuiContainer {
 				if (p != null) {
 					int box = p.boxNumber;
 					int pos = p.order;
-					temp[box][pos] = new SlotPCPC(pcSlots[box][pos].x, pcSlots[box][pos].y, box, pos, null);
+					temp[box][pos] = new SlotPCPC(pcSlots[box][pos].x, pcSlots[box][pos].y, box, pos);
 					temp[box][pos].setPokemon(p);
 				}
 			}
@@ -134,13 +134,8 @@ public class GuiPC extends GuiContainer {
 	public boolean checkIfLast() {
 		int i = 0;
 		for (SlotPC slot : partySlots) {
-			if (ModLoader.getMinecraftInstance().theWorld.isRemote) {
-				if (slot.pokemonData != null)
-					i++;
-			} else {
-				if (slot.pokemon != null)
-					i++;
-			}
+			if (slot.pokemonData != null)
+				i++;
 		}
 		if (i == 1) {
 			return true;
@@ -215,24 +210,17 @@ public class GuiPC extends GuiContainer {
 
 	public void onGuiClosed() {
 		super.onGuiClosed();
+		if (mouseSlot.pokemonData != null) {
+			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -4));
+		}
+		mouseSlot.pokemonData = null;
 		if (!goingToPokeChecker) {
-
 			PixelmonServerStore.store.clear();
-			if (mouseSlot.pokemonData != null) {
-				for (int i = 0; i < pcSlots.length; i++) {
-					for (int j = 0; j < pcSlots[i].length; j++) {
-						if (pcSlots[i][j].pokemonData == null) {
-							ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -4, i, j));
-							break;
-						}
-					}
-				}
-			}
-			
+
 			GuiPixelmonOverlay.checkSelection();
 		}
 		goingToPokeChecker = false;
-		
+
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -310,6 +298,7 @@ public class GuiPC extends GuiContainer {
 		for (int a = 0; a < partySlots.length; a++) {
 			image = 0;
 			SlotPCParty slot = partySlots[a];
+			slot.setPokemon(ServerStorageDisplay.pokemon[a]);
 			if (slot.pokemonData == null) {
 				continue;
 			}

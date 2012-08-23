@@ -11,12 +11,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.StatCollector;
 
 public class GuiScreenPokeChecker extends GuiScreen {
-	protected PixelmonEntityHelper target;
 	protected PixelmonDataPacket targetPacket;
-
-	public GuiScreenPokeChecker(PixelmonEntityHelper pixelmonEntityHelper) {
-		target = pixelmonEntityHelper;
-	}
 
 	public GuiScreenPokeChecker(PixelmonDataPacket pixelmonDataPacket) {
 		targetPacket = pixelmonDataPacket;
@@ -31,10 +26,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 		controlList.clear();
 		controlList.add(new GuiButton(0, width / 2 - 100, (int) (height * 0.8), StatCollector.translateToLocal("menu.returnToGame")));
 		String s = "";
-		if (ModLoader.getMinecraftInstance().theWorld.isRemote)
-			s = !targetPacket.name.equals(targetPacket.nickname) ? "Give Nickname" : "Change Nickname";
-		else
-			s = !target.getDisplayName().equals(target.nickname) ? "Give Nickname" : "Change Nickname";
+		s = !targetPacket.name.equals(targetPacket.nickname) ? "Give Nickname" : "Change Nickname";
 		controlList.add(new GuiButton(1, width / 2 - 100, (int) (height * 0.8 - 25), s));
 	}
 
@@ -45,20 +37,13 @@ public class GuiScreenPokeChecker extends GuiScreen {
 			mc.setIngameFocus();
 			break;
 		case 1:
-			if (ModLoader.getMinecraftInstance().theWorld.isRemote)
-				mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
-			else
-				mc.displayGuiScreen(new GuiRenamePokemon(target, this));
+			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
 		}
 
 	}
 
 	public void drawScreen(int i, int i1, float f) {
 		drawDefaultBackground();
-		// drawCenteredString(fontRenderer, "PokeChecker", width / 2, 40,
-		// 0xffffff);
-		// drawCenteredString(fontRenderer, "Lv: " + target.getLevel() +
-		// target.getName(), width / 2, 35, 0xcccccc);
 		drawCenteredString(fontRenderer, "PokeChecker", width / 2, height / 7, 0xffffff);
 		drawCenteredString(fontRenderer, "Lv: " + targetPacket.lvl + " " + targetPacket.nickname + " (" + targetPacket.name + ")", width / 2, height / 7 + 15, 0xcccccc);
 		this.drawHorizontalLine(width / 5, height / 7 + 20, width * 4 / 5, 0xffffff);
