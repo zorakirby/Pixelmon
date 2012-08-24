@@ -35,12 +35,6 @@ public class SendPixelmon extends PacketHandlerBase {
 		NBTTagCompound nbt = PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(pokemonId);
 		if (!PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj)
 				&& !PixelmonStorage.PokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
-			if(ItemPokeBall.ballTimer > 0)
-			{
-				return;
-			}
-			ItemPokeBall.ballTimer = 40;
-			
 			PixelmonEntityHelper helper = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj).getHelper();
 			EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, helper, helper.caughtBall);
 			

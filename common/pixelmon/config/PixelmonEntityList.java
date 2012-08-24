@@ -16,7 +16,6 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityEggInfo;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EnumCreatureType;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -231,16 +230,16 @@ public class PixelmonEntityList {
 			try {
 				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
 					if (eggInfo != null)
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, ModLoader.getUniqueEntityId(), eggInfo[0],
+						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, EntityRegistry.findGlobalUniqueEntityId(), eggInfo[0],
 								eggInfo[1]);
 					else
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, ModLoader.getUniqueEntityId());
+						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, EntityRegistry.findGlobalUniqueEntityId());
 				} else if (type == ClassType.Trainer)
 					if (eggInfo != null)
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, ModLoader.getUniqueEntityId(),
+						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, EntityRegistry.findGlobalUniqueEntityId(),
 								eggInfo[0], eggInfo[1]);
 					else
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, ModLoader.getUniqueEntityId());
+						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, EntityRegistry.findGlobalUniqueEntityId());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

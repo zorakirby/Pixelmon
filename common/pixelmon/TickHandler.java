@@ -22,10 +22,6 @@ public class TickHandler implements ITickHandler {
 			}
 			if(type == TickType.RENDER)
 			{
-				if(ItemPokeBall.ballTimer > 0)
-				{
-					ItemPokeBall.ballTimer--;
-				}
 			}
 		}
 	}

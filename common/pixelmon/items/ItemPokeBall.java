@@ -15,8 +15,6 @@ import net.minecraft.src.World;
 public class ItemPokeBall extends PixelmonItem {
 	private EnumPokeballs type;
 	
-	public static int ballTimer = 0;
-
 	public static HashMap<EntityPlayer, Integer> playerTimers;
 
 	public ItemPokeBall(int i, EnumPokeballs type) {
@@ -32,16 +30,6 @@ public class ItemPokeBall extends PixelmonItem {
 	}
 
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		
-		if(ballTimer > 0)
-		{
-			return itemstack;
-		}
-		if(!world.isRemote)
-		{
-			ballTimer = 40;
-		}
-		
 		if(!entityplayer.capabilities.isCreativeMode)
 		{
 			--itemstack.stackSize;
