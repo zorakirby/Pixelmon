@@ -26,22 +26,24 @@ public class EntityKoffing extends EntityGroundPixelmon {
 
 	public void onUpdate() {
 		super.onUpdate();
+		if (worldObj.isRemote) {
+			float var2 = helper.stats.BaseStats.Width * helper.giScale * helper.scale;
+			float var4 = this.rand.nextFloat() * (float) Math.PI * 2.0F;
+			float var5 = this.rand.nextFloat() * 4F + .5F;
+			float var6 = MathHelper.sin(var4) * var2 * .5F * var5;
+			float var7 = MathHelper.cos(var4) * var2 * .5F * var5;
 
-		float var2 = helper.stats.BaseStats.Width * helper.giScale * helper.scale;
-		float var4 = this.rand.nextFloat() * (float) Math.PI * 2.0F;
-		float var5 = this.rand.nextFloat() * 4F + .5F;
-		float var6 = MathHelper.sin(var4) * var2 * .5F * var5;
-		float var7 = MathHelper.cos(var4) * var2 * .5F * var5;
-		
-		if (count<=0){
-			particlesOn = !particlesOn;
+			if (count <= 0) {
+				particlesOn = !particlesOn;
+				if (particlesOn)
+					count = (new Random()).nextInt(3);
+				else
+					count = (new Random()).nextInt(27);
+			}
+			count--;
 			if (particlesOn)
-				count = (new Random()).nextInt(3);
-			else
-				count = (new Random()).nextInt(27);
+				Minecraft.getMinecraft().effectRenderer.addEffect(new EntityKoffingParticle(worldObj, posX + (double) var6, posY + hoverTimer + 1.5F, posZ + (double) var7, 0D, 0D, 0D));
 		}
-		count--;
-		if (particlesOn) Minecraft.getMinecraft().effectRenderer.addEffect(new EntityKoffingParticle(worldObj, posX + (double) var6, posY + hoverTimer + 1.5F, posZ + (double) var7, 0D, 0D, 0D));
 	}
 
 	public void init() {
