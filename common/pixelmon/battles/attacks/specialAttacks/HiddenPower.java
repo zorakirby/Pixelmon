@@ -9,8 +9,6 @@ import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.ModLoader;
-
 public class HiddenPower extends SpecialAttackBase {
 
 	public HiddenPower() {

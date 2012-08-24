@@ -10,6 +10,7 @@ import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.gui.FontScaler;
 import pixelmon.render.GraphicsHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
 public class GuiPokedex extends GuiContainer
@@ -40,7 +41,7 @@ public class GuiPokedex extends GuiContainer
 			pokedexList.add(e.name);
 			else pokedexList.add("???");
 		}
-		mc = ModLoader.getMinecraftInstance();
+		mc = Minecraft.getMinecraft();
 		setSelectedEntry(pokedex.getEntry(1));
 		xSize = 256;
 		ySize = 202;

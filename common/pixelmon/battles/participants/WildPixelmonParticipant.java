@@ -1,6 +1,6 @@
 package pixelmon.battles.participants;
 
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;

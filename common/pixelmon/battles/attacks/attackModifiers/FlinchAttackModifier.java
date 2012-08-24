@@ -3,8 +3,6 @@ package pixelmon.battles.attacks.attackModifiers;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-import net.minecraft.src.ModLoader;
-
 public class FlinchAttackModifier extends AttackModifierBase {
 
 	public FlinchAttackModifier() {

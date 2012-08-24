@@ -7,7 +7,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
-import net.minecraft.src.ModLoader;
+
 import net.minecraftforge.common.Configuration;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumEvolutionStone;

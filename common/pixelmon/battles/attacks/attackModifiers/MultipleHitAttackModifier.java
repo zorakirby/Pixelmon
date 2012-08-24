@@ -6,8 +6,6 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.ModLoader;
-
 public class MultipleHitAttackModifier extends AttackModifierBase {
 
 	private int count = 0;

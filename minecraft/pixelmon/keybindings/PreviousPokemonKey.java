@@ -10,7 +10,7 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.gui.GuiPixelmonOverlay;
 
 import net.minecraft.src.KeyBinding;
-import net.minecraft.src.ModLoader;
+
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
 

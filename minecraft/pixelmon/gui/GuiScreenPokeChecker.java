@@ -7,7 +7,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumType;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.StatCollector;
 
 public class GuiScreenPokeChecker extends GuiScreen {

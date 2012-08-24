@@ -5,11 +5,12 @@ import java.awt.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Tessellator;
 
 import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.PixelmonServerStore;
 import pixelmon.ServerStorageDisplay;
@@ -167,19 +168,19 @@ public class GuiPC extends GuiContainer {
 				if (changed) {
 					if (slot instanceof SlotPCParty) {
 						int pos = ((SlotPCParty) slot).partyPosition;
-						ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -1, boxNumber, pos));
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -1, boxNumber, pos));
 					}
 					if (slot instanceof SlotPCPC) {
 						int boxNumber = ((SlotPCPC) slot).boxNumber;
 						int pos = ((SlotPCPC) slot).boxPosition;
-						ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, this.boxNumber, boxNumber, pos));
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, this.boxNumber, boxNumber, pos));
 					}
 				}
 				return;
 
 			} else if (new Rectangle(trashX, trashY, 32, 32).contains(par1, par2)) {
 				if (mouseSlot.pokemonData != null) {
-					ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -2));
+					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -2));
 				}
 
 				mouseSlot.clearPokemon();
@@ -211,7 +212,7 @@ public class GuiPC extends GuiContainer {
 	public void onGuiClosed() {
 		super.onGuiClosed();
 		if (mouseSlot.pokemonData != null) {
-			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -4));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -4));
 		}
 		mouseSlot.pokemonData = null;
 		if (!goingToPokeChecker) {

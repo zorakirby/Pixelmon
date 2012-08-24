@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -40,7 +42,7 @@ public class GuiChooseStarter extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		String pixelmonName = starterList[button.id];
 		Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, button.id);
-		ModLoader.sendPacket(packet);
+		PacketDispatcher.sendPacketToServer(packet);
 		mc.displayGuiScreen(null);
 	}
 

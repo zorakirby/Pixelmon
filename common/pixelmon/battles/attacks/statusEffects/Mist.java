@@ -11,7 +11,7 @@ import pixelmon.battles.attacks.attackModifiers.ModifierType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
-import net.minecraft.src.ModLoader;
+
 
 public class Mist extends StatusEffectBase {
 

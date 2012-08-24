@@ -1,12 +1,13 @@
 package pixelmon.gui;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.gui.pc.GuiPC;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.StatCollector;
 
 public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
@@ -34,7 +35,7 @@ public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 		switch (button.id) {
 		case 0:
 
-			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.PCClick, -5));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -5));
 			mc.displayGuiScreen(parent);
 			break;
 		}

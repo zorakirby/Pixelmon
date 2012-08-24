@@ -14,7 +14,7 @@ import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 
 public class LevelHelper {

@@ -11,8 +11,6 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.ModLoader;
-
 public class JumpKick extends SpecialAttackBase {
 
 	public JumpKick() {

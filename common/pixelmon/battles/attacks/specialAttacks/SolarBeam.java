@@ -12,8 +12,6 @@ import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.ModLoader;
-
 public class SolarBeam extends MultiTurnSpecialAttackBase {
 
 	public SolarBeam() {
