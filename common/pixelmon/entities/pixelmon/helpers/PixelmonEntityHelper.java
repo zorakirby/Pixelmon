@@ -65,6 +65,7 @@ public class PixelmonEntityHelper {
 	public BattleController bc;
 	public LevelHelper lvl;
 	public float giScale = 1;
+	public boolean hitByPokeball;
 	public ItemStack heldItem;
 
 	public PixelmonEntityHelper(IHaveHelper pixelmon) {

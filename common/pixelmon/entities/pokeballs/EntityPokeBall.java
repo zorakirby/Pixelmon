@@ -79,7 +79,6 @@ public class EntityPokeBall extends EntityThrowable {
 
 		if (!isEmpty) {
 			if (movingobjectposition != null && !worldObj.isRemote) {
-				ItemPokeBall.ballTimer = 0;
 				if (pixelmon != null) {
 					if(movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
 					{
@@ -112,10 +111,16 @@ public class EntityPokeBall extends EntityThrowable {
 			}
 		} else {
 			if (movingobjectposition != null) {
-				ItemPokeBall.ballTimer = 0;
 				if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
 					IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
 					p = entitypixelmon.getHelper();
+					if(p.hitByPokeball)
+					{
+						motionX = motionZ = 0;
+						motionY = -0.1;
+						return;
+					}
+					p.hitByPokeball = true;
 					if (p.getOwner() == (EntityPlayer) thrower) {
 						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
 						// spawnFailParticles();
@@ -274,6 +279,7 @@ public class EntityPokeBall extends EntityThrowable {
 			waitTime = 0;
 			isWaiting = false;
 			p.getEntity().setPosition(posX, posY, posZ);
+			p.hitByPokeball = false;
 			worldObj.spawnEntityInWorld(p.getEntity());
 			p.getEntity().setPosition(posX, posY, posZ);
 			p.setIsDead(false);
