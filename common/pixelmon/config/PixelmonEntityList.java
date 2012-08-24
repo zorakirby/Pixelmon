@@ -256,7 +256,7 @@ public class PixelmonEntityList {
 			ClassType type = getClassTypeFromID((Integer) entry.getKey());
 			int rarity = DatabaseStats.GetRarity(name);
 			if (rarity > 0)
-				SpawnRegistry.addSpawn(entry, name, type);
+				SpawnRegistry.addSpawn(entry, name, rarity, type);
 
 			// BiomeGenBase[] biomes;
 			// if (type == ClassType.Pixelmon || type ==

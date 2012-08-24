@@ -33,7 +33,8 @@ public class PixelmonSpawner {
 		for (List l : entityLists) {
 			currentTotalNum += l.size();
 		}
-		performSpawningInChunk(event.getChunk(), event.getChunk().xPosition, event.getChunk().zPosition, ChunkDataEvents.getNumFromPos(event.getChunk().xPosition, event.getChunk().zPosition) - currentTotalNum, event.world);
+		performSpawningInChunk(event.getChunk(), event.getChunk().xPosition, event.getChunk().zPosition, ChunkDataEvents.getNumFromPos(event.getChunk().xPosition, event.getChunk().zPosition)
+				- currentTotalNum, event.world);
 	}
 
 	private void performSpawningInChunk(Chunk chunk, int xPosition, int zPosition, int num, World world) {
@@ -43,13 +44,26 @@ public class PixelmonSpawner {
 		int z = zPosition * 16;
 		Random rand = new Random();
 		BiomeGenBase biome = world.getBiomeGenForCoords(x + 8, z + 8);
-		List<String> creatureList = SpawnRegistry.getSpawnsForBiome(biome);
+		List<SpawnData> creatureList = SpawnRegistry.getSpawnsForBiome(biome);
+
+		int totRarityCount = 0;
+		for (SpawnData s : creatureList)
+			totRarityCount += s.rarity;
 
 		for (int i = 0; i < num; i++) {
 			int xRand = x + rand.nextInt(16);
 			int zRand = z + rand.nextInt(16);
 			int y = getTopSolidOrLiquidBlock(chunk, xRand, zRand);
-			String creatureName = creatureList.get(rand.nextInt(creatureList.size()));
+			int index = rand.nextInt(totRarityCount);
+			String creatureName =null;
+			int tot=0;
+			for (SpawnData s: creatureList)	{
+				tot+= s.rarity;
+				if (index <= tot) {
+					creatureName=s.name;
+					break;
+				}
+			}
 			if (SpawnerAnimals.canCreatureTypeSpawnAtLocation(DatabaseStats.GetCreatureType(creatureName), world, xRand, y, zRand)) {
 				Entity pixelmon = PixelmonEntityList.createEntityByName(creatureName, world);
 				pixelmon.setLocationAndAngles(xRand, y, zRand, rand.nextFloat() * 360.0F, 0.0F);
@@ -78,5 +92,4 @@ public class PixelmonSpawner {
 		return chunk.getBlockID(x & 15, y, z & 15);
 	}
 
-	
 }
