@@ -179,7 +179,7 @@ public class ModelParas extends ModelBase
       Leg_part1.setRotationPoint(0F, 0F, 0F);
       Leg_part1.setTextureSize(64, 32);
       Leg_part1.mirror = true;
-      setRotation(Leg_part1, 0F, 2.3F, 0.72F);
+      setRotation(Leg_part1, 0F,0.72F, 2.3F);
       claw1 = new ModelRenderer(this, 0, 0);
       claw1.addBox(-2F, 0F, 0F, 2, 1, 1);
       claw1.setRotationPoint(-2F, 2.7F, -3.1F);
