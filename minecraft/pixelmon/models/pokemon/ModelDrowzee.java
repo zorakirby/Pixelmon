@@ -254,6 +254,16 @@ public class ModelDrowzee extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+   
+   
+    HeadBase.rotateAngleY = f3 / (180F / (float)Math.PI);
+    HeadBase.rotateAngleX = f4 / (180F / (float)Math.PI);
+    RightLegBase.rotateAngleX = MathHelper.cos(f * 1F) * 1.1F * f1;
+    LeftLegBase.rotateAngleX = MathHelper.cos(f * 1F + (float)Math.PI) * 1.1F * f1;
+    RightArmBase.rotateAngleX = MathHelper.cos(f2 * .15F + (float)Math.PI) * .5F * .5F - .5F;
+    LeftArmBase.rotateAngleX = MathHelper.cos(f2 * .15F) * .5F * 0.5F - .5F;
+    RightArmBase.rotateAngleY = MathHelper.sin(f2 * .15F) * .5F * 0.5F;
+    LeftArmBase.rotateAngleY = MathHelper.sin(f2 * .15F + (float)Math.PI) * .5F * 0.5F;
   }
 
 }
