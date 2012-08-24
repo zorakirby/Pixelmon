@@ -27,9 +27,8 @@ public class EntityGastly extends EntityGroundPixelmon
     	float var7 = MathHelper.cos(var4) * var2 * .5F * var5;
     	float var8 = this.rand.nextFloat() * var2;
     	
-    	
-    for(int i=0; i<2; i++)
-    	Minecraft.getMinecraft().effectRenderer.addEffect(new EntityGastlyParticle(worldObj, posX + (double)var6, posY + 1.3F + var8, posZ + (double)var7, 0D, 0D, 0D));
+    	for(int i=0; i<2; i++)
+    		Minecraft.getMinecraft().effectRenderer.addEffect(new EntityGastlyParticle(worldObj, posX + (double)var6, posY + 1.3F + var8, posZ + (double)var7, 0D, 0D, 0D));
     }
 	public void init() 
 	{
