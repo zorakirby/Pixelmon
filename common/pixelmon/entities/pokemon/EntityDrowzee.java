@@ -1,8 +1,8 @@
 package pixelmon.entities.pokemon;
 
+import net.minecraft.src.World;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
-import net.minecraft.src.*;
 
 public class EntityDrowzee extends EntityGroundPixelmon
 {
