@@ -5,8 +5,11 @@ import static net.minecraftforge.client.IItemRenderer.ItemRenderType.*;
 import static net.minecraftforge.client.IItemRenderer.ItemRendererHelper.*;
 import net.minecraftforge.client.MinecraftForgeClient;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class RenderSnowMan extends RenderLiving
 {
     /** A reference to the Snowman model in RenderSnowMan. */

@@ -1,9 +1,12 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class MapItemRenderer
 {
     private int[] intArray = new int[16384];

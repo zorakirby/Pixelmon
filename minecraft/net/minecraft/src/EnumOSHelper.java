@@ -1,5 +1,10 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
+@SideOnly(Side.CLIENT)
+
 public class EnumOSHelper
 {
     public static final int[] field_74533_a = new int[EnumOS.values().length];

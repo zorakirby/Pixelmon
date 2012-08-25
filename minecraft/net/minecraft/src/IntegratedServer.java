@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.File;
 import java.io.IOException;
 
@@ -8,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.DimensionManager;
 
+@SideOnly(Side.CLIENT)
 public class IntegratedServer extends MinecraftServer
 {
     /** The Minecraft instance. */

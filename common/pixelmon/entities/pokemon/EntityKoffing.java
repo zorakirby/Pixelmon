@@ -2,15 +2,12 @@ package pixelmon.entities.pokemon;
 
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.EntityMagmaCube;
-import net.minecraft.src.EntitySlime;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
-import pixelmon.battles.animations.particles.EntityGastlyParticle;
-import pixelmon.battles.animations.particles.EntityKoffingParticle;
+import pixelmon.ClientProxy;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.enums.EnumPixelmonParticles;
 
 public class EntityKoffing extends EntityGroundPixelmon {
 
@@ -42,7 +39,7 @@ public class EntityKoffing extends EntityGroundPixelmon {
 			}
 			count--;
 			if (particlesOn)
-				Minecraft.getMinecraft().effectRenderer.addEffect(new EntityKoffingParticle(worldObj, posX + (double) var6, posY + hoverTimer + 1.5F, posZ + (double) var7, 0D, 0D, 0D));
+				ClientProxy.spawnParticle(EnumPixelmonParticles.koffing, worldObj, posX + (double) var6, posY + hoverTimer + 1.5F, posZ + (double) var7);
 		}
 	}
 

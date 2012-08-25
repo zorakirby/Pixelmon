@@ -19,8 +19,8 @@ public class PixelmonRecipes {
 						Character.valueOf('I'), Item.ingotIron });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.ultraBall, 1), new Object[] { "GGG", "CBC", "III", Character.valueOf('G'), Item.ingotGold, Character.valueOf('C'), PixelmonItems.coalDust, Character.valueOf('B'),
 				Block.button, Character.valueOf('I'), Item.ingotIron });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItems.masterBall), new Object[] { "PPP", "OBO", "DDD", Character.valueOf('P'), new ItemStack(Item.dyePowder, 1, 5), Character.valueOf('O'), Block.obsidian,
-				Character.valueOf('B'), Block.button, Character.valueOf('D'), Item.diamond });
+//		GameRegistry.addRecipe(new ItemStack(PixelmonItems.masterBall), new Object[] { "PPP", "OBO", "DDD", Character.valueOf('P'), new ItemStack(Item.dyePowder, 1, 5), Character.valueOf('O'), Block.obsidian,
+//				Character.valueOf('B'), Block.button, Character.valueOf('D'), Item.diamond });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pokeChecker), new Object[] { " GG", "IIG", "II ", Character.valueOf('G'), Block.glass, Character.valueOf('I'), Item.ingotIron });
 		GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.rareCandy), new Object[] { Item.lightStoneDust, Item.appleGold, Item.sugar });
 		GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.potion, 4), new Object[] { Item.glassBottle, Item.bucketMilk, Item.wheat });
@@ -31,5 +31,6 @@ public class PixelmonRecipes {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.thunderStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), PixelmonItems.thunderStoneShard });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.leafStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), PixelmonItems.leafStoneShard });
 		GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.pcItem, 1), new Object[] { Block.dirt });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pcItem, 1), new Object[]{"DPD", "DGD", "DRD", Character.valueOf('D'), Item.diamond, Character.valueOf('G'), Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone});
 	}
 }

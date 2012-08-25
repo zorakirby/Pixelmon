@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.client.FMLTextureFX;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
@@ -7,10 +11,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
-
-import cpw.mods.fml.client.FMLTextureFX;
 import net.minecraft.client.Minecraft;
 
+@SideOnly(Side.CLIENT)
 public class TextureWatchFX extends FMLTextureFX
 {
     /**

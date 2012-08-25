@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class RenderChicken extends RenderLiving
 {
     public RenderChicken(ModelBase par1ModelBase, float par2)

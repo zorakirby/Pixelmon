@@ -1,6 +1,5 @@
 package cpw.mods.fml.common.registry;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -8,6 +7,7 @@ import java.util.logging.Level;
 
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.CraftingManager;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.FurnaceRecipes;
 import net.minecraft.src.IChunkProvider;
@@ -24,11 +24,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.ICraftingHandler;
 import cpw.mods.fml.common.IDispenseHandler;
 import cpw.mods.fml.common.IFuelHandler;
+import cpw.mods.fml.common.IPickupNotifier;
+import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.LoaderException;
@@ -44,6 +45,8 @@ public class GameRegistry
     private static List<IFuelHandler> fuelHandlers = Lists.newArrayList();
     private static List<ICraftingHandler> craftingHandlers = Lists.newArrayList();
     private static List<IDispenseHandler> dispenserHandlers = Lists.newArrayList();
+    private static List<IPickupNotifier> pickupHandlers = Lists.newArrayList();
+    private static List<IPlayerTracker> playerTrackers = Lists.newArrayList();
 
     /**
      * Register a world generator - something that inserts new block types into the world
@@ -103,11 +106,11 @@ public class GameRegistry
      * @param item
      * @return
      */
-    public static int tryDispense(World world, double x, double y, double z, int xVelocity, int zVelocity, ItemStack item)
+    public static int tryDispense(World world, double x, double y, double z, int xVelocity, int zVelocity, ItemStack item, Random random, double entX, double entY, double entZ)
     {
         for (IDispenseHandler handler : dispenserHandlers)
         {
-            int dispensed = handler.dispense(x, y, z, xVelocity, zVelocity, world, item);
+            int dispensed = handler.dispense(x, y, z, xVelocity, zVelocity, world, item, random, entX, entY, entZ);
             if (dispensed>-1)
             {
                 return dispensed;
@@ -246,4 +249,45 @@ public class GameRegistry
         }
     }
 
+    public static void registerPickupHandler(IPickupNotifier handler)
+    {
+        pickupHandlers.add(handler);
+    }
+
+    public static void onPickupNotification(EntityPlayer player, EntityItem item)
+    {
+        for (IPickupNotifier notify : pickupHandlers)
+        {
+            notify.notifyPickup(item, player);
+        }
+    }
+    
+    public static void registerPlayerTracker(IPlayerTracker tracker)
+	{
+		playerTrackers.add(tracker);
+	}
+	
+	public static void onPlayerLogin(EntityPlayer player)
+	{
+		for(IPlayerTracker tracker : playerTrackers)
+			tracker.onPlayerLogin(player);
+	}
+	
+	public static void onPlayerLogout(EntityPlayer player)
+	{
+		for(IPlayerTracker tracker : playerTrackers)
+			tracker.onPlayerLogout(player);
+	}
+	
+	public static void onPlayerChangedDimension(EntityPlayer player)
+	{
+		for(IPlayerTracker tracker : playerTrackers)
+			tracker.onPlayerChangedDimension(player);
+	}
+	
+	public static void onPlayerRespawn(EntityPlayer player)
+	{
+		for(IPlayerTracker tracker : playerTrackers)
+			tracker.onPlayerRespawn(player);
+	}
 }

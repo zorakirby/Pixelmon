@@ -14,17 +14,19 @@
 
 package cpw.mods.fml.client.modloader;
 
+import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 
-import net.minecraft.src.KeyBinding;
-
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import com.google.common.collect.ObjectArrays;
+import com.google.common.primitives.Booleans;
+
+import net.minecraft.src.KeyBinding;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.modloader.ModLoaderModContainer;
-import cpw.mods.fml.common.registry.TickRegistry;
 
 /**
  * @author cpw
@@ -33,23 +35,27 @@ import cpw.mods.fml.common.registry.TickRegistry;
 public class ModLoaderKeyBindingHandler extends KeyBindingRegistry.KeyHandler
 {
     private ModLoaderModContainer modContainer;
-    private boolean downArmed;
-    private boolean upArmed;
+    private List<KeyBinding> helper;
+    private boolean[] active = new boolean[0];
+    private boolean[] mlRepeats = new boolean[0];
+    private boolean[] armed = new boolean[0];
 
     /**
      * @param keyHandler
-     * @param allowRepeat
-     * @param modContainer
      */
-    public ModLoaderKeyBindingHandler(KeyBinding keyBinding, boolean allowRepeat, ModLoaderModContainer modContainer)
+    public ModLoaderKeyBindingHandler()
     {
-        super(new KeyBinding[] { keyBinding }, new boolean[] { allowRepeat });
-        this.modContainer=modContainer;
+        super(new KeyBinding[0], new boolean[0]);
     }
 
-    public void onRenderEndTick()
+    void setModContainer(ModLoaderModContainer modContainer)
     {
-        ((net.minecraft.src.BaseMod)modContainer.getMod()).keyboardEvent(keyBindings[0]);
+        this.modContainer = modContainer;
+    }
+
+    public void fireKeyEvent(KeyBinding kb)
+    {
+        ((net.minecraft.src.BaseMod)modContainer.getMod()).keyboardEvent(kb);
     }
 
     @Override
@@ -59,15 +65,16 @@ public class ModLoaderKeyBindingHandler extends KeyBindingRegistry.KeyHandler
         {
             return;
         }
-        upArmed = false;
+        int idx = helper.indexOf(kb);
         if (type.contains(TickType.CLIENT))
         {
-            downArmed = true;
+            armed[idx] = true;
         }
-        if (type.contains(TickType.RENDER) && downArmed)
+        if (armed[idx] && type.contains(TickType.RENDER) && (!active[idx] || mlRepeats[idx]))
         {
-            onRenderEndTick();
-            downArmed = false;
+            fireKeyEvent(kb);
+            active[idx] = true;
+            armed[idx] = false;
         }
     }
 
@@ -78,16 +85,8 @@ public class ModLoaderKeyBindingHandler extends KeyBindingRegistry.KeyHandler
         {
             return;
         }
-        downArmed = false;
-        if (type.contains(TickType.CLIENT))
-        {
-            upArmed = true;
-        }
-        if (type.contains(TickType.RENDER) && upArmed)
-        {
-            onRenderEndTick();
-            upArmed = false;
-        }
+        int idx = helper.indexOf(kb);
+        active[idx] = false;
     }
 
     @Override
@@ -100,5 +99,17 @@ public class ModLoaderKeyBindingHandler extends KeyBindingRegistry.KeyHandler
     public String getLabel()
     {
         return modContainer.getModId() +" KB "+keyBindings[0].keyCode;
+    }
+
+    void addKeyBinding(KeyBinding binding, boolean repeats)
+    {
+        this.keyBindings = ObjectArrays.concat(this.keyBindings, binding);
+        this.repeatings = new boolean[this.keyBindings.length];
+        Arrays.fill(this.repeatings, true);
+        this.active = new boolean[this.keyBindings.length];
+        this.armed = new boolean[this.keyBindings.length];
+        this.mlRepeats = Booleans.concat(this.mlRepeats, new boolean[] { repeats });
+        this.keyDown = new boolean[this.keyBindings.length];
+        this.helper = Arrays.asList(this.keyBindings);
     }
 }

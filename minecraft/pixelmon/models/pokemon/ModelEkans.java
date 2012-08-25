@@ -218,6 +218,8 @@ public class ModelEkans extends ModelBase {
   	BODY7.rotateAngleY = ((float) Math.pow(dampingFactor, 7)) * TopAngle * (MathHelper.cos(animationSpeed * f + 0.9f * 5 * offset + initialOffset))
   			- currentAngle;// -PI/8;
   	currentAngle = currentAngle + BODY7.rotateAngleY;
+  	 HEADBASE.rotateAngleY = f3 / (180F / (float)Math.PI);
+     HEADBASE.rotateAngleX = f4 / (180F / (float)Math.PI);
     }
 
   }

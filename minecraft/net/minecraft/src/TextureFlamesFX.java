@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
 import cpw.mods.fml.client.FMLTextureFX;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class TextureFlamesFX extends FMLTextureFX
 {
     protected float[] field_76869_g = new float[320];
@@ -9,11 +12,10 @@ public class TextureFlamesFX extends FMLTextureFX
     private int fireTileSize = 20;
     private int fireGridSize = 320;
 
-
     public TextureFlamesFX(int par1)
     {
         super(Block.fire.blockIndexInTexture + par1 * 16);
-		setup();
+        setup();
     }
 
     @Override

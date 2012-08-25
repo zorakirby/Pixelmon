@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.DimensionManager;
 
@@ -196,6 +197,7 @@ public abstract class ServerConfigurationManager
      */
     public void playerLoggedOut(EntityPlayerMP par1EntityPlayerMP)
     {
+        GameRegistry.onPlayerLogout(par1EntityPlayerMP);
         this.writePlayerData(par1EntityPlayerMP);
         WorldServer var2 = par1EntityPlayerMP.getServerForPlayer();
         var2.setEntityDead(par1EntityPlayerMP);
@@ -356,6 +358,7 @@ public abstract class ServerConfigurationManager
         var7.spawnEntityInWorld(var6);
         this.playerEntityList.add(var6);
         var6.addSelfToInternalCraftingInventory();
+        GameRegistry.onPlayerRespawn(var6);
         return var6;
     }
 
@@ -421,6 +424,8 @@ public abstract class ServerConfigurationManager
             PotionEffect var13 = (PotionEffect)var14.next();
             par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet41EntityEffect(par1EntityPlayerMP.entityId, var13));
         }
+
+        GameRegistry.onPlayerChangedDimension(par1EntityPlayerMP);
     }
 
     /**

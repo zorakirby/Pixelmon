@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.InputStream;
 
+@SideOnly(Side.CLIENT)
 public interface TexturePackBase
 {
     void func_77533_a(RenderEngine var1);

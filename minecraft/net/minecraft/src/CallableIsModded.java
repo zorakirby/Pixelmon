@@ -1,9 +1,12 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.concurrent.Callable;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
 
+@SideOnly(Side.CLIENT)
 class CallableIsModded implements Callable
 {
     /** Gets if Client Is Modded. */

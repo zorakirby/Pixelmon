@@ -1,8 +1,11 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.Component;
 import org.lwjgl.input.Mouse;
 
+@SideOnly(Side.CLIENT)
 public class MouseHelper
 {
     private Component windowComponent;

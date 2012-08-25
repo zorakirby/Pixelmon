@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.Random;
 
+@SideOnly(Side.CLIENT)
 public class EnchantmentNameParts
 {
     /** The static instance of this class. */

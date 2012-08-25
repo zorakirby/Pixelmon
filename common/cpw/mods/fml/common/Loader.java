@@ -14,49 +14,42 @@
 package cpw.mods.fml.common;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
-import java.util.regex.Matcher;
 
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.CallableMinecraftVersion;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
-import com.google.common.base.Splitter.MapSplitter;
-import com.google.common.base.Throwables;
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultiset;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.common.collect.Multiset.Entry;
 import com.google.common.collect.Multisets;
 import com.google.common.collect.Ordering;
+import com.google.common.collect.Sets.SetView;
 import com.google.common.collect.TreeMultimap;
 
 import cpw.mods.fml.common.LoaderState.ModState;
-import cpw.mods.fml.common.discovery.ContainerType;
 import cpw.mods.fml.common.discovery.ModDiscoverer;
 import cpw.mods.fml.common.event.FMLLoadEvent;
 import cpw.mods.fml.common.functions.ModIdFunction;
+import cpw.mods.fml.common.modloader.BaseModProxy;
 import cpw.mods.fml.common.toposort.ModSorter;
 import cpw.mods.fml.common.toposort.ModSortingException;
 import cpw.mods.fml.common.toposort.TopologicalSort;
@@ -185,14 +178,32 @@ public class Loader
         FMLLog.fine("Verifying mod requirements are satisfied");
         try
         {
-            Map<String, ArtifactVersion> modVersions = Maps.newHashMap();
-            for (ModContainer mod : mods)
+            BiMap<String, ArtifactVersion> modVersions = HashBiMap.create();
+            for (ModContainer mod : getActiveModList())
             {
                 modVersions.put(mod.getModId(), mod.getProcessedVersion());
             }
 
-            for (ModContainer mod : mods)
+            for (ModContainer mod : getActiveModList())
             {
+                Map<String,ArtifactVersion> names = Maps.uniqueIndex(mod.getRequirements(), new Function<ArtifactVersion, String>()
+                {
+                    public String apply(ArtifactVersion v)
+                    {
+                        return v.getLabel();
+                    }
+                });
+                Set<String> missingMods = Sets.difference(names.keySet(), modVersions.keySet());
+                Set<ArtifactVersion> versionMissingMods = Sets.newHashSet();
+                if (!missingMods.isEmpty())
+                {
+                    FMLLog.severe("The mod %s (%s) requires mods %s to be available", mod.getModId(), mod.getName(), missingMods);
+                    for (String modid : missingMods)
+                    {
+                        versionMissingMods.add(names.get(modid));
+                    }
+                    throw new MissingModsException(versionMissingMods);
+                }
                 ImmutableList<ArtifactVersion> allDeps = ImmutableList.<ArtifactVersion>builder().addAll(mod.getDependants()).addAll(mod.getDependencies()).build();
                 for (ArtifactVersion v : allDeps)
                 {
@@ -200,21 +211,28 @@ public class Loader
                     {
                         if (!v.containsVersion(modVersions.get(v.getLabel())))
                         {
-                            FMLLog.log(Level.SEVERE, "The mod %s (%s) requires mods %s to be available, one or more are not", mod.getModId(), mod.getName(), allDeps);
-                            throw new LoaderException();
+                            versionMissingMods.add(v);
                         }
                     }
+                }
+                if (!versionMissingMods.isEmpty())
+                {
+                    FMLLog.severe("The mod %s (%s) requires mod versions %s to be available", mod.getModId(), mod.getName(), missingMods);
+                    throw new MissingModsException(versionMissingMods);
                 }
             }
 
             FMLLog.fine("All mod requirements are satisfied");
 
-            ModSorter sorter = new ModSorter(mods, namedMods);
+            ModSorter sorter = new ModSorter(getActiveModList(), namedMods);
 
             try
             {
                 FMLLog.fine("Sorting mods into an ordered list");
-                mods = sorter.sort();
+                List<ModContainer> sortedMods = sorter.sort();
+                mods.removeAll(sortedMods);
+                sortedMods.addAll(mods);
+                mods = sortedMods;
                 FMLLog.fine("Mod sorting completed successfully");
             }
             catch (ModSortingException sortException)
@@ -229,11 +247,11 @@ public class Loader
         finally
         {
             FMLLog.fine("Mod sorting data:");
-            for (ModContainer mod : mods)
+            for (ModContainer mod : getActiveModList())
             {
                 if (!mod.isImmutable())
                 {
-                    FMLLog.fine("\t%s(%s): %s (%s)", mod.getModId(), mod.getName(), mod.getSource().getName(), mod.getSortingRules());
+                    FMLLog.fine("\t%s(%s:%s): %s (%s)", mod.getModId(), mod.getName(), mod.getVersion(), mod.getSource().getName(), mod.getSortingRules());
                 }
             }
             if (mods.size()==0)
@@ -413,9 +431,9 @@ public class Loader
         modController.transition(LoaderState.LOADING);
         ModDiscoverer disc = identifyMods();
         disableRequestedMods();
+        modController.distributeStateMessage(FMLLoadEvent.class);
         sortModList();
         mods = ImmutableList.copyOf(mods);
-        modController.distributeStateMessage(FMLLoadEvent.class);
         modController.transition(LoaderState.CONSTRUCTING);
         modController.distributeStateMessage(LoaderState.CONSTRUCTING, modClassLoader, disc.getASMTable());
         modController.transition(LoaderState.PREINITIALIZATION);
@@ -425,30 +443,30 @@ public class Loader
 
     private void disableRequestedMods()
     {
-        String disabledModList = System.getProperty("fml.modStates", "");
-        FMLLog.fine("Received a system property request \'%s\'",disabledModList);
+        String forcedModList = System.getProperty("fml.modStates", "");
+        FMLLog.fine("Received a system property request \'%s\'",forcedModList);
         Map<String, String> sysPropertyStateList = Splitter.on(CharMatcher.anyOf(";:"))
                 .omitEmptyStrings().trimResults().withKeyValueSeparator("=")
-                .split(disabledModList);
+                .split(forcedModList);
         FMLLog.fine("System property request managing the state of %d mods", sysPropertyStateList.size());
         Map<String, String> modStates = Maps.newHashMap();
 
-        File disabledModFile = new File(canonicalConfigDir, "fmlModState.properties");
-        Properties disabledModListProperties = new Properties();
-        if (disabledModFile.exists() && disabledModFile.isFile())
+        File forcedModFile = new File(canonicalConfigDir, "fmlModState.properties");
+        Properties forcedModListProperties = new Properties();
+        if (forcedModFile.exists() && forcedModFile.isFile())
         {
-            FMLLog.fine("Found a mod state file %s", disabledModFile.getName());
+            FMLLog.fine("Found a mod state file %s", forcedModFile.getName());
             try
             {
-                disabledModListProperties.load(new FileReader(disabledModFile));
-                FMLLog.fine("Loaded states for %d mods from file", disabledModListProperties.size());
+                forcedModListProperties.load(new FileReader(forcedModFile));
+                FMLLog.fine("Loaded states for %d mods from file", forcedModListProperties.size());
             }
             catch (Exception e)
             {
                 FMLLog.log(Level.INFO, e, "An error occurred reading the fmlModState.properties file");
             }
         }
-        modStates.putAll(Maps.fromProperties(disabledModListProperties));
+        modStates.putAll(Maps.fromProperties(forcedModListProperties));
         modStates.putAll(sysPropertyStateList);
         FMLLog.fine("After merging, found state information for %d mods", modStates.size());
 
@@ -456,7 +474,7 @@ public class Loader
         {
             public Boolean apply(String input)
             {
-                return !Boolean.parseBoolean(input);
+                return Boolean.parseBoolean(input);
             }
         });
 
@@ -478,7 +496,7 @@ public class Loader
      */
     public static boolean isModLoaded(String modname)
     {
-        return instance().namedMods.containsKey(modname);
+        return instance().namedMods.containsKey(modname) && instance().modController.getModState(instance.namedMods.get(modname))!=ModState.DISABLED;
     }
 
     /**
@@ -518,7 +536,7 @@ public class Loader
         return modClassLoader;
     }
 
-    public void computeDependencies(String dependencyString, List<ArtifactVersion> requirements, List<ArtifactVersion> dependencies, List<ArtifactVersion> dependants)
+    public void computeDependencies(String dependencyString, Set<ArtifactVersion> requirements, List<ArtifactVersion> dependencies, List<ArtifactVersion> dependants)
     {
         if (dependencyString == null || dependencyString.length() == 0)
         {
@@ -607,13 +625,19 @@ public class Loader
         FMLLog.info("Forge Mod Loader has successfully loaded %d mod%s", mods.size(), mods.size()==1 ? "" : "s");
     }
 
-    public Callable getCallableCrashInformation()
+    public ICrashCallable getCallableCrashInformation()
     {
-        return new Callable<String>() {
+        return new ICrashCallable() {
             @Override
             public String call() throws Exception
             {
                 return getCrashInformation();
+            }
+
+            @Override
+            public String getLabel()
+            {
+                return "FML";
             }
         };
     }

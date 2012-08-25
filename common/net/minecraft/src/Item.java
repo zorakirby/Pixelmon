@@ -317,7 +317,7 @@ public class Item
     /**
      * set max damage of an Item
      */
-    protected Item setMaxDamage(int par1)
+    public Item setMaxDamage(int par1)
     {
         this.maxDamage = par1;
         return this;
@@ -681,13 +681,23 @@ public class Item
      * @param stack The Item Stack
      * @param player The Player that used the item
      * @param world The Current World
-     * @param X Target X Position
-     * @param Y Target Y Position
-     * @param Z Target Z Position
+     * @param x Target X Position
+     * @param y Target Y Position
+     * @param z Target Z Position
      * @param side The side of the target hit
      * @return Return true to prevent any further processing.
      */
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int X, int Y, int Z, int side) 
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) 
+    {
+        return onItemUseFirst(stack, player, world, x, y, z, side);
+    }
+    
+    /**
+     * See onItemUseFirst above, this is deprecated in favor of the more aware version.
+     * Only here for compaibility.
+     */
+    @Deprecated
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side) 
     {
         return false;
     }

@@ -229,17 +229,25 @@ public class PixelmonEntityList {
 			Integer[] eggInfo = entityEggs.get(name);
 			try {
 				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
-					if (eggInfo != null)
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, EntityRegistry.findGlobalUniqueEntityId(), eggInfo[0],
-								eggInfo[1]);
-					else
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, EntityRegistry.findGlobalUniqueEntityId());
+					try {
+						if (eggInfo != null)
+							EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name,
+									EntityRegistry.findGlobalUniqueEntityId(), eggInfo[0], eggInfo[1]);
+						else
+							EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name,
+									EntityRegistry.findGlobalUniqueEntityId());
+					} catch (Exception e) {
+						System.out.println("Failed on " + name);
+						System.out.println(e.getMessage());
+						e.printStackTrace();
+					}
 				} else if (type == ClassType.Trainer)
 					if (eggInfo != null)
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, EntityRegistry.findGlobalUniqueEntityId(),
-								eggInfo[0], eggInfo[1]);
+						EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name,
+								EntityRegistry.findGlobalUniqueEntityId(), eggInfo[0], eggInfo[1]);
 					else
-						EntityRegistry.registerGlobalEntityID((Class<? extends Entity>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, EntityRegistry.findGlobalUniqueEntityId());
+						EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name,
+								EntityRegistry.findGlobalUniqueEntityId());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

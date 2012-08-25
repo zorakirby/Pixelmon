@@ -1,5 +1,7 @@
 package net.minecraft.client;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -136,6 +138,7 @@ import cpw.mods.fml.common.Side;
 import cpw.mods.fml.relauncher.ArgsWrapper;
 import cpw.mods.fml.relauncher.FMLRelauncher;
 
+@SideOnly(Side.CLIENT)
 public abstract class Minecraft implements Runnable, IPlayerUsage
 {
     /** The experienceTotal value the client thinks the player has. */
@@ -474,7 +477,7 @@ public abstract class Minecraft implements Runnable, IPlayerUsage
         {
             this.toggleFullscreen();
         }
-        FMLClientHandler.instance().reloadTextureFX();
+        FMLClientHandler.instance().onInitializationComplete();
     }
 
     /**

@@ -490,7 +490,7 @@ public class RailLogic
     /**
      * get number of adjacent tracks
      */
-    static int getNAdjacentTracks(RailLogic par0RailLogic)
+    public static int getNAdjacentTracks(RailLogic par0RailLogic)
     {
         return par0RailLogic.getAdjacentTracks();
     }

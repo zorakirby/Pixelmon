@@ -1,5 +1,12 @@
 package pixelmon;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
 import java.util.logging.Level;
 
 import pixelmon.comm.ConnectionHandler;
@@ -16,6 +23,7 @@ import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ServerCommandManager;
 import net.minecraftforge.common.Configuration;

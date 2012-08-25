@@ -12,105 +12,48 @@
  */
 package cpw.mods.fml.client;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.awt.image.BufferedImage;
-import java.awt.Dimension;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
-
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.CrashReport;
+import net.minecraft.src.Entity;
+import net.minecraft.src.EntityLiving;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.GuiScreen;
+import net.minecraft.src.Packet;
+import net.minecraft.src.Render;
+import net.minecraft.src.RenderManager;
+import net.minecraft.src.World;
+import net.minecraft.src.WorldClient;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.BaseMod;
-import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.Block;
-import net.minecraft.src.CrashReport;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.GameSettings;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.IChunkProvider;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.KeyBinding;
-import net.minecraft.src.MLProp;
-import net.minecraft.src.ModTextureStatic;
-import net.minecraft.src.NetClientHandler;
-import net.minecraft.src.NetworkManager;
-import net.minecraft.src.Packet;
-import net.minecraft.src.Packet1Login;
-import net.minecraft.src.Packet250CustomPayload;
-import net.minecraft.src.Packet3Chat;
-import net.minecraft.src.Profiler;
-import net.minecraft.src.Render;
-import net.minecraft.src.RenderBlocks;
-import net.minecraft.src.RenderEngine;
-import net.minecraft.src.RenderManager;
-import net.minecraft.src.RenderPlayer;
-import net.minecraft.src.StringTranslate;
-import net.minecraft.src.TextureFX;
-import net.minecraft.src.TexturePackBase;
-import net.minecraft.src.World;
-import net.minecraft.src.WorldClient;
-import net.minecraft.src.WorldType;
-import argo.jdom.JdomParser;
-import argo.jdom.JsonNode;
 import cpw.mods.fml.client.modloader.ModLoaderClientHelper;
-import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLDummyContainer;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IFMLSidedHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.LoaderException;
-import cpw.mods.fml.common.LoaderState;
 import cpw.mods.fml.common.MetadataCollection;
+import cpw.mods.fml.common.MissingModsException;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.ProxyInjector;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.common.modloader.ModLoaderHelper;
-import cpw.mods.fml.common.modloader.ModLoaderModContainer;
-import cpw.mods.fml.common.modloader.ModProperty;
 import cpw.mods.fml.common.network.EntitySpawnAdjustmentPacket;
 import cpw.mods.fml.common.network.EntitySpawnPacket;
+import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import cpw.mods.fml.common.registry.IThrowableEntity;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -160,6 +103,8 @@ public class FMLClientHandler implements IFMLSidedHandler
 
     private boolean serverIsRunning;
 
+    private MissingModsException modsMissing;
+
     public void beginMinecraftLoading(Minecraft minecraft)
     {
         if (minecraft.isDemo())
@@ -179,7 +124,7 @@ public class FMLClientHandler implements IFMLSidedHandler
             Class<?> optifineConfig = Class.forName("Config", false, Loader.instance().getModClassLoader());
             String optifineVersion = (String) optifineConfig.getField("VERSION").get(null);
             Map<String,Object> dummyOptifineMeta = ImmutableMap.<String,Object>builder().put("name", "Optifine").put("version", optifineVersion).build();
-            ModMetadata optifineMetadata = MetadataCollection.from(getClass().getResourceAsStream("optifinemod.info")).getMetadataForId("optifine", dummyOptifineMeta);
+            ModMetadata optifineMetadata = MetadataCollection.from(getClass().getResourceAsStream("optifinemod.info"),"optifine").getMetadataForId("optifine", dummyOptifineMeta);
             optifineContainer = new DummyModContainer(optifineMetadata);
             FMLLog.info("Forge Mod Loader has detected optifine %s, enabling compatibility features",optifineContainer.getVersion());
         }
@@ -190,6 +135,10 @@ public class FMLClientHandler implements IFMLSidedHandler
         try
         {
             Loader.instance().loadMods();
+        }
+        catch (MissingModsException missing)
+        {
+            modsMissing = missing;
         }
         catch (LoaderException le)
         {
@@ -212,6 +161,10 @@ public class FMLClientHandler implements IFMLSidedHandler
     @SuppressWarnings("deprecation")
     public void finishMinecraftLoading()
     {
+        if (modsMissing != null)
+        {
+            return;
+        }
         try
         {
             Loader.instance().initializeMods();
@@ -227,9 +180,16 @@ public class FMLClientHandler implements IFMLSidedHandler
         KeyBindingRegistry.instance().uploadKeyBindingsToGame(client.gameSettings);
     }
 
-    public void reloadTextureFX()
+    public void onInitializationComplete()
     {
-        TextureFXManager.instance().loadTextures(client.texturePackList.getSelectedTexturePack());
+        if (modsMissing != null)
+        {
+            client.displayGuiScreen(new GuiModsMissing(modsMissing));
+        }
+        else
+        {
+            TextureFXManager.instance().loadTextures(client.texturePackList.getSelectedTexturePack());
+        }
     }
     /**
      * Get the server instance
@@ -309,22 +269,41 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
 
     @Override
-    public Entity spawnEntityIntoClientWorld(Class<? extends Entity> cls, EntitySpawnPacket packet)
+    public Entity spawnEntityIntoClientWorld(EntityRegistration er, EntitySpawnPacket packet)
     {
         WorldClient wc = client.theWorld;
 
+        Class<? extends Entity> cls = er.getEntityClass();
+
         try
         {
-            Entity entity = (Entity)(cls.getConstructor(World.class).newInstance(wc));
+            Entity entity;
+            if (er.hasCustomSpawning())
+            {
+                entity = er.doCustomSpawning(packet);
+            }
+            else
+            {
+                entity = (Entity)(cls.getConstructor(World.class).newInstance(wc));
+                entity.entityId = packet.entityId;
+                entity.setLocationAndAngles(packet.scaledX, packet.scaledY, packet.scaledZ, packet.scaledYaw, packet.scaledPitch);
+                if (entity instanceof EntityLiving)
+                {
+                    ((EntityLiving)entity).rotationYawHead = packet.scaledHeadYaw;
+                }
+
+            }
+
+            entity.serverPosX = packet.rawX;
+            entity.serverPosY = packet.rawY;
+            entity.serverPosZ = packet.rawZ;
+
             if (entity instanceof IThrowableEntity)
             {
                 Entity thrower = client.thePlayer.entityId == packet.throwerId ? client.thePlayer : wc.getEntityByID(packet.throwerId);
                 ((IThrowableEntity)entity).setThrower(thrower);
             }
 
-            entity.serverPosX = packet.rawX;
-            entity.serverPosY = packet.rawY;
-            entity.serverPosZ = packet.rawZ;
 
             Entity parts[] = entity.getParts();
             if (parts != null)
@@ -336,13 +315,6 @@ public class FMLClientHandler implements IFMLSidedHandler
                 }
             }
 
-            entity.entityId = packet.entityId;
-            entity.setPositionAndRotation2(packet.scaledX, packet.scaledY, packet.scaledZ, packet.scaledYaw, packet.scaledPitch, 1);
-
-            if (entity instanceof EntityLiving)
-            {
-                ((EntityLiving)entity).rotationYawHead = packet.scaledHeadYaw;
-            }
 
             if (packet.metadata != null)
             {

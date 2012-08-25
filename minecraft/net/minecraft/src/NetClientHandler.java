@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.common.network.FMLNetworkHandler;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -25,9 +29,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.input.Keyboard;
 
-import cpw.mods.fml.common.LoaderException;
-import cpw.mods.fml.common.network.FMLNetworkHandler;
-
+@SideOnly(Side.CLIENT)
 public class NetClientHandler extends NetHandler
 {
     private boolean field_72554_f = false;

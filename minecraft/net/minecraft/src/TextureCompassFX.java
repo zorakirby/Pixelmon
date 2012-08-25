@@ -1,11 +1,14 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.client.FMLTextureFX;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import cpw.mods.fml.client.FMLTextureFX;
 import net.minecraft.client.Minecraft;
 
+@SideOnly(Side.CLIENT)
 public class TextureCompassFX extends FMLTextureFX
 {
     /** A reference to the Minecraft object. */

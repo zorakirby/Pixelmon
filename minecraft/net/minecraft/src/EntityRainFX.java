@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class EntityRainFX extends EntityFX
 {
     public EntityRainFX(World par1World, double par2, double par4, double par6)

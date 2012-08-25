@@ -2,15 +2,16 @@ package cpw.mods.fml.client.registry;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.Set;
+
+import net.minecraft.src.GameSettings;
+import net.minecraft.src.KeyBinding;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.google.common.collect.Lists;
-
-import net.minecraft.src.GameSettings;
-import net.minecraft.src.KeyBinding;
+import com.google.common.collect.Sets;
 
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.Side;
@@ -27,7 +28,10 @@ public class KeyBindingRegistry
      */
     public static void registerKeyBinding(KeyHandler handler) {
         instance().keyHandlers.add(handler);
-        TickRegistry.registerTickHandler(handler, Side.CLIENT);
+        if (!handler.isDummy)
+        {
+            TickRegistry.registerTickHandler(handler, Side.CLIENT);
+        }
     }
 
 
@@ -43,6 +47,7 @@ public class KeyBindingRegistry
         protected KeyBinding[] keyBindings;
         protected boolean[] keyDown;
         protected boolean[] repeatings;
+        private boolean isDummy;
 
         /**
          * Pass an array of keybindings and a repeat flag for each one
@@ -56,6 +61,19 @@ public class KeyBindingRegistry
             this.keyBindings = keyBindings;
             this.repeatings = repeatings;
             this.keyDown = new boolean[keyBindings.length];
+        }
+
+
+        /**
+         * Register the keys into the system. You will do your own keyboard management elsewhere. No events will fire
+         * if you use this method
+         *
+         * @param keyBindings
+         */
+        public KeyHandler(KeyBinding[] keyBindings)
+        {
+            this.keyBindings = keyBindings;
+            this.isDummy = true;
         }
 
         public KeyBinding[] getKeyBindings()
@@ -98,7 +116,10 @@ public class KeyBindingRegistry
                     {
                         keyUp(type, keyBinding, tickEnd);
                     }
-                    keyDown[i] = state;
+                    if (tickEnd)
+                    {
+                        keyDown[i] = state;
+                    }
                 }
 
             }
@@ -137,7 +158,7 @@ public class KeyBindingRegistry
 
     private static final KeyBindingRegistry INSTANCE = new KeyBindingRegistry();
 
-    private List<KeyHandler> keyHandlers = Lists.newArrayList();
+    private Set<KeyHandler> keyHandlers = Sets.newLinkedHashSet();
 
     @Deprecated
     public static KeyBindingRegistry instance()

@@ -9,7 +9,7 @@ public class BlockLeavesBase extends Block
      * Used to determine how to display leaves based on the graphics level. May also be used in rendering for
      * transparency, not sure.
      */
-    protected boolean graphicsLevel;
+    public boolean graphicsLevel;
 
     protected BlockLeavesBase(int par1, int par2, Material par3Material, boolean par4)
     {

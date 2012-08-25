@@ -44,6 +44,8 @@ public class EntityMinecart extends Entity implements IInventory
     public static float defaultMaxSpeedGround = 0.4f;
     public static float defaultMaxSpeedAirLateral = 0.4f;
     public static float defaultMaxSpeedAirVertical = -1f;
+    public static double defaultDragRidden = 0.996999979019165D;
+    public static double defaultDragEmpty = 0.9599999785423279D;
     public static double defaultDragAir = 0.94999998807907104D;
     protected boolean canUseRail = true;
     protected boolean canBePushed = true;
@@ -331,6 +333,11 @@ public class EntityMinecart extends Entity implements IInventory
                 if (((BlockRail)Block.blocksList[var8]).isPowered())
                 {
                     var10 &= 7;
+                }
+
+                if (var10 >= 2 && var10 <= 5)
+                {
+                    this.posY = (double)(var2 + 1);
                 }
 
                 adjustSlopeVelocities(var10);
@@ -1270,7 +1277,7 @@ public class EntityMinecart extends Entity implements IInventory
      */
     protected double getDrag()
     {
-        return riddenByEntity != null ? 0.99D : 0.96D;
+        return riddenByEntity != null ? defaultDragRidden : defaultDragEmpty;
     }   
 
     /**

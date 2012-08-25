@@ -1,12 +1,9 @@
 package cpw.mods.fml.common;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import argo.jdom.JdomParser;
 import argo.jdom.JsonNode;
@@ -14,7 +11,6 @@ import argo.jdom.JsonRootNode;
 import argo.saj.InvalidSyntaxException;
 
 import com.google.common.base.Throwables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class MetadataCollection
@@ -23,13 +19,13 @@ public class MetadataCollection
     private Map<String, ModMetadata> metadatas = Maps.newHashMap();
     private int metadataVersion = 1;
 
-    public static MetadataCollection from(InputStream inputStream)
+    public static MetadataCollection from(InputStream inputStream, String sourceName)
     {
         if (inputStream == null)
         {
             return new MetadataCollection();
         }
-        
+
         InputStreamReader reader = new InputStreamReader(inputStream);
         try
         {
@@ -42,6 +38,11 @@ public class MetadataCollection
             {
                 return parseModInfo(root);
             }
+        }
+        catch (InvalidSyntaxException e)
+        {
+            FMLLog.log(Level.SEVERE, e, "The mcmod.info file in %s cannot be parsed as valid JSON. It will be ignored", sourceName);
+            return new MetadataCollection();
         }
         catch (Exception e)
         {

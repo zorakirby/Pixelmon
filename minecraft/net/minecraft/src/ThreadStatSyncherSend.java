@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.Map;
 
+@SideOnly(Side.CLIENT)
 class ThreadStatSyncherSend extends Thread
 {
     final Map field_77483_a;

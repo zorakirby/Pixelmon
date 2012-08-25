@@ -3,7 +3,7 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Random;
 
-abstract class ComponentVillage extends StructureComponent
+public abstract class ComponentVillage extends StructureComponent
 {
     /** The number of villagers that have been spawned in this component. */
     private int villagersSpawned;

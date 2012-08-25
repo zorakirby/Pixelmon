@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
 import cpw.mods.fml.client.FMLTextureFX;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class TextureWaterFlowFX extends FMLTextureFX
 {
     protected float[] field_76880_g = new float[256];
@@ -14,7 +17,7 @@ public class TextureWaterFlowFX extends FMLTextureFX
     {
         super(Block.waterMoving.blockIndexInTexture + 1);
         this.tileSize = 2;
-		setup();
+        setup();
     }
 
     @Override

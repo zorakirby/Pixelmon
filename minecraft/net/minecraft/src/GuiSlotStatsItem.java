@@ -1,8 +1,11 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+@SideOnly(Side.CLIENT)
 class GuiSlotStatsItem extends GuiSlotStats
 {
     final GuiStats field_77269_a;

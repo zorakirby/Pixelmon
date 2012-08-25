@@ -13,46 +13,34 @@
  */
 package cpw.mods.fml.common;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.CrashReport;
 import net.minecraft.src.DedicatedServer;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.ServerListenThread;
+import net.minecraft.src.ThreadServerApplication;
 import net.minecraft.src.World;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 import com.google.common.collect.Lists;
 
-import cpw.mods.fml.common.discovery.ContainerType;
 import cpw.mods.fml.common.network.EntitySpawnAdjustmentPacket;
 import cpw.mods.fml.common.network.EntitySpawnPacket;
+import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
 import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.server.FMLServerHandler;
 
 
 /**
@@ -81,12 +69,18 @@ public class FMLCommonHandler
 
     private List<IScheduledTickHandler> scheduledClientTicks = Lists.newArrayList();
     private List<IScheduledTickHandler> scheduledServerTicks = Lists.newArrayList();
+    private Class<?> forge;
+    private boolean noForge;
+    private List<String> brandings;
+    private List<ICrashCallable> crashCallables = Lists.newArrayList(Loader.instance().getCallableCrashInformation());
+
 
     public void beginLoading(IFMLSidedHandler handler)
     {
         sidedDelegate = handler;
         FMLLog.info("Attempting early MinecraftForge initialization");
         callForgeMethod("initialize");
+        callForgeMethod("registerCrashCallable");
         FMLLog.info("Completed early MinecraftForge initialization");
     }
 
@@ -104,7 +98,7 @@ public class FMLCommonHandler
         }
         for (IScheduledTickHandler ticker : scheduledTicks)
         {
-            EnumSet<TickType> ticksToRun = EnumSet.copyOf(ticker.ticks());
+            EnumSet<TickType> ticksToRun = EnumSet.copyOf(Objects.firstNonNull(ticker.ticks(), EnumSet.noneOf(TickType.class)));
             ticksToRun.removeAll(EnumSet.complementOf(ticks));
             if (!ticksToRun.isEmpty())
             {
@@ -123,7 +117,7 @@ public class FMLCommonHandler
         }
         for (IScheduledTickHandler ticker : scheduledTicks)
         {
-            EnumSet<TickType> ticksToRun = EnumSet.copyOf(ticker.ticks());
+            EnumSet<TickType> ticksToRun = EnumSet.copyOf(Objects.firstNonNull(ticker.ticks(), EnumSet.noneOf(TickType.class)));
             ticksToRun.removeAll(EnumSet.complementOf(ticks));
             if (!ticksToRun.isEmpty())
             {
@@ -173,6 +167,23 @@ public class FMLCommonHandler
     }
 
     /**
+     * Return the effective side for the context in the game. This is dependent
+     * on thread analysis to try and determine whether the code is running in the
+     * server or not. Use at your own risk
+     *
+     * @return
+     */
+    public Side getEffectiveSide()
+    {
+        Thread thr = Thread.currentThread();
+        if ((thr instanceof ThreadServerApplication) || (thr instanceof ServerListenThread))
+        {
+            return Side.SERVER;
+        }
+
+        return Side.CLIENT;
+    }
+    /**
      * Raise an exception
      *
      * @param exception
@@ -189,9 +200,6 @@ public class FMLCommonHandler
     }
 
 
-    private Class<?> forge;
-    private boolean noForge;
-    private List<String> brandings;
     private Class<?> findMinecraftForge()
     {
         if (forge==null && !noForge)
@@ -326,9 +334,9 @@ public class FMLCommonHandler
         sidedDelegate.showGuiScreen(clientGuiElement);
     }
 
-    public Entity spawnEntityIntoClientWorld(Class<? extends Entity> cls, EntitySpawnPacket entitySpawnPacket)
+    public Entity spawnEntityIntoClientWorld(EntityRegistration registration, EntitySpawnPacket entitySpawnPacket)
     {
-        return sidedDelegate.spawnEntityIntoClientWorld(cls, entitySpawnPacket);
+        return sidedDelegate.spawnEntityIntoClientWorld(registration, entitySpawnPacket);
     }
 
     public void adjustEntityLocationOnClient(EntitySpawnAdjustmentPacket entitySpawnAdjustmentPacket)
@@ -338,16 +346,7 @@ public class FMLCommonHandler
 
     public void onServerStart(DedicatedServer dedicatedServer)
     {
-        try
-        {
-            // Done this way so that the client doesn't depend on server side handler
-            Class<?> cls = Class.forName("cpw.mods.fml.server.FMLServerHandler", true, getClass().getClassLoader());
-        }
-        catch (ClassNotFoundException e)
-        {
-            FMLLog.log(Level.SEVERE, e, "Unable to load the FML server handler");
-            throw Throwables.propagate(e);
-        }
+        FMLServerHandler.instance();
         sidedDelegate.beginServerLoading(dedicatedServer);
     }
 
@@ -388,5 +387,18 @@ public class FMLCommonHandler
     {
         Side side = player instanceof EntityPlayerMP ? Side.SERVER : Side.CLIENT;
         tickEnd(EnumSet.of(TickType.PLAYER), side, player);
+    }
+
+    public void registerCrashCallable(ICrashCallable callable)
+    {
+        crashCallables.add(callable);
+    }
+
+    public void enhanceCrashReport(CrashReport crashReport)
+    {
+        for (ICrashCallable call: crashCallables)
+        {
+            crashReport.addCrashSectionCallable(call.getLabel(), call);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
 import java.util.Iterator;
@@ -17,6 +19,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 
+@SideOnly(Side.CLIENT)
 public class EntityRenderer
 {
     public static boolean anaglyphEnable = false;
@@ -405,18 +408,7 @@ public class EntityRenderer
 
             if (!this.mc.gameSettings.debugCamEnable)
             {
-                int var10 = this.mc.theWorld.getBlockId(MathHelper.floor_double(var2.posX), MathHelper.floor_double(var2.posY), MathHelper.floor_double(var2.posZ));
-                int x = MathHelper.floor_double(var2.posX);
-                int y = MathHelper.floor_double(var2.posY);
-                int z = MathHelper.floor_double(var2.posZ);
-                Block block = Block.blocksList[mc.theWorld.getBlockId(x, y, z)];
-                
-                if (block != null && block.isBed(mc.theWorld, x, y, z, var2))
-                {
-                    int var12 = block.getBedDirection(mc.theWorld, x, y, z);
-                    GL11.glRotatef((float)(var12 * 90), 0.0F, 1.0F, 0.0F);
-                }
-
+                ForgeHooksClient.orientBedCamera(mc, var2);
                 GL11.glRotatef(var2.prevRotationYaw + (var2.rotationYaw - var2.prevRotationYaw) * par1 + 180.0F, 0.0F, -1.0F, 0.0F);
                 GL11.glRotatef(var2.prevRotationPitch + (var2.rotationPitch - var2.prevRotationPitch) * par1, -1.0F, 0.0F, 0.0F);
             }
@@ -1049,7 +1041,7 @@ public class EntityRenderer
                     var17 = (EntityPlayer)var4;
                     GL11.glDisable(GL11.GL_ALPHA_TEST);
                     this.mc.mcProfiler.endStartSection("outline");
-                    if (!MinecraftForge.EVENT_BUS.post(new DrawBlockHighlightEvent(var5, var17, mc.objectMouseOver, 0, var17.inventory.getCurrentItem(), par1)))
+                    if (!ForgeHooksClient.onDrawBlockHighlight(var5, var17, mc.objectMouseOver, 0, var17.inventory.getCurrentItem(), par1))
                     {
                         var5.drawBlockBreaking(var17, this.mc.objectMouseOver, 0, var17.inventory.getCurrentItem(), par1);
                         var5.drawSelectionBox(var17, this.mc.objectMouseOver, 0, var17.inventory.getCurrentItem(), par1);
@@ -1117,7 +1109,7 @@ public class EntityRenderer
                 var17 = (EntityPlayer)var4;
                 GL11.glDisable(GL11.GL_ALPHA_TEST);
                 this.mc.mcProfiler.endStartSection("outline");
-                if (!MinecraftForge.EVENT_BUS.post(new DrawBlockHighlightEvent(var5, var17, mc.objectMouseOver, 0, var17.inventory.getCurrentItem(), par1)))
+                if (!ForgeHooksClient.onDrawBlockHighlight(var5, var17, mc.objectMouseOver, 0, var17.inventory.getCurrentItem(), par1))
                 {
                     var5.drawBlockBreaking(var17, this.mc.objectMouseOver, 0, var17.inventory.getCurrentItem(), par1);
                     var5.drawSelectionBox(var17, this.mc.objectMouseOver, 0, var17.inventory.getCurrentItem(), par1);
@@ -1146,8 +1138,8 @@ public class EntityRenderer
                 GL11.glPopMatrix();
             }
 
-            this.mc.mcProfiler.endStartSection("fhooks");
-            MinecraftForge.EVENT_BUS.post(new RenderWorldLastEvent(var5, par1));
+            this.mc.mcProfiler.endStartSection("FRenderLast");
+            ForgeHooksClient.dispatchRenderLast(var5, par1);
 
             this.mc.mcProfiler.endStartSection("hand");
 

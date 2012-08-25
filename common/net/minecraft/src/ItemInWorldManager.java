@@ -249,6 +249,11 @@ public class ItemInWorldManager
         }
         else
         {
+            ItemStack stack = thisPlayerMP.getCurrentEquippedItem();
+            if (stack != null && stack.getItem().onBlockStartBreak(stack, par1, par2, par3, thisPlayerMP))
+            {
+                return false;
+            }
             int var4 = this.theWorld.getBlockId(par1, par2, par3);
             int var5 = this.theWorld.getBlockMetadata(par1, par2, par3);
             this.theWorld.playAuxSFXAtEntity(this.thisPlayerMP, 2001, par1, par2, par3, var4 + (this.theWorld.getBlockMetadata(par1, par2, par3) << 12));
@@ -332,7 +337,7 @@ public class ItemInWorldManager
     {
         if (par3ItemStack != null &&
             par3ItemStack.getItem() != null &&
-            par3ItemStack.getItem().onItemUseFirst(par3ItemStack, par1EntityPlayer, par2World, par4, par5, par6, par7))
+            par3ItemStack.getItem().onItemUseFirst(par3ItemStack, par1EntityPlayer, par2World, par4, par5, par6, par7, par8, par9, par10))
         {
             return true;
         }

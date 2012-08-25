@@ -1,9 +1,12 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+@SideOnly(Side.CLIENT)
 class MusInputStream extends InputStream
 {
     private int hash;

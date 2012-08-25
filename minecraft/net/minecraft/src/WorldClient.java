@@ -1,11 +1,14 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
 
+@SideOnly(Side.CLIENT)
 public class WorldClient extends World
 {
     /** The packets that need to be sent to the server. */

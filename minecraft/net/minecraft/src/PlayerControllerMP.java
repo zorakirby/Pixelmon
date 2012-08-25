@@ -1,10 +1,13 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 
+@SideOnly(Side.CLIENT)
 public class PlayerControllerMP
 {
     /** The Minecraft instance. */
@@ -298,17 +301,17 @@ public class PlayerControllerMP
     public boolean onPlayerRightClick(EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack, int par4, int par5, int par6, int par7, Vec3 par8Vec3)
     {
         this.syncCurrentPlayItem();
-        if (par3ItemStack != null && 
-            par3ItemStack.getItem() != null && 
-            par3ItemStack.getItem().onItemUseFirst(par3ItemStack, par1EntityPlayer, par2World, par4, par5, par6, par7))
-        {
-                return true;
-        }
         float var9 = (float)par8Vec3.xCoord - (float)par4;
         float var10 = (float)par8Vec3.yCoord - (float)par5;
         float var11 = (float)par8Vec3.zCoord - (float)par6;
         boolean var12 = false;
         int var13 = par2World.getBlockId(par4, par5, par6);
+        if (par3ItemStack != null && 
+            par3ItemStack.getItem() != null && 
+            par3ItemStack.getItem().onItemUseFirst(par3ItemStack, par1EntityPlayer, par2World, par4, par5, par6, par7, var9, var10, var11))
+        {
+                return true;
+        }
 
         if (var13 > 0 && Block.blocksList[var13].onBlockActivated(par2World, par4, par5, par6, par1EntityPlayer, par7, var9, var10, var11))
         {

@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class GuiErrorScreen extends GuiScreen
 {
     /**
@@ -11,6 +15,10 @@ public class GuiErrorScreen extends GuiScreen
      * Unused class. Would contain a message drawn to the center of the screen.
      */
     private String message2;
+
+    public GuiErrorScreen()
+    {
+    }
 
     /**
      * Draws the screen and all the components in it.

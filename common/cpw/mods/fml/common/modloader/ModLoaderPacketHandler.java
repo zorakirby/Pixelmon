@@ -1,6 +1,5 @@
 package cpw.mods.fml.common.modloader;
 
-import net.minecraft.src.BaseMod;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.NetworkManager;
@@ -10,9 +9,9 @@ import cpw.mods.fml.common.network.Player;
 
 public class ModLoaderPacketHandler implements IPacketHandler
 {
-    private BaseMod mod;
+    private BaseModProxy mod;
 
-    public ModLoaderPacketHandler(BaseMod mod)
+    public ModLoaderPacketHandler(BaseModProxy mod)
     {
         this.mod = mod;
     }
@@ -22,11 +21,11 @@ public class ModLoaderPacketHandler implements IPacketHandler
     {
         if (player instanceof EntityPlayerMP)
         {
-            mod.onPacket250Received((EntityPlayer) player, packet);
+            mod.serverCustomPayload(((EntityPlayerMP)player).serverForThisPlayer, packet);
         }
         else
         {
-            mod.receiveCustomPacket(packet);
+            ModLoaderHelper.sidedHelper.sendClientPacket(mod, packet);
         }
     }
 

@@ -15,10 +15,10 @@ package cpw.mods.fml.common;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 import com.google.common.eventbus.EventBus;
 
-import cpw.mods.fml.common.LoaderState.ModState;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 
 /**
@@ -91,7 +91,7 @@ public interface ModContainer
      *
      * @return
      */
-    List<ArtifactVersion> getRequirements();
+    Set<ArtifactVersion> getRequirements();
 
     /**
      * A list of modids that should be loaded prior to this one. The special

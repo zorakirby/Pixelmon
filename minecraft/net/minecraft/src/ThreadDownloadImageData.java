@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.image.BufferedImage;
 
+@SideOnly(Side.CLIENT)
 public class ThreadDownloadImageData
 {
     /** The image data. */

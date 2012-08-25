@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.common.registry.VillagerRegistry;
+
 public class StructureVillagePieces
 {
     public static ArrayList getStructureVillageWeightedPieceList(Random par0Random, int par1)
@@ -19,6 +21,8 @@ public class StructureVillagePieces
         var2.add(new StructureVillagePieceWeight(ComponentVillageField2.class, 3, MathHelper.getRandomIntegerInRange(par0Random, 2 + par1, 4 + par1 * 2)));
         var2.add(new StructureVillagePieceWeight(ComponentVillageHouse2.class, 15, MathHelper.getRandomIntegerInRange(par0Random, 0, 1 + par1)));
         var2.add(new StructureVillagePieceWeight(ComponentVillageHouse3.class, 8, MathHelper.getRandomIntegerInRange(par0Random, 0 + par1, 3 + par1 * 2)));
+        VillagerRegistry.addExtraVillageComponents(var2, par0Random, par1);
+
         Iterator var3 = var2.iterator();
 
         while (var3.hasNext())
@@ -91,6 +95,10 @@ public class StructureVillagePieces
         else if (var9 == ComponentVillageHouse3.class)
         {
             var10 = ComponentVillageHouse3.func_74921_a(par0ComponentVillageStartPiece, par2List, par3Random, par4, par5, par6, par7, par8);
+        }
+        else
+        {
+            var10 = VillagerRegistry.getVillageComponent(par1StructureVillagePieceWeight, par0ComponentVillageStartPiece , par2List, par3Random, par4, par5, par6, par7, par8);
         }
 
         return (ComponentVillage)var10;

@@ -1,9 +1,11 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.client.FMLTextureFX;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.Random;
 
-import cpw.mods.fml.client.FMLTextureFX;
-
+@SideOnly(Side.CLIENT)
 public class TexturePortalFX extends FMLTextureFX
 {
     /** Portal tick counter */
@@ -15,8 +17,8 @@ public class TexturePortalFX extends FMLTextureFX
     public TexturePortalFX()
     {
         super(Block.portal.blockIndexInTexture);
-		setup();
-	}
+        setup();
+    }
 
     @Override
     public void setup()

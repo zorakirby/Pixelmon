@@ -1,11 +1,14 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.applet.Applet;
 import java.applet.AppletStub;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+@SideOnly(Side.CLIENT)
 public class MinecraftFakeLauncher extends Applet implements AppletStub
 {
     final Map field_74534_a;

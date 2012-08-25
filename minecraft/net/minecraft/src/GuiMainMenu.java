@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import com.google.common.collect.Lists;
 import cpw.mods.fml.client.GuiModList;
 import cpw.mods.fml.common.FMLCommonHandler;
 
+@SideOnly(Side.CLIENT)
 public class GuiMainMenu extends GuiScreen
 {
     /** The RNG used by the Main Menu Screen. */

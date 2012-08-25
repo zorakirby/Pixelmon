@@ -1097,8 +1097,9 @@ public class NetServerHandler extends NetHandler
         }
     }
 
+    // modloader compat -- yuk!
     @Override
-    public EntityPlayer getPlayer()
+    public EntityPlayerMP getPlayer()
     {
         return playerEntity;
     }
