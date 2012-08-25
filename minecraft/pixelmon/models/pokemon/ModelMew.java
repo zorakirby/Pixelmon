@@ -1,6 +1,7 @@
 package pixelmon.models.pokemon;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -329,6 +330,25 @@ public class ModelMew extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    HEADBASE.rotateAngleY = f3 / (180F / (float)Math.PI);
+    HEADBASE.rotateAngleX = f4 / (180F / (float)Math.PI);
+    MEW.rotationPointY = MathHelper.cos(f2* .2F) * 1.5F;
+    RIGHTLEG.rotateAngleX = MathHelper.cos(f2* .2F + (float)Math.PI) * .2F + .1F;
+    LEFTLEG.rotateAngleX = MathHelper.cos(f2* .2F + (float)Math.PI + .5F) * .2F + .1F;
+    TAILBASE.rotateAngleX = MathHelper.cos(f2* .2F) * .2F;
+    TAILBASE.rotateAngleY = MathHelper.cos(f2 * .1F) * 1F;
+    TAILSEG1.rotateAngleY = MathHelper.cos(f2 * .1F + 4F);
+    TAILSEG2.rotateAngleY = MathHelper.cos(f2 * .1F + 5F);
+    TAILSEG3.rotateAngleZ = MathHelper.cos(f2 * .1F + 3.6F) * .5F;
+    TAILSEG4.rotateAngleY = MathHelper.cos(f2 * .1F + 8.7F);
+    TAILSEG4.rotateAngleZ = MathHelper.cos(f2 * .1F + 8.7F) * .5F;
+    TAILSEG5.rotateAngleZ = MathHelper.cos(f2 * .1F + 10.7F) * .5F;
+    TAILSEG5.rotateAngleY = MathHelper.cos(f2 * .1F + 9.5F) * .5F;
+    TAILTIP.rotateAngleY = MathHelper.cos(f2* .1F + 4.2F) * 1.2F;
+    TAILTIP.rotateAngleZ = MathHelper.cos(f2 * .1F + 12.6F) * .5F;
+    TAILTIP.rotateAngleX = MathHelper.cos(f2 * .2F + 12.6F) * .6F;
+
+    
   }
 
 }

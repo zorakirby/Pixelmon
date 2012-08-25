@@ -272,9 +272,9 @@ public class ModelButterfree extends ModelBase
     HEADBASE.rotateAngleY = f3 / 57.29578F;
     BUTTERFREE.rotationPointY = MathHelper.cos(.5F*f2)*3F;
     LEFTANTENNA.rotateAngleX = MathHelper.cos(.5F * f2 + 3.14159F)*.2F + .2F;
-    RIGHTANTENNA.rotateAngleX = MathHelper.cos(.5F * f2 + 3.14159F)*.2F + .2F;
+    RIGHTANTENNA.rotateAngleX = MathHelper.cos(.5F * f2 + 3.14159F + .3F)*.2F + .2F;
     FootL.rotateAngleX = MathHelper.cos(.5F * f2 + 3.14159F)*.2F - .2F;
-    FootR.rotateAngleX = MathHelper.cos(.5F * f2 + 3.5F)*.2F - .2F;
+    FootR.rotateAngleX = MathHelper.cos(.5F * f2 + 3.5F + .3F)*.2F - .2F;
   }
 
 }
