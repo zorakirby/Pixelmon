@@ -2,7 +2,6 @@ package pixelmon.entities.pokeballs;
 
 import java.util.Random;
 
-
 import pixelmon.Pixelmon;
 import pixelmon.RandomHelper;
 import pixelmon.comm.ChatHandler;
@@ -80,17 +79,20 @@ public class EntityPokeBall extends EntityThrowable {
 		if (!isEmpty) {
 			if (movingobjectposition != null && !worldObj.isRemote) {
 				if (pixelmon != null) {
-					if(movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
-					{
-						Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
-						if(mat != null && mat.isSolid())
-						{
-							pixelmon.setLocationAndAngles(prevPosX, prevPosY, prevPosZ, rotationYaw, 0.0F);
-						}
-						else return;
-					}
-					else
-					{
+					if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
+						if (movingobjectposition.sideHit == 0)// Bottom
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY - 1, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+						if (movingobjectposition.sideHit == 1)// Top
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY + 1, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+						if (movingobjectposition.sideHit == 2)// East
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5 - 1, rotationYaw, 0.0F);
+						if (movingobjectposition.sideHit == 3)// West
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5 + 1, rotationYaw, 0.0F);
+						if (movingobjectposition.sideHit == 4)// North
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 - 1, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+						if (movingobjectposition.sideHit == 5)// South
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 + 1, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+					} else {
 						pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
 					}
 					pixelmon.setMotion(0, 0, 0);
@@ -114,8 +116,7 @@ public class EntityPokeBall extends EntityThrowable {
 				if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
 					IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
 					p = entitypixelmon.getHelper();
-					if(p.hitByPokeball)
-					{
+					if (p.hitByPokeball) {
 						motionX = motionZ = 0;
 						motionY = -0.1;
 						return;
@@ -130,12 +131,10 @@ public class EntityPokeBall extends EntityThrowable {
 					isWaiting = true;
 					motionX = motionZ = 0;
 					motionY = -0.1;
-				}
-				else {
+				} else {
 					Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
 					if (!isWaiting && mat != null && mat.isSolid()) {
-						if(dropItem)
-						{
+						if (dropItem) {
 							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
 						}
 						setDead();
@@ -288,19 +287,22 @@ public class EntityPokeBall extends EntityThrowable {
 	}
 
 	private void spawnCaptureParticles() {
-//		for (int i = RandomHelper.getRandomNumberBetween(5, 7); i > 0; i--) {
-//			EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this, "crit");
-//			Minecraft.getMinecraft().effectRenderer.addEffect(entitycrit2fx);
-//		}
+		// for (int i = RandomHelper.getRandomNumberBetween(5, 7); i > 0; i--) {
+		// EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this,
+		// "crit");
+		// Minecraft.getMinecraft().effectRenderer.addEffect(entitycrit2fx);
+		// }
 	}
 
 	private void spawnFailParticles() {
 
-//		for (int i = 0; i < 30; i++) {
-//			EntityReddustFX entityred = new EntityReddustFX(worldObj, posX, posY, posZ, 1, 0, 0);
-//			entityred.setVelocity(worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5);
-//			Minecraft.getMinecraft().effectRenderer.addEffect(entityred);
-//		}
+		// for (int i = 0; i < 30; i++) {
+		// EntityReddustFX entityred = new EntityReddustFX(worldObj, posX, posY,
+		// posZ, 1, 0, 0);
+		// entityred.setVelocity(worldObj.rand.nextFloat() / 5,
+		// worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5);
+		// Minecraft.getMinecraft().effectRenderer.addEffect(entityred);
+		// }
 	}
 
 	private int b;

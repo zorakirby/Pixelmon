@@ -245,9 +245,11 @@ public class PlayerStorage {
 	public boolean isFainted(int pokemonId) {
 		for (NBTTagCompound nbt : partyPokemon)
 			if (nbt != null) {
-				if (nbt.getInteger("pixelmonID") == pokemonId)
+				if (nbt.getInteger("pixelmonID") == pokemonId){
 					if (nbt.getBoolean("IsFainted"))
 						return true;
+					if (nbt.getShort("Health")<=0) return true;
+				}
 			}
 		return false;
 	}
