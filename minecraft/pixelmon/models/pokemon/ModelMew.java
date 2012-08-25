@@ -343,9 +343,10 @@ public class ModelMew extends ModelBase
     TAILSEG4.rotateAngleY = MathHelper.cos(f2 * .1F + 8.7F);
     TAILSEG4.rotateAngleZ = MathHelper.cos(f2 * .1F + 8.7F) * .5F;
     TAILSEG5.rotateAngleZ = MathHelper.cos(f2 * .1F + 10.7F) * .5F;
-    TAILTIP.rotateAngleY = MathHelper.cos(f2* .1F + 15.8F) * 1.2F;
-    TAILTIP.rotateAngleZ = MathHelper.cos(f2 * .1F + 12.7F) * .5F;
-    TAILTIP.rotateAngleX = MathHelper.cos(f2 * .2F + 12.7F) * .6F;
+    TAILSEG5.rotateAngleY = MathHelper.cos(f2 * .1F + 9.5F) * .5F;
+    TAILTIP.rotateAngleY = MathHelper.cos(f2* .1F + 4.2F) * 1.2F;
+    TAILTIP.rotateAngleZ = MathHelper.cos(f2 * .1F + 12.6F) * .5F;
+    TAILTIP.rotateAngleX = MathHelper.cos(f2 * .2F + 12.6F) * .6F;
 
     
   }
