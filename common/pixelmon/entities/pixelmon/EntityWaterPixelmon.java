@@ -420,8 +420,10 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 				setAttackTarget((EntityLiving) entity);
 				setTarget(entity);
 			}
+			helper.lvl.updateEntityString();
 			return flag;
 		}
+		
 		return false;
 	}
 

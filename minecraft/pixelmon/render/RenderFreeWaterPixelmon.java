@@ -137,8 +137,8 @@ public class RenderFreeWaterPixelmon extends RenderLiving {
 			byte byte0 = -25;
 			GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 			tessellator.startDrawingQuads();
-			float f5 = ((IHaveHelper) entityLiving).getHelper().getHealth();
-			float f6 = ((IHaveHelper) entityLiving).getHelper().getMaxHealth();
+			float f5 = lvlInstance.health;
+			float f6 = lvlInstance.maxHealth;
 			float f8 = 50F * (f5 / f6);
 			tessellator.setColorRGBA_F(1.0F, 0.0F, 0.0F, 1.0F);
 			tessellator.addVertex(-25F + f8, -7 + byte0, 0.0D);

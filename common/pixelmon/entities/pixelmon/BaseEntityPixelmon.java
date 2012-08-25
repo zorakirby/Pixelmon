@@ -194,6 +194,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 				setAttackTarget((EntityLiving) entity);
 				setTarget(entity);
 			}
+			helper.lvl.updateEntityString();
 			return flag;
 		}
 		return false;
