@@ -54,8 +54,8 @@ public class PCClick extends PacketHandlerBase {
 			int pos = data.readInt();
 			int id = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getIDFromPosition(pos);
 			NBTTagCompound n = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getNBT(id);
-			NBTTagCompound n1 =null;
-			if (mousePokemon.get(player)!=null)
+			NBTTagCompound n1 = null;
+			if (mousePokemon.get(player) != null)
 				n1 = mousePokemon.get(player).nbt;
 			mousePokemon.put(player, new MapEntry(n, box, pos));
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).changePokemon(pos, n1);
@@ -72,10 +72,10 @@ public class PCClick extends PacketHandlerBase {
 		} else if (box >= 0 && box <= 8) {
 			int useless = data.readInt();
 			int boxPos = data.readInt();
-			NBTTagCompound n1 =null;
+			NBTTagCompound n1 = null;
 			if (mousePokemon.get(player) != null) {
 				n1 = mousePokemon.get(player).nbt;
-				if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj)) {
+				if (n1 != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj)) {
 					IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj);
 					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).retrieve(pixelmon);
 					pixelmon.catchInPokeball();
