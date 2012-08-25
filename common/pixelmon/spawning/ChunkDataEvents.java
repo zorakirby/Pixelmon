@@ -2,6 +2,7 @@ package pixelmon.spawning;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import pixelmon.RandomHelper;
 
@@ -10,7 +11,7 @@ import net.minecraftforge.event.world.ChunkDataEvent;
 
 public class ChunkDataEvents {
 	private static ArrayList<NumPos> numPosList = new ArrayList<NumPos>();
-	
+
 	private class NumPos {
 		public int x;
 		public int z;
@@ -22,8 +23,8 @@ public class ChunkDataEvents {
 			this.num = num;
 		}
 	}
-	
-	public static int getNumFromPos(int x, int z){
+
+	public static int getNumFromPos(int x, int z) {
 		for (int i = 0; i < numPosList.size(); i++) {
 			if (numPosList.get(i).x == x && numPosList.get(i).z == z) {
 				return numPosList.get(i).num;
@@ -31,13 +32,15 @@ public class ChunkDataEvents {
 		}
 		return 0;
 	}
-	
+
 	@ForgeSubscribe
 	public void spawnOnChunkLoad(ChunkDataEvent.Load event) {
 		int numPixelmon;
 		int[] chunkPos = new int[] { event.getChunk().xPosition, event.getChunk().zPosition };
 		if (!event.getData().hasKey("NumberOfPixelmon")) {
 			numPixelmon = generateChunkPixelmonNumber();
+			if (numPixelmon < 0)
+				numPixelmon = 0;
 		} else {
 			numPixelmon = event.getData().getInteger("NumberOfPixelmon");
 		}
@@ -55,7 +58,10 @@ public class ChunkDataEvents {
 		}
 	}
 
+	private Random rand = new Random();
+	
 	private int generateChunkPixelmonNumber() {
-		return RandomHelper.getRandomNumberBetween(0, 1);
+		int r = rand.nextInt(5)-1;
+		return r;
 	}
 }

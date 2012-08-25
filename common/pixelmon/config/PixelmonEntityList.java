@@ -255,44 +255,30 @@ public class PixelmonEntityList {
 			String name = (String) entry.getValue();
 			ClassType type = getClassTypeFromID((Integer) entry.getKey());
 			int rarity = DatabaseStats.GetRarity(name);
-			if (rarity > 0)
-				SpawnRegistry.addSpawn(entry, name, rarity, type);
-
-			// BiomeGenBase[] biomes;
-			// if (type == ClassType.Pixelmon || type ==
-			// ClassType.WaterPixelmon) {
-			// biomes = DatabaseStats.GetSpawnBiomes(name);
-			// int groupMin = DatabaseStats.GetMinGroupSize(name);
-			// int groupMax = DatabaseStats.GetMaxGroupSize(name);
-			// EnumCreatureType creaturetype =
-			// DatabaseStats.GetCreatureType(name);
-			// if (rarity != -1) {
-			// try {
-			// EntityRegistry.addSpawn((Class)
-			// Class.forName("pixelmon.entities.pokemon.Entity" +
-			// entry.getValue()), rarity, groupMin, groupMax, creaturetype,
-			// biomes);
-			// } catch (ClassNotFoundException e) {
-			// e.printStackTrace();
-			// }
-			// }
-			// // if (new File("resources/newsound/pixelmon/" +
-			// name.toLowerCase() + ".ogg").exists())
-			// //
-			// ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/"
-			// + name.toLowerCase() + ".ogg", new
-			// File("resources/newsound/pixelmon/" + name.toLowerCase() +
-			// ".ogg"));
-			// } else if (type == ClassType.Trainer) {
-			// biomes = DatabaseTrainers.GetSpawnBiomes(name);
-			// try {
-			// EntityRegistry.addSpawn((Class)
-			// Class.forName("pixelmon.entities.trainers.EntityTrainer" +
-			// entry.getValue()), 10, 1, 1, EnumCreatureType.creature, biomes);
-			// } catch (ClassNotFoundException e) {
-			// e.printStackTrace();
-			// }
-			// }
+			if (type == ClassType.Pixelmon || type == ClassType.Trainer) {
+				if (rarity > 0)
+					SpawnRegistry.addSpawn(entry, name, rarity, type);
+			} else {
+				BiomeGenBase[] biomes;
+				biomes = DatabaseStats.GetSpawnBiomes(name);
+				int groupMin = DatabaseStats.GetMinGroupSize(name);
+				int groupMax = DatabaseStats.GetMaxGroupSize(name);
+				EnumCreatureType creaturetype = DatabaseStats.GetCreatureType(name);
+				if (rarity != -1) {
+					try {
+						EntityRegistry.addSpawn((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), rarity, groupMin, groupMax, creaturetype, biomes);
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+				}
+				// if (new File("resources/newsound/pixelmon/" +
+				// name.toLowerCase() + ".ogg").exists())
+				//
+				// ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/"
+				// + name.toLowerCase() + ".ogg", new
+				// File("resources/newsound/pixelmon/" + name.toLowerCase() +
+				// ".ogg"));
+			}
 		}
 	}
 
