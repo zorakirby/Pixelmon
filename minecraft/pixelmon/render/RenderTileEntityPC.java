@@ -2,7 +2,8 @@ package pixelmon.render;
 
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.src.ModLoader;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
 import pixelmon.blocks.TileEntityPC;
@@ -38,7 +39,7 @@ public class RenderTileEntityPC extends TileEntitySpecialRenderer {
 
 		if (i <0)
 			return;
-		if (ModLoader.getMinecraftInstance().theWorld.getBlockId(tile.xCoord, tile.yCoord-1, tile.zCoord) == PixelmonBlocks.pc.blockID) return;
+		if (Minecraft.getMinecraft().theWorld.getBlockId(tile.xCoord, tile.yCoord-1, tile.zCoord) == PixelmonBlocks.pc.blockID) return;
 
 		bindTextureByName("/pixelmon/texture/blocks/pc.png"); // texture
 		GL11.glPushMatrix(); // start

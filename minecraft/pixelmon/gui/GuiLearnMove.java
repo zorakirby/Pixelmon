@@ -1,5 +1,6 @@
 package pixelmon.gui;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
@@ -43,7 +44,7 @@ public class GuiLearnMove extends GuiScreen {
 		}
 		
 		PixelmonDataPacket p = ServerStorageDisplay.get(pokemonId);
-		ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonId, moveToLearn.attackIndex, index));
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonId, moveToLearn.attackIndex, index));
 	}
 
 	public void actionPerformed(GuiButton b) {

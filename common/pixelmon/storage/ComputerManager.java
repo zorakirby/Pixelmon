@@ -20,7 +20,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Chunk;
 import net.minecraft.src.CompressedStreamTools;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.SaveHandler;
 import net.minecraft.src.World;

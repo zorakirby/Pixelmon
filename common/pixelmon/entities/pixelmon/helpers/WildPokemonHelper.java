@@ -1,7 +1,7 @@
 package pixelmon.entities.pixelmon.helpers;
 
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.World;
 
 public class WildPokemonHelper {

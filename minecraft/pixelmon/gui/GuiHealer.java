@@ -1,5 +1,6 @@
 package pixelmon.gui;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import pixelmon.Pixelmon;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.battles.attacks.Attack;
@@ -10,7 +11,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumType;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StatCollector;
@@ -58,7 +59,7 @@ public class GuiHealer extends GuiScreen {
 					for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
 						if (p != null) {
 							if (j == i) {
-								ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.HealPokemon, p.pokemonID));
+								PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.HealPokemon, p.pokemonID));
 								p.health = p.hp;
 							}
 							j++;

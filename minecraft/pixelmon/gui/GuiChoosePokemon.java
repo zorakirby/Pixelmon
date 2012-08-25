@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 
 import org.lwjgl.input.Keyboard;
+
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.ServerStorageDisplay;
 import pixelmon.battles.BattleController;
@@ -62,7 +64,7 @@ public class GuiChoosePokemon extends GuiScreen {
 
 	protected void actionPerformed(GuiButton par1GuiButton) {
 		if (par1GuiButton.id < 6) {
-			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.SwitchPokemon, par1GuiButton.id, bcIndex, 0));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwitchPokemon, par1GuiButton.id, bcIndex, 0));
 			mc.displayGuiScreen(parentGui);
 			mc.setIngameFocus();
 		} else

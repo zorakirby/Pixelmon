@@ -8,8 +8,9 @@ import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.EntityQuestionMarks;
 import pixelmon.enums.EnumPixelmonRarity;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.World;
 
 public class PokedexEntry
@@ -50,7 +51,7 @@ public class PokedexEntry
 		if(pixelmon != null) return pixelmon;
 		try {
 			pixelmon = (EntityLiving) entity.getConstructor(new Class[] { World.class })
-					.newInstance(new Object[] { flag?ModLoader.getMinecraftInstance().theWorld:null });
+					.newInstance(new Object[] { flag?Minecraft.getMinecraft().theWorld:null });
 			return pixelmon;
 		} catch (Exception e) {
 			e.printStackTrace();

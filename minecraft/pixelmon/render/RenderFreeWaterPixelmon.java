@@ -3,7 +3,7 @@ package pixelmon.render;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.RenderLiving;

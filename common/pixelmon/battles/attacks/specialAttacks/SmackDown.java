@@ -9,8 +9,6 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
-import net.minecraft.src.ModLoader;
-
 public class SmackDown extends SpecialAttackBase {
 
 	public SmackDown() {

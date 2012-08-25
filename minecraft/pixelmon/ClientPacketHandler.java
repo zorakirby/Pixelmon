@@ -12,7 +12,7 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;

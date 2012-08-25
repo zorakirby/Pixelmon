@@ -15,7 +15,7 @@ import pixelmon.items.ItemBlock;
 import net.minecraft.src.Block;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.ModLoader;
+
 import net.minecraftforge.common.Configuration;
 
 public class PixelmonBlocks {

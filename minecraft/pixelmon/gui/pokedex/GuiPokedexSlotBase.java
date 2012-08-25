@@ -3,7 +3,7 @@ package pixelmon.gui.pokedex;
 import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.Tessellator;
@@ -192,8 +192,8 @@ public abstract class GuiPokedexSlotBase
      */
     public void drawScreen(int mousePosX, int mousePosY, float par3)
     {
-    	ScaledResolution var5 = new ScaledResolution(ModLoader.getMinecraftInstance().gameSettings, ModLoader.getMinecraftInstance().displayWidth,
-				ModLoader.getMinecraftInstance().displayHeight);
+    	ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
+				Minecraft.getMinecraft().displayHeight);
         this.mouseX = mousePosX;
         this.mouseY = mousePosY;
         //this.drawBackground();
@@ -214,7 +214,7 @@ public abstract class GuiPokedexSlotBase
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glEnable(GL11.GL_LIGHTING);
 
-		ModLoader.getMinecraftInstance().entityRenderer.setupOverlayRendering();
+		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
 		RenderHelper.enableGUIStandardItemLighting();
         
         if (Mouse.isButtonDown(0))

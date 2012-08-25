@@ -1,7 +1,7 @@
 package pixelmon.comm;
 
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ModLoader;
+
 
 public class ChatHandler {
 

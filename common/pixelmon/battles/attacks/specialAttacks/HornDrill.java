@@ -9,7 +9,6 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.ModLoader;
 
 public class HornDrill extends SpecialAttackBase {
 

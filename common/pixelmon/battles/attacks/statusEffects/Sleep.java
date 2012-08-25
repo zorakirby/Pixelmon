@@ -8,7 +8,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumType;
 
-import net.minecraft.src.ModLoader;
+
 
 public class Sleep extends StatusEffectBase {
 

@@ -2,7 +2,7 @@ package pixelmon.items;
 
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.ModLoader;
+
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;

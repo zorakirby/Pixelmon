@@ -7,7 +7,7 @@ import pixelmon.battles.attacks.specialAttacks.SpecialAttackType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
-import net.minecraft.src.ModLoader;
+
 
 public class WaitAfter extends StatusEffectBase {
 

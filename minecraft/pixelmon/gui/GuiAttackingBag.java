@@ -3,14 +3,17 @@ package pixelmon.gui;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.ModLoader;
+
 
 import org.lwjgl.input.Keyboard;
+
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -36,7 +39,7 @@ public class GuiAttackingBag extends GuiScreen {
 	}
 
 	public void loadInventory() {
-		InventoryPlayer ip = ModLoader.getMinecraftInstance().thePlayer.inventory;
+		InventoryPlayer ip = Minecraft.getMinecraft().thePlayer.inventory;
 		for (ItemStack i : ip.mainInventory) {
 			if (i == null) {
 				continue;
@@ -85,7 +88,7 @@ public class GuiAttackingBag extends GuiScreen {
 				return;
 			}
 			Item item = selected.getItem().getItem();
-			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.battleControllerIndex,0));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.battleControllerIndex,0));
 			mc.displayGuiScreen(parent);
 		}
 	}

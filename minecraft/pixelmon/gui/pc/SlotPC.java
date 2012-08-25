@@ -4,7 +4,8 @@ import java.awt.Rectangle;
 
 import pixelmon.comm.PixelmonDataPacket;
 
-import net.minecraft.src.ModLoader;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.NBTTagCompound;
 
 public class SlotPC {
@@ -28,7 +29,7 @@ public class SlotPC {
 			pokeNum = "0" + pokemonData.nationalPokedexNumber;
 		else
 			pokeNum = "" + pokemonData.nationalPokedexNumber;
-		return ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/sprites/" + pokeNum);
+		return Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + pokeNum);
 	}
 
 	public void clearPokemon() {

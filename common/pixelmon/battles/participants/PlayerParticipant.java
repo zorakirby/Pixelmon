@@ -3,7 +3,7 @@ package pixelmon.battles.participants;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import pixelmon.Pixelmon;
 import pixelmon.battles.BattleController;

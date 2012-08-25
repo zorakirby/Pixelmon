@@ -290,7 +290,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private void spawnCaptureParticles() {
 //		for (int i = RandomHelper.getRandomNumberBetween(5, 7); i > 0; i--) {
 //			EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this, "crit");
-//			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
+//			Minecraft.getMinecraft().effectRenderer.addEffect(entitycrit2fx);
 //		}
 	}
 
@@ -299,7 +299,7 @@ public class EntityPokeBall extends EntityThrowable {
 //		for (int i = 0; i < 30; i++) {
 //			EntityReddustFX entityred = new EntityReddustFX(worldObj, posX, posY, posZ, 1, 0, 0);
 //			entityred.setVelocity(worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5, worldObj.rand.nextFloat() / 5);
-//			ModLoader.getMinecraftInstance().effectRenderer.addEffect(entityred);
+//			Minecraft.getMinecraft().effectRenderer.addEffect(entityred);
 //		}
 	}
 

@@ -2,12 +2,15 @@ package pixelmon.gui;
 
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
 public class GuiRenamePokemon extends GuiScreen {
@@ -36,7 +39,7 @@ public class GuiRenamePokemon extends GuiScreen {
 		controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, stringtranslate.translateKey("gui.cancel")));
 		theGuiTextField = new GuiTextField(fontRenderer, width / 2 - 100, 60, 200, 20);
 		theGuiTextField.setFocused(true);
-		if (ModLoader.getMinecraftInstance().theWorld.isRemote)
+		if (Minecraft.getMinecraft().theWorld.isRemote)
 			theGuiTextField.setText(targetPacket.nickname);
 		else
 			theGuiTextField.setText(target.getName());
@@ -59,7 +62,7 @@ public class GuiRenamePokemon extends GuiScreen {
 		case 1:
 			mc.displayGuiScreen(parentGuiScreen);
 		case 0:
-				ModLoader.sendPacket(PacketCreator.createStringPacket(EnumPackets.RenamePokemon, targetPacket.pokemonID, theGuiTextField.getText()));
+				PacketDispatcher.sendPacketToServer(PacketCreator.createStringPacket(EnumPackets.RenamePokemon, targetPacket.pokemonID, theGuiTextField.getText()));
 				targetPacket.nickname = theGuiTextField.getText();
 			parentGuiScreen.initGui();
 			mc.displayGuiScreen(parentGuiScreen);

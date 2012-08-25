@@ -6,8 +6,6 @@ import pixelmon.battles.attacks.EffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
-import net.minecraft.src.ModLoader;
-
 public class StatsEffect extends EffectBase{
 	
 	private StatsEffectType type;

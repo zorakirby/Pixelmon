@@ -13,7 +13,7 @@ import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
