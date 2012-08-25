@@ -4,7 +4,7 @@ import pixelmon.battles.animations.particles.EntityGastlyParticle;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.World;
 
 public class EntityGastly extends EntityGroundPixelmon {

@@ -6,7 +6,7 @@ import java.io.IOException;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.ModLoader;
+
 
 import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;

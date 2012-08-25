@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 import pixelmon.config.PixelmonConfig;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
 public class GuiPokedexOptions extends GuiScreen {
@@ -14,7 +15,7 @@ public class GuiPokedexOptions extends GuiScreen {
 	private ArrayList<GuiButton> buttonList = new ArrayList<GuiButton>();
 
 	public GuiPokedexOptions(GuiScreen gui) {
-		mc = ModLoader.getMinecraftInstance();
+		mc = Minecraft.getMinecraft();
 		parentScreen = gui;
 		for (EnumPokedexButtons e : EnumPokedexButtons.allButtons)
 			buttonList.add(new GuiButton(e.index, 100, 100, 75, 20, e.getState()));

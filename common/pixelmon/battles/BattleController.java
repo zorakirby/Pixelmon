@@ -25,7 +25,7 @@ import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 
 public class BattleController {

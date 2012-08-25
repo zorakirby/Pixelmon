@@ -11,7 +11,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 import net.minecraft.src.CompressedStreamTools;
 import net.minecraft.src.Entity;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 
 public class ComputerBox {

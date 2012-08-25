@@ -39,7 +39,7 @@ import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityWaterMob;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 

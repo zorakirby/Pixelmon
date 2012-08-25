@@ -6,7 +6,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
-import net.minecraft.src.ModLoader;
+
 
 public class LightScreen extends StatusEffectBase {
 	private int effectTurns = -1;

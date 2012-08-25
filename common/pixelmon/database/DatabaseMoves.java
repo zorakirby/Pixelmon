@@ -1,6 +1,6 @@
 package pixelmon.database;
 
-import net.minecraft.src.ModLoader;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;

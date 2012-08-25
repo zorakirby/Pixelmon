@@ -4,7 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.ModLoader;
+
 
 public class PixelmonRecipes {
 
@@ -31,9 +31,5 @@ public class PixelmonRecipes {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.thunderStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), PixelmonItems.thunderStoneShard });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.leafStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), PixelmonItems.leafStoneShard });
 		GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.pcItem, 1), new Object[] { Block.dirt });
-		// ModLoader.addShapelessRecipe(new ItemStack(pokeBall, 1), new Object[]
-		// { Block.dirt, Block.dirt });
-		// ModLoader.addShapelessRecipe(new ItemStack(rareCandy, 1), new
-		// Object[] { Block.sand });
 	}
 }

@@ -17,7 +17,7 @@ import pixelmon.storage.PlayerComputerStorage;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NetworkManager;
 

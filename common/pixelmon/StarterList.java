@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.World;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.database.DatabaseMoves;

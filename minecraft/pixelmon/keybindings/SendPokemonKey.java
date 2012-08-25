@@ -11,9 +11,10 @@ import pixelmon.gui.GuiPixelmonOverlay;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.KeyBinding;
-import net.minecraft.src.ModLoader;
+
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class SendPokemonKey extends KeyHandler {
 
@@ -33,7 +34,7 @@ public class SendPokemonKey extends KeyHandler {
 		{
 			return;
 		}
-		ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
 	}
 
 	@Override

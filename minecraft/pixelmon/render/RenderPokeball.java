@@ -3,7 +3,7 @@ package pixelmon.render;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPotion;
 import net.minecraft.src.Item;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.PotionHelper;
 import net.minecraft.src.Render;
 import net.minecraft.src.RenderEngine;

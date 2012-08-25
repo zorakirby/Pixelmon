@@ -41,7 +41,7 @@ import net.minecraft.src.EntityTameable;
 import net.minecraft.src.EnumSkyBlock;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
@@ -254,7 +254,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	// public void renderLevelUpEffects() {
 	// EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this,
 	// "magicCrit");
-	// ModLoader.getMinecraftInstance().effectRenderer.addEffect(entitycrit2fx);
+	// Minecraft.getMinecraft().effectRenderer.addEffect(entitycrit2fx);
 	// }
 
 	public boolean LearnsAttackAtLevel(int level) {

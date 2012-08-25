@@ -273,7 +273,7 @@ public class PixelmonEntityList {
 				// if (new File("resources/newsound/pixelmon/" +
 				// name.toLowerCase() + ".ogg").exists())
 				//
-				// ModLoader.getMinecraftInstance().installResource("newsound/pixelmon/"
+				// Minecraft.getMinecraft().installResource("newsound/pixelmon/"
 				// + name.toLowerCase() + ".ogg", new
 				// File("resources/newsound/pixelmon/" + name.toLowerCase() +
 				// ".ogg"));

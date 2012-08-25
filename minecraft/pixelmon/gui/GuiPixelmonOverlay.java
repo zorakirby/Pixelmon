@@ -17,7 +17,7 @@ import net.minecraft.src.Gui;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.RenderGlobal;
 import net.minecraft.src.RenderHelper;
@@ -33,12 +33,12 @@ public class GuiPixelmonOverlay extends Gui {
 	public static int selectedPixelmon;
 
 	public GuiPixelmonOverlay() {
-		fontRenderer = ModLoader.getMinecraftInstance().fontRenderer;
+		fontRenderer = Minecraft.getMinecraft().fontRenderer;
 	}
 
 	@ForgeSubscribe
 	public void onRenderWorldLast(RenderWorldLastEvent event){
-		ScaledResolution var5 = new ScaledResolution(ModLoader.getMinecraftInstance().gameSettings, ModLoader.getMinecraftInstance().displayWidth, ModLoader.getMinecraftInstance().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -49,11 +49,11 @@ public class GuiPixelmonOverlay extends Gui {
 		GL11.glEnable(GL11.GL_LIGHTING);
 		int var4;
 		if (isGuiMinimized)
-			var4 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlaySimple.png");
+			var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlaySimple.png");
 		else
-			var4 = ModLoader.getMinecraftInstance().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
-		ModLoader.getMinecraftInstance().renderEngine.bindTexture(var4);
-		ModLoader.getMinecraftInstance().entityRenderer.setupOverlayRendering();
+			var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
+		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
 		if (isGuiMinimized)
 			this.drawTexturedModalRect(0, var7 / 6, 0, 0, 60, 182);
 		else
@@ -69,7 +69,7 @@ public class GuiPixelmonOverlay extends Gui {
 				i = p.order;
 				if (!isGuiMinimized) {
 					fontRenderer.drawString(p.nickname, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
-					ModLoader.getMinecraftInstance().renderEngine.bindTexture(var4);
+					Minecraft.getMinecraft().renderEngine.bindTexture(var4);
 					if (p.isMale)
 						this.drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
 					else

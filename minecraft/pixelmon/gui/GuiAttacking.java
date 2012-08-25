@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.RenderHelper;
 import net.minecraft.src.RenderManager;
 import net.minecraft.src.Tessellator;
@@ -12,6 +12,8 @@ import net.minecraft.src.Tessellator;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.PixelmonServerStore;
 import pixelmon.ServerStorageDisplay;
@@ -83,7 +85,7 @@ public class GuiAttacking extends GuiScreen {
 	protected void actionPerformed(GuiButton par1GuiButton) {
 
 		if (par1GuiButton.id < 4) {
-			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.ChooseAttack, par1GuiButton.id, battleControllerIndex, userPacket.pokemonID));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, par1GuiButton.id, battleControllerIndex, userPacket.pokemonID));
 			mc.displayGuiScreen(null);
 			mc.setIngameFocus();
 		} else if (par1GuiButton.id == 11) {
@@ -91,7 +93,7 @@ public class GuiAttacking extends GuiScreen {
 		} else if (par1GuiButton.id == 12){
 			mc.displayGuiScreen(new GuiAttackingBag(this));
 		} else {
-			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.Flee, 0));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 			mc.displayGuiScreen(null);
 			mc.setIngameFocus();
 		}

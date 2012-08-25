@@ -6,6 +6,9 @@ import javax.swing.text.html.MinimalHTMLWriter;
 
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.common.network.FMLNetworkHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
+
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.entities.pixelmon.BaseEntityPixelmon;
@@ -18,7 +21,7 @@ import pixelmon.storage.PixelmonStorage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.KeyBinding;
 import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModLoader;
+
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet250CustomPayload;
 
@@ -35,20 +38,20 @@ public class KeyboardHandler {
 	}
 	
 	public static void handleKeyboardEvent(KeyBinding event) {
-		if (ModLoader.getMinecraftInstance().theWorld == null)
+		if (Minecraft.getMinecraft().theWorld == null)
 			return;
-		if (ModLoader.getMinecraftInstance().currentScreen != null)
+		if (Minecraft.getMinecraft().currentScreen != null)
 			return;
 		if (event == nextPixelmonKey) {
 			GuiPixelmonOverlay.selectNextPixelmon();
 		} else if (event == previousPixelmonKey) {
 			GuiPixelmonOverlay.selectPreviousPixelmon();
 		} else if (event == sendPixelmonKey) {
-			ModLoader.sendPacket(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
 		} else if (event == minimizePixelmonKey) {
 			GuiPixelmonOverlay.isGuiMinimized = !GuiPixelmonOverlay.isGuiMinimized;
 //		} else if (event == debugKey) {
-//			Minecraft mc = ModLoader.getMinecraftInstance();
+//			Minecraft mc = Minecraft.getMinecraft();
 //			PixelmonDebug.debugKeyFunction(mc);
 		}
 	}

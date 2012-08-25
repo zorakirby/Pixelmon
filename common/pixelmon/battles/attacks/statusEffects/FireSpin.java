@@ -10,7 +10,7 @@ import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.ModLoader;
+
 
 public class FireSpin extends StatusEffectBase {
 	int effectTurns = -1;
