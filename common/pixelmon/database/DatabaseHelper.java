@@ -20,6 +20,7 @@ import java.util.zip.Adler32;
 import java.util.zip.CheckedInputStream;
 
 import pixelmon.ClientProxy;
+import pixelmon.DownloadHelper;
 
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 
@@ -43,17 +44,18 @@ public class DatabaseHelper {
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
-			if(!getDir().exists())
+			File databaseDir = new File(DownloadHelper.getDir(), "database");
+			if(!databaseDir.exists())
 			{
-				getDir().mkdir();
-				downloadDatabase();
+				databaseDir.mkdir();
+				DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
 			}
 			else
 			{
-				File databaseFile = new File(getDir(), "Pixelmon.db");
+				File databaseFile = new File(databaseDir, "Pixelmon.db");
 				if(!databaseFile.exists())
 				{
-					downloadDatabase();
+					DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
 				}
 				else
 				{
@@ -61,7 +63,7 @@ public class DatabaseHelper {
 				}
 			}
 			
-			Connection c = DriverManager.getConnection("jdbc:sqlite:" + getDir() + "/Pixelmon.db");
+			Connection c = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/Pixelmon.db");
 			if(c == null)
 			{
 				return false;
@@ -74,6 +76,14 @@ public class DatabaseHelper {
 			return false;
 		}
 	}
+	
+	public static void checkVersion()
+	{
+		if(!DownloadHelper.compareVersion("database/Pixelmon.db", databaseURL))
+		{
+			DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+		}
+	}
 
 	/**
 	 * Gets the connection to the path
@@ -83,7 +93,7 @@ public class DatabaseHelper {
 	public static Connection getConnection() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:" + getDir() + "/Pixelmon.db");
+			Connection con = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
 			con.setReadOnly(true);
 			return con;
 
@@ -93,104 +103,9 @@ public class DatabaseHelper {
 		}
 	}
 	
-	public static File getDir()
-	{
-		if(MinecraftServer.getServer() != null)
-		{
-			if(!MinecraftServer.getServer().isSinglePlayer())
-			{
-				return MinecraftServer.getServer().getFile("database");
-			}
-		}
-		return  new File(ClientProxy.getMinecraftDir(), "database");
-	}
+	public static String databaseURL = "https://dl.dropbox.com/u/78327099/Pixelmon.db";
 	
-	public static void checkVersion()
-	{
-		try
-		{
-			long currentVersion = getChecksum(new DataInputStream(new FileInputStream(new File(getDir(), "Pixelmon.db"))));
-			long releasedVersion = getChecksum(new DataInputStream(new URL("https://dl.dropbox.com/u/78327099/Pixelmon.db").openStream()));
-			if(currentVersion != releasedVersion)
-			{
-				downloadDatabase();
-			}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
 	
-	public static long getChecksum(InputStream is)
-    {
-        CheckedInputStream cis = null;        
-        long checksum = 0;
-        try 
-        {
-            cis = new CheckedInputStream(is, new Adler32());
-            byte[] tempBuf = new byte[128];
-            while (cis.read(tempBuf) >= 0) 
-            {
-            }
-            checksum = cis.getChecksum().getValue();
-        } 
-        catch (IOException e) 
-        {
-            checksum = 0;
-        }
-        finally
-        {
-            if (cis != null)
-            {
-                try
-                {
-                    cis.close();
-                }
-                catch (IOException ioe)
-                {                    
-                }
-            }
-        }
-        return checksum;
-    }
-	
-	public static void downloadDatabase()
-	{
-		try
-		{
-			System.out.println("Attempting to download the Database!");
-			String databaseURL = "https://dl.dropbox.com/u/78327099/Pixelmon.db";
-			URL url = new URL(databaseURL);
-			File databaseFile = new File(getDir(), "Pixelmon.db");
-			databaseFile.createNewFile();
-			byte[] array = new byte[4096];
-	        DataInputStream urlStream = new DataInputStream(url.openStream());
-	        DataOutputStream fileStream = new DataOutputStream(new FileOutputStream(databaseFile));
-	        boolean var8 = false;
-
-	        do
-	        {
-	            int data;
-
-	            if ((data = urlStream.read(array)) < 0)
-	            {
-	                urlStream.close();
-	                fileStream.close();
-	                break;
-	            }
-
-	            fileStream.write(array, 0, data);
-	        }
-	        while (true);
-	        System.out.println("Database Downloaded!");
-		}
-		catch(Exception e)
-		{
-			System.out.println("Failed to download the Database!");
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Gets a <code>Statement</code> from the given <code>Connection</code>

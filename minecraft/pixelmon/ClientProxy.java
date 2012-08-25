@@ -1,9 +1,12 @@
 package pixelmon;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
+import pixelmon.battles.animations.particles.EntityGastlyParticle;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.comm.PixelmonDataPacket;
@@ -12,6 +15,7 @@ import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumPixelmonParticles;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiAttacking;
@@ -37,6 +41,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 
+import net.minecraft.src.EntityFX;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.RenderLiving;
 import net.minecraft.src.World;
@@ -174,5 +180,31 @@ public class ClientProxy extends CommonProxy {
 	public void onWorldLoad(WorldEvent.Load event) {
 		ServerStorageDisplay.clear();
 		PixelmonServerStore.clearList();
+	}
+	
+	public static void spawnParticle(EnumPixelmonParticles particle, World worldObj, double posX, double posY, double posZ)
+	{
+		try {
+			EntityFX fx = (EntityFX)particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class).newInstance(worldObj, posX, posY, posZ, 0d, 0d, 0d);
+			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
