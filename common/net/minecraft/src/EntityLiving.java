@@ -177,7 +177,7 @@ public abstract class EntityLiving extends Entity
     protected float randomYawVelocity;
 
     /** used to check whether entity is jumping. */
-    protected boolean isJumping = false;
+    public boolean isJumping = false;
     protected float defaultPitch = 0.0F;
     protected float moveSpeed = 0.7F;
 
@@ -318,7 +318,7 @@ public abstract class EntityLiving extends Entity
     public void setAttackTarget(EntityLiving par1EntityLiving)
     {
         this.attackTarget = par1EntityLiving;
-        MinecraftForge.EVENT_BUS.post(new LivingSetAttackTargetEvent(this, par1EntityLiving));
+        ForgeHooks.onLivingSetAttackTarget(this, par1EntityLiving);
     }
 
     public boolean isExplosiveMob(Class par1Class)
@@ -375,7 +375,7 @@ public abstract class EntityLiving extends Entity
     {
         this.entityLivingToAttack = par1EntityLiving;
         this.revengeTimer = this.entityLivingToAttack != null ? 60 : 0;
-        MinecraftForge.EVENT_BUS.post(new LivingSetAttackTargetEvent(this, par1EntityLiving));
+        ForgeHooks.onLivingSetAttackTarget(this, par1EntityLiving);
     }
 
     protected void entityInit()
@@ -662,7 +662,7 @@ public abstract class EntityLiving extends Entity
      */
     public void onUpdate()
     {
-        if (MinecraftForge.EVENT_BUS.post(new LivingUpdateEvent(this)))
+        if (ForgeHooks.onLivingUpdate(this))
         {
             return;
         }
@@ -834,7 +834,7 @@ public abstract class EntityLiving extends Entity
      */
     public boolean attackEntityFrom(DamageSource par1DamageSource, int par2)
     {
-        if (MinecraftForge.EVENT_BUS.post(new LivingAttackEvent(this, par1DamageSource, par2)))
+        if (ForgeHooks.onLivingAttack(this, par1DamageSource, par2))
         {
             return false;
         }
@@ -1023,12 +1023,11 @@ public abstract class EntityLiving extends Entity
      */
     protected void damageEntity(DamageSource par1DamageSource, int par2)
     {
-        LivingHurtEvent event = new LivingHurtEvent(this, par1DamageSource, par2);
-        if (MinecraftForge.EVENT_BUS.post(event) || event.ammount== 0)
+        par2 = ForgeHooks.onLivingHurt(this, par1DamageSource, par2);
+        if (par2 <= 0)
         {
             return;
         }
-        par2 = event.ammount;
 
         par2 = this.applyArmorCalculations(par1DamageSource, par2);
         par2 = this.applyPotionDamageCalculations(par1DamageSource, par2);
@@ -1093,7 +1092,7 @@ public abstract class EntityLiving extends Entity
      */
     public void onDeath(DamageSource par1DamageSource)
     {
-        if (MinecraftForge.EVENT_BUS.post(new LivingDeathEvent(this, par1DamageSource)))
+        if (ForgeHooks.onLivingDeath(this, par1DamageSource))
         {
             return;
         }
@@ -1141,8 +1140,8 @@ public abstract class EntityLiving extends Entity
             }
 
             captureDrops = false;
-            
-            if (!MinecraftForge.EVENT_BUS.post(new LivingDropsEvent(this, par1DamageSource, capturedDrops, var3, recentlyHit > 0, var4)))
+
+            if (!ForgeHooks.onLivingDrops(this, par1DamageSource, capturedDrops, var3, recentlyHit > 0, var4))
             {
                 for (EntityItem item : capturedDrops)
                 {
@@ -1192,12 +1191,11 @@ public abstract class EntityLiving extends Entity
      */
     protected void fall(float par1)
     {
-        LivingFallEvent event = new LivingFallEvent(this, par1);
-        if (MinecraftForge.EVENT_BUS.post(event))
+        par1 = ForgeHooks.onLivingFall(this, par1);
+        if (par1 <= 0)
         {
             return;
         }
-        par1 = event.distance;
 
         super.fall(par1);
         int var2 = MathHelper.ceiling_float_int(par1 - 3.0F);
@@ -1386,7 +1384,7 @@ public abstract class EntityLiving extends Entity
         int var2 = MathHelper.floor_double(this.boundingBox.minY);
         int var3 = MathHelper.floor_double(this.posZ);
         int var4 = this.worldObj.getBlockId(var1, var2, var3);
-        return Block.blocksList[var4] != null && Block.blocksList[var4].isLadder(worldObj, var1, var2, var3);
+        return ForgeHooks.isLivingOnLadder(Block.blocksList[var4], worldObj, var1, var2, var3);
     }
 
     /**
@@ -1649,7 +1647,7 @@ public abstract class EntityLiving extends Entity
         }
 
         this.isAirBorne = true;
-        MinecraftForge.EVENT_BUS.post(new LivingJumpEvent(this));
+        ForgeHooks.onLivingJump(this);
     }
 
     /**

@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
 
+@SideOnly(Side.CLIENT)
 public class TexturePackList
 {
     private static final TexturePackBase field_77314_a = new TexturePackDefault();

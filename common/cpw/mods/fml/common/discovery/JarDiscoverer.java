@@ -2,7 +2,7 @@ package cpw.mods.fml.common.discovery;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -10,6 +10,7 @@ import java.util.zip.ZipFile;
 import com.google.common.collect.Lists;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.LoaderException;
 import cpw.mods.fml.common.MetadataCollection;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.ModContainerFactory;
@@ -32,17 +33,32 @@ public class JarDiscoverer implements ITypeDiscoverer
             if (modInfo != null)
             {
                 FMLLog.finer("Located mcmod.info file in file %s", candidate.getModContainer().getName());
-                mc = MetadataCollection.from(jar.getInputStream(modInfo));
+                mc = MetadataCollection.from(jar.getInputStream(modInfo), candidate.getModContainer().getName());
+            }
+            else
+            {
+                FMLLog.info("The mod container %s appears to be missing an mcmod.info file", candidate.getModContainer().getName());
+                mc = MetadataCollection.from(null, "");
             }
             for (ZipEntry ze : Collections.list(jar.entries()))
             {
                 Matcher match = classFile.matcher(ze.getName());
                 if (match.matches())
                 {
-                    ASMModParser modParser = new ASMModParser(jar.getInputStream(ze));
+                    ASMModParser modParser;
+                    try
+                    {
+                        modParser = new ASMModParser(jar.getInputStream(ze));
+                    }
+                    catch (LoaderException e)
+                    {
+                        FMLLog.log(Level.SEVERE, e, "There was a problem reading the entry %s in the jar %s - probably a corrupt zip", ze.getName(), candidate.getModContainer().getPath());
+                        jar.close();
+                        throw e;
+                    }
                     modParser.validate();
                     modParser.sendToTable(table, candidate);
-                    ModContainer container = ModContainerFactory.instance().build(modParser, candidate.getModContainer());
+                    ModContainer container = ModContainerFactory.instance().build(modParser, candidate.getModContainer(), candidate);
                     if (container!=null)
                     {
                         table.addContainer(container);
@@ -54,7 +70,7 @@ public class JarDiscoverer implements ITypeDiscoverer
         }
         catch (Exception e)
         {
-            FMLLog.warning("Zip file %s failed to read properly, it will be ignored", candidate.getModContainer().getName());
+            FMLLog.log(Level.WARNING, e, "Zip file %s failed to read properly, it will be ignored", candidate.getModContainer().getName());
         }
         finally
         {

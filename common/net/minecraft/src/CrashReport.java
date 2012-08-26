@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import java.io.File;
@@ -46,6 +47,7 @@ public class CrashReport
         this.addCrashSectionCallable("Java VM Version", new CallableJavaInfo2(this));
         this.addCrashSectionCallable("Memory", new CallableMemoryInfo(this));
         this.addCrashSectionCallable("JVM Flags", new CallableJVMFlags(this));
+        FMLCommonHandler.instance().enhanceCrashReport(this);
     }
 
     /**

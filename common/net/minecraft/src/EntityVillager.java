@@ -2,6 +2,8 @@ package net.minecraft.src;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.common.registry.VillagerRegistry;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,13 +34,13 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
      * a villagers recipe list is intialized off this list ; the 2 params are min/max amount they will trade for 1
      * emerald
      */
-    private static final Map villagerStockList = new HashMap();
+    public static final Map villagerStockList = new HashMap();
 
     /**
      * Selling list of Blacksmith items. negative numbers mean 1 emerald for n items, positive numbers are n emeralds
      * for 1 item
      */
-    private static final Map blacksmithSellingList = new HashMap();
+    public static final Map blacksmithSellingList = new HashMap();
 
     public EntityVillager(World par1World)
     {
@@ -212,7 +214,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
             case 4:
                 return "/mob/villager/butcher.png";
             default:
-                return super.getTexture();
+                return VillagerRegistry.getVillagerSkin(this.getProfession(), super.getTexture());
         }
     }
 
@@ -447,6 +449,8 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
                 addBlacksmithItem(var2, Item.beefCooked.shiftedIndex, this.rand, 0.3F);
         }
 
+        VillagerRegistry.manageVillagerTrades(var2, this, this.getProfession(), this.rand);
+
         if (var2.isEmpty())
         {
             addMerchantItem(var2, Item.ingotGold.shiftedIndex, this.rand, 1.0F);
@@ -471,7 +475,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
     /**
      * each recipie takes a random stack from villagerStockList and offers it for 1 emerald
      */
-    private static void addMerchantItem(MerchantRecipeList par0MerchantRecipeList, int par1, Random par2Random, float par3)
+    public static void addMerchantItem(MerchantRecipeList par0MerchantRecipeList, int par1, Random par2Random, float par3)
     {
         if (par2Random.nextFloat() < par3)
         {
@@ -493,7 +497,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
         return var2 == null ? 1 : (((Integer)var2.getFirst()).intValue() >= ((Integer)var2.getSecond()).intValue() ? ((Integer)var2.getFirst()).intValue() : ((Integer)var2.getFirst()).intValue() + par1Random.nextInt(((Integer)var2.getSecond()).intValue() - ((Integer)var2.getFirst()).intValue()));
     }
 
-    private static void addBlacksmithItem(MerchantRecipeList par0MerchantRecipeList, int par1, Random par2Random, float par3)
+    public static void addBlacksmithItem(MerchantRecipeList par0MerchantRecipeList, int par1, Random par2Random, float par3)
     {
         if (par2Random.nextFloat() < par3)
         {

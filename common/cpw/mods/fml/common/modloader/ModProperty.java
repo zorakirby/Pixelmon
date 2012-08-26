@@ -14,7 +14,6 @@
 
 package cpw.mods.fml.common.modloader;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -30,12 +29,12 @@ public class ModProperty
     private String name;
     private Field field;
 
-    public ModProperty(Field f, String info, double min, double max, String name)
+    public ModProperty(Field f, String info, Double min, Double max, String name)
     {
         this.field = f;
         this.info = info;
-        this.min = min;
-        this.max = max;
+        this.min = min != null ? min : Double.MIN_VALUE;
+        this.max = max != null ? max : Double.MAX_VALUE;
         this.name = name;
     }
     public ModProperty(Field field, Map<String, Object> annotationInfo)

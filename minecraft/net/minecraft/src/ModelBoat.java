@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class ModelBoat extends ModelBase
 {
     public ModelRenderer[] boatSides = new ModelRenderer[5];

@@ -4,17 +4,8 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Maps;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.ModContainer;
 
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.Entity;
@@ -24,9 +15,22 @@ import net.minecraft.src.EntityTracker;
 import net.minecraft.src.EnumCreatureType;
 import net.minecraft.src.SpawnListEntry;
 
+import com.google.common.base.Function;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Maps;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.network.EntitySpawnPacket;
+import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
+
 public class EntityRegistry
 {
-
     public class EntityRegistration
     {
         private Class<? extends Entity> entityClass;
@@ -36,6 +40,7 @@ public class EntityRegistry
         private int trackingRange;
         private int updateFrequency;
         private boolean sendsVelocityUpdates;
+        private Function<EntitySpawnPacket, Entity> customSpawnCallback;
         public EntityRegistration(ModContainer mc, Class<? extends Entity> entityClass, String entityName, int id, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
         {
             this.container = mc;
@@ -62,10 +67,6 @@ public class EntityRegistry
         {
             return modId;
         }
-        public int getModId()
-        {
-            return modId;
-        }
         public int getTrackingRange()
         {
             return trackingRange;
@@ -77,6 +78,18 @@ public class EntityRegistry
         public boolean sendsVelocityUpdates()
         {
             return sendsVelocityUpdates;
+        }
+        public boolean hasCustomSpawning()
+        {
+            return customSpawnCallback != null;
+        }
+        public Entity doCustomSpawning(EntitySpawnPacket packet) throws Exception
+        {
+            return customSpawnCallback.apply(packet);
+        }
+        public void setCustomSpawning(Function<EntitySpawnPacket, Entity> callable)
+        {
+            this.customSpawnCallback = callable;
         }
     }
 
@@ -124,6 +137,17 @@ public class EntityRegistry
         {
             entityClassRegistrations.put(entityClass, er);
             entityNames.put(entityName, mc);
+            if (!EntityList.classToStringMapping.containsKey(entityClass))
+            {
+                String entityModName = String.format("%s.%s", mc.getModId(), entityName);
+                EntityList.classToStringMapping.put(entityClass, entityModName);
+                EntityList.stringToClassMapping.put(entityModName, entityClass);
+                FMLLog.finest("Automatically registered mod %s entity %s as %s", mc.getModId(), entityName, entityModName);
+            }
+            else
+            {
+                FMLLog.fine("Skipping automatic mod %s entity registration for already registered class %s", mc.getModId(), entityClass.getName());
+            }
         }
         catch (IllegalArgumentException e)
         {
@@ -135,6 +159,11 @@ public class EntityRegistry
 
     public static void registerGlobalEntityID(Class <? extends Entity > entityClass, String entityName, int id)
     {
+        if (EntityList.classToStringMapping.containsKey(entityClass))
+        {
+            FMLLog.warning("The mod %s tried to register the entity class %s which was already registered - if you wish to override default naming for FML mod entities, register it here first", Loader.instance().activeModContainer().getModId(), entityClass);
+            return;
+        }
         instance().validateAndClaimId(id);
         EntityList.addMapping(entityClass, entityName, id);
     }
@@ -266,6 +295,30 @@ public class EntityRegistry
             return true;
         }
         return false;
+    }
+
+    /**
+     *
+     * DO NOT USE THIS METHOD
+     *
+     * @param entityClass
+     * @param entityTypeId
+     * @param updateRange
+     * @param updateInterval
+     * @param sendVelocityInfo
+     * @return
+     */
+    @Deprecated
+    public static EntityRegistration registerModLoaderEntity(Object mod, Class<? extends Entity> entityClass, int entityTypeId, int updateRange, int updateInterval,
+            boolean sendVelocityInfo)
+    {
+        String entityName = (String) EntityList.classToStringMapping.get(entityClass);
+        if (entityName == null)
+        {
+            throw new IllegalArgumentException(String.format("The ModLoader mod %s has tried to register an entity tracker for a non-existent entity type %s", Loader.instance().activeModContainer().getModId(), entityClass.getCanonicalName()));
+        }
+        instance().doModEntityRegistration(entityClass, entityName, entityTypeId, mod, updateRange, updateInterval, sendVelocityInfo);
+        return instance().entityClassRegistrations.get(entityClass);
     }
 
 }

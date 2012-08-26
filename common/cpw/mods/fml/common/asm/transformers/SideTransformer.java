@@ -11,7 +11,6 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import cpw.mods.fml.relauncher.FMLRelauncher;
 import cpw.mods.fml.relauncher.IClassTransformer;
@@ -27,6 +26,15 @@ public class SideTransformer implements IClassTransformer
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(bytes);
         classReader.accept(classNode, 0);
+
+        if (remove((List<AnnotationNode>)classNode.visibleAnnotations, SIDE))
+        {
+            if (DEBUG)
+            {
+                System.out.println(String.format("Attempted to load class %s for invalid side %s", classNode.name, SIDE));
+            }
+            return null;
+        }
 
         Iterator<FieldNode> fields = classNode.fields.iterator();
         while(fields.hasNext())

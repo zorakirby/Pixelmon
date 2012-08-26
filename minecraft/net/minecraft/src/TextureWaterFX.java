@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
 import cpw.mods.fml.client.FMLTextureFX;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class TextureWaterFX extends FMLTextureFX
 {
     /** red RGB value for water texture */
@@ -20,7 +23,7 @@ public class TextureWaterFX extends FMLTextureFX
     public TextureWaterFX()
     {
         super(Block.waterMoving.blockIndexInTexture);
-		setup();
+        setup();
     }
 
     @Override

@@ -17,31 +17,46 @@ package cpw.mods.fml.common.modloader;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import java.util.concurrent.Callable;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Maps;
 
 import net.minecraft.src.BaseMod;
-
+import net.minecraft.src.Container;
+import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.TradeEntry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.ICraftingHandler;
+import cpw.mods.fml.common.IDispenseHandler;
 import cpw.mods.fml.common.IFuelHandler;
+import cpw.mods.fml.common.IPickupNotifier;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.network.IConnectionHandler;
+import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
+import cpw.mods.fml.common.registry.VillagerRegistry.IVillageTradeHandler;
+import cpw.mods.fml.common.registry.VillagerRegistry;
 
 /**
  * @author cpw
  *
  */
+@SuppressWarnings("deprecation")
 public class ModLoaderHelper
 {
-    private static Map<BaseMod, ModLoaderModContainer> notModCallbacks=new HashMap<BaseMod, ModLoaderModContainer>();
-
     public static IModLoaderSidedHelper sidedHelper;
-    public static void updateStandardTicks(BaseMod mod, boolean enable, boolean useClock)
+
+    private static Map<Integer, ModLoaderGuiHelper> guiHelpers = Maps.newHashMap();
+
+    public static void updateStandardTicks(BaseModProxy mod, boolean enable, boolean useClock)
     {
         ModLoaderModContainer mlmc = (ModLoaderModContainer) Loader.instance().activeModContainer();
         BaseModTicker ticker = mlmc.getGameTickHandler();
@@ -62,9 +77,9 @@ public class ModLoaderHelper
         }
     }
 
-    public static void updateGUITicks(BaseMod mod, boolean enable, boolean useClock)
+    public static void updateGUITicks(BaseModProxy mod, boolean enable, boolean useClock)
     {
-        ModLoaderModContainer mlmc = findOrBuildModContainer(mod);
+        ModLoaderModContainer mlmc = (ModLoaderModContainer) Loader.instance().activeModContainer();
         EnumSet<TickType> ticks = mlmc.getGUITickHandler().ticks();
         // If we're enabled and we don't want clock ticks we get render ticks
         if (enable && !useClock) {
@@ -82,34 +97,7 @@ public class ModLoaderHelper
         }
     }
 
-    /**
-     * @param mod
-     * @return
-     */
-    private static ModLoaderModContainer findOrBuildModContainer(BaseMod mod)
-    {
-        ModLoaderModContainer mlmc=(ModLoaderModContainer) FMLCommonHandler.instance().findContainerFor(mod);
-        if (mlmc==null) {
-            mlmc=notModCallbacks.get(mod);
-            if (mlmc==null) {
-                mlmc=new ModLoaderModContainer(mod);
-                notModCallbacks.put(mod, mlmc);
-            }
-        }
-        return mlmc;
-    }
-
-    /**
-     * @param mod
-     * @return
-     */
-    public static ModLoaderModContainer registerKeyHelper(BaseMod mod)
-    {
-        ModLoaderModContainer mlmc=findOrBuildModContainer(mod);
-        return mlmc;
-    }
-
-    public static IPacketHandler buildPacketHandlerFor(BaseMod mod)
+    public static IPacketHandler buildPacketHandlerFor(BaseModProxy mod)
     {
         return new ModLoaderPacketHandler(mod);
     }
@@ -140,5 +128,60 @@ public class ModLoaderHelper
     public static IConnectionHandler buildConnectionHelper(BaseModProxy mod)
     {
         return new ModLoaderConnectionHandler(mod);
+    }
+
+    public static IPickupNotifier buildPickupHelper(BaseModProxy mod)
+    {
+        return new ModLoaderPickupNotifier(mod);
+    }
+
+    public static void buildGuiHelper(BaseModProxy mod, int id)
+    {
+        ModLoaderGuiHelper handler = new ModLoaderGuiHelper(mod, id);
+        guiHelpers.put(id, handler);
+        NetworkRegistry.instance().registerGuiHandler(mod, handler);
+    }
+
+    public static void openGui(int id, EntityPlayer player, Container container, int x, int y, int z)
+    {
+        ModLoaderGuiHelper helper = guiHelpers.get(id);
+        helper.injectContainer(container);
+        player.openGui(helper.getMod(), id, player.worldObj, x, y, z);
+    }
+
+    public static Object getClientSideGui(BaseModProxy mod, EntityPlayer player, int ID, int x, int y, int z)
+    {
+        if (sidedHelper != null)
+        {
+            return sidedHelper.getClientGui(mod, player, ID, x, y, z);
+        }
+        return null;
+    }
+
+    public static IDispenseHandler buildDispenseHelper(BaseModProxy mod)
+    {
+        return new ModLoaderDispenseHelper(mod);
+    }
+
+
+    public static void buildEntityTracker(BaseModProxy mod, Class<? extends Entity> entityClass, int entityTypeId, int updateRange, int updateInterval,
+            boolean sendVelocityInfo)
+    {
+        EntityRegistration er = EntityRegistry.registerModLoaderEntity(mod, entityClass, entityTypeId, updateRange, updateInterval, sendVelocityInfo);
+        er.setCustomSpawning(new ModLoaderEntitySpawnCallback(mod, er));
+    }
+
+    private static ModLoaderVillageTradeHandler[] tradeHelpers = new ModLoaderVillageTradeHandler[6];
+
+    public static void registerTrade(int profession, TradeEntry entry)
+    {
+        assert profession < tradeHelpers.length : "The profession is out of bounds";
+        if (tradeHelpers[profession] == null)
+        {
+            tradeHelpers[profession] = new ModLoaderVillageTradeHandler();
+            VillagerRegistry.instance().registerVillageTradeHandler(profession, tradeHelpers[profession]);
+        }
+
+        tradeHelpers[profession].addTrade(entry);
     }
 }

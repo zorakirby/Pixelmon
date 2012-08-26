@@ -1,43 +1,29 @@
 package cpw.mods.fml.relauncher;
 
-import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
 import java.lang.reflect.Method;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
-import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.FileChannel.MapMode;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.Attributes;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JOptionPane;
-import javax.swing.ProgressMonitorInputStream;
-
-import cpw.mods.fml.common.discovery.ModCandidate;
 
 public class RelaunchLibraryManager
 {
@@ -426,6 +412,8 @@ public class RelaunchLibraryManager
             downloadMonitor.updateProgressString(infoString);
             FMLRelaunchLog.info(infoString);
             URLConnection connection = libDownload.openConnection();
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
             connection.setRequestProperty("User-Agent", "FML Relaunch Downloader");
             int sizeGuess = connection.getContentLength();
             performDownload(connection.getInputStream(), sizeGuess, hash, libFile);
@@ -436,13 +424,13 @@ public class RelaunchLibraryManager
         {
             if (downloadMonitor.stopIt)
             {
-                FMLRelaunchLog.warning("You have stopped downloads in progress");
+                FMLRelaunchLog.warning("You have stopped the downloading operation before it could complete");
                 return;
             }
             if (e instanceof RuntimeException) throw (RuntimeException)e;
             FMLRelaunchLog.severe("There was a problem downloading the file %s automatically. Perhaps you " +
             		"have an environment without internet access. You will need to download " +
-            		"the file manually\n", libFile.getName());
+            		"the file manually or restart and let it try again\n", libFile.getName());
             libFile.delete();
             throw new RuntimeException("A download error occured", e);
         }

@@ -1,11 +1,15 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import net.minecraft.client.Minecraft;
@@ -14,6 +18,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+@SideOnly(Side.CLIENT)
 public class ThreadDownloadResources extends Thread
 {
     /** The folder to store the resources in. */
@@ -45,7 +50,11 @@ public class ThreadDownloadResources extends Thread
             URL var1 = new URL("http://s3.amazonaws.com/MinecraftResources/");
             DocumentBuilderFactory var2 = DocumentBuilderFactory.newInstance();
             DocumentBuilder var3 = var2.newDocumentBuilder();
-            Document var4 = var3.parse(var1.openStream());
+            //Add a timeout of 60 seconds to getting the list, MC stalls without sound for some users.
+            URLConnection con = var1.openConnection();
+            con.setConnectTimeout(60000);
+            con.setReadTimeout(60000);
+            Document var4 = var3.parse(con.getInputStream());
             NodeList var5 = var4.getElementsByTagName("Contents");
 
             for (int var6 = 0; var6 < 2; ++var6)
@@ -169,7 +178,11 @@ public class ThreadDownloadResources extends Thread
     private void downloadResource(URL par1URL, File par2File, long par3) throws IOException
     {
         byte[] var5 = new byte[4096];
-        DataInputStream var6 = new DataInputStream(par1URL.openStream());
+        //Add a timeout of 60 seconds to getting the list, MC stalls without sound for some users.
+        URLConnection con = par1URL.openConnection();
+        con.setConnectTimeout(60000);
+        con.setReadTimeout(60000);
+        DataInputStream var6 = new DataInputStream(con.getInputStream());
         DataOutputStream var7 = new DataOutputStream(new FileOutputStream(par2File));
         boolean var8 = false;
 

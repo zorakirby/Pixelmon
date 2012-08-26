@@ -12,29 +12,20 @@
  */
 package net.minecraft.src;
 
+import static cpw.mods.fml.common.Side.CLIENT;
+
 import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.IConsoleHandler;
-import cpw.mods.fml.common.ICraftingHandler;
-import cpw.mods.fml.common.IDispenseHandler;
-import cpw.mods.fml.common.INetworkHandler;
-import cpw.mods.fml.common.IPickupNotifier;
-import cpw.mods.fml.common.IPlayerTracker;
-import cpw.mods.fml.common.IWorldGenerator;
-import cpw.mods.fml.common.Side;
-import static cpw.mods.fml.common.Side.*;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.asm.SideOnly;
 
 public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModProxy
 {
     // CALLBACK MECHANISMS
-
-    private boolean fml_lastWorld = false;
 
     public final boolean doTickInGame(TickType tick, boolean tickEnd, Object... data)
     {
@@ -50,17 +41,10 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
     public final boolean doTickInGUI(TickType tick, boolean tickEnd, Object... data)
     {
         Minecraft mc = FMLClientHandler.instance().getClient();
-        boolean hasWorld = mc.theWorld != null;
-        if (!hasWorld && !fml_lastWorld)
-        {
-            fml_lastWorld = true;
-        }
-        else if (!hasWorld && fml_lastWorld)
-        {
-            return true;
-        }
 
-        if (tickEnd && ( tick==TickType.RENDER || tick==TickType.CLIENT)) {
+        boolean hasWorld = mc.theWorld != null;
+
+        if (tickEnd && ( tick==TickType.RENDER || ( tick==TickType.CLIENT && hasWorld))) {
             return onTickInGUI((Float) data[0], mc, mc.currentScreen);
         }
         return true;
@@ -211,9 +195,10 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @param item
      * @return
      */
-    public boolean dispenseEntity(World world, double x, double y, double z, int xVel, int zVel, ItemStack item)
+    @Override
+    public int dispenseEntity(World world, ItemStack item, Random rnd, double x, double y, double z, int xVel, int zVel, double entX, double entY, double entZ)
     {
-        return false;
+        return -1;
     }
 
     /**
@@ -238,6 +223,21 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     public void generateSurface(World world, Random random, int chunkX, int chunkZ)
     {
+    }
+
+    /**
+     * Callback to return a gui screen to display
+     * @param player
+     * @param containerID
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    @SideOnly(CLIENT)
+    public GuiContainer getContainerGUI(EntityClientPlayerMP player, int containerID, int x, int y, int z)
+    {
+        return null;
     }
 
     /**
@@ -368,6 +368,12 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
     }
 
     @Override
+    public void serverCustomPayload(NetServerHandler handler, Packet250CustomPayload packet)
+    {
+
+    }
+
+    @Override
     public void serverDisconnect() {
 
     }
@@ -461,6 +467,27 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @param player
      */
     public void onClientDimensionChanged(EntityPlayer player)
+    {
+
+    }
+
+    /**
+     *
+     * Spawn the entity of the supplied type, if it is your mod's
+     * @param entityId
+     * @param world
+     * @param scaledX
+     * @param scaledY
+     * @param scaledZ
+     * @return
+     */
+    @SideOnly(CLIENT)
+    public Entity spawnEntity(int entityId, World world, double scaledX, double scaledY, double scaledZ)
+    {
+        return null;
+    }
+
+    public void clientCustomPayload(NetClientHandler handler, Packet250CustomPayload packet)
     {
 
     }

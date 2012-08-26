@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.File;
 import java.util.Random;
 
@@ -23,6 +25,7 @@ import paulscode.sound.codecs.CodecJOrbis;
 import paulscode.sound.codecs.CodecWav;
 import paulscode.sound.libraries.LibraryLWJGLOpenAL;
 
+@SideOnly(Side.CLIENT)
 public class SoundManager
 {
     /** A reference to the sound system. */

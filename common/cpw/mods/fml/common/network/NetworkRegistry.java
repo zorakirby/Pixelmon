@@ -1,9 +1,6 @@
 package cpw.mods.fml.common.network;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +16,6 @@ import net.minecraft.src.NetServerHandler;
 import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;
 import net.minecraft.src.Packet250CustomPayload;
-import net.minecraft.src.TcpConnection;
 import net.minecraft.src.World;
 
 import com.google.common.base.Charsets;
@@ -28,12 +24,9 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -92,11 +85,28 @@ public class NetworkRegistry
      */
     public void registerChannel(IPacketHandler handler, String channelName)
     {
+        if (Strings.isNullOrEmpty(channelName) || (channelName!=null && channelName.length()>16))
+        {
+            FMLLog.severe("Invalid channel name '%s' : %s", channelName, Strings.isNullOrEmpty(channelName) ? "Channel name is empty" : "Channel name is too long (16 chars is maximum)");
+            throw new RuntimeException("Channel name is invalid");
+
+        }
         universalPacketHandlers.put(channelName, handler);
     }
 
     public void registerChannel(IPacketHandler handler, String channelName, Side side)
     {
+        if (side == null)
+        {
+            registerChannel(handler, channelName);
+            return;
+        }
+        if (Strings.isNullOrEmpty(channelName) || (channelName!=null && channelName.length()>16))
+        {
+            FMLLog.severe("Invalid channel name '%s' : %s", channelName, Strings.isNullOrEmpty(channelName) ? "Channel name is empty" : "Channel name is too long (16 chars is maximum)");
+            throw new RuntimeException("Channel name is invalid");
+
+        }
         if (side.isClient())
         {
             clientPacketHandlers.put(channelName, handler);

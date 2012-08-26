@@ -1,8 +1,11 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 
+@SideOnly(Side.CLIENT)
 class ThreadConnectToServer extends Thread
 {
     /** The IP address or domain used to connect. */

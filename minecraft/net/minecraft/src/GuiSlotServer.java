@@ -1,8 +1,11 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 class GuiSlotServer extends GuiSlot
 {
     /** Instance to the GUI this list is on. */

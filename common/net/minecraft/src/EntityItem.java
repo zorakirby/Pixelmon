@@ -5,6 +5,8 @@ import java.util.Iterator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class EntityItem extends Entity
 {
     /** The item stack of this EntityItem. */
@@ -123,6 +125,11 @@ public class EntityItem extends Entity
         {
             this.setDead();
         }
+
+        if (this.item == null || this.item.stackSize <= 0)
+        {
+            this.setDead();
+        }
     }
 
     public boolean func_70289_a(EntityItem par1EntityItem)
@@ -226,7 +233,7 @@ public class EntityItem extends Entity
         NBTTagCompound var2 = par1NBTTagCompound.getCompoundTag("Item");
         this.item = ItemStack.loadItemStackFromNBT(var2);
 
-        if (this.item == null)
+        if (this.item == null || this.item.stackSize <= 0)
         {
             this.setDead();
         }
@@ -239,26 +246,21 @@ public class EntityItem extends Entity
     {
         if (!this.worldObj.isRemote)
         {
-            int var2 = this.item.stackSize;
+            if (this.delayBeforeCanPickup > 0)
+            {
+                return;
+            }
 
             EntityItemPickupEvent event = new EntityItemPickupEvent(par1EntityPlayer, this);
-            MinecraftForge.EVENT_BUS.post(event);
-            
-            if (delayBeforeCanPickup == 0 && (!event.isCanceled() || item.stackSize <= 0))
+
+            if (MinecraftForge.EVENT_BUS.post(event))
             {
-                //FML Notify pickup
-                worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                par1EntityPlayer.onItemPickup(this, var2);
-
-                if (item.stackSize <= 0)
-                {
-                    setDead();
-                }
+                return;
             }
-            
-            var2 = item.stackSize;
 
-            if (this.delayBeforeCanPickup == 0 && par1EntityPlayer.inventory.addItemStackToInventory(this.item))
+            int var2 = this.item.stackSize;
+
+            if (this.delayBeforeCanPickup <= 0 && (event.isHandled() || var2 <= 0 || par1EntityPlayer.inventory.addItemStackToInventory(this.item)))
             {
                 if (this.item.itemID == Block.wood.blockID)
                 {
@@ -279,6 +281,8 @@ public class EntityItem extends Entity
                 {
                     par1EntityPlayer.triggerAchievement(AchievementList.blazeRod);
                 }
+
+                GameRegistry.onPickupNotification(par1EntityPlayer, this);
 
                 this.worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 par1EntityPlayer.onItemPickup(this, var2);

@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 
+@SideOnly(Side.CLIENT)
 public class MemoryConnection implements NetworkManager
 {
     private static final SocketAddress mySocketAddress = new InetSocketAddress("127.0.0.1", 0);

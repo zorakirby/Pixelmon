@@ -1,11 +1,14 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+@SideOnly(Side.CLIENT)
 public class GuiSnooper extends GuiScreen
 {
     private final GuiScreen field_74100_a;

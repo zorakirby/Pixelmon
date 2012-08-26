@@ -1,10 +1,13 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MinecraftApplet;
 
+@SideOnly(Side.CLIENT)
 public class MinecraftAppletImpl extends Minecraft
 {
     /** Reference to the main frame, in this case, the applet window itself. */

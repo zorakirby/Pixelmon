@@ -1,10 +1,13 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.nio.FloatBuffer;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class RenderEndPortal extends TileEntitySpecialRenderer
 {
     FloatBuffer field_76908_a = GLAllocation.createDirectFloatBuffer(16);

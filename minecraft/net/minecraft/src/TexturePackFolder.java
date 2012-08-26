@@ -1,11 +1,14 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+@SideOnly(Side.CLIENT)
 public class TexturePackFolder extends TexturePackImplementation
 {
     public TexturePackFolder(String par1Str, File par2File)

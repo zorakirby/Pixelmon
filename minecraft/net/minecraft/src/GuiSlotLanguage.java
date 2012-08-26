@@ -1,9 +1,12 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 
+@SideOnly(Side.CLIENT)
 class GuiSlotLanguage extends GuiSlot
 {
     private ArrayList field_77251_g;

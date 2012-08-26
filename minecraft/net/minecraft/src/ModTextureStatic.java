@@ -14,6 +14,8 @@
 
 package net.minecraft.src;
 
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
@@ -22,8 +24,6 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.FMLTextureFX;
-import cpw.mods.fml.common.FMLCommonHandler;
-import static org.lwjgl.opengl.GL11.*;
 
 public class ModTextureStatic extends FMLTextureFX
 {
@@ -33,30 +33,30 @@ public class ModTextureStatic extends FMLTextureFX
     private int storedSize;
     private BufferedImage overrideData = null;
     private int needApply = 2;
-    
-    
+
+
     public ModTextureStatic(int icon, int target, BufferedImage image)
     {
         this(icon, 1, target, image);
     }
 
-    public ModTextureStatic(int icon, int size, int target, BufferedImage image)    
+    public ModTextureStatic(int icon, int size, int target, BufferedImage image)
     {
         this(icon, size, (target == 0 ? "/terrain.png" : "/gui/items.png"), image);
     }
-    
+
     public ModTextureStatic(int icon, int size, String target, BufferedImage image)
     {
         super(icon);
         RenderEngine re = FMLClientHandler.instance().getClient().renderEngine;
-        
+
         targetTex = target;
         storedSize = size;
         tileSize = size;
         tileImage = re.getTexture(target);
         overrideData = image;
     }
-    
+
     @Override
     public void setup()
     {
@@ -80,16 +80,17 @@ public class ModTextureStatic extends FMLTextureFX
 
         update();
     }
-    
-    public void func_783_a()
+
+    @Override
+    public void onTick()
     {
         if (oldanaglyph != anaglyphEnabled)
         {
             update();
         }
-        // This makes it so we only apply the texture to the target texture when we need to, 
-        //due to the fact that update is called when the Effect is first registered, we actually 
-        //need to wait for the next one. 
+        // This makes it so we only apply the texture to the target texture when we need to,
+        //due to the fact that update is called when the Effect is first registered, we actually
+        //need to wait for the next one.
         tileSize = (needApply == 0 ? 0 : storedSize);
         if (needApply > 0)
         {
@@ -97,11 +98,12 @@ public class ModTextureStatic extends FMLTextureFX
         }
     }
 
-    public void func_782_a(RenderEngine p_782_1_)
+    @Override
+    public void bindImage(RenderEngine par1RenderEngine)
     {
-        GL11.glBindTexture(GL_TEXTURE_2D, p_782_1_.getTexture(targetTex));
+        GL11.glBindTexture(GL_TEXTURE_2D, par1RenderEngine.getTexture(targetTex));
     }
-    
+
     public void update()
     {
         needApply = 2;
@@ -126,7 +128,7 @@ public class ModTextureStatic extends FMLTextureFX
 
         oldanaglyph = anaglyphEnabled;
     }
-    
+
     //Implementation of http://scale2x.sourceforge.net/algorithm.html
     public static BufferedImage scale2x(BufferedImage image)
     {
@@ -170,9 +172,9 @@ public class ModTextureStatic extends FMLTextureFX
         return tmp;
     }
 
-    
+
     @Override
-    public String toString() 
+    public String toString()
     {
         return String.format("ModTextureStatic %s @ %d", targetTex, iconIndex);
     }

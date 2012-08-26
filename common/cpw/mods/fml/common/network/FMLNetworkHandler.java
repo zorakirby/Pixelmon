@@ -32,8 +32,8 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.discovery.ASMDataTable;
 import cpw.mods.fml.common.network.FMLPacket.Type;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
-import cpw.mods.fml.relauncher.FMLRelaunchLog;
 
 public class FMLNetworkHandler
 {
@@ -101,7 +101,7 @@ public class FMLNetworkHandler
             if (handleVanillaLoginKick(netLoginHandler, server, address, userName))
             {
                 // No FML on the client
-                FMLRelaunchLog.fine("Connection from %s rejected - no FML packet received from client", userName);
+                FMLLog.fine("Connection from %s rejected - no FML packet received from client", userName);
                 netLoginHandler.completeConnection("You don't have FML installed, or your installation is too old");
                 return;
             }
@@ -171,12 +171,12 @@ public class FMLNetworkHandler
     {
         if (login.clientEntityId == FML_HASH && login.dimension == PROTOCOL_VERSION)
         {
-            FMLRelaunchLog.finest("Received valid FML login packet from %s", handler.myTCPConnection.getSocketAddress());
+            FMLLog.finest("Received valid FML login packet from %s", handler.myTCPConnection.getSocketAddress());
             instance().loginStates.put(handler, 1);
         }
         else
         {
-            FMLRelaunchLog.fine("Received invalid FML login packet %d, %d from %s", login.clientEntityId, login.dimension,
+            FMLLog.fine("Received invalid FML login packet %d, %d from %s", login.clientEntityId, login.dimension,
                     handler.myTCPConnection.getSocketAddress());
         }
     }
@@ -247,6 +247,7 @@ public class FMLNetworkHandler
     public static void handlePlayerLogin(EntityPlayerMP player, NetServerHandler netHandler, NetworkManager manager)
     {
         NetworkRegistry.instance().playerLoggedIn(player, netHandler, manager);
+        GameRegistry.onPlayerLogin(player);
     }
 
     public Map<Integer, NetworkModHandler> getNetworkIdMap()
@@ -258,8 +259,11 @@ public class FMLNetworkHandler
     {
         Map<String, ModContainer> mods = Loader.instance().getIndexedModList();
         NetworkModHandler handler = findNetworkModHandler(mods.get(key));
-        handler.setNetworkId(value);
-        networkIdLookup.put(value, handler);
+        if (handler != null)
+        {
+            handler.setNetworkId(value);
+            networkIdLookup.put(value, handler);
+        }
     }
 
     public static void onClientConnectionToRemoteServer(NetHandler netClientHandler, String server, int port, NetworkManager networkManager)

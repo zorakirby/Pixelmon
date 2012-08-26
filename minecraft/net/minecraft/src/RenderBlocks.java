@@ -1,11 +1,14 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.client.Minecraft;
 import static net.minecraftforge.common.ForgeDirection.*;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+@SideOnly(Side.CLIENT)
 public class RenderBlocks
 {
     /** The IBlockAccess used by this instance of RenderBlocks */

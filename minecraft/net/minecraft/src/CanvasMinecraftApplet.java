@@ -1,8 +1,11 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.awt.Canvas;
 import net.minecraft.client.MinecraftApplet;
 
+@SideOnly(Side.CLIENT)
 public class CanvasMinecraftApplet extends Canvas
 {
     /** Reference to the MinecraftApplet object. */

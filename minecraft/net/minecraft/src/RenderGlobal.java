@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,10 +11,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.SkyProvider;
+
 import org.lwjgl.opengl.ARBOcclusionQuery;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class RenderGlobal implements IWorldAccess
 {
     public List tileEntities = new ArrayList();
@@ -867,6 +873,12 @@ public class RenderGlobal implements IWorldAccess
      */
     public void renderSky(float par1)
     {
+        SkyProvider skyProvider = null;
+        if ((skyProvider = this.mc.theWorld.provider.getSkyProvider()) != null)
+        {
+            skyProvider.render(par1, this.theWorld, mc);
+            return;
+        }
         if (this.mc.theWorld.provider.worldType == 1)
         {
             GL11.glDisable(GL11.GL_FOG);

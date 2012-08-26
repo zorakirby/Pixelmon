@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import net.minecraftforge.client.SkyProvider;
 import net.minecraftforge.common.DimensionManager;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
@@ -31,6 +32,8 @@ public abstract class WorldProvider
 
     /** Array for sunrise/sunset colors (RGBA) */
     private float[] colorsSunriseSunset = new float[4];
+
+    private SkyProvider skyProvider = null;
 
     /**
      * associate an existing world with a World provider, and setup its lightbrightness table
@@ -327,4 +330,17 @@ public abstract class WorldProvider
         }
         return 1.0;
     }
+
+    @SideOnly(Side.CLIENT)
+    public SkyProvider getSkyProvider()
+    {
+        return this.skyProvider;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void setSkyProvider(SkyProvider skyProvider)
+    {
+        this.skyProvider = skyProvider;
+    }
+
 }

@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 
+@SideOnly(Side.CLIENT)
 public class StatsSyncher
 {
     private volatile boolean isBusy = false;

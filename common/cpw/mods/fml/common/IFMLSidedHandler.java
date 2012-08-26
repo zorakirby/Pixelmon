@@ -1,21 +1,13 @@
 package cpw.mods.fml.common;
 
-import java.io.File;
-import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Logger;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.DedicatedServer;
 import net.minecraft.src.Entity;
 import net.minecraft.src.Packet;
-import net.minecraft.src.World;
-
-import cpw.mods.fml.common.modloader.ModProperty;
 import cpw.mods.fml.common.network.EntitySpawnAdjustmentPacket;
 import cpw.mods.fml.common.network.EntitySpawnPacket;
+import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
 
 public interface IFMLSidedHandler
 {
@@ -27,7 +19,7 @@ public interface IFMLSidedHandler
 
     void showGuiScreen(Object clientGuiElement);
 
-    Entity spawnEntityIntoClientWorld(Class<? extends Entity> entityClass, EntitySpawnPacket packet);
+    Entity spawnEntityIntoClientWorld(EntityRegistration registration, EntitySpawnPacket packet);
 
     void adjustEntityLocationOnClient(EntitySpawnAdjustmentPacket entitySpawnAdjustmentPacket);
 

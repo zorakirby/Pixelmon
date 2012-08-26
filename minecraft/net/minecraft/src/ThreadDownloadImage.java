@@ -1,9 +1,12 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
+@SideOnly(Side.CLIENT)
 class ThreadDownloadImage extends Thread
 {
     /** The URL of the image to download. */

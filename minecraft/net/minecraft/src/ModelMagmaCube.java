@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class ModelMagmaCube extends ModelBase
 {
     ModelRenderer[] field_78109_a = new ModelRenderer[8];

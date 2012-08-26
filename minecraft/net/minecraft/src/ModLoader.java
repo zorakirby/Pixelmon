@@ -12,17 +12,16 @@
  */
 package net.minecraft.src;
 
+import static cpw.mods.fml.common.Side.CLIENT;
+
 import java.awt.image.BufferedImage;
 import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
-
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.SpriteHelper;
 import cpw.mods.fml.client.TextureFXManager;
@@ -34,8 +33,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Side;
-import static cpw.mods.fml.common.Side.*;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.asm.SideOnly;
 import cpw.mods.fml.common.modloader.ModLoaderHelper;
 import cpw.mods.fml.common.modloader.ModLoaderModContainer;
@@ -45,8 +43,12 @@ import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import cpw.mods.fml.server.FMLServerHandler;
 
+/**
+ * @author cpw
+ *
+ */
 public class ModLoader
 {
     public static final String fmlMarker = "This is an FML marker";
@@ -115,6 +117,10 @@ public class ModLoader
         GameRegistry.addBiome(biome);
     }
 
+    public static void addEntityTracker(BaseMod mod, Class<? extends Entity> entityClass, int entityTypeId, int updateRange, int updateInterval, boolean sendVelocityInfo)
+    {
+        ModLoaderHelper.buildEntityTracker(mod, entityClass, entityTypeId, updateRange, updateInterval, sendVelocityInfo);
+    }
     /**
      * Add localization for the specified string
      *
@@ -221,6 +227,16 @@ public class ModLoader
     }
 
     /**
+     * Add a new product to be smelted
+     *
+     * @param input
+     * @param output
+     */
+    public static void addSmelting(int input, ItemStack output, float experience)
+    {
+        GameRegistry.addSmelting(input, output, experience);
+    }
+    /**
      * Add a mob to the spawn list
      *
      * @param entityClass
@@ -276,6 +292,19 @@ public class ModLoader
     public static void addSpawn(String entityName, int weightedProb, int min, int max, EnumCreatureType spawnList, BiomeGenBase... biomes)
     {
         EntityRegistry.addSpawn(entityName, weightedProb, min, max, spawnList, biomes);
+    }
+
+    public static void addTrade(int profession, TradeEntry entry)
+    {
+        ModLoaderHelper.registerTrade(profession, entry);
+    }
+    /**
+     * Send a packet from the client
+     * @param packet
+     */
+    public static void clientSendPacket(Packet packet)
+    {
+        PacketDispatcher.sendPacketToServer(packet);
     }
 
     /**
@@ -564,6 +593,10 @@ public class ModLoader
         GameRegistry.registerBlock(block, itemclass);
     }
 
+    public static void registerContainerID(BaseMod mod, int id)
+    {
+        ModLoaderHelper.buildGuiHelper(mod, id);
+    }
     /**
      * Register a new entity ID
      *
@@ -593,8 +626,7 @@ public class ModLoader
     @SideOnly(CLIENT)
     public static void registerKey(BaseMod mod, KeyBinding keyHandler, boolean allowRepeat)
     {
-        ModLoaderModContainer mlmc=ModLoaderHelper.registerKeyHelper(mod);
-        KeyBindingRegistry.registerKeyBinding(new ModLoaderKeyBindingHandler(keyHandler, allowRepeat, mlmc));
+        ModLoaderClientHelper.registerKeyBinding(mod, keyHandler, allowRepeat);
     }
 
     /**
@@ -737,6 +769,18 @@ public class ModLoader
     public static void serverLogin(NetClientHandler handler, Packet1Login loginPacket)
     {
         //TODO
+    }
+
+    public static void serverSendPacket(NetServerHandler handler, Packet packet)
+    {
+        if (handler != null)
+        {
+            PacketDispatcher.sendPacketToPlayer(packet, (Player)handler.getPlayer());
+        }
+    }
+    public static void serverOpenWindow(EntityPlayerMP player, Container container, int ID, int x, int y, int z)
+    {
+        ModLoaderHelper.openGui(ID, player, container, x, y, z);
     }
 
     /**

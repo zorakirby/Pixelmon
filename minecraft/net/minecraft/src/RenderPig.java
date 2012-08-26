@@ -1,5 +1,9 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class RenderPig extends RenderLiving
 {
     public RenderPig(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)

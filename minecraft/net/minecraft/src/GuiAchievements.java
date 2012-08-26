@@ -1,16 +1,19 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.AchievementPage;
-import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+@SideOnly(Side.CLIENT)
 public class GuiAchievements extends GuiScreen
 {
     /** The top x coordinate of the achievement map */

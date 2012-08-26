@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.File;
 
+@SideOnly(Side.CLIENT)
 class TexturePackDownloadSuccess implements IDownloadSuccess
 {
     final TexturePackList field_76171_a;

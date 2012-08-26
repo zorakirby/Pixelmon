@@ -1,10 +1,13 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.lwjgl.input.Mouse;
 
+@SideOnly(Side.CLIENT)
 abstract class GuiSlotStats extends GuiSlot
 {
     protected int field_77262_g;

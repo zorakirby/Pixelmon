@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+@SideOnly(Side.CLIENT)
 public class RenderSheep extends RenderLiving
 {
     public RenderSheep(ModelBase par1ModelBase, ModelBase par2ModelBase, float par3)

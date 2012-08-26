@@ -1,7 +1,10 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.util.concurrent.Callable;
 
+@SideOnly(Side.CLIENT)
 class CallableMPL1 implements Callable
 {
     /** Initialises the WorldClient for CallableMPL1. */

@@ -1,11 +1,14 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.Sys;
 
+@SideOnly(Side.CLIENT)
 public class GuiTexturePacks extends GuiScreen
 {
     protected GuiScreen guiScreen;

@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,6 +9,7 @@ import java.util.List;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+@SideOnly(Side.CLIENT)
 public class GuiChat extends GuiScreen
 {
     private String field_73898_b = "";

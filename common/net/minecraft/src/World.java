@@ -2003,7 +2003,6 @@ public abstract class World implements IBlockAccess
             canUpdate = event.canUpdate;
         }
         if (canUpdate)
-        if (!par2 || this.checkChunksExist(var3 - var5, 0, var4 - var5, var3 + var5, 0, var4 + var5))
         {
             par1Entity.lastTickPosX = par1Entity.posX;
             par1Entity.lastTickPosY = par1Entity.posY;
