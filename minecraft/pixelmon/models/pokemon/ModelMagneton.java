@@ -11,7 +11,10 @@
 
 package pixelmon.models.pokemon;
 
+import java.util.Random;
+
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -383,9 +386,36 @@ public class ModelMagneton extends ModelBase
     model.rotateAngleZ = z;
   }
   
+  Random randomGenerator = new Random();
+  int count = 0;
+  
+  boolean Headisrotating = false;
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    LowerLeftBody.rotationPointY = MathHelper.cos(.2F * f2)*5F*.5F; 
+    LowerRightBody.rotationPointY = MathHelper.cos(.2F * f2)*5F*.5F; 
+    TopBody.rotationPointY = MathHelper.cos(.2F * f2)*5F*.5F - 5F; 
+    
+    int randomInt = randomGenerator.nextInt(10);
+	
+    if(randomInt == 4)
+   	{
+   		Headisrotating = true;
+   	}
+	
+
+	else if(Headisrotating = true)
+	{
+		TopRightMagnet.rotateAngleX += .1F;
+		count++;
+	}
+		
+	if(count>=3)
+	{
+		Headisrotating = false;
+	}
+    
   }
 
 }
