@@ -22,7 +22,7 @@ public class EntityAIStartBattle extends EntityAIBase {
 			if (((BaseEntityPixelmon) theEntity).getAttackTarget() instanceof EntityPlayer)
 				return true;
 			if (((BaseEntityPixelmon) theEntity).getAttackTarget().getDistanceSqToEntity((Entity) this.theEntity) < 2) {
-				theEntity.getHelper().StartBattle(((BaseEntityPixelmon) ((BaseEntityPixelmon) theEntity).getAttackTarget()).helper);
+				//theEntity.getHelper().StartBattle(((BaseEntityPixelmon) ((BaseEntityPixelmon) theEntity).getAttackTarget()).helper);
 				return true;
 			}
 		}else if (theEntity instanceof EntityWaterPixelmon){
@@ -31,7 +31,7 @@ public class EntityAIStartBattle extends EntityAIBase {
 			if (((EntityWaterPixelmon) theEntity).getAttackTarget() instanceof EntityPlayer)
 				return true;
 			if (((EntityWaterPixelmon) theEntity).getAttackTarget().getDistanceSqToEntity((Entity) this.theEntity) < 2) {
-				theEntity.getHelper().StartBattle(((EntityWaterPixelmon) ((EntityWaterPixelmon) theEntity).getAttackTarget()).helper);
+				//theEntity.getHelper().StartBattle(((EntityWaterPixelmon) ((EntityWaterPixelmon) theEntity).getAttackTarget()).helper);
 				return true;
 			}
 		}

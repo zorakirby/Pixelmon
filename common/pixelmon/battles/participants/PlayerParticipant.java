@@ -23,7 +23,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	public EntityPlayerMP player;
 	PixelmonEntityHelper currentPixelmon;
 	BattleController bc;
-	
+
 	public PlayerParticipant(EntityPlayerMP p, PixelmonEntityHelper firstPixelmon) {
 		player = p;
 		currentPixelmon = firstPixelmon;
@@ -60,7 +60,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return currentPixelmon.getIsDead() || currentPixelmon.isFainted;
+		return currentPixelmon.getIsDead() || currentPixelmon.isFainted || currentPixelmon.getHealth() <= 0;
 	}
 
 	@Override
@@ -88,21 +88,21 @@ public class PlayerParticipant implements IBattleParticipant {
 		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "That's enough " + currentPixelmon.getName() + "!");
 		currentPixelmon.catchInPokeball();
 
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)currentPixelmon.getOwner()).retrieve((IHaveHelper) currentPixelmon.getIHaveHelper());
-		IHaveHelper newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)currentPixelmon.getOwner()).sendOut(newPixelmonId,
-				currentPixelmon.getOwner().worldObj);
-		((EntityLiving)newPixelmon).setLocationAndAngles(((EntityLiving)currentPixelmon.getEntity()).posX, ((EntityLiving)currentPixelmon.getEntity()).posY, ((EntityLiving)currentPixelmon.getEntity()).posZ, ((EntityLiving)currentPixelmon.getEntity()).rotationYaw, 0.0F);
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).retrieve((IHaveHelper) currentPixelmon.getIHaveHelper());
+		IHaveHelper newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
+		((EntityLiving) newPixelmon).setLocationAndAngles(((EntityLiving) currentPixelmon.getEntity()).posX, ((EntityLiving) currentPixelmon.getEntity()).posY,
+				((EntityLiving) currentPixelmon.getEntity()).posZ, ((EntityLiving) currentPixelmon.getEntity()).rotationYaw, 0.0F);
 		newPixelmon.getHelper().setMotion(0, 0, 0);
 		newPixelmon.getHelper().releaseFromPokeball();
-		
+
 		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "Go " + newPixelmon.getHelper().getName() + "!");
 		currentPixelmon = newPixelmon.getHelper();
 	}
 
 	@Override
 	public boolean checkPokemon() {
-		for (NBTTagCompound n : PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)currentPokemon().getOwner()).partyPokemon) {
-			if (n!=null && n.getInteger("PixelmonNumberMoves") == 0) {
+		for (NBTTagCompound n : PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPokemon().getOwner()).partyPokemon) {
+			if (n != null && n.getInteger("PixelmonNumberMoves") == 0) {
 				ChatHandler.sendChat(currentPixelmon.getOwner(), "Couldn't load pokemon's moves");
 				return false;
 			}
@@ -117,6 +117,6 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)currentPixelmon.getOwner()).getNBT(currentPixelmon.getPokemonId()).setBoolean("IsFainted", true);		
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).getNBT(currentPixelmon.getPokemonId()).setBoolean("IsFainted", true);
 	}
 }

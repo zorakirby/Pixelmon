@@ -46,7 +46,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return pixelmon.getIsDead() || pixelmon.isFainted;
+		return pixelmon.getIsDead() || pixelmon.isFainted || pixelmon.getHealth() <= 0;
 	}
 
 	boolean isWild = true;

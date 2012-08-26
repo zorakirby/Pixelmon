@@ -13,7 +13,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	public EntityTrainer trainer;
 	private BattleController bc;
-	
+
 	public TrainerParticipant(EntityTrainer trainer, EntityPlayer opponent) {
 		this.trainer = trainer;
 		trainer.releasePokemon();
@@ -21,10 +21,10 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void setBattleController(BattleController bc){
+	public void setBattleController(BattleController bc) {
 		this.bc = bc;
 	}
-	
+
 	@Override
 	public PixelmonEntityHelper currentPokemon() {
 		return trainer.releasedPokemon.getHelper();
@@ -55,13 +55,13 @@ public class TrainerParticipant implements IBattleParticipant {
 	@Override
 	public void getNextPokemon() {
 		trainer.pokemonStorage.updateNBT(currentPokemon());
-		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted",true);
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
 		trainer.releasePokemon();
 	}
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return trainer.releasedPokemon.getHelper().getIsDead() || trainer.releasedPokemon.getHelper().isFainted;
+		return trainer.releasedPokemon.getHelper().getIsDead() || trainer.releasedPokemon.getHelper().isFainted || trainer.releasedPokemon.getHelper().getHealth() <= 0;
 	}
 
 	@Override
@@ -71,20 +71,19 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.getHelper().moveset, participant2.currentPokemon().getType(),
-				trainer.releasedPokemon.getHelper(), participant2.currentPokemon());
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.getHelper().moveset, participant2.currentPokemon().getType(), trainer.releasedPokemon.getHelper(), participant2.currentPokemon());
 	}
 
 	@Override
 	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public boolean checkPokemon() {
-		for(NBTTagCompound n: trainer.pokemonStorage.partyPokemon){
-			if (n!=null && n.getInteger("PixelmonNumberMoves")==0){
+		for (NBTTagCompound n : trainer.pokemonStorage.partyPokemon) {
+			if (n != null && n.getInteger("PixelmonNumberMoves") == 0) {
 				System.out.println("Couldn't load pokemon's moves");
 				return false;
 			}
