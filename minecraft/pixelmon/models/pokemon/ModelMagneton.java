@@ -388,7 +388,7 @@ public class ModelMagneton extends ModelBase {
 		LowerRightBody.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F;
 		TopBody.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F - 5F;
 
-		int randomInt = randomGenerator.nextInt(1000);
+		int randomInt = randomGenerator.nextInt(100);
 
 		if (randomInt == 4) {
 			Headisrotating = true;
@@ -397,9 +397,12 @@ public class ModelMagneton extends ModelBase {
 			count++;
 		}
 
-		if (count >= 3) {
+		if (count >= 63) {
 			Headisrotating = false;
-		}
+			count = 0;
+			}
+		
+		
 
 	}
 
