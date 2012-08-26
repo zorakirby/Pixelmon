@@ -386,30 +386,32 @@ public class ModelMagneton extends ModelBase
     model.rotateAngleZ = z;
   }
   
+  Random randomGenerator = new Random();
+  int count = 0;
+  
+  boolean Headisrotating = false;
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
     LowerLeftBody.rotationPointY = MathHelper.cos(.2F * f2)*5F*.5F; 
     LowerRightBody.rotationPointY = MathHelper.cos(.2F * f2)*5F*.5F; 
     TopBody.rotationPointY = MathHelper.cos(.2F * f2)*5F*.5F - 5F; 
-    Random randomGenerator = new Random();
-    int count = 0;
-    int randomInt = randomGenerator.nextInt(1001);
-	boolean Headisrotating = false;
+    
+    int randomInt = randomGenerator.nextInt(10);
 	
-	if(Headisrotating = true)
+    if(randomInt == 4)
+   	{
+   		Headisrotating = true;
+   	}
+	
+
+	else if(Headisrotating = true)
 	{
 		TopRightMagnet.rotateAngleX += .1F;
 		count++;
 	}
-	
-
-	else if(randomInt == 4)
-	{
-		Headisrotating = true;
-	}
 		
-	if(count==3)
+	if(count>=3)
 	{
 		Headisrotating = false;
 	}
