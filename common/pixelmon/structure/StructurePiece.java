@@ -12,7 +12,6 @@ import net.minecraft.src.World;
  *
  */
 
-@SideOnly(value = Side.SERVER)
 public final class StructurePiece
 {
 	public int blockX;

@@ -19,7 +19,6 @@ import net.minecraft.src.World;
  *
  */
 
-@SideOnly(value = Side.SERVER)
 public class Generation
 {
 	public static final String blockToWaitOn = "'12''13''26''34''36''37''38''39''40''50''51''55''59''63''64''65''66''68''69''70''71''72''75''76''77''78''81''83''92''93''94''96''104''105''106''111''115''117''127''132'";

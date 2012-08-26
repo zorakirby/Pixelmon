@@ -49,7 +49,6 @@ import net.minecraft.src.World;
  *
  */
 
-//@SideOnly(value = Side.SERVER)
 public class Structure 
 {
 	public int recMode;

@@ -17,7 +17,6 @@ import net.minecraft.src.MovingObjectPosition;
  *
  */
 
-@SideOnly(value = Side.SERVER)
 public class CommandGen extends CommandBase {
 
 	@Override
