@@ -23,11 +23,15 @@ import pixelmon.items.ItemPokeBall;
 import pixelmon.storage.PixelmonStorage;
 
 public class SendPixelmon extends PacketHandlerBase {
-
+	public static HashMap<EntityPlayer, EntityPokeBall> playerPokeballs;
+	
 	public SendPixelmon(){
+		playerPokeballs = new HashMap<EntityPlayer, EntityPokeBall>();
 		packetsHandled.add(EnumPackets.SendPokemon);
 	}
 
+	
+	
 	@Override
 	public void handlePacket(int index, Player pl, DataInputStream dataStream) throws IOException {
 		EntityPlayerMP player = (EntityPlayerMP)pl;
@@ -35,8 +39,13 @@ public class SendPixelmon extends PacketHandlerBase {
 		NBTTagCompound nbt = PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(pokemonId);
 		if (!PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj)
 				&& !PixelmonStorage.PokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
+			
+			if (playerPokeballs.get(player)!=null && !playerPokeballs.get(player).isDead)
+				return;
+			
 			PixelmonEntityHelper helper = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj).getHelper();
 			EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, helper, helper.caughtBall);
+			playerPokeballs.put(player, pokeball);
 			
 			boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
 			ChatHandler.sendChat(player, "You sent out " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");
