@@ -75,10 +75,7 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
-		// TODO Auto-generated method stub
-
-	}
+	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {	}
 
 	@Override
 	public boolean checkPokemon() {
