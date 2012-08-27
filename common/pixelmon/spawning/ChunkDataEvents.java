@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import pixelmon.RandomHelper;
+import pixelmon.config.PixelmonConfig;
 
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.ChunkDataEvent;
@@ -59,9 +60,11 @@ public class ChunkDataEvents {
 	}
 
 	private Random rand = new Random();
-	
+
 	private int generateChunkPixelmonNumber() {
-		int r = rand.nextInt(5)-1;
+		if (rand.nextFloat() * 100 < PixelmonConfig.chanceOfNoPokemon)
+			return 0;
+		int r = rand.nextInt(PixelmonConfig.maxPokemonPerChunk - 1) + 1;
 		return r;
 	}
 }

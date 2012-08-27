@@ -26,6 +26,10 @@ public class PixelmonConfig {
 	
 	public static boolean allowNonPixelmonMobs;
 	
+	public static int maxPokemonPerChunk=3;
+	
+	public static int chanceOfNoPokemon;
+	
 	public static void loadConfig(Configuration configuration)
 	{
 		config = configuration;
@@ -35,6 +39,8 @@ public class PixelmonConfig {
 		IDListPixelmon.load(config);
 		IDListTrainer.load(config);
 		allowNonPixelmonMobs = config.getOrCreateBooleanProperty("Allow vanilla mobs", "general", false).getBoolean(false);
+		maxPokemonPerChunk = config.getOrCreateIntProperty("Max number of pokemon per chunk", "general", 3).getInt(3);
+		chanceOfNoPokemon = config.getOrCreateIntProperty("Percent chance of no pokemon in chunk", "general", 60).getInt(60);
 		config.save();
 		
 		PixelmonItems.addNames();
