@@ -182,10 +182,11 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	// Random Crap I
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
-		if (health - par2 < 0) {
-			par2 = health;
-		}
 		if (!worldObj.isRemote) {
+			if (health - par2 < 0) {
+				par2 = health;
+				this.onDeath(par1DamageSource);
+			}
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 			Entity entity = par1DamageSource.getEntity();
 			if (getOwner() != null)

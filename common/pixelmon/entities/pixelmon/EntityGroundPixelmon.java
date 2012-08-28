@@ -43,7 +43,7 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 			tasks.addTask(4, new PixelmonAIStartBattle(this));
 		}
 		tasks.addTask(5, new EntityAIAvoidEntity(this, EntityPlayer.class, 16.0F, 0.23F, 0.4F));
-        tasks.addTask(6, new EntityAIFollowOwner(this, 0.3F, 10.0F, 5.0F));
+        tasks.addTask(6, new EntityAIFollowOwner(this, 0.3F, 10.0F, 4.0F));
 		tasks.addTask(7, new EntityAITempt(this, moveSpeed, PixelmonItems.rareCandy.shiftedIndex, false));
 		tasks.addTask(8, new EntityAIWander(this, moveSpeed));
 		tasks.addTask(9, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
