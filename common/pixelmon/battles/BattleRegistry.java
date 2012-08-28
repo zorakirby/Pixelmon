@@ -55,8 +55,4 @@ public class BattleRegistry {
 			bc.update();
 		}
 	}
-
-	public static boolean isParticipant(PixelmonEntityHelper pixelmon) {
-		return false;
-	}
 }

@@ -15,7 +15,7 @@ public class PixelmonAIIsInBattle extends EntityAIBase {
 
 	@Override
 	public boolean shouldExecute() {
-		return pixelmon.bc != null || BattleRegistry.isParticipant(pixelmon);
+		return pixelmon.bc != null;
 	}
 
 	@Override
