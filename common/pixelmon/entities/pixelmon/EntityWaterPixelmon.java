@@ -93,7 +93,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	@Override
 	public String getTexture() {
-		if (dataWatcher.getWatchableObjectShort(20) == 1)
+		if (dataWatcher.getWatchableObjectShort(20) == 1 && Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-shiny/shiny" + name.toLowerCase() + ".png")!=null)
 			return "/pixelmon/texture/pokemon-shiny/shiny" + name.toLowerCase() + ".png";
 		else if (dataWatcher.getWatchableObjectShort(21) == 1 && Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + name.toLowerCase() + ".png")!=null)
 			return "/pixelmon/texture/pokemon-roasted/roasted" + name.toLowerCase() + ".png";
