@@ -1,5 +1,6 @@
 package pixelmon.entities.pixelmon;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -30,6 +31,7 @@ import pixelmon.enums.EnumType;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PokeballManager;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.DamageSource;
@@ -61,8 +63,10 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public EntityWaterPixelmon(World par1World) {
 		super(par1World);
 		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
+		dataWatcher.addObject(18, "");
 		dataWatcher.addObject(19, -1);
 		dataWatcher.addObject(20, (short) 0);
+		dataWatcher.addObject(21, (short) 0); // roasted
 	}
 
 	public void init() {
@@ -70,7 +74,6 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 			System.out.println("Shiny " + name + " spawned");
 			dataWatcher.updateObject(20, (short) 1);
 		}
-		dataWatcher.addObject(18, "");
 		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
 		helper.giScale = helper.stats.BaseStats.giScale;
 		type.add(helper.stats.BaseStats.Type1);
@@ -92,6 +95,8 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	public String getTexture() {
 		if (dataWatcher.getWatchableObjectShort(20) == 1)
 			return "/pixelmon/texture/pokemon-shiny/shiny" + name.toLowerCase() + ".png";
+		else if (dataWatcher.getWatchableObjectShort(21) == 1 && Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + name.toLowerCase() + ".png")!=null)
+			return "/pixelmon/texture/pokemon-roasted/roasted" + name.toLowerCase() + ".png";
 		else
 			return "/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png";
 	}
@@ -412,6 +417,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 				par2 = health;
 				this.onDeath(par1DamageSource);
 			}
+			if (par1DamageSource.fireDamage()) dataWatcher.updateObject(21, (short)1);
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 			Entity entity = par1DamageSource.getEntity();
 			if (getOwner() != null)
