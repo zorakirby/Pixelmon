@@ -221,7 +221,7 @@ public class PlayerStorage {
 		int c = 0;
 		for (NBTTagCompound e : partyPokemon)
 			if (e != null) {
-				if (!e.getBoolean("IsFainted"))
+				if (!e.getBoolean("IsFainted") && e.getShort("Health")>0)
 					c++;
 			}
 
