@@ -339,12 +339,10 @@ public class PlayerStorage {
 	}
 
 	public IHaveHelper getFirstAblePokemon(World world) {
-		for (NBTTagCompound n : partyPokemon) {
-			if (n != null && !n.getBoolean("IsFainted")) {
-				n.setBoolean("IsInBall", false);
-				IHaveHelper e = (IHaveHelper) PixelmonEntityList.createEntityFromNBT(n, world);
-				return e;
-			}
+		for (int i=0; i < carryLimit; i++){
+			int id = getIDFromPosition(i);
+			if (id !=-1 && !isFainted(id))
+				return sendOut(id, world);
 		}
 		return null;
 	}

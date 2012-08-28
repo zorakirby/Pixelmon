@@ -3,6 +3,7 @@ package pixelmon.battles;
 import java.util.ArrayList;
 
 import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 import net.minecraft.src.EntityPlayer;
 
@@ -53,5 +54,9 @@ public class BattleRegistry {
 		for (BattleController bc : battleList) {
 			bc.update();
 		}
+	}
+
+	public static boolean isParticipant(PixelmonEntityHelper pixelmon) {
+		return false;
 	}
 }

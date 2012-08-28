@@ -326,8 +326,8 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public void onUpdate() {
-		if (helper.bc != null) {
-			helper.bc.update();
+		if (helper != null) {
+			helper.onUpdate();
 		}
 		super.onUpdate();
 	}

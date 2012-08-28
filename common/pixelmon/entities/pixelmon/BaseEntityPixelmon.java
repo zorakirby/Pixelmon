@@ -334,8 +334,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public void onUpdate() {
-		if (helper.bc != null) {
-			helper.bc.update();
+		if (helper != null) {
+			helper.onUpdate();
 		}
 		if (litUp = true) {
 			double po11 = this.lastTickPosX;
