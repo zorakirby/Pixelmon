@@ -85,7 +85,6 @@ public class ClientProxy extends CommonProxy {
 			String name = (String) entry.getValue();
 			ClassType type = PixelmonEntityList.getClassTypeFromID((Integer) entry.getKey());
 			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon){
-				MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon-shiny/shiny" + name.toLowerCase() + ".png");
 				MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png");
 			}
 		}
