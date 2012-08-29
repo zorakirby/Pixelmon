@@ -378,9 +378,10 @@ public class ModelMagneton extends ModelBase {
 	}
 
 	Random randomGenerator = new Random();
-	int count = 0;
+	int[] count = new int[6];
 
-	boolean Headisrotating = false;
+	boolean[] Headisrotating = new boolean[6];
+
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5);
@@ -390,18 +391,77 @@ public class ModelMagneton extends ModelBase {
 
 		int randomInt = randomGenerator.nextInt(100);
 
-		if (randomInt == 4) {
-			Headisrotating = true;
-		}else if (Headisrotating == true) {
+		if (randomInt == 4) {					//topright magnet
+			Headisrotating[1] = true;
+		}else if (Headisrotating[1] == true) {
 			TopRightMagnet.rotateAngleX += .1F;
-			count++;
+			count[1]++;
 		}
 
-		if (count >= 63) {
-			Headisrotating = false;
-			count = 0;
+		if (count[1] >= 63) {
+			Headisrotating[1] = false;
+			count[1] = 0;
 			}
 		
+		if (randomInt == 5) {					//topleft magnet
+			Headisrotating[2] = true;
+		}else if (Headisrotating[2] == true) {
+			TopLeftMagnet.rotateAngleX -= .1F;
+			count[2]++;
+		}
+
+		if (count[2] >= 63) {
+			Headisrotating[2] = false;
+			count[2] = 0;
+			}
+		
+		if (randomInt == 6) {					//LowerLeft magnet
+			Headisrotating[3] = true;
+		}else if (Headisrotating[3] == true) {
+			LowerLeftMagnet.rotateAngleX += .1F;
+			count[3]++;
+		}
+
+		if (count[3] >= 63) {
+			Headisrotating[3] = false;
+			count[3] = 0;
+			}
+		
+		if (randomInt == 7) {					//LowerRight magnet
+			Headisrotating[4] = true;
+		}else if (Headisrotating[4] == true) {
+			LowerRightMagnet.rotateAngleX -= .1F;
+			count[4]++;
+		}
+
+		if (count[4] >= 63) {
+			Headisrotating[4] = false;
+			count[4] = 0;
+			}
+		
+		if (randomInt == 8) {					//BottomRight magnet
+			Headisrotating[5] = true;
+		}else if (Headisrotating[5] == true) {
+			BottomRightMagnet.rotateAngleX += .1F;
+			count[5]++;
+		}
+
+		if (count[5] >= 63) {
+			Headisrotating[5] = false;
+			count[5] = 0;
+			}
+		
+		if (randomInt == 9) {					//BottomLeft magnet
+			Headisrotating[6] = true;
+		}else if (Headisrotating[6] == true) {
+			BottomLeftMagnet.rotateAngleX -= .1F;
+			count[6]++;
+		}
+
+		if (count[6] >= 63) {
+			Headisrotating[6] = false;
+			count[6] = 0;
+			}
 		
 
 	}
