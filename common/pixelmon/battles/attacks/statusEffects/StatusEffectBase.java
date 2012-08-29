@@ -67,4 +67,6 @@ public abstract class StatusEffectBase extends EffectBase {
 	public boolean cantMiss() {
 		return false;
 	}
+	
+	public boolean pokemon1MovesFirst(PixelmonEntityHelper user, PixelmonEntityHelper target){ return false; }
 }

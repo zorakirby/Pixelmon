@@ -45,6 +45,8 @@ public class BattleController {
 	private ArrayList<Integer> attackersList1 = new ArrayList<Integer>();
 	private ArrayList<Integer> attackersList2 = new ArrayList<Integer>();
 
+	public ArrayList<StatusEffectBase> battleStatusList = new ArrayList<StatusEffectBase>();
+	
 	public BattleController(IBattleParticipant participant1, IBattleParticipant participant2) {
 		BattleRegistry.registerBattle(this);
 		this.participant1 = participant1;
@@ -125,13 +127,15 @@ public class BattleController {
 				for (int i = 0; i < participant1.currentPokemon().status.size(); i++) {
 					StatusEffectBase s = participant1.currentPokemon().status.get(i);
 					s.applyRepeatedEffect(participant1.currentPokemon(), participant2.currentPokemon());
-					s.turnTick(participant1.currentPokemon(), participant2.currentPokemon()); // Update
-																								// Status's
+					s.turnTick(participant1.currentPokemon(), participant2.currentPokemon()); // Update Status's
 				}
 				for (int i = 0; i < participant2.currentPokemon().status.size(); i++) {
 					StatusEffectBase s = participant2.currentPokemon().status.get(i);
 					s.applyRepeatedEffect(participant2.currentPokemon(), participant1.currentPokemon());
 					s.turnTick(participant2.currentPokemon(), participant1.currentPokemon());
+				}
+				for (int i=0; i< battleStatusList.size(); i++){
+					battleStatusList.get(i).turnTick(participant1.currentPokemon(), participant2.currentPokemon());
 				}
 
 				checkAndReplaceFaintedPokemon(participant1, participant2);
@@ -199,6 +203,12 @@ public class BattleController {
 		else if (priority2 > priority1)
 			pixelmon1MovesFirst = false;
 		else {
+			for(StatusEffectBase e: battleStatusList){
+				if (e.applyStage== ApplyStage.Priority){
+					pixelmon1MovesFirst = e.pokemon1MovesFirst(participant1.currentPokemon(), participant2.currentPokemon());
+					return;
+				}
+			}
 			if (participant1.currentPokemon().stats.Speed * participant1.currentPokemon().battleStats.SpeedModifier > participant2.currentPokemon().stats.Speed
 					* participant2.currentPokemon().battleStats.SpeedModifier)
 				pixelmon1MovesFirst = true;
