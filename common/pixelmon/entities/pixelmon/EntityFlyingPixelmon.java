@@ -2,9 +2,8 @@ package pixelmon.entities.pixelmon;
 
 import java.util.List;
 
-import pixelmon.AI.EntityAIIsInBattle;
-import pixelmon.AI.EntityAINearestPixelmonTarget;
-import pixelmon.AI.EntityAIStartBattle;
+import pixelmon.AI.PixelmonAITargetNearest;
+import pixelmon.AI.PixelmonAIStartBattle;
 import pixelmon.battles.BattleController;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.EntityTrainer;
@@ -48,14 +47,13 @@ public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
 	public void loadAI() {
 		if (helper.aggression > 0) {
 			tasks.addTask(0, new EntityAIMoveTowardsTarget(this, moveSpeed, 15));
-			tasks.addTask(1, new EntityAINearestPixelmonTarget(this, 10, 50 - helper.aggression, true));
-			tasks.addTask(2, new EntityAIStartBattle(this));
+			tasks.addTask(1, new PixelmonAITargetNearest(this, 10, 50 - helper.aggression, true));
+			tasks.addTask(2, new PixelmonAIStartBattle(this));
 		}
 		tasks.addTask(3, new EntityAISwimming(this));
 		tasks.addTask(4, new EntityAITempt(this, moveSpeed, PixelmonItems.rareCandy.shiftedIndex, false));
 		tasks.addTask(6, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
 		tasks.addTask(7, new EntityAILookIdle(this));
-		tasks.addTask(8, new EntityAIIsInBattle(helper));
 	}
 
 	protected void fall(float f) {

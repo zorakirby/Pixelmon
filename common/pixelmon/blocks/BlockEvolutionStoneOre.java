@@ -6,6 +6,7 @@ import pixelmon.config.PixelmonBlocks;
 import pixelmon.config.PixelmonItems;
 
 import net.minecraft.src.Block;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Material;
 
 public class BlockEvolutionStoneOre extends Block{
@@ -18,6 +19,7 @@ public class BlockEvolutionStoneOre extends Block{
 		setHardness(hardness);
 		setStepSound(Block.soundStoneFootstep);
 		if (id == PixelmonBlocks.waterStoneOreId) setLightValue(0.5f);
+		setCreativeTab(CreativeTabs.tabMisc);
 	}
 	
     public boolean isOpaqueCube()

@@ -23,6 +23,9 @@ import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.worldGeneration.WorldGenLeafStoneOre;
+import pixelmon.worldGeneration.WorldGenThunderStoneOre;
+import pixelmon.worldGeneration.WorldGenWaterStoneOre;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ServerCommandManager;
@@ -91,6 +94,9 @@ public class Pixelmon {
 		proxy.preloadTextures();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", IDListPixelmon.i ++ , Pixelmon.instance, 80, 1, true);
+		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
+		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
+		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
@@ -104,11 +110,12 @@ public class Pixelmon {
 	}
 	
 	@ServerStarting
-	public void onServerStatr(FMLServerStartingEvent event)
+	public void onServerStart(FMLServerStartingEvent event)
 	{
 		if(MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager)
 		{
 			((ServerCommandManager)MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
 		}
 	}
+	
 }

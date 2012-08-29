@@ -4,6 +4,9 @@ import java.util.Random;
 
 import pixelmon.Pixelmon;
 import pixelmon.RandomHelper;
+import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.battles.participants.TrainerParticipant;
+import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
@@ -98,11 +101,13 @@ public class EntityPokeBall extends EntityThrowable {
 					pixelmon.setMotion(0, 0, 0);
 					pixelmon.releaseFromPokeball();
 					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)
-							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper()))
-						pixelmon.StartBattle(((IHaveHelper) movingobjectposition.entityHit).getHelper());
-					if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer)
-						pixelmon.StartBattle((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
-					else
+							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper())) {
+						WildPixelmonParticipant part = new WildPixelmonParticipant(((IHaveHelper) movingobjectposition.entityHit).getHelper());
+						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
+					} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
+						TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
+						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), trainer);
+					} else
 						pixelmon.clearAttackTarget();
 					if (thrower instanceof EntityPlayer) {
 

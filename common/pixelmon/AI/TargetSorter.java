@@ -5,12 +5,12 @@ import java.util.Comparator;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAINearestAttackableTarget;
 
-public class EntityAINearestPixelmonTargetSorter implements Comparator {
+public class TargetSorter implements Comparator {
 	private Entity theEntity;
 
-	final EntityAINearestPixelmonTarget parent;
+	final PixelmonAITargetNearest parent;
 
-	public EntityAINearestPixelmonTargetSorter(EntityAINearestPixelmonTarget par1EntityAINearestAttackableTarget, Entity par2Entity) {
+	public TargetSorter(PixelmonAITargetNearest par1EntityAINearestAttackableTarget, Entity par2Entity) {
 		this.parent = par1EntityAINearestAttackableTarget;
 		this.theEntity = par2Entity;
 	}

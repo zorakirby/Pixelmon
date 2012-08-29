@@ -34,7 +34,8 @@ public class SendPokemonKey extends KeyHandler {
 		{
 			return;
 		}
-		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
+		if (ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon]!=null)
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
 	}
 
 	@Override

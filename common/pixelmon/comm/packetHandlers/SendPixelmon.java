@@ -35,6 +35,8 @@ public class SendPixelmon extends PacketHandlerBase {
 		EntityPlayerMP player = (EntityPlayerMP) pl;
 		int pokemonId = dataStream.readInt();
 		NBTTagCompound nbt = PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(pokemonId);
+		if (nbt == null)
+			return;
 		if (!PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj) && !PixelmonStorage.PokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
 
 			if (playerPokeballs.get(player) != null && !playerPokeballs.get(player).isDead)

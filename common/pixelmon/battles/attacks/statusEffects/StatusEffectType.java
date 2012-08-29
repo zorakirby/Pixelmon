@@ -20,7 +20,8 @@ public enum StatusEffectType {
 	SmackedDown,
 	Substitute,
 	Sunny,
-	WaitAfter;
+	WaitAfter, 
+	TrickRoom;
 	
 	public static StatusEffectType getStatusEffect(String string){
 		if (string.equalsIgnoreCase("Burn")) return StatusEffectType.Burn;
@@ -42,6 +43,7 @@ public enum StatusEffectType {
 		if (string.equalsIgnoreCase("SmackedDown")) return StatusEffectType.SmackedDown;
 		if (string.equalsIgnoreCase("Substitute")) return StatusEffectType.Substitute;
 		if (string.equalsIgnoreCase("Sunny")) return StatusEffectType.Sunny;
+		if (string.equalsIgnoreCase("TrickRoom")) return StatusEffectType.TrickRoom;
 		if (string.equalsIgnoreCase("WaitAfter")) return StatusEffectType.WaitAfter;
 		return null;
 	}
@@ -66,6 +68,7 @@ public enum StatusEffectType {
 		if (string.equalsIgnoreCase("SmackedDown")) return true;
 		if (string.equalsIgnoreCase("Substitute")) return true;
 		if (string.equalsIgnoreCase("Sunny")) return true;
+		if (string.equalsIgnoreCase("TrickRoom")) return true;
 		if (string.equalsIgnoreCase("WaitAfter")) return true;
 		
 		return false;

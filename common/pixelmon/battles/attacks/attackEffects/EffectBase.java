@@ -32,7 +32,7 @@ public abstract class EffectBase {
 	public abstract void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList);
 
 	public enum ApplyStage {
-		Start, During, End
+		Start, During, End, Priority
 	}
 
 	public boolean checkChance() {

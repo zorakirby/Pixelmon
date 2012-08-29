@@ -63,6 +63,7 @@ public class PixelmonEntityHelper {
 	public float scale = 1F;
 	public float maxScale = 1.25F;
 	public BattleController bc;
+	public boolean wasBattleInitiator = false;
 	public LevelHelper lvl;
 	public float giScale = 1;
 	public boolean hitByPokeball;
@@ -145,48 +146,15 @@ public class PixelmonEntityHelper {
 		return lvl;
 	}
 
-	public void StartBattle(PixelmonEntityHelper target) {
+	public void StartBattle(IBattleParticipant p1, IBattleParticipant p2) {
 		if (moveset.size() == 0)
 			loadMoveset();
-
-		IBattleParticipant p1, p2;
-		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), this);
-		else
-			p1 = new WildPixelmonParticipant(this);
-
-		if (target.getOwner() != null)
-			p2 = new PlayerParticipant((EntityPlayerMP) target.getOwner(), target);
-		else
-			p2 = new WildPixelmonParticipant(target);
 
 		bc = new BattleController(p1, p2);
+		wasBattleInitiator = true;
+		p2.currentPokemon().bc = bc;
 		if (pixelmon instanceof EntityWaterPixelmon)
 			((EntityWaterPixelmon) pixelmon).isSwimming = false;
-	}
-
-	public void StartBattle(EntityTrainer trainer, EntityPlayer opponent) {
-		if (moveset.size() == 0)
-			loadMoveset();
-		IBattleParticipant p1, p2;
-		if (getOwner() != null)
-			p1 = new PlayerParticipant((EntityPlayerMP) getOwner(), this);
-		else
-			p1 = new WildPixelmonParticipant(this);
-
-		p2 = new TrainerParticipant(trainer, opponent);
-
-		bc = new BattleController(p1, p2);
-		if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).isSwimming = false;
-	}
-
-	public void SetBattleController(BattleController bc) {
-		if (moveset.size() == 0)
-			loadMoveset();
-		if (pixelmon instanceof EntityWaterPixelmon)
-			((EntityWaterPixelmon) pixelmon).isSwimming = false;
-		this.bc = bc;
 	}
 
 	public void EndBattle() {
@@ -294,7 +262,7 @@ public class PixelmonEntityHelper {
 		entity.moveset.clear();
 		entity.isMale = isMale;
 		entity.setIsShiny(getIsShiny());
-		if (getHeldItem()!=null)
+		if (getHeldItem() != null)
 			entity.setHeldItem(getHeldItem().copy());
 		for (int i = 0; i < moveset.size(); i++)
 			entity.moveset.add(moveset.get(i));
@@ -336,14 +304,16 @@ public class PixelmonEntityHelper {
 			EntityPlayer entity1 = (EntityPlayer) entity;
 			ItemStack itemstack = entity1.getCurrentEquippedItem();
 			boolean flag = false;
-//			if (itemstack == null) {
-//				if (stats.BaseStats.IsRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)entity).isIn(this)) {
-//					entity.mountEntity((EntityLiving) pixelmon);
-//					return true;
-//				}
-//				return false;
-//			}
-			
+			// if (itemstack == null) {
+			// if (stats.BaseStats.IsRideable &&
+			// PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)entity).isIn(this))
+			// {
+			// entity.mountEntity((EntityLiving) pixelmon);
+			// return true;
+			// }
+			// return false;
+			// }
+
 			if (itemstack != null && itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex && getOwner() == entity) {
 				getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
 				if (!entity.capabilities.isCreativeMode)
@@ -643,5 +613,10 @@ public class PixelmonEntityHelper {
 		if (pixelmon instanceof EntityWaterPixelmon)
 			return ((EntityWaterPixelmon) pixelmon).getLvlString();
 		return null;
+	}
+
+	public void onUpdate() {
+		if (bc!=null && wasBattleInitiator) bc.update();
+		
 	}
 }

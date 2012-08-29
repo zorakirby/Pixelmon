@@ -96,6 +96,8 @@ public class EffectParser {
 				effect = new Sleep();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Sunny)
 				effect = new Sunny();
+			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.TrickRoom)
+				effect = new TrickRoom();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.WaitAfter)
 				effect = new WaitAfter(Value);
 		}
@@ -117,6 +119,8 @@ public class EffectParser {
 				effect = new FlinchAttackModifier();
 			else if (AttackModifierType.getAttackModifierType(effectTypeString) == AttackModifierType.MultipleHit)
 				effect = new MultipleHitAttackModifier(Value, Value2);
+			else if (AttackModifierType.getAttackModifierType(effectTypeString) == AttackModifierType.Priority)
+				effect = new PriorityAttackModifier(Value);
 			else if (AttackModifierType.getAttackModifierType(effectTypeString) == AttackModifierType.Recoil)
 				effect = new RecoilAttackModifier(Value);
 		}else if (effectType == EffectType.MultiTurnSpecialAttack){
