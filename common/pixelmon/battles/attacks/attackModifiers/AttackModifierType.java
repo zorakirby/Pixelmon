@@ -6,6 +6,7 @@ public enum AttackModifierType {
 	Damage,
 	Flinch,
 	MultipleHit,
+	Priority,
 	Recoil;
 	
 	public static AttackModifierType getAttackModifierType(String string){
@@ -14,6 +15,7 @@ public enum AttackModifierType {
 		if (string.equalsIgnoreCase("Damage")) return AttackModifierType.Damage;
 		if (string.equalsIgnoreCase("Flinch")) return AttackModifierType.Flinch;
 		if (string.equalsIgnoreCase("MultipleHit")) return AttackModifierType.MultipleHit;
+		if (string.equalsIgnoreCase("Priority")) return AttackModifierType.Priority;
 		if (string.equalsIgnoreCase("Recoil")) return AttackModifierType.Recoil;
 		return null;
 	}
@@ -24,6 +26,7 @@ public enum AttackModifierType {
 		if (string.equalsIgnoreCase("Damage")) return true;
 		if (string.equalsIgnoreCase("Flinch")) return true;
 		if (string.equalsIgnoreCase("MultipleHit")) return true;
+		if (string.equalsIgnoreCase("Priority")) return true;
 		if (string.equalsIgnoreCase("Recoil")) return true;
 		return false;		
 	}
