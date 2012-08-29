@@ -72,46 +72,46 @@ public class DatabaseStats {
 				}
 				stats.CatchRate = rs.getInt("CatchRate");
 				if (rs.wasNull()) 
-					System.out.println("Error in CatchRate");
+					System.out.println("Error in CatchRate"+ " For Pokemon : " + pixelmonName);
 				
 				stats.MalePercent = rs.getInt("MalePercent");
 				if (rs.wasNull()) 
-					System.out.println("Error in MalePercent");
+					System.out.println("Error in MalePercent"+ " For Pokemon : " + pixelmonName);
 				
 				stats.EvolveLevel = rs.getInt("EvolveLevel");
 				if (rs.wasNull()) 
-					System.out.println("Error in EvolveLevel");
+					System.out.println("Error in EvolveLevel"+ " For Pokemon : " + pixelmonName);
 				stats.EvolveInto = rs.getString("EvolveInto");
 				stats.CanFly = rs.getInt("CanFly") == 1;
 				if (rs.wasNull()) 
-					System.out.println("Error in CanFly");
+					System.out.println("Error in CanFly"+ " For Pokemon : " + pixelmonName);
 				stats.Height = rs.getFloat("Height");
 				if (rs.wasNull()) 
-					System.out.println("Error in Height");
+					System.out.println("Error in Height"+ " For Pokemon : " + pixelmonName);
 				stats.Width = rs.getFloat("Width");
 				if (rs.wasNull()) 
-					System.out.println("Error in Width");
+					System.out.println("Error in Width"+ " For Pokemon : " + pixelmonName);
 				stats.Length = rs.getFloat("Length");
 				if (rs.wasNull()) 
-					System.out.println("Error in Length");
+					System.out.println("Error in Length"+ " For Pokemon : " + pixelmonName);
 				stats.Type1 = EnumType.parseType(rs.getString("Type1"));
 				if (rs.wasNull()) 
-					System.out.println("Error in Type");
+					System.out.println("Error in Type"+ " For Pokemon : " + pixelmonName);
 				stats.BaseExp = rs.getInt("BaseExp");
 				if (rs.wasNull()) 
-					System.out.println("Error in BaseExp");
+					System.out.println("Error in BaseExp"+ " For Pokemon : " + pixelmonName);
 				stats.ExperienceGroup = ExperienceGroup.getExperienceGroup(rs.getString("ExperienceGroup"));
 				if (rs.wasNull()|| stats.ExperienceGroup == null) 
-					System.out.println("Error in ExperienceGroup");
+					System.out.println("Error in ExperienceGroup"+ " For Pokemon : " + pixelmonName);
 				stats.nationalPokedexNumber = rs.getInt("NationalPokedexNumber");
 				if (rs.wasNull()) 
-					System.out.println("Error in NationalPokedexNumber");
+					System.out.println("Error in NationalPokedexNumber"+ " For Pokemon : " + pixelmonName);
 				stats.SpawnLevel = rs.getInt("SpawnLevel");
 				if (rs.wasNull()) 
-					System.out.println("Error in SpawnLevel");
+					System.out.println("Error in SpawnLevel"+ " For Pokemon : " + pixelmonName);
 				stats.SpawnLevelRange= rs.getInt("SpawnLevelRange");
 				if (rs.wasNull()) 
-					System.out.println("Error in SpawnLevelRange");
+					System.out.println("Error in SpawnLevelRange"+ " For Pokemon : " + pixelmonName);
 				stats.IsRideable = rs.getBoolean("IsRideable");
 				stats.giScale = rs.getFloat("GIScale");
 				rs.getString("Type2");

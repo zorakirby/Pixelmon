@@ -5,6 +5,12 @@ import java.util.Random;
 
 import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.attacks.EffectType;
+import pixelmon.battles.attacks.attackEffects.EffectBase;
+import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
+import pixelmon.battles.attacks.attackModifiers.AttackModifierBase;
+import pixelmon.battles.attacks.attackModifiers.AttackModifierType;
+import pixelmon.battles.attacks.attackModifiers.PriorityAttackModifier;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
@@ -47,8 +53,10 @@ public class BattleController {
 		participant2.setBattleController(this);
 		participant1.currentPokemon().bc = this;
 		participant2.currentPokemon().bc = this;
-		if (!participant1.checkPokemon()) return;
-		if (!participant2.checkPokemon()) return;
+		if (!participant1.checkPokemon())
+			return;
+		if (!participant2.checkPokemon())
+			return;
 		if (participant1.canGainXP())
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
 		if (participant2.canGainXP())
@@ -58,7 +66,7 @@ public class BattleController {
 
 	private void setPositions() {
 	}
-	
+
 	enum MoveStage {
 		PickAttacks, FirstMove, SecondMove
 	};
@@ -74,7 +82,8 @@ public class BattleController {
 	}
 
 	public void update() {
-		if (isWaiting()) return;
+		if (isWaiting())
+			return;
 		int tickTop;
 		if (moveStage == MoveStage.PickAttacks)
 			tickTop = 20;
@@ -82,8 +91,10 @@ public class BattleController {
 			tickTop = 50;
 		if (battleTicks++ > tickTop) {
 			if (moveStage == MoveStage.PickAttacks) { // Pick Moves
-				if (attacks[0]!=null) attacks[0].flinched = false;
-				if (attacks[1]!=null) attacks[1].flinched = false;
+				if (attacks[0] != null)
+					attacks[0].flinched = false;
+				if (attacks[1] != null)
+					attacks[1].flinched = false;
 				// moveToPositions();
 				pickMoves();
 				checkMoveSpeed();
@@ -133,34 +144,35 @@ public class BattleController {
 
 	private void checkAndReplaceFaintedPokemon(IBattleParticipant participant, IBattleParticipant foe) {
 		if (participant.getIsFaintedOrDead()) {
-			if (participant==participant1) {
+			if (participant == participant1) {
 				if (participant1.isWild)
 					ChatHandler.sendChat(participant2.currentPokemon().getOwner(), "The wild " + participant1.currentPokemon().getName() + " fainted!");
-				if (participant1.currentPokemon().getOwner()!=null || participant2.currentPokemon().getOwner()!=null)
+				if (participant1.currentPokemon().getOwner() != null || participant2.currentPokemon().getOwner() != null)
 					awardExp(attackersList2, participant2.currentPokemon(), participant1.currentPokemon());
-			} else if (participant==participant2) {
+			} else if (participant == participant2) {
 				if (participant2.isWild)
 					ChatHandler.sendChat(participant1.currentPokemon().getOwner(), "The wild " + participant2.currentPokemon().getName() + " fainted!");
-				if (participant1.currentPokemon().getOwner()!=null || participant2.currentPokemon().getOwner()!=null)
+				if (participant1.currentPokemon().getOwner() != null || participant2.currentPokemon().getOwner() != null)
 					awardExp(attackersList1, participant1.currentPokemon(), participant2.currentPokemon());
 			}
-			
+
 			if (participant.hasMorePokemon()) {
 				participant.getNextPokemon();
 				participant.currentPokemon().bc = this;
-				ChatHandler.sendChat(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out "
-						+ participant.currentPokemon().getName() + "!");
+				ChatHandler.sendChat(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out " + participant.currentPokemon().getName() + "!");
 				attackersList1.clear();
 				attackersList2.clear();
 				if (participant == participant1) {
 					if (participant.canGainXP())
 						attackersList1.add(participant.currentPokemon().getPokemonId());
-					if (foe.canGainXP()) attackersList2.add(foe.currentPokemon().getPokemonId());
+					if (foe.canGainXP())
+						attackersList2.add(foe.currentPokemon().getPokemonId());
 					pixelmon1CanAttack = false;
 				} else if (participant == participant2) {
 					if (participant.canGainXP())
 						attackersList2.add(participant.currentPokemon().getPokemonId());
-					if (foe.canGainXP()) attackersList1.add(foe.currentPokemon().getPokemonId());
+					if (foe.canGainXP())
+						attackersList1.add(foe.currentPokemon().getPokemonId());
 					pixelmon2CanAttack = false;
 				}
 			} else {
@@ -170,17 +182,35 @@ public class BattleController {
 	}
 
 	private void checkMoveSpeed() {
-		if (participant1.currentPokemon().stats.Speed * participant1.currentPokemon().battleStats.SpeedModifier > participant2.currentPokemon()
-				.stats.Speed * participant2.currentPokemon().battleStats.SpeedModifier)
+		int priority1 = 0, priority2 = 0;
+		if (attacks[0] != null) {
+			for (EffectBase e : attacks[0].effects)
+				if (e.applyStage == ApplyStage.Priority)
+					priority1 = ((PriorityAttackModifier) e).value;
+		}
+		if (attacks[1] != null) {
+			for (EffectBase e : attacks[1].effects)
+				if (e.applyStage == ApplyStage.Priority)
+					priority2 = ((PriorityAttackModifier) e).value;
+		}
+
+		if (priority1 > priority2)
 			pixelmon1MovesFirst = true;
-		else if (participant2.currentPokemon().stats.Speed * participant2.currentPokemon().battleStats.SpeedModifier > participant1.currentPokemon()
-				.stats.Speed * participant1.currentPokemon().battleStats.SpeedModifier)
+		else if (priority2 > priority1)
 			pixelmon1MovesFirst = false;
 		else {
-			if (RandomHelper.getRandomNumberBetween(0, 2) >= 1)
-				pixelmon1MovesFirst = false;
-			else
+			if (participant1.currentPokemon().stats.Speed * participant1.currentPokemon().battleStats.SpeedModifier > participant2.currentPokemon().stats.Speed
+					* participant2.currentPokemon().battleStats.SpeedModifier)
 				pixelmon1MovesFirst = true;
+			else if (participant2.currentPokemon().stats.Speed * participant2.currentPokemon().battleStats.SpeedModifier > participant1.currentPokemon().stats.Speed
+					* participant1.currentPokemon().battleStats.SpeedModifier)
+				pixelmon1MovesFirst = false;
+			else {
+				if (RandomHelper.getRandomNumberBetween(0, 2) >= 1)
+					pixelmon1MovesFirst = false;
+				else
+					pixelmon1MovesFirst = true;
+			}
 		}
 	}
 
@@ -230,11 +260,11 @@ public class BattleController {
 		if (mypixelmon.getEntity() == participant1.currentPokemon().getEntity()) {
 			attacks[0] = a;
 			attackList1.add(a.attackName);
-			participant1Wait=false;
+			participant1Wait = false;
 		} else {
 			attacks[1] = a;
 			attackList2.add(a.attackName);
-			participant2Wait=false;
+			participant2Wait = false;
 		}
 	}
 
@@ -272,12 +302,22 @@ public class BattleController {
 
 	private void awardExp(ArrayList<Integer> users, PixelmonEntityHelper pixelmon22, PixelmonEntityHelper pixelmon12) {
 		ArrayList<Integer> doneUsers = new ArrayList<Integer>();
-		if (!users.contains(pixelmon22.getPokemonId())) users.add(pixelmon22.getPokemonId());
+		if (!users.contains(pixelmon22.getPokemonId()))
+			users.add(pixelmon22.getPokemonId());
+		for (int i = 0; i < users.size(); i++) {
+			if (pixelmon22.getOwner() != null) {
+				if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon22.getOwner()).isFainted(users.get(i))) {
+					users.remove(i);
+					i--;
+				}
+			}
+		}
 		for (int userIndex : users) {
 			if (!doneUsers.contains(userIndex)) {
 				double a, t, b, e, L, Lp, s, p;
 				NBTTagCompound user = null;
-				if (pixelmon22.getOwner()!=null) user = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon22.getOwner()).getNBT(userIndex);
+				if (pixelmon22.getOwner() != null)
+					user = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon22.getOwner()).getNBT(userIndex);
 				if (user != null)
 					a = 1.5;
 				else
@@ -289,14 +329,14 @@ public class BattleController {
 				Lp = user.getInteger("Level");
 				s = users.size();
 				p = 1;
-				
+
 				double exp = ((a * b * L) / (5 * s) * (Math.pow(2 * L + 10, 2.5) / Math.pow(L + Lp + 10, 2.5)) + 1) * t * e * p;
 				if (userIndex == pixelmon22.getPokemonId()) {
 					pixelmon22.getLvl().awardEXP((int) exp);
 				} else {
-					IHaveHelper pix = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon22.getOwner()).sendOut(userIndex, pixelmon22.getOwner().worldObj);
+					IHaveHelper pix = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon22.getOwner()).sendOut(userIndex, pixelmon22.getOwner().worldObj);
 					pix.getHelper().getLvl().awardEXP((int) exp);
-					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon22.getOwner()).retrieve(pix);
+					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon22.getOwner()).retrieve(pix);
 				}
 				doneUsers.add(userIndex);
 			}
@@ -304,13 +344,12 @@ public class BattleController {
 	}
 
 	public void setFlee(PixelmonEntityHelper mypixelmon) {
-		if (mypixelmon == participant1.currentPokemon()){
+		if (mypixelmon == participant1.currentPokemon()) {
 			pixelmon1WillTryFlee = true;
-			participant1Wait=false;
-		}
-		else if (mypixelmon == participant2.currentPokemon()){
+			participant1Wait = false;
+		} else if (mypixelmon == participant2.currentPokemon()) {
 			pixelmon2WillTryFlee = true;
-			participant2Wait=false;
+			participant2Wait = false;
 		}
 	}
 
@@ -322,7 +361,7 @@ public class BattleController {
 			attackersList2.clear();
 			attackersList2.add(participant2.currentPokemon().getPokemonId());
 			pixelmon1IsSwitching = true;
-			participant1Wait=false;
+			participant1Wait = false;
 		} else {
 			participant2.switchPokemon(participant1, newPixelmonId);
 			participant2.currentPokemon().bc = this;
@@ -330,7 +369,7 @@ public class BattleController {
 			attackersList1.clear();
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
 			pixelmon2IsSwitching = true;
-			participant2Wait=false;
+			participant2Wait = false;
 		}
 	}
 
@@ -340,13 +379,15 @@ public class BattleController {
 
 	boolean participant1Wait;
 	boolean participant2Wait;
-	
+
 	public void waitForMove(PlayerParticipant playerParticipant) {
-		if (playerParticipant == participant1) participant1Wait=true;
-		else if (playerParticipant == participant2) participant2Wait=true;
+		if (playerParticipant == participant1)
+			participant1Wait = true;
+		else if (playerParticipant == participant2)
+			participant2Wait = true;
 	}
-	
-	public boolean isWaiting(){
+
+	public boolean isWaiting() {
 		return participant1Wait || participant2Wait;
 	}
 }
