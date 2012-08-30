@@ -364,17 +364,24 @@ public class BattleController {
 	}
 
 	public void SwitchPokemon(PixelmonEntityHelper currentPixelmon, int newPixelmonId) {
+		boolean wasInitiator = false;
 		if (participant1.currentPokemon() == currentPixelmon) {
+			if (participant1.currentPokemon().wasBattleInitiator)
+				wasInitiator = true;
 			participant1.switchPokemon(participant2, newPixelmonId);
 			participant1.currentPokemon().bc = this;
+			participant1.currentPokemon().wasBattleInitiator = wasInitiator;
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
 			attackersList2.clear();
 			attackersList2.add(participant2.currentPokemon().getPokemonId());
 			pixelmon1IsSwitching = true;
 			participant1Wait = false;
 		} else {
+			if (participant2.currentPokemon().wasBattleInitiator)
+				wasInitiator = true;
 			participant2.switchPokemon(participant1, newPixelmonId);
 			participant2.currentPokemon().bc = this;
+			participant2.currentPokemon().wasBattleInitiator = wasInitiator;
 			attackersList2.add(participant2.currentPokemon().getPokemonId());
 			attackersList1.clear();
 			attackersList1.add(participant1.currentPokemon().getPokemonId());

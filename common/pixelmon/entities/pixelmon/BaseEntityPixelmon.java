@@ -22,6 +22,7 @@ import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.LevelHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
+import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper.Aggression;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumType;
 import pixelmon.storage.PixelmonStorage;
@@ -66,7 +67,9 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		dataWatcher.addObject(20, (short) 0);
 		dataWatcher.addObject(21, (short) 0); // roasted
 		getNavigator().setAvoidsWater(true);
-		helper.aggression = rand.nextInt(11) - 5;
+		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
+		helper.giScale = helper.stats.BaseStats.giScale;
+		helper.calculateAggression(rand);
 	}
 
 	public void init() {
@@ -75,8 +78,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			dataWatcher.updateObject(20, (short) 1);
 		}
 		moveSpeed = getMoveSpeed();// + getMoveSpeed();
-		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
-		helper.giScale = helper.stats.BaseStats.giScale;
 		health = 11;
 		if (rand.nextInt(100) < helper.stats.BaseStats.MalePercent)
 			helper.isMale = true;
@@ -221,7 +222,7 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public void releaseFromPokeball() {
-		helper.aggression = 0;
+		helper.aggression = Aggression.passive;
 		worldObj.spawnEntityInWorld(this);
 		helper.isInBall = false;
 	}
