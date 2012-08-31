@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import pixelmon.database.BaseStats.Aggression;
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumType;
@@ -117,6 +118,10 @@ public class DatabaseStats {
 				rs.getString("Type2");
 				if (!rs.wasNull())
 					stats.Type2 = EnumType.parseType(rs.getString("Type2"));
+				stats.aggression = stats.new Aggression(rs.getString("Aggression"), pixelmonName);
+				if (rs.wasNull()) 
+					System.out.println("Error in Aggression"+ " For Pokemon : " + pixelmonName);
+
 			}
 			conn.close();
 			return stats;

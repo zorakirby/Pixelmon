@@ -2,6 +2,7 @@ package pixelmon.entities.pixelmon.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import pixelmon.Pixelmon;
 import pixelmon.RandomHelper;
@@ -59,7 +60,7 @@ public class PixelmonEntityHelper {
 	public boolean isFainted = false;
 	public boolean doesHover = false;
 	public float hoverHeight;
-	public int aggression;
+	public Aggression aggression;
 	public float scale = 1F;
 	public float maxScale = 1.25F;
 	public BattleController bc;
@@ -68,6 +69,10 @@ public class PixelmonEntityHelper {
 	public float giScale = 1;
 	public boolean hitByPokeball;
 	public ItemStack heldItem;
+
+	public enum Aggression {
+		timid, passive, aggressive
+	};
 
 	public PixelmonEntityHelper(IHaveHelper pixelmon) {
 		this.pixelmon = pixelmon;
@@ -617,7 +622,17 @@ public class PixelmonEntityHelper {
 	}
 
 	public void onUpdate() {
-		if (bc!=null && wasBattleInitiator) bc.update();
-		
+		if (bc != null && wasBattleInitiator)
+			bc.update();
+	}
+
+	public void calculateAggression(Random random) {
+		int r = random.nextInt(100) + 1;
+		if (r < stats.BaseStats.aggression.timid)
+			aggression = Aggression.timid;
+		else if (r < stats.BaseStats.aggression.timid + stats.BaseStats.aggression.passive)
+			aggression = Aggression.passive;
+		else if (r < stats.BaseStats.aggression.timid + stats.BaseStats.aggression.passive + stats.BaseStats.aggression.aggressive)
+			aggression = Aggression.aggressive;
 	}
 }

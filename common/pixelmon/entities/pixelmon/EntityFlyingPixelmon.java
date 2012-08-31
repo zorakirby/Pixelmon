@@ -8,6 +8,7 @@ import pixelmon.battles.BattleController;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper.Aggression;
 
 import net.minecraft.src.*;
 
@@ -45,9 +46,9 @@ public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
 	}
 	
 	public void loadAI() {
-		if (helper.aggression > 0) {
+		if (helper.aggression == Aggression.aggressive) {
 			tasks.addTask(0, new EntityAIMoveTowardsTarget(this, moveSpeed, 15));
-			tasks.addTask(1, new PixelmonAITargetNearest(this, 10, 50 - helper.aggression, true));
+			tasks.addTask(1, new PixelmonAITargetNearest(this, 10, true));
 			tasks.addTask(2, new PixelmonAIStartBattle(this));
 		}
 		tasks.addTask(3, new EntityAISwimming(this));
