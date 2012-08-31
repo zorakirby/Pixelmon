@@ -26,6 +26,7 @@ public class LevelHelper {
 	private int level;
 	public int maxHealth = 10;
 	public int health;
+	public int extraXP = 0;
 
 	public LevelHelper() {
 		exp = 0;
@@ -128,13 +129,11 @@ public class LevelHelper {
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
 		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
 		pixelmon.setHealth((int) Math.ceil(newHealth));
-		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP)
-		{
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).updateNBT(pixelmon);
-			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).contains(pixelmon.getPokemonId())) 
-			{
+		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP) {
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
+			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).contains(pixelmon.getPokemonId())) {
 				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + level + "!");
-				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pixelmon.getOwner()).updateNBT(pixelmon);
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
 			}
 		}
 		String name = pixelmon.getName();
@@ -167,10 +166,12 @@ public class LevelHelper {
 			level++;
 			onLevelUp();
 			if (level >= pixelmon.stats.BaseStats.EvolveLevel) {
+				extraXP = exp - getExpForLevel(level + 1);
 				if (pixelmon.getIHaveHelper() instanceof BaseEntityPixelmon)
 					((BaseEntityPixelmon) pixelmon.getIHaveHelper()).evolve();
 				else if (pixelmon.getIHaveHelper() instanceof EntityWaterPixelmon)
 					((EntityWaterPixelmon) pixelmon.getIHaveHelper()).evolve();
+				break;
 			}
 			if (!canLevelUp())
 				return;

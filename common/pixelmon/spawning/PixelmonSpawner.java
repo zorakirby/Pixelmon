@@ -47,6 +47,7 @@ public class PixelmonSpawner {
 		List<SpawnData> creatureList = SpawnRegistry.getSpawnsForBiome(biome);
 
 		int totRarityCount = 0;
+		if (creatureList==null) return;
 		for (SpawnData s : creatureList)
 			totRarityCount += s.rarity;
 

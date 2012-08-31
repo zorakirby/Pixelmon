@@ -293,6 +293,7 @@ public class PixelmonEntityHelper {
 		entity.setPokemonID(getPokemonId());
 		getEntity().setDead();
 		entity.getLvl().recalculateXP();
+		entity.getLvl().awardEXP(entity.getLvl().extraXP);
 	}
 
 	public IHaveHelper getIHaveHelper() {
