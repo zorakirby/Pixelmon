@@ -213,8 +213,7 @@ public class PixelmonEntityList {
 
 		// Trainers
 		addMapping("Youngster", IDListTrainer.trainerYoungsterId, ClassType.Trainer);
-		// Missing Database Entry
-		addMapping("Youngster", IDListTrainer.trainerYoungster2Id, ClassType.Trainer);
+		addMapping("Youngster02", IDListTrainer.trainerYoungster2Id, ClassType.Trainer);
 		addMapping("BugCatcher", IDListTrainer.trainerBugCatcherId, ClassType.Trainer);
 	}
 
@@ -263,6 +262,7 @@ public class PixelmonEntityList {
 			String name = (String) entry.getValue();
 			ClassType type = getClassTypeFromID((Integer) entry.getKey());
 			int rarity = DatabaseStats.GetRarity(name);
+			if (type == ClassType.Trainer) rarity = 10;
 			if (type == ClassType.Pixelmon || type == ClassType.Trainer) {
 				if (rarity > 0)
 					SpawnRegistry.addSpawn(entry, name, rarity, type);
