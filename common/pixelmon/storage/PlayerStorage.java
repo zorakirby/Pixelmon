@@ -132,6 +132,7 @@ public class PlayerStorage {
 					entity1.writeToNBT(n);
 					n.setName(currentPixelmon.getHelper().getName());
 					n.setBoolean("IsInBall", true);
+					currentPixelmon.unloadEntity();
 				}
 			}
 		}

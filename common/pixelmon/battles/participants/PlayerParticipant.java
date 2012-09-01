@@ -89,6 +89,7 @@ public class PlayerParticipant implements IBattleParticipant {
 		currentPixelmon.catchInPokeball();
 
 		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).retrieve((IHaveHelper) currentPixelmon.getIHaveHelper());
+		currentPixelmon.unloadEntity();
 		IHaveHelper newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
 		((EntityLiving) newPixelmon).setLocationAndAngles(((EntityLiving) currentPixelmon.getEntity()).posX, ((EntityLiving) currentPixelmon.getEntity()).posY,
 				((EntityLiving) currentPixelmon.getEntity()).posZ, ((EntityLiving) currentPixelmon.getEntity()).rotationYaw, 0.0F);

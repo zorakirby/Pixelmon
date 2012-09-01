@@ -84,7 +84,7 @@ public class GuiAttacking extends GuiScreen {
 
 	protected void actionPerformed(GuiButton par1GuiButton) {
 
-		if (par1GuiButton.id < 4) {
+		if (par1GuiButton.id < 4 && userPacket.moveset[par1GuiButton.id].pp > 0 ) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, par1GuiButton.id, battleControllerIndex, userPacket.pokemonID));
 			mc.displayGuiScreen(null);
 			mc.setIngameFocus();
@@ -92,7 +92,7 @@ public class GuiAttacking extends GuiScreen {
 			mc.displayGuiScreen(new GuiChoosePokemon(userPacket, battleControllerIndex, this));
 		} else if (par1GuiButton.id == 12){
 			mc.displayGuiScreen(new GuiAttackingBag(this));
-		} else {
+		} else if (userPacket.moveset[par1GuiButton.id].pp > 0 ){
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 			mc.displayGuiScreen(null);
 			mc.setIngameFocus();
