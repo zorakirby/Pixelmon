@@ -213,8 +213,7 @@ public class PixelmonEntityList {
 
 		// Trainers
 		addMapping("Youngster", IDListTrainer.trainerYoungsterId, ClassType.Trainer);
-		// Missing Database Entry
-		addMapping("Youngster", IDListTrainer.trainerYoungster2Id, ClassType.Trainer);
+		addMapping("Youngster02", IDListTrainer.trainerYoungster2Id, ClassType.Trainer);
 		addMapping("BugCatcher", IDListTrainer.trainerBugCatcherId, ClassType.Trainer);
 	}
 
