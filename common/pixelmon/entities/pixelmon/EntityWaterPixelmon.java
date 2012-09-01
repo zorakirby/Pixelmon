@@ -166,7 +166,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		super.onLivingUpdate();
 		// if (ridingHelper != null)
 		// ridingHelper.onLivingUpdate();
-		if (!isSwimming || worldObj.isRemote) {
+		if (worldObj.isRemote) {
 			motionX = motionY = motionZ = 0;
 			return;
 		}
@@ -174,7 +174,7 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 		if (this.field_21085_g > ((float) Math.PI * 2F)) {
 			this.field_21085_g -= ((float) Math.PI * 2F);
 		}
-		if (this.isInWater()) {
+		if (this.isInWater() && !isSwimming) {
 			if (randomMotionSpeed <= swimSpeed / 2)
 				randomMotionSpeed = swimSpeed;
 			randomMotionSpeed *= decayRate;
