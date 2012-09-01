@@ -27,7 +27,7 @@ public class PixelmonAIStartBattle extends EntityAIBase {
 			return false;
 		if (theEntity.getHelper().getOwner() != null)
 			return false;
-		if (((BaseEntityPixelmon) theEntity).getAttackTarget() == null)
+		if (((EntityLiving) theEntity).getAttackTarget() == null)
 			return false;
 		if (((EntityLiving) theEntity).getAttackTarget() instanceof EntityPlayer) {
 			EntityPlayerMP player = (EntityPlayerMP) ((BaseEntityPixelmon) theEntity).getAttackTarget();

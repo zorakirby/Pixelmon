@@ -67,12 +67,12 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		dataWatcher.addObject(20, (short) 0);
 		dataWatcher.addObject(21, (short) 0); // roasted
 		getNavigator().setAvoidsWater(true);
-		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
-		helper.giScale = helper.stats.BaseStats.giScale;
-		helper.calculateAggression(rand);
 	}
 
 	public void init() {
+		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
+		helper.giScale = helper.stats.BaseStats.giScale;
+		helper.calculateAggression(rand);
 		if ((new Random()).nextFloat() < 1 / 8192f) {
 			System.out.println("Shiny " + name + " spawned");
 			dataWatcher.updateObject(20, (short) 1);
