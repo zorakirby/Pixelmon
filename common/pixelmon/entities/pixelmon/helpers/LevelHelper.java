@@ -7,19 +7,21 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.ExperienceGroup;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.Entity3HasStats;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 
 import net.minecraft.src.NBTTagCompound;
 
 public class LevelHelper {
 
-	private PixelmonEntityHelper pixelmon;
+	private EntityPixelmon pixelmon;
 	private int exp;
 	private int expToNextLevel;
 	private int baseLevel = 0;
@@ -32,14 +34,14 @@ public class LevelHelper {
 		exp = 0;
 	}
 
-	public LevelHelper(PixelmonEntityHelper p) {
+	public LevelHelper(EntityPixelmon p) {
 		this.pixelmon = p;
 		exp = 0;
 		setScale();
 	}
 
 	protected void updateStats() {
-		pixelmon.stats.setLevelStats(level);
+		pixelmon.updateStats();
 		maxHealth = pixelmon.stats.HP;
 	}
 
@@ -73,16 +75,16 @@ public class LevelHelper {
 			newHealth = pixelmon.getMaxHealth();
 		else
 			newHealth = ((float) pixelmon.getHealth()) * percentGain;
-		pixelmon.setHealth((int) Math.ceil(newHealth));
+		pixelmon.setEntityHealth((int) Math.ceil(newHealth));
 		updateEntityString();
 	}
 
 	private int getExpForLevel(int level2) {
 		double l = level2;
-		if (pixelmon.stats.BaseStats.ExperienceGroup == null)
+		if (pixelmon.baseStats.ExperienceGroup == null)
 			;// .getMinecraftInstance().ingameGUI.addChatMessage("Database error with "
 				// + pixelmon.getName());
-		if (pixelmon.stats.BaseStats.ExperienceGroup == ExperienceGroup.Erratic) {
+		if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.Erratic) {
 			if (l <= 50)
 				return (int) (l * l * l * (100 - l)) / 50;
 			if (l <= 68)
@@ -91,15 +93,15 @@ public class LevelHelper {
 				return (int) (l * l * l * (1911 - 10 * l)) / 3;
 			if (l <= 100)
 				return (int) (l * l * l * (160 - l)) / 100;
-		} else if (pixelmon.stats.BaseStats.ExperienceGroup == ExperienceGroup.Fast) {
+		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.Fast) {
 			return (int) (4 * l * l * l / 5);
-		} else if (pixelmon.stats.BaseStats.ExperienceGroup == ExperienceGroup.MediumFast) {
+		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.MediumFast) {
 			return (int) (l * l * l);
-		} else if (pixelmon.stats.BaseStats.ExperienceGroup == ExperienceGroup.MediumSlow) {
+		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.MediumSlow) {
 			return (int) ((6 / 5) * l * l * l - 15 * l * l + 100 * l - 140);
-		} else if (pixelmon.stats.BaseStats.ExperienceGroup == ExperienceGroup.Slow) {
+		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.Slow) {
 			return (int) (5 * l * l * l / 4);
-		} else if (pixelmon.stats.BaseStats.ExperienceGroup == ExperienceGroup.Fluctuating) {
+		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.Fluctuating) {
 			if (l <= 15)
 				return (int) (l * l * l * ((l + 1) / 3 + 24) / 50);
 			if (l <= 36)
@@ -128,7 +130,7 @@ public class LevelHelper {
 		updateStats();
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
 		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
-		pixelmon.setHealth((int) Math.ceil(newHealth));
+		pixelmon.setEntityHealth((int) Math.ceil(newHealth));
 		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP) {
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
 			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).contains(pixelmon.getPokemonId())) {
@@ -142,7 +144,7 @@ public class LevelHelper {
 			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, level);
 			for (Attack a : newAttacks) {
 				if (pixelmon.moveset.size() >= 4) {
-					pixelmon.getOwner().openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
+					((EntityPlayer)pixelmon.getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
 				} else {
 					pixelmon.moveset.add(a);
 					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
@@ -165,12 +167,9 @@ public class LevelHelper {
 		while (exp >= expToNextLevel) {
 			level++;
 			onLevelUp();
-			if (level >= pixelmon.stats.BaseStats.EvolveLevel) {
+			if (level >= pixelmon.baseStats.EvolveLevel) {
 				extraXP = exp - getExpForLevel(level + 1);
-				if (pixelmon.getIHaveHelper() instanceof BaseEntityPixelmon)
-					((BaseEntityPixelmon) pixelmon.getIHaveHelper()).evolve();
-				else if (pixelmon.getIHaveHelper() instanceof EntityWaterPixelmon)
-					((EntityWaterPixelmon) pixelmon.getIHaveHelper()).evolve();
+				pixelmon.evolve(pixelmon.baseStats.EvolveInto);
 				break;
 			}
 			if (!canLevelUp())
@@ -209,7 +208,7 @@ public class LevelHelper {
 
 	public void updateEntityString() {
 		String lvlString = "" + exp + ";" + expToNextLevel + ";" + level + ";" + (int) pixelmon.getHealth() + ";" + pixelmon.stats.HP;
-		pixelmon.updateLvlString(lvlString);
+		pixelmon.setLvlString(lvlString);
 	}
 
 	public void recalculateXP() {

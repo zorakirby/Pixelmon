@@ -1,6 +1,7 @@
 package pixelmon.entities.pixelmon.helpers;
 
 import pixelmon.entities.pixelmon.EntityFlyingPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
@@ -19,10 +20,10 @@ public class RidingHelper {
 	double speedBonus; // multiplies the player movement input to make the mount
 						// move faster
 
-	EntityLiving parent;
+	EntityPixelmon parent;
 	World worldObj;
 
-	public RidingHelper(EntityLiving parent, World worldObj) {
+	public RidingHelper(EntityPixelmon parent, World worldObj) {
 		this.worldObj = worldObj;
 		this.parent = parent;
 		sprintToggleTimer = 0;
@@ -150,9 +151,9 @@ public class RidingHelper {
 			}
 
 			// Submit!
-			((IHaveHelper) parent).doMoveEntity(parent.motionX, parent.motionY, parent.motionZ);
+			parent.doMoveEntity(parent.motionX, parent.motionY, parent.motionZ);
 		} else
-			((IHaveHelper) parent).doMoveEntity(d, d1, d2);
+			parent.doMoveEntity(d, d1, d2);
 	}
 
 	public void updateRidden() {
@@ -172,7 +173,7 @@ public class RidingHelper {
 	public void jump(Boolean flag) { // boolean. true = 2.5-high jump. false =
 										// normal jump.
 		if (parent.onGround && jumpTicks == 0 && !(parent instanceof EntityFlyingPixelmon)) {
-			if (parent instanceof IHaveHelper)
+			if (parent instanceof EntityPixelmon)
 				if (flag) {
 					parent.motionY += 0.2; // makes mount jump higher. Do not
 											// use big values!

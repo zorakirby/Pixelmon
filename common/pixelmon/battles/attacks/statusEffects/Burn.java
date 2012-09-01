@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.battles.*;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
@@ -16,10 +16,10 @@ public class Burn extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 
 		if (checkChance()) {
-			if (target.getType().contains(EnumType.Fire)){
+			if (target.type.contains(EnumType.Fire)){
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
@@ -34,9 +34,9 @@ public class Burn extends StatusEffectBase {
 	}
 
 	@Override
-	public void applyRepeatedEffect(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is hurt by its burn!");
-		user.attackEntityFrom(DamageSource.causeMobDamage((EntityLiving) user.getEntity()), (int) (((float) user.getMaxHealth()) / 8));
+		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 8));
 	}
 
 	@Override

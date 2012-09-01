@@ -3,7 +3,7 @@ package pixelmon.gui.pokedex;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
@@ -12,7 +12,7 @@ public class SlotPokedex extends GuiSlot
 {
 
 	private Pokedex pokedex;
-	private BaseEntityPixelmon selectedEntity;
+	private EntityPixelmon selectedEntity;
 	private GuiPokedex guiPokedex;
 	
 	public SlotPokedex(GuiPokedex gui, Minecraft mc, Pokedex p) 

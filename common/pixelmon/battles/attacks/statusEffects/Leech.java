@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-
 
 public class Leech extends StatusEffectBase {
 
@@ -20,7 +19,7 @@ public class Leech extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Leech) {
@@ -34,12 +33,12 @@ public class Leech extends StatusEffectBase {
 	}
 
 	@Override
-	public void applyRepeatedEffect(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " drains health from " + user.getName());
 		int dmg = (int) (((float) user.getMaxHealth()) / 8);
 		if (user.getHealth() < 16)
 			dmg = 1;
-		user.attackEntityFrom(DamageSource.causeMobDamage((EntityLiving) user.getEntity()), dmg);
+		user.attackEntityFrom(DamageSource.causeMobDamage(user), dmg);
 		target.setHealth(target.getHealth() + dmg);
 	}
 }

@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-
 
 public class PoisonBadly extends StatusEffectBase {
 
@@ -20,9 +19,9 @@ public class PoisonBadly extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		if (checkChance()) {
-			if (target.getType().contains(EnumType.Poison)) {
+			if (target.type.contains(EnumType.Poison)) {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
@@ -38,9 +37,9 @@ public class PoisonBadly extends StatusEffectBase {
 	}
 
 	@Override
-	public void applyRepeatedEffect(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is hurt by poison!");
-		user.attackEntityFrom(DamageSource.causeMobDamage((EntityLiving) user.getEntity()), (int) (((float) user.getMaxHealth()) * poisonAmount));
+		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) * poisonAmount));
 		poisonAmount += 1 / 16;
 	}
 

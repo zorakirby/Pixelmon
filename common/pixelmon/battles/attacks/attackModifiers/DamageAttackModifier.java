@@ -3,7 +3,7 @@ package pixelmon.battles.attacks.attackModifiers;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.attackEffects.EffectParser;
 import pixelmon.battles.attacks.attackEffects.EffectParser.ValueType;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
 
@@ -17,14 +17,14 @@ public class DamageAttackModifier extends AttackModifierBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		double dmg;
 		if (type == ValueType.Percent)
 			dmg = ((double)target.getMaxHealth())*((double)value)/100;
 		else
 			dmg = value;
-		target.attackEntityFrom(DamageSource.causeMobDamage((EntityLiving) user.getEntity()), (int)dmg);
-		a.doMove((EntityLiving)user.getEntity(), (EntityLiving)target.getEntity());
+		target.attackEntityFrom(DamageSource.causeMobDamage(user), (int)dmg);
+		a.doMove(user, target);
 		return true;
 	}
 

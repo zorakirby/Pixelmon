@@ -13,7 +13,6 @@ import java.util.Iterator;
 import com.google.common.eventbus.Subscribe;
 
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 
 import net.minecraft.server.MinecraftServer;

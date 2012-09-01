@@ -5,21 +5,19 @@ import java.util.ArrayList;
 import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
-
-
 
 public class Infatuated extends StatusEffectBase {
 
-	PixelmonEntityHelper originalTarget; 
+	EntityPixelmon originalTarget; 
 	public Infatuated() {
 		super(StatusEffectType.Infatuated, false, true, false);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Infatuated) {
@@ -34,7 +32,7 @@ public class Infatuated extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
 		if (originalTarget !=target){
 			user.status.remove(this);
 			return true;

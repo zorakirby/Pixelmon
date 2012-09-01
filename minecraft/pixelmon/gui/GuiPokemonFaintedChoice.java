@@ -6,14 +6,14 @@ import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Keyboard;
 
 import pixelmon.battles.BattleController;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class GuiPokemonFaintedChoice extends GuiScreen {
 
-	private BaseEntityPixelmon mypixelmon;
+	private EntityPixelmon mypixelmon;
 	private BattleController bc;
 
-	public GuiPokemonFaintedChoice(BattleController bc, BaseEntityPixelmon entity) {
+	public GuiPokemonFaintedChoice(BattleController bc, EntityPixelmon entity) {
 		mypixelmon = entity;
 		this.bc = bc;
 	}

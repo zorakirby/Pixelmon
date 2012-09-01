@@ -33,6 +33,9 @@ public class BaseStats {
 		public int passive;
 		public int aggressive;
 		public Aggression(String aggressionString, String pixelmonName){
+			if (aggressionString ==null){
+				return;
+			}
 			String[] splits = aggressionString.split(";");
 			if (splits.length!=3) {
 				System.out.println("Error in Aggression"+ " For Pokemon : " + pixelmonName);

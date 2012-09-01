@@ -14,6 +14,7 @@ public class ItemBlock extends Item
         super(par1);
         this.blockID = par1 + 256;
         this.setIconIndex(Block.blocksList[par1 + 256].getBlockTextureFromSide(2));
+        isDefaultTexture = Block.blocksList[par1 + 256].isDefaultTexture;
     }
 
     /**

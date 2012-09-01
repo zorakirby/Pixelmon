@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 
 public class ItemBucket extends Item
@@ -34,16 +35,16 @@ public class ItemBucket extends Item
         else
         {
             FillBucketEvent event = new FillBucketEvent(par3EntityPlayer, par1ItemStack, par2World, var12);
-            if (event.isCanceled())
+            if (MinecraftForge.EVENT_BUS.post(event))
             {
                 return par1ItemStack;
             }
-            
+
             if (event.isHandeled())
             {
                 return event.result;
             }
-            
+
             if (var12.typeOfHit == EnumMovingObjectType.TILE)
             {
                 int var13 = var12.blockX;
@@ -54,7 +55,6 @@ public class ItemBucket extends Item
                 {
                     return par1ItemStack;
                 }
-                
 
                 if (this.isFull == 0)
                 {

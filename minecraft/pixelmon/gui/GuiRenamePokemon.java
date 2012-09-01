@@ -7,8 +7,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
@@ -17,13 +16,7 @@ public class GuiRenamePokemon extends GuiScreen {
 
 	private GuiScreen parentGuiScreen;
 	private GuiTextField theGuiTextField;
-	private PixelmonEntityHelper target;
 	private PixelmonDataPacket targetPacket;
-
-	public GuiRenamePokemon(PixelmonEntityHelper target2, GuiScreen parent) {
-		target = target2;
-		parentGuiScreen = parent;
-	}
 
 	public GuiRenamePokemon(PixelmonDataPacket targetPacket, GuiScreenPokeChecker parent) {
 		this.targetPacket = targetPacket;
@@ -39,10 +32,7 @@ public class GuiRenamePokemon extends GuiScreen {
 		controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, stringtranslate.translateKey("gui.cancel")));
 		theGuiTextField = new GuiTextField(fontRenderer, width / 2 - 100, 60, 200, 20);
 		theGuiTextField.setFocused(true);
-		if (Minecraft.getMinecraft().theWorld.isRemote)
-			theGuiTextField.setText(targetPacket.nickname);
-		else
-			theGuiTextField.setText(target.getName());
+		theGuiTextField.setText(targetPacket.nickname);
 	}
 
 	public void updateScreen() {

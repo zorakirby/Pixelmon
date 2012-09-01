@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import java.io.BufferedReader;
@@ -628,6 +629,7 @@ public class GameSettings
      */
     public void saveOptions()
     {
+        if (FMLClientHandler.instance().isLoading()) return;
         try
         {
             PrintWriter var1 = new PrintWriter(new FileWriter(this.optionsFile));

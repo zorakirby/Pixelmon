@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
@@ -24,7 +24,7 @@ public class EntityCharmander extends EntityGroundPixelmon
 	
 	public void evolve() 
 	{
-		BaseEntityPixelmon entity = new EntityCharmeleon(worldObj);
+		EntityPixelmon entity = new EntityCharmeleon(worldObj);
 		helper.evolve(entity.helper);
 	}
 	

@@ -8,9 +8,8 @@ import java.util.Iterator;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 import pixelmon.entities.EntityTrainer;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.EntityList;
@@ -60,7 +59,7 @@ public class PixelmonConfig {
 			{
 				Integer i = (Integer)it.next(); 
 				Class c1 = (Class)EntityList.IDtoClassMapping.get(i);
-				if(IHaveHelper.class.isAssignableFrom(c1) || EntityTrainer.class.isAssignableFrom(c1))
+				if(EntityPixelmon.class.isAssignableFrom(c1) || EntityTrainer.class.isAssignableFrom(c1))
 				{
 					continue;
 				}

@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
+
+import net.minecraft.src.ICommand;
 
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
@@ -55,6 +58,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -82,6 +86,7 @@ public class ModLoaderModContainer implements ModContainer
     private String sortingProperties;
     private ArtifactVersion processedVersion;
     private boolean isNetworkMod;
+    private List<ICommand> serverCommands = Lists.newArrayList();
 
     public ModLoaderModContainer(String className, File modSource, String sortingProperties)
     {
@@ -445,7 +450,7 @@ public class ModLoaderModContainer implements ModContainer
     @Override
     public void bindMetadata(MetadataCollection mc)
     {
-        Map<String, Object> dummyMetadata = ImmutableMap.<String,Object>builder().put("name", modId).put("version", "").build();
+        Map<String, Object> dummyMetadata = ImmutableMap.<String,Object>builder().put("name", modId).put("version", "1.0").build();
         this.metadata = mc.getMetadataForId(modId, dummyMetadata);
         Loader.instance().computeDependencies(sortingProperties, getRequirements(), getDependencies(), getDependants());
     }
@@ -485,10 +490,12 @@ public class ModLoaderModContainer implements ModContainer
             EnumSet<TickType> ticks = EnumSet.noneOf(TickType.class);
             this.gameTickHandler = new BaseModTicker(ticks, false);
             this.guiTickHandler = new BaseModTicker(ticks.clone(), true);
-            Class<? extends BaseModProxy> modClazz = (Class<? extends BaseModProxy>) Class.forName(modClazzName, true, modClassLoader);
+            Class<? extends BaseModProxy> modClazz = (Class<? extends BaseModProxy>) modClassLoader.loadBaseModClass(modClazzName);
             configureMod(modClazz, event.getASMHarvestedData());
             isNetworkMod = FMLNetworkHandler.instance().registerNetworkMod(this, modClazz, event.getASMHarvestedData());
-            mod = (BaseModProxy)modClazz.newInstance();
+            Constructor<? extends BaseModProxy> ctor = modClazz.getConstructor();
+            ctor.setAccessible(true);
+            mod = modClazz.newInstance();
             if (!isNetworkMod)
             {
                 FMLLog.fine("Injecting dummy network mod handler for BaseMod %s", getModId());
@@ -561,6 +568,14 @@ public class ModLoaderModContainer implements ModContainer
         ModLoaderHelper.finishModLoading(this);
     }
 
+    @Subscribe
+    public void serverStarting(FMLServerStartingEvent evt)
+    {
+        for (ICommand cmd : serverCommands)
+        {
+            evt.registerServerCommand(cmd);
+        }
+    }
     @Override
     public ArtifactVersion getProcessedVersion()
     {
@@ -581,5 +596,16 @@ public class ModLoaderModContainer implements ModContainer
     public boolean isNetworkMod()
     {
         return this.isNetworkMod;
+    }
+
+    @Override
+    public String getDisplayVersion()
+    {
+        return metadata!=null ? metadata.version : getVersion();
+    }
+
+    public void addServerCommand(ICommand command)
+    {
+        serverCommands .add(command);
     }
 }

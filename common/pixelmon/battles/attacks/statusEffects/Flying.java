@@ -3,8 +3,7 @@ package pixelmon.battles.attacks.statusEffects;
 import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Flying extends StatusEffectBase {
 
@@ -14,7 +13,7 @@ public class Flying extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		turnCount=0;
 	}
 
@@ -24,7 +23,7 @@ public class Flying extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean stopsIncomingAttack(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a) {
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		if (!a.attackName.equalsIgnoreCase("Smack Down"))
 			return true;
 		return false;

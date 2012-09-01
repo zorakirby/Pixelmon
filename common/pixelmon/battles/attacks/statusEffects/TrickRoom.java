@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.RandomHelper;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class TrickRoom extends StatusEffectBase {
 	private int effectTurns = -1;
@@ -14,20 +14,20 @@ public class TrickRoom extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
-		for (int i=0; i < user.bc.battleStatusList.size(); i++){
-			if (user.bc.battleStatusList.get(i).type == type){
-				user.bc.battleStatusList.remove(i);
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+		for (int i=0; i < user.battleController.battleStatusList.size(); i++){
+			if (user.battleController.battleStatusList.get(i).type == type){
+				user.battleController.battleStatusList.remove(i);
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
 				return;
 			}
 		}
 		effectTurns = 5;
-		user.bc.battleStatusList.add(this);
+		user.battleController.battleStatusList.add(this);
 	}
 	
 	@Override
-	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (effectTurns == 0) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
 			user.status.remove(this);
@@ -36,7 +36,7 @@ public class TrickRoom extends StatusEffectBase {
 	}
 	
 	@Override
-	public boolean pokemon1MovesFirst(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public boolean pokemon1MovesFirst(EntityPixelmon user, EntityPixelmon target) {
 		if (user.stats.Speed * user.battleStats.SpeedModifier > target.stats.Speed
 				* target.battleStats.SpeedModifier)
 			return false;

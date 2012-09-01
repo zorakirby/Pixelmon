@@ -14,8 +14,8 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.EntityTrainer;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.Entity3HasStats;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
 import net.minecraft.server.MinecraftServer;
@@ -69,7 +69,7 @@ public class PlayerStorage {
 		partyPokemon = pokemon;
 	}
 
-	public void addToParty(PixelmonEntityHelper p) {
+	public void addToParty(EntityPixelmon p) {
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
 		if (!hasSpace()) {
@@ -78,7 +78,7 @@ public class PlayerStorage {
 			return;
 		}
 		if (mode == PokeballManagerMode.Player)
-			p.setOwner(player);
+			p.setOwner(player.username);
 		else if (mode == PokeballManagerMode.Trainer)
 			p.setTrainer(trainer);
 		NBTTagCompound n = new NBTTagCompound();
@@ -101,19 +101,17 @@ public class PlayerStorage {
 			}
 		} while (contains(id));
 
-		p.setPokemonID(id);
+		p.setPokemonId(id);
 		p.writeEntityToNBT(n);
-		Entity entity1 = (Entity) p.getEntity();
-		entity1.writeToNBT(n);
-		p.lvl.writeToNBT(n);
+		p.writeToNBT(n);
+		p.getLvl().writeToNBT(n);
 		n.setString("id", p.getName());
 		n.setName(p.getName());
 		n.setString("Nickname", n.getName());
 		n.setBoolean("IsInBall", true);
 		n.setBoolean("IsShiny", p.getIsShiny());
 		n.setInteger("PixelmonOrder", getNextOpen());
-		if(p.getHeldItem() != null)
-		{
+		if (p.getHeldItem() != null) {
 			n.setCompoundTag("Held Item", p.getHeldItem().writeToNBT(new NBTTagCompound()));
 		}
 		partyPokemon[getNextOpen()] = n;
@@ -123,14 +121,14 @@ public class PlayerStorage {
 			((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.AddToStorage).getPacket());
 	}
 
-	public void retrieve(IHaveHelper currentPixelmon) {
+	public void retrieve(EntityPixelmon currentPixelmon) {
 		for (NBTTagCompound n : partyPokemon) {
 			if (n != null) {
-				if (n.getInteger("pixelmonID") == currentPixelmon.getHelper().getPokemonId()) {
-					currentPixelmon.getHelper().writeEntityToNBT(n);
+				if (n.getInteger("pixelmonID") == currentPixelmon.getPokemonId()) {
+					currentPixelmon.writeEntityToNBT(n);
 					Entity entity1 = (Entity) currentPixelmon;
 					entity1.writeToNBT(n);
-					n.setName(currentPixelmon.getHelper().getName());
+					n.setName(currentPixelmon.getName());
 					n.setBoolean("IsInBall", true);
 					currentPixelmon.unloadEntity();
 				}
@@ -148,16 +146,16 @@ public class PlayerStorage {
 		return false;
 	}
 
-	public IHaveHelper sendOut(int id, World world) {
+	public EntityPixelmon sendOut(int id, World world) {
 		for (NBTTagCompound n : partyPokemon) {
 			if (n != null) {
 				if (n.getInteger("pixelmonID") == id) {
 					n.setBoolean("IsInBall", false);
-					IHaveHelper e = (IHaveHelper) PixelmonEntityList.createEntityFromNBT(n, world);
-					e.setOwner(player);
-					e.getHelper().lvl.updateEntityString();
-					e.getHelper().clearVelocity();
-					e.getHelper().setIsDead(false);
+					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
+					e.setOwner(player.username);
+					e.getLvl().updateEntityString();
+					e.motionX = e.motionY = e.motionZ = 0;
+					e.isDead = false;
 					return e;
 				}
 			}
@@ -179,15 +177,14 @@ public class PlayerStorage {
 		return partyPokemon;
 	}
 
-	public void replace(PixelmonEntityHelper entityPixelmon, PixelmonEntityHelper entityCapturedPixelmon) {
+	public void replace(EntityPixelmon entityPixelmon, EntityPixelmon entityCapturedPixelmon) {
 		for (int i = 0; i < partyPokemon.length; i++) {
 			NBTTagCompound nbt = partyPokemon[i];
 			if (nbt != null) {
 				if (nbt.getInteger("pixelmonID") == entityPixelmon.getPokemonId()) {
-					entityCapturedPixelmon.setPokemonID(entityPixelmon.getPokemonId());
+					entityCapturedPixelmon.setPokemonId(entityPixelmon.getPokemonId());
 					entityCapturedPixelmon.writeEntityToNBT(nbt);
-					Entity entity1 = (Entity) entityCapturedPixelmon.getEntity();
-					entity1.writeToNBT(nbt);
+					entityCapturedPixelmon.writeToNBT(nbt);
 					nbt.setString("id", entityCapturedPixelmon.getName());
 					nbt.setName(entityCapturedPixelmon.getName());
 					if (mode == PokeballManagerMode.Player)
@@ -222,15 +219,15 @@ public class PlayerStorage {
 		int c = 0;
 		for (NBTTagCompound e : partyPokemon)
 			if (e != null) {
-				if (!e.getBoolean("IsFainted") && e.getShort("Health")>0)
+				if (!e.getBoolean("IsFainted") && e.getShort("Health") > 0)
 					c++;
 			}
 
 		return c;
 	}
 
-	public boolean isIn(PixelmonEntityHelper entityHit) {
-		return contains(entityHit.getPokemonId());
+	public boolean isIn(EntityPixelmon entityPixelmon) {
+		return contains(entityPixelmon.getPokemonId());
 	}
 
 	public boolean hasSentOut(int pixelmonID) {
@@ -246,24 +243,24 @@ public class PlayerStorage {
 	public boolean isFainted(int pokemonId) {
 		for (NBTTagCompound nbt : partyPokemon)
 			if (nbt != null) {
-				if (nbt.getInteger("pixelmonID") == pokemonId){
+				if (nbt.getInteger("pixelmonID") == pokemonId) {
 					if (nbt.getBoolean("IsFainted"))
 						return true;
-					if (nbt.getShort("Health")<=0) return true;
+					if (nbt.getShort("Health") <= 0)
+						return true;
 				}
 			}
 		return false;
 	}
 
-	public void updateNBT(PixelmonEntityHelper helper) {
+	public void updateNBT(EntityPixelmon pixelmon) {
 		for (NBTTagCompound nbt : partyPokemon) {
 			if (nbt != null) {
-				if (nbt.getInteger("pixelmonID") == helper.getPokemonId()) {
-					helper.writeEntityToNBT(nbt);
-					Entity entity1 = (Entity) helper.getEntity();
-					entity1.writeToNBT(nbt);
-					nbt.setString("id", helper.getName());
-					nbt.setName(helper.getName());
+				if (nbt.getInteger("pixelmonID") == pixelmon.getPokemonId()) {
+					pixelmon.writeEntityToNBT(nbt);
+					pixelmon.writeToNBT(nbt);
+					nbt.setString("id", pixelmon.getName());
+					nbt.setName(pixelmon.getName());
 					if (mode == PokeballManagerMode.Player)
 						player.serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 				}
@@ -285,8 +282,8 @@ public class PlayerStorage {
 		@SuppressWarnings("unchecked")
 		List<Entity> EntityList = world.loadedEntityList;
 		for (Entity e : EntityList) {
-			if (e instanceof IHaveHelper) {
-				if (((IHaveHelper) e).getHelper().getPokemonId() == id) {
+			if (e instanceof EntityPixelmon) {
+				if (((EntityPixelmon) e).getPokemonId() == id) {
 					return true;
 				}
 			}
@@ -294,16 +291,16 @@ public class PlayerStorage {
 		return false;
 	}
 
-	public IHaveHelper getAlreadyExists(int id, World world) {
+	public EntityPixelmon getAlreadyExists(int id, World world) {
 		if (id == -1) {
 			return null;
 		}
 		@SuppressWarnings("unchecked")
 		List<Entity> EntityList = world.loadedEntityList;
 		for (Entity e : EntityList) {
-			if (e instanceof IHaveHelper) {
-				if (((IHaveHelper) e).getHelper().getPokemonId() == id) {
-					return (IHaveHelper) e;
+			if (e instanceof EntityPixelmon) {
+				if (((EntityPixelmon) e).getPokemonId() == id) {
+					return (EntityPixelmon) e;
 				}
 			}
 		}
@@ -339,10 +336,10 @@ public class PlayerStorage {
 		} while (true);
 	}
 
-	public IHaveHelper getFirstAblePokemon(World world) {
-		for (int i=0; i < carryLimit; i++){
+	public EntityPixelmon getFirstAblePokemon(World world) {
+		for (int i = 0; i < carryLimit; i++) {
 			int id = getIDFromPosition(i);
-			if (id !=-1 && !isFainted(id))
+			if (id != -1 && !isFainted(id))
 				return sendOut(id, world);
 		}
 		return null;
@@ -356,7 +353,7 @@ public class PlayerStorage {
 		}
 	}
 
-	public IHaveHelper sendOutFromPosition(int pos, World worldObj) {
+	public EntityPixelmon sendOutFromPosition(int pos, World worldObj) {
 		return sendOut(getIDFromPosition(pos), worldObj);
 	}
 

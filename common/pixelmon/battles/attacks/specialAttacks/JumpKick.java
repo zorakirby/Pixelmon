@@ -7,7 +7,7 @@ import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
@@ -18,13 +18,13 @@ public class JumpKick extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
 		return false;
 	}
 	
 	@Override
-	public void ApplyMissEffect(PixelmonEntityHelper user, PixelmonEntityHelper target){
-		user.attackEntityFrom(DamageSource.causeMobDamage((EntityLiving) user.getEntity()), user.getHealth()/2);
+	public void ApplyMissEffect(EntityPixelmon user, EntityPixelmon target){
+		user.attackEntityFrom(DamageSource.causeMobDamage(user), user.getHealth()/2);
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() +" kept on going and hurt itself trying to land!");
 	}
 }

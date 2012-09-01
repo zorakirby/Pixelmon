@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Return extends SpecialAttackBase {
 
@@ -13,7 +13,7 @@ public class Return extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Friendship not fully implemented yet, using basePower of 50");
 		a.basePower = 50;
 		return false;

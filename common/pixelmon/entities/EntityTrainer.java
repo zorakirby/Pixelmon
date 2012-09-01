@@ -6,7 +6,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.TrainerInfo;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PlayerStorage;
 import pixelmon.storage.PokeballManager;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
@@ -20,7 +20,7 @@ import net.minecraft.src.World;
 public class EntityTrainer extends EntityLiving {
 
 	public PlayerStorage pokemonStorage;
-	public IHaveHelper releasedPokemon;
+	public EntityPixelmon releasedPokemon;
 	public String name;
 	public TrainerInfo info;
 
@@ -49,7 +49,7 @@ public class EntityTrainer extends EntityLiving {
 	public void releasePokemon() {
 		if (pokemonStorage.count() == 0)
 			loadPokemon();
-		IHaveHelper p = pokemonStorage.getFirstAblePokemon(worldObj);
+		EntityPixelmon p = pokemonStorage.getFirstAblePokemon(worldObj);
 		if (p != null) {
 			releasedPokemon = p;
 			p.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
@@ -70,11 +70,11 @@ public class EntityTrainer extends EntityLiving {
 		if (info == null)
 			info = DatabaseTrainers.GetTrainerInfo(name);
 		for (String pokemonName : info.partypokemon) {
-			IHaveHelper p = (IHaveHelper) PixelmonEntityList.createEntityByName(pokemonName, worldObj);
+			EntityPixelmon p = (EntityPixelmon)PixelmonEntityList.createEntityByName(pokemonName, worldObj);
 			if (p != null) {
-				p.getHelper().getLvl().setLevel((new Random()).nextInt(3) - 1 + info.level);
-				p.getHelper().setTrainer(this);
-				pokemonStorage.addToParty(p.getHelper());
+				p.getLvl().setLevel((new Random()).nextInt(3) - 1 + info.level);
+				p.setTrainer(this);
+				pokemonStorage.addToParty(p);
 			}
 		}
 	}
@@ -83,12 +83,12 @@ public class EntityTrainer extends EntityLiving {
 		ChatHandler.sendChat(player, info.greeting);
 	}
 
-	public void loseBattle(EntityPlayer player) {
-		ChatHandler.sendChat(player, info.loseMessage);
+	public void loseBattle(EntityLiving entityLiving) {
+		ChatHandler.sendChat(entityLiving, info.loseMessage);
 	}
 
-	public void winBattle(EntityPlayer player) {
-		ChatHandler.sendChat(player, info.winMessage);
+	public void winBattle(EntityLiving entityLiving) {
+		ChatHandler.sendChat(entityLiving, info.winMessage);
 	}
 
 	public void retrievePokemon() {

@@ -3,7 +3,7 @@ package pixelmon.entities.pokemon;
 import java.util.Random;
 
 import pixelmon.ClientProxy;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import pixelmon.enums.EnumPixelmonParticles;
 import net.minecraft.src.MathHelper;

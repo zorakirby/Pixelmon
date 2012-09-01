@@ -5,7 +5,7 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 
@@ -16,7 +16,7 @@ public class ItemBerryLeppa extends ItemHeld {
 		SetUsableInBattle(true);
 	}
 
-	public boolean effectEntity(PixelmonEntityHelper helper) {
+	public boolean effectEntity(EntityPixelmon helper) {
 		for (Attack move : helper.moveset) {
 			if (move == null) {
 				continue;
@@ -32,7 +32,7 @@ public class ItemBerryLeppa extends ItemHeld {
 	}
 
 	@Override
-	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
 		
 	}
 }

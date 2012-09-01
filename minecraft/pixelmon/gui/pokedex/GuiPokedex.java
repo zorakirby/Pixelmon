@@ -6,8 +6,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import pixelmon.config.PixelmonConfig;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.gui.FontScaler;
 import pixelmon.render.GraphicsHelper;
 import net.minecraft.client.Minecraft;
@@ -47,7 +46,7 @@ public class GuiPokedex extends GuiContainer
 		ySize = 202;
 	}
 	
-	public GuiPokedex(PixelmonEntityHelper pixelmonEntityHelper)
+	public GuiPokedex(EntityPixelmon pixelmonEntityHelper)
 	{
 		this();
 		setSelectedEntry(pokedex.getEntry(pokedex.getFromPokedex(pixelmonEntityHelper.getName())));

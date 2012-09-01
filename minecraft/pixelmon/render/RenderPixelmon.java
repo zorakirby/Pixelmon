@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.MathHelper;
 
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.RenderLiving;
@@ -14,8 +15,7 @@ import org.lwjgl.opengl.GL11;
 import pixelmon.Pixelmon;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.LevelHelper;
 
 public class RenderPixelmon extends RenderLiving {
@@ -30,10 +30,10 @@ public class RenderPixelmon extends RenderLiving {
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
-		if (var10 <= (float) 8 || ((BaseEntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((BaseEntityPixelmon) entityLiving).getPokemonId())) {
-			lvlInstance = ((BaseEntityPixelmon) entityLiving).helper.getClientLvl();
+		if (var10 <= (float) 8 || ((EntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((EntityPixelmon) entityLiving).getPokemonId())) {
+			lvlInstance = ((EntityPixelmon) entityLiving).getClientLvl();
 			drawHealthBar(entityLiving, d, d1, d2, f, f1);
-			if (ServerStorageDisplay.contains(((BaseEntityPixelmon)entityLiving).getPokemonId()))
+			if (ServerStorageDisplay.contains(((EntityPixelmon)entityLiving).getPokemonId()))
 				drawExpBar(entityLiving, d, d1, d2, f, f1);
 			drawNameTag(entityLiving, d, d1, d2);
 		}
@@ -45,11 +45,11 @@ public class RenderPixelmon extends RenderLiving {
 	}
 
 	public void drawNameTag(EntityLiving entityliving, double par2, double par4, double par6) {
-		if (Minecraft.isGuiEnabled() && (entityliving instanceof BaseEntityPixelmon)) {
-			BaseEntityPixelmon entitypixelmon = (BaseEntityPixelmon) entityliving;
+		if (Minecraft.isGuiEnabled() && (entityliving instanceof EntityPixelmon)) {
+			EntityPixelmon entitypixelmon = (EntityPixelmon) entityliving;
 			PixelmonDataPacket p = null;
-			if (ServerStorageDisplay.contains(entitypixelmon.getHelper().getPokemonId()))
-				p = ServerStorageDisplay.get(entitypixelmon.getHelper().getPokemonId());
+			if (ServerStorageDisplay.contains(entitypixelmon.getPokemonId()))
+				p = ServerStorageDisplay.get(entitypixelmon.getPokemonId());
 			boolean flag;
 			if (p == null) {
 				flag = true;
@@ -59,9 +59,9 @@ public class RenderPixelmon extends RenderLiving {
 			String s = "";
 			if (lvlInstance != null)
 				s = " Lv: " + lvlInstance.getLevel() + " ";
-			s += (flag ? entitypixelmon.name : p.nickname);
-			if (entitypixelmon.getHelper().getOwner() != null) {
-				s += " (" + entitypixelmon.getHelper().getOwner().username + ")";
+			s += (flag ? entitypixelmon.getName() : p.nickname);
+			if (entitypixelmon.getOwner() != null) {
+				s += " (" + ((EntityPlayer)entitypixelmon.getOwner()).username + ")";
 			} else {
 				s += " (Wild)";
 			}
@@ -159,14 +159,14 @@ public class RenderPixelmon extends RenderLiving {
 		}
 	}
 
-	protected void preRenderScale(IHaveHelper entity, float f) {
-		GL11.glScalef(entity.getHelper().scale * entity.getHelper().giScale, entity.getHelper().scale * entity.getHelper().giScale, entity.getHelper().scale * entity.getHelper().giScale);
-		if (entity.getHelper().doesHover) {
-			GL11.glTranslatef(0, -1 * entity.getHelper().hoverHeight, 0);
+	protected void preRenderScale(EntityPixelmon entity, float f) {
+		GL11.glScalef(entity.scale * entity.baseStats.giScale, entity.scale * entity.baseStats.giScale, entity.scale * entity.baseStats.giScale);
+		if (entity.doesHover) {
+			GL11.glTranslatef(0, -1 * entity.hoverHeight, 0);
 		}
 	}
 
 	protected void preRenderCallback(EntityLiving entityliving, float f) {
-		preRenderScale((IHaveHelper) entityliving, f);
+		preRenderScale((EntityPixelmon) entityliving, f);
 	}
 }

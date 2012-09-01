@@ -9,7 +9,7 @@ import cpw.mods.fml.common.network.Player;
 import pixelmon.Pixelmon;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.ComputerBox;
 import pixelmon.storage.PixelmonStorage;
@@ -76,7 +76,7 @@ public class PCClick extends PacketHandlerBase {
 			if (mousePokemon.get(player) != null) {
 				n1 = mousePokemon.get(player).nbt;
 				if (n1 != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj)) {
-					IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj);
+					EntityPixelmon pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(n1.getInteger("pixelmonID"), player.worldObj);
 					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).retrieve(pixelmon);
 					pixelmon.catchInPokeball();
 				}
@@ -90,7 +90,7 @@ public class PCClick extends PacketHandlerBase {
 				return;
 			MapEntry e = mousePokemon.get(player);
 			if (e != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(e.nbt.getInteger("pixelmonID"), player.worldObj)) {
-				IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(e.nbt.getInteger("pixelmonID"), player.worldObj);
+				EntityPixelmon pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(e.nbt.getInteger("pixelmonID"), player.worldObj);
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).retrieve(pixelmon);
 				pixelmon.catchInPokeball();
 			}

@@ -1578,11 +1578,11 @@ public class Block
         int count = quantityDropped(metadata, fortune, world.rand);
         for(int i = 0; i < count; i++)
         {
-                int id = idDropped(metadata, world.rand, 0);
-                if (id > 0)
-                {
-                        ret.add(new ItemStack(id, 1, damageDropped(metadata)));
-                }
+            int id = idDropped(metadata, world.rand, 0);
+            if (id > 0)
+            {
+                ret.add(new ItemStack(id, 1, damageDropped(metadata)));
+            }
         }
         return ret;
     }
@@ -1600,9 +1600,9 @@ public class Block
      */
     public boolean canSilkHarvest(World world, EntityPlayer player, int x, int y, int z, int metadata)
     {
-        if (this instanceof BlockGlass)
+        if (this instanceof BlockGlass || this instanceof BlockEnderChest)
         {
-                return true;
+            return true;
         }
         return renderAsNormalBlock() && !hasTileEntity(metadata);
     }

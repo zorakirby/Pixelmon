@@ -6,7 +6,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
@@ -17,7 +17,7 @@ public class Venoshock extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
 		a.basePower = 65;
 		boolean isPoisoned=false;
 		for(StatusEffectBase e:target.status)

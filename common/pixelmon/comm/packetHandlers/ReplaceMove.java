@@ -9,8 +9,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.database.DatabaseMoves;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.EntityPlayer;
@@ -32,8 +31,8 @@ public class ReplaceMove extends PacketHandlerBase {
 		EntityPlayerMP player =(EntityPlayerMP)pl;
 		Attack a = DatabaseMoves.getAttack(moveToLearnIndex);
 		
-		IHaveHelper p = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(pokemonID, player.worldObj);
-		ChatHandler.sendChat(player, "Your " + p.getHelper().getName() + " forgot " + p.getHelper().moveset.get(replaceIndex).attackName + ", and learned " + a.attackName);
-		p.getHelper().moveset.set(replaceIndex, a);
+		EntityPixelmon p = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(pokemonID, player.worldObj);
+		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(replaceIndex).attackName + ", and learned " + a.attackName);
+		p.moveset.set(replaceIndex, a);
 	}
 }

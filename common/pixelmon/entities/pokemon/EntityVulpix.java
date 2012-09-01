@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
@@ -22,7 +22,7 @@ public class EntityVulpix  extends EntityGroundPixelmon
 	
 	public void evolve() 
 	{		
-		BaseEntityPixelmon entity = new EntityNinetales(worldObj);
+		EntityPixelmon entity = new EntityNinetales(worldObj);
 		helper.evolve(entity.helper);
 	}
 }

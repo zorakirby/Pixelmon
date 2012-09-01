@@ -6,8 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.src.CompressedStreamTools;
 import net.minecraft.src.Entity;
@@ -36,12 +35,11 @@ public class ComputerBox {
 		return false;
 	}
 
-	public void add(PixelmonEntityHelper p, int id) {
+	public void add(EntityPixelmon p, int id) {
 		NBTTagCompound n = new NBTTagCompound();
-		p.setPokemonID(id);
+		p.setPokemonId(id);
 		p.writeEntityToNBT(n);
-		Entity entity1 = (Entity) p.getEntity();
-		entity1.writeToNBT(n);
+		p.writeToNBT(n);
 		n.setString("id", p.getName());
 		n.setName(p.getName());
 		n.setString("Nickname", n.getName());

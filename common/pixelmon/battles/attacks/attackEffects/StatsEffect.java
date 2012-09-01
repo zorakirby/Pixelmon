@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.EffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class StatsEffect extends EffectBase{
 	
@@ -19,8 +19,8 @@ public class StatsEffect extends EffectBase{
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
-		PixelmonEntityHelper effected = target;
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+		EntityPixelmon effected = target;
 		if (isUser) effected = user;
 		if (checkChance()) {
 			if (type == StatsEffectType.Accuracy) {

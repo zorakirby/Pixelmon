@@ -10,15 +10,14 @@ public class Stats {
 	public int SpecialDefence;
 	public int Speed;
 	public PixelmonIVStore IVs;
-	public BaseStats BaseStats;
 	
-	public void setLevelStats(int level){
-		HP = (int)((((float)IVs.HP + 2*(float)BaseStats.HP + 100f) * (float)level)/100f + 10f);
-		Attack = (int)((((float)IVs.Attack + 2*(float)BaseStats.Attack) * (float)level)/100f + 5f);
-		Defence = (int)((((float)IVs.Defence + 2*(float)BaseStats.Defence) * (float)level)/100f + 5f);
-		SpecialAttack = (int)((((float)IVs.SpAtt + 2*(float)BaseStats.SpAtt) * (float)level)/100f + 5f);
-		SpecialDefence = (int)((((float)IVs.SpDef + 2*(float)BaseStats.SpDef) * (float)level)/100f + 5f);
-		Speed = (int)((((float)IVs.Speed + 2*(float)BaseStats.Speed) * (float)level)/100f + 5f);
+	public void setLevelStats(BaseStats baseStats, int level){
+		HP = (int)((((float)IVs.HP + 2*(float)baseStats.HP + 100f) * (float)level)/100f + 10f);
+		Attack = (int)((((float)IVs.Attack + 2*(float)baseStats.Attack) * (float)level)/100f + 5f);
+		Defence = (int)((((float)IVs.Defence + 2*(float)baseStats.Defence) * (float)level)/100f + 5f);
+		SpecialAttack = (int)((((float)IVs.SpAtt + 2*(float)baseStats.SpAtt) * (float)level)/100f + 5f);
+		SpecialDefence = (int)((((float)IVs.SpDef + 2*(float)baseStats.SpDef) * (float)level)/100f + 5f);
+		Speed = (int)((((float)IVs.Speed + 2*(float)baseStats.Speed) * (float)level)/100f + 5f);
 	}
 
 	public void writeToNBT(NBTTagCompound var1) {
@@ -28,7 +27,6 @@ public class Stats {
 		var1.setInteger("StatsSpecialAttack", SpecialAttack);
 		var1.setInteger("StatsSpecialDefence", SpecialDefence);
 		var1.setInteger("StatsSpeed", Speed);
-		var1.setString("NationalPokedexNumber", BaseStats.getNationalPokedexNumberString());
 		IVs.writeToNBt(var1);
 	}
 	

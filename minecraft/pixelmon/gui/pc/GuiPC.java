@@ -18,7 +18,6 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.gui.GuiScreenPokeCheckerPC;

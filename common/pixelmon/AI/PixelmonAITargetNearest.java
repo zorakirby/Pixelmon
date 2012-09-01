@@ -4,8 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAINearestAttackableTargetSorter;
@@ -17,11 +16,11 @@ public class PixelmonAITargetNearest extends PixelmonAITarget {
 	EntityLiving targetEntity;
 	private TargetSorter field_48387_g;
 
-	public PixelmonAITargetNearest(EntityLiving par1EntityLiving, float par3, boolean par5) {
+	public PixelmonAITargetNearest(EntityPixelmon par1EntityLiving, float par3, boolean par5) {
 		this(par1EntityLiving, par3, par5, false);
 	}
 
-	public PixelmonAITargetNearest(EntityLiving par1EntityLiving, float par3, boolean par5, boolean par6) {
+	public PixelmonAITargetNearest(EntityPixelmon par1EntityLiving, float par3, boolean par5, boolean par6) {
 		super(par1EntityLiving, par3, par5, par6);
 		this.targetDistance = par3;
 		this.field_48387_g = new TargetSorter(this, par1EntityLiving);
@@ -32,7 +31,7 @@ public class PixelmonAITargetNearest extends PixelmonAITarget {
 	 * Returns whether the EntityAIBase should begin execution.
 	 */
 	public boolean shouldExecute() {
-		if (((IHaveHelper) taskOwner).getHelper().bc != null)
+		if (taskOwner.battleController != null)
 			return false;
 
 		EntityPlayer var1 = this.taskOwner.worldObj.getClosestPlayerToEntity(this.taskOwner, (double) this.targetDistance);
@@ -41,7 +40,7 @@ public class PixelmonAITargetNearest extends PixelmonAITarget {
 			return true;
 		}
 
-		List var5 = this.taskOwner.worldObj.getEntitiesWithinAABB(BaseEntityPixelmon.class, this.taskOwner.boundingBox.expand((double) this.targetDistance, 4.0D, (double) this.targetDistance));
+		List var5 = this.taskOwner.worldObj.getEntitiesWithinAABB(EntityPixelmon.class, this.taskOwner.boundingBox.expand((double) this.targetDistance, 4.0D, (double) this.targetDistance));
 		Collections.sort(var5, this.field_48387_g);
 		Iterator var2 = var5.iterator();
 

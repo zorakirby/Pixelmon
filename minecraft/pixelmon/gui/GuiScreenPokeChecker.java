@@ -2,8 +2,7 @@ package pixelmon.gui;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiScreen;

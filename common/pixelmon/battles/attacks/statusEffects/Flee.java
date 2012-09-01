@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-
-
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Flee extends StatusEffectBase {
 
@@ -16,15 +14,15 @@ public class Flee extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName()+ " runs away!");
-		BattleRegistry.deRegisterBattle(target.bc);
+		BattleRegistry.deRegisterBattle(target.battleController);
 		target.EndBattle();
 		user.EndBattle();
 	}
 
 	@Override
-	public boolean canAttackThisTurn(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
 		return false;
 	}
 }

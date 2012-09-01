@@ -1,6 +1,7 @@
 package pixelmon.config;
 
 
+import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraftforge.common.Configuration;
 
 public class IDListPixelmon {
@@ -81,7 +82,6 @@ public class IDListPixelmon {
 	public static int golbatId;
 	public static int drowzeeId;
 	public static int numelId;
-	
 	
 	public static int i=0;
 	public static void load(Configuration configuration) {

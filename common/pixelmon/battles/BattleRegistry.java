@@ -3,7 +3,6 @@ package pixelmon.battles;
 import java.util.ArrayList;
 
 import pixelmon.battles.participants.PlayerParticipant;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 import net.minecraft.src.EntityPlayer;
 

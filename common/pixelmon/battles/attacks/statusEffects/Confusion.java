@@ -5,12 +5,11 @@ import java.util.Random;
 
 import pixelmon.battles.*;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-
 
 public class Confusion extends StatusEffectBase {
 	private int effectTurns = -1;
@@ -20,7 +19,7 @@ public class Confusion extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Confusion) {
@@ -35,19 +34,19 @@ public class Confusion extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is confused...");
 		if ((new Random()).nextInt(100) <= 50) {
-			user.attackEntityFrom(DamageSource.causeMobDamage((EntityLiving) user.getEntity()), calculateConfusionDamage(user));
+			user.attackEntityFrom(DamageSource.causeMobDamage(user), calculateConfusionDamage(user));
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " hurt itself in its confusion");
 			return false;
 		}
 		return true;
 	}
 
-	private int calculateConfusionDamage(PixelmonEntityHelper user) {
+	private int calculateConfusionDamage(EntityPixelmon user) {
 		double stab = 1;
-		double type = EnumType.getTotalEffectiveness(user.getType(), EnumType.Normal);
+		double type = EnumType.getTotalEffectiveness(user.type, EnumType.Normal);
 		double critical = 1;
 		double rand = ((new Random()).nextDouble() + 85.0) * 15.0 / 100.0;
 		double modifier = stab * type * critical * rand;
@@ -59,7 +58,7 @@ public class Confusion extends StatusEffectBase {
 	}
 
 	@Override
-	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (effectTurns == 0) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " snaps out of confusion!");
 			user.status.remove(this);

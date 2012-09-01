@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class LightScreen extends StatusEffectBase {
 	private int effectTurns = -1;
@@ -14,7 +14,7 @@ public class LightScreen extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 
 		if (checkChance()) {
 			if (user.status.contains(this))
@@ -27,14 +27,14 @@ public class LightScreen extends StatusEffectBase {
 	}
 
 	@Override
-	public double adjustDamage(Attack a, double damage, PixelmonEntityHelper user, PixelmonEntityHelper target, double crit) {
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
 		if (a.attackCategory == Attack.ATTACK_SPECIAL)
 			return damage / 2;
 		return damage;
 	}
 
 	@Override
-	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (effectTurns == 0) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + "'s Lightscreen wears off!");
 			user.status.remove(this);

@@ -16,9 +16,7 @@ import pixelmon.battles.attacks.specialAttacks.MultiTurnSpecialAttackBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 import pixelmon.items.ItemHeld;
 import pixelmon.storage.PixelmonStorage;
@@ -68,10 +66,10 @@ public class Attack {
 
 	public boolean flinched = false;
 
-	public void use(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void use(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		boolean attackHandled = false, cantMiss = false;
 		flinched = false;
-		user.getLookHelper().setLookPositionWithEntity((Entity) target.getEntity(), 0, 0);
+		user.getLookHelper().setLookPositionWithEntity(target, 0, 0);
 		double accuracy = ((double) this.accuracy) * ((double) user.battleStats.Accuracy) / ((double) target.battleStats.Evasion);
 		double crit = calcCriticalHit(null);
 		/* Check for Protect */
@@ -126,16 +124,16 @@ public class Attack {
 				if (attackCategory == ATTACK_STATUS)
 					power = 0;
 				else {
-					target.attackEntityFrom(DamageSource.causeMobDamage((EntityLiving) user.getEntity()), power);
+					target.attackEntityFrom(DamageSource.causeMobDamage(user), power);
 				}
 
-				doMove((EntityLiving) user.getEntity(), (EntityLiving) target.getEntity());
+				doMove(user, target);
 
 				String s = null;
 				if (attackCategory != ATTACK_STATUS) {
 					if (crit > 1)
 						ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Critical Hit!");
-					float effectiveness = EnumType.getTotalEffectiveness(target.getType(), attackType);
+					float effectiveness = EnumType.getTotalEffectiveness(target.type, attackType);
 					if (effectiveness == EFFECTIVE_NONE)
 						s = "It had no effect!";
 					if (effectiveness == EFFECTIVE_NOT || effectiveness == EFFECTIVE_BARELY)
@@ -165,10 +163,10 @@ public class Attack {
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)user.getOwner()).updateNBT(user);
 		if (target.getOwner() != null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)target.getOwner()).updateNBT(target);
-		if (user.getTrainer() != null)
-			user.getTrainer().pokemonStorage.updateNBT(user);
-		if (target.getTrainer() != null)
-			target.getTrainer().pokemonStorage.updateNBT(target);
+		if (user.trainer != null)
+			user.trainer.pokemonStorage.updateNBT(user);
+		if (target.trainer != null)
+			target.trainer.pokemonStorage.updateNBT(target);
 		pp--;
 		ItemHeld.useBattleItems(user, target);
 		return;
@@ -179,11 +177,11 @@ public class Attack {
 			anim.doMove(user, target);
 	}
 
-	public int doDamageCalc(PixelmonEntityHelper user, PixelmonEntityHelper target, double crit) {
+	public int doDamageCalc(EntityPixelmon user, EntityPixelmon target, double crit) {
 		double stab = 1;
 		if (STAB)
 			stab = 1.5;
-		double type = EnumType.getTotalEffectiveness(target.getType(), attackType);
+		double type = EnumType.getTotalEffectiveness(target.type, attackType);
 		double critical = crit;
 		double rand = ((double) RandomHelper.getRandomNumberBetween(85, 100)) / 100;
 		double modifier = stab * type * critical * rand;
@@ -227,19 +225,19 @@ public class Attack {
 		return 1;
 	}
 
-	public boolean canHit(PixelmonEntityHelper pixelmon1, PixelmonEntityHelper pixelmon2) {
+	public boolean canHit(EntityPixelmon pixelmon1, EntityPixelmon pixelmon2) {
 		if (pixelmon2 == null) {
 			return false;
 		}
 
-		if (((EntityLiving) pixelmon1.getEntity()).isDead || pixelmon1.isFainted || ((EntityLiving) pixelmon2.getEntity()).isDead || pixelmon2.isFainted) {
+		if (pixelmon1.isDead || pixelmon1.isFainted || pixelmon2.isDead || pixelmon2.isFainted) {
 			return false;
 		}
 
 		return true;
 	}
 
-	public static boolean canMovesHit(PixelmonEntityHelper entity, PixelmonEntityHelper target) {
+	public static boolean canMovesHit(EntityPixelmon entity, EntityPixelmon target) {
 		Iterator<Attack> i = entity.moveset.iterator();
 		boolean[] b = new boolean[4];
 		int i1 = 0;
@@ -257,7 +255,7 @@ public class Attack {
 		return true;
 	}
 
-	public static Attack getWhichMoveIsBest(List<Attack> moves, ArrayList<EnumType> types, PixelmonEntityHelper pixelmon1, PixelmonEntityHelper pixelmon2) {
+	public static Attack getWhichMoveIsBest(List<Attack> moves, ArrayList<EnumType> types, EntityPixelmon releasedPokemon, EntityPixelmon entityPixelmon) {
 		int i1 = 0;
 		// for (int i = 0; i < moves.size(); i++) {
 		// float f = Type
@@ -289,9 +287,9 @@ public class Attack {
 		}
 	}
 
-	public boolean doesPersist(PixelmonEntityHelper pixelmon1) {
+	public boolean doesPersist(EntityPixelmon entityPixelmon) {
 		if (attackName.equalsIgnoreCase("Fly") || attackName.equalsIgnoreCase("Bounce")) {
-			for (StatusEffectBase s : pixelmon1.status)
+			for (StatusEffectBase s : entityPixelmon.status)
 				if (s.type == StatusEffectType.Flying)
 					return true;
 			return false;

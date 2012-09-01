@@ -8,7 +8,7 @@ import java.util.Random;
 import pixelmon.RandomHelper;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseStats;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.database.DatabaseTrainers;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.BiomeGenBase;
@@ -26,6 +26,8 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.ChunkEvent;
 
 public class PixelmonSpawner {
+	private Random random = new Random();
+
 	@ForgeSubscribe
 	public void spawnOnChunkLoad(ChunkEvent.Load event) {
 		List[] entityLists = event.getChunk().entityLists;
@@ -33,11 +35,29 @@ public class PixelmonSpawner {
 		for (List l : entityLists) {
 			currentTotalNum += l.size();
 		}
-		performSpawningInChunk(event.getChunk(), event.getChunk().xPosition, event.getChunk().zPosition, ChunkDataEvents.getNumFromPos(event.getChunk().xPosition, event.getChunk().zPosition)
-				- currentTotalNum, event.world);
+		int calculatedNum = ChunkDataEvents.getNumFromPos(
+				event.getChunk().xPosition, event.getChunk().zPosition);
+		if (calculatedNum < currentTotalNum) {
+			ArrayList<List> filledLists = new ArrayList<List>();
+			for (List l : entityLists)
+				if (l.size() != 0)
+					filledLists.add(l);
+			while (calculatedNum < currentTotalNum) {
+				int listIndex = random.nextInt(filledLists.size());
+				int entityIndex = random.nextInt(filledLists.get(listIndex)
+						.size());
+				((Entity) filledLists.get(listIndex).get(entityIndex))
+						.setDead();
+				currentTotalNum--;
+			}
+		} else if (calculatedNum > currentTotalNum)
+			performSpawningInChunk(event.getChunk(),
+					event.getChunk().xPosition, event.getChunk().zPosition,
+					calculatedNum - currentTotalNum, event.world);
 	}
 
-	private void performSpawningInChunk(Chunk chunk, int xPosition, int zPosition, int num, World world) {
+	private void performSpawningInChunk(Chunk chunk, int xPosition,
+			int zPosition, int num, World world) {
 		if (num <= 0)
 			return;
 		int x = xPosition * 16;
@@ -47,7 +67,8 @@ public class PixelmonSpawner {
 		List<SpawnData> creatureList = SpawnRegistry.getSpawnsForBiome(biome);
 
 		int totRarityCount = 0;
-		if (creatureList==null) return;
+		if (creatureList == null)
+			return;
 		for (SpawnData s : creatureList)
 			totRarityCount += s.rarity;
 
@@ -56,18 +77,23 @@ public class PixelmonSpawner {
 			int zRand = z + rand.nextInt(16);
 			int y = getTopSolidOrLiquidBlock(chunk, xRand, zRand);
 			int index = rand.nextInt(totRarityCount);
-			String creatureName =null;
-			int tot=0;
-			for (SpawnData s: creatureList)	{
-				tot+= s.rarity;
+			String creatureName = null;
+			int tot = 0;
+			for (SpawnData s : creatureList) {
+				tot += s.rarity;
 				if (index <= tot) {
-					creatureName=s.name;
+					creatureName = s.name;
 					break;
 				}
 			}
-			if (SpawnerAnimals.canCreatureTypeSpawnAtLocation(DatabaseStats.GetCreatureType(creatureName), world, xRand, y, zRand)) {
-				Entity pixelmon = PixelmonEntityList.createEntityByName(creatureName, world);
-				pixelmon.setLocationAndAngles(xRand, y, zRand, rand.nextFloat() * 360.0F, 0.0F);
+			if (DatabaseStats.GetCreatureType(creatureName) == null
+					|| SpawnerAnimals.canCreatureTypeSpawnAtLocation(
+							DatabaseStats.GetCreatureType(creatureName), world,
+							xRand, y, zRand)) {
+				Entity pixelmon = PixelmonEntityList.createEntityByName(
+						creatureName, world);
+				pixelmon.setLocationAndAngles(xRand, y, zRand,
+						rand.nextFloat() * 360.0F, 0.0F);
 				if (((EntityLiving) pixelmon).getCanSpawnHere())
 					world.spawnEntityInWorld(pixelmon);
 			}
@@ -81,7 +107,9 @@ public class PixelmonSpawner {
 		for (z &= 15; var4 > 0; --var4) {
 			int var5 = chunk.getBlockID(x, var4, z);
 
-			if (var5 != 0 && Block.blocksList[var5].blockMaterial.blocksMovement() && Block.blocksList[var5].blockMaterial != Material.leaves) {
+			if (var5 != 0
+					&& Block.blocksList[var5].blockMaterial.blocksMovement()
+					&& Block.blocksList[var5].blockMaterial != Material.leaves) {
 				return var4 + 1;
 			}
 		}

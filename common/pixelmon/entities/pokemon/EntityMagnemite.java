@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
@@ -24,7 +24,7 @@ public class EntityMagnemite  extends EntityGroundPixelmon
 	
 	public void evolve() 
 	{		
-		BaseEntityPixelmon entity = new EntityMagneton(worldObj);
+		EntityPixelmon entity = new EntityMagneton(worldObj);
 		helper.evolve(entity.helper);
 	}
 }

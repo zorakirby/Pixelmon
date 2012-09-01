@@ -9,7 +9,6 @@ import pixelmon.Pixelmon;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.config.PixelmonEntityList;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 
 import net.minecraft.src.EntityPlayer;
 
@@ -17,7 +16,6 @@ import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;
 import net.minecraft.src.Packet250CustomPayload;
-
 
 public class ClientPacketHandler implements IPacketHandler {
 

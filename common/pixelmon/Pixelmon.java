@@ -93,7 +93,7 @@ public class Pixelmon {
 		proxy.registerRenderers();
 		proxy.preloadTextures();
 		PixelmonRecipes.addRecipes();
-		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", IDListPixelmon.i ++ , Pixelmon.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", EntityRegistry.findGlobalUniqueEntityId() , Pixelmon.instance, 80, 1, true);
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());

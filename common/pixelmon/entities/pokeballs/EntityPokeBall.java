@@ -9,8 +9,7 @@ import pixelmon.battles.participants.TrainerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.EntityTrainer;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.storage.PixelmonStorage;
@@ -32,11 +31,11 @@ import net.minecraft.src.World;
 public class EntityPokeBall extends EntityThrowable {
 	public int shakePokeball;
 	private EntityLiving thrower;
-	private PixelmonEntityHelper p;
+	private EntityPixelmon p;
 	private boolean isWaiting;
 	private int waitTime;
 	private boolean canCatch = false;
-	private PixelmonEntityHelper pixelmon;
+	private EntityPixelmon pixelmon;
 	private boolean isEmpty;
 	private float endRotationYaw = 0;
 	public boolean dropItem;
@@ -54,7 +53,7 @@ public class EntityPokeBall extends EntityThrowable {
 		this.dropItem = dropItem;
 	}
 
-	public EntityPokeBall(World world, EntityLiving entityliving, PixelmonEntityHelper e, EnumPokeballs type) {
+	public EntityPokeBall(World world, EntityLiving entityliving, EntityPixelmon e, EnumPokeballs type) {
 		super(world, entityliving);
 		thrower = entityliving;
 		endRotationYaw = entityliving.rotationYawHead;
@@ -100,9 +99,9 @@ public class EntityPokeBall extends EntityThrowable {
 					}
 					pixelmon.setMotion(0, 0, 0);
 					pixelmon.releaseFromPokeball();
-					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)
-							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn(((IHaveHelper) movingobjectposition.entityHit).getHelper())) {
-						WildPixelmonParticipant part = new WildPixelmonParticipant(((IHaveHelper) movingobjectposition.entityHit).getHelper());
+					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)
+							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn((EntityPixelmon) movingobjectposition.entityHit)) {
+						WildPixelmonParticipant part = new WildPixelmonParticipant((EntityPixelmon)movingobjectposition.entityHit);
 						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
 					} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
 						TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
@@ -118,9 +117,9 @@ public class EntityPokeBall extends EntityThrowable {
 			}
 		} else {
 			if (movingobjectposition != null) {
-				if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof IHaveHelper)) {
-					IHaveHelper entitypixelmon = (IHaveHelper) movingobjectposition.entityHit;
-					p = entitypixelmon.getHelper();
+				if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)) {
+					EntityPixelmon entitypixelmon = (EntityPixelmon) movingobjectposition.entityHit;
+					p = entitypixelmon;
 					if (p.hitByPokeball) {
 						motionX = motionZ = 0;
 						motionY = -0.1;
@@ -164,7 +163,7 @@ public class EntityPokeBall extends EntityThrowable {
 		if (isWaiting) {
 			if (waitTime == 0 && !isUnloaded) {
 				initialScale = p.scale;
-				initPos = p.getPosition();
+				initPos = Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
 				Vec3 current = Vec3.createVectorHelper(posX, posY, posZ);
 				current.xCoord -= initPos.xCoord;
 				current.yCoord -= initPos.yCoord;
@@ -206,7 +205,10 @@ public class EntityPokeBall extends EntityThrowable {
 	int i = 0;
 
 	private void moveCloser() {
-		p.setPosition(initPos.addVector(diff.xCoord * i / 4, diff.yCoord * i / 4, diff.zCoord * i / 4));
+		Vec3 newVec = initPos.addVector(diff.xCoord * i / 4, diff.yCoord * i / 4, diff.zCoord * i / 4);
+		p.posX = newVec.xCoord;
+		p.posY = newVec.yCoord;
+		p.posZ = newVec.zCoord;
 		i++;
 	}
 
@@ -236,7 +238,7 @@ public class EntityPokeBall extends EntityThrowable {
 		if (isCaptured) {
 			if (waitTime > 20) {
 				p.setTamed(true);
-				p.setOwner((EntityPlayer) thrower);
+				p.setOwner(((EntityPlayer) thrower).username);
 				p.caughtBall = getType();
 				p.clearAttackTarget();
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).addToParty(p);
@@ -282,11 +284,11 @@ public class EntityPokeBall extends EntityThrowable {
 			spawnFailParticles();
 			waitTime = 0;
 			isWaiting = false;
-			p.getEntity().setPosition(posX, posY, posZ);
+			p.setPosition(posX, posY, posZ);
 			p.hitByPokeball = false;
-			worldObj.spawnEntityInWorld(p.getEntity());
-			p.getEntity().setPosition(posX, posY, posZ);
-			p.setIsDead(false);
+			worldObj.spawnEntityInWorld(p);
+			p.setPosition(posX, posY, posZ);
+			p.isDead = false;
 			setDead();
 		}
 	}
@@ -313,10 +315,10 @@ public class EntityPokeBall extends EntityThrowable {
 	private int b;
 	public boolean isCaptured = false;
 
-	protected void doCaptureCalc(PixelmonEntityHelper entitypixelmon) {
-		int pokemonRate = entitypixelmon.stats.BaseStats.CatchRate;
-		int hpMax = entitypixelmon.getMaxHealth();
-		int hpCurrent = entitypixelmon.getHealth();
+	protected void doCaptureCalc(EntityPixelmon p2) {
+		int pokemonRate = p2.baseStats.CatchRate;
+		int hpMax = p2.getMaxHealth();
+		int hpCurrent = p2.getHealth();
 		int bonusStatus = 1;
 		double a, b, p;
 		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * getType().getBallBonus()) / (3 * hpMax)) * bonusStatus;

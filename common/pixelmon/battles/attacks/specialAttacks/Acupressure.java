@@ -5,7 +5,7 @@ import java.util.Random;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Acupressure extends SpecialAttackBase {
 
@@ -14,7 +14,7 @@ public class Acupressure extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
 		boolean handled = false;
 		while (!handled) {
 			int selection = (new Random()).nextInt(7);

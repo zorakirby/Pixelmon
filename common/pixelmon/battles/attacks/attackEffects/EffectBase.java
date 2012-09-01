@@ -6,8 +6,7 @@ import pixelmon.battles.attacks.EffectType;
 import pixelmon.battles.attacks.attackModifiers.ChanceModifier;
 import pixelmon.battles.attacks.attackModifiers.ModifierBase;
 import pixelmon.battles.attacks.attackModifiers.ModifierType;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class EffectBase {
 
@@ -29,7 +28,7 @@ public abstract class EffectBase {
 		modifiers.add(modifier);
 	}
 
-	public abstract void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList);
+	public abstract void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList);
 
 	public enum ApplyStage {
 		Start, During, End, Priority
@@ -59,10 +58,10 @@ public abstract class EffectBase {
 		return false;
 	}
 
-	public double getAccuracy(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public double getAccuracy(EntityPixelmon user, EntityPixelmon target) {
 		return 100;
 	}
 
-	public void ApplyMissEffect(PixelmonEntityHelper user, PixelmonEntityHelper target) {		
+	public void ApplyMissEffect(EntityPixelmon user, EntityPixelmon target) {		
 	}
 }

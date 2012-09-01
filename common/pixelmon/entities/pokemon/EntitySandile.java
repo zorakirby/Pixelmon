@@ -2,7 +2,7 @@ package pixelmon.entities.pokemon;
 
 import net.minecraft.src.*;
 import pixelmon.config.PixelmonEntityList.ClassType;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 
 public class EntitySandile extends EntityGroundPixelmon
@@ -22,7 +22,7 @@ public class EntitySandile extends EntityGroundPixelmon
 	}
 	public void evolve() 
 	{
-		BaseEntityPixelmon entity = new EntityKrokorok(worldObj);
+		EntityPixelmon entity = new EntityKrokorok(worldObj);
 		helper.evolve(entity.helper);
 	}
 	

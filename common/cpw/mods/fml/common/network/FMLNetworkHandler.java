@@ -138,6 +138,11 @@ public class FMLNetworkHandler
             netLoginHandler.completeConnection(null);
             loginStates.remove(netLoginHandler);
         }
+        else if (loginStates.get(netLoginHandler) == 3)
+        {
+            netLoginHandler.completeConnection("The server requires mods that are missing on your client");
+            loginStates.remove(netLoginHandler);
+        }
         // We have to abort this connection - there was a negotiation problem
         // (most likely missing mods)
         else
@@ -179,6 +184,11 @@ public class FMLNetworkHandler
             FMLLog.fine("Received invalid FML login packet %d, %d from %s", login.clientEntityId, login.dimension,
                     handler.myTCPConnection.getSocketAddress());
         }
+    }
+
+    static void setHandlerState(NetLoginHandler handler, int state)
+    {
+        instance().loginStates.put(handler, state);
     }
 
     public static FMLNetworkHandler instance()
@@ -316,6 +326,10 @@ public class FMLNetworkHandler
     {
         EntityRegistration er = EntityRegistry.instance().lookupModSpawn(entity.getClass(), false);
         if (er == null)
+        {
+            return null;
+        }
+        if (er.usesVanillaSpawning())
         {
             return null;
         }

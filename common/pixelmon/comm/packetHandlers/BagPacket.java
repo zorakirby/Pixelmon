@@ -15,7 +15,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.PixelmonItem;
 
@@ -48,7 +48,7 @@ public class BagPacket extends PacketHandlerBase {
 			return;
 		}
 
-		PixelmonEntityHelper userPokemon = null, targetPokemon = null;
+		EntityPixelmon userPokemon = null, targetPokemon = null;
 
 		if (bc.participant1 instanceof PlayerParticipant) {
 			if (((PlayerParticipant) bc.participant1).player == (EntityPlayerMP) player) {

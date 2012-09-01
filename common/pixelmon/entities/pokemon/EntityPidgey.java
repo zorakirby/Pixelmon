@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityFlyingPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
