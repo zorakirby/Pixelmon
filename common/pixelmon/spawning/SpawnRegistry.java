@@ -17,7 +17,7 @@ public class SpawnRegistry {
 	
 	public static void addSpawn(Entry entry, String name, int rarity, ClassType type) {
 		BiomeGenBase[] biomes =null;
-		if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) 
+		if (type == ClassType.Pixelmon) 
 			biomes = DatabaseStats.GetSpawnBiomes(name);
 		else if (type == ClassType.Trainer)
 			biomes = DatabaseTrainers.GetSpawnBiomes(name);

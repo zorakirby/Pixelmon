@@ -263,6 +263,7 @@ public class PixelmonEntityList {
 			String name = (String) entry.getValue();
 			ClassType type = getClassTypeFromID((Integer) entry.getKey());
 			int rarity = DatabaseStats.GetRarity(name);
+			if (type == ClassType.Trainer) rarity = 10;
 			if (type == ClassType.Pixelmon || type == ClassType.Trainer) {
 				if (rarity > 0)
 					SpawnRegistry.addSpawn(entry, name, rarity, type);
