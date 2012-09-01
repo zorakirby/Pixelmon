@@ -628,6 +628,10 @@ public class PixelmonEntityHelper {
 
 	public void calculateAggression(Random random) {
 		int r = random.nextInt(100) + 1;
+		if (stats.BaseStats.aggression == null) {
+			aggression = Aggression.passive;
+			return;
+		}
 		if (r < stats.BaseStats.aggression.timid)
 			aggression = Aggression.timid;
 		else if (r < stats.BaseStats.aggression.timid + stats.BaseStats.aggression.passive)

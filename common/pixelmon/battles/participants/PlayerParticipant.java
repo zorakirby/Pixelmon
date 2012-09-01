@@ -88,13 +88,13 @@ public class PlayerParticipant implements IBattleParticipant {
 		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "That's enough " + currentPixelmon.getName() + "!");
 		currentPixelmon.catchInPokeball();
 		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).retrieve((IHaveHelper) currentPixelmon.getIHaveHelper());
-		
-		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(newPixelmonId, player.worldObj)){
+
+		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(newPixelmonId, player.worldObj)) {
 			PixelmonEntityHelper oldPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(newPixelmonId, player.worldObj).getHelper();
 			oldPokemon.catchInPokeball();
-			PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve((IHaveHelper) oldPokemon.getIHaveHelper());			
+			PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve((IHaveHelper) oldPokemon.getIHaveHelper());
 		}
-		
+
 		IHaveHelper newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
 		((EntityLiving) newPixelmon).setLocationAndAngles(((EntityLiving) currentPixelmon.getEntity()).posX, ((EntityLiving) currentPixelmon.getEntity()).posY,
 				((EntityLiving) currentPixelmon.getEntity()).posZ, ((EntityLiving) currentPixelmon.getEntity()).rotationYaw, 0.0F);
