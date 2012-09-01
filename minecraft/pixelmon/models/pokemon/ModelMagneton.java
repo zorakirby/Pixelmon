@@ -378,9 +378,10 @@ public class ModelMagneton extends ModelBase {
 	}
 
 	Random randomGenerator = new Random();
-	int[] count = new int[6];
+	int[] count = {0,0,0,0,0,0};
+	
 
-	boolean[] Headisrotating = new boolean[6];
+	boolean[] Headisrotating = {false,false,false,false,false,false};
 
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
