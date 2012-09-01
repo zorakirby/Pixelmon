@@ -209,6 +209,11 @@ public class Item
         }
 
         itemsList[256 + par1] = this;
+
+        if (!(this instanceof ItemBlock))
+        {
+            isDefaultTexture = "/gui/items.png".equals(getTextureFile());
+        }
     }
 
     /**

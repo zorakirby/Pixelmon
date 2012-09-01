@@ -36,7 +36,8 @@ public class PixelmonSpawner {
 		for (List l : entityLists) {
 			currentTotalNum += l.size();
 		}
-		int calculatedNum = ChunkDataEvents.getNumFromPos(event.getChunk().xPosition, event.getChunk().zPosition);
+		int calculatedNum = ChunkDataEvents.getNumFromPos(
+				event.getChunk().xPosition, event.getChunk().zPosition);
 		if (calculatedNum < currentTotalNum) {
 			ArrayList<List> filledLists = new ArrayList<List>();
 			for (List l : entityLists)
@@ -44,15 +45,20 @@ public class PixelmonSpawner {
 					filledLists.add(l);
 			while (calculatedNum < currentTotalNum) {
 				int listIndex = random.nextInt(filledLists.size());
-				int entityIndex = random.nextInt(filledLists.get(listIndex).size());
-				((Entity) filledLists.get(listIndex).get(entityIndex)).setDead();
+				int entityIndex = random.nextInt(filledLists.get(listIndex)
+						.size());
+				((Entity) filledLists.get(listIndex).get(entityIndex))
+						.setDead();
 				currentTotalNum--;
 			}
 		} else if (calculatedNum > currentTotalNum)
-			performSpawningInChunk(event.getChunk(), event.getChunk().xPosition, event.getChunk().zPosition, calculatedNum - currentTotalNum, event.world);
+			performSpawningInChunk(event.getChunk(),
+					event.getChunk().xPosition, event.getChunk().zPosition,
+					calculatedNum - currentTotalNum, event.world);
 	}
 
-	private void performSpawningInChunk(Chunk chunk, int xPosition, int zPosition, int num, World world) {
+	private void performSpawningInChunk(Chunk chunk, int xPosition,
+			int zPosition, int num, World world) {
 		if (num <= 0)
 			return;
 		int x = xPosition * 16;
@@ -81,9 +87,14 @@ public class PixelmonSpawner {
 					break;
 				}
 			}
-			if (SpawnerAnimals.canCreatureTypeSpawnAtLocation(DatabaseStats.GetCreatureType(creatureName), world, xRand, y, zRand)) {
-				Entity pixelmon = PixelmonEntityList.createEntityByName(creatureName, world);
-				pixelmon.setLocationAndAngles(xRand, y, zRand, rand.nextFloat() * 360.0F, 0.0F);
+			if (DatabaseStats.GetCreatureType(creatureName) == null
+					|| SpawnerAnimals.canCreatureTypeSpawnAtLocation(
+							DatabaseStats.GetCreatureType(creatureName), world,
+							xRand, y, zRand)) {
+				Entity pixelmon = PixelmonEntityList.createEntityByName(
+						creatureName, world);
+				pixelmon.setLocationAndAngles(xRand, y, zRand,
+						rand.nextFloat() * 360.0F, 0.0F);
 				if (((EntityLiving) pixelmon).getCanSpawnHere())
 					world.spawnEntityInWorld(pixelmon);
 			}
@@ -97,7 +108,9 @@ public class PixelmonSpawner {
 		for (z &= 15; var4 > 0; --var4) {
 			int var5 = chunk.getBlockID(x, var4, z);
 
-			if (var5 != 0 && Block.blocksList[var5].blockMaterial.blocksMovement() && Block.blocksList[var5].blockMaterial != Material.leaves) {
+			if (var5 != 0
+					&& Block.blocksList[var5].blockMaterial.blocksMovement()
+					&& Block.blocksList[var5].blockMaterial != Material.leaves) {
 				return var4 + 1;
 			}
 		}

@@ -53,6 +53,7 @@ import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.network.EntitySpawnAdjustmentPacket;
 import cpw.mods.fml.common.network.EntitySpawnPacket;
+import cpw.mods.fml.common.network.ModMissingPacket;
 import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import cpw.mods.fml.common.registry.IThrowableEntity;
@@ -105,6 +106,8 @@ public class FMLClientHandler implements IFMLSidedHandler
 
     private MissingModsException modsMissing;
 
+    private boolean loading;
+
     public void beginMinecraftLoading(Minecraft minecraft)
     {
         if (minecraft.isDemo())
@@ -114,6 +117,7 @@ public class FMLClientHandler implements IFMLSidedHandler
             return;
         }
 
+        loading = true;
         client = minecraft;
         ObfuscationReflectionHelper.detectObfuscation(World.class);
         TextureFXManager.instance().setClient(client);
@@ -177,6 +181,7 @@ public class FMLClientHandler implements IFMLSidedHandler
         LanguageRegistry.reloadLanguageTable();
         RenderingRegistry.instance().loadEntityRenderers((Map<Class<? extends Entity>, Render>)RenderManager.instance.entityRenderMap);
 
+        loading = false;
         KeyBindingRegistry.instance().uploadKeyBindingsToGame(client.gameSettings);
     }
 
@@ -372,5 +377,20 @@ public class FMLClientHandler implements IFMLSidedHandler
     public void sendPacket(Packet packet)
     {
         client.thePlayer.sendQueue.addToSendQueue(packet);
+    }
+
+    @Override
+    public void displayMissingMods(ModMissingPacket modMissingPacket)
+    {
+        client.displayGuiScreen(new GuiModsMissingForServer(modMissingPacket));
+    }
+
+    /**
+     * If the client is in the midst of loading, we disable saving so that custom settings aren't wiped out
+     * @return
+     */
+    public boolean isLoading()
+    {
+        return loading;
     }
 }

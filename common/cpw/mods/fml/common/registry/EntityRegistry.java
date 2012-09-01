@@ -41,6 +41,7 @@ public class EntityRegistry
         private int updateFrequency;
         private boolean sendsVelocityUpdates;
         private Function<EntitySpawnPacket, Entity> customSpawnCallback;
+        private boolean usesVanillaSpawning;
         public EntityRegistration(ModContainer mc, Class<? extends Entity> entityClass, String entityName, int id, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
         {
             this.container = mc;
@@ -79,6 +80,11 @@ public class EntityRegistry
         {
             return sendsVelocityUpdates;
         }
+
+        public boolean usesVanillaSpawning()
+        {
+            return usesVanillaSpawning;
+        }
         public boolean hasCustomSpawning()
         {
             return customSpawnCallback != null;
@@ -87,9 +93,10 @@ public class EntityRegistry
         {
             return customSpawnCallback.apply(packet);
         }
-        public void setCustomSpawning(Function<EntitySpawnPacket, Entity> callable)
+        public void setCustomSpawning(Function<EntitySpawnPacket, Entity> callable, boolean usesVanillaSpawning)
         {
             this.customSpawnCallback = callable;
+            this.usesVanillaSpawning = usesVanillaSpawning;
         }
     }
 
@@ -107,7 +114,7 @@ public class EntityRegistry
     private EntityRegistry()
     {
         availableIndicies = new BitSet(256);
-        availableIndicies.set(0,255);
+        availableIndicies.set(1,255);
         for (Object id : EntityList.IDtoClassMapping.keySet())
         {
             availableIndicies.clear((Integer)id);
@@ -129,6 +136,7 @@ public class EntityRegistry
     {
         instance().doModEntityRegistration(entityClass, entityName, id, mod, trackingRange, updateFrequency, sendsVelocityUpdates);
     }
+
     private void doModEntityRegistration(Class<? extends Entity> entityClass, String entityName, int id, Object mod, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
         ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
@@ -164,17 +172,23 @@ public class EntityRegistry
             FMLLog.warning("The mod %s tried to register the entity class %s which was already registered - if you wish to override default naming for FML mod entities, register it here first", Loader.instance().activeModContainer().getModId(), entityClass);
             return;
         }
-        instance().validateAndClaimId(id);
+        id = instance().validateAndClaimId(id);
         EntityList.addMapping(entityClass, entityName, id);
     }
 
-    private void validateAndClaimId(int id)
+    private int validateAndClaimId(int id)
     {
+        // workaround for broken ML
+        if (id < 0)
+        {
+            id += 3000;
+        }
         if (!availableIndicies.get(id))
         {
-            throw new RuntimeException(String.format("Unable to claim entity id %d", id));
+            FMLLog.severe("The mod %s has attempted to register an entity ID %d which is already reserved. This could cause severe problems", Loader.instance().activeModContainer().getModId(), id);
         }
         availableIndicies.clear(id);
+        return id;
     }
 
     public static void registerGlobalEntityID(Class <? extends Entity > entityClass, String entityName, int id, int backgroundEggColour, int foregroundEggColour)

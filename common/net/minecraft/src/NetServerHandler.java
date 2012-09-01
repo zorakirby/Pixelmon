@@ -306,7 +306,7 @@ public class NetServerHandler extends NetHandler
                 this.playerEntity.setPositionAndRotation(var5, var7, var9, var11, var12);
                 boolean var32 = var2.getCollidingBoundingBoxes(this.playerEntity, this.playerEntity.boundingBox.copy().contract((double)var27, (double)var27, (double)var27)).isEmpty();
 
-                if (var28 && (var31 || !var32) && !this.playerEntity.isPlayerSleeping())
+                if (var28 && (var31 || !var32) && !this.playerEntity.isPlayerSleeping() && !this.playerEntity.noClip)
                 {
                     this.setPlayerLocation(this.lastPosX, this.lastPosY, this.lastPosZ, var11, var12);
                     return;
