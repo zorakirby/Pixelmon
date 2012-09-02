@@ -94,6 +94,7 @@ public abstract class Entity1Base extends EntityTameable {
 		super.readEntityFromNBT(nbt);
 		dataWatcher.updateObject(19, nbt.getInteger("pixelmonID"));
 		dataWatcher.updateObject(2, nbt.getString("Name"));
+		init(getName());
 		dataWatcher.updateObject(3, nbt.getString("Nickname"));
 		if (nbt.hasKey("CaughtBall"))
 			caughtBall= EnumPokeballs.getFromIndex(nbt.getInteger("CaughtBall"));
@@ -104,10 +105,5 @@ public abstract class Entity1Base extends EntityTameable {
 
 	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
 		return null;
-	}
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		if (!isInitialised) init(getName());
 	}
 }

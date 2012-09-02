@@ -37,6 +37,8 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 			aggression = Aggression.passive;
 		else if (r < baseStats.aggression.timid + baseStats.aggression.passive + baseStats.aggression.aggressive)
 			aggression = Aggression.aggressive;
+		else
+			aggression = Aggression.passive;
 	}
 
 	@Override

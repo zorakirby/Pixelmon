@@ -35,7 +35,7 @@ public class PixelmonConfig {
 		config.load();
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
-		//IDListPixelmon.load(config);
+		IDListPixelmon.load(config);
 		IDListTrainer.load(config);
 		allowNonPixelmonMobs = config.getOrCreateBooleanProperty("Allow vanilla mobs", "general", false).getBoolean(false);
 		maxPokemonPerChunk = config.getOrCreateIntProperty("Max number of pokemon per chunk", "general", 3).getInt(3);
