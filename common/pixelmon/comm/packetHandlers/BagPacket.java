@@ -33,9 +33,12 @@ public class BagPacket extends PacketHandlerBase {
 		int battleIndex = dataStream.readInt();
 
 		ItemStack usedStack = null;
-		for (ItemStack i : ((EntityPlayer) player).inventory.mainInventory)
-			if (i.getItem().shiftedIndex == itemIndex)
+		for (ItemStack i : ((EntityPlayer) player).inventory.mainInventory) {
+			if (i != null && i.getItem().shiftedIndex == itemIndex){
 				usedStack = i;
+				break;
+			}
+		}
 
 		if (usedStack == null) {
 			ChatHandler.sendChat((EntityPlayer) player, "Item Could not be found!");
@@ -62,6 +65,8 @@ public class BagPacket extends PacketHandlerBase {
 
 		PixelmonItem item = (PixelmonItem) usedStack.getItem();
 		item.useFromBag(userPokemon, targetPokemon);
+
+		ChatHandler.sendChat((EntityPlayer) player, item.getItemDisplayName(usedStack) + " used!");
 
 		usedStack.stackSize--;
 	}
