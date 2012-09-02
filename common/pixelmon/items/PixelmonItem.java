@@ -1,6 +1,6 @@
 package pixelmon.items;
 
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;
 
@@ -24,13 +24,13 @@ public class PixelmonItem extends Item {
 		return isUsableInBattle;
 	}
 
-	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {	}
+	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {	}
 	
 	public boolean isUsableOutSideBattle(){
 		return isUsableOutsideBattle;
 	}
 	
-	public void useFromInventory(PixelmonEntityHelper user){ }
+	public void useFromInventory(EntityPixelmon user){ }
 	
 	public boolean isEquippable(){
 		return isEquippable;

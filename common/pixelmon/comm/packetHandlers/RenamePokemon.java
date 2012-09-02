@@ -26,7 +26,7 @@ public class RenamePokemon extends PacketHandlerBase {
 		EntityPlayerMP player = (EntityPlayerMP)pl;
 		int id = dataStream.readInt();
 		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(id, player.worldObj)) {
-			PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(id, player.worldObj).getHelper().nickname = Packet.readString(dataStream, 64);
+			PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(id, player.worldObj).setNickname(Packet.readString(dataStream, 64));
 		} else {
 			NBTTagCompound nbt = PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(id);
 			if (nbt != null) {

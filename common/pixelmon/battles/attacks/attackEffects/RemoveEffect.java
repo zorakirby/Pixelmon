@@ -6,7 +6,7 @@ import pixelmon.battles.attacks.EffectType;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class RemoveEffect extends EffectBase {
 	StatusEffectType removeType;
@@ -16,7 +16,7 @@ public class RemoveEffect extends EffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		for (StatusEffectBase e:target.status){
 			if (e.type == removeType) {
 				target.status.remove(e);

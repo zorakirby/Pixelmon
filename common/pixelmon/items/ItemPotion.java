@@ -5,7 +5,7 @@ import net.minecraft.src.EntityPlayerMP;
 
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
 
 public class ItemPotion extends PixelmonItem {
@@ -16,7 +16,7 @@ public class ItemPotion extends PixelmonItem {
 	}
 
 	@Override
-	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
 		if (userPokemon.getHealth() + 20 >= userPokemon.stats.HP) {
 			userPokemon.setHealth(userPokemon.stats.HP);
 		} else {

@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAINearestAttackableTargetSorter;

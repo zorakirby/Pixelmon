@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 public class SmackedDown extends StatusEffectBase {
@@ -14,15 +14,15 @@ public class SmackedDown extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {}
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {}
 	
 	@Override
-	public double adjustDamage(Attack a, double damage, PixelmonEntityHelper user, PixelmonEntityHelper target, double crit) {
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
 		double stab = 1;
 		if (a.STAB)
 			stab = 1.5;
-		double type = EnumType.getTotalEffectiveness(user.getType(), a.attackType);
-		if (a.attackType == EnumType.Ground && user.getType().contains(EnumType.Flying))
+		double type = EnumType.getTotalEffectiveness(user.type, a.attackType);
+		if (a.attackType == EnumType.Ground && user.type.contains(EnumType.Flying))
 			type = 1;
 		double critical = crit;
 		double rand = ((double) RandomHelper.getRandomNumberBetween(85, 100)) / 100;

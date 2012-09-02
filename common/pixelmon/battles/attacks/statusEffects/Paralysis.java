@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
-
-
 
 public class Paralysis extends StatusEffectBase {
 
@@ -17,7 +15,7 @@ public class Paralysis extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Paralysis) {
@@ -35,7 +33,7 @@ public class Paralysis extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 25) {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is paralyzed!");
 			return false;

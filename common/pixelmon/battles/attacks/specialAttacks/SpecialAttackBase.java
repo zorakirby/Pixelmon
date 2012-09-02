@@ -7,8 +7,7 @@ import pixelmon.battles.attacks.EffectType;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
 import pixelmon.battles.attacks.attackModifiers.AttackModifierType;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class SpecialAttackBase extends EffectBase{
 	public SpecialAttackType type;
@@ -20,10 +19,10 @@ public abstract class SpecialAttackBase extends EffectBase{
 		this.type = type;
 	}
 
-	public abstract boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList);
+	public abstract boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList);
 	
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 	}
 	
 	public boolean cantMiss() {

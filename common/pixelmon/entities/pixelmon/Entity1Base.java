@@ -1,8 +1,12 @@
 package pixelmon.entities.pixelmon;
 
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.AxisAlignedBB;
+import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityLiving;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityTameable;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
@@ -68,7 +72,6 @@ public abstract class Entity1Base extends EntityTameable {
 	public AxisAlignedBB getBoundingBox() {
 		return this.boundingBox;
 	}
-
 	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {

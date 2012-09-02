@@ -19,7 +19,6 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.PixelmonItem;
 

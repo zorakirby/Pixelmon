@@ -14,8 +14,6 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 
@@ -85,24 +83,23 @@ public class PlayerParticipant implements IBattleParticipant {
 	@Override
 	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
 		currentPixelmon.battleStats.clearBattleStats();
-		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "That's enough " + currentPixelmon.getName() + "!");
+		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "That's enough " + currentPixelmon.getNickname() + "!");
 		currentPixelmon.catchInPokeball();
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).retrieve((IHaveHelper) currentPixelmon.getIHaveHelper());
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).retrieve(currentPixelmon);
 
 		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(newPixelmonId, player.worldObj)) {
-			PixelmonEntityHelper oldPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(newPixelmonId, player.worldObj).getHelper();
+			EntityPixelmon oldPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(newPixelmonId, player.worldObj);
 			oldPokemon.catchInPokeball();
-			PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve((IHaveHelper) oldPokemon.getIHaveHelper());
+			PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve(oldPokemon);
 		}
 
-		IHaveHelper newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
-		((EntityLiving) newPixelmon).setLocationAndAngles(((EntityLiving) currentPixelmon.getEntity()).posX, ((EntityLiving) currentPixelmon.getEntity()).posY,
-				((EntityLiving) currentPixelmon.getEntity()).posZ, ((EntityLiving) currentPixelmon.getEntity()).rotationYaw, 0.0F);
-		newPixelmon.getHelper().setMotion(0, 0, 0);
-		newPixelmon.getHelper().releaseFromPokeball();
+		EntityPixelmon newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
+		newPixelmon.setLocationAndAngles(currentPixelmon.posX, currentPixelmon.posY, currentPixelmon.posZ, currentPixelmon.rotationYaw, 0.0F);
+		newPixelmon.setMotion(0, 0, 0);
+		newPixelmon.releaseFromPokeball();
 
-		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "Go " + newPixelmon.getHelper().getName() + "!");
-		currentPixelmon = newPixelmon.getHelper();
+		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "Go " + newPixelmon.getNickname() + "!");
+		currentPixelmon = newPixelmon;
 	}
 
 	@Override

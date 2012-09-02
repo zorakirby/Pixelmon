@@ -11,14 +11,14 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	
 	public Entity5Rideable(World par1World) {
 		super(par1World);
-		ridingHelper = new RidingHelper(this, worldObj);
+		ridingHelper = new RidingHelper((EntityPixelmon)this, worldObj);
 	}
 	
 	@Override
 	protected void init(String name) {
 		super.init(name);
 		if (baseStats.IsRideable)
-			ridingHelper = new RidingHelper(this, worldObj);
+			ridingHelper = new RidingHelper((EntityPixelmon)this, worldObj);
 	}
 	@Override
 	public void jump() {

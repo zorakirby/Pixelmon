@@ -1,7 +1,7 @@
 package pixelmon.battles.attacks.attackModifiers;
 
 import pixelmon.battles.attacks.Attack;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class CriticalHitAttackModifier extends AttackModifierBase {
 
@@ -11,7 +11,7 @@ public class CriticalHitAttackModifier extends AttackModifierBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		return false;
 	}
 

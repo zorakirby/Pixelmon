@@ -14,6 +14,7 @@ import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 
 import net.minecraft.src.NBTTagCompound;
@@ -143,7 +144,7 @@ public class LevelHelper {
 			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, level);
 			for (Attack a : newAttacks) {
 				if (pixelmon.moveset.size() >= 4) {
-					pixelmon.getOwner().openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
+					((EntityPlayer)pixelmon.getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
 				} else {
 					pixelmon.moveset.add(a);
 					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
@@ -168,7 +169,7 @@ public class LevelHelper {
 			onLevelUp();
 			if (level >= pixelmon.baseStats.EvolveLevel) {
 				extraXP = exp - getExpForLevel(level + 1);
-				pixelmon.evolve();
+				pixelmon.evolve(pixelmon.baseStats.EvolveInto);
 				break;
 			}
 			if (!canLevelUp())

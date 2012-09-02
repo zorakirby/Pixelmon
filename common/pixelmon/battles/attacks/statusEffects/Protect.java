@@ -5,9 +5,7 @@ import java.util.Random;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-
-
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Protect extends StatusEffectBase {
 
@@ -16,7 +14,7 @@ public class Protect extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		float chance = 1f;
 		for(int i=attackList.size()-2; i >=0; i--){
 			if (attackList.get(i) == "Protect") chance *=0.5f;
@@ -33,13 +31,13 @@ public class Protect extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean stopsIncomingAttack(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a) {
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " protects itself!");
 		return true;
 	}
 
 	@Override
-	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		user.status.remove(this);
 	}
 }

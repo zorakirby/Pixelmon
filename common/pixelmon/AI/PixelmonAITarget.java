@@ -1,7 +1,6 @@
 package pixelmon.AI;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.EntityAIBase;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
@@ -96,8 +95,8 @@ public abstract class PixelmonAITarget extends EntityAIBase {
 			return false;
 		} else if (par1EntityLiving.boundingBox.maxY > this.taskOwner.boundingBox.minY && par1EntityLiving.boundingBox.minY < this.taskOwner.boundingBox.maxY) {
 
-			if (this.taskOwner instanceof IHaveHelper && ((IHaveHelper) this.taskOwner).getOwner()!= null) {
-				if (par1EntityLiving instanceof IHaveHelper && ((IHaveHelper) par1EntityLiving).getOwner()== ((IHaveHelper) this.taskOwner).getOwner()) {
+			if (this.taskOwner instanceof EntityPixelmon && ((EntityPixelmon) this.taskOwner).getOwner()!= null) {
+				if (par1EntityLiving instanceof EntityPixelmon && ((EntityPixelmon) par1EntityLiving).getOwner()== ((EntityPixelmon) this.taskOwner).getOwner()) {
 					return false;
 				}
 

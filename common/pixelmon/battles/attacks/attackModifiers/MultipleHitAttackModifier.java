@@ -3,7 +3,7 @@ package pixelmon.battles.attacks.attackModifiers;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
 public class MultipleHitAttackModifier extends AttackModifierBase {
@@ -31,7 +31,7 @@ public class MultipleHitAttackModifier extends AttackModifierBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		while (RepeatsAttack()) {
 			double crit = a.calcCriticalHit(null);
 			for (EffectBase e : a.effects)
@@ -41,8 +41,8 @@ public class MultipleHitAttackModifier extends AttackModifierBase {
 			if (a.attackCategory == Attack.ATTACK_STATUS)
 				power = 0;
 			target.attackEntityFrom(
-					DamageSource.causeMobDamage((EntityLiving) user.getEntity()), power);
-			a.doMove((EntityLiving)user.getEntity(), (EntityLiving)target.getEntity());
+					DamageSource.causeMobDamage(user), power);
+			a.doMove(user, target);
 			if (crit > 1)
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Critical Hit!");
 		}

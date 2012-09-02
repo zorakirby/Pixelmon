@@ -16,7 +16,6 @@ import pixelmon.battles.BattleController;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.storage.PokeballManager;
 
 public class GuiChoosePokemon extends GuiScreen {
@@ -25,15 +24,8 @@ public class GuiChoosePokemon extends GuiScreen {
 	private BattleController bc;
 	@SuppressWarnings("unused")
 	private GuiScreen parentGui;
-	private PixelmonEntityHelper currentPixelmon;
 	private PixelmonDataPacket userPacket;
 	int bcIndex;
-
-	public GuiChoosePokemon(BattleController bc, PixelmonEntityHelper mypixelmon, GuiScreen parentGui) {
-		this.parentGui = parentGui;
-		this.bc = bc;
-		currentPixelmon = mypixelmon;
-	}
 
 	public GuiChoosePokemon(PixelmonDataPacket userPacket, int bcIndex, GuiAttacking parentGui) {
 		this.parentGui = parentGui;

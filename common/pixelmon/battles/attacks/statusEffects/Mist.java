@@ -9,9 +9,7 @@ import pixelmon.battles.attacks.attackEffects.StatsEffect;
 import pixelmon.battles.attacks.attackModifiers.ModifierBase;
 import pixelmon.battles.attacks.attackModifiers.ModifierType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-
-
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Mist extends StatusEffectBase {
 
@@ -21,7 +19,7 @@ public class Mist extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		if (checkChance()) {
 			for (StatusEffectBase e : user.status)
 				if (e.type == StatusEffectType.Paralysis) {
@@ -38,7 +36,7 @@ public class Mist extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean stopsIncomingAttack(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a) {
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		if (a.attackCategory ==  Attack.ATTACK_STATUS){
 			for (EffectBase e:a.effects){
 				if (e.effectType == EffectType.Stats){
@@ -55,7 +53,7 @@ public class Mist extends StatusEffectBase {
 	}
 
 	@Override
-	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		turnCount++;
 		if (turnCount==5) {
 			user.status.remove(this);

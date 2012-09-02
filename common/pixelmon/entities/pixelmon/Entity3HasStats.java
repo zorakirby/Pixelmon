@@ -2,6 +2,9 @@ package pixelmon.entities.pixelmon;
 
 import java.util.ArrayList;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+
 import pixelmon.RandomHelper;
 import pixelmon.database.BaseStats;
 import pixelmon.database.DatabaseStats;
@@ -44,6 +47,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			isMale = true;
 		else
 			isMale = false;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public LevelHelper getClientLvl() {
+		return LevelHelper.readFromLvlString(getLvlString());
 	}
 	
 	@Override

@@ -3,7 +3,7 @@ package pixelmon.items.heldItems;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 
@@ -14,7 +14,7 @@ public class ItemBerryRawst extends ItemHeld {
 		SetUsableInBattle(true);
 	}
 
-	public boolean effectEntity(PixelmonEntityHelper helper) {
+	public boolean effectEntity(EntityPixelmon helper) {
 		for (int i = 0; i < helper.status.size(); i++) {
 			StatusEffectBase base = helper.status.get(i);
 			if (base.type == StatusEffectType.Burn) {
@@ -27,7 +27,7 @@ public class ItemBerryRawst extends ItemHeld {
 	}
 	
 	@Override
-	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
 		for (int i = 0; i < userPokemon.status.size(); i++) {
 			StatusEffectBase base = userPokemon.status.get(i);
 			if (base.type == StatusEffectType.Burn) {

@@ -39,5 +39,10 @@ public abstract class Entity2HasModel extends Entity1Base {
 			System.out.println("Can't find Model for " + getName());
 		return model;
 	}
+	
+	public void evolve(String evolveTo){
+		setName(evolveTo);
+		loadModel();
+	}
 
 }

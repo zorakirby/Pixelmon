@@ -3,8 +3,7 @@ package pixelmon.battles.attacks.specialAttacks;
 import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class EchoedVoice extends SpecialAttackBase {
 
@@ -13,7 +12,7 @@ public class EchoedVoice extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
 		int power = 40;
 		for(int i=attackList.size()-2; i >=0; i--){
 			if (attackList.get(i) == a.attackName) power+=40;

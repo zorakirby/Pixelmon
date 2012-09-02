@@ -1,32 +1,23 @@
 package pixelmon.gui;
 
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.render.GraphicsHelper;
 import net.minecraft.src.*;
 
 public class GuiEvolve extends GuiScreen
 {
 	
-	public IHaveHelper beginPixelmon, finishPixelmon;
-	private PixelmonEntityHelper b, f;
+	public EntityPixelmon beginPixelmon, finishPixelmon;
 	private String start, complete, cancel;
 	
-	public GuiEvolve(IHaveHelper start, IHaveHelper end)
+	public GuiEvolve(EntityPixelmon start, EntityPixelmon end)
 	{
 		beginPixelmon = start;
 		finishPixelmon = end;
-		b = beginPixelmon.getHelper();
-		f = finishPixelmon.getHelper();
-		this.start = "What? Your " + getName(b)
+		this.start = "What? Your " + beginPixelmon.getNickname()
 				+ " is evolving!";
-		complete = "Congratulations, your " + getName(b) + " evolved into " + f.getName() + "!";
-		cancel = "Huh? " + getName(b) + " stopped evolving!";
-	}
-	
-	private String getName(PixelmonEntityHelper e)
-	{
-		return (MathHelper.stringNullOrLengthZero(b.nickname)?b.getName():b.nickname);
+		complete = "Congratulations, your " + beginPixelmon.getNickname() + " evolved into " + finishPixelmon.getNickname() + "!";
+		cancel = "Huh? " + beginPixelmon.getNickname() + " stopped evolving!";
 	}
 	
 	public void initGui()
@@ -36,6 +27,6 @@ public class GuiEvolve extends GuiScreen
 	
 	public void updateScreen()
 	{
-		GraphicsHelper.drawModelToScreen(1, 1, 1, mc.displayWidth / 2, mc.displayWidth / 2, b.getEntity(), this, true);
+		GraphicsHelper.drawModelToScreen(1, 1, 1, mc.displayWidth / 2, mc.displayWidth / 2, beginPixelmon, this, true);
 	}
 }

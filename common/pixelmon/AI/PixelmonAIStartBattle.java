@@ -4,8 +4,6 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAIBase;

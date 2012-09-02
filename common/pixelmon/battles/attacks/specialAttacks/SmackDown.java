@@ -7,7 +7,7 @@ import pixelmon.battles.attacks.statusEffects.SmackedDown;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class SmackDown extends SpecialAttackBase {
 
@@ -16,7 +16,7 @@ public class SmackDown extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
 		target.status.add(new SmackedDown());
 		for (int i = 0; i < target.status.size(); i++) {
 			StatusEffectBase s = target.status.get(i);

@@ -15,8 +15,7 @@ import net.minecraft.src.NetworkManager;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.items.ItemPokeBall;
@@ -42,8 +41,8 @@ public class SendPixelmon extends PacketHandlerBase {
 			if (playerPokeballs.get(player) != null && !playerPokeballs.get(player).isDead)
 				return;
 
-			PixelmonEntityHelper helper = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj).getHelper();
-			EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, helper, helper.caughtBall);
+			EntityPixelmon pokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj);
+			EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, pokemon, pokemon.caughtBall);
 			playerPokeballs.put(player, pokeball);
 
 			boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
@@ -55,24 +54,24 @@ public class SendPixelmon extends PacketHandlerBase {
 			boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
 			ChatHandler.sendChat(player, (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + " is unable to battle!");
 		} else if (PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj)) {
-			IHaveHelper pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(pokemonId, player.worldObj);
+			EntityPixelmon pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(pokemonId, player.worldObj);
 			if (pixelmon == null) {
 				return;
 			}
 			if (BattleRegistry.getBattle(player) != null
 					&& (BattleRegistry.getBattle(player).participant1.currentPokemon().getPokemonId() == pixelmon.getPokemonId() || BattleRegistry.getBattle(player).participant2.currentPokemon()
 							.getPokemonId() == pixelmon.getPokemonId())) {
-				if (pixelmon.getHelper().bc == null) {
+				if (pixelmon.battleController == null) {
 					BattleRegistry.deRegisterBattle(BattleRegistry.getBattle(player));
 				} else {
-					ChatHandler.sendChat(player, pixelmon.getHelper().getName() + " is in a battle!");
+					ChatHandler.sendChat(player, pixelmon.getName() + " is in a battle!");
 					return;
 				}
 			}
 
-			if (pixelmon.getHelper().getOwner() == null)
+			if (pixelmon.getOwner() == null)
 				pixelmon.unloadEntity();
-			else if (pixelmon.getHelper().getOwner() == player) {
+			else if (pixelmon.getOwner() == player) {
 				PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve(pixelmon);
 				pixelmon.catchInPokeball();
 				boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();

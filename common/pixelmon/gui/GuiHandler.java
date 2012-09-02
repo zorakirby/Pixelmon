@@ -6,7 +6,6 @@ import pixelmon.battles.BattleRegistry;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.storage.PixelmonStorage;

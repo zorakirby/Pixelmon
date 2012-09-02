@@ -8,8 +8,6 @@ import pixelmon.battles.attacks.EffectType;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 
 import net.minecraft.src.DamageSource;

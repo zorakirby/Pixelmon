@@ -11,6 +11,14 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 		super(par1World);
 	}
 	
+	public void setHeldItem(ItemStack var1) {
+		heldItem = var1;
+	}
+	
+	public ItemStack getHeldItem() {
+		return heldItem;
+	}
+	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);

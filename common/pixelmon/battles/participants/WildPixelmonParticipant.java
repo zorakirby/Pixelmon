@@ -6,7 +6,6 @@ import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 public class WildPixelmonParticipant implements IBattleParticipant {
 

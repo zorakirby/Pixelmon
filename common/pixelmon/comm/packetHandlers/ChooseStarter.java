@@ -8,7 +8,7 @@ import cpw.mods.fml.common.network.Player;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.config.PixelmonEntityList;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
 
@@ -27,12 +27,11 @@ public class ChooseStarter extends PacketHandlerBase {
 	public void handlePacket(int index, Player play, DataInputStream dataStream) throws IOException {
 		EntityPlayer player = (EntityPlayer)play;
 		int pokemonIndex = dataStream.readInt();
-		IHaveHelper p = (IHaveHelper) PixelmonEntityList.createEntityByName(StarterList.getStarterStringList()[pokemonIndex], player.worldObj);
-		p.getHelper().getLvl().setLevel(5);
-		p.getHelper().loadMoveset();
-		p.getHelper().caughtBall = EnumPokeballs.MasterBall;
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).addToParty(p.getHelper());
-		
+		EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(StarterList.getStarterStringList()[pokemonIndex], player.worldObj);
+		p.getLvl().setLevel(5);
+		p.loadMoveset();
+		p.caughtBall = EnumPokeballs.MasterBall;
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).addToParty(p);
 	}
 
 }

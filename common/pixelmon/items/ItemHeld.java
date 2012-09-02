@@ -1,6 +1,6 @@
 package pixelmon.items;
 
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumHeldItems;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -32,10 +32,10 @@ public abstract class ItemHeld extends PixelmonItem {
 		return effectsBattles;
 	}
 
-	public static void useItem(PixelmonEntityHelper helper, PixelmonEntityHelper helper1, EnumHeldItems item) {
-		if (helper.getHeldItem() != null && helper.getHeldItem().getItem() != null && helper.getHeldItem().getItem() instanceof ItemHeld) {
-			if (((ItemHeld) helper.getHeldItem().getItem()).heldItemType == item && ((ItemHeld) helper.getHeldItem().getItem()).effectEntity(helper)) {
-				helper.setHeldItem(null);
+	public static void useItem(EntityPixelmon user, EntityPixelmon target, EnumHeldItems item) {
+		if (user.getHeldItem() != null && user.getHeldItem().getItem() != null && user.getHeldItem().getItem() instanceof ItemHeld) {
+			if (((ItemHeld) user.getHeldItem().getItem()).heldItemType == item && ((ItemHeld) user.getHeldItem().getItem()).effectEntity(user)) {
+				user.setHeldItem(null);
 			}
 		}
 	}
@@ -47,16 +47,16 @@ public abstract class ItemHeld extends PixelmonItem {
 			return ((ItemHeld) item.getItem()).heldItemType == type;
 	}
 
-	public boolean effectEntity(PixelmonEntityHelper helper1) {
+	public boolean effectEntity(EntityPixelmon helper1) {
 		return false;
 	}
 
-	public static void useBattleItems(PixelmonEntityHelper helper1, PixelmonEntityHelper helper2) {
+	public static void useBattleItems(EntityPixelmon user, EntityPixelmon target) {
 		for (EnumHeldItems item : EnumHeldItems.values()) {
 			if (!item.getBattleModifier()) {
 				continue;
 			}
-			useItem(helper1, helper2, item);
+			useItem(user, target, item);
 		}
 	}
 }

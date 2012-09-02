@@ -7,7 +7,6 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.TrainerInfo;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.storage.PlayerStorage;
 import pixelmon.storage.PokeballManager;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
@@ -84,12 +83,12 @@ public class EntityTrainer extends EntityLiving {
 		ChatHandler.sendChat(player, info.greeting);
 	}
 
-	public void loseBattle(EntityPlayer player) {
-		ChatHandler.sendChat(player, info.loseMessage);
+	public void loseBattle(EntityLiving entityLiving) {
+		ChatHandler.sendChat(entityLiving, info.loseMessage);
 	}
 
-	public void winBattle(EntityPlayer player) {
-		ChatHandler.sendChat(player, info.winMessage);
+	public void winBattle(EntityLiving entityLiving) {
+		ChatHandler.sendChat(entityLiving, info.winMessage);
 	}
 
 	public void retrievePokemon() {

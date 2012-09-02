@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
-
-
 
 public class Sunny extends StatusEffectBase {
 
@@ -17,7 +15,7 @@ public class Sunny extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		if (checkChance()) {
 			if (!user.getOwner().worldObj.isDaytime()) {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "There's no sun at night!");
@@ -40,7 +38,7 @@ public class Sunny extends StatusEffectBase {
 	}
 
 	@Override
-	public double adjustDamage(Attack a, double damage, PixelmonEntityHelper user, PixelmonEntityHelper target, double crit) {
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
 		if (a.attackType == EnumType.Fire)
 			return damage *= 1.5;
 		else if (a.attackType == EnumType.Water)
@@ -50,7 +48,7 @@ public class Sunny extends StatusEffectBase {
 	}
 
 	@Override
-	public void turnTick(PixelmonEntityHelper user, PixelmonEntityHelper target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (turnCount == 0) {
 			user.status.remove(this);
 		}

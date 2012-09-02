@@ -10,8 +10,7 @@ import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
 import pixelmon.battles.attacks.attackModifiers.ChanceModifier;
 import pixelmon.battles.attacks.attackModifiers.ModifierBase;
 import pixelmon.battles.attacks.attackModifiers.ModifierType;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class MultiTurnSpecialAttackBase extends EffectBase {
 		public int turnCount=2;
@@ -25,10 +24,10 @@ public abstract class MultiTurnSpecialAttackBase extends EffectBase {
 			this.mtsatype = type;
 		}
 
-		public abstract boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a, ArrayList<String> attackList);
+		public abstract boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList);
 		
 		@Override
-		public void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList) {
+		public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		}
 		
 		public abstract boolean cantMiss();

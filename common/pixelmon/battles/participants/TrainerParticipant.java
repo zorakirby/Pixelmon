@@ -7,7 +7,7 @@ import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.EntityTrainer;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class TrainerParticipant implements IBattleParticipant {
 
@@ -61,7 +61,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return trainer.releasedPokemon.getHelper().getIsDead() || trainer.releasedPokemon.getHelper().isFainted || trainer.releasedPokemon.getHelper().getHealth() <= 0;
+		return trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted || trainer.releasedPokemon.getHealth() <= 0;
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.getHelper().moveset, participant2.currentPokemon().getType(), trainer.releasedPokemon.getHelper(), participant2.currentPokemon());
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, participant2.currentPokemon().type, trainer.releasedPokemon, participant2.currentPokemon());
 	}
 
 	@Override

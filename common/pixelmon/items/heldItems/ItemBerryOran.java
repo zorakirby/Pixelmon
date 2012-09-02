@@ -3,7 +3,7 @@ package pixelmon.items.heldItems;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 
@@ -14,7 +14,7 @@ public class ItemBerryOran extends ItemHeld {
 		SetUsableInBattle(true);
 	}
 
-	public boolean effectEntity(PixelmonEntityHelper helper) {
+	public boolean effectEntity(EntityPixelmon helper) {
 		if (helper.getHealth() < (int) ((float) helper.getMaxHealth() / .3f)) {
 			helper.setHealth(helper.getHealth() + 10);
 			ChatHandler.sendChat(helper.getOwner(), helper.getName() + " just consumed an Oran Berry and gained 10 health!");
@@ -24,7 +24,7 @@ public class ItemBerryOran extends ItemHeld {
 	}
 	
 	@Override
-	public void useFromBag(PixelmonEntityHelper userPokemon, PixelmonEntityHelper targetPokemon) {
+	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
 		if (userPokemon.getHealth()+10 > userPokemon.stats.HP)
 			userPokemon.setHealth(userPokemon.stats.HP);
 		else

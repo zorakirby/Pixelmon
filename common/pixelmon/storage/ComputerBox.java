@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 import net.minecraft.src.CompressedStreamTools;
 import net.minecraft.src.Entity;

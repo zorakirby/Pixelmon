@@ -22,13 +22,10 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.storage.PixelmonStorage;
 
 public class GuiAttacking extends GuiScreen {
 
-	private PixelmonEntityHelper mypixelmon;
-	private PixelmonEntityHelper target;
 	private BattleController bc;
 
 	private PixelmonDataPacket userPacket, targetPacket;
@@ -114,17 +111,6 @@ public class GuiAttacking extends GuiScreen {
 		drawPokemonStats(targetPacket, width * 5 / 8, height * 2 / 6, false);
 		drawHealthBar(userPacket.health, userPacket.hp, width / 8, height * 2 / 6 + 10, 0, 0, 0);
 		drawHealthBar(targetPacket.health, targetPacket.hp, width * 5 / 8, height * 2 / 6 + 10, 0, 0, 0);
-	}
-
-	public void drawPokemonStats(PixelmonEntityHelper pixelmon, int x, int y, boolean isMine) {
-		fontRenderer.FONT_HEIGHT = 10;
-		drawString(fontRenderer, pixelmon.getName(), x, y, 0xDDDDDD);
-		if (pixelmon.isMale)
-			drawString(fontRenderer, "♂ Lv." + pixelmon.getLvl().getLevel(), x + width / 4, y, 0xDDDDDD);
-		else
-			drawString(fontRenderer, "♀ Lv." + pixelmon.getLvl().getLevel(), x + width / 4, y, 0xDDDDDD);
-		drawString(fontRenderer, pixelmon.getHealth() + "/" + pixelmon.getMaxHealth(), x + 50, y + 15, 0xDDDDDD);
-
 	}
 
 	public void drawPokemonStats(PixelmonDataPacket pixelmon, int x, int y, boolean isMine) {

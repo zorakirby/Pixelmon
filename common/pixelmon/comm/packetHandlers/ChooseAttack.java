@@ -11,7 +11,6 @@ import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPokeballs;

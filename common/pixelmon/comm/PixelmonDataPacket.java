@@ -8,7 +8,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 
 import pixelmon.database.BaseStats;
 import pixelmon.database.DatabaseStats;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.Entity;
@@ -86,12 +86,12 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			boxNumber = p.getInteger("BoxNumber");
 	}
 
-	public PixelmonDataPacket(PixelmonEntityHelper p, EnumPackets packetType) {
+	public PixelmonDataPacket(EntityPixelmon p, EnumPackets packetType) {
 		this.packetType = packetType;
 		pokemonID = p.getPokemonId();
-		nationalPokedexNumber = p.stats.BaseStats.nationalPokedexNumber;
+		nationalPokedexNumber = p.baseStats.nationalPokedexNumber;
 		name = p.getName();
-		nickname = p.nickname;
+		nickname = p.getNickname();
 		lvl = p.getLvl().getLevel();
 		nextLvlXP = p.getLvl().getExpToNextLevel();
 		hp = p.stats.HP;
@@ -105,9 +105,9 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i =0; i < numMoves; i++){
 			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.moveset,i);
 		}
-		type1 = p.getType().get(0);
-		if (p.getType().size()==1) type2 = EnumType.Mystery;
-		else type2 = p.getType().get(1);
+		type1 = p.type.get(0);
+		if (p.type.size()==1) type2 = EnumType.Mystery;
+		else type2 = p.type.get(1);
 		HP = p.stats.HP;
 		Speed = p.stats.Speed;
 		Attack = p.stats.Attack;

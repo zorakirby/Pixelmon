@@ -3,7 +3,6 @@ package pixelmon.battles.participants;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 public interface IBattleParticipant {
 	boolean isWild = false;

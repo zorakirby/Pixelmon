@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
@@ -16,7 +16,7 @@ public class HiddenPower extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack attack, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack attack, ArrayList<String> attackList) {
 		int a, b, c, d, e, f;
 
 		a = user.stats.IVs.HP % 2;
@@ -63,7 +63,7 @@ public class HiddenPower extends SpecialAttackBase {
 			attack.attackType = EnumType.Dark;
 
 		boolean stab = false;
-		for (EnumType t : user.getType()) {
+		for (EnumType t : user.type) {
 			if (t == attack.attackType) {
 				stab = true;
 				break;

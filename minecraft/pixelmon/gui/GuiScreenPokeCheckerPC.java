@@ -4,7 +4,6 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.gui.pc.GuiPC;
 import net.minecraft.src.GuiButton;
 

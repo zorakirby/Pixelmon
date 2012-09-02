@@ -5,7 +5,6 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.config.PixelmonItems;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.items.ItemHeld;
 
 public enum EnumHeldItems {
