@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntityGrowlithe extends EntityGroundPixelmon
+public class EntityGrowlithe extends EntityPixelmon
 {
 	
 	public EntityGrowlithe(World world)
@@ -15,15 +14,7 @@ public class EntityGrowlithe extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Growlithe";
-		isImmuneToFire = true;
-		super.init();
-	}
-	
-	public void evolve() 
-	{
-		IHaveHelper entity = new EntityArcanine(worldObj);
-		helper.evolve(entity.getHelper());
+		super.init("Growlithe");
 	}
 
 }

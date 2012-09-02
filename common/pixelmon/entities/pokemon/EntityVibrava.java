@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import net.minecraft.src.World;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
-public class EntityVibrava extends EntityGroundPixelmon
+public class EntityVibrava extends EntityPixelmon
 {
 	
 	public EntityVibrava(World world)
@@ -14,14 +14,6 @@ public class EntityVibrava extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Vibrava";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		
-		
+		super.init("Vibrava");
 	}
 }

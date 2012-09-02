@@ -2,13 +2,11 @@ package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.*;
-
 
 public class EntityStaryu extends EntityWaterPixelmon
 {
-	
+
 	public EntityStaryu(World world)
 	{
 		super(world);
@@ -17,21 +15,13 @@ public class EntityStaryu extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Staryu";
+		super.init("Staryu");
 		depthRangeStart=7;
-		isImmuneToFire = false;
-		super.init();
 	}
 
 	public float getMoveSpeed() 
 	{
 		return 2F;
-	}
-
-	public void evolve() 
-	{
-		IHaveHelper entity = new EntityStarmie(worldObj);
-		helper.evolve(entity.getHelper());
 	}
 	
 	public boolean getCanSpawnHere() {

@@ -15,14 +15,8 @@ public class EntityGeodude extends EntityPixelmon
 	public void init()
 	{
 		super.init("Geodude");
-		isImmuneToFire = false;
-		super.init();
 	}
 	
-	public void evolve() 
-	{		
-		
-	}
 	public boolean getCanSpawnHere() {
 		int var1 = MathHelper.floor_double(this.posX);
 		int var2 = MathHelper.floor_double(this.boundingBox.minY);

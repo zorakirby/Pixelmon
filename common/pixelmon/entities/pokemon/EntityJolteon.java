@@ -1,11 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
-
-public class EntityJolteon extends EntityGroundPixelmon
+public class EntityJolteon extends EntityPixelmon
 {
 	
 	public EntityJolteon(World world)
@@ -16,13 +14,6 @@ public class EntityJolteon extends EntityGroundPixelmon
 
 	public void init() 
 	{
-		name = "Jolteon";
-		isImmuneToFire = true;
-		super.init();
-	}
-
-	public void evolve() 
-	{	
-		
+		super.init("Jolteon");
 	}
 }

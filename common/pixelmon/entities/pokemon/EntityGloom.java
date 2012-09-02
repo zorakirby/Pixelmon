@@ -1,11 +1,10 @@
 package pixelmon.entities.pokemon;
 
 import net.minecraft.src.World;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 
-public class EntityGloom extends EntityGroundPixelmon
+public class EntityGloom extends EntityPixelmon
 {
 
 	public EntityGloom(World par1World) 
@@ -16,14 +15,6 @@ public class EntityGloom extends EntityGroundPixelmon
 	
 	public void init() 
 	{
-		name = "Gloom";
-		isImmuneToFire = false;
-		super.init();
-	}
-
-	public void evolve() 
-	{
-	
-	}
-	
+		super.init("Gloom");
+	}	
 }

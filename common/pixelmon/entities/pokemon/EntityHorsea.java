@@ -4,7 +4,6 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import net.minecraft.src.*;
 
-
 public class EntityHorsea extends EntityWaterPixelmon
 {
 	
@@ -16,19 +15,13 @@ public class EntityHorsea extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Horsea";
-		isImmuneToFire = false;
+		super.init("Horsea");
 		depthRangeStart = 2;
 		depthRangeEnd = 20;
-		super.init();
 	}
 
 	public float getMoveSpeed() 
 	{
 		return 2F;
-	}
-
-	public void evolve() 
-	{
 	}
 }

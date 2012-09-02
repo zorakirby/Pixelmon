@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntityPsyduck  extends EntityGroundPixelmon
+public class EntityPsyduck  extends EntityPixelmon
 {
 	
 	public EntityPsyduck(World world)
@@ -14,13 +14,6 @@ public class EntityPsyduck  extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Psyduck";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		
+		super.init("Psyduck");
 	}
 }

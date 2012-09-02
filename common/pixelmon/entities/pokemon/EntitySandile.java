@@ -3,9 +3,8 @@ package pixelmon.entities.pokemon;
 import net.minecraft.src.*;
 import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 
-public class EntitySandile extends EntityGroundPixelmon
+public class EntitySandile extends EntityPixelmon
 {
 	
 	public EntitySandile(World world)
@@ -16,14 +15,7 @@ public class EntitySandile extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Sandile";
-		isImmuneToFire = false;
-		super.init();
-	}
-	public void evolve() 
-	{
-		EntityPixelmon entity = new EntityKrokorok(worldObj);
-		helper.evolve(entity.helper);
+		super.init("Sandile");
 	}
 	
 	public boolean getCanSpawnHere() {

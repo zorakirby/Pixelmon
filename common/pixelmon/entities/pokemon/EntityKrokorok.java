@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.*;
 
-public class EntityKrokorok extends EntityGroundPixelmon
+public class EntityKrokorok extends EntityPixelmon
 {
 	
 	public EntityKrokorok(World world)
@@ -14,12 +14,7 @@ public class EntityKrokorok extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Krokorok";
-		isImmuneToFire = false;
-		super.init();
-	}
-	public void evolve() 
-	{
+		super.init("Krokorok");
 	}
 	public boolean getCanSpawnHere() {
 		int var1 = MathHelper.floor_double(this.posX);

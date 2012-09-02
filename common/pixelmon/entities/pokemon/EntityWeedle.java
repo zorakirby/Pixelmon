@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
-public class EntityWeedle extends EntityGroundPixelmon
+public class EntityWeedle extends EntityPixelmon
 {
 	
 	public EntityWeedle(World world)
@@ -15,14 +14,6 @@ public class EntityWeedle extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Weedle";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		EntityPixelmon entity = new EntityKakuna(worldObj);
-		helper.evolve(entity.getHelper());
+		super.init("Weedle");
 	}
 }

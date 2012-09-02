@@ -2,14 +2,10 @@ package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.*;
-
-
 
 public class EntityOmanyte extends EntityWaterPixelmon
 {
-	
 	public EntityOmanyte(World world)
 	{
 		super(world);
@@ -20,19 +16,11 @@ public class EntityOmanyte extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Omanyte";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Omanyte");
 	}
 
 	public float getMoveSpeed() 
 	{
 		return 2F;
-	}
-
-	public void evolve() 
-	{
-		IHaveHelper entity = new EntityOmastar(worldObj);
-		helper.evolve(entity.getHelper());
 	}
 }

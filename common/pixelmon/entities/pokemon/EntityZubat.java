@@ -1,7 +1,6 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityFlyingPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
@@ -13,17 +12,10 @@ public class EntityZubat extends EntityFlyingPixelmon {
 	}
 
 	public void init() {
-		name = "Zubat";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Zubat");
 		doesLand = false;
 		isAggressive = true;
 		courseChangeCooldown = 10;
-	}
-
-	public void evolve() {
-		IHaveHelper entity = new EntityGolbat(worldObj);
-		helper.evolve(entity.getHelper());
 	}
 
 	public boolean getCanSpawnHere() {

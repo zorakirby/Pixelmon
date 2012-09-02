@@ -1,33 +1,21 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.Item;
 import net.minecraft.src.World;
 
-public class EntityVoltorb extends EntityGroundPixelmon
-{
-	
-	public EntityVoltorb(World world)
-	{
+public class EntityVoltorb extends EntityPixelmon {
+
+	public EntityVoltorb(World world) {
 		super(world);
 		init();
 	}
 
-	public void init()
-	{
-		name = "Voltorb";
-		isImmuneToFire = false;
-		super.init();
+	public void init() {
+		super.init("Voltorb");
 	}
-	 protected int getDropItemId()
-	    {
-	        return Item.gunpowder.shiftedIndex;
-	    }
-	public void evolve() 
-	{		
-		IHaveHelper entity = new EntityElectrode(worldObj);
-		helper.evolve(entity.getHelper());
-		
+
+	protected int getDropItemId() {
+		return Item.gunpowder.shiftedIndex;
 	}
 }

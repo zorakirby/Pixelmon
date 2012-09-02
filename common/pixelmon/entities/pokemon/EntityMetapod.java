@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
-public class EntityMetapod extends EntityGroundPixelmon
+public class EntityMetapod extends EntityPixelmon
 {
 	
 	public EntityMetapod(World world)
@@ -15,15 +14,6 @@ public class EntityMetapod extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Metapod";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Metapod");
 	}
-	
-	public void evolve() 
-	{
-		EntityPixelmon entity = new EntityButterfree(worldObj);
-		helper.evolve(entity.helper);
-	}
-
 }

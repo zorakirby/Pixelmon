@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
-public class EntityKakuna extends EntityGroundPixelmon
+public class EntityKakuna extends EntityPixelmon
 {
 	
 	public EntityKakuna(World world)
@@ -15,14 +14,7 @@ public class EntityKakuna extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Kakuna";
-		isImmuneToFire = false;
-		helper.hoverHeight=1f;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		
+		super.init("Kakuna");
+		hoverHeight=1f;
 	}
 }
