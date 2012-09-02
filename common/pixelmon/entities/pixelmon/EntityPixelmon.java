@@ -48,7 +48,7 @@ import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
-public abstract class EntityPixelmon extends Entity9HasSounds {
+public class EntityPixelmon extends Entity9HasSounds {
 
 	public EntityPixelmon(World par1World) {
 		super(par1World);
@@ -57,7 +57,7 @@ public abstract class EntityPixelmon extends Entity9HasSounds {
 		getNavigator().setAvoidsWater(true);
 	}
 
-	protected void init(String name) {
+	public void init(String name) {
 		super.init(name);
 		moveSpeed = getMoveSpeed();
 		health = 11;

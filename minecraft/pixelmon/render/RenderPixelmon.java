@@ -27,6 +27,12 @@ public class RenderPixelmon extends RenderLiving {
 
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
 		mainModel = ((EntityPixelmon)entityLiving).model;
+		if (mainModel==null){
+			if (((EntityPixelmon)entityLiving).getName().equals(""))
+				return;
+			((EntityPixelmon)entityLiving).init(((EntityPixelmon)entityLiving).getName());
+			mainModel = ((EntityPixelmon)entityLiving).model;
+		}
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
 		if (var10 <= (float) 8 || ((EntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((EntityPixelmon) entityLiving).getPokemonId())) {

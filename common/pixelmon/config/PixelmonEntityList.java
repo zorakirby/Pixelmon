@@ -66,11 +66,16 @@ public class PixelmonEntityList {
 			ClassType type = getClassTypeFromString(par0Str);
 			Class<?> var3 = null;
 			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
-				var3 = (Class<?>) Class.forName("pixelmon.entities.pokemon.Entity" + par0Str);
+				var3 = EntityPixelmon.class;
 			else if (type == ClassType.Trainer)
 				var3 = (Class<?>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + par0Str);
 			if (var3 != null) {
-				var2 = (Entity) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
+				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
+					var2 = new EntityPixelmon(par1World);
+					((EntityPixelmon) var2).init(par0Str);
+				} else {
+					var2 = (Entity) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
+				}
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();
@@ -86,10 +91,11 @@ public class PixelmonEntityList {
 		EntityLiving var2 = null;
 
 		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.entities.pokemon.Entity" + par0NBTTagCompound.getString("id"));
+			Class<?> var3 = EntityPixelmon.class;
 
 			if (var3 != null) {
 				var2 = (EntityLiving) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
+				((EntityPixelmon)var2).init(par0NBTTagCompound.getString("Name"));
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();

@@ -22,7 +22,8 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
-		nbt.setInteger("HeldItem", heldItem.itemID);
+		if (heldItem!=null)
+			nbt.setInteger("HeldItem", heldItem.itemID);
 	}
 	
 	@Override

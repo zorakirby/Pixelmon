@@ -31,8 +31,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		stats = new Stats();
 		level = new LevelHelper((EntityPixelmon)this);
 		dataWatcher.addObject(18, ""); //LvlString
-		setSize(baseStats.Width, baseStats.Height + hoverHeight);
-		length = baseStats.Length;
 	}
 	
 	@Override
@@ -40,6 +38,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super.init(name);
 		baseStats = DatabaseStats.GetBaseStats(name);
 		stats.IVs = PixelmonIVStore.CreateNewIVs();
+		setSize(baseStats.Width, baseStats.Height + hoverHeight);
+		length = baseStats.Length;
 		
 		if (rand.nextInt(100) < baseStats.MalePercent)
 			isMale = true;
@@ -60,7 +60,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		baseStats = DatabaseStats.GetBaseStats(getName());
 		type.clear();
 		setType();
-		
 	}
 	
 	protected void fall(float f) {
