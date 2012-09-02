@@ -1,12 +1,11 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.Block;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-public class EntityNumel extends EntityGroundPixelmon
+public class EntityNumel extends EntityPixelmon
 {
 	
 	public EntityNumel(World world)
@@ -17,12 +16,6 @@ public class EntityNumel extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Numel";
-		isImmuneToFire = true;
-		super.init();
-	}
-	
-	public void evolve() 
-	{	
+		super.init("Numel");
 	}
 }

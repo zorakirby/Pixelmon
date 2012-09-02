@@ -2,10 +2,7 @@ package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.*;
-
-
 
 public class EntityMagikarp extends EntityWaterPixelmon
 {
@@ -18,9 +15,7 @@ public class EntityMagikarp extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Magikarp";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Magikarp");
 		depthRangeStart =0;
 		depthRangeEnd=5;
 	}
@@ -28,11 +23,5 @@ public class EntityMagikarp extends EntityWaterPixelmon
 	public float getMoveSpeed() 
 	{
 		return 2F;
-	}
-
-	public void evolve() 
-	{
-		IHaveHelper entity = new EntityGyarados(worldObj);
-		helper.evolve(entity.getHelper());
 	}
 }

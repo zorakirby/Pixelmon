@@ -2,9 +2,7 @@ package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.*;
-
 
 public class EntityStarmie extends EntityWaterPixelmon
 {
@@ -17,20 +15,13 @@ public class EntityStarmie extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Starmie";
+		super.init("Starmie");
 		depthRangeStart=4;
-		isImmuneToFire = false;
-		super.init();
 	}
 
 	public float getMoveSpeed() 
 	{
 		return 2F;
-	}
-
-	public void evolve() 
-	{
-
 	}
 	
 	public boolean getCanSpawnHere() {

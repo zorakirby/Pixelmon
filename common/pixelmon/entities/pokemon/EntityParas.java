@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
-public class EntityParas extends EntityGroundPixelmon
+public class EntityParas extends EntityPixelmon
 {
 	
 	public EntityParas(World world)
@@ -15,14 +14,6 @@ public class EntityParas extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Paras";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{
-
-	}
-	
+		super.init("Paras");
+	}	
 }

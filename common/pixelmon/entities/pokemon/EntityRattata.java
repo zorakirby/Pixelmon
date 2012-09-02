@@ -1,13 +1,10 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-
-
-public class EntityRattata extends EntityGroundPixelmon
+public class EntityRattata extends EntityPixelmon
 {
-
 	public EntityRattata(World par1World) 
 	{
 		super(par1World);
@@ -16,14 +13,6 @@ public class EntityRattata extends EntityGroundPixelmon
 
 	public void init() 
 	{
-		name = "Rattata";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Rattata");
 	}
-
-	@Override
-	public void evolve() 
-	{
-	}
-	
 }

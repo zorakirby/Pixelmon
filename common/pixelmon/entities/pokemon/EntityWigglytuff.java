@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntityWigglytuff extends EntityGroundPixelmon
+public class EntityWigglytuff extends EntityPixelmon
 {
 	
 	public EntityWigglytuff(World world)
@@ -14,13 +14,6 @@ public class EntityWigglytuff extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Wigglytuff";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		
+		super.init("Wigglytuff");
 	}
 }

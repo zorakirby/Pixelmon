@@ -13,6 +13,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseMoves;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
@@ -54,12 +55,13 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 
 public class ClientProxy extends CommonProxy {
 	@Override
-	public void registerRenderers() 
-	{
-		for (EnumPokeballs p : EnumPokeballs.values()){
+	public void registerRenderers() {
+		for (EnumPokeballs p : EnumPokeballs.values()) {
 			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getTexture());
 			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getFlashRedTexture());
 			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getCaptureTexture());
@@ -71,27 +73,27 @@ public class ClientProxy extends CommonProxy {
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 	}
-	
+
 	@Override
 	public World GetClientWorld() {
 		return Minecraft.getMinecraft().theWorld;
 	}
-	
+
 	@Override
-	public void preloadTextures(){
+	public void preloadTextures() {
 		Iterator i = PixelmonEntityList.idToStringMapping.entrySet().iterator();
 		while (i.hasNext()) {
 			Map.Entry entry = (Map.Entry) i.next();
 			String name = (String) entry.getValue();
 			ClassType type = PixelmonEntityList.getClassTypeFromID((Integer) entry.getKey());
-			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon){
+			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
 				MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png");
 			}
 		}
 	}
 
 	@Override
-	public void registerKeyBindings(){
+	public void registerKeyBindings() {
 		MinecraftForge.EVENT_BUS.register(this);
 
 		KeyBindingRegistry.registerKeyBinding(new SendPokemonKey());
@@ -99,8 +101,7 @@ public class ClientProxy extends CommonProxy {
 		KeyBindingRegistry.registerKeyBinding(new PreviousPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new MinimizeMaximizeOverlayKey());
 	}
-	
-	
+
 	private void addPokemonRenderers() {
 		Iterator i = PixelmonEntityList.idToStringMapping.entrySet().iterator();
 		while (i.hasNext()) {
@@ -121,30 +122,41 @@ public class ClientProxy extends CommonProxy {
 			ModelBase model = null;
 			try {
 				Class<?> var3 = null;
-				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
-					var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + name);
-				else if (type == ClassType.Trainer)
+				if (type == ClassType.Trainer)
 					var3 = (Class<?>) Class.forName("pixelmon.models.trainers.Model" + name);
 
 				if (var3 != null) {
-					model = (ModelBase) var3.getConstructor(new Class[] { }).newInstance(new Object[] {});
+					model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 				}
 			} catch (Exception var4) {
 				var4.printStackTrace();
 			}
-			if (model == null)
-				return;
+			if (model != null) {
 
-			RenderLiving renderer;
-			if (type == ClassType.Pixelmon)
-				renderer = new RenderPixelmon(model, 0.5f);
-			else if (type == ClassType.WaterPixelmon)
-				renderer = new RenderFreeWaterPixelmon(model, 0.5f);
-			else
-				renderer = new RenderTrainer(model, 0.5f);
+				RenderLiving renderer = null;
+				if (type == ClassType.Trainer)
+					renderer = new RenderTrainer(model, 0.5f);
 
-			RenderingRegistry.registerEntityRenderingHandler(pokeClass, renderer);
+				RenderingRegistry.registerEntityRenderingHandler(pokeClass, renderer);
+			}
 		}
+		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
+	}
+
+	public ModelBase loadModel(String name) {
+		ModelBase model = null;
+		try {
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + name);
+			if (var3 != null) {
+				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
+			}
+
+		} catch (Exception e) {
+			System.out.println("Can't find Model for " + name);
+		}
+		if (model == null)
+			System.out.println("Can't find Model for " + name);
+		return model;
 	}
 
 	@Override
@@ -169,22 +181,21 @@ public class ClientProxy extends CommonProxy {
 		}
 		return null;
 	}
-	
-	public static File getMinecraftDir()
-	{
+
+	public static File getMinecraftDir() {
 		return Minecraft.getMinecraftDir();
 	}
-	
+
 	@ForgeSubscribe
 	public void onWorldLoad(WorldEvent.Load event) {
 		ServerStorageDisplay.clear();
 		PixelmonServerStore.clearList();
 	}
-	
-	public static void spawnParticle(EnumPixelmonParticles particle, World worldObj, double posX, double posY, double posZ)
-	{
+
+	public static void spawnParticle(EnumPixelmonParticles particle, World worldObj, double posX, double posY, double posZ) {
 		try {
-			EntityFX fx = (EntityFX)particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class).newInstance(worldObj, posX, posY, posZ, 0d, 0d, 0d);
+			EntityFX fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class).newInstance(worldObj, posX,
+					posY, posZ, 0d, 0d, 0d);
 			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		} catch (Exception e) {
 			e.printStackTrace();

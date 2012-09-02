@@ -12,15 +12,10 @@ public class EntityGolbat extends EntityFlyingPixelmon {
 	}
 
 	public void init() {
-		name = "Golbat";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Golbat");
 		doesLand = false;
 		isAggressive = true;
 		courseChangeCooldown = 10;
-	}
-
-	public void evolve() {
 	}
 
 	public boolean getCanSpawnHere() {

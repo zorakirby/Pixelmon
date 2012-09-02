@@ -2,10 +2,7 @@ package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.*;
-
-
 
 public class EntitySeaking extends EntityWaterPixelmon
 {
@@ -18,20 +15,13 @@ public class EntitySeaking extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Seaking";
+		super.init("Seaking");
 		depthRangeStart=6;
 		depthRangeEnd=20;
-		isImmuneToFire = false;
-		super.init();
 	}
 
 	public float getMoveSpeed() 
 	{
 		return 2F;
-	}
-
-	public void evolve() 
-	{
-
 	}
 }

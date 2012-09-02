@@ -13,6 +13,7 @@ import net.minecraft.src.World;
 public abstract class Entity4Textures extends Entity3HasStats {
 	public float scale = 1F;
 	public float maxScale = 1.25F;
+	public float hoverTimer;
 
 	public Entity4Textures(World par1World) {
 		super(par1World);
@@ -38,27 +39,38 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
-		if (dataWatcher.getWatchableObjectShort(20) == 1
+		if (dataWatcher.getWatchableObjectShort(20) == (short)1
 				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
 			return "/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
-		else if (dataWatcher.getWatchableObjectShort(21) == 1
+		else if (dataWatcher.getWatchableObjectShort(21) == (short)1
 				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
 			return "/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";
 		else
 			return "/pixelmon/texture/pokemon/" + getName().toLowerCase() + ".png";
 	}
 
+	public boolean getIsShiny() {
+		return dataWatcher.getWatchableObjectShort(20) == (short)1;
+	}
+
+	public void setIsShiny(boolean isShiny) {
+		if (isShiny)
+			dataWatcher.updateObject(20, (short) 1);
+		else
+			dataWatcher.updateObject(20, (short) 0);
+	}
+	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
-		nbt.setBoolean("IsShiny", dataWatcher.getWatchableObjectShort(20) == 1);
-		nbt.setBoolean("IsRoasted", dataWatcher.getWatchableObjectShort(21) == 1);
+		nbt.setBoolean("IsShiny", dataWatcher.getWatchableObjectShort(20) == (short)1);
+		nbt.setBoolean("IsRoasted", dataWatcher.getWatchableObjectShort(21) == (short)1);
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		dataWatcher.updateObject(20, nbt.getBoolean("IsShiny") ? 1 : 0);
-		dataWatcher.updateObject(21, nbt.getBoolean("IsRoasted") ? 1 : 0);
+		dataWatcher.updateObject(20, nbt.getBoolean("IsShiny") ? (short)1 : (short)0);
+		dataWatcher.updateObject(21, nbt.getBoolean("IsRoasted") ? (short)1 : (short)0);
 	}
 }

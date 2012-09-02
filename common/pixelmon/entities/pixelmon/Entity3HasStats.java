@@ -12,6 +12,7 @@ import pixelmon.database.PixelmonIVStore;
 import pixelmon.database.Stats;
 import pixelmon.entities.pixelmon.helpers.*;
 import pixelmon.enums.EnumType;
+import net.minecraft.src.EnumCreatureType;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
@@ -30,8 +31,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		stats = new Stats();
 		level = new LevelHelper((EntityPixelmon)this);
 		dataWatcher.addObject(18, ""); //LvlString
-		setSize(baseStats.Width, baseStats.Height + hoverHeight);
-		length = baseStats.Length;
 	}
 	
 	@Override
@@ -39,14 +38,51 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super.init(name);
 		baseStats = DatabaseStats.GetBaseStats(name);
 		stats.IVs = PixelmonIVStore.CreateNewIVs();
-		type.add(baseStats.Type1);
-		if (baseStats.Type2 != EnumType.Mystery)
-			type.add(baseStats.Type2);
+		setSize(baseStats.Width, baseStats.Height + hoverHeight);
+		length = baseStats.Length;
 		
 		if (rand.nextInt(100) < baseStats.MalePercent)
 			isMale = true;
 		else
 			isMale = false;
+		isImmuneToFire = type.contains(EnumType.Fire);
+	}
+	
+	private void setType(){
+		type.add(baseStats.Type1);
+		if (baseStats.Type2 != EnumType.Mystery)
+			type.add(baseStats.Type2);
+	}
+	
+	@Override
+	public void evolve(String evolveTo) {
+		super.evolve(evolveTo);
+		baseStats = DatabaseStats.GetBaseStats(getName());
+		type.clear();
+		setType();
+	}
+	
+	protected void fall(float f) {
+		if (baseStats!=null){
+			if (baseStats.creatureType== EnumCreatureType.waterCreature)
+				return;
+			if (baseStats.CanFly) return;
+		}
+		super.fall(f);
+	}
+	
+	public int getMaxHealth() {
+		if (stats == null)
+			return 1;
+		return stats.HP;
+	}
+
+	public void setHealth(int i) {
+		health = i;
+	}
+
+	public float getMoveSpeed() {
+		return 0.3f;
 	}
 	
 	@SideOnly(Side.CLIENT)

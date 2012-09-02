@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
-public class EntityEkans extends EntityGroundPixelmon
+public class EntityEkans extends EntityPixelmon
 {
 
 	public EntityEkans(World par1World) 
@@ -15,15 +14,6 @@ public class EntityEkans extends EntityGroundPixelmon
 
 	public void init() 
 	{
-		name = "Ekans";
-		isImmuneToFire = false;
-		super.init();
-	}
-
-
-	public void evolve() 
-	{
-		EntityPixelmon entity = new EntityArbok(worldObj);
-		helper.evolve(entity.helper);
+		super.init("Ekans");
 	}
 }

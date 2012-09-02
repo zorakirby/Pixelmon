@@ -19,15 +19,20 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.LevelHelper;
 
 public class RenderPixelmon extends RenderLiving {
-	public RenderPixelmon(ModelBase par1ModelBase, float par2) { // par2 =
-																	// shadow
-																	// size
-		super(par1ModelBase, par2);
+	public RenderPixelmon(float par2) { // par2 = shadow size
+		super(null, par2);
 	}
 
 	private LevelHelper lvlInstance;
 
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
+		mainModel = ((EntityPixelmon)entityLiving).model;
+		if (mainModel==null){
+			if (((EntityPixelmon)entityLiving).getName().equals(""))
+				return;
+			((EntityPixelmon)entityLiving).init(((EntityPixelmon)entityLiving).getName());
+			mainModel = ((EntityPixelmon)entityLiving).model;
+		}
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
 		if (var10 <= (float) 8 || ((EntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((EntityPixelmon) entityLiving).getPokemonId())) {
@@ -38,10 +43,6 @@ public class RenderPixelmon extends RenderLiving {
 			drawNameTag(entityLiving, d, d1, d2);
 		}
 
-	}
-
-	public ModelBase getModel() {
-		return mainModel;
 	}
 
 	public void drawNameTag(EntityLiving entityliving, double par2, double par4, double par6) {

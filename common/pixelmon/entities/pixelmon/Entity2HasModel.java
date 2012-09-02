@@ -2,6 +2,8 @@ package pixelmon.entities.pixelmon;
 
 import java.lang.reflect.InvocationTargetException;
 
+import pixelmon.Pixelmon;
+
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.src.Entity;
@@ -20,29 +22,12 @@ public abstract class Entity2HasModel extends Entity1Base {
 	
 	protected void init(String name){
 		super.init(name);
-		model = loadModel();
-	}
-
-	@SideOnly(Side.CLIENT)
-	private ModelBase loadModel() {
-		ModelBase model = null;
-		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + getName());
-			if (var3 != null) {
-				model = (ModelBase) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { worldObj });
-			}
-
-		} catch (Exception e) {
-			System.out.println("Can't find Model for " + getName());
-		}
-		if (model == null)
-			System.out.println("Can't find Model for " + getName());
-		return model;
+		model = Pixelmon.proxy.loadModel(name);
 	}
 	
 	public void evolve(String evolveTo){
 		setName(evolveTo);
-		loadModel();
+		model = Pixelmon.proxy.loadModel(evolveTo);
 	}
 
 }

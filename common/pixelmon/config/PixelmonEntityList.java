@@ -22,6 +22,7 @@ import net.minecraftforge.common.MinecraftForge;
 import pixelmon.Pixelmon;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokemon.*;
 import pixelmon.entities.trainers.EntityTrainerBugCatcher;
 import pixelmon.entities.trainers.EntityTrainerYoungster;
@@ -65,11 +66,16 @@ public class PixelmonEntityList {
 			ClassType type = getClassTypeFromString(par0Str);
 			Class<?> var3 = null;
 			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
-				var3 = (Class<?>) Class.forName("pixelmon.entities.pokemon.Entity" + par0Str);
+				var3 = EntityPixelmon.class;
 			else if (type == ClassType.Trainer)
 				var3 = (Class<?>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + par0Str);
 			if (var3 != null) {
-				var2 = (Entity) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
+				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
+					var2 = new EntityPixelmon(par1World);
+					((EntityPixelmon) var2).init(par0Str);
+				} else {
+					var2 = (Entity) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
+				}
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();
@@ -85,10 +91,11 @@ public class PixelmonEntityList {
 		EntityLiving var2 = null;
 
 		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.entities.pokemon.Entity" + par0NBTTagCompound.getString("id"));
+			Class<?> var3 = EntityPixelmon.class;
 
 			if (var3 != null) {
 				var2 = (EntityLiving) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
+				((EntityPixelmon)var2).init(par0NBTTagCompound.getString("Name"));
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();
@@ -238,26 +245,19 @@ public class PixelmonEntityList {
 			LanguageRegistry.instance().addStringLocalization("entity." + name + ".name", "en_US", name);
 			Integer[] eggInfo = entityEggs.get(name);
 			try {
-				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
-					try {
-						if (eggInfo != null)
-							EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, EntityRegistry.findGlobalUniqueEntityId(), eggInfo[0], eggInfo[1]);
-						else
-							EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.pokemon.Entity" + name), name, EntityRegistry.findGlobalUniqueEntityId());
-					} catch (Exception e) {
-						System.out.println("Failed on " + name);
-						System.out.println(e.getMessage());
-						e.printStackTrace();
-					}
-				} else if (type == ClassType.Trainer)
+				if (type == ClassType.Trainer)
 					if (eggInfo != null)
-						EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, EntityRegistry.findGlobalUniqueEntityId(), eggInfo[0], eggInfo[1]);
+						EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name,
+								EntityRegistry.findGlobalUniqueEntityId(), eggInfo[0], eggInfo[1]);
 					else
-						EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name, EntityRegistry.findGlobalUniqueEntityId());
+						EntityRegistry.registerGlobalEntityID((Class<? extends EntityLiving>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + name), name,
+								EntityRegistry.findGlobalUniqueEntityId());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
+
+		EntityRegistry.registerGlobalEntityID(EntityPixelmon.class, "Pixelmon", EntityRegistry.findGlobalUniqueEntityId());
 	}
 
 	public static void addSpawns() {

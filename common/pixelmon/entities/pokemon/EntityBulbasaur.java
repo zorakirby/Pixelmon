@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
-public class EntityBulbasaur extends EntityGroundPixelmon
+public class EntityBulbasaur extends EntityPixelmon
 {
 	
 	public EntityBulbasaur(World world)
@@ -15,14 +14,6 @@ public class EntityBulbasaur extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Bulbasaur";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		EntityPixelmon entity = new EntityIvysaur(worldObj);
-		helper.evolve(entity.helper);
+		super.init("Bulbasaur");
 	}
 }

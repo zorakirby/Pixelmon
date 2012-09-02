@@ -97,11 +97,11 @@ public class EntityPokeBall extends EntityThrowable {
 					} else {
 						pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
 					}
-					pixelmon.setMotion(0, 0, 0);
+					pixelmon.motionX = pixelmon.motionY = pixelmon.motionZ = 0;
 					pixelmon.releaseFromPokeball();
 					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)
 							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn((EntityPixelmon) movingobjectposition.entityHit)) {
-						WildPixelmonParticipant part = new WildPixelmonParticipant((EntityPixelmon)movingobjectposition.entityHit);
+						WildPixelmonParticipant part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
 						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
 					} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
 						TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);

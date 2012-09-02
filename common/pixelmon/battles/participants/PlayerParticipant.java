@@ -95,7 +95,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 		EntityPixelmon newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
 		newPixelmon.setLocationAndAngles(currentPixelmon.posX, currentPixelmon.posY, currentPixelmon.posZ, currentPixelmon.rotationYaw, 0.0F);
-		newPixelmon.setMotion(0, 0, 0);
+		newPixelmon.motionX = newPixelmon.motionY = newPixelmon.motionZ = 0;
 		newPixelmon.releaseFromPokeball();
 
 		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "Go " + newPixelmon.getNickname() + "!");

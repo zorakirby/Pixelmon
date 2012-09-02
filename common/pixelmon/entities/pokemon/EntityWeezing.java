@@ -4,12 +4,11 @@ import java.util.Random;
 
 import pixelmon.ClientProxy;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import pixelmon.enums.EnumPixelmonParticles;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-public class EntityWeezing  extends EntityGroundPixelmon
+public class EntityWeezing  extends EntityPixelmon
 {
 	
 	public EntityWeezing(World world)
@@ -25,7 +24,7 @@ public class EntityWeezing  extends EntityGroundPixelmon
 	public void onUpdate() {
 		super.onUpdate();
 		if (worldObj.isRemote) {
-			float var2 = helper.stats.BaseStats.Width * helper.giScale * helper.scale;
+			float var2 = baseStats.Width * baseStats.giScale * scale;
 			float var4 = this.rand.nextFloat() * (float) Math.PI * 2.0F;
 			float var5 = this.rand.nextFloat() * 4F + .5F;
 			float var6 = MathHelper.sin(var4) * var2 * .5F * var5;
@@ -46,15 +45,8 @@ public class EntityWeezing  extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Weezing";
-		isImmuneToFire = false;
-		helper.doesHover = true;
-		helper.hoverHeight=1f;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-
+		super.init("Weezing");
+		doesHover = true;
+		hoverHeight=1f;
 	}
 }

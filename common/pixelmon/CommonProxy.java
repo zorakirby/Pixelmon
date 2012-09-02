@@ -1,6 +1,7 @@
 package pixelmon;
 
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.ModelBase;
 import net.minecraft.src.World;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -36,6 +37,10 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void registerKeyBindings() {		
+	}
+
+	public ModelBase loadModel(String name) {
+		return null;
 	}
 
 }

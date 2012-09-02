@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
-public class EntityPikachu extends EntityGroundPixelmon
+public class EntityPikachu extends EntityPixelmon
 {
 	
 	public EntityPikachu(World world)
@@ -15,13 +14,6 @@ public class EntityPikachu extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Pikachu";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{
-
+		super.init("Pikachu");
 	}
 }

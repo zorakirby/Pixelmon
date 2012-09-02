@@ -2,6 +2,7 @@ package pixelmon.AI;
 
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
+import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.storage.PixelmonStorage;
@@ -12,10 +13,10 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 
 public class PixelmonAIStartBattle extends EntityAIBase {
-	private EntityPixelmon theEntity;
+	private Entity7HasAI theEntity;
 
-	public PixelmonAIStartBattle(EntityPixelmon theEntity) {
-		this.theEntity = theEntity;
+	public PixelmonAIStartBattle(Entity7HasAI entity7HasAI) {
+		this.theEntity = entity7HasAI;
 		setMutexBits(3);
 	}
 
@@ -30,12 +31,12 @@ public class PixelmonAIStartBattle extends EntityAIBase {
 		if (theEntity.getAttackTarget() instanceof EntityPlayer) {
 			EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
 			EntityPixelmon firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getFirstAblePokemon(player.worldObj);
-			theEntity.StartBattle(new WildPixelmonParticipant(theEntity), new PlayerParticipant(player, firstPokemon));
+			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon)theEntity), new PlayerParticipant(player, firstPokemon));
 			return true;
 		}
 		if (((EntityLiving) theEntity).getAttackTarget().getDistanceSqToEntity((Entity) this.theEntity) < 2) {
 			EntityPixelmon target = (EntityPixelmon)theEntity.getAttackTarget();
-			theEntity.StartBattle(new WildPixelmonParticipant(theEntity), new WildPixelmonParticipant(target));
+			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon)theEntity), new WildPixelmonParticipant(target));
 			return true;
 		}
 		return false;

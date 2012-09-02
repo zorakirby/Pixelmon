@@ -1,11 +1,10 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntityNinetales  extends EntityGroundPixelmon
+public class EntityNinetales  extends EntityPixelmon
 {
-	
 	public EntityNinetales(World world)
 	{
 		super(world);
@@ -14,13 +13,6 @@ public class EntityNinetales  extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Ninetales";
-		isImmuneToFire = true;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		
+		super.init("Ninetales");
 	}
 }

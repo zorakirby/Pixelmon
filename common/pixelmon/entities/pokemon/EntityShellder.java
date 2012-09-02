@@ -1,12 +1,11 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.Block;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-public class EntityShellder extends EntityGroundPixelmon
+public class EntityShellder extends EntityPixelmon
 {
 	
 	public EntityShellder(World world)
@@ -17,13 +16,7 @@ public class EntityShellder extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Shellder";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{	
+		super.init("Shellder");
 	}
 	
 	public boolean getCanSpawnHere() {

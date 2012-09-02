@@ -1,29 +1,18 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.*;
 
-public class EntitySquirtle extends EntityGroundPixelmon
+public class EntitySquirtle extends EntityPixelmon
 {
 	public EntitySquirtle(World world)
 	{
 		super(world);
-		moveSpeed = 0.3F;
 		init();
 	}
 
 	public void init() 
 	{
-		name = "Squirtle";
-		isImmuneToFire = false;
-		super.init();
-	}
-
-	public void evolve() 
-	{
-		IHaveHelper entity = new EntityWartortle(worldObj);
-		helper.evolve(entity.getHelper());
+		super.init("Squirtle");
 	}
 }

@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 
-public class EntityPrimeape  extends EntityGroundPixelmon
+public class EntityPrimeape  extends EntityPixelmon
 {
 	
 	public EntityPrimeape(World world)
@@ -14,11 +14,6 @@ public class EntityPrimeape  extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Primeape";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Primeape");
 	}
-	
-	public void evolve() 
-	{}
 }

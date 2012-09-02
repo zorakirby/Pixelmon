@@ -2,9 +2,8 @@ package pixelmon.entities.pokemon;
 
 import net.minecraft.src.World;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 
-public class EntityDrowzee extends EntityGroundPixelmon
+public class EntityDrowzee extends EntityPixelmon
 {
 	
 	public EntityDrowzee(World world)
@@ -15,12 +14,8 @@ public class EntityDrowzee extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Drowzee";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Drowzee");
 	}
 
-	public void evolve() 
-	{
-	}
+	
 }

@@ -1,5 +1,6 @@
 package pixelmon.database;
 
+import net.minecraft.src.EnumCreatureType;
 import pixelmon.enums.EnumType;
 
 public class BaseStats {
@@ -26,7 +27,8 @@ public class BaseStats {
 	public float Width;
 	public float Length;
 	public float giScale;
-	public Aggression aggression; 
+	public Aggression aggression;
+	public EnumCreatureType creatureType; 
 
 	public class Aggression{
 		public int timid;

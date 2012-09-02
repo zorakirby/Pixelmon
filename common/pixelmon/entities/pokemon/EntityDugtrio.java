@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.*;
 
-public class EntityDugtrio extends EntityGroundPixelmon
+public class EntityDugtrio extends EntityPixelmon
 {
 	
 	public EntityDugtrio(World world)
@@ -14,10 +14,9 @@ public class EntityDugtrio extends EntityGroundPixelmon
 
 	public void init() 
 	{
-		name = "Dugtrio";
-		isImmuneToFire = true;
-		super.init();
+		super.init("Dugtrio");
 	}
+
 	public void onLivingUpdate()
 	{
 		super.onLivingUpdate();
@@ -35,9 +34,6 @@ public class EntityDugtrio extends EntityGroundPixelmon
 
 	}
 
-	public void evolve() 
-	{	
-	}
 	public boolean getCanSpawnHere() {
 		int var1 = MathHelper.floor_double(this.posX);
 		int var2 = MathHelper.floor_double(this.boundingBox.minY);

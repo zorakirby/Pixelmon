@@ -16,6 +16,7 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
 import net.minecraft.server.MinecraftServer;
@@ -77,6 +78,7 @@ public class PlayerStorage {
 			PixelmonStorage.ComputerManager.getPlayerStorage(player).addToComputer(p);
 			return;
 		}
+		if (p.caughtBall == null) p.caughtBall = EnumPokeballs.MasterBall;
 		if (mode == PokeballManagerMode.Player)
 			p.setOwner(player.username);
 		else if (mode == PokeballManagerMode.Trainer)
@@ -105,7 +107,7 @@ public class PlayerStorage {
 		p.writeEntityToNBT(n);
 		p.writeToNBT(n);
 		p.getLvl().writeToNBT(n);
-		n.setString("id", p.getName());
+		n.setString("id", "Pixelmon");
 		n.setName(p.getName());
 		n.setString("Nickname", n.getName());
 		n.setBoolean("IsInBall", true);

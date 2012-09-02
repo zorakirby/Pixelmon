@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntityBlastoise extends EntityGroundPixelmon
+public class EntityBlastoise extends EntityPixelmon
 {
 	
 	public EntityBlastoise(World world)
@@ -14,9 +14,7 @@ public class EntityBlastoise extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Blastoise";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Blastoise");
 	}
 	
 	public void evolve() 

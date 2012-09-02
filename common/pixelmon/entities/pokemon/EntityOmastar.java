@@ -4,7 +4,6 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import net.minecraft.src.*;
 
-
 public class EntityOmastar extends EntityWaterPixelmon
 {
 	
@@ -16,11 +15,9 @@ public class EntityOmastar extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Omastar";
+		super.init("Omastar");
 		depthRangeStart = 5;
 		depthRangeEnd = 10;
-		isImmuneToFire = false;
-		super.init();
 	}
 
 	public float getMoveSpeed() 
@@ -28,11 +25,6 @@ public class EntityOmastar extends EntityWaterPixelmon
 		return 2F;
 	}
 
-	public void evolve() 
-	{
-
-	}
-	
 	public boolean getCanSpawnHere() {
 		
 		return  this.posY < 55.0D && super.getCanSpawnHere();

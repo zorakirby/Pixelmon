@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
-public class EntityMagnemite  extends EntityGroundPixelmon
+public class EntityMagnemite  extends EntityPixelmon
 {
 	
 	public EntityMagnemite(World world)
@@ -15,16 +14,8 @@ public class EntityMagnemite  extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Magnemite";
-		isImmuneToFire = false;
-		helper.doesHover = true;
-		helper.hoverHeight=1f;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		EntityPixelmon entity = new EntityMagneton(worldObj);
-		helper.evolve(entity.helper);
+		super.init("Magnemite");
+		doesHover = true;
+		hoverHeight=1f;
 	}
 }

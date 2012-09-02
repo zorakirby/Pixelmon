@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
-public class EntityButterfree extends EntityGroundPixelmon
+public class EntityButterfree extends EntityPixelmon
 {
 	
 	public EntityButterfree(World world)
@@ -15,11 +14,9 @@ public class EntityButterfree extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Butterfree";
-		isImmuneToFire = false;
-		helper.doesHover = true;
-		helper.hoverHeight = 1f;
-		super.init();
+		super.init("Butterfree");
+		doesHover = true;
+		hoverHeight = 1f;
 	}
 	
 	public void evolve() 

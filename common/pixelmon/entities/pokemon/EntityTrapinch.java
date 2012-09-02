@@ -1,12 +1,11 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.Block;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-public class EntityTrapinch extends EntityGroundPixelmon
+public class EntityTrapinch extends EntityPixelmon
 {
 	
 	public EntityTrapinch(World world)
@@ -17,16 +16,7 @@ public class EntityTrapinch extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Trapinch";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{	
-		EntityPixelmon entity = new EntityVibrava(worldObj);
-		helper.evolve(entity.helper);
-		
+		super.init("Trapinch");
 	}
 	
 	public boolean getCanSpawnHere() {

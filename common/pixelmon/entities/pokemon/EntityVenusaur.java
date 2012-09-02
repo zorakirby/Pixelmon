@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntityVenusaur extends EntityGroundPixelmon
+public class EntityVenusaur extends EntityPixelmon
 {
 	
 	public EntityVenusaur(World world)
@@ -14,12 +14,6 @@ public class EntityVenusaur extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Venusaur";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
+		super.init("Venusaur");
 	}
 }

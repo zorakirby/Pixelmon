@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.*;
 
-public class EntityGeodude extends EntityGroundPixelmon
+public class EntityGeodude extends EntityPixelmon
 {
 	
 	public EntityGeodude(World world)
@@ -14,15 +14,9 @@ public class EntityGeodude extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Geodude";
-		isImmuneToFire = false;
-		super.init();
+		super.init("Geodude");
 	}
 	
-	public void evolve() 
-	{		
-		
-	}
 	public boolean getCanSpawnHere() {
 		int var1 = MathHelper.floor_double(this.posX);
 		int var2 = MathHelper.floor_double(this.boundingBox.minY);

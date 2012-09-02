@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntitySnorlax extends EntityGroundPixelmon
+public class EntitySnorlax extends EntityPixelmon
 {
 	
 	public EntitySnorlax(World world)
@@ -14,13 +14,6 @@ public class EntitySnorlax extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Snorlax";
-		isImmuneToFire = false;
-		super.init();
-	}
-	
-	public void evolve() 
-	{		
-		
+		super.init("Snorlax");
 	}
 }

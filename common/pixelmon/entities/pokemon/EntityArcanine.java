@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntityArcanine extends EntityGroundPixelmon
+public class EntityArcanine extends EntityPixelmon
 {
 	
 	public EntityArcanine(World world)
@@ -15,9 +14,7 @@ public class EntityArcanine extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Arcanine";
-		isImmuneToFire = true;
-		super.init();
+		super.init("Arcanine");
 	}
 	
 	public void evolve() 

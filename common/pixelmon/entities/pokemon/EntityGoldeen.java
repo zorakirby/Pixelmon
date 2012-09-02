@@ -2,10 +2,7 @@ package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.*;
-
-
 
 public class EntityGoldeen extends EntityWaterPixelmon
 {
@@ -18,21 +15,14 @@ public class EntityGoldeen extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Goldeen";
+		super.init("Goldeen");
 		depthRangeStart=2;
 		depthRangeEnd=10;
 		isImmuneToFire = false;
-		super.init();
 	}
 
 	public float getMoveSpeed() 
 	{
 		return 2F;
-	}
-
-	public void evolve() 
-	{
-		IHaveHelper entity = new EntitySeaking(worldObj);
-		helper.evolve(entity.getHelper());
 	}
 }
