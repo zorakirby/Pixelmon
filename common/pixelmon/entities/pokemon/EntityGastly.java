@@ -1,12 +1,12 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.ClientProxy;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPixelmonParticles;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-public class EntityGastly extends EntityGroundPixelmon {
+public class EntityGastly extends EntityPixelmon {
 
 	public EntityGastly(World par1World) {
 		super(par1World);
@@ -28,15 +28,8 @@ public class EntityGastly extends EntityGroundPixelmon {
 	}
 
 	public void init() {
-		name = "Gastly";
-		yOffset = 0;
-		isImmuneToFire = false;
-		helper.doesHover = true;
-		helper.hoverHeight = 1f;
-		super.init();
+		super.init("Gastly");
+		doesHover = true;
+		hoverHeight = 1f;
 	}
-
-	public void evolve() {
-	}
-
 }

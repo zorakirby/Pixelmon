@@ -48,7 +48,7 @@ import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
-public abstract class EntityPixelmon extends Entity8HoldsItems {
+public abstract class EntityPixelmon extends Entity9HasSounds {
 
 	public EntityPixelmon(World par1World) {
 		super(par1World);
@@ -79,25 +79,6 @@ public abstract class EntityPixelmon extends Entity8HoldsItems {
 		}
 	}
 
-	// Getters and Setters
-	public float getMoveSpeed() {
-		return 0.3f;
-	}
-
-	public int getMaxHealth() {
-		if (stats == null)
-			return 1;
-		return stats.HP;
-	}
-
-	public void setHealth(int i) {
-		health = i;
-	}
-
-	public boolean isAIEnabled() {
-		return true;
-	}
-
 	public boolean interact(EntityPlayer entity) {
 		if (entity instanceof EntityPlayerMP) {
 			EntityPlayer entity1 = (EntityPlayer) entity;
@@ -121,7 +102,7 @@ public abstract class EntityPixelmon extends Entity8HoldsItems {
 			}
 			if (itemstack != null && itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
 				if (getOwner() != null)
-					getOwner().openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
+					((EntityPlayer)getOwner()).openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
 			if (itemstack != null && itemstack.itemID == PixelmonItems.potion.shiftedIndex && getOwner() == entity) {
@@ -148,19 +129,7 @@ public abstract class EntityPixelmon extends Entity8HoldsItems {
 			// }
 			if (itemstack != null && itemstack.getItem() instanceof ItemEvolutionStone && getOwner() == entity) {
 				ItemEvolutionStone i = (ItemEvolutionStone) itemstack.getItem();
-				for (EvolutionInfo e : DatabaseStats.getEvolveList(getName())) {
-					if (e.evolutionStone == i.getType()) {
-						String evolveTo = e.pokemonName;
-						if (evolveTo == null) {
-							System.out.println(e.pokemonName + " isn't coded yet");
-							break;
-						}
-						evolve(evolveTo);
-						flag = true;
-						itemstack.stackSize--;
-						break;
-					}
-				}
+				return i.useOnEntity(itemstack, this, entity);
 			}
 			if (!flag && getOwner() == entity) {
 				if (getHeldItem() != null) {
@@ -200,10 +169,6 @@ public abstract class EntityPixelmon extends Entity8HoldsItems {
 		isInBall = false;
 	}
 
-	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
-		return null;
-	}
-
 	public void clearAttackTarget() {
 		setTarget(null);
 		setAttackTarget(null);
@@ -223,17 +188,11 @@ public abstract class EntityPixelmon extends Entity8HoldsItems {
 		return !MathHelper.stringNullOrLengthZero(getOwnerName());
 	}
 
-	public World getWorldObj() {
-		return worldObj;
-	}
-
 	// public void renderLevelUpEffects() {
 	// EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this,
 	// "magicCrit");
 	// Minecraft.getMinecraft().effectRenderer.addEffect(entitycrit2fx);
 	// }
-
-
 
 	public boolean getCanSpawnHere() {
 		int var1 = MathHelper.floor_double(this.posX);
@@ -266,73 +225,17 @@ public abstract class EntityPixelmon extends Entity8HoldsItems {
 			super.setOwner("pixelmonOwner");
 	}
 
-	public void setMotion(int i, int j, int k) {
-		motionX = i;
-		motionY = j;
-		motionZ = k;
-	}
-
 	public void unloadEntity() {
 		ArrayList<Entity> list = new ArrayList<Entity>();
 		list.add(this);
 		worldObj.unloadEntities(list);
 		clearAttackTarget();
-		if (bc != null) {
-			helper.bc = null;
+		if (battleController != null) {
+			battleController = null;
 		}
 	}
 
-	public void setPokemonId(int id) {
-		dataWatcher.updateObject(19, id);
-	}
-
-	public boolean getIsShiny() {
-		return dataWatcher.getWatchableObjectShort(20) == 1;
-	}
-
-	public void setIsShiny(boolean isShiny) {
-		if (isShiny)
-			dataWatcher.updateObject(20, (short) 1);
-		else
-			dataWatcher.updateObject(20, (short) 0);
-	}
-
-	/**
-	 * Returns the sound this mob makes while it's alive.
-	 */
-	@Override
-	protected String getLivingSound() {
-		return ("pixelmon." + name.toLowerCase());
-	}
-
-	/**
-	 * Returns the sound this mob makes when it is hurt.
-	 */
-	// @Override
-	// protected String getHurtSound()
-	// {
-	// return "mob.cowhurt";
-	// }
-	//
-	// /**
-	// * Returns the sound this mob makes on death.
-	// */
-	// @Override
-	// protected String getDeathSound()
-	// {
-	// return "mob.cowhurt";
-	// }
-
-	/**
-	 * Returns the volume for the sounds this mob makes.
-	 */
-	@Override
-	protected float getSoundVolume() {
-		return 0.4F;
-	}
-
 	public void setTrainer(EntityTrainer entityTrainer) {
-		// TODO Auto-generated method stub
-
+		trainer = entityTrainer;
 	}
 }

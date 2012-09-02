@@ -5,6 +5,7 @@
 // - ZeuX
 package pixelmon.models.pokemon;
 
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokemon.EntityKoffing;
 import net.minecraft.src.Entity;
 import net.minecraft.src.MathHelper;
@@ -418,7 +419,7 @@ public class ModelKoffing extends ModelBase
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5);
     Main_body.render(f5);
-    ((EntityKoffing)entity).hoverTimer = MathHelper.cos(.1F*f2 + (float)Math.PI) * .33F;
+    ((EntityPixelmon)entity).hoverTimer = MathHelper.cos(.1F*f2 + (float)Math.PI) * .33F;
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

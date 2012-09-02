@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.World;
 
-public class EntityFlareon extends EntityGroundPixelmon
+public class EntityFlareon extends EntityPixelmon
 {
 	
 	public EntityFlareon(World world)
@@ -14,14 +14,6 @@ public class EntityFlareon extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Flareon";
-		isImmuneToFire = true;
-		super.init();
+		super.init("Flareon");
 	}
-	
-	public void evolve() 
-	{
-		
-	}
-
 }

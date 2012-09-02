@@ -1,16 +1,17 @@
 package pixelmon.AI;
 
 import pixelmon.battles.BattleRegistry;
+import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.EntityAIBase;
 
 public class PixelmonAIIsInBattle extends EntityAIBase {
 
-	EntityPixelmon pixelmon;
+	Entity7HasAI pixelmon;
 
-	public PixelmonAIIsInBattle(EntityPixelmon p) {
+	public PixelmonAIIsInBattle(Entity7HasAI entity7HasAI) {
 		setMutexBits(1);
-		pixelmon = p;
+		pixelmon = entity7HasAI;
 	}
 
 	@Override

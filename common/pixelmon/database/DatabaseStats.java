@@ -121,7 +121,9 @@ public class DatabaseStats {
 				stats.aggression = stats.new Aggression(rs.getString("Aggression"), pixelmonName);
 				if (rs.wasNull()) 
 					System.out.println("Error in Aggression"+ " For Pokemon : " + pixelmonName);
-
+				String type = rs.getString("CreatureType");
+				if (type.equalsIgnoreCase("Land")) stats.creatureType = EnumCreatureType.creature;
+				else stats.creatureType = EnumCreatureType.waterCreature;
 			}
 			conn.close();
 			return stats;

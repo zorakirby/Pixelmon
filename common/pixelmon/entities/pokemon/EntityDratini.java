@@ -3,7 +3,6 @@ package pixelmon.entities.pokemon;
 import net.minecraft.src.World;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 
-
 public class EntityDratini extends EntityWaterPixelmon
 {
 	
@@ -15,16 +14,7 @@ public class EntityDratini extends EntityWaterPixelmon
 
 	public void init() 
 	{
-		name = "Dratini";
-		isImmuneToFire = false;
-		moveSpeed = 9F;
-		super.init();
-		
-		
+		super.init("Dratini");
 	}
 
-	public void evolve() 
-	{
-	
-	}
 }

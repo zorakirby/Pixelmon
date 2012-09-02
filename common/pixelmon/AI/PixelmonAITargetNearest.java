@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.src.Entity;
@@ -16,14 +17,14 @@ public class PixelmonAITargetNearest extends PixelmonAITarget {
 	EntityLiving targetEntity;
 	private TargetSorter field_48387_g;
 
-	public PixelmonAITargetNearest(EntityPixelmon par1EntityLiving, float par3, boolean par5) {
-		this(par1EntityLiving, par3, par5, false);
+	public PixelmonAITargetNearest(Entity7HasAI entity7HasAI, float par3, boolean par5) {
+		this(entity7HasAI, par3, par5, false);
 	}
 
-	public PixelmonAITargetNearest(EntityPixelmon par1EntityLiving, float par3, boolean par5, boolean par6) {
-		super(par1EntityLiving, par3, par5, par6);
+	public PixelmonAITargetNearest(Entity7HasAI entity7HasAI, float par3, boolean par5, boolean par6) {
+		super(entity7HasAI, par3, par5, par6);
 		this.targetDistance = par3;
-		this.field_48387_g = new TargetSorter(this, par1EntityLiving);
+		this.field_48387_g = new TargetSorter(this, entity7HasAI);
 		this.setMutexBits(3);
 	}
 

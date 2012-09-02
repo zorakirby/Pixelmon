@@ -10,7 +10,7 @@ public class IDListTrainer {
 	public static int trainerYoungster2Id;
 	public static int trainerBugCatcherId;
 	
-	private static int i=700;
+	private static int i=100;
 	public static void load(Configuration configuration) {
 		trainerYoungsterId = Integer.parseInt(configuration.getOrCreateIntProperty("Youngster", "trainers", i++).value);
 		trainerYoungster2Id = Integer.parseInt(configuration.getOrCreateIntProperty("Youngster2", "trainers", i++).value);

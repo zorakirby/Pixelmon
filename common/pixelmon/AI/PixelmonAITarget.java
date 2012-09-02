@@ -1,5 +1,6 @@
 package pixelmon.AI;
 
+import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.EntityAIBase;
 import net.minecraft.src.EntityLiving;
@@ -11,7 +12,7 @@ import net.minecraft.src.PathPoint;
 
 public abstract class PixelmonAITarget extends EntityAIBase {
 	/** The entity that this task belongs to */
-	protected EntityPixelmon taskOwner;
+	protected Entity7HasAI taskOwner;
 	protected float targetDistance;
 
 	/**
@@ -29,11 +30,11 @@ public abstract class PixelmonAITarget extends EntityAIBase {
 		setMutexBits(3);
 	}
 
-	public PixelmonAITarget(EntityPixelmon par1EntityLiving, float par2, boolean par3, boolean par4) {
+	public PixelmonAITarget(Entity7HasAI entity7HasAI, float par2, boolean par3, boolean par4) {
 		this.field_75301_b = 0;
 		this.field_75302_c = 0;
 		this.field_75298_g = 0;
-		this.taskOwner = par1EntityLiving;
+		this.taskOwner = entity7HasAI;
 		this.targetDistance = par2;
 		this.shouldCheckSight = par3;
 		this.field_75303_a = par4;

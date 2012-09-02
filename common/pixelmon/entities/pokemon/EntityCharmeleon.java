@@ -1,10 +1,9 @@
 package pixelmon.entities.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
-public class EntityCharmeleon extends EntityGroundPixelmon
+public class EntityCharmeleon extends EntityPixelmon
 {
 	
 	public EntityCharmeleon(World world)
@@ -15,18 +14,7 @@ public class EntityCharmeleon extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Charmeleon";
+		super.init("Charmeleon");
 		isImmuneToFire = true;
-		super.init();
-		this.litUp = false;
-		this.litLevel = 45;
 	}
-	
-	public void evolve() 
-	{
-		EntityPixelmon entity = new EntityCharizard(worldObj);
-		helper.evolve(entity.helper);
-	}
-
-
 }

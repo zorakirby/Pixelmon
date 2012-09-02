@@ -13,6 +13,7 @@ import net.minecraft.src.World;
 public abstract class Entity4Textures extends Entity3HasStats {
 	public float scale = 1F;
 	public float maxScale = 1.25F;
+	public float hoverTimer;
 
 	public Entity4Textures(World par1World) {
 		super(par1World);
@@ -48,6 +49,17 @@ public abstract class Entity4Textures extends Entity3HasStats {
 			return "/pixelmon/texture/pokemon/" + getName().toLowerCase() + ".png";
 	}
 
+	public boolean getIsShiny() {
+		return dataWatcher.getWatchableObjectShort(20) == 1;
+	}
+
+	public void setIsShiny(boolean isShiny) {
+		if (isShiny)
+			dataWatcher.updateObject(20, (short) 1);
+		else
+			dataWatcher.updateObject(20, (short) 0);
+	}
+	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);

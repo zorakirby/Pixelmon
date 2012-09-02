@@ -1,5 +1,6 @@
 package pixelmon.entities.pixelmon;
 
+import pixelmon.entities.pixelmon.helpers.AIHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
@@ -15,6 +16,8 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 
 	public Aggression aggression;
 
+	private AIHelper aiHelper;
+	
 	public Entity7HasAI(World par1World) {
 		super(par1World);
 	}
@@ -22,6 +25,7 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 	@Override
 	protected void init(String name) {
 		super.init(name);
+		aiHelper = new AIHelper(name, this, tasks);
 		int r = rand.nextInt(100) + 1;
 		if (baseStats.aggression == null) {
 			aggression = Aggression.passive;
@@ -56,5 +60,9 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 			aggression = Aggression.aggressive;
 			break;
 		}
+	}
+	
+	public boolean isAIEnabled() {
+		return true;
 	}
 }

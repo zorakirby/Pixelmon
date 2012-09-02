@@ -5,6 +5,7 @@ import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityTameable;
@@ -93,5 +94,9 @@ public abstract class Entity1Base extends EntityTameable {
 		isMale = nbt.getBoolean("IsMale");
 		isInBall = nbt.getBoolean("IsInBall");
 		isFainted = nbt.getBoolean("IsFainted");
+	}
+	
+	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
+		return null;
 	}
 }

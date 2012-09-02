@@ -13,6 +13,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseMoves;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
@@ -121,9 +122,7 @@ public class ClientProxy extends CommonProxy {
 			ModelBase model = null;
 			try {
 				Class<?> var3 = null;
-				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
-					var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + name);
-				else if (type == ClassType.Trainer)
+				if (type == ClassType.Trainer)
 					var3 = (Class<?>) Class.forName("pixelmon.models.trainers.Model" + name);
 
 				if (var3 != null) {
@@ -135,16 +134,13 @@ public class ClientProxy extends CommonProxy {
 			if (model == null)
 				return;
 
-			RenderLiving renderer;
-			if (type == ClassType.Pixelmon)
-				renderer = new RenderPixelmon(model, 0.5f);
-			else if (type == ClassType.WaterPixelmon)
-				renderer = new RenderFreeWaterPixelmon(model, 0.5f);
-			else
+			RenderLiving renderer = null;
+			if (type == ClassType.Trainer)
 				renderer = new RenderTrainer(model, 0.5f);
 
 			RenderingRegistry.registerEntityRenderingHandler(pokeClass, renderer);
 		}
+		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
 	}
 
 	@Override

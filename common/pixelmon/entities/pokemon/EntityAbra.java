@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityAILookIdle;
 import net.minecraft.src.EntityAISwimming;
@@ -12,7 +12,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-public class EntityAbra extends EntityGroundPixelmon
+public class EntityAbra extends EntityPixelmon
 {
 	
 	public EntityAbra(World world)
@@ -23,11 +23,7 @@ public class EntityAbra extends EntityGroundPixelmon
 
 	public void init() 
 	{
-		name = "Abra";
-		isImmuneToFire = false;
-		super.init();
-		tasks.field_75782_a.clear();
-		tasks.addTask(1, new EntityAISwimming(this));
+		super.init("Abra");
 	}
 
 	public void onUpdate()

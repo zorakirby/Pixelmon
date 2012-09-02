@@ -1,9 +1,9 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.EntityGroundPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.*;
 
-public class EntityGeodude extends EntityGroundPixelmon
+public class EntityGeodude extends EntityPixelmon
 {
 	
 	public EntityGeodude(World world)
@@ -14,7 +14,7 @@ public class EntityGeodude extends EntityGroundPixelmon
 
 	public void init()
 	{
-		name = "Geodude";
+		super.init("Geodude");
 		isImmuneToFire = false;
 		super.init();
 	}

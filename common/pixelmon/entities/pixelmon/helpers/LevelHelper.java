@@ -28,7 +28,6 @@ public class LevelHelper {
 	private int level;
 	public int maxHealth = 10;
 	public int health;
-	public int extraXP = 0;
 
 	public LevelHelper() {
 		exp = 0;
@@ -168,9 +167,7 @@ public class LevelHelper {
 			level++;
 			onLevelUp();
 			if (level >= pixelmon.baseStats.EvolveLevel) {
-				extraXP = exp - getExpForLevel(level + 1);
 				pixelmon.evolve(pixelmon.baseStats.EvolveInto);
-				break;
 			}
 			if (!canLevelUp())
 				return;

@@ -7,8 +7,6 @@ import pixelmon.AI.PixelmonAIStartBattle;
 import pixelmon.battles.BattleController;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.EntityTrainer;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
-import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper.Aggression;
 
 import net.minecraft.src.*;
 
@@ -41,28 +39,10 @@ public abstract class EntityFlyingPixelmon extends EntityPixelmon {
 		fleeing = false;
 	}
 
-	public void init() {
-		super.init();
-	}
-	
-	public void loadAI() {
-		if (helper.aggression == Aggression.aggressive) {
-			tasks.addTask(0, new EntityAIMoveTowardsTarget(this, moveSpeed, 15));
-			tasks.addTask(1, new PixelmonAITargetNearest(this, 10, true));
-			tasks.addTask(2, new PixelmonAIStartBattle(this));
-		}
-		tasks.addTask(3, new EntityAISwimming(this));
-		tasks.addTask(4, new EntityAITempt(this, moveSpeed, PixelmonItems.rareCandy.shiftedIndex, false));
-		tasks.addTask(6, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
-		tasks.addTask(7, new EntityAILookIdle(this));
-	}
-
-	protected void fall(float f) {
-	}
-
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		if (riddenByEntity != null) return;
+		if (riddenByEntity != null)
+			return;
 		winge = wingb;
 		wingd = wingc;
 		wingc = (float) ((double) wingc + (double) (onGround ? -1 : 4) * 0.29999999999999999D);
@@ -108,11 +88,10 @@ public abstract class EntityFlyingPixelmon extends EntityPixelmon {
 	}
 
 	protected void updateEntityActionState() {
-		if (riddenByEntity != null) return;
+		if (riddenByEntity != null)
+			return;
 		if (doesLand) {
-			if (onGround
-					&& rand.nextInt(10) == 0
-					&& (motionX > 0.050000000000000003D || motionZ > 0.050000000000000003D || motionX < -0.050000000000000003D || motionZ < -0.050000000000000003D)) {
+			if (onGround && rand.nextInt(10) == 0 && (motionX > 0.050000000000000003D || motionZ > 0.050000000000000003D || motionX < -0.050000000000000003D || motionZ < -0.050000000000000003D)) {
 				motionY = 0.25D;
 			}
 			if (!fleeing) {
@@ -165,8 +144,7 @@ public abstract class EntityFlyingPixelmon extends EntityPixelmon {
 
 				if (this.targetedEntity != null && ((Entity) this.targetedEntity).getDistanceSqToEntity(this) < var9 * var9) {
 					double var11 = this.targetedEntity.posX - this.posX;
-					double var13 = this.targetedEntity.boundingBox.minY + (double) (this.targetedEntity.height / 2.0F)
-							- (this.posY + (double) (this.height / 2.0F));
+					double var13 = this.targetedEntity.boundingBox.minY + (double) (this.targetedEntity.height / 2.0F) - (this.posY + (double) (this.height / 2.0F));
 					double var15 = this.targetedEntity.posZ - this.posZ;
 					this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(var11, var15)) * 180.0F / (float) Math.PI;
 
@@ -497,7 +475,7 @@ public abstract class EntityFlyingPixelmon extends EntityPixelmon {
 	public float wingd;
 	public float winge;
 	public float wingh;
-	
+
 	public World getWorldObj() {
 		return worldObj;
 	}
