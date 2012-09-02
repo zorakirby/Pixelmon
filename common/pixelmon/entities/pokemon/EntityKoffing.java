@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 import pixelmon.ClientProxy;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import pixelmon.enums.EnumPixelmonParticles;
 
@@ -52,7 +52,7 @@ public class EntityKoffing extends EntityGroundPixelmon {
 	}
 
 	public void evolve() {
-		BaseEntityPixelmon entity = new EntityWeezing(worldObj);
+		EntityPixelmon entity = new EntityWeezing(worldObj);
 		helper.evolve(entity.helper);
 	}
 }

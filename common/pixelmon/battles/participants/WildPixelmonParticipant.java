@@ -5,18 +5,19 @@ import net.minecraft.src.NBTTagCompound;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 public class WildPixelmonParticipant implements IBattleParticipant {
 
-	PixelmonEntityHelper pixelmon;
+	EntityPixelmon pixelmon;
 
-	public WildPixelmonParticipant(PixelmonEntityHelper pixelmon) {
+	public WildPixelmonParticipant(EntityPixelmon pixelmon) {
 		this.pixelmon = pixelmon;
 	}
 
 	@Override
-	public PixelmonEntityHelper currentPokemon() {
+	public EntityPixelmon currentPokemon() {
 		return pixelmon;
 	}
 
@@ -33,7 +34,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		pixelmon.EndBattle();
-		if (!pixelmon.getIsDead() && !pixelmon.isFainted) {
+		if (!pixelmon.isDead && !pixelmon.isFainted) {
 			pixelmon.battleStats.clearBattleStats();
 			pixelmon.setHealth(pixelmon.stats.HP);
 		}
@@ -46,7 +47,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return pixelmon.getIsDead() || pixelmon.isFainted || pixelmon.getHealth() <= 0;
+		return pixelmon.isDead || pixelmon.isFainted || pixelmon.getHealth() <= 0;
 	}
 
 	boolean isWild = true;
@@ -59,7 +60,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(pixelmon.moveset, participant2.currentPokemon().getType(), pixelmon, participant2.currentPokemon());
+		return Attack.getWhichMoveIsBest(pixelmon.moveset, participant2.currentPokemon().type, pixelmon, participant2.currentPokemon());
 	}
 
 	@Override

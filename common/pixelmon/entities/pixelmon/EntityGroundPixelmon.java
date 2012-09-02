@@ -21,7 +21,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import net.minecraftforge.common.MinecraftForge;
 
-public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
+public abstract class EntityGroundPixelmon extends EntityPixelmon {
 	private World world;
 
 	public EntityGroundPixelmon(World world) {
@@ -48,7 +48,7 @@ public abstract class EntityGroundPixelmon extends BaseEntityPixelmon {
 		tasks.addTask(6, new EntityAIFollowOwner(this, 0.3F, 10.0F, 4.0F));
 		tasks.addTask(7, new EntityAITempt(this, moveSpeed, PixelmonItems.rareCandy.shiftedIndex, false));
 		tasks.addTask(8, new EntityAIWander(this, moveSpeed));
-		tasks.addTask(9, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
+		tasks.addTask(9, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
 		tasks.addTask(10, new EntityAILookIdle(this));
 	}
 }

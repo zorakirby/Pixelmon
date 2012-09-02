@@ -6,6 +6,7 @@ import java.util.Random;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import net.minecraft.src.EntityPlayer;
 
@@ -26,7 +27,7 @@ public class PlayerComputerStorage {
 		}
 	}
 
-	public void addToComputer(PixelmonEntityHelper p) {
+	public void addToComputer(EntityPixelmon p) {
 		for (ComputerBox c : storageBoxes) {
 			if (c.hasSpace()) {
 				c.add(p, getId());

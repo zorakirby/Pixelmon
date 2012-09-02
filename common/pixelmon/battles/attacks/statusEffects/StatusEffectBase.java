@@ -7,6 +7,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.EffectType;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
@@ -32,7 +33,7 @@ public abstract class StatusEffectBase extends EffectBase {
 	}
 
 	@Override
-	public abstract void ApplyEffect(PixelmonEntityHelper user, PixelmonEntityHelper target, ArrayList<String> attackList);
+	public abstract void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList);
 
 	public boolean hasRepeatedEffect() {
 		return hasRepeatedEffect;
@@ -52,21 +53,21 @@ public abstract class StatusEffectBase extends EffectBase {
 
 	public boolean ClearsOnBattleEnd(){return true;}
 
-	public void applyRepeatedEffect(PixelmonEntityHelper pixelmon1, PixelmonEntityHelper pixelmon2){}
+	public void applyRepeatedEffect(EntityPixelmon entityPixelmon, EntityPixelmon entityPixelmon2){}
 
-	public boolean canAttackThisTurn(PixelmonEntityHelper pixelmon1, PixelmonEntityHelper pixelmon2){return true;}
+	public boolean canAttackThisTurn(EntityPixelmon pixelmon1, EntityPixelmon pixelmon2){return true;}
 
-	public boolean stopsIncomingAttack(PixelmonEntityHelper user, PixelmonEntityHelper target, Attack a){return false;}
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a){return false;}
 
-	public double adjustDamage(Attack a, double damage, PixelmonEntityHelper user, PixelmonEntityHelper target, double crit){return damage;}
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit){return damage;}
 
 	public boolean stopsStatusChange(){return false;}
 
-	public void turnTick(PixelmonEntityHelper pixelmon1, PixelmonEntityHelper target){}
+	public void turnTick(EntityPixelmon pixelmon1, EntityPixelmon target){}
 
 	public boolean cantMiss() {
 		return false;
 	}
 	
-	public boolean pokemon1MovesFirst(PixelmonEntityHelper user, PixelmonEntityHelper target){ return false; }
+	public boolean pokemon1MovesFirst(EntityPixelmon user, EntityPixelmon target){ return false; }
 }

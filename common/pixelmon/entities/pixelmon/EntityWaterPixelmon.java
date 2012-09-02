@@ -45,7 +45,7 @@ import net.minecraft.src.EntityWaterMob;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
-public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon implements IHaveHelper {
+public abstract class EntityWaterPixelmon extends EntityPixelmon implements IHaveHelper {
 	public String name;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	private float field_21080_l;
@@ -62,11 +62,6 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 
 	public EntityWaterPixelmon(World par1World) {
 		super(par1World);
-		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
-		dataWatcher.addObject(18, "");
-		dataWatcher.addObject(19, -1);
-		dataWatcher.addObject(20, (short) 0);
-		dataWatcher.addObject(21, (short) 0); // roasted
 	}
 
 	public void init() {
@@ -315,10 +310,10 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	}
 
 	public void setLocationAndAngles(IHaveHelper currentPixelmon) {
-		if (currentPixelmon instanceof BaseEntityPixelmon) {
-			this.posX = ((BaseEntityPixelmon) currentPixelmon).posX;
-			this.posY = ((BaseEntityPixelmon) currentPixelmon).posY;
-			this.posZ = ((BaseEntityPixelmon) currentPixelmon).posZ;
+		if (currentPixelmon instanceof EntityPixelmon) {
+			this.posX = ((EntityPixelmon) currentPixelmon).posX;
+			this.posY = ((EntityPixelmon) currentPixelmon).posY;
+			this.posZ = ((EntityPixelmon) currentPixelmon).posZ;
 		} else if (currentPixelmon instanceof EntityWaterPixelmon) {
 			this.posX = ((EntityWaterPixelmon) currentPixelmon).posX;
 			this.posY = ((EntityWaterPixelmon) currentPixelmon).posY;
@@ -466,4 +461,28 @@ public abstract class EntityWaterPixelmon extends EntityTameableWaterPokemon imp
 	protected float getSoundVolume() {
 		return 0.4F;
 	}
+	
+    /**
+     * Get number of ticks, at least during which the living entity will be silent.
+     */
+    public int getTalkInterval()
+    {
+        return 120;
+    }
+
+    /**
+     * Determines if an entity can be despawned, used on idle far away entities
+     */
+    protected boolean canDespawn()
+    {
+        return true;
+    }
+
+    /**
+     * Get the experience points the entity currently has.
+     */
+    protected int getExperiencePoints(EntityPlayer par1EntityPlayer)
+    {
+        return 1 + this.worldObj.rand.nextInt(3);
+    }
 }

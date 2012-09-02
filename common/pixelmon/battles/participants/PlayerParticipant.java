@@ -13,7 +13,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
@@ -21,10 +21,10 @@ import pixelmon.storage.PixelmonStorage;
 
 public class PlayerParticipant implements IBattleParticipant {
 	public EntityPlayerMP player;
-	PixelmonEntityHelper currentPixelmon;
+	EntityPixelmon currentPixelmon;
 	BattleController bc;
 
-	public PlayerParticipant(EntityPlayerMP p, PixelmonEntityHelper firstPixelmon) {
+	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) {
 		player = p;
 		currentPixelmon = firstPixelmon;
 	}
@@ -35,7 +35,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public PixelmonEntityHelper currentPokemon() {
+	public EntityPixelmon currentPokemon() {
 		return currentPixelmon;
 	}
 
@@ -60,7 +60,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return currentPixelmon.getIsDead() || currentPixelmon.isFainted || currentPixelmon.getHealth() <= 0;
+		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.getHealth() <= 0;
 	}
 
 	@Override

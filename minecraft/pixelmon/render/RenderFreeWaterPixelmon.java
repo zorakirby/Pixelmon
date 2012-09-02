@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 import pixelmon.Pixelmon;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.LevelHelper;

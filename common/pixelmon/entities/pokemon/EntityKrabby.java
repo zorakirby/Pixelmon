@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.Block;
 import net.minecraft.src.MathHelper;

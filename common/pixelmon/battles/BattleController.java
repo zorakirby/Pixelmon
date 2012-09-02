@@ -18,7 +18,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.BattleStats;
 import pixelmon.entities.EntityTrainer;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumGui;
@@ -53,8 +53,8 @@ public class BattleController {
 		this.participant2 = participant2;
 		participant1.setBattleController(this);
 		participant2.setBattleController(this);
-		participant1.currentPokemon().bc = this;
-		participant2.currentPokemon().bc = this;
+		participant1.currentPokemon().battleController = this;
+		participant2.currentPokemon().battleController = this;
 		if (!participant1.checkPokemon())
 			return;
 		if (!participant2.checkPokemon())

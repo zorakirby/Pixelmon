@@ -48,109 +48,30 @@ import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
-public abstract class BaseEntityPixelmon extends EntityTameable implements IHaveHelper {
+public abstract class EntityPixelmon extends Entity8HoldsItems{
 
-	public String name;
-	public ArrayList<EnumType> type = new ArrayList<EnumType>();
-	public PixelmonEntityHelper helper = new PixelmonEntityHelper(this);
-	public boolean litUp;
-	public int litLevel;
-	private RidingHelper ridingHelper;
-	private float length = 1.0f;
 
-	public BaseEntityPixelmon(World par1World) {
+	public EntityPixelmon(World par1World) {
 		super(par1World);
-		helper.stats.IVs = PixelmonIVStore.CreateNewIVs();
+		
 		targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-		dataWatcher.addObject(18, "");
-		dataWatcher.addObject(19, -1); // pokemonId
-		dataWatcher.addObject(20, (short) 0);
-		dataWatcher.addObject(21, (short) 0); // roasted
 		getNavigator().setAvoidsWater(true);
 	}
 
-	public void init() {
-		helper.stats.BaseStats = DatabaseStats.GetBaseStats(name);
-		helper.giScale = helper.stats.BaseStats.giScale;
-		helper.calculateAggression(rand);
-		if ((new Random()).nextFloat() < 1 / 8192f) {
-			System.out.println("Shiny " + name + " spawned");
-			dataWatcher.updateObject(20, (short) 1);
-		}
-		moveSpeed = getMoveSpeed();// + getMoveSpeed();
+	protected void init(String name) {
+		super.init(name);
+		moveSpeed = getMoveSpeed();
 		health = 11;
-		if (rand.nextInt(100) < helper.stats.BaseStats.MalePercent)
-			helper.isMale = true;
-		else
-			helper.isMale = false;
-		type.add(helper.stats.BaseStats.Type1);
-		if (helper.stats.BaseStats.Type2 != EnumType.Mystery)
-			type.add(helper.stats.BaseStats.Type2);
-
-		helper.getLvl();
-		setSize(helper.stats.BaseStats.Width, helper.stats.BaseStats.Height + helper.hoverHeight);
-		length = helper.stats.BaseStats.Length;
-		if (helper.stats.BaseStats.IsRideable)
-			ridingHelper = new RidingHelper(this, worldObj);
-
 	}
-
-	@Override
-	public void setPosition(double par1, double par3, double par5) {
-		this.posX = par1;
-		this.posY = par3;
-		this.posZ = par5;
-		float halfWidth = this.width / 2.0F;
-		float halfLength = this.length / 2.0F;
-		if (helper != null)
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height + helper.hoverHeight, par5 + (double) halfLength);
-		else
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height, par5 + (double) halfLength);
-	}
-
-	/**
-	 * Returns a boundingBox used to collide the entity with other entities and
-	 * blocks. This enables the entity to be pushable on contact, like boats or
-	 * minecarts.
-	 */
-	@Override
-	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
-		return par1Entity.boundingBox;
-	}
-
-	/**
-	 * returns the bounding box for this entity
-	 */
-	@Override
-	public AxisAlignedBB getBoundingBox() {
-		return this.boundingBox;
-	}
-
-	public abstract void loadAI();
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public String getTexture() {
-		if (dataWatcher.getWatchableObjectShort(20) == 1 && Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-shiny/shiny" + name.toLowerCase() + ".png")!=null)
-			return "/pixelmon/texture/pokemon-shiny/shiny" + name.toLowerCase() + ".png";
-		else if (dataWatcher.getWatchableObjectShort(21) == 1 && Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + name.toLowerCase() + ".png")!=null)
-			return "/pixelmon/texture/pokemon-roasted/roasted" + name.toLowerCase() + ".png";
-		else
-			return "/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png";
-	}
-
-	public EntityTrainer trainer;
 
 	public void onDeath(DamageSource damagesource) {
 		if (worldObj.isRemote) {
 			super.onDeath(damagesource);
-			if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).isIn(helper)) {
+			if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).isIn(this)) {
 				String s = "Your " + getName() + " fainted!";
 				ChatHandler.sendChat(getOwner(), s);
-				helper.isFainted = true;
-				helper.setHealth(0);
+				isFainted = true;
+				setHealth(0);
 				catchInPokeball();
 			} else {
 				super.onDeath(damagesource);
@@ -188,13 +109,13 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		if (!worldObj.isRemote) {
+			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 			if (health - par2 < 0) {
 				par2 = health;
 				this.onDeath(par1DamageSource);
 			}
 			if (par1DamageSource.fireDamage())
 				dataWatcher.updateObject(21, (short) 1);
-			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 			Entity entity = par1DamageSource.getEntity();
 			if (getOwner() != null)
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(helper);
@@ -245,8 +166,8 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	public void setAttackTarget(EntityLiving e) {
 		super.setAttackTarget(e);
 		super.setTarget(e);
-		if (e instanceof BaseEntityPixelmon) {
-			BaseEntityPixelmon e1 = (BaseEntityPixelmon) e;
+		if (e instanceof EntityPixelmon) {
+			EntityPixelmon e1 = (EntityPixelmon) e;
 			if (e1.getAttackTarget() == null)
 				e1.setAttackTarget(this);
 		}
@@ -322,10 +243,10 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	}
 
 	public void setLocationAndAngles(IHaveHelper currentPixelmon) {
-		if (currentPixelmon instanceof BaseEntityPixelmon) {
-			this.posX = ((BaseEntityPixelmon) currentPixelmon).posX;
-			this.posY = ((BaseEntityPixelmon) currentPixelmon).posY;
-			this.posZ = ((BaseEntityPixelmon) currentPixelmon).posZ;
+		if (currentPixelmon instanceof EntityPixelmon) {
+			this.posX = ((EntityPixelmon) currentPixelmon).posX;
+			this.posY = ((EntityPixelmon) currentPixelmon).posY;
+			this.posZ = ((EntityPixelmon) currentPixelmon).posZ;
 		} else if (currentPixelmon instanceof EntityWaterPixelmon) {
 			this.posX = ((EntityWaterPixelmon) currentPixelmon).posX;
 			this.posY = ((EntityWaterPixelmon) currentPixelmon).posY;
@@ -391,17 +312,9 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 		}
 	}
 
-	public void setLvlString(String string) {
-		dataWatcher.updateObject(18, string);
-	}
 
-	public String getLvlString() {
-		return dataWatcher.getWatchableObjectString(18);
-	}
 
-	public int getPokemonId() {
-		return dataWatcher.getWatchableObjectInt(19);
-	}
+
 
 	public void setPokemonId(int id) {
 		dataWatcher.updateObject(19, id);
@@ -418,45 +331,6 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 			dataWatcher.updateObject(20, (short) 0);
 	}
 
-	@Override
-	public void jump() {
-		super.jump();
-	}
-
-	@Override
-	public double getMountedYOffset() {
-		if (ridingHelper != null)
-			return ridingHelper.getMountedYOffset();
-		else
-			return super.getMountedYOffset();
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		if (ridingHelper != null)
-			ridingHelper.onLivingUpdate();
-	}
-
-	@Override
-	public void moveEntity(double d, double d1, double d2) {
-		if (ridingHelper != null)
-			ridingHelper.moveEntity(d, d1, d2);
-		else
-			super.moveEntity(d, d1, d2);
-	}
-
-	@Override
-	public void updateRidden() {
-		if (ridingHelper != null)
-			ridingHelper.updateRidden();
-		else
-			super.updateRidden();
-	}
-
-	public void doMoveEntity(double motionX, double motionY, double motionZ) {
-		super.moveEntity(motionX, motionY, motionZ);
-	}
 
 	/**
 	 * Returns the sound this mob makes while it's alive.
@@ -490,5 +364,10 @@ public abstract class BaseEntityPixelmon extends EntityTameable implements IHave
 	@Override
 	protected float getSoundVolume() {
 		return 0.4F;
+	}
+
+	public void setTrainer(EntityTrainer entityTrainer) {
+		// TODO Auto-generated method stub
+		
 	}
 }

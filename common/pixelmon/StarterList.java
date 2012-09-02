@@ -8,7 +8,7 @@ import java.util.List;
 import net.minecraft.src.World;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.database.DatabaseMoves;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokemon.EntityBulbasaur;
 import pixelmon.entities.pokemon.EntityCharmander;
 import pixelmon.entities.pokemon.EntityEevee;

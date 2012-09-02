@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 import pixelmon.Pixelmon;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.LevelHelper;
 
@@ -30,10 +30,10 @@ public class RenderPixelmon extends RenderLiving {
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
-		if (var10 <= (float) 8 || ((BaseEntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((BaseEntityPixelmon) entityLiving).getPokemonId())) {
-			lvlInstance = ((BaseEntityPixelmon) entityLiving).helper.getClientLvl();
+		if (var10 <= (float) 8 || ((EntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((EntityPixelmon) entityLiving).getPokemonId())) {
+			lvlInstance = ((EntityPixelmon) entityLiving).helper.getClientLvl();
 			drawHealthBar(entityLiving, d, d1, d2, f, f1);
-			if (ServerStorageDisplay.contains(((BaseEntityPixelmon)entityLiving).getPokemonId()))
+			if (ServerStorageDisplay.contains(((EntityPixelmon)entityLiving).getPokemonId()))
 				drawExpBar(entityLiving, d, d1, d2, f, f1);
 			drawNameTag(entityLiving, d, d1, d2);
 		}
@@ -45,8 +45,8 @@ public class RenderPixelmon extends RenderLiving {
 	}
 
 	public void drawNameTag(EntityLiving entityliving, double par2, double par4, double par6) {
-		if (Minecraft.isGuiEnabled() && (entityliving instanceof BaseEntityPixelmon)) {
-			BaseEntityPixelmon entitypixelmon = (BaseEntityPixelmon) entityliving;
+		if (Minecraft.isGuiEnabled() && (entityliving instanceof EntityPixelmon)) {
+			EntityPixelmon entitypixelmon = (EntityPixelmon) entityliving;
 			PixelmonDataPacket p = null;
 			if (ServerStorageDisplay.contains(entitypixelmon.getHelper().getPokemonId()))
 				p = ServerStorageDisplay.get(entitypixelmon.getHelper().getPokemonId());

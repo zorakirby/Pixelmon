@@ -6,7 +6,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import pixelmon.config.PixelmonConfig;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.gui.FontScaler;
 import pixelmon.render.GraphicsHelper;

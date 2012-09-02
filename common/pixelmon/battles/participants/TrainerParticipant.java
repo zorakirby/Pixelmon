@@ -26,8 +26,8 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public PixelmonEntityHelper currentPokemon() {
-		return trainer.releasedPokemon.getHelper();
+	public EntityPixelmon currentPokemon() {
+		return trainer.releasedPokemon;
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
-		trainer.releasedPokemon.getHelper().battleStats.clearBattleStats();
-		trainer.releasedPokemon.getHelper().EndBattle();
+		trainer.releasedPokemon.battleStats.clearBattleStats();
+		trainer.releasedPokemon.EndBattle();
 		trainer.healAllPokemon();
 		this.trainer.setAttackTarget(null);
 		if (didWin)

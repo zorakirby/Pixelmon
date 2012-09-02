@@ -2,11 +2,12 @@ package pixelmon.battles.participants;
 
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 
 public interface IBattleParticipant {
 	boolean isWild = false;
-	PixelmonEntityHelper currentPokemon();
+	EntityPixelmon currentPokemon();
 	boolean hasMorePokemon();
 	boolean canGainXP();
 	void EndBattle(boolean didWin, IBattleParticipant participant2);

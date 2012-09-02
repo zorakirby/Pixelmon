@@ -1,5 +1,6 @@
 package pixelmon.AI;
 
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import net.minecraft.src.EntityAIBase;
 import net.minecraft.src.EntityLiving;
@@ -11,7 +12,7 @@ import net.minecraft.src.PathPoint;
 
 public abstract class PixelmonAITarget extends EntityAIBase {
 	/** The entity that this task belongs to */
-	protected EntityLiving taskOwner;
+	protected EntityPixelmon taskOwner;
 	protected float targetDistance;
 
 	/**
@@ -24,12 +25,12 @@ public abstract class PixelmonAITarget extends EntityAIBase {
 	private int field_75302_c;
 	private int field_75298_g;
 
-	public PixelmonAITarget(EntityLiving par1EntityLiving, float par2, boolean par3) {
+	public PixelmonAITarget(EntityPixelmon par1EntityLiving, float par2, boolean par3) {
 		this(par1EntityLiving, par2, par3, false);
 		setMutexBits(3);
 	}
 
-	public PixelmonAITarget(EntityLiving par1EntityLiving, float par2, boolean par3, boolean par4) {
+	public PixelmonAITarget(EntityPixelmon par1EntityLiving, float par2, boolean par3, boolean par4) {
 		this.field_75301_b = 0;
 		this.field_75302_c = 0;
 		this.field_75298_g = 0;
@@ -43,7 +44,7 @@ public abstract class PixelmonAITarget extends EntityAIBase {
 	 * Returns whether an in-progress EntityAIBase should continue executing
 	 */
 	public boolean continueExecuting() {
-		if (((IHaveHelper) taskOwner).getHelper().bc != null)
+		if (taskOwner.battleController != null)
 			return false;
 		EntityLiving var1 = this.taskOwner.getAttackTarget();
 

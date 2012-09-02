@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
@@ -22,7 +22,7 @@ public class EntityIvysaur extends EntityGroundPixelmon
 
 	public void evolve() 
 	{
-		BaseEntityPixelmon entity = new EntityVenusaur(worldObj);
+		EntityPixelmon entity = new EntityVenusaur(worldObj);
 		helper.evolve(entity.helper);
 	}
 }

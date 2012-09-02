@@ -16,7 +16,7 @@ import pixelmon.battles.attacks.specialAttacks.MultiTurnSpecialAttackBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper;
 import pixelmon.enums.EnumType;

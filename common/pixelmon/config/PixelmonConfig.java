@@ -8,7 +8,7 @@ import java.util.Iterator;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 import pixelmon.entities.EntityTrainer;
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.entities.pixelmon.helpers.IHaveHelper;
 

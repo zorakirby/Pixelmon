@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.World;
 
@@ -23,7 +23,7 @@ public class EntityWartortle extends EntityGroundPixelmon
 
 	public void evolve() 
 	{
-		BaseEntityPixelmon entity = new EntityBlastoise(worldObj);
+		EntityPixelmon entity = new EntityBlastoise(worldObj);
 		helper.evolve(entity.helper);
 	}
 }

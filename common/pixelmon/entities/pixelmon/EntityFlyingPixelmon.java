@@ -12,7 +12,7 @@ import pixelmon.entities.pixelmon.helpers.PixelmonEntityHelper.Aggression;
 
 import net.minecraft.src.*;
 
-public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
+public abstract class EntityFlyingPixelmon extends EntityPixelmon {
 
 	private enum landingPlaceEnum {
 		trees, water
@@ -53,7 +53,7 @@ public abstract class EntityFlyingPixelmon extends BaseEntityPixelmon {
 		}
 		tasks.addTask(3, new EntityAISwimming(this));
 		tasks.addTask(4, new EntityAITempt(this, moveSpeed, PixelmonItems.rareCandy.shiftedIndex, false));
-		tasks.addTask(6, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.BaseEntityPixelmon.class, 8F));
+		tasks.addTask(6, new EntityAIWatchClosest(this, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
 		tasks.addTask(7, new EntityAILookIdle(this));
 	}
 

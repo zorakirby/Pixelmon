@@ -1,6 +1,6 @@
 package pixelmon.entities.pixelmon.helpers;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.src.World;
 
@@ -10,7 +10,7 @@ public class WildPokemonHelper {
 	public static IHaveHelper getCapturedPokemonEntity(String name, World world) {
 		try 
 		{
-			Class<? extends BaseEntityPixelmon> entity = (Class<? extends BaseEntityPixelmon>) Class.forName("Pokemon.Entity" + name); 
+			Class<? extends EntityPixelmon> entity = (Class<? extends EntityPixelmon>) Class.forName("Pokemon.Entity" + name); 
 			return  (IHaveHelper) entity.getConstructor(new Class[] { World.class })
 					.newInstance(new Object[] { world });
 		} catch (Exception e) 

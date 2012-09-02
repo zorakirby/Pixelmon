@@ -1,6 +1,6 @@
 package pixelmon.entities.pokemon;
 
-import pixelmon.entities.pixelmon.BaseEntityPixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityGroundPixelmon;
 import net.minecraft.src.*;
 
@@ -39,7 +39,7 @@ public class EntityDiglett extends EntityGroundPixelmon
 
 	public void evolve() 
 	{	
-		BaseEntityPixelmon entity = new EntityDugtrio(worldObj);
+		EntityPixelmon entity = new EntityDugtrio(worldObj);
 		helper.evolve(entity.helper);
 	}
 	public boolean getCanSpawnHere() {
