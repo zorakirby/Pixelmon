@@ -280,11 +280,11 @@ public class PixelmonEntityList {
 				int groupMax = DatabaseStats.GetMaxGroupSize(name);
 				EnumCreatureType creaturetype = DatabaseStats.GetCreatureType(name);
 				if (rarity != -1) {
-					try {
-						EntityRegistry.addSpawn((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), rarity, groupMin, groupMax, creaturetype, biomes);
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-					}
+//					try {
+//						//EntityRegistry.addSpawn((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), rarity, groupMin, groupMax, creaturetype, biomes);
+//					} catch (ClassNotFoundException e) {
+//						e.printStackTrace();
+//					}
 				}
 				// if (new File("resources/newsound/pixelmon/" +
 				// name.toLowerCase() + ".ogg").exists())
