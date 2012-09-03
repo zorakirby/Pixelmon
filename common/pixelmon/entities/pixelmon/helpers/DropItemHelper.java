@@ -24,7 +24,7 @@ public class DropItemHelper {
 			return Item.blazePowder.shiftedIndex;
 		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Bones"))
 			return Item.bone.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Raw Beef"))
+		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Diamond"))
 			return Item.diamond.shiftedIndex;
 		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Egg"))
 			return Item.egg.shiftedIndex;
