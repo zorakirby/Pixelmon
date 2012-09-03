@@ -26,19 +26,20 @@ public class RenderPixelmon extends RenderLiving {
 	private LevelHelper lvlInstance;
 
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
-		mainModel = ((EntityPixelmon)entityLiving).model;
+		EntityPixelmon pixelmon = (EntityPixelmon)entityLiving;
+		mainModel = pixelmon.model;
 		if (mainModel==null){
-			if (((EntityPixelmon)entityLiving).getName().equals(""))
+			if (pixelmon.getName().equals(""))
 				return;
-			((EntityPixelmon)entityLiving).init(((EntityPixelmon)entityLiving).getName());
+			pixelmon.init(((EntityPixelmon)entityLiving).getName());
 			mainModel = ((EntityPixelmon)entityLiving).model;
 		}
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
-		if (var10 <= (float) 8 || ((EntityPixelmon) entityLiving).hasOwner() || ServerStorageDisplay.contains(((EntityPixelmon) entityLiving).getPokemonId())) {
-			lvlInstance = ((EntityPixelmon) entityLiving).getClientLvl();
+		if (var10 <= (float) 8 || pixelmon.hasOwner() || ServerStorageDisplay.contains(pixelmon.getPokemonId())) {
+			lvlInstance = pixelmon.getClientLvl();
 			drawHealthBar(entityLiving, d, d1, d2, f, f1);
-			if (ServerStorageDisplay.contains(((EntityPixelmon)entityLiving).getPokemonId()))
+			if (ServerStorageDisplay.contains(pixelmon.getPokemonId()))
 				drawExpBar(entityLiving, d, d1, d2, f, f1);
 			drawNameTag(entityLiving, d, d1, d2);
 		}

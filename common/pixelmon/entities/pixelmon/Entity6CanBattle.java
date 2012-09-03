@@ -84,6 +84,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	@Override
 	public void onUpdate() {
+		super.onUpdate();
 		if (battleController != null && wasBattleInitiator)
 			battleController.update();
 	}

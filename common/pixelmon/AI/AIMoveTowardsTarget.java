@@ -7,7 +7,7 @@ import net.minecraft.src.EntityLiving;
 import net.minecraft.src.RandomPositionGenerator;
 import net.minecraft.src.Vec3;
 
-public class PixelmonAIMoveTowardsTarget extends EntityAIBase {
+public class AIMoveTowardsTarget extends EntityAIBase {
 	private EntityPixelmon theEntity;
 	private EntityLiving targetEntity;
 	private double movePosX;
@@ -16,7 +16,7 @@ public class PixelmonAIMoveTowardsTarget extends EntityAIBase {
 	private float field_75425_f;
 	private float field_75426_g;
 
-	public PixelmonAIMoveTowardsTarget(EntityPixelmon par1EntityCreature, float par2, float par3) {
+	public AIMoveTowardsTarget(EntityPixelmon par1EntityCreature, float par2, float par3) {
 		this.theEntity = par1EntityCreature;
 		this.field_75425_f = par2;
 		this.field_75426_g = par3;

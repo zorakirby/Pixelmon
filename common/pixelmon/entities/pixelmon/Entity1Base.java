@@ -77,6 +77,12 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if (!isInitialised) init(getName());
+	}
+	
+	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		nbt.setInteger("pixelmonID", dataWatcher.getWatchableObjectInt(19));
@@ -94,6 +100,7 @@ public abstract class Entity1Base extends EntityTameable {
 		super.readEntityFromNBT(nbt);
 		dataWatcher.updateObject(19, nbt.getInteger("pixelmonID"));
 		dataWatcher.updateObject(2, nbt.getString("Name"));
+		init(getName());
 		dataWatcher.updateObject(3, nbt.getString("Nickname"));
 		if (nbt.hasKey("CaughtBall"))
 			caughtBall= EnumPokeballs.getFromIndex(nbt.getInteger("CaughtBall"));
@@ -104,10 +111,5 @@ public abstract class Entity1Base extends EntityTameable {
 
 	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
 		return null;
-	}
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		if (!isInitialised) init(getName());
 	}
 }

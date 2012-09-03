@@ -2,8 +2,8 @@ package pixelmon.entities.pixelmon;
 
 import java.util.List;
 
-import pixelmon.AI.PixelmonAITargetNearest;
-import pixelmon.AI.PixelmonAIStartBattle;
+import pixelmon.AI.AITargetNearest;
+import pixelmon.AI.AIStartBattle;
 import pixelmon.battles.BattleController;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.EntityTrainer;

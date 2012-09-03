@@ -89,7 +89,7 @@ public class GuiAttacking extends GuiScreen {
 			mc.displayGuiScreen(new GuiChoosePokemon(userPacket, battleControllerIndex, this));
 		} else if (par1GuiButton.id == 12){
 			mc.displayGuiScreen(new GuiAttackingBag(this));
-		} else if (userPacket.moveset[par1GuiButton.id].pp > 0 ){
+		} else if (par1GuiButton.id == 10){
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 			mc.displayGuiScreen(null);
 			mc.setIngameFocus();

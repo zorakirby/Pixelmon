@@ -25,7 +25,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public boolean doesHover = false;
 	public float hoverHeight =0f;
-	protected float length;
+	public float length;
 	public Entity3HasStats(World par1World) {
 		super(par1World);
 		stats = new Stats();
@@ -39,6 +39,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		baseStats = DatabaseStats.GetBaseStats(name);
 		stats.IVs = PixelmonIVStore.CreateNewIVs();
 		setSize(baseStats.Width, baseStats.Height + hoverHeight);
+		setType();
 		length = baseStats.Length;
 		
 		if (rand.nextInt(100) < baseStats.MalePercent)
@@ -46,6 +47,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		else
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
+		level.updateEntityString();
 	}
 	
 	private void setType(){

@@ -5,11 +5,11 @@ import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.EntityAIBase;
 
-public class PixelmonAIIsInBattle extends EntityAIBase {
+public class AIIsInBattle extends EntityAIBase {
 
 	Entity7HasAI pixelmon;
 
-	public PixelmonAIIsInBattle(Entity7HasAI entity7HasAI) {
+	public AIIsInBattle(Entity7HasAI entity7HasAI) {
 		setMutexBits(1);
 		pixelmon = entity7HasAI;
 	}
