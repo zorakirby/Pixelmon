@@ -39,6 +39,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		baseStats = DatabaseStats.GetBaseStats(name);
 		stats.IVs = PixelmonIVStore.CreateNewIVs();
 		setSize(baseStats.Width, baseStats.Height + hoverHeight);
+		setType();
 		length = baseStats.Length;
 		
 		if (rand.nextInt(100) < baseStats.MalePercent)
