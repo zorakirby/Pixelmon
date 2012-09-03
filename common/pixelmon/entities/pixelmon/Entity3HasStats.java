@@ -46,6 +46,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		else
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
+		level.updateEntityString();
 	}
 	
 	private void setType(){

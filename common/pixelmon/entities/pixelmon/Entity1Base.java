@@ -77,6 +77,12 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if (!isInitialised) init(getName());
+	}
+	
+	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		nbt.setInteger("pixelmonID", dataWatcher.getWatchableObjectInt(19));
