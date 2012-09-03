@@ -28,7 +28,9 @@ public class BaseStats {
 	public float Length;
 	public float giScale;
 	public Aggression aggression;
-	public EnumCreatureType creatureType; 
+	public EnumCreatureType creatureType;
+	public String droppedItem;
+	public String spawnBlock; 
 
 	public class Aggression{
 		public int timid;

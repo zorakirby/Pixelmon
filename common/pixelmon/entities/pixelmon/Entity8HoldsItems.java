@@ -35,7 +35,6 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 	}
 	
 	protected int getDropItemId() {
-		if (!dropItemHelper.dropsItem()) return 0;
 		return dropItemHelper.getDropItemID();
 	}
 }
