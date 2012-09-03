@@ -13,15 +13,15 @@ import net.minecraft.src.EntityAITarget;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 
-public class PixelmonAITargetNearest extends PixelmonAITarget {
+public class AITargetNearest extends AITarget {
 	EntityLiving targetEntity;
 	private TargetSorter field_48387_g;
 
-	public PixelmonAITargetNearest(Entity7HasAI entity7HasAI, float par3, boolean par5) {
+	public AITargetNearest(Entity7HasAI entity7HasAI, float par3, boolean par5) {
 		this(entity7HasAI, par3, par5, false);
 	}
 
-	public PixelmonAITargetNearest(Entity7HasAI entity7HasAI, float par3, boolean par5, boolean par6) {
+	public AITargetNearest(Entity7HasAI entity7HasAI, float par3, boolean par5, boolean par6) {
 		super(entity7HasAI, par3, par5, par6);
 		this.targetDistance = par3;
 		this.field_48387_g = new TargetSorter(this, entity7HasAI);

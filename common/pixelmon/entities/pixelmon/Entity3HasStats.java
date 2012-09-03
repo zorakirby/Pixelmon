@@ -25,7 +25,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public boolean doesHover = false;
 	public float hoverHeight =0f;
-	protected float length;
+	public float length;
 	public Entity3HasStats(World par1World) {
 		super(par1World);
 		stats = new Stats();

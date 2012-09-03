@@ -8,9 +8,9 @@ import net.minecraft.src.EntityAINearestAttackableTarget;
 public class TargetSorter implements Comparator {
 	private Entity theEntity;
 
-	final PixelmonAITargetNearest parent;
+	final AITargetNearest parent;
 
-	public TargetSorter(PixelmonAITargetNearest par1EntityAINearestAttackableTarget, Entity par2Entity) {
+	public TargetSorter(AITargetNearest par1EntityAINearestAttackableTarget, Entity par2Entity) {
 		this.parent = par1EntityAINearestAttackableTarget;
 		this.theEntity = par2Entity;
 	}

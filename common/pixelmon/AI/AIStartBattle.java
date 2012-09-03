@@ -12,10 +12,10 @@ import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 
-public class PixelmonAIStartBattle extends EntityAIBase {
+public class AIStartBattle extends EntityAIBase {
 	private Entity7HasAI theEntity;
 
-	public PixelmonAIStartBattle(Entity7HasAI entity7HasAI) {
+	public AIStartBattle(Entity7HasAI entity7HasAI) {
 		this.theEntity = entity7HasAI;
 		setMutexBits(3);
 	}

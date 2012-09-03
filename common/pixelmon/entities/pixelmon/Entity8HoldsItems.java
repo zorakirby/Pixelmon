@@ -1,11 +1,14 @@
 package pixelmon.entities.pixelmon;
 
+import pixelmon.entities.pixelmon.helpers.DropItemHelper;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
 public abstract class Entity8HoldsItems extends Entity7HasAI {
 	public ItemStack heldItem;
+	public DropItemHelper dropItemHelper = new DropItemHelper(this);
 
 	public Entity8HoldsItems(World par1World) {
 		super(par1World);
@@ -28,7 +31,11 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
-		super.readEntityFromNBT(nbt);
-		
+		super.readEntityFromNBT(nbt);	
+	}
+	
+	protected int getDropItemId() {
+		if (!dropItemHelper.dropsItem()) return 0;
+		return dropItemHelper.getDropItemID();
 	}
 }
