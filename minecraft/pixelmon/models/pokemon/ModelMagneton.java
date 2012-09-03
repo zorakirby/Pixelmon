@@ -378,10 +378,10 @@ public class ModelMagneton extends ModelBase {
 	}
 
 	Random randomGenerator = new Random();
-	int[] count = {0,0,0,0,0,0};
+	int[] count = {0,0,0,0,0,0,0};
 	
 
-	boolean[] Headisrotating = {false,false,false,false,false,false};
+	boolean[] Headisrotating = {false,false,false,false,false,false,false};
 
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
@@ -390,7 +390,7 @@ public class ModelMagneton extends ModelBase {
 		LowerRightBody.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F;
 		TopBody.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F - 5F;
 
-		int randomInt = randomGenerator.nextInt(100);
+		int randomInt = randomGenerator.nextInt(200);
 
 		if (randomInt == 4) {					//topright magnet
 			Headisrotating[1] = true;
@@ -399,7 +399,7 @@ public class ModelMagneton extends ModelBase {
 			count[1]++;
 		}
 
-		if (count[1] >= 63) {
+		if (count[1] >= 31) {
 			Headisrotating[1] = false;
 			count[1] = 0;
 			}
@@ -411,7 +411,7 @@ public class ModelMagneton extends ModelBase {
 			count[2]++;
 		}
 
-		if (count[2] >= 63) {
+		if (count[2] >= 31) {
 			Headisrotating[2] = false;
 			count[2] = 0;
 			}
@@ -423,7 +423,7 @@ public class ModelMagneton extends ModelBase {
 			count[3]++;
 		}
 
-		if (count[3] >= 63) {
+		if (count[3] >= 31) {
 			Headisrotating[3] = false;
 			count[3] = 0;
 			}
@@ -435,7 +435,7 @@ public class ModelMagneton extends ModelBase {
 			count[4]++;
 		}
 
-		if (count[4] >= 63) {
+		if (count[4] >= 31) {
 			Headisrotating[4] = false;
 			count[4] = 0;
 			}
@@ -443,11 +443,11 @@ public class ModelMagneton extends ModelBase {
 		if (randomInt == 8) {					//BottomRight magnet
 			Headisrotating[5] = true;
 		}else if (Headisrotating[5] == true) {
-			BottomRightMagnet.rotateAngleX += .1F;
+			BottomRightMagnet.rotateAngleY += .1F;
 			count[5]++;
 		}
 
-		if (count[5] >= 63) {
+		if (count[5] >= 31) {
 			Headisrotating[5] = false;
 			count[5] = 0;
 			}
@@ -455,11 +455,11 @@ public class ModelMagneton extends ModelBase {
 		if (randomInt == 9) {					//BottomLeft magnet
 			Headisrotating[6] = true;
 		}else if (Headisrotating[6] == true) {
-			BottomLeftMagnet.rotateAngleX -= .1F;
+			BottomLeftMagnet.rotateAngleY -= .1F;
 			count[6]++;
 		}
 
-		if (count[6] >= 63) {
+		if (count[6] >= 31) {
 			Headisrotating[6] = false;
 			count[6] = 0;
 			}
