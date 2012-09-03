@@ -88,7 +88,8 @@ public class GuiAttackingBag extends GuiScreen {
 			}
 			Item item = selected.getItem().getItem();
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.battleControllerIndex,0));
-			mc.displayGuiScreen(parent);
+			mc.displayGuiScreen(null);
+			mc.setIngameFocus();
 		}
 	}
 

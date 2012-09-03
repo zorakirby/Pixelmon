@@ -50,25 +50,8 @@ public class BagPacket extends PacketHandlerBase {
 			ChatHandler.sendChat((EntityPlayer) player, "Battle Could not be found!");
 			return;
 		}
-
-		EntityPixelmon userPokemon = null, targetPokemon = null;
-
-		if (bc.participant1 instanceof PlayerParticipant) {
-			if (((PlayerParticipant) bc.participant1).player == (EntityPlayerMP) player) {
-				userPokemon = bc.participant1.currentPokemon();
-				targetPokemon = bc.participant2.currentPokemon();
-			} else {
-				userPokemon = bc.participant2.currentPokemon();
-				targetPokemon = bc.participant1.currentPokemon();
-			}
-		}
-
-		PixelmonItem item = (PixelmonItem) usedStack.getItem();
-		item.useFromBag(userPokemon, targetPokemon);
-
-		ChatHandler.sendChat((EntityPlayer) player, item.getItemDisplayName(usedStack) + " used!");
-
-		usedStack.stackSize--;
+		
+		bc.setUseItem(player, usedStack);
 	}
 
 }
