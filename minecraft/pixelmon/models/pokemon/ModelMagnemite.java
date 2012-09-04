@@ -5,11 +5,9 @@
 // - ZeuX
 
 
-
-
-
-
 package pixelmon.models.pokemon;
+
+import java.util.Random;
 
 import net.minecraft.src.Entity;
 import net.minecraft.src.MathHelper;
@@ -20,208 +18,237 @@ import net.minecraft.src.ModelRenderer;
 public class ModelMagnemite extends ModelBase
 {
   //fields
-    ModelRenderer Piece1;
-    ModelRenderer body;
-    ModelRenderer boltbase;
-    ModelRenderer bolttop;
-    ModelRenderer LM3;
-    ModelRenderer RM1;
-    ModelRenderer RM2;
-    ModelRenderer RM3;
-    ModelRenderer RM4;
-    ModelRenderer RM5;
-    ModelRenderer RM6;
-    ModelRenderer RM7;
-    ModelRenderer RM8;
-    ModelRenderer RM9;
-    ModelRenderer LM1;
-    ModelRenderer LM2;
-    ModelRenderer LM4;
-    ModelRenderer LM5;
-    ModelRenderer LM6;
-    ModelRenderer LM7;
-    ModelRenderer LM8;
-    ModelRenderer LM9;
+    ModelRenderer BodyBase;
+    ModelRenderer RightMagnet;
+    ModelRenderer LeftMagnet;
   
   public ModelMagnemite()
   {
     textureWidth = 64;
     textureHeight = 32;
-    setTextureOffset("Piece1.left_magnet", 0, 0);
+    setTextureOffset("BodyBase.body", 0, 0);
+    setTextureOffset("RightMagnet.right_magnet", 0, 0);
+    setTextureOffset("LeftMagnet.left_magnet", 0, 0);
     
-    Piece1 = new ModelRenderer(this, "Piece1");
-    Piece1.setRotationPoint(0F, 1F, 0F);
-    setRotation(Piece1, 0F, 0F, 0F);
-    Piece1.mirror = true;
-      body = new ModelRenderer(this, 0, 0);
-      body.addBox(-2.5F, 0F, -2F, 5, 5, 5);
-      body.setRotationPoint(0F, -2.5F, -0.5F);
+    BodyBase = new ModelRenderer(this, "BodyBase");
+    BodyBase.setRotationPoint(0F, 1F, 0F);
+    setRotation(BodyBase, 0F, 0F, 0F);
+    BodyBase.mirror = true;
+      ModelRenderer body = new ModelRenderer(this, 0, 0);
+      body.addBox(-2.5F, -2.5F, -2.5F, 5, 5, 5);
+      body.setRotationPoint(0F, 0F, 0F);
       body.setTextureSize(64, 32);
       body.mirror = true;
       setRotation(body, 0F, 0F, 0F);
-      boltbase = new ModelRenderer(this, 34, 0);
-      boltbase.addBox(0F, -1F, 0F, 1, 1, 1);
-      boltbase.setRotationPoint(-0.5F, -2.5F, -0.5F);
+      ModelRenderer boltbase = new ModelRenderer(this, 34, 0);
+      boltbase.addBox(-0.5F, -1F, -0.5F, 1, 1, 1);
+      boltbase.setRotationPoint(0F, -2.5F, 0F);
       boltbase.setTextureSize(64, 32);
       boltbase.mirror = true;
       setRotation(boltbase, 0F, 0F, 0F);
-      bolttop = new ModelRenderer(this, 21, 0);
-      bolttop.addBox(-1F, -3F, -1F, 3, 1, 3);
-      bolttop.setRotationPoint(-0.5F, -1.5F, -0.5F);
+      ModelRenderer bolttop = new ModelRenderer(this, 21, 0);
+      bolttop.addBox(-1.5F, -1F, -1.5F, 3, 1, 3);
+      bolttop.setRotationPoint(0F, -3.5F, 0F);
       bolttop.setTextureSize(64, 32);
       bolttop.mirror = true;
       setRotation(bolttop, 0F, 0F, 0F);
-      LM3 = new ModelRenderer(this, 0, 24);
-      LM3.addBox(-4F, -2F, 0F, 1, 1, 1);
-      LM3.setRotationPoint(-2.5F, -0.5F, -0.5F);
-      LM3.setTextureSize(64, 32);
-      LM3.mirror = true;
-      setRotation(LM3, 0F, 0F, 0F);
-      RM1 = new ModelRenderer(this, 5, 10);
-      RM1.addBox(4F, 2F, 0F, 1, 1, 1);
-      RM1.setRotationPoint(2.5F, -0.5F, -0.5F);
-      RM1.setTextureSize(64, 32);
-      RM1.mirror = true;
-      setRotation(RM1, 0F, 0F, 0F);
-      RM2 = new ModelRenderer(this, 5, 26);
-      RM2.addBox(4F, -2F, 0F, 1, 1, 1);
-      RM2.setRotationPoint(2.5F, -0.5F, -0.5F);
-      RM2.setTextureSize(64, 32);
-      RM2.mirror = true;
-      setRotation(RM2, 0F, 0F, 0F);
-      RM3 = new ModelRenderer(this, 5, 12);
-      RM3.addBox(3F, 2F, 0F, 1, 1, 1);
-      RM3.setRotationPoint(2.5F, -0.5F, -0.5F);
-      RM3.setTextureSize(64, 32);
-      RM3.mirror = true;
-      setRotation(RM3, 0F, 0F, 0F);
-      RM4 = new ModelRenderer(this, 5, 24);
-      RM4.addBox(3F, -2F, 0F, 1, 1, 1);
-      RM4.setRotationPoint(2.5F, -0.5F, -0.5F);
+      
+      BodyBase.addChild(body);
+      BodyBase.addChild(boltbase);
+      BodyBase.addChild(bolttop);
+      
+    RightMagnet = new ModelRenderer(this, "RightMagnet");
+    RightMagnet.setRotationPoint(2.5F, 0F, 0F);
+    setRotation(RightMagnet, 0F, 0F, 0F);
+    RightMagnet.mirror = true;
+      ModelRenderer RM4 = new ModelRenderer(this, 5, 24);
+      RM4.addBox(3F, -2.5F, -0.5F, 1, 1, 1);
+      RM4.setRotationPoint(0F, 0F, 0F);
       RM4.setTextureSize(64, 32);
       RM4.mirror = true;
       setRotation(RM4, 0F, 0F, 0F);
-      RM5 = new ModelRenderer(this, 5, 18);
-      RM5.addBox(0F, 0F, 0F, 1, 1, 1);
-      RM5.setRotationPoint(2.5F, -0.5F, -0.5F);
+      ModelRenderer  RM1 = new ModelRenderer(this, 5, 10);
+      RM1.addBox(4F, 1.5F, -0.5F, 1, 1, 1);
+      RM1.setRotationPoint(0F, 0F, 0F);
+      RM1.setTextureSize(64, 32);
+      RM1.mirror = true;
+      setRotation(RM1, 0F, 0F, 0F);
+      ModelRenderer  RM2 = new ModelRenderer(this, 5, 26);
+      RM2.addBox(4F, -2.5F, -0.5F, 1, 1, 1);
+      RM2.setRotationPoint(0F, 0F, 0F);
+      RM2.setTextureSize(64, 32);
+      RM2.mirror = true;
+      setRotation(RM2, 0F, 0F, 0F);
+      ModelRenderer  RM3 = new ModelRenderer(this, 5, 12);
+      RM3.addBox(3F, 1.5F, -0.5F, 1, 1, 1);
+      RM3.setRotationPoint(0F, 0F, 0F);
+      RM3.setTextureSize(64, 32);
+      RM3.mirror = true;
+      setRotation(RM3, 0F, 0F, 0F);
+      ModelRenderer RM5 = new ModelRenderer(this, 5, 18);
+      RM5.addBox(0F, -0.5F, -0.5F, 1, 1, 1);
+      RM5.setRotationPoint(0F, 0F, 0F);
       RM5.setTextureSize(64, 32);
       RM5.mirror = true;
       setRotation(RM5, 0F, 0F, 0F);
-      RM6 = new ModelRenderer(this, 5, 22);
-      RM6.addBox(2F, -2F, 0F, 1, 1, 1);
-      RM6.setRotationPoint(2.5F, -0.5F, -0.5F);
+      ModelRenderer  RM6 = new ModelRenderer(this, 5, 22);
+      RM6.addBox(2F, -2.5F, -0.5F, 1, 1, 1);
+      RM6.setRotationPoint(0F, 0F, 0F);
       RM6.setTextureSize(64, 32);
       RM6.mirror = true;
       setRotation(RM6, 0F, 0F, 0F);
-      RM7 = new ModelRenderer(this, 5, 20);
-      RM7.addBox(1F, -1F, 0F, 1, 1, 1);
-      RM7.setRotationPoint(2.5F, -0.5F, -0.5F);
+      ModelRenderer  RM7 = new ModelRenderer(this, 5, 20);
+      RM7.addBox(1F, -1.5F, -0.5F, 1, 1, 1);
+      RM7.setRotationPoint(0F, 0F, 0F);
       RM7.setTextureSize(64, 32);
       RM7.mirror = true;
       setRotation(RM7, 0F, 0F, 0F);
-      RM8 = new ModelRenderer(this, 5, 14);
-      RM8.addBox(2F, 2F, 0F, 1, 1, 1);
-      RM8.setRotationPoint(2.5F, -0.5F, -0.5F);
+      ModelRenderer   RM8 = new ModelRenderer(this, 5, 14);
+      RM8.addBox(2F, 1.5F, -0.5F, 1, 1, 1);
+      RM8.setRotationPoint(0F, 0F, 0F);
       RM8.setTextureSize(64, 32);
       RM8.mirror = true;
       setRotation(RM8, 0F, 0F, 0F);
-      RM9 = new ModelRenderer(this, 5, 16);
-      RM9.addBox(1F, 1F, 0F, 1, 1, 1);
-      RM9.setRotationPoint(2.5F, -0.5F, -0.5F);
+      ModelRenderer  RM9 = new ModelRenderer(this, 5, 16);
+      RM9.addBox(1F, 0.5F, -0.5F, 1, 1, 1);
+      RM9.setRotationPoint(0F, 0F, 0F);
       RM9.setTextureSize(64, 32);
       RM9.mirror = true;
       setRotation(RM9, 0F, 0F, 0F);
-      LM1 = new ModelRenderer(this, 0, 10);
-      LM1.addBox(-5F, 2F, 0F, 1, 1, 1);
-      LM1.setRotationPoint(-2.5F, -0.5F, -0.5F);
+      
+      RightMagnet.addChild(RM1);
+      RightMagnet.addChild(RM2);
+      RightMagnet.addChild(RM3);
+      RightMagnet.addChild(RM4);
+      RightMagnet.addChild(RM5);
+      RightMagnet.addChild(RM6);
+      RightMagnet.addChild(RM7);
+      RightMagnet.addChild(RM8);
+      RightMagnet.addChild(RM9);
+      BodyBase.addChild(RightMagnet);
+      
+    LeftMagnet = new ModelRenderer(this, "LeftMagnet");
+    LeftMagnet.setRotationPoint(-2.5F, 0F, 0F);
+    setRotation(LeftMagnet, 0F, 0F, 0F);
+    LeftMagnet.mirror = true;
+      ModelRenderer LM3 = new ModelRenderer(this, 0, 24);
+      LM3.addBox(-4F, -2.5F, -0.5F, 1, 1, 1);
+      LM3.setRotationPoint(0F, 0F, 0F);
+      LM3.setTextureSize(64, 32);
+      LM3.mirror = true;
+      setRotation(LM3, 0F, 0F, 0F);
+      ModelRenderer LM1 = new ModelRenderer(this, 0, 10);
+      LM1.addBox(-5F, 1.5F, -0.5F, 1, 1, 1);
+      LM1.setRotationPoint(0F, 0F, 0F);
       LM1.setTextureSize(64, 32);
       LM1.mirror = true;
       setRotation(LM1, 0F, 0F, 0F);
-      LM2 = new ModelRenderer(this, 0, 16);
-      LM2.addBox(-2F, 1F, 0F, 1, 1, 1);
-      LM2.setRotationPoint(-2.5F, -0.5F, -0.5F);
+      ModelRenderer  LM2 = new ModelRenderer(this, 0, 16);
+      LM2.addBox(-2F, 0.5F, -0.5F, 1, 1, 1);
+      LM2.setRotationPoint(0F, 0F, 0F);
       LM2.setTextureSize(64, 32);
       LM2.mirror = true;
       setRotation(LM2, 0F, 0F, 0F);
-      LM4 = new ModelRenderer(this, 0, 20);
-      LM4.addBox(-2F, -1F, 0F, 1, 1, 1);
-      LM4.setRotationPoint(-2.5F, -0.5F, -0.5F);
+      ModelRenderer LM4 = new ModelRenderer(this, 0, 20);
+      LM4.addBox(-2F, -1.5F, -0.5F, 1, 1, 1);
+      LM4.setRotationPoint(0F, 0F, 0F);
       LM4.setTextureSize(64, 32);
       LM4.mirror = true;
       setRotation(LM4, 0F, 0F, 0F);
-      LM5 = new ModelRenderer(this, 0, 18);
-      LM5.addBox(-1F, 0F, 0F, 1, 1, 1);
-      LM5.setRotationPoint(-2.5F, -0.5F, -0.5F);
+      ModelRenderer LM5 = new ModelRenderer(this, 0, 18);
+      LM5.addBox(-1F, -0.5F, -0.5F, 1, 1, 1);
+      LM5.setRotationPoint(0F, 0F, 0F);
       LM5.setTextureSize(64, 32);
       LM5.mirror = true;
       setRotation(LM5, 0F, 0F, 0F);
-      LM6 = new ModelRenderer(this, 0, 14);
-      LM6.addBox(-3F, 2F, 0F, 1, 1, 1);
-      LM6.setRotationPoint(-2.5F, -0.5F, -0.5F);
+      ModelRenderer  LM6 = new ModelRenderer(this, 0, 14);
+      LM6.addBox(-3F, 1.5F, -0.5F, 1, 1, 1);
+      LM6.setRotationPoint(0F, 0F, 0F);
       LM6.setTextureSize(64, 32);
       LM6.mirror = true;
       setRotation(LM6, 0F, 0F, 0F);
-      LM7 = new ModelRenderer(this, 0, 26);
-      LM7.addBox(-5F, -2F, 0F, 1, 1, 1);
-      LM7.setRotationPoint(-2.5F, -0.5F, -0.5F);
+      ModelRenderer LM7 = new ModelRenderer(this, 0, 26);
+      LM7.addBox(-5F, -2.5F, -0.5F, 1, 1, 1);
+      LM7.setRotationPoint(0F, 0F, -0.03333334F);
       LM7.setTextureSize(64, 32);
       LM7.mirror = true;
       setRotation(LM7, 0F, 0F, 0F);
-      LM8 = new ModelRenderer(this, 0, 12);
-      LM8.addBox(-4F, 2F, 0F, 1, 1, 1);
-      LM8.setRotationPoint(-2.5F, -0.5F, -0.5F);
+      ModelRenderer LM8 = new ModelRenderer(this, 0, 12);
+      LM8.addBox(-4F, 1.5F, -0.5F, 1, 1, 1);
+      LM8.setRotationPoint(0F, 0F, 0F);
       LM8.setTextureSize(64, 32);
       LM8.mirror = true;
       setRotation(LM8, 0F, 0F, 0F);
-      LM9 = new ModelRenderer(this, 0, 22);
-      LM9.addBox(-3F, -2F, 0F, 1, 1, 1);
-      LM9.setRotationPoint(-2.5F, -0.5F, -0.5F);
+      ModelRenderer LM9 = new ModelRenderer(this, 0, 22);
+      LM9.addBox(-3F, -2.5F, -0.5F, 1, 1, 1);
+      LM9.setRotationPoint(0F, 0F, 0F);
       LM9.setTextureSize(64, 32);
       LM9.mirror = true;
       setRotation(LM9, 0F, 0F, 0F);
-      Piece1.addChild(body);
-      Piece1.addChild(boltbase);
-      Piece1.addChild(bolttop);
-      Piece1.addChild(LM3);
-      Piece1.addChild(RM1);
-      Piece1.addChild(RM2);
-      Piece1.addChild(RM3);
-      Piece1.addChild(RM4);
-      Piece1.addChild(RM5);
-      Piece1.addChild(RM6);
-      Piece1.addChild(RM7);
-      Piece1.addChild(RM8);
-      Piece1.addChild(RM9);
-      Piece1.addChild(LM2);
-      Piece1.addChild(LM1);
-      Piece1.addChild(LM4);
-      Piece1.addChild(LM5);
-      Piece1.addChild(LM6);
-      Piece1.addChild(LM7);
-      Piece1.addChild(LM8);
-      Piece1.addChild(LM9);
       
+      LeftMagnet.addChild(LM1);
+      LeftMagnet.addChild(LM2);
+      LeftMagnet.addChild(LM3);
+      LeftMagnet.addChild(LM4);
+      LeftMagnet.addChild(LM5);
+      LeftMagnet.addChild(LM6);
+      LeftMagnet.addChild(LM7);
+      LeftMagnet.addChild(LM8);
+      LeftMagnet.addChild(LM9);
+      BodyBase.addChild(LeftMagnet);
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5);
-    Piece1.render(f5);
+    BodyBase.render(f5);
   }
   
-  private void setRotation(ModelRenderer model, float x, float y, float z)
-  {
-    model.rotateAngleX = x;
-    model.rotateAngleY = y;
-    model.rotateAngleZ = z;
-  }
+  private void setRotation(ModelRenderer model, float x, float y, float z) {
+		model.rotateAngleX = x;
+		model.rotateAngleY = y;
+		model.rotateAngleZ = z;
+	}
   
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
-  {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5);
-    Piece1.rotateAngleY = f3 / (180F / (float)Math.PI);
-    Piece1.rotationPointY = MathHelper.cos(.2F * f2)*5F*.5F + 10F; 
-  }
+  Random randomGenerator = new Random();
+	int[] count = {0,0};
+	
 
+	boolean[] Headisrotating = {false,false};
+
+
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
+		
+		
+		super.setRotationAngles(f, f1, f2, f3, f4, f5);
+		BodyBase.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F;
+
+
+		int randomInt = randomGenerator.nextInt(200);
+
+		if (randomInt == 4) {					//right magnet
+			Headisrotating[1] = true;
+		}else if (Headisrotating[1] == true) {
+			RightMagnet.rotateAngleX += .1F;
+			count[1]++;
+		}
+
+		if (count[1] >= 31) {
+			Headisrotating[1] = false;
+			count[1] = 0;
+			}
+		
+		if (randomInt == 5) {					//left magnet
+			Headisrotating[2] = true;
+		}else if (Headisrotating[2] == true) {
+			LeftMagnet.rotateAngleX -= .1F;
+			count[2]++;
+		}
+
+		if (count[2] >= 31) {
+			Headisrotating[2] = false;
+			count[2] = 0;
+			}
+	}
 }
