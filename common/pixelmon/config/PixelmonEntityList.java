@@ -59,8 +59,8 @@ public class PixelmonEntityList {
 	/**
 	 * Create a new instance of an entity in the world by using the entity name.
 	 */
-	public static Entity createEntityByName(String par0Str, World par1World) {
-		Entity var2 = null;
+	public static EntityLiving createEntityByName(String par0Str, World par1World) {
+		EntityLiving var2 = null;
 
 		try {
 			ClassType type = getClassTypeFromString(par0Str);
@@ -74,7 +74,7 @@ public class PixelmonEntityList {
 					var2 = new EntityPixelmon(par1World);
 					((EntityPixelmon) var2).init(par0Str);
 				} else {
-					var2 = (Entity) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
+					var2 = (EntityLiving) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
 				}
 			}
 		} catch (Exception var4) {
