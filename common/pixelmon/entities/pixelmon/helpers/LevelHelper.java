@@ -13,6 +13,7 @@ import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 
+import net.minecraft.src.DataWatcher;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
@@ -22,50 +23,42 @@ import net.minecraft.src.NBTTagCompound;
 public class LevelHelper {
 
 	private EntityPixelmon pixelmon;
-	private int exp;
-	private int expToNextLevel;
 	private int baseLevel = 0;
-	private int level;
-	public int maxHealth = 10;
-	public int health;
-
-	public LevelHelper() {
-		exp = 0;
-	}
 
 	public LevelHelper(EntityPixelmon p) {
 		this.pixelmon = p;
-		exp = 0;
+		pixelmon.getDataWatcher().addObject(9, (short) 1); // Level
+		pixelmon.getDataWatcher().addObject(11, (short) 0); // Experience
+		pixelmon.getDataWatcher().addObject(13, (short) 0); // Experience to
+															// next level
 		setScale();
 	}
 
 	protected void updateStats() {
 		pixelmon.updateStats();
-		maxHealth = pixelmon.stats.HP;
 	}
 
 	public void writeToNBT(NBTTagCompound var1) {
-		var1.setInteger("Level", level);
-		var1.setInteger("EXP", exp);
-		var1.setInteger("EXPToNextLevel", expToNextLevel);
+		var1.setInteger("Level", getLevel());
+		var1.setInteger("EXP", getExp());
+		var1.setInteger("EXPToNextLevel", getExpToNextLevel());
 	}
 
 	public void readFromNBT(NBTTagCompound var1) {
-		level = var1.getInteger("Level");
-		exp = var1.getInteger("EXP");
-		expToNextLevel = getExpForLevel(level + 1) - getExpForLevel(level);
-		updateEntityString();
+		setLevel(var1.getInteger("Level"));
+		setExp(var1.getInteger("EXP"));
+		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
 	}
 
 	public int getLevel() {
-		return level;
+		return pixelmon.getDataWatcher().getWatchableObjectShort(9);
 	}
 
 	public void setLevel(int i) {
-		level = i;
+		pixelmon.getDataWatcher().updateObject(9, (short) i);
 		setScale();
-		expToNextLevel = getExpForLevel(level + 1) - getExpForLevel(level);
-		exp = 0;
+		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
+		setExp(0);
 		float oldHp = pixelmon.stats.HP;
 		updateStats();
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
@@ -74,8 +67,7 @@ public class LevelHelper {
 			newHealth = pixelmon.getMaxHealth();
 		else
 			newHealth = ((float) pixelmon.getHealth()) * percentGain;
-		pixelmon.setEntityHealth((int) Math.ceil(newHealth));
-		updateEntityString();
+		pixelmon.setHealth((int) Math.ceil(newHealth));
 	}
 
 	private int getExpForLevel(int level2) {
@@ -113,15 +105,23 @@ public class LevelHelper {
 	}
 
 	public int getExp() {
-		return exp;
+		return pixelmon.getDataWatcher().getWatchableObjectShort(11);
+	}
+
+	public void setExp(int i) {
+		pixelmon.getDataWatcher().updateObject(11, (short) i);
 	}
 
 	public int getExpToNextLevel() {
-		return expToNextLevel;
+		return pixelmon.getDataWatcher().getWatchableObjectShort(13);
+	}
+
+	public void setExpToNextLevel(int i) {
+		pixelmon.getDataWatcher().updateObject(13, (short) i);
 	}
 
 	public boolean canLevelUp() {
-		return level != 100;
+		return getLevel() != 100;
 	}
 
 	protected void onLevelUp() {
@@ -133,17 +133,17 @@ public class LevelHelper {
 		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP) {
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
 			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).contains(pixelmon.getPokemonId())) {
-				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + level + "!");
+				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + getLevel() + "!");
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
 			}
 		}
 		String name = pixelmon.getName();
 
-		if (DatabaseMoves.LearnsAttackAtLevel(name, level)) {
-			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, level);
+		if (DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
+			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
 			for (Attack a : newAttacks) {
 				if (pixelmon.moveset.size() >= 4) {
-					((EntityPlayer)pixelmon.getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
+					((EntityPlayer) pixelmon.getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
 				} else {
 					pixelmon.moveset.add(a);
 					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
@@ -151,65 +151,40 @@ public class LevelHelper {
 			}
 		}
 		setScale();
-		updateEntityString();
 	}
 
 	public void awardEXP(int i) {
-		exp += i;
+		setExp(getExp() + i);
 		if ((pixelmon.getOwner() != null) && getLevel() != 100)
 			if (pixelmon.getOwner() != null)
 				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " gained " + i + " EXP!");
-		if (!canLevelUp() || expToNextLevel == -1) {
-			exp = 0;
+		if (!canLevelUp() || getExpToNextLevel() == -1) {
+			setExp(0);
 			return;
 		}
-		while (exp >= expToNextLevel) {
-			level++;
+		while (getExp() >= getExpToNextLevel()) {
+			setLevel(getLevel() + 1);
 			onLevelUp();
-			if (level >= pixelmon.baseStats.EvolveLevel) {
+			if (getLevel() >= pixelmon.baseStats.EvolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.EvolveInto);
 			}
 			if (!canLevelUp())
 				return;
-			exp -= expToNextLevel;
-			expToNextLevel = getExpForLevel(level + 1) - getExpForLevel(level);
+			setExp(getExp() - getExpToNextLevel());
+			setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
 		}
-		updateEntityString();
-	}
-
-	public void setEXP(int i) {
-		exp = i;
-		updateEntityString();
 	}
 
 	private void setScale() {
 		float percent = 1;
-		percent = 0.8f + 0.4f * (level) / (100);
+		percent = 0.8f + 0.4f * (getLevel()) / (100);
 		if (percent > pixelmon.maxScale)
 			percent = pixelmon.maxScale;
 		pixelmon.scale = percent;
 	}
 
-	public static LevelHelper readFromLvlString(String lvlString) {
-		if (lvlString == "")
-			return null;
-		LevelHelper l = new LevelHelper();
-		String[] splits = lvlString.split(";");
-		l.exp = Integer.parseInt(splits[0]);
-		l.expToNextLevel = Integer.parseInt(splits[1]);
-		l.level = Integer.parseInt(splits[2]);
-		l.health = Integer.parseInt(splits[3]);
-		l.maxHealth = Integer.parseInt(splits[4]);
-		return l;
-	}
-
-	public void updateEntityString() {
-		String lvlString = "" + exp + ";" + expToNextLevel + ";" + level + ";" + (int) pixelmon.getHealth() + ";" + pixelmon.stats.HP;
-		pixelmon.setLvlString(lvlString);
-	}
-
 	public void recalculateXP() {
-		exp = 0;
-		expToNextLevel = getExpForLevel(level + 1) - getExpForLevel(level);
+		setExp(0);
+		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
 	}
 }

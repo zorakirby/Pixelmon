@@ -30,19 +30,44 @@ public class BaseStats {
 	public Aggression aggression;
 	public EnumCreatureType creatureType;
 	public String droppedItem;
-	public String spawnBlock; 
+	public String spawnBlock;
+	public SwimmingParameters swimmingParameters;
 
-	public class Aggression{
+	public class SwimmingParameters {
+		public int depthRangeStart;
+		public int depthRangeEnd;
+		public float swimSpeed;
+		public float decayRate;
+		public int refreshRate;
+
+		public SwimmingParameters(String parameterString, String pokemonName) {
+			String[] splits = parameterString.split(";");
+			if (splits.length != 5)
+				System.out.println("[ERROR] SwimmingParameter Error for " + pokemonName);
+			try {
+				depthRangeStart = Integer.parseInt(splits[0]);
+				depthRangeEnd = Integer.parseInt(splits[1]);
+				swimSpeed = Float.parseFloat(splits[2]);
+				decayRate = Float.parseFloat(splits[3]);
+				refreshRate = Integer.parseInt(splits[4]);
+			} catch (Exception e) {
+				System.out.println("[ERROR] SwimmingParameter Error2 for " + pokemonName);
+			}
+		}
+	}
+
+	public class Aggression {
 		public int timid;
 		public int passive;
 		public int aggressive;
-		public Aggression(String aggressionString, String pixelmonName){
-			if (aggressionString ==null){
+
+		public Aggression(String aggressionString, String pixelmonName) {
+			if (aggressionString == null) {
 				return;
 			}
 			String[] splits = aggressionString.split(";");
-			if (splits.length!=3) {
-				System.out.println("Error in Aggression"+ " For Pokemon : " + pixelmonName);
+			if (splits.length != 3) {
+				System.out.println("Error in Aggression" + " For Pokemon : " + pixelmonName);
 				return;
 			}
 			timid = Integer.parseInt(splits[0]);
@@ -50,13 +75,13 @@ public class BaseStats {
 			aggressive = Integer.parseInt(splits[2]);
 		}
 	}
-	
+
 	public String getNationalPokedexNumberString() {
 		if (nationalPokedexNumber < 10)
-			return "00" + nationalPokedexNumber +".png";
+			return "00" + nationalPokedexNumber + ".png";
 		else if (nationalPokedexNumber < 100)
-			return "0" + nationalPokedexNumber +".png";
+			return "0" + nationalPokedexNumber + ".png";
 		else
-			return "" + nationalPokedexNumber +".png";
+			return "" + nationalPokedexNumber + ".png";
 	}
 }

@@ -71,7 +71,7 @@ public class PixelmonEntityList {
 			Class<?> var3 = null;
 			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
 				var3 = EntityPixelmon.class;
-			else if (type == ClassType.Trainer)
+			else if (type == null)
 				var3 = (Class<?>) Class.forName("pixelmon.entities.trainers.EntityTrainer" + par0Str);
 			if (var3 != null) {
 				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {

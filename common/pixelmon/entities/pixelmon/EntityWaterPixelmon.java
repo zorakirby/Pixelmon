@@ -47,7 +47,6 @@ public abstract class EntityWaterPixelmon extends EntityPixelmon{
 	public String name;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	private float field_21080_l;
-	public float swimFrequency = 0.6f;
 	public float swimSpeed = 1.5f;
 	public float decayRate = 0.99f;
 	public int refreshRate = 100;

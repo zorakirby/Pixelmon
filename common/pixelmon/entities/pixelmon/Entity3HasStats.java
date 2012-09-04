@@ -24,15 +24,17 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public BaseStats baseStats;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public boolean doesHover = false;
-	public float hoverHeight =0f;
+	public float hoverHeight = 0f;
 	public float length;
+
 	public Entity3HasStats(World par1World) {
 		super(par1World);
 		stats = new Stats();
-		level = new LevelHelper((EntityPixelmon)this);
-		dataWatcher.addObject(18, ""); //LvlString
+		level = new LevelHelper((EntityPixelmon) this);
+		dataWatcher.addObject(10, (short)10); // MaxHP
+		dataWatcher.addObject(7, (short)health);
 	}
-	
+
 	@Override
 	protected void init(String name) {
 		super.init(name);
@@ -41,21 +43,29 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		setSize(baseStats.Width, baseStats.Height + hoverHeight);
 		setType();
 		length = baseStats.Length;
-		
+
 		if (rand.nextInt(100) < baseStats.MalePercent)
 			isMale = true;
 		else
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
-		level.updateEntityString();
 	}
-	
-	private void setType(){
+
+	private void setType() {
 		type.add(baseStats.Type1);
 		if (baseStats.Type2 != EnumType.Mystery)
 			type.add(baseStats.Type2);
 	}
-	
+
+	@Override
+	public void moveEntityWithHeading(float par1, float par2) {
+		if (baseStats != null) {
+			if (baseStats.creatureType == EnumCreatureType.waterCreature && isInWater())
+				this.moveEntity(this.motionX, this.motionY, this.motionZ);
+		} else
+			super.moveEntityWithHeading(par1, par2);
+	}
+
 	@Override
 	public void evolve(String evolveTo) {
 		super.evolve(evolveTo);
@@ -63,33 +73,60 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		type.clear();
 		setType();
 	}
-	
+
+	@Override
+	protected boolean canDespawn() {
+		if (getOwner() != null)
+			return false;
+		if (baseStats.creatureType == EnumCreatureType.creature)
+			return false;
+		return true;
+	}
+
 	protected void fall(float f) {
-		if (baseStats!=null){
-			if (baseStats.creatureType== EnumCreatureType.waterCreature)
+		if (baseStats != null) {
+			if (baseStats.creatureType == EnumCreatureType.waterCreature)
 				return;
-			if (baseStats.CanFly) return;
+			if (baseStats.CanFly)
+				return;
 		}
 		super.fall(f);
 	}
-	
+
+	@Override
+	public boolean canBreatheUnderwater() {
+		if (baseStats != null) {
+			if (baseStats.creatureType == EnumCreatureType.waterCreature)
+				return true;
+			else
+				return false;
+		}
+		return true;
+	}
+
 	public int getMaxHealth() {
-		if (stats == null)
-			return 1;
-		return stats.HP;
+		if (isInitialised)
+			return dataWatcher.getWatchableObjectShort(10);
+		else return 10;
 	}
 
 	public void setHealth(int i) {
 		health = i;
+		updateHealth();
+	}
+	public void updateHealth(){
+		dataWatcher.updateObject(7, (short)health);
 	}
 
 	public float getMoveSpeed() {
 		return 0.3f;
 	}
-	
-	@SideOnly(Side.CLIENT)
-	public LevelHelper getClientLvl() {
-		return LevelHelper.readFromLvlString(getLvlString());
+
+	@Override
+	public int getHealth() {
+		if (dataWatcher.getWatchableObjectShort(7) != health)
+			health = dataWatcher.getWatchableObjectShort(7);
+		return super.getHealth();
 	}
 	
 	@Override
@@ -106,11 +143,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
 					- (double) this.yOffset + (double) this.ySize + (double) height, par5 + (double) halfLength);
 	}
-	
+
 	public void updateStats() {
 		stats.setLevelStats(baseStats, level.getLevel());
+		dataWatcher.updateObject(10, (short)stats.HP);
 	}
-		
+
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
@@ -118,28 +156,20 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public LevelHelper getLvl() {
 		if (level == null) {
-			level = new LevelHelper((EntityPixelmon)this);
+			level = new LevelHelper((EntityPixelmon) this);
 			level.setLevel(RandomHelper.getRandomNumberBetween(baseStats.SpawnLevel, baseStats.SpawnLevel + baseStats.SpawnLevelRange));
 			setEntityHealth(stats.HP);
 		}
 		return level;
 	}
-	
-	public void setLvlString(String string) {
-		dataWatcher.updateObject(18, string);
-	}
 
-	public String getLvlString() {
-		return dataWatcher.getWatchableObjectString(18);
-	}
-	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		stats.writeToNBT(nbt);
 		level.writeToNBT(nbt);
 	}
-	
+
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);

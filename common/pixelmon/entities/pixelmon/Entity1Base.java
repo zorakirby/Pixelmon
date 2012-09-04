@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.AxisAlignedBB;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAnimal;
@@ -24,7 +25,7 @@ public abstract class Entity1Base extends EntityTameable {
 		super(par1World);
 		dataWatcher.addObject(2, ""); // Name
 		dataWatcher.addObject(3, ""); // NickName
-		dataWatcher.addObject(19, -1); // pokemonId
+		dataWatcher.addObject(4, -1); // pokemonId
 	}
 
 	protected void init(String name) {
@@ -51,11 +52,11 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	public int getPokemonId() {
-		return dataWatcher.getWatchableObjectInt(19);
+		return dataWatcher.getWatchableObjectInt(4);
 	}
 
 	public void setPokemonId(int id) {
-		dataWatcher.updateObject(19, id);
+		dataWatcher.updateObject(4, id);
 	}
 
 	/**
@@ -85,7 +86,7 @@ public abstract class Entity1Base extends EntityTameable {
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
-		nbt.setInteger("pixelmonID", dataWatcher.getWatchableObjectInt(19));
+		nbt.setInteger("pixelmonID", dataWatcher.getWatchableObjectInt(4));
 		nbt.setString("Name", dataWatcher.getWatchableObjectString(2));
 		nbt.setString("Nickname", dataWatcher.getWatchableObjectString(3));
 		if (caughtBall != null)
@@ -98,7 +99,7 @@ public abstract class Entity1Base extends EntityTameable {
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		dataWatcher.updateObject(19, nbt.getInteger("pixelmonID"));
+		dataWatcher.updateObject(4, nbt.getInteger("pixelmonID"));
 		dataWatcher.updateObject(2, nbt.getString("Name"));
 		init(getName());
 		dataWatcher.updateObject(3, nbt.getString("Nickname"));

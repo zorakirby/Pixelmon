@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pixelmon.database.BaseStats.Aggression;
+import pixelmon.database.BaseStats.SwimmingParameters;
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumType;
@@ -126,6 +127,10 @@ public class DatabaseStats {
 				else stats.creatureType = EnumCreatureType.waterCreature;
 				stats.droppedItem = rs.getString("DroppedItem");
 				stats.spawnBlock = rs.getString("SpawnBlock");
+				
+				String sp = rs.getString("SwimmingParameters");
+				if (!rs.wasNull())
+					stats.swimmingParameters = stats.new SwimmingParameters(sp, pixelmonName);
 			}
 			conn.close();
 			return stats;
