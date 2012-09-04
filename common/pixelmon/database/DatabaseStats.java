@@ -124,6 +124,8 @@ public class DatabaseStats {
 				String type = rs.getString("CreatureType");
 				if (type.equalsIgnoreCase("Land")) stats.creatureType = EnumCreatureType.creature;
 				else stats.creatureType = EnumCreatureType.waterCreature;
+				stats.droppedItem = rs.getString("DroppedItem");
+				stats.spawnBlock = rs.getString("SpawnBlock");
 			}
 			conn.close();
 			return stats;
