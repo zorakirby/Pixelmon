@@ -66,7 +66,7 @@ public class PixelmonEntityList {
 		try {
 			ClassType type = null;
 			for (EnumPokemon pokemon: EnumPokemon.values())
-				if (pokemon.name== par0Str)
+				if (pokemon.name.equalsIgnoreCase(par0Str))
 					type = pokemon.type;
 			Class<?> var3 = null;
 			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
