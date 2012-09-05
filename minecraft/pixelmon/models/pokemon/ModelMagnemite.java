@@ -210,12 +210,45 @@ public class ModelMagnemite extends ModelBase
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
+  
+  Random randomGenerator = new Random();
+	int[] count = {0,0};
+	
+
+	boolean[] Headisrotating = {false,false};
+
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
 		
-		{
-		super.setRotationAngles(f, f1, f2, f3, f4, f5);
-		}
 		
+		super.setRotationAngles(f, f1, f2, f3, f4, f5);
+		BodyBase.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F;
+
+
+		int randomInt = randomGenerator.nextInt(200);
+
+		if (randomInt == 4) {					//right magnet
+			Headisrotating[0] = true;
+		}else if (Headisrotating[0] == true) {
+			RightMagnet.rotateAngleX += .1F;
+			count[0]++;
+		}
+
+		if (count[0] >= 31) {
+			Headisrotating[0] = false;
+			count[0] = 0;
+			}
+		
+		if (randomInt == 5) {					//left magnet
+			Headisrotating[1] = true;
+		}else if (Headisrotating[1] == true) {
+			LeftMagnet.rotateAngleX -= .1F;
+			count[1]++;
+		}
+
+		if (count[1] >= 31) {
+			Headisrotating[1] = false;
+			count[1] = 0;
+			}
 	}
 }
