@@ -155,7 +155,6 @@ public class PlayerStorage {
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
 					e.setOwner(player.username);
-					e.getLvl().updateEntityString();
 					e.motionX = e.motionY = e.motionZ = 0;
 					e.isDead = false;
 					return e;
