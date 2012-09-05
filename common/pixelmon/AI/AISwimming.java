@@ -73,7 +73,7 @@ public class AISwimming extends EntityAIBase {
 		pixelmon.renderYawOffset += ((-(float) Math.atan2(pixelmon.motionX, pixelmon.motionZ) * 180F) / (float) Math.PI - pixelmon.renderYawOffset) * 0.1F;
 		pixelmon.rotationYaw = pixelmon.renderYawOffset;
 
-		return randomMotionSpeed > 0.001;
+		return randomMotionSpeed > swimSpeed/3;
 	}
 
 }
