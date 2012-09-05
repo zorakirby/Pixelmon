@@ -1,6 +1,5 @@
 package pixelmon.enums;
 
-import pixelmon.config.IDListPixelmon;
 import pixelmon.config.IDListTrainer;
 import pixelmon.config.PixelmonEntityList.ClassType;
 
