@@ -121,6 +121,8 @@ public class ModelHaunter extends ModelBase
       BODYBASE.addChild(Body);
       BODYBASE.addChild(Head);
       BODYBASE.addChild(Face);
+      BODYBASE.addChild(EyebrowR);
+      BODYBASE.addChild(EyebrowL);
       BODYBASE.addChild(Tail1);
       BODYBASE.addChild(Tail2);
       BODYBASE.addChild(Tail3);
