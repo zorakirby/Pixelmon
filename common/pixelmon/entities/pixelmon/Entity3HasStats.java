@@ -31,8 +31,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super(par1World);
 		stats = new Stats();
 		level = new LevelHelper((EntityPixelmon) this);
-		dataWatcher.addObject(10, (short)10); // MaxHP
-		dataWatcher.addObject(7, (short)health);
+		dataWatcher.addObject(10, (short) 10); // MaxHP
+		dataWatcher.addObject(7, (short) health);
 	}
 
 	@Override
@@ -49,6 +49,9 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		else
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
+
+		if (level.getLevel()==-1)
+			level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
 	}
 
 	private void setType() {
@@ -107,15 +110,17 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public int getMaxHealth() {
 		if (isInitialised)
 			return dataWatcher.getWatchableObjectShort(10);
-		else return 10;
+		else
+			return 10;
 	}
 
 	public void setHealth(int i) {
 		health = i;
 		updateHealth();
 	}
-	public void updateHealth(){
-		dataWatcher.updateObject(7, (short)health);
+
+	public void updateHealth() {
+		dataWatcher.updateObject(7, (short) health);
 	}
 
 	public float getMoveSpeed() {
@@ -128,7 +133,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			health = dataWatcher.getWatchableObjectShort(7);
 		return super.getHealth();
 	}
-	
+
 	@Override
 	public void setPosition(double par1, double par3, double par5) {
 		this.posX = par1;
@@ -146,7 +151,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public void updateStats() {
 		stats.setLevelStats(baseStats, level.getLevel());
-		dataWatcher.updateObject(10, (short)stats.HP);
+		dataWatcher.updateObject(10, (short) stats.HP);
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class LevelHelper {
 
 	public LevelHelper(EntityPixelmon p) {
 		this.pixelmon = p;
-		pixelmon.getDataWatcher().addObject(9, (short) 1); // Level
+		pixelmon.getDataWatcher().addObject(9, (short) -1); // Level
 		pixelmon.getDataWatcher().addObject(11, (short) 0); // Experience
 		pixelmon.getDataWatcher().addObject(13, (short) 0); // Experience to
 															// next level
