@@ -16,7 +16,7 @@ public class SpawnRegistry {
 	private static HashMap<BiomeGenBase, List<SpawnData>> biomeSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
 	private static HashMap<BiomeGenBase, List<SpawnData>> biomeWaterSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
 
-	public static void addSpawn(Entry entry, String name, int rarity, ClassType type) {
+	public static void addSpawn(String name, int rarity, ClassType type) {
 		BiomeGenBase[] biomes = null;
 		if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
 			biomes = DatabaseStats.GetSpawnBiomes(name);

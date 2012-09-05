@@ -28,6 +28,7 @@ import pixelmon.entities.pokemon.*;
 import pixelmon.entities.trainers.EntityTrainerBugCatcher;
 import pixelmon.entities.trainers.EntityTrainerYoungster;
 import pixelmon.entities.trainers.EntityTrainerYoungster02;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.spawning.SpawnRegistry;
 
 public class PixelmonEntityList {
@@ -56,7 +57,6 @@ public class PixelmonEntityList {
 		stringToTypeMapping.put(par1Str, type);
 		entityEggs.put(par1Str, new Integer[] { par4, par5 });
 	}
-
 	/**
 	 * Create a new instance of an entity in the world by using the entity name.
 	 */
@@ -64,7 +64,10 @@ public class PixelmonEntityList {
 		EntityLiving var2 = null;
 
 		try {
-			ClassType type = getClassTypeFromString(par0Str);
+			ClassType type = null;
+			for (EnumPokemon pokemon: EnumPokemon.values())
+				if (pokemon.name== par0Str)
+					type = pokemon.type;
 			Class<?> var3 = null;
 			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
 				var3 = EntityPixelmon.class;
@@ -85,6 +88,21 @@ public class PixelmonEntityList {
 		return var2;
 	}
 
+	/**
+	 * Finds the class using IDtoClassMapping and classToStringMapping
+	 */
+	public static String getStringFromID(int par0) {
+		return idToStringMapping.get(Integer.valueOf(par0));
+	}
+
+	public static ClassType getClassTypeFromID(int par0) {
+		return (ClassType) IDtoTypeMapping.get(Integer.valueOf(par0));
+	}
+
+	private static ClassType getClassTypeFromString(String par0Str) {
+		return (ClassType) stringToTypeMapping.get(par0Str);
+	}
+	
 	/**
 	 * create a new instance of an entity from NBT store
 	 */
@@ -111,124 +129,7 @@ public class PixelmonEntityList {
 		return var2;
 	}
 
-	/**
-	 * Create a new instance of an entity in the world by using an entity ID.
-	 */
-	public static Entity createEntityByID(int par0, World par1World) {
-		Entity var2 = null;
-
-		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.entities.pokemon.Entity" + idToStringMapping.get(Integer.valueOf(par0)));
-
-			if (var3 != null) {
-				var2 = (Entity) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
-			}
-		} catch (Exception var4) {
-			var4.printStackTrace();
-		}
-
-		if (var2 == null) {
-			System.out.println("Skipping Entity with id " + par0);
-		}
-
-		return var2;
-	}
-
-	/**
-	 * Finds the class using IDtoClassMapping and classToStringMapping
-	 */
-	public static String getStringFromID(int par0) {
-		return idToStringMapping.get(Integer.valueOf(par0));
-	}
-
-	public static ClassType getClassTypeFromID(int par0) {
-		return (ClassType) IDtoTypeMapping.get(Integer.valueOf(par0));
-	}
-
-	private static ClassType getClassTypeFromString(String par0Str) {
-		return (ClassType) stringToTypeMapping.get(par0Str);
-	}
-
 	static {
-		// Pokemon
-		addMapping("Abra", IDListPixelmon.abraId, ClassType.Pixelmon);
-		addMapping("Arbok", IDListPixelmon.arbokId, ClassType.Pixelmon);
-		addMapping("Blastoise", IDListPixelmon.blastoiseId, ClassType.Pixelmon);
-		addMapping("Bulbasaur", IDListPixelmon.bulbasaurId, ClassType.Pixelmon);
-		addMapping("Butterfree", IDListPixelmon.butterfreeId, ClassType.Pixelmon);
-		addMapping("Caterpie", IDListPixelmon.caterpieId, ClassType.Pixelmon);
-		addMapping("Charizard", IDListPixelmon.charizardId, ClassType.Pixelmon);
-		addMapping("Charmander", IDListPixelmon.charmanderId, ClassType.Pixelmon);
-		addMapping("Charmeleon", IDListPixelmon.charmeleonId, ClassType.Pixelmon);
-		addMapping("Cubone", IDListPixelmon.cuboneId, ClassType.Pixelmon);
-		addMapping("Diglett", IDListPixelmon.diglettId, ClassType.Pixelmon);
-		addMapping("Dugtrio", IDListPixelmon.dugtrioId, ClassType.Pixelmon);
-		addMapping("Eevee", IDListPixelmon.eeveeId, ClassType.Pixelmon);
-		addMapping("Ekans", IDListPixelmon.ekansId, ClassType.Pixelmon);
-		addMapping("Electrode", IDListPixelmon.electrodeId, ClassType.Pixelmon);
-		addMapping("Flareon", IDListPixelmon.flareonId, ClassType.Pixelmon);
-		addMapping("Gastly", IDListPixelmon.gastlyId, ClassType.Pixelmon);
-		addMapping("Geodude", IDListPixelmon.geodudeId, ClassType.Pixelmon);
-		addMapping("Goldeen", IDListPixelmon.goldeenId, ClassType.WaterPixelmon);
-		addMapping("Growlithe", IDListPixelmon.growlitheId, ClassType.Pixelmon);
-		addMapping("Gyarados", IDListPixelmon.gyaradosId, ClassType.WaterPixelmon);
-		addMapping("Horsea", IDListPixelmon.horseaId, ClassType.WaterPixelmon);
-		addMapping("Ivysaur", IDListPixelmon.ivysaurId, ClassType.Pixelmon);
-		addMapping("Jolteon", IDListPixelmon.jolteonId, ClassType.Pixelmon);
-		addMapping("Jigglypuff", IDListPixelmon.jigglypuffId, ClassType.Pixelmon);
-		addMapping("Magikarp", IDListPixelmon.magikarpId, ClassType.WaterPixelmon);
-		addMapping("Magnemite", IDListPixelmon.magnemiteId, ClassType.Pixelmon);
-		addMapping("Mankey", IDListPixelmon.mankeyId, ClassType.Pixelmon);
-		addMapping("Metapod", IDListPixelmon.metapodId, ClassType.Pixelmon);
-		addMapping("Mew", IDListPixelmon.mewId, ClassType.Pixelmon);
-		addMapping("Sandile", IDListPixelmon.sandileId, ClassType.Pixelmon);
-		addMapping("Krokorok", IDListPixelmon.krokorokId, ClassType.Pixelmon);
-		addMapping("Miltank", IDListPixelmon.miltankId, ClassType.Pixelmon);
-		addMapping("Pidgey", IDListPixelmon.pidgeyId, ClassType.Pixelmon);
-		addMapping("Pikachu", IDListPixelmon.pikachuId, ClassType.Pixelmon);
-		addMapping("Pidgeotto", IDListPixelmon.pidgeottoId, ClassType.Pixelmon);
-		addMapping("Pidgeot", IDListPixelmon.pidgeotId, ClassType.Pixelmon);
-		addMapping("Ninetales", IDListPixelmon.ninetalesId, ClassType.Pixelmon);
-		addMapping("Oddish", IDListPixelmon.oddishId, ClassType.Pixelmon);
-		addMapping("Omanyte", IDListPixelmon.omanyteId, ClassType.WaterPixelmon);
-		addMapping("Omastar", IDListPixelmon.omastarId, ClassType.WaterPixelmon);
-		addMapping("Psyduck", IDListPixelmon.psyduckId, ClassType.Pixelmon);
-		addMapping("Rattata", IDListPixelmon.rattataId, ClassType.Pixelmon);
-		addMapping("Seaking", IDListPixelmon.seakingId, ClassType.WaterPixelmon);
-		addMapping("Shellder", IDListPixelmon.shellderId, ClassType.Pixelmon);
-		addMapping("Snorlax", IDListPixelmon.snorlaxId, ClassType.Pixelmon);
-		addMapping("Squirtle", IDListPixelmon.squirtleId, ClassType.Pixelmon);
-		addMapping("Staryu", IDListPixelmon.staryuId, ClassType.WaterPixelmon);
-		addMapping("Starmie", IDListPixelmon.starmieId, ClassType.WaterPixelmon);
-		addMapping("Trapinch", IDListPixelmon.trapinchId, ClassType.Pixelmon);
-		addMapping("Venusaur", IDListPixelmon.venusaurId, ClassType.Pixelmon);
-		addMapping("Voltorb", IDListPixelmon.voltorbId, ClassType.Pixelmon);
-		addMapping("Vulpix", IDListPixelmon.vulpixId, ClassType.Pixelmon);
-		addMapping("Wartortle", IDListPixelmon.wartortleId, ClassType.Pixelmon);
-		addMapping("Wigglytuff", IDListPixelmon.wigglytuffId, ClassType.Pixelmon);
-		addMapping("Zubat", IDListPixelmon.zubatId, ClassType.Pixelmon);
-		addMapping("Magneton", IDListPixelmon.magnetonId, ClassType.Pixelmon);
-		addMapping("Vibrava", IDListPixelmon.vibravaId, ClassType.Pixelmon);
-		addMapping("Mareep", IDListPixelmon.mareepId, ClassType.Pixelmon);
-		addMapping("Tentacool", IDListPixelmon.tentacoolId, ClassType.WaterPixelmon);
-		addMapping("Solrock", IDListPixelmon.solrockId, ClassType.Pixelmon);
-		addMapping("Lunatone", IDListPixelmon.lunatoneId, ClassType.Pixelmon);
-		addMapping("NidoranMale", IDListPixelmon.nidoranMaleId, ClassType.Pixelmon);
-		addMapping("Vaporeon", IDListPixelmon.vaporeonId, ClassType.Pixelmon);
-		addMapping("Gloom", IDListPixelmon.gloomId, ClassType.Pixelmon);
-		addMapping("Krabby", IDListPixelmon.krabbyId, ClassType.Pixelmon);
-		addMapping("Weedle", IDListPixelmon.weedleId, ClassType.Pixelmon);
-		addMapping("Kakuna", IDListPixelmon.kakunaId, ClassType.Pixelmon);
-		addMapping("Koffing", IDListPixelmon.koffingId, ClassType.Pixelmon);
-		addMapping("Weezing", IDListPixelmon.weezingId, ClassType.Pixelmon);
-		addMapping("Primeape", IDListPixelmon.primeapeId, ClassType.Pixelmon);
-		addMapping("Arcanine", IDListPixelmon.arcanineId, ClassType.Pixelmon);
-		addMapping("Paras", IDListPixelmon.parasId, ClassType.Pixelmon);
-		addMapping("Golbat", IDListPixelmon.golbatId, ClassType.Pixelmon);
-		addMapping("Drowzee", IDListPixelmon.drowzeeId, ClassType.Pixelmon);
-		addMapping("Dratini", IDListPixelmon.dratiniId, ClassType.WaterPixelmon);
-		addMapping("Numel", IDListPixelmon.numelId, ClassType.Pixelmon);
-
 		// Trainers
 		addMapping("Youngster", IDListTrainer.trainerYoungsterId, ClassType.Trainer);
 		addMapping("Youngster02", IDListTrainer.trainerYoungster2Id, ClassType.Trainer);
@@ -264,6 +165,15 @@ public class PixelmonEntityList {
 
 	public static void addSpawns() {
 		System.out.println("[PIXELMON] Registering entity spawns");
+		
+		for (EnumPokemon pokemon: EnumPokemon.values()){
+			String name = pokemon.name;
+			ClassType type = pokemon.type;
+			int rarity = DatabaseStats.GetRarity(name);
+			if (rarity>0)
+				SpawnRegistry.addSpawn(name, rarity, type);
+		}
+		
 		Iterator i = idToStringMapping.entrySet().iterator();
 		while (i.hasNext()) {
 			Map.Entry entry = (Map.Entry) i.next();
@@ -273,7 +183,7 @@ public class PixelmonEntityList {
 			if (type == ClassType.Trainer)
 				rarity = 20;
 			if (rarity > 0)
-				SpawnRegistry.addSpawn(entry, name, rarity, type);
+				SpawnRegistry.addSpawn(name, rarity, type);
 			// if (new File("resources/newsound/pixelmon/" +
 			// name.toLowerCase() + ".ogg").exists())
 			//
