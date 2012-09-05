@@ -29,6 +29,8 @@ public class PixelmonConfig {
 	
 	public static int chanceOfNoPokemon;
 	
+	public static int idPixelmon=200;
+	public static int idPokeball=201;
 	public static void loadConfig(Configuration configuration)
 	{
 		config = configuration;
@@ -40,6 +42,8 @@ public class PixelmonConfig {
 		allowNonPixelmonMobs = config.getOrCreateBooleanProperty("Allow vanilla mobs", "general", false).getBoolean(false);
 		maxPokemonPerChunk = config.getOrCreateIntProperty("Max number of pokemon per chunk", "general", 3).getInt(3);
 		chanceOfNoPokemon = config.getOrCreateIntProperty("Percent chance of no pokemon in chunk", "general", 60).getInt(60);
+		idPixelmon = config.getOrCreateIntProperty("Pixelmon ID", "IDs", 200).getInt(200);
+		idPokeball = config.getOrCreateIntProperty("Pokeball ID", "IDs", 201).getInt(201);
 		config.save();
 		
 		PixelmonItems.addNames();

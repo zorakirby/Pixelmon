@@ -23,6 +23,7 @@ import pixelmon.Pixelmon;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.pokemon.*;
 import pixelmon.entities.trainers.EntityTrainerBugCatcher;
 import pixelmon.entities.trainers.EntityTrainerYoungster;
@@ -95,7 +96,7 @@ public class PixelmonEntityList {
 
 			if (var3 != null) {
 				var2 = (EntityLiving) var3.getConstructor(new Class[] { World.class }).newInstance(new Object[] { par1World });
-				((EntityPixelmon)var2).init(par0NBTTagCompound.getString("Name"));
+				((EntityPixelmon) var2).init(par0NBTTagCompound.getString("Name"));
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();
@@ -257,7 +258,8 @@ public class PixelmonEntityList {
 			}
 		}
 
-		EntityRegistry.registerGlobalEntityID(EntityPixelmon.class, "Pixelmon", EntityRegistry.findGlobalUniqueEntityId());
+		//EntityRegistry.registerGlobalEntityID(EntityPixelmon.class, "Pixelmon", EntityRegistry.findGlobalUniqueEntityId());
+		EntityRegistry.registerModEntity(EntityPixelmon.class, "Pixelmon", PixelmonConfig.idPixelmon , Pixelmon.instance, 80, 1, true);
 	}
 
 	public static void addSpawns() {
@@ -270,30 +272,15 @@ public class PixelmonEntityList {
 			int rarity = DatabaseStats.GetRarity(name);
 			if (type == ClassType.Trainer)
 				rarity = 20;
-			if (type == ClassType.Pixelmon || type == ClassType.Trainer) {
-				if (rarity > 0)
-					SpawnRegistry.addSpawn(entry, name, rarity, type);
-			} else {
-				BiomeGenBase[] biomes;
-				biomes = DatabaseStats.GetSpawnBiomes(name);
-				int groupMin = DatabaseStats.GetMinGroupSize(name);
-				int groupMax = DatabaseStats.GetMaxGroupSize(name);
-				EnumCreatureType creaturetype = DatabaseStats.GetCreatureType(name);
-				if (rarity != -1) {
-//					try {
-//						//EntityRegistry.addSpawn((Class) Class.forName("pixelmon.entities.pokemon.Entity" + entry.getValue()), rarity, groupMin, groupMax, creaturetype, biomes);
-//					} catch (ClassNotFoundException e) {
-//						e.printStackTrace();
-//					}
-				}
-				// if (new File("resources/newsound/pixelmon/" +
-				// name.toLowerCase() + ".ogg").exists())
-				//
-				// Minecraft.getMinecraft().installResource("newsound/pixelmon/"
-				// + name.toLowerCase() + ".ogg", new
-				// File("resources/newsound/pixelmon/" + name.toLowerCase() +
-				// ".ogg"));
-			}
+			if (rarity > 0)
+				SpawnRegistry.addSpawn(entry, name, rarity, type);
+			// if (new File("resources/newsound/pixelmon/" +
+			// name.toLowerCase() + ".ogg").exists())
+			//
+			// Minecraft.getMinecraft().installResource("newsound/pixelmon/"
+			// + name.toLowerCase() + ".ogg", new
+			// File("resources/newsound/pixelmon/" + name.toLowerCase() +
+			// ".ogg"));
 		}
 	}
 

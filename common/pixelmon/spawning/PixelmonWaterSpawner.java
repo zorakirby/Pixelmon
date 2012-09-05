@@ -90,8 +90,6 @@ public class PixelmonWaterSpawner implements ITickHandler {
 		var3 = 0;
 		ChunkCoordinates var31 = par0WorldServer.getSpawnPoint();
 
-		EnumCreatureType[] var32 = EnumCreatureType.values();
-		var6 = var32.length;
 		if (countWaterPokemonEntities(par0WorldServer) <= EnumCreatureType.waterCreature.getMaxNumberOfCreature() * eligibleChunksForSpawning.size() / 256) {
 			Iterator var35 = eligibleChunksForSpawning.keySet().iterator();
 			ArrayList<ChunkCoordIntPair> tmp = new ArrayList(eligibleChunksForSpawning.keySet());
@@ -213,7 +211,7 @@ public class PixelmonWaterSpawner implements ITickHandler {
 	 */
 	public static String getRandomCreatureName(WorldProvider worldProvider, int par2, int par3, int par4) {
 		BiomeGenBase b = worldProvider.worldObj.getBiomeGenForCoords(par2, par4);
-		List<SpawnData> spawnData = SpawnRegistry.getSpawnsForBiome(b);
+		List<SpawnData> spawnData = SpawnRegistry.getWaterSpawnsForBiome(b);
 		return spawnData != null && !spawnData.isEmpty() ? ((SpawnData) WeightedRandom.getRandomItem(rand, spawnData)).name : null;
 	}
 
