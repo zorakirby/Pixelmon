@@ -82,6 +82,9 @@ public class IDListPixelmon {
 	public static int golbatId;
 	public static int drowzeeId;
 	public static int numelId;
+	public static int cameruptId;
+	public static int scytherId;
+	public static int flygonId;
 	
 	public static int i=0;
 	public static void load(Configuration configuration) {
@@ -163,5 +166,8 @@ public class IDListPixelmon {
 		golbatId = i++;
 		drowzeeId = i++;
 		numelId = i++;
+		cameruptId = i++;
+		scytherId = i++;
+		flygonId = i++;
 	}
 }
