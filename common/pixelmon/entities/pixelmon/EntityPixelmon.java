@@ -41,6 +41,7 @@ import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityTameable;
+import net.minecraft.src.EnumCreatureType;
 import net.minecraft.src.EnumSkyBlock;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
@@ -61,6 +62,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 		super.init(name);
 		moveSpeed = getMoveSpeed();
 		health = 11;
+		updateHealth();
 	}
 
 	public void onDeath(DamageSource damagesource) {
@@ -102,7 +104,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 			}
 			if (itemstack != null && itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
 				if (getOwner() != null)
-					((EntityPlayer)getOwner()).openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
+					((EntityPlayer) getOwner()).openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
 			if (itemstack != null && itemstack.itemID == PixelmonItems.potion.shiftedIndex && getOwner() == entity) {
@@ -112,7 +114,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 					setHealth(getHealth() + 20);
 				if (getOwner() != null)
 					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
-				getLvl().updateEntityString();
+				updateHealth();
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;
 				if (getHealth() > stats.HP)
@@ -184,10 +186,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 		}
 	}
 
-	public boolean hasOwner() {
-		return !MathHelper.stringNullOrLengthZero(getOwnerName());
-	}
-
 	// public void renderLevelUpEffects() {
 	// EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this,
 	// "magicCrit");
@@ -195,11 +193,27 @@ public class EntityPixelmon extends Entity9HasSounds {
 	// }
 
 	public boolean getCanSpawnHere() {
-		return true;
-//		int var1 = MathHelper.floor_double(this.posX);
-//		int var2 = MathHelper.floor_double(this.boundingBox.minY);
-//		int var3 = MathHelper.floor_double(this.posZ);
-//		return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
+		if (baseStats.creatureType == EnumCreatureType.waterCreature) {
+			int wdepth = WorldHelper.getWaterDepth((int) posX, (int) posY, (int) posZ, worldObj);
+			if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
+				return true;
+			else {
+				double y = posY - (baseStats.swimmingParameters.depthRangeStart + rand.nextInt(baseStats.swimmingParameters.depthRangeEnd - baseStats.swimmingParameters.depthRangeStart));
+				wdepth = WorldHelper.getWaterDepth((int) posX, (int) y, (int) posZ, worldObj);
+				if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
+					return false;
+				else{
+					posY = y;
+					return true;
+				}
+			}
+
+		}
+
+		int var1 = MathHelper.floor_double(this.posX);
+		int var2 = MathHelper.floor_double(this.boundingBox.minY);
+		int var3 = MathHelper.floor_double(this.posZ);
+		return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
 	}
 
 	@Override
@@ -224,7 +238,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 		super.readEntityFromNBT(nbt);
 		if (nbt.hasKey("pixelmonOwner"))
 			super.setOwner("pixelmonOwner");
-		getLvl().updateEntityString();
 	}
 
 	public void unloadEntity() {

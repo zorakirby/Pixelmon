@@ -23,21 +23,18 @@ public class RenderPixelmon extends RenderLiving {
 		super(null, par2);
 	}
 
-	private LevelHelper lvlInstance;
-
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
-		EntityPixelmon pixelmon = (EntityPixelmon)entityLiving;
+		EntityPixelmon pixelmon = (EntityPixelmon) entityLiving;
 		mainModel = pixelmon.model;
-		if (mainModel==null){
+		if (mainModel == null) {
 			if (pixelmon.getName().equals(""))
 				return;
-			pixelmon.init(((EntityPixelmon)entityLiving).getName());
-			mainModel = ((EntityPixelmon)entityLiving).model;
+			pixelmon.init(((EntityPixelmon) entityLiving).getName());
+			mainModel = ((EntityPixelmon) entityLiving).model;
 		}
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
-		if (var10 <= (float) 8 || pixelmon.hasOwner() || ServerStorageDisplay.contains(pixelmon.getPokemonId())) {
-			lvlInstance = pixelmon.getClientLvl();
+		if (var10 <= (float) 8 || pixelmon.getOwner() != null || ServerStorageDisplay.contains(pixelmon.getPokemonId())) {
 			drawHealthBar(entityLiving, d, d1, d2, f, f1);
 			if (ServerStorageDisplay.contains(pixelmon.getPokemonId()))
 				drawExpBar(entityLiving, d, d1, d2, f, f1);
@@ -58,12 +55,10 @@ public class RenderPixelmon extends RenderLiving {
 			} else {
 				flag = MathHelper.stringNullOrLengthZero(p.nickname);
 			}
-			String s = "";
-			if (lvlInstance != null)
-				s = " Lv: " + lvlInstance.getLevel() + " ";
+			String s = " Lv: " + entitypixelmon.getLvl().getLevel() + " ";
 			s += (flag ? entitypixelmon.getName() : p.nickname);
 			if (entitypixelmon.getOwner() != null) {
-				s += " (" + ((EntityPlayer)entitypixelmon.getOwner()).username + ")";
+				s += " (" + ((EntityPlayer) entitypixelmon.getOwner()).username + ")";
 			} else {
 				s += " (Wild)";
 			}
@@ -92,8 +87,8 @@ public class RenderPixelmon extends RenderLiving {
 			byte byte0 = -20;
 			GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 			tessellator.startDrawingQuads();
-			float f5 = lvlInstance.getExp();
-			float f6 = lvlInstance.getExpToNextLevel();
+			float f5 = ((EntityPixelmon)entityLiving).getLvl().getExp();
+			float f6 = ((EntityPixelmon)entityLiving).getLvl().getExpToNextLevel();
 			if (f5 >= f6)
 				f5 = 56;
 			float f8 = 50F * (f5 / f6);
@@ -137,8 +132,8 @@ public class RenderPixelmon extends RenderLiving {
 			byte byte0 = -25;
 			GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 			tessellator.startDrawingQuads();
-			float f5 = lvlInstance.health;
-			float f6 = lvlInstance.maxHealth;
+			float f5 = ((EntityPixelmon)entityLiving).getHealth();
+			float f6 = ((EntityPixelmon)entityLiving).getMaxHealth();
 			float f8 = 50F * (f5 / f6);
 			tessellator.setColorRGBA_F(1.0F, 0.0F, 0.0F, 1.0F);
 			tessellator.addVertex(-25F + f8, -7 + byte0, 0.0D);
