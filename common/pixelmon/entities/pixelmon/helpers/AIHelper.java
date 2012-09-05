@@ -13,6 +13,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EnumCreatureType;
 import pixelmon.AI.AIIsInBattle;
 import pixelmon.AI.AIStartBattle;
+import pixelmon.AI.AISwimming;
 import pixelmon.AI.AITargetNearest;
 import pixelmon.AI.AITeleportAway;
 import pixelmon.config.PixelmonItems;
@@ -22,14 +23,24 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class AIHelper {
 
-	int i=0;
+	int i = 0;
+
 	public AIHelper(String Name, Entity7HasAI entity, EntityAITasks tasks) {
+		if (tasks.field_75782_a.size() != 0)
+			tasks.field_75782_a.clear();
 		initBaseAI(entity, tasks);
 		if (entity.baseStats.creatureType == EnumCreatureType.creature && !entity.baseStats.CanFly) {
 			initGroundAI(Name, entity, tasks);
-		}else if (entity.baseStats.CanFly){
+		} else if (entity.baseStats.CanFly) {
 			initFlyingAI(Name, entity, tasks);
+		} else if (entity.baseStats.creatureType == EnumCreatureType.waterCreature) {
+			initSwimmingAI(Name, entity, tasks);
 		}
+	}
+
+	private void initSwimmingAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
+		tasks.addTask(i++, new EntityAITempt(entity, entity.getMoveSpeed(), PixelmonItems.rareCandy.shiftedIndex, false));
+		tasks.addTask(i++, new AISwimming(entity));
 	}
 
 	private void initFlyingAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
@@ -39,7 +50,8 @@ public class AIHelper {
 	}
 
 	private void initBaseAI(Entity7HasAI entity, EntityAITasks tasks) {
-		tasks.addTask(i++, new EntityAISwimming(entity));
+		if (entity.baseStats.creatureType != EnumCreatureType.waterCreature)
+			tasks.addTask(i++, new EntityAISwimming(entity));
 		tasks.addTask(i++, new AIIsInBattle(entity));
 		if (entity.aggression == Aggression.aggressive) {
 			tasks.addTask(i++, new EntityAIMoveTowardsTarget(entity, entity.getMoveSpeed(), 15));
