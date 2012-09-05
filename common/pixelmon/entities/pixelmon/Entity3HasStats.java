@@ -12,6 +12,8 @@ import pixelmon.database.PixelmonIVStore;
 import pixelmon.database.Stats;
 import pixelmon.entities.pixelmon.helpers.*;
 import pixelmon.enums.EnumType;
+import pixelmon.storage.PixelmonStorage;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EnumCreatureType;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.NBTTagCompound;
@@ -50,8 +52,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
 
-		if (level.getLevel()==-1)
-			level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
+		if (level.getLevel()==-1){
+			if (baseStats.SpawnLevelRange<=0)
+				level.setLevel(baseStats.SpawnLevel);
+			else
+				level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
+		}
 	}
 
 	private void setType() {
@@ -75,6 +81,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		baseStats = DatabaseStats.GetBaseStats(getName());
 		type.clear();
 		setType();
+		if (getOwner()!=null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT((EntityPixelmon)this);
 	}
 
 	@Override

@@ -19,15 +19,31 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public Entity2HasModel(World par1World) {
 		super(par1World);
 	}
-	
-	protected void init(String name){
+
+	protected void init(String name) {
 		super.init(name);
-		model = Pixelmon.proxy.loadModel(name);
+		oldName = name;
+	}
+
+	public void evolve(String evolveTo) {
+		setName(evolveTo);
+		oldName = evolveTo;
 	}
 	
-	public void evolve(String evolveTo){
-		setName(evolveTo);
-		model = Pixelmon.proxy.loadModel(evolveTo);
+	public void loadModel(){
+		model = Pixelmon.proxy.loadModel(getName());
+	}
+
+	String oldName;
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if (!oldName.equals(getName())) {
+			isInitialised=false;
+			loadModel();
+			oldName = getName();
+		}
 	}
 
 }

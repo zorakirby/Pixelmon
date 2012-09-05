@@ -80,7 +80,9 @@ public abstract class Entity1Base extends EntityTameable {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (!isInitialised) init(getName());
+		if (!isInitialised) {
+			init(getName());
+		}
 	}
 	
 	@Override
@@ -88,7 +90,8 @@ public abstract class Entity1Base extends EntityTameable {
 		super.writeEntityToNBT(nbt);
 		nbt.setInteger("pixelmonID", dataWatcher.getWatchableObjectInt(4));
 		nbt.setString("Name", dataWatcher.getWatchableObjectString(2));
-		nbt.setString("Nickname", dataWatcher.getWatchableObjectString(3));
+		if (!dataWatcher.getWatchableObjectString(3).equals(""))
+			nbt.setString("Nickname", dataWatcher.getWatchableObjectString(3));
 		if (caughtBall != null)
 			nbt.setInteger("CaughtBall", caughtBall.getIndex());
 		nbt.setBoolean("IsMale", isMale);
@@ -102,7 +105,10 @@ public abstract class Entity1Base extends EntityTameable {
 		dataWatcher.updateObject(4, nbt.getInteger("pixelmonID"));
 		dataWatcher.updateObject(2, nbt.getString("Name"));
 		init(getName());
-		dataWatcher.updateObject(3, nbt.getString("Nickname"));
+		if (nbt.hasKey("Nickname"))
+			dataWatcher.updateObject(3, nbt.getString("Nickname"));
+		else
+			dataWatcher.updateObject(3, nbt.getString(""));
 		if (nbt.hasKey("CaughtBall"))
 			caughtBall= EnumPokeballs.getFromIndex(nbt.getInteger("CaughtBall"));
 		isMale = nbt.getBoolean("IsMale");
