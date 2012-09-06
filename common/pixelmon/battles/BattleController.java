@@ -373,14 +373,12 @@ public class BattleController {
 	}
 
 	public void setUseItem(Player user, ItemStack usedStack){
-		if (participant1 instanceof PlayerParticipant) {
-			if (((PlayerParticipant) participant1).player == (EntityPlayerMP) user) {
-				pixelmon1WillUseItemInStack = usedStack;
-				participant1Wait = false;
-			} else {
-				pixelmon2WillUseItemInStack = usedStack;
-				participant2Wait = false;
-			}
+		if (participant1 instanceof PlayerParticipant && ((PlayerParticipant) participant1).player == (EntityPlayerMP) user) {
+			pixelmon1WillUseItemInStack = usedStack;
+			participant1Wait = false;
+		} else {
+			pixelmon2WillUseItemInStack = usedStack;
+			participant2Wait = false;
 		}
 	}
 	
@@ -432,7 +430,7 @@ public class BattleController {
 		
 		item = (PixelmonItem) usedStack.getItem();
 		item.useFromBag(userPokemon, targetPokemon);
-		usedStack.stackSize--;
+		--usedStack.stackSize;
 		ChatHandler.sendChat(user, item.getItemDisplayName(usedStack) + " used!");
 	}
 	
