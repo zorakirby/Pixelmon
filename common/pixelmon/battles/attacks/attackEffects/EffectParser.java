@@ -14,7 +14,6 @@ public class EffectParser {
 	private String effectValueString;
 
 	private EffectType effectType;
-	@SuppressWarnings("unused")
 	private ValueType valueType;
 
 	private int Value = 0;

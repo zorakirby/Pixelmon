@@ -21,6 +21,8 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
+import com.google.common.primitives.UnsignedBytes;
+import com.google.common.primitives.UnsignedInteger;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -169,7 +171,17 @@ public class EntityRegistry
     {
         if (EntityList.classToStringMapping.containsKey(entityClass))
         {
-            FMLLog.warning("The mod %s tried to register the entity class %s which was already registered - if you wish to override default naming for FML mod entities, register it here first", Loader.instance().activeModContainer().getModId(), entityClass);
+            ModContainer activeModContainer = Loader.instance().activeModContainer();
+            String modId = "unknown";
+            if (activeModContainer != null)
+            {
+                modId = activeModContainer.getModId();
+            }
+            else
+            {
+                FMLLog.severe("There is a rogue mod failing to register entities from outside the context of mod loading. This is incredibly dangerous and should be stopped.");
+            }
+            FMLLog.warning("The mod %s tried to register the entity class %s which was already registered - if you wish to override default naming for FML mod entities, register it here first", modId, entityClass);
             return;
         }
         id = instance().validateAndClaimId(id);
@@ -179,20 +191,51 @@ public class EntityRegistry
     private int validateAndClaimId(int id)
     {
         // workaround for broken ML
-        if (id < 0)
+        int realId = id;
+        if (id < Byte.MIN_VALUE)
         {
-            id += 3000;
+            FMLLog.warning("Compensating for modloader out of range compensation by mod : entityId %d for mod %s is now %d", id, Loader.instance().activeModContainer().getModId(), realId);
+            realId += 3000;
         }
-        if (!availableIndicies.get(id))
+
+        if (realId < 0)
+        {
+            realId += Byte.MAX_VALUE;
+        }
+        try
+        {
+            UnsignedBytes.checkedCast(realId);
+        }
+        catch (IllegalArgumentException e)
+        {
+            FMLLog.log(Level.SEVERE, "The entity ID %d for mod %s is not an unsigned byte and may not work", id, Loader.instance().activeModContainer().getModId());
+        }
+
+        if (!availableIndicies.get(realId))
         {
             FMLLog.severe("The mod %s has attempted to register an entity ID %d which is already reserved. This could cause severe problems", Loader.instance().activeModContainer().getModId(), id);
         }
-        availableIndicies.clear(id);
-        return id;
+        availableIndicies.clear(realId);
+        return realId;
     }
 
     public static void registerGlobalEntityID(Class <? extends Entity > entityClass, String entityName, int id, int backgroundEggColour, int foregroundEggColour)
     {
+        if (EntityList.classToStringMapping.containsKey(entityClass))
+        {
+            ModContainer activeModContainer = Loader.instance().activeModContainer();
+            String modId = "unknown";
+            if (activeModContainer != null)
+            {
+                modId = activeModContainer.getModId();
+            }
+            else
+            {
+                FMLLog.severe("There is a rogue mod failing to register entities from outside the context of mod loading. This is incredibly dangerous and should be stopped.");
+            }
+            FMLLog.warning("The mod %s tried to register the entity class %s which was already registered - if you wish to override default naming for FML mod entities, register it here first", modId, entityClass);
+            return;
+        }
         instance().validateAndClaimId(id);
         EntityList.addMapping(entityClass, entityName, id, backgroundEggColour, foregroundEggColour);
     }

@@ -15,7 +15,7 @@ import net.minecraft.src.World;
 
 public abstract class Entity1Base extends EntityTameable {
 	public EnumPokeballs caughtBall;
-	public boolean hitByPokeball;
+	public boolean hitByPokeball = false;
 	public boolean isMale;
 	public boolean isInBall = false;
 	public boolean isFainted = false;
@@ -116,6 +116,11 @@ public abstract class Entity1Base extends EntityTameable {
 		isFainted = nbt.getBoolean("IsFainted");
 	}
 
+	@Override
+	public int getAge() {
+		return 0;
+	}
+	
 	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
 		return null;
 	}

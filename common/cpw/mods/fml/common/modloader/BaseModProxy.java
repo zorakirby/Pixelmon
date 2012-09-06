@@ -77,20 +77,20 @@ public interface BaseModProxy
 
     public abstract void onClientLogin(EntityPlayer player);
 
-    public abstract void onPacket250Received(EntityPlayer source, Packet250CustomPayload payload);
-
     public abstract void serverDisconnect();
 
     public abstract void serverConnect(NetHandler handler);
 
     public abstract void receiveCustomPacket(Packet250CustomPayload packet);
 
-    public abstract void receiveChatPacket(String text);
+    public abstract void clientChat(String text);
 
     public abstract void onItemPickup(EntityPlayer player, ItemStack item);
 
-    public abstract int dispenseEntity(World world, ItemStack item, Random rnd, double x, double y, double z, int xVel, int zVel, double entX,
+    public abstract int dispenseEntity(World world, ItemStack item, Random rnd, int x, int y, int z, int xVel, int zVel, double entX,
             double entY, double entZ);
 
     public abstract void serverCustomPayload(NetServerHandler handler, Packet250CustomPayload packet);
+
+    public abstract void serverChat(NetServerHandler source, String message);
 }

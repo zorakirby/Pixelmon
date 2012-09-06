@@ -25,6 +25,8 @@ public class ModDiscoverer
 
     private ASMDataTable dataTable = new ASMDataTable();
 
+    private List<File> nonModLibs = Lists.newArrayList();
+
     public void findClasspathMods(ModClassLoader modClassLoader)
     {
         List<String> knownLibraries = ImmutableList.<String>builder().addAll(modClassLoader.getDefaultLibraries()).addAll(RelaunchLibraryManager.getLibraries()).build();
@@ -32,7 +34,7 @@ public class ModDiscoverer
         if (minecraftSources.length == 1 && minecraftSources[0].isFile())
         {
             FMLLog.fine("Minecraft is a file at %s, loading", minecraftSources[0].getAbsolutePath());
-            candidates.add(new ModCandidate(minecraftSources[0], minecraftSources[0], ContainerType.JAR));
+            candidates.add(new ModCandidate(minecraftSources[0], minecraftSources[0], ContainerType.JAR, true, true));
         }
         else
         {
@@ -47,13 +49,13 @@ public class ModDiscoverer
                     else
                     {
                         FMLLog.fine("Found a minecraft related file at %s, examining for mod candidates", minecraftSources[i].getAbsolutePath());
-                        candidates.add(new ModCandidate(minecraftSources[i], minecraftSources[i], ContainerType.JAR, i!=0));
+                        candidates.add(new ModCandidate(minecraftSources[i], minecraftSources[i], ContainerType.JAR, i==0, true));
                     }
                 }
                 else if (minecraftSources[i].isDirectory())
                 {
                     FMLLog.fine("Found a minecraft related directory at %s, examining for mod candidates", minecraftSources[i].getAbsolutePath());
-                    candidates.add(new ModCandidate(minecraftSources[i], minecraftSources[i], ContainerType.DIR, i!=0));
+                    candidates.add(new ModCandidate(minecraftSources[i], minecraftSources[i], ContainerType.DIR, i==0, true));
                 }
             }
         }
@@ -99,7 +101,14 @@ public class ModDiscoverer
             try
             {
                 List<ModContainer> mods = candidate.explore(dataTable);
-                modList.addAll(mods);
+                if (mods.isEmpty() && !candidate.isClasspath())
+                {
+                    nonModLibs.add(candidate.getModContainer());
+                }
+                else
+                {
+                    modList.addAll(mods);
+                }
             }
             catch (LoaderException le)
             {
@@ -117,6 +126,11 @@ public class ModDiscoverer
     public ASMDataTable getASMTable()
     {
         return dataTable;
+    }
+
+    public List<File> getNonModLibs()
+    {
+        return nonModLibs;
     }
 
 }

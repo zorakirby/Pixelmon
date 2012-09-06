@@ -255,9 +255,9 @@ public class EntityTrackerEntry
                     this.motionY = this.myEntity.motionY;
                     this.motionZ = this.myEntity.motionZ;
 
-                    int posX = MathHelper.floor_double(this.motionX * 32.0D);
-                    int posY = MathHelper.floor_double(this.motionY * 32.0D);
-                    int posZ = MathHelper.floor_double(this.motionZ * 32.0D);
+                    int posX = MathHelper.floor_double(this.myEntity.posX * 32.0D);
+                    int posY = MathHelper.floor_double(this.myEntity.posY * 32.0D);
+                    int posZ = MathHelper.floor_double(this.myEntity.posZ * 32.0D);
                     if (posX != this.lastScaledXPosition || posY != this.lastScaledYPosition || posZ != this.lastScaledZPosition)
                     {
                         FMLNetworkHandler.makeEntitySpawnAdjustment(this.myEntity.entityId, par1EntityPlayerMP, this.lastScaledXPosition, this.lastScaledYPosition, this.lastScaledZPosition);
@@ -337,12 +337,12 @@ public class EntityTrackerEntry
         }
 
         Packet pkt = FMLNetworkHandler.getEntitySpawningPacket(this.myEntity);
-        
+
         if (pkt != null)
         {
             return pkt;
         }
-        
+
         if (this.myEntity instanceof EntityItem)
         {
             EntityItem var8 = (EntityItem)this.myEntity;

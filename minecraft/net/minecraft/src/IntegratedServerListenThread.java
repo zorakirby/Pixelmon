@@ -2,10 +2,14 @@ package net.minecraft.src;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.common.network.FMLNetworkHandler;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
@@ -54,32 +58,7 @@ public class IntegratedServerListenThread extends NetworkListenThread
 
             try
             {
-                InetAddress add = null;
-                NetworkInterface notLocal = null;
-                for (NetworkInterface ni : Collections.list(NetworkInterface.getNetworkInterfaces()))
-                {
-                    if (!ni.isLoopback() && ni.isUp())
-                    {
-                        notLocal = ni;
-                        break;
-                    }
-                }
-                if (notLocal != null)
-                {
-                    for (InetAddress inadd : Collections.list(notLocal.getInetAddresses()))
-                    {
-                        if (inadd.getAddress().length == 4)
-                        {
-                            add = inadd;
-                            break;
-                        }
-                    }
-                }
-                if (add == null)
-                {
-                    add = InetAddress.getLocalHost();
-                }
-                this.myServerListenThread = new ServerListenThread(this, add, var1);
+                this.myServerListenThread = new ServerListenThread(this, null, var1);
                 this.myServerListenThread.start();
             }
             catch (IOException var3)
@@ -88,7 +67,7 @@ public class IntegratedServerListenThread extends NetworkListenThread
             }
         }
 
-        return this.myServerListenThread.getInetAddress().getHostAddress() + ":" + this.myServerListenThread.func_71765_d();
+        return FMLNetworkHandler.computeLocalHost().getHostAddress() + ":" + this.myServerListenThread.func_71765_d();
     }
 
     public void stopListening()

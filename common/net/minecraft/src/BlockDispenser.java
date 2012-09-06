@@ -325,7 +325,7 @@ public class BlockDispenser extends BlockContainer
     {
         float var15 = 1.1F;
         byte var16 = 6;
-        int modDispense = GameRegistry.tryDispense(par1World, par9, par11, par13, par7, par8, par2ItemStack, par3Random, par9, par11, par13);
+        int modDispense = GameRegistry.tryDispense(par1World, par4, par5, par6, par7, par8, par2ItemStack, par3Random, par9, par11, par13);
         if (modDispense > -1)
         {
             return modDispense;

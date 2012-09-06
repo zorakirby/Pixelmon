@@ -20,9 +20,7 @@ import pixelmon.storage.PokeballManager;
 
 public class GuiChoosePokemon extends GuiScreen {
 
-	@SuppressWarnings("unused")
 	private BattleController bc;
-	@SuppressWarnings("unused")
 	private GuiScreen parentGui;
 	private PixelmonDataPacket userPacket;
 	int bcIndex;

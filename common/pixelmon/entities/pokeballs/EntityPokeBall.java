@@ -32,7 +32,6 @@ public class EntityPokeBall extends EntityThrowable {
 	public int shakePokeball;
 	private EntityLiving thrower;
 	private EntityPixelmon p;
-	private boolean isWaiting;
 	private int waitTime;
 	private boolean canCatch = false;
 	private EntityPixelmon pixelmon;
@@ -40,17 +39,57 @@ public class EntityPokeBall extends EntityThrowable {
 	private float endRotationYaw = 0;
 	public boolean dropItem;
 
+	private boolean isInitialized = false;
+
 	public EntityPokeBall(World world) {
 		super(world);
 		dataWatcher.addObject(10, EnumPokeballs.PokeBall.getIndex());
+		dataWatcher.addObject(11, (short) 0);// IsCaptured
+		dataWatcher.addObject(12, (short) 0);// IsWaiting
+		dataWatcher.addObject(13, (short) 0);// IsOnGround
+		isInitialized = true;
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, EnumPokeballs type, boolean dropItem) {
 		super(world, entityliving);
 		thrower = entityliving;
 		dataWatcher.addObject(10, type.getIndex());
+		dataWatcher.addObject(11, (short) 0);// IsCaptured
+		dataWatcher.addObject(12, (short) 0);// IsWaiting
+		dataWatcher.addObject(13, (short) 0);// IsOnGround
 		isEmpty = true;
+		isInitialized = true;
 		this.dropItem = dropItem;
+	}
+
+	private void setIsWaiting(boolean value) {
+		dataWatcher.updateObject(12, value ? (short) 1 : (short) 0);
+	}
+
+	private boolean getIsWaiting() {
+		if (!isInitialized)
+			return false;
+		return dataWatcher.getWatchableObjectShort(12) == (short) 1;
+	}
+	
+	private void setIsOnGround(boolean value) {
+		dataWatcher.updateObject(13, value ? (short) 1 : (short) 0);
+	}
+
+	private boolean getIsOnGround() {
+		if (!isInitialized)
+			return false;
+		return dataWatcher.getWatchableObjectShort(13) == (short) 1;
+	}
+
+	private void setIsCaptured(boolean value) {
+		dataWatcher.updateObject(11, value ? (short) 1 : (short) 0);
+	}
+
+	public boolean getIsCaptured() {
+		if (!isInitialized)
+			return false;
+		return dataWatcher.getWatchableObjectShort(11) == (short) 1;
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, EntityPixelmon e, EnumPokeballs type) {
@@ -121,8 +160,10 @@ public class EntityPokeBall extends EntityThrowable {
 					EntityPixelmon entitypixelmon = (EntityPixelmon) movingobjectposition.entityHit;
 					p = entitypixelmon;
 					if (p.hitByPokeball) {
-						motionX = motionZ = 0;
-						motionY = -0.1;
+						if (dropItem) {
+							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+						}
+						setDead();
 						return;
 					}
 					p.hitByPokeball = true;
@@ -132,12 +173,12 @@ public class EntityPokeBall extends EntityThrowable {
 						return;
 					}
 					doCaptureCalc(p);
-					isWaiting = true;
+					setIsWaiting(true);
 					motionX = motionZ = 0;
 					motionY = -0.1;
 				} else {
 					Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
-					if (!isWaiting && mat != null && mat.isSolid()) {
+					if (!getIsWaiting() && mat != null && mat.isSolid()) {
 						if (dropItem) {
 							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
 						}
@@ -157,34 +198,31 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onEntityUpdate() {
-		if (worldObj.isRemote) {
-			motionX = motionY = motionZ = 0;
-		}
-		if (isWaiting) {
+		if (!worldObj.isRemote && getIsWaiting()) {
 			if (waitTime == 0 && !isUnloaded) {
-				initialScale = p.scale;
+				initialScale = p.getScale();
 				initPos = Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
 				Vec3 current = Vec3.createVectorHelper(posX, posY, posZ);
 				current.xCoord -= initPos.xCoord;
 				current.yCoord -= initPos.yCoord;
 				current.zCoord -= initPos.zCoord;
 				diff = current;
-				p.scale = initialScale / 1.1f;
+				p.setScale(initialScale / 1.1f);
 			}
 			if (waitTime == 1 && !isUnloaded) {
-				p.scale = initialScale / 1.3f;
+				p.setScale(initialScale / 1.3f);
 				moveCloser();
 			}
 			if (waitTime == 2 && !isUnloaded) {
-				p.scale = initialScale / 1.7f;
+				p.setScale(initialScale / 1.7f);
 				moveCloser();
 			}
 			if (waitTime == 3 && !isUnloaded) {
-				p.scale = initialScale / 2.2f;
+				p.setScale(initialScale / 2.2f);
 				moveCloser();
 			}
 			if (waitTime == 4 && !isUnloaded) {
-				p.scale = initialScale / 3;
+				p.setScale(initialScale / 3);
 				moveCloser();
 			}
 			if (waitTime == 4 && !isUnloaded) {
@@ -196,6 +234,7 @@ public class EntityPokeBall extends EntityThrowable {
 				this.motionY = 0;
 				this.motionX = 0;
 				this.motionZ = 0;
+				setIsOnGround(true);
 			}
 
 			waitTime++;
@@ -221,12 +260,14 @@ public class EntityPokeBall extends EntityThrowable {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (!onGround) {
-			rotationYaw += 10;
+		if (!getIsOnGround()) {
+			rotationYaw += 50;
+		}else{
+			motionY=0;
 		}
 		rotationPitch = 0;
-		if (isWaiting) {
-			rotationYaw = endRotationYaw;
+		if (getIsOnGround() && worldObj.isRemote) {
+			// rotationYaw = endRotationYaw;
 			flashCounter++;
 			if (flashCounter < 15)
 				flashRed = true;
@@ -235,7 +276,7 @@ public class EntityPokeBall extends EntityThrowable {
 			if (flashCounter == 30)
 				flashCounter = -1;
 		}
-		if (isCaptured) {
+		if (getIsCaptured()) {
 			if (waitTime > 20) {
 				p.setTamed(true);
 				p.setOwner(((EntityPlayer) thrower).username);
@@ -243,12 +284,12 @@ public class EntityPokeBall extends EntityThrowable {
 				p.clearAttackTarget();
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).addToParty(p);
 				p.catchInPokeball();
-				isWaiting = false;
+				setIsWaiting(false);
 				setDead();
 			}
 		} else {
 			if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
-				p.scale = initialScale;
+				p.setScale(initialScale);
 				if (numShakes == 0)
 					catchPokemon();
 				this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
@@ -278,12 +319,12 @@ public class EntityPokeBall extends EntityThrowable {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
 
 			spawnCaptureParticles();
-			isCaptured = true;
+			setIsCaptured(true);
 			waitTime = 0;
 		} else {
 			spawnFailParticles();
 			waitTime = 0;
-			isWaiting = false;
+			setIsWaiting(false);
 			p.setPosition(posX, posY, posZ);
 			p.hitByPokeball = false;
 			worldObj.spawnEntityInWorld(p);
@@ -313,7 +354,6 @@ public class EntityPokeBall extends EntityThrowable {
 	}
 
 	private int b;
-	public boolean isCaptured = false;
 
 	protected void doCaptureCalc(EntityPixelmon p2) {
 		int pokemonRate = p2.baseStats.CatchRate;

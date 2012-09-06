@@ -31,6 +31,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public Entity3HasStats(World par1World) {
 		super(par1World);
+		dataWatcher.addObject(14, (short) 1000); // scale
 		stats = new Stats();
 		level = new LevelHelper((EntityPixelmon) this);
 		dataWatcher.addObject(10, (short) 10); // MaxHP
@@ -52,8 +53,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
 
-		if (level.getLevel()==-1){
-			if (baseStats.SpawnLevelRange<=0)
+		if (level.getLevel() == -1) {
+			if (baseStats.SpawnLevelRange <= 0)
 				level.setLevel(baseStats.SpawnLevel);
 			else
 				level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
@@ -69,10 +70,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void moveEntityWithHeading(float par1, float par2) {
 		if (baseStats != null) {
-			if (baseStats.creatureType == EnumCreatureType.waterCreature && isInWater())
+			if (baseStats.creatureType == EnumCreatureType.waterCreature && isInWater()) {
 				this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		} else
-			super.moveEntityWithHeading(par1, par2);
+				return;
+			}
+		}
+		super.moveEntityWithHeading(par1, par2);
 	}
 
 	@Override
@@ -81,8 +84,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		baseStats = DatabaseStats.GetBaseStats(getName());
 		type.clear();
 		setType();
-		if (getOwner()!=null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT((EntityPixelmon)this);
+		if (getOwner() != null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
 	}
 
 	@Override
@@ -128,7 +131,19 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	public void updateHealth() {
+		if (health > stats.HP)
+			health = stats.HP;
+		if (health < 0)
+			health = 0;
 		dataWatcher.updateObject(7, (short) health);
+	}
+
+	public void setScale(float scale) {
+		dataWatcher.updateObject(14, (short) (scale * 1000));
+	}
+
+	public float getScale() {
+		return ((float) dataWatcher.getWatchableObjectShort(14)) / 1000.0f;
 	}
 
 	public float getMoveSpeed() {
@@ -147,24 +162,22 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		this.posX = par1;
 		this.posY = par3;
 		this.posZ = par5;
-		float halfWidth = this.width / 2.0F;
-		float halfLength = this.length / 2.0F;
+		float scale =1;
+		if (isInitialised) scale = getScale();
+		float halfWidth = this.width * scale / 2.0F;
+		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height + hoverHeight, par5 + (double) halfLength);
+					- (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5 + (double) halfLength);
 		else
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height, par5 + (double) halfLength);
+					- (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
 	}
 
 	public void updateStats() {
 		stats.setLevelStats(baseStats, level.getLevel());
 		dataWatcher.updateObject(10, (short) stats.HP);
-	}
-
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
+		updateHealth();
 	}
 
 	public LevelHelper getLvl() {
