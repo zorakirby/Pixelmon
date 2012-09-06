@@ -52,8 +52,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
 
-		if (level.getLevel()==-1)
-			level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
+		if (level.getLevel()==-1){
+			if (baseStats.SpawnLevelRange<=0)
+				level.setLevel(baseStats.SpawnLevel);
+			else
+				level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
+		}
 	}
 
 	private void setType() {
