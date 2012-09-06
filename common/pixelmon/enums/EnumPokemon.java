@@ -7,6 +7,7 @@ public enum EnumPokemon {
 	Abra("Abra", ClassType.Pixelmon),
 	Arcanine("Arcanine", ClassType.Pixelmon),
 	Arbok("Arbok", ClassType.Pixelmon),
+	Beedrill("Beedrill", ClassType.Pixelmon),
 	Blastoise("Blastoise", ClassType.Pixelmon),
 	Bulbasaur("Bulbasaur", ClassType.Pixelmon),
 	Butterfree("Butterfree", ClassType.Pixelmon),
