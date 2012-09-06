@@ -11,7 +11,6 @@ import java.util.logging.Level;
 
 import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
-import pixelmon.config.IDListPixelmon;
 import pixelmon.config.IDListTrainer;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.config.PixelmonConfig;
