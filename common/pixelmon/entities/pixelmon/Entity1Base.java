@@ -116,6 +116,11 @@ public abstract class Entity1Base extends EntityTameable {
 		isFainted = nbt.getBoolean("IsFainted");
 	}
 
+	@Override
+	public int getAge() {
+		return 0;
+	}
+	
 	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
 		return null;
 	}

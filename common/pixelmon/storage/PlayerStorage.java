@@ -86,18 +86,18 @@ public class PlayerStorage {
 		NBTTagCompound n = new NBTTagCompound();
 		int id = 0;
 		if (mode == PokeballManagerMode.Player)
-			id = new Random().nextInt(1000000);
+			id = new Random().nextInt(32000);
 		else if (mode == PokeballManagerMode.Trainer)
-			id = new Random().nextInt(10000) * -1 - 1;
+			id = new Random().nextInt(32000) * -1 - 1;
 		boolean isUsed = false;
 		do {
 			isUsed = false;
 			for (NBTTagCompound nbt : partyPokemon) {
 				if (nbt != null) {
 					if (mode == PokeballManagerMode.Player) {
-						id = new Random().nextInt(1000000);
+						id = new Random().nextInt(32000);
 					} else if (mode == PokeballManagerMode.Trainer) {
-						id = new Random().nextInt(10000) * -1 - 1;
+						id = new Random().nextInt(32000) * -1 - 1;
 					}
 				}
 			}

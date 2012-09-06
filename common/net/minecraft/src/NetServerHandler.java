@@ -623,6 +623,7 @@ public class NetServerHandler extends NetHandler
 
     public void handleChat(Packet3Chat par1Packet3Chat)
     {
+        par1Packet3Chat = FMLNetworkHandler.handleChatMessage(this, par1Packet3Chat);
         if (this.playerEntity.getChatVisibility() == 2)
         {
             this.sendPacketToPlayer(new Packet3Chat("Cannot send chat message."));

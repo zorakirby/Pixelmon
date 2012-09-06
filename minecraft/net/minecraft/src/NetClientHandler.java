@@ -660,6 +660,7 @@ public class NetClientHandler extends NetHandler
 
     public void handleChat(Packet3Chat par1Packet3Chat)
     {
+        par1Packet3Chat = FMLNetworkHandler.handleChatMessage(this, par1Packet3Chat);
         ClientChatReceivedEvent event = new ClientChatReceivedEvent(par1Packet3Chat.message);
         if (!MinecraftForge.EVENT_BUS.post(event) && event.message != null)
         {
@@ -1023,13 +1024,13 @@ public class NetClientHandler extends NetHandler
             {
                 var2.onDataPacket(netManager,  par1Packet132TileEntityData);
             }
-            else 
+            else
             {
                 /*Packet132TileEntityData pkt = par1Packet132TileEntityData;
                 ModLoader.getLogger().log(Level.WARNING, String.format(
-                        "Received a TileEntityData packet for a location that did not have a TileEntity: (%d, %d, %d) %d: %d, %d, %d", 
+                        "Received a TileEntityData packet for a location that did not have a TileEntity: (%d, %d, %d) %d: %d, %d, %d",
                         pkt.xPosition, pkt.yPosition, pkt.zPosition,
-                        pkt.actionType, 
+                        pkt.actionType,
                         pkt.customParam1, pkt.customParam2, pkt.customParam3));*/
             }
         }
