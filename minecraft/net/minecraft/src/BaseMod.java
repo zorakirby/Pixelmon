@@ -20,6 +20,7 @@ import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.asm.SideOnly;
 
@@ -180,7 +181,6 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
     @SideOnly(CLIENT)
     public void addRenderer(Map<Class<? extends Entity>, Render> renderers)
     {
-
     }
 
     /**
@@ -196,7 +196,7 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      * @return
      */
     @Override
-    public int dispenseEntity(World world, ItemStack item, Random rnd, double x, double y, double z, int xVel, int zVel, double entX, double entY, double entZ)
+    public int dispenseEntity(World world, ItemStack item, Random rnd, int x, int y, int z, int xVel, int zVel, double entX, double entY, double entZ)
     {
         return -1;
     }
@@ -321,19 +321,18 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
 
     /**
      * Only implemented on the client side
-     * {@link #onChatMessageReceived(EntityPlayer, Packet3Chat)}
+     * {@link #serverChat(EntityPlayer, Packet3Chat)}
      *
      * @param text
      */
     @Override
-    public void receiveChatPacket(String text)
+    public void clientChat(String text)
     {
         // TODO
     }
 
     /**
-     * Only called on the client side
-     * {@link #onPacket250Received(EntityPlayer, Packet250CustomPayload)}
+     * Called client side to receive a custom payload for this mod
      *
      * @param packet
      */
@@ -408,37 +407,16 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
     }
 
     /**
-     * Called when a 250 packet is received on a channel registered to this mod
-     *
-     * @param source
-     * @param payload
-     */
-    @Override
-    public void onPacket250Received(EntityPlayer source, Packet250CustomPayload payload)
-    {
-    }
-
-    /**
      * Called when a chat message is received. Return true to stop further processing
      *
      * @param source
      * @param chat
      * @return true if you want to consume the message so it is not available for further processing
      */
-    public boolean onChatMessageReceived(EntityPlayer source, Packet3Chat chat)
+    @Override
+    public void serverChat(NetServerHandler source, String message)
     {
-        return false;
     }
-    /**
-     * Called when a server command is received
-     * @param command
-     * @return true if you want to consume the message so it is not available for further processing
-     */
-    public boolean onServerCommand(String command, String sender, ICommandManager listener)
-    {
-        return false;
-    }
-
     /**
      * Called when a new client logs in.
      *
@@ -456,17 +434,6 @@ public abstract class BaseMod implements cpw.mods.fml.common.modloader.BaseModPr
      */
     @Override
     public void onClientLogout(NetworkManager mgr)
-    {
-
-    }
-
-    /**
-     *
-     * Called when a client changes dimensions on the server.
-     *
-     * @param player
-     */
-    public void onClientDimensionChanged(EntityPlayer player)
     {
 
     }

@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-class GuiButtonMerchant extends GuiButton
+public class GuiButtonMerchant extends GuiButton
 {
     private final boolean field_73749_j;
 

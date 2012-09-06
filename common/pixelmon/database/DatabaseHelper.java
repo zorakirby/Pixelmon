@@ -22,6 +22,8 @@ import java.util.zip.CheckedInputStream;
 import pixelmon.ClientProxy;
 import pixelmon.DownloadHelper;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModClassLoader;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 
 import net.minecraft.server.MinecraftServer;
@@ -43,12 +45,12 @@ public class DatabaseHelper {
 	public static boolean has() {
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
 			File databaseDir = new File(DownloadHelper.getDir(), "database");
 			if(!databaseDir.exists())
 			{
 				databaseDir.mkdir();
 				DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+				DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
 			}
 			else
 			{
@@ -61,8 +63,14 @@ public class DatabaseHelper {
 				{
 					checkVersion();
 				}
+				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
+				if (!sqlitejar.exists())
+					DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
+				((ModClassLoader)Loader.instance().getModClassLoader()).addFile(sqlitejar);
 			}
 			
+			
+			Class.forName("org.sqlite.JDBC");
 			Connection c = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/Pixelmon.db");
 			if(c == null)
 			{
@@ -104,7 +112,7 @@ public class DatabaseHelper {
 	}
 	
 	public static String databaseURL = "https://dl.dropbox.com/u/78327099/Pixelmon.db";
-	
+	public static String sqliteURL = "https://dl.dropbox.com/u/78327099/sqlite-jdbc-3.7.2.jar";
 	
 
 	/**
