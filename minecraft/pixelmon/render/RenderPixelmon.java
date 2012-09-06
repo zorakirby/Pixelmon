@@ -30,6 +30,7 @@ public class RenderPixelmon extends RenderLiving {
 			if (pixelmon.getName().equals(""))
 				return;
 			pixelmon.init(((EntityPixelmon) entityLiving).getName());
+			pixelmon.loadModel();
 			mainModel = ((EntityPixelmon) entityLiving).model;
 		}
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
@@ -46,17 +47,8 @@ public class RenderPixelmon extends RenderLiving {
 	public void drawNameTag(EntityLiving entityliving, double par2, double par4, double par6) {
 		if (Minecraft.isGuiEnabled() && (entityliving instanceof EntityPixelmon)) {
 			EntityPixelmon entitypixelmon = (EntityPixelmon) entityliving;
-			PixelmonDataPacket p = null;
-			if (ServerStorageDisplay.contains(entitypixelmon.getPokemonId()))
-				p = ServerStorageDisplay.get(entitypixelmon.getPokemonId());
-			boolean flag;
-			if (p == null) {
-				flag = true;
-			} else {
-				flag = MathHelper.stringNullOrLengthZero(p.nickname);
-			}
 			String s = " Lv: " + entitypixelmon.getLvl().getLevel() + " ";
-			s += (flag ? entitypixelmon.getName() : p.nickname);
+			s += entitypixelmon.getNickname();
 			if (entitypixelmon.getOwner() != null) {
 				s += " (" + ((EntityPlayer) entitypixelmon.getOwner()).username + ")";
 			} else {

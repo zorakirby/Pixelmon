@@ -12,6 +12,8 @@ import pixelmon.database.PixelmonIVStore;
 import pixelmon.database.Stats;
 import pixelmon.entities.pixelmon.helpers.*;
 import pixelmon.enums.EnumType;
+import pixelmon.storage.PixelmonStorage;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EnumCreatureType;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.NBTTagCompound;
@@ -75,6 +77,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		baseStats = DatabaseStats.GetBaseStats(getName());
 		type.clear();
 		setType();
+		if (getOwner()!=null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT((EntityPixelmon)this);
 	}
 
 	@Override

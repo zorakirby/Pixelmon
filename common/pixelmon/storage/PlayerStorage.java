@@ -109,7 +109,6 @@ public class PlayerStorage {
 		p.getLvl().writeToNBT(n);
 		n.setString("id", "Pixelmon");
 		n.setName(p.getName());
-		n.setString("Nickname", n.getName());
 		n.setBoolean("IsInBall", true);
 		n.setBoolean("IsShiny", p.getIsShiny());
 		n.setInteger("PixelmonOrder", getNextOpen());

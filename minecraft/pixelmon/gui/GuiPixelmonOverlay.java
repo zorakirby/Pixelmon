@@ -66,14 +66,17 @@ public class GuiPixelmonOverlay extends Gui {
 		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
 			int offset = 0;
 			if (p != null) {
+				String displayName = p.name;
+				if (!p.nickname.equals("")) displayName = p.nickname;
+				
 				i = p.order;
 				if (!isGuiMinimized) {
-					fontRenderer.drawString(p.nickname, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
+					fontRenderer.drawString(displayName, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
 					Minecraft.getMinecraft().renderEngine.bindTexture(var4);
 					if (p.isMale)
-						this.drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
+						this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
 					else
-						this.drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 218, 5, 9);
+						this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 218, 5, 9);
 
 				}
 				String numString = "";
