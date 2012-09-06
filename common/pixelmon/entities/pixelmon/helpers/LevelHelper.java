@@ -48,6 +48,7 @@ public class LevelHelper {
 		setLevel(var1.getInteger("Level"));
 		setExp(var1.getInteger("EXP"));
 		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
+		updateStats();
 	}
 
 	public int getLevel() {

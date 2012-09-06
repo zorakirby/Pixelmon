@@ -52,8 +52,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
 
-		if (level.getLevel()==-1){
-			if (baseStats.SpawnLevelRange<=0)
+		if (level.getLevel() == -1) {
+			if (baseStats.SpawnLevelRange <= 0)
 				level.setLevel(baseStats.SpawnLevel);
 			else
 				level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
@@ -69,10 +69,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void moveEntityWithHeading(float par1, float par2) {
 		if (baseStats != null) {
-			if (baseStats.creatureType == EnumCreatureType.waterCreature && isInWater())
+			if (baseStats.creatureType == EnumCreatureType.waterCreature && isInWater()) {
 				this.moveEntity(this.motionX, this.motionY, this.motionZ);
-		} else
-			super.moveEntityWithHeading(par1, par2);
+				return;
+			}
+		}
+		super.moveEntityWithHeading(par1, par2);
 	}
 
 	@Override
@@ -81,8 +83,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		baseStats = DatabaseStats.GetBaseStats(getName());
 		type.clear();
 		setType();
-		if (getOwner()!=null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT((EntityPixelmon)this);
+		if (getOwner() != null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
 	}
 
 	@Override
@@ -128,6 +130,10 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	public void updateHealth() {
+		if (health > stats.HP)
+			health = stats.HP;
+		if (health < 0)
+			health = 0;
 		dataWatcher.updateObject(7, (short) health);
 	}
 
@@ -160,11 +166,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void updateStats() {
 		stats.setLevelStats(baseStats, level.getLevel());
 		dataWatcher.updateObject(10, (short) stats.HP);
-	}
-
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
+		updateHealth();
 	}
 
 	public LevelHelper getLvl() {
