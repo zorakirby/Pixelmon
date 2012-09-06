@@ -21,7 +21,8 @@ public enum StatusEffectType {
 	Substitute,
 	Sunny,
 	WaitAfter, 
-	TrickRoom;
+	TrickRoom,
+	Perish;
 	
 	public static StatusEffectType getStatusEffect(String string){
 		if (string.equalsIgnoreCase("Burn")) return StatusEffectType.Burn;
@@ -35,6 +36,7 @@ public enum StatusEffectType {
 		if (string.equalsIgnoreCase("LightScreen")) return StatusEffectType.LightScreen;
 		if (string.equalsIgnoreCase("Mist")) return StatusEffectType.Mist;
 		if (string.equalsIgnoreCase("Paralysis")) return StatusEffectType.Paralysis;
+		if (string.equalsIgnoreCase("Perish")) return StatusEffectType.Perish;
 		if (string.equalsIgnoreCase("Poison")) return StatusEffectType.Poison;
 		if (string.equalsIgnoreCase("PoisonBadly")) return StatusEffectType.PoisonBadly;
 		if (string.equalsIgnoreCase("Protect")) return StatusEffectType.Protect;
@@ -60,6 +62,7 @@ public enum StatusEffectType {
 		if (string.equalsIgnoreCase("LightScreen")) return true;
 		if (string.equalsIgnoreCase("Mist")) return true;
 		if (string.equalsIgnoreCase("Paralysis")) return true;
+		if (string.equalsIgnoreCase("Perish")) return true;
 		if (string.equalsIgnoreCase("Poison")) return true;
 		if (string.equalsIgnoreCase("PoisonBadly")) return true;
 		if (string.equalsIgnoreCase("Protect")) return true;

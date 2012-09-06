@@ -83,6 +83,8 @@ public class EffectParser {
 				effect = new Mist();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Paralysis)
 				effect = new Paralysis();
+			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Perish)
+				effect = new Perish();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Poison)
 				effect = new Poison();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.PoisonBadly)
