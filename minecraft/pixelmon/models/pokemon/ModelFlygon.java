@@ -194,9 +194,16 @@ public class ModelFlygon extends ModelBase
       Chest.setTextureSize(128, 128);
       Chest.mirror = true;
       setRotation(Chest, -0.8922867F, 0F, 0F);
+      ModelRenderer BodyBottom = new ModelRenderer(this, 0, 75);
+      BodyBottom.addBox(-4.5F, 0F, -3F, 9, 8, 8);
+      BodyBottom.setRotationPoint(0F, 1.5F, 4F);
+      BodyBottom.setTextureSize(128, 128);
+      BodyBottom.mirror = true;
+      setRotation(BodyBottom, -0.0743572F, 0F, 0F);
       
       BodyBase.addChild(Chest);
       BodyBase.addChild(Body);
+      BodyBase.addChild(BodyBottom);
       
     ArmL = new ModelRenderer(this, "ArmL");
     ArmL.setRotationPoint(3F, 0.6F, -8.5F);
