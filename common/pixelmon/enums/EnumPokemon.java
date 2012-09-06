@@ -80,7 +80,11 @@ public enum EnumPokemon {
 	Golbat("Golbat", ClassType.Pixelmon),
 	Drowzee("Drowzee", ClassType.Pixelmon),
 	Dratini("Dratini", ClassType.WaterPixelmon),
-	Numel("Numel", ClassType.Pixelmon);
+	Numel("Numel", ClassType.Pixelmon),
+	Lapras("Lapras", ClassType.WaterPixelmon),
+	Ponyta("Ponyta", ClassType.Pixelmon),
+	Dragonair("Dragonair",ClassType.WaterPixelmon);
+	
 
 	private EnumPokemon(String name, ClassType type){
 		this.name = name; this.type = type;
