@@ -228,27 +228,27 @@ public class ModelMagnemite extends ModelBase
 		int randomInt = randomGenerator.nextInt(200);
 
 		if (randomInt == 4) {					//right magnet
+			Headisrotating[0] = true;
+		}else if (Headisrotating[0] == true) {
+			RightMagnet.rotateAngleX += .1F;
+			count[0]++;
+		}
+
+		if (count[0] >= 31) {
+			Headisrotating[0] = false;
+			count[0] = 0;
+			}
+		
+		if (randomInt == 5) {					//left magnet
 			Headisrotating[1] = true;
 		}else if (Headisrotating[1] == true) {
-			RightMagnet.rotateAngleX += .1F;
+			LeftMagnet.rotateAngleX -= .1F;
 			count[1]++;
 		}
 
 		if (count[1] >= 31) {
 			Headisrotating[1] = false;
 			count[1] = 0;
-			}
-		
-		if (randomInt == 5) {					//left magnet
-			Headisrotating[2] = true;
-		}else if (Headisrotating[2] == true) {
-			LeftMagnet.rotateAngleX -= .1F;
-			count[2]++;
-		}
-
-		if (count[2] >= 31) {
-			Headisrotating[2] = false;
-			count[2] = 0;
 			}
 	}
 }
