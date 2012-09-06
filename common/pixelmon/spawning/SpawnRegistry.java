@@ -37,7 +37,7 @@ public class SpawnRegistry {
 				biomeSpawns.put(b, spawnList);
 			} else if (type == ClassType.WaterPixelmon) {
 				List<SpawnData> spawnList;
-				if (biomeSpawns.containsKey(b))
+				if (biomeWaterSpawns.containsKey(b))
 					spawnList = biomeWaterSpawns.get(b);
 				else
 					spawnList = new ArrayList<SpawnData>();
