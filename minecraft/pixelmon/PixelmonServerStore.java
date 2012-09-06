@@ -30,4 +30,11 @@ public class PixelmonServerStore {
 	public static void clearList() {
 		store.clear();
 	}
+
+	public static PixelmonDataPacket getFromBox(int i, int j) {
+		for (PixelmonDataPacket p: store){
+			if (p.boxNumber == i && p.order == j) return p;
+		}
+		return null;
+	}
 }

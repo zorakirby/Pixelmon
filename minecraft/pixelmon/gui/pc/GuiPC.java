@@ -57,9 +57,9 @@ public class GuiPC extends GuiContainer {
 				y += height / 6 - 5;
 				pcSlots[i][j] = new SlotPCPC(x, y, i, j);
 				PixelmonDataPacket p = null;
-				if (j < PixelmonServerStore.store.size()) {
-					p = PixelmonServerStore.store.get(j);
-				}
+				
+				p = PixelmonServerStore.getFromBox(i, j);
+				
 				if (p != null) {
 					pcSlots[i][j].setPokemon(p);
 				}
@@ -239,6 +239,7 @@ public class GuiPC extends GuiContainer {
 				boxNumber++;
 			}
 		}
+		
 	}
 
 	public boolean doesGuiPauseGame() {
