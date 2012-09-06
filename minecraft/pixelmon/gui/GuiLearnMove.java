@@ -17,7 +17,7 @@ public class GuiLearnMove extends GuiScreen {
 	private EntityPlayer player;
 	private Attack moveToLearn;
 	private PixelmonDataPacket dataPacket;
-	
+
 	public GuiLearnMove(int x, EntityPlayer player, Attack attack) {
 		pokemonId = x;
 		this.player = player;
@@ -41,13 +41,14 @@ public class GuiLearnMove extends GuiScreen {
 			ChatHandler.sendChat(player, "Decided not to teach " + dataPacket.name + " " + a.attackName + ".");
 			return;
 		}
-		
+
 		PixelmonDataPacket p = ServerStorageDisplay.get(pokemonId);
 		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonId, moveToLearn.attackIndex, index));
 	}
 
 	public void actionPerformed(GuiButton b) {
-		teachMove(b.id, moveToLearn);
+		if (b.id != 10)
+			teachMove(b.id, moveToLearn);
 		mc.displayGuiScreen(null);
 	}
 

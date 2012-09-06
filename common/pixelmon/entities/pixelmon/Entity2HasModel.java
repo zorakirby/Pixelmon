@@ -3,6 +3,8 @@ package pixelmon.entities.pixelmon;
 import java.lang.reflect.InvocationTargetException;
 
 import pixelmon.Pixelmon;
+import pixelmon.database.DatabaseStats;
+import pixelmon.enums.EnumPokemon;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
@@ -26,6 +28,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 	}
 
 	public void evolve(String evolveTo) {
+		if (!EnumPokemon.hasPokemon(evolveTo)) return;
 		setName(evolveTo);
 		oldName = evolveTo;
 	}

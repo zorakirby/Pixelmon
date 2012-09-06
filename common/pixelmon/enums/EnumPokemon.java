@@ -87,4 +87,10 @@ public enum EnumPokemon {
 	}
 	public String name;
 	public ClassType type;
+	public static boolean hasPokemon(String evolveTo) {
+		for (EnumPokemon e: values()){
+			if (e.name.equalsIgnoreCase(evolveTo)) return true;
+		}
+		return false;
+	}
 }
