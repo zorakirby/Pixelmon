@@ -1,6 +1,7 @@
 package pixelmon.models.pokemon;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -446,6 +447,12 @@ public class ModelSnorlax extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    HEADBASE.rotateAngleY = f3 / (180F / (float)Math.PI);
+    HEADBASE.rotateAngleX = f4 / (180F / (float)Math.PI);
+    LEFTFOOT.rotateAngleX = MathHelper.cos(f*.8F) * .25F *f1;
+    RIGHTFOOT.rotateAngleX = MathHelper.cos(f*.8F + (float)Math.PI) * .25F *f1;
+    LEFTARM.rotateAngleX = MathHelper.cos(f*.8F + (float)Math.PI) * .8F *f1;
+    RIGHTARM.rotateAngleX = MathHelper.cos(f*.8F) * .8F *f1;
   }
 
 }
