@@ -31,6 +31,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public Entity3HasStats(World par1World) {
 		super(par1World);
+		dataWatcher.addObject(14, (short) 1000); // scale
 		stats = new Stats();
 		level = new LevelHelper((EntityPixelmon) this);
 		dataWatcher.addObject(10, (short) 10); // MaxHP

@@ -24,7 +24,7 @@ public class EntityWeezing  extends EntityPixelmon
 	public void onUpdate() {
 		super.onUpdate();
 		if (worldObj.isRemote) {
-			float var2 = baseStats.Width * baseStats.giScale * scale;
+			float var2 = baseStats.Width * baseStats.giScale * getScale();
 			float var4 = this.rand.nextFloat() * (float) Math.PI * 2.0F;
 			float var5 = this.rand.nextFloat() * 4F + .5F;
 			float var6 = MathHelper.sin(var4) * var2 * .5F * var5;

@@ -11,7 +11,6 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
 public abstract class Entity4Textures extends Entity3HasStats {
-	public float scale = 1F;
 	public float maxScale = 1.25F;
 	public float hoverTimer;
 
@@ -29,6 +28,14 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		}
 	}
 
+	public void setScale(float scale) {
+		dataWatcher.updateObject(14, (short) (scale * 1000));
+	}
+
+	public float getScale() {
+		return ((float) dataWatcher.getWatchableObjectShort(14)) / 1000.0f;
+	}
+
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		if (par1DamageSource.fireDamage())
@@ -39,10 +46,10 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
-		if (dataWatcher.getWatchableObjectShort(5) == (short)1
+		if (dataWatcher.getWatchableObjectShort(5) == (short) 1
 				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
 			return "/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
-		else if (dataWatcher.getWatchableObjectShort(6) == (short)1
+		else if (dataWatcher.getWatchableObjectShort(6) == (short) 1
 				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
 			return "/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";
 		else
@@ -50,7 +57,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	}
 
 	public boolean getIsShiny() {
-		return dataWatcher.getWatchableObjectShort(5) == (short)1;
+		return dataWatcher.getWatchableObjectShort(5) == (short) 1;
 	}
 
 	public void setIsShiny(boolean isShiny) {
@@ -59,18 +66,18 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		else
 			dataWatcher.updateObject(5, (short) 0);
 	}
-	
+
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
-		nbt.setBoolean("IsShiny", dataWatcher.getWatchableObjectShort(5) == (short)1);
-		nbt.setBoolean("IsRoasted", dataWatcher.getWatchableObjectShort(6) == (short)1);
+		nbt.setBoolean("IsShiny", dataWatcher.getWatchableObjectShort(5) == (short) 1);
+		nbt.setBoolean("IsRoasted", dataWatcher.getWatchableObjectShort(6) == (short) 1);
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		dataWatcher.updateObject(5, nbt.getBoolean("IsShiny") ? (short)1 : (short)0);
-		dataWatcher.updateObject(6, nbt.getBoolean("IsRoasted") ? (short)1 : (short)0);
+		dataWatcher.updateObject(5, nbt.getBoolean("IsShiny") ? (short) 1 : (short) 0);
+		dataWatcher.updateObject(6, nbt.getBoolean("IsRoasted") ? (short) 1 : (short) 0);
 	}
 }

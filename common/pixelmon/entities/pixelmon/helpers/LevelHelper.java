@@ -181,7 +181,7 @@ public class LevelHelper {
 		percent = 0.8f + 0.4f * (getLevel()) / (100);
 		if (percent > pixelmon.maxScale)
 			percent = pixelmon.maxScale;
-		pixelmon.scale = percent;
+		pixelmon.setScale(percent);
 	}
 
 	public void recalculateXP() {
