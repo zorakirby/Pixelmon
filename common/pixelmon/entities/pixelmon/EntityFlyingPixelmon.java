@@ -6,7 +6,7 @@ import pixelmon.AI.AITargetNearest;
 import pixelmon.AI.AIStartBattle;
 import pixelmon.battles.BattleController;
 import pixelmon.config.PixelmonItems;
-import pixelmon.entities.EntityTrainer;
+import pixelmon.entities.trainers.EntityTrainer;
 
 import net.minecraft.src.*;
 

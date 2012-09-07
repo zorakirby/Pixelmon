@@ -13,9 +13,9 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
-import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 

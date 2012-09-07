@@ -43,4 +43,7 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 
+	public ModelBase getTrainerModel(String model) {
+		return null;
+	}
 }

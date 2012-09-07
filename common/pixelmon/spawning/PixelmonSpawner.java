@@ -9,7 +9,7 @@ import pixelmon.RandomHelper;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
-import pixelmon.entities.EntityTrainer;
+import pixelmon.entities.trainers.EntityTrainer;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.BiomeGenBase;

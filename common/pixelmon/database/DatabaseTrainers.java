@@ -41,20 +41,28 @@ public class DatabaseTrainers {
 				info.greeting = greetingListSplits[ind];
 				String winningListString = rs.getString("VictoryMessages");
 				String defeatListString = rs.getString("DefeatMessages");
-				if (winningListString == null) info.winMessage = "NO WINNING MESSAGE!";
-				else
-				{
+				if (winningListString == null)
+					info.winMessage = "NO WINNING MESSAGE!";
+				else {
 					String[] winningListSplits = winningListString.split(";");
-					if (winningListSplits.length < ind -1) info.winMessage = "NO WINNING MESSAGE!";
-					else info.winMessage = winningListSplits[ind];
+					if (winningListSplits.length < ind - 1)
+						info.winMessage = "NO WINNING MESSAGE!";
+					else
+						info.winMessage = winningListSplits[ind];
 				}
-				if (defeatListString == null) info.loseMessage = "NO DEFEAT MESSAGE!";
-				else
-				{
+				if (defeatListString == null)
+					info.loseMessage = "NO DEFEAT MESSAGE!";
+				else {
 					String[] defeatListSplits = defeatListString.split(";");
-					if (defeatListSplits.length < ind -1) info.loseMessage = "NO DEFEAT MESSAGE!";
-					else info.loseMessage = defeatListSplits[ind];
+					if (defeatListSplits.length < ind - 1)
+						info.loseMessage = "NO DEFEAT MESSAGE!";
+					else
+						info.loseMessage = defeatListSplits[ind];
 				}
+				info.rarity = rs.getInt("Rarity");
+				String modelStrings = rs.getString("Models");
+				String[] modelSplits = modelStrings.split(";");
+				info.model = modelSplits[rand.nextInt(modelSplits.length)];
 			}
 			conn.close();
 			return info;
@@ -100,5 +108,29 @@ public class DatabaseTrainers {
 				}
 		}
 		return null;
+	}
+
+	public static int getRarity(String name) {
+		Connection conn = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DatabaseHelper.getConnection();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select * from Trainers where TrainerType='" + name + "'");
+			int rarity = 0;
+			while (rs.next()) {
+				rarity = rs.getInt("Rarity");
+			}
+			conn.close();
+			return rarity;
+		} catch (Exception e) {
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		}
+		return 0;
 	}
 }

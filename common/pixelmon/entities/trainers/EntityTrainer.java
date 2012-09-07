@@ -1,7 +1,8 @@
-package pixelmon.entities;
+package pixelmon.entities.trainers;
 
 import java.util.Random;
 
+import pixelmon.Pixelmon;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseTrainers;
@@ -11,39 +12,44 @@ import pixelmon.storage.PlayerStorage;
 import pixelmon.storage.PokeballManager;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
+import net.minecraft.src.Block;
+import net.minecraft.src.DamageSource;
+import net.minecraft.src.EntityAISwimming;
+import net.minecraft.src.EntityAIWander;
+import net.minecraft.src.EntityCreature;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.MathHelper;
+import net.minecraft.src.ModelBase;
 
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
-public class EntityTrainer extends EntityLiving {
+public class EntityTrainer extends EntityCreature {
 
 	public PlayerStorage pokemonStorage;
 	public EntityPixelmon releasedPokemon;
 	public String name;
 	public TrainerInfo info;
+	public ModelBase model;
 
 	public EntityTrainer(World par1World) {
 		super(par1World);
-		init();
+		tasks.addTask(0, new EntityAISwimming(this));
+		tasks.addTask(1, new EntityAIWander(this, moveSpeed));
 	}
 
-	public void init() {
+	public void init(String name) {
+		this.name = name;
 		pokemonStorage = new PlayerStorage(this);
+		info = DatabaseTrainers.GetTrainerInfo(name);
+		model = Pixelmon.proxy.getTrainerModel(info.model);
+		health=100;
 	}
-
+	
 	@Override
 	public int getMaxHealth() {
 		return 100;
-	}
-
-	public void writeEntityToNBT(NBTTagCompound var1) {
-		super.writeEntityToNBT(var1);
-	}
-
-	public void readEntityFromNBT(NBTTagCompound var1) {
-		super.readEntityFromNBT(var1);
 	}
 
 	public void releasePokemon() {
@@ -67,10 +73,8 @@ public class EntityTrainer extends EntityLiving {
 	}
 
 	public void loadPokemon() {
-		if (info == null)
-			info = DatabaseTrainers.GetTrainerInfo(name);
 		for (String pokemonName : info.partypokemon) {
-			EntityPixelmon p = (EntityPixelmon)PixelmonEntityList.createEntityByName(pokemonName, worldObj);
+			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(pokemonName, worldObj);
 			if (p != null) {
 				p.getLvl().setLevel((new Random()).nextInt(3) - 1 + info.level);
 				p.setTrainer(this);
@@ -106,5 +110,16 @@ public class EntityTrainer extends EntityLiving {
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean getCanSpawnHere() {
+		int var1 = MathHelper.floor_double(this.posX);
+		int var2 = MathHelper.floor_double(this.boundingBox.minY);
+		int var3 = MathHelper.floor_double(this.posZ);
+
+		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
+		return blockId == Block.grass.blockID || blockId == Block.sand.blockID;
+
 	}
 }

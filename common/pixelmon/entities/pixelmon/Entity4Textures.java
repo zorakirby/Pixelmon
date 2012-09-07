@@ -13,6 +13,7 @@ import net.minecraft.src.World;
 public abstract class Entity4Textures extends Entity3HasStats {
 	public float maxScale = 1.25F;
 	public float hoverTimer;
+	public boolean alreadyInitialised = false;
 
 	public Entity4Textures(World par1World) {
 		super(par1World);
@@ -22,10 +23,13 @@ public abstract class Entity4Textures extends Entity3HasStats {
 
 	protected void init(String name) {
 		super.init(name);
-		if ((new Random()).nextFloat() < 1 / 8192f) {
-			System.out.println("Shiny " + getName() + " spawned");
-			dataWatcher.updateObject(5, (short) 1);
+		if (!alreadyInitialised) {
+			if ((new Random()).nextFloat() < 1 / 8192f) {
+				System.out.println("Shiny " + getName() + " spawned");
+				dataWatcher.updateObject(5, (short) 1);
+			}
 		}
+		alreadyInitialised = true;
 	}
 
 	@Override

@@ -15,9 +15,12 @@ import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.enums.EnumPokemon;
+import pixelmon.enums.EnumTrainers;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiAttacking;
 import pixelmon.gui.GuiChoosePokemon;
@@ -81,15 +84,8 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preloadTextures() {
-		Iterator i = PixelmonEntityList.idToStringMapping.entrySet().iterator();
-		while (i.hasNext()) {
-			Map.Entry entry = (Map.Entry) i.next();
-			String name = (String) entry.getValue();
-			ClassType type = PixelmonEntityList.getClassTypeFromID((Integer) entry.getKey());
-			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
-				MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + name.toLowerCase() + ".png");
-			}
-		}
+		for (EnumPokemon pokemon: EnumPokemon.values())
+			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + pokemon.name.toLowerCase() + ".png");
 	}
 
 	@Override
@@ -103,43 +99,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	private void addPokemonRenderers() {
-		Iterator i = PixelmonEntityList.idToStringMapping.entrySet().iterator();
-		while (i.hasNext()) {
-			Map.Entry entry = (Map.Entry) i.next();
-			String name = (String) entry.getValue();
-			int id = (Integer) entry.getKey();
-			ClassType type = PixelmonEntityList.getClassTypeFromID((Integer) entry.getKey());
-			Class pokeClass = null;
-			try {
-				if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon)
-					pokeClass = Class.forName("pixelmon.entities.pokemon.Entity" + name);
-				else if (type == ClassType.Trainer)
-					pokeClass = Class.forName("pixelmon.entities.trainers.EntityTrainer" + name);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-
-			ModelBase model = null;
-			try {
-				Class<?> var3 = null;
-				if (type == ClassType.Trainer)
-					var3 = (Class<?>) Class.forName("pixelmon.models.trainers.Model" + name);
-
-				if (var3 != null) {
-					model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
-				}
-			} catch (Exception var4) {
-				var4.printStackTrace();
-			}
-			if (model != null) {
-
-				RenderLiving renderer = null;
-				if (type == ClassType.Trainer)
-					renderer = new RenderTrainer(model, 0.5f);
-
-				RenderingRegistry.registerEntityRenderingHandler(pokeClass, renderer);
-			}
-		}
+		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
 	}
 
@@ -147,6 +107,22 @@ public class ClientProxy extends CommonProxy {
 		ModelBase model = null;
 		try {
 			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + name);
+			if (var3 != null) {
+				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
+			}
+
+		} catch (Exception e) {
+			System.out.println("Can't find Model for " + name);
+		}
+		if (model == null)
+			System.out.println("Can't find Model for " + name);
+		return model;
+	}
+
+	public ModelBase getTrainerModel(String name) {
+		ModelBase model = null;
+		try {
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.trainers.Model" + name);
 			if (var3 != null) {
 				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
