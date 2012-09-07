@@ -11,6 +11,7 @@ import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.items.ItemBlock;
 import net.minecraft.src.Block;
 import net.minecraft.src.IBlockAccess;
@@ -45,9 +46,9 @@ public class PixelmonBlocks {
 		pcId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PC", 205).value);
 		waterStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("WaterStoneOre", 206).value);
 		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
-		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, 0, 3.0f).setBlockName("ThunderStoneOre");
-		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, 1, 3.0f).setBlockName("LeafStoneOre");
-		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, 2, 3.0f).setBlockName("WaterStoneOre");
+		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
+		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f).setBlockName("LeafStoneOre");
+		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, EnumEvolutionStone.Waterstone, 3.0f).setBlockName("WaterStoneOre");
 		pc = new BlockPC(pcId, 0).setBlockName("pc");
 	}
 
