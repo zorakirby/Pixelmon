@@ -55,7 +55,6 @@ public class ModelDragonair extends ModelBase
   {
     textureWidth = 64;
     textureHeight = 64;
-    setTextureOffset("HEADPIECE.DELETE_THIS", 0, 0);
     
       tail7slope = new ModelRenderer(this, 0, 0);
       tail7slope.addBox(0F, -0.9F, -0.1F, 1, 1, 5);
@@ -167,22 +166,18 @@ public class ModelDragonair extends ModelBase
     TAIL4PIECE.setRotationPoint(0F, 2F, 6.7F);
     setRotation(TAIL4PIECE, 0F, 0F, 0F);
     TAIL4PIECE.mirror = true;
-      TAIL4PIECE.addBox("tail4", -2F, -2F, 0F, 4, 4, 8);
     TAIL5PIECE = new ModelRenderer(this, "TAIL5PIECE");
     TAIL5PIECE.setRotationPoint(0F, 0F, 8F);
     setRotation(TAIL5PIECE, 0F, 0F, 0F);
     TAIL5PIECE.mirror = true;
-      TAIL5PIECE.addBox("tail5", -2F, -2F, 0F, 4, 4, 6);
     TAIL6PIECE = new ModelRenderer(this, "TAIL6PIECE");
     TAIL6PIECE.setRotationPoint(0F, 0F, 6F);
     setRotation(TAIL6PIECE, 0F, 0F, 0F);
     TAIL6PIECE.mirror = true;
-      TAIL6PIECE.addBox("tail6", -1.5F, -1F, 0F, 3, 3, 6);
     TAIL7PIECE = new ModelRenderer(this, "TAIL7PIECE");
     TAIL7PIECE.setRotationPoint(-0.5F, 1F, 9F);
     setRotation(TAIL7PIECE, 0F, 0F, 0F);
     TAIL7PIECE.mirror = true;
-      TAIL7PIECE.addBox("tail7", 0F, 0F, 0F, 1, 1, 5);
     TAIL8PIECE = new ModelRenderer(this, "TAIL8PIECE");
     TAIL8PIECE.setRotationPoint(0.5F, 0.5F, 5F);
     setRotation(TAIL8PIECE, 0F, 0F, 0F);
@@ -309,31 +304,7 @@ public class ModelDragonair extends ModelBase
       TAIL8PIECE.addChild(tailrattle10);
       TAIL8PIECE.addChild(tailrattle11);
       TAIL8PIECE.addChild(tail8);
-      
-    																  
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+           
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)

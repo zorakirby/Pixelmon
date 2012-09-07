@@ -67,6 +67,7 @@ public enum EnumPokemon {
 	Ponyta("Ponyta", ClassType.Pixelmon),
 	Primeape("Primeape", ClassType.Pixelmon),
 	Psyduck("Psyduck", ClassType.Pixelmon),
+	Raichu("Raichu", ClassType.Pixelmon),
 	Rattata("Rattata", ClassType.Pixelmon),
 	Sandile("Sandile", ClassType.Pixelmon),
 	Scyther("Scyther", ClassType.Pixelmon),

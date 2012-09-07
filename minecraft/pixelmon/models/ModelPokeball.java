@@ -182,7 +182,7 @@ public class ModelPokeball extends ModelBase {
 		RedBack.mirror = true;
 		setRotation(RedBack, 0F, 0F, 0F);
 		ModelRenderer Button = new ModelRenderer(this, 12, 25);
-		Button.addBox(-0.5F, -0.1F, -0.6F, 1, 1, 1);
+		Button.addBox(-0.5F, -0.1F, -2.1F, 1, 1, 1);
 		Button.setRotationPoint(0F, -0.5F, -1.5F);
 		Button.setTextureSize(32, 32);
 		Button.mirror = true;
@@ -217,7 +217,6 @@ public class ModelPokeball extends ModelBase {
 		Pokeball.addChild(WhiteBack);
 		Pokeball.addChild(WhiteRight);
 		Pokeball.addChild(WhiteLeft);
-		Pokeball.addChild(Button);
 	}
 
 	public void render(EntityPokeBall pokeball, float f) {
