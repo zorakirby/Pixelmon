@@ -4,7 +4,7 @@ import pixelmon.config.PixelmonItems;
 import net.minecraft.src.Item;
 
 public enum EnumPotions {
-	Potion(2, 20, 0, "potion", 0), SuperPotion(18, 50, 0, "superpotion", 16), 
+	Potion(2, 20, 0, "potion", 0), SuperPotion(18, 50, 0, "superpotion", 16),
 	HyperPotion(34, 200, 0, "hyperpotion", 32), MaxPotion(50, 0, 100, "maxpotion", 48);
 
 	private EnumPotions(int index, int healAmount, int healPercent, String filenamePrefix,

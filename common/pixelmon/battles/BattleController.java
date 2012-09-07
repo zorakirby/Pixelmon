@@ -28,6 +28,7 @@ import pixelmon.items.PixelmonItem;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PokeballManager;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
@@ -430,7 +431,13 @@ public class BattleController {
 		
 		item = (PixelmonItem) usedStack.getItem();
 		item.useFromBag(userPokemon, targetPokemon);
-		--usedStack.stackSize;
+
+		ItemStack[] inv = user.inventory.mainInventory;
+		if (((EntityPlayer) Minecraft.getMinecraft().thePlayer).entityId == user.entityId) {
+			inv = ((EntityPlayer) Minecraft.getMinecraft().thePlayer).inventory.mainInventory;
+		}
+		item.removeFromInventory(inv);
+
 		ChatHandler.sendChat(user, item.getItemDisplayName(usedStack) + " used!");
 	}
 	

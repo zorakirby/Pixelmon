@@ -3,6 +3,7 @@ package pixelmon.items;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 
 public class PixelmonItem extends Item {
 
@@ -34,5 +35,17 @@ public class PixelmonItem extends Item {
 	
 	public boolean isEquippable(){
 		return isEquippable;
+	}
+	
+	public void removeFromInventory(ItemStack[] inv){
+		for (int i = 0; i < inv.length; i++) {
+			if (inv[i] != null && inv[i].getItem().shiftedIndex == shiftedIndex){
+				inv[i].stackSize--;
+				if (inv[i].stackSize < 1){
+					inv[i] = null;
+				}
+				break;
+			}
+		}
 	}
 }
