@@ -63,9 +63,6 @@ public class AITargetNearest extends AITarget {
 	 * Execute a one shot task or start executing a continuous task
 	 */
 	public void startExecuting() {
-		if (targetEntity instanceof EntityPlayer) {
-			this.taskOwner.setAttackTarget(targetEntity);
-		}
 		this.taskOwner.setAttackTarget(this.targetEntity);
 		super.startExecuting();
 	}

@@ -40,8 +40,8 @@ public class PixelmonConfig {
 		//IDListPixelmon.load(config);
 		IDListTrainer.load(config);
 		allowNonPixelmonMobs = config.getOrCreateBooleanProperty("Allow vanilla mobs", "general", false).getBoolean(false);
-		maxPokemonPerChunk = config.getOrCreateIntProperty("Max number of pokemon per chunk", "general", 3).getInt(3);
-		chanceOfNoPokemon = config.getOrCreateIntProperty("Percent chance of no pokemon in chunk", "general", 60).getInt(60);
+		maxPokemonPerChunk = config.getOrCreateIntProperty("Max number of pokemon per chunk", "general", 4).getInt(4);
+		chanceOfNoPokemon = config.getOrCreateIntProperty("Percent chance of no pokemon in chunk", "general", 20).getInt(20);
 		idPixelmon = config.getOrCreateIntProperty("Pixelmon ID", "IDs", 200).getInt(200);
 		idPokeball = config.getOrCreateIntProperty("Pokeball ID", "IDs", 201).getInt(201);
 		config.save();

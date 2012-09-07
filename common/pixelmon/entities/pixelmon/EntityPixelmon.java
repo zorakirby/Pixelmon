@@ -200,7 +200,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 				wdepth = WorldHelper.getWaterDepth((int) posX, (int) y, (int) posZ, worldObj);
 				if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 					return false;
-				else{
+				else {
 					posY = y;
 					return true;
 				}
@@ -211,7 +211,15 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int var1 = MathHelper.floor_double(this.posX);
 		int var2 = MathHelper.floor_double(this.boundingBox.minY);
 		int var3 = MathHelper.floor_double(this.posZ);
-		return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
+
+		if (baseStats.spawnBlock == null)
+			return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
+		else if (baseStats.spawnBlock.equalsIgnoreCase("Sand"))
+			return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.sand.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
+		else if (baseStats.spawnBlock.equalsIgnoreCase("Rock"))
+			return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.sand.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
+		else
+			return true;
 	}
 
 	@Override
