@@ -49,7 +49,7 @@ public class RenderPokeball extends Render {
 		float factor = (float) (1.0 / 16.0);
 		GL11.glPushMatrix();
 		model.setRotationAngles(pokeball.rotationPitch, pokeball.rotationYaw);
-		model.render(factor);
+		model.render(pokeball, factor);
 		GL11.glPopMatrix();
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);

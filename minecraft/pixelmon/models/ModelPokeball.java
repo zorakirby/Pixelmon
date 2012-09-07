@@ -1,5 +1,6 @@
 package pixelmon.models;
 
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import net.minecraft.src.*;
 
 public class ModelPokeball extends ModelBase {
@@ -219,9 +220,9 @@ public class ModelPokeball extends ModelBase {
 		Pokeball.addChild(Button);
 	}
 
-	public void render(float f) {
-		// setRotationAngles(f, f1, f2, f3, f4, f5);
-		Rocking.render(f); 
+	public void render(EntityPokeBall pokeball, float f) {
+		Rocking.render(f);
+		Hinge.rotateAngleX=pokeball.openAngle;
 	}
 
 	protected void setRotation(ModelRenderer model, float x, float y, float z) {

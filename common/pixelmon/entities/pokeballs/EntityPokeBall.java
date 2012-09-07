@@ -39,6 +39,8 @@ public class EntityPokeBall extends EntityThrowable {
 	private float endRotationYaw = 0;
 	public boolean dropItem;
 
+	public float openAngle = 0;
+
 	private boolean isInitialized = false;
 
 	public EntityPokeBall(World world) {
@@ -47,6 +49,7 @@ public class EntityPokeBall extends EntityThrowable {
 		dataWatcher.addObject(11, (short) 0);// IsCaptured
 		dataWatcher.addObject(12, (short) 0);// IsWaiting
 		dataWatcher.addObject(13, (short) 0);// IsOnGround
+		dataWatcher.addObject(14, (short) 0);// IsOpen
 		isInitialized = true;
 	}
 
@@ -57,6 +60,7 @@ public class EntityPokeBall extends EntityThrowable {
 		dataWatcher.addObject(11, (short) 0);// IsCaptured
 		dataWatcher.addObject(12, (short) 0);// IsWaiting
 		dataWatcher.addObject(13, (short) 0);// IsOnGround
+		dataWatcher.addObject(14, (short) 0);// IsOpen
 		isEmpty = true;
 		isInitialized = true;
 		this.dropItem = dropItem;
@@ -90,6 +94,16 @@ public class EntityPokeBall extends EntityThrowable {
 		if (!isInitialized)
 			return false;
 		return dataWatcher.getWatchableObjectShort(11) == (short) 1;
+	}
+
+	private void setIsOpen(boolean value) {
+		dataWatcher.updateObject(14, value ? (short) 1 : (short) 0);
+	}
+
+	public boolean getIsOpen() {
+		if (!isInitialized)
+			return false;
+		return dataWatcher.getWatchableObjectShort(14) == (short) 1;
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, EntityPixelmon e, EnumPokeballs type) {
@@ -204,36 +218,38 @@ public class EntityPokeBall extends EntityThrowable {
 	@Override
 	public void onEntityUpdate() {
 		if (!worldObj.isRemote && getIsWaiting()) {
-			if (waitTime == 0 && !isUnloaded) {
-				initialScale = p.getScale();
-				initPos = Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
-				Vec3 current = Vec3.createVectorHelper(posX, posY, posZ);
-				current.xCoord -= initPos.xCoord;
-				current.yCoord -= initPos.yCoord;
-				current.zCoord -= initPos.zCoord;
-				diff = current;
-				p.setScale(initialScale / 1.1f);
-			}
-			if (waitTime == 1 && !isUnloaded) {
-				p.setScale(initialScale / 1.3f);
-				moveCloser();
-			}
-			if (waitTime == 2 && !isUnloaded) {
-				p.setScale(initialScale / 1.7f);
-				moveCloser();
-			}
-			if (waitTime == 3 && !isUnloaded) {
-				p.setScale(initialScale / 2.2f);
-				moveCloser();
-			}
-			if (waitTime == 4 && !isUnloaded) {
-				p.setScale(initialScale / 3);
-				moveCloser();
-			}
-			if (waitTime == 4 && !isUnloaded) {
-				p.unloadEntity();
-				isUnloaded = true;
-				waitTime = 0;
+			if (!isUnloaded) {
+				if (waitTime == 0) {
+					setIsOpen(true);
+					initialScale = p.getScale();
+					initPos = Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
+					Vec3 current = Vec3.createVectorHelper(posX, posY, posZ);
+					current.xCoord -= initPos.xCoord;
+					current.yCoord -= initPos.yCoord;
+					current.zCoord -= initPos.zCoord;
+					diff = current;
+					p.setScale(initialScale / 1.1f);
+				}
+				if (waitTime == 10) {
+					p.setScale(initialScale / 1.3f);
+					moveCloser();
+				}
+				if (waitTime == 14) {
+					p.setScale(initialScale / 1.7f);
+					moveCloser();
+				}
+				if (waitTime == 18) {
+					p.setScale(initialScale / 2.2f);
+					moveCloser();
+				}
+				if (waitTime == 22) {
+					p.setScale(initialScale / 3);
+					moveCloser();
+					p.unloadEntity();
+					isUnloaded = true;
+					waitTime = 0;
+					setIsOpen(false);
+				}
 			}
 			if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY) - 2, (int) this.posZ) && this.posY % 1 <= this.height) {
 				this.motionY = 0;
@@ -256,7 +272,7 @@ public class EntityPokeBall extends EntityThrowable {
 		i++;
 	}
 
-	int initialDelay = 15;
+	int initialDelay = 30;
 	int wobbleTime = 5;
 	public boolean flashRed = false;
 	int flashTime = 10;
@@ -264,6 +280,12 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onUpdate() {
+		if (getIsOpen() && openAngle > (float)(-Math.PI/2)) {
+			openAngle-=(float)(Math.PI/20);
+		}
+		if (!getIsOpen() && openAngle <0)
+			openAngle+=(float)(Math.PI/20);
+
 		super.onUpdate();
 		if (!getIsOnGround()) {
 			rotationYaw += 50;
@@ -327,6 +349,7 @@ public class EntityPokeBall extends EntityThrowable {
 			setIsCaptured(true);
 			waitTime = 0;
 		} else {
+			openAngle = (float)-Math.PI/2;
 			spawnFailParticles();
 			waitTime = 0;
 			setIsWaiting(false);
