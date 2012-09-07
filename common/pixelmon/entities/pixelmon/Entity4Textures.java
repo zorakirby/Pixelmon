@@ -28,14 +28,6 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		}
 	}
 
-	public void setScale(float scale) {
-		dataWatcher.updateObject(14, (short) (scale * 1000));
-	}
-
-	public float getScale() {
-		return ((float) dataWatcher.getWatchableObjectShort(14)) / 1000.0f;
-	}
-
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		if (par1DamageSource.fireDamage())

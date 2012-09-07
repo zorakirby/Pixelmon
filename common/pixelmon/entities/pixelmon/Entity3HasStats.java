@@ -138,6 +138,14 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		dataWatcher.updateObject(7, (short) health);
 	}
 
+	public void setScale(float scale) {
+		dataWatcher.updateObject(14, (short) (scale * 1000));
+	}
+
+	public float getScale() {
+		return ((float) dataWatcher.getWatchableObjectShort(14)) / 1000.0f;
+	}
+
 	public float getMoveSpeed() {
 		return 0.3f;
 	}
@@ -154,14 +162,14 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		this.posX = par1;
 		this.posY = par3;
 		this.posZ = par5;
-		float halfWidth = this.width / 2.0F;
-		float halfLength = this.length / 2.0F;
+		float halfWidth = this.width * getScale() / 2.0F;
+		float halfLength = this.length * getScale() / 2.0F;
 		if (baseStats != null)
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height + hoverHeight, par5 + (double) halfLength);
+					- (double) this.yOffset + (double) this.ySize + (double) height * getScale() + hoverHeight, par5 + (double) halfLength);
 		else
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height, par5 + (double) halfLength);
+					- (double) this.yOffset + (double) this.ySize + (double) height * getScale(), par5 + (double) halfLength);
 	}
 
 	public void updateStats() {
