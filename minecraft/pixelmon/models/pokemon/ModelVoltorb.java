@@ -22,7 +22,7 @@ public class ModelVoltorb extends ModelBase
     textureHeight = 302;
     
     VoltorbBase = new ModelRenderer(this, "VoltorbBase");
-    VoltorbBase.setRotationPoint(0F, 36F, 0F);
+    VoltorbBase.setRotationPoint(0F, 0F, 0F);
     setRotation(VoltorbBase, 0F, 0F, 0F);
     VoltorbBase.mirror = true;
       ModelRenderer Shape1 = new ModelRenderer(this, 0, 274);
