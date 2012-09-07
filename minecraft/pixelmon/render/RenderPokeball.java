@@ -38,7 +38,7 @@ public class RenderPokeball extends Render {
 		GL11.glTranslated(x, y, z);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(180, 1, 0, 1);
-		if (pokeball.isCaptured) {
+		if (pokeball.getIsCaptured()) {
 			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getCaptureTexture(), 0);
 		} else if (pokeball.flashRed) {
 			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getFlashRedTexture(), 0);

@@ -44,8 +44,9 @@ public class EntityPokeBall extends EntityThrowable {
 	public EntityPokeBall(World world) {
 		super(world);
 		dataWatcher.addObject(10, EnumPokeballs.PokeBall.getIndex());
-		dataWatcher.addObject(11, (short) 0);// IsShaking
+		dataWatcher.addObject(11, (short) 0);// IsCaptured
 		dataWatcher.addObject(12, (short) 0);// IsWaiting
+		dataWatcher.addObject(13, (short) 0);// IsOnGround
 		isInitialized = true;
 	}
 
@@ -53,21 +54,42 @@ public class EntityPokeBall extends EntityThrowable {
 		super(world, entityliving);
 		thrower = entityliving;
 		dataWatcher.addObject(10, type.getIndex());
-		dataWatcher.addObject(11, (short) 0);// IsShaking
+		dataWatcher.addObject(11, (short) 0);// IsCaptured
 		dataWatcher.addObject(12, (short) 0);// IsWaiting
+		dataWatcher.addObject(13, (short) 0);// IsOnGround
 		isEmpty = true;
 		isInitialized = true;
 		this.dropItem = dropItem;
 	}
 
 	private void setIsWaiting(boolean value) {
-		dataWatcher.updateObject(12, value ? (short) 0 : (short) 1);
+		dataWatcher.updateObject(12, value ? (short) 1 : (short) 0);
 	}
 
 	private boolean getIsWaiting() {
 		if (!isInitialized)
 			return false;
 		return dataWatcher.getWatchableObjectShort(12) == (short) 1;
+	}
+	
+	private void setIsOnGround(boolean value) {
+		dataWatcher.updateObject(13, value ? (short) 1 : (short) 0);
+	}
+
+	private boolean getIsOnGround() {
+		if (!isInitialized)
+			return false;
+		return dataWatcher.getWatchableObjectShort(13) == (short) 1;
+	}
+
+	private void setIsCaptured(boolean value) {
+		dataWatcher.updateObject(11, value ? (short) 1 : (short) 0);
+	}
+
+	public boolean getIsCaptured() {
+		if (!isInitialized)
+			return false;
+		return dataWatcher.getWatchableObjectShort(11) == (short) 1;
 	}
 
 	public EntityPokeBall(World world, EntityLiving entityliving, EntityPixelmon e, EnumPokeballs type) {
@@ -138,8 +160,10 @@ public class EntityPokeBall extends EntityThrowable {
 					EntityPixelmon entitypixelmon = (EntityPixelmon) movingobjectposition.entityHit;
 					p = entitypixelmon;
 					if (p.hitByPokeball) {
-						motionX = motionZ = 0;
-						motionY = -0.1;
+						if (dropItem) {
+							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+						}
+						setDead();
 						return;
 					}
 					p.hitByPokeball = true;
@@ -174,7 +198,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onEntityUpdate() {
-		if (getIsWaiting()) {
+		if (!worldObj.isRemote && getIsWaiting()) {
 			if (waitTime == 0 && !isUnloaded) {
 				initialScale = p.getScale();
 				initPos = Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
@@ -210,6 +234,7 @@ public class EntityPokeBall extends EntityThrowable {
 				this.motionY = 0;
 				this.motionX = 0;
 				this.motionZ = 0;
+				setIsOnGround(true);
 			}
 
 			waitTime++;
@@ -235,11 +260,13 @@ public class EntityPokeBall extends EntityThrowable {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (!onGround) {
+		if (!getIsOnGround()) {
 			rotationYaw += 50;
+		}else{
+			motionY=0;
 		}
 		rotationPitch = 0;
-		if (getIsWaiting() && worldObj.isRemote) {
+		if (getIsOnGround() && worldObj.isRemote) {
 			// rotationYaw = endRotationYaw;
 			flashCounter++;
 			if (flashCounter < 15)
@@ -249,7 +276,7 @@ public class EntityPokeBall extends EntityThrowable {
 			if (flashCounter == 30)
 				flashCounter = -1;
 		}
-		if (isCaptured) {
+		if (getIsCaptured()) {
 			if (waitTime > 20) {
 				p.setTamed(true);
 				p.setOwner(((EntityPlayer) thrower).username);
@@ -292,7 +319,7 @@ public class EntityPokeBall extends EntityThrowable {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
 
 			spawnCaptureParticles();
-			isCaptured = true;
+			setIsCaptured(true);
 			waitTime = 0;
 		} else {
 			spawnFailParticles();
@@ -327,7 +354,6 @@ public class EntityPokeBall extends EntityThrowable {
 	}
 
 	private int b;
-	public boolean isCaptured = false;
 
 	protected void doCaptureCalc(EntityPixelmon p2) {
 		int pokemonRate = p2.baseStats.CatchRate;
