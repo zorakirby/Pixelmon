@@ -212,14 +212,33 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int var2 = MathHelper.floor_double(this.boundingBox.minY);
 		int var3 = MathHelper.floor_double(this.posZ);
 
-		if (baseStats.spawnBlock == null)
-			return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.grass.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
-		else if (baseStats.spawnBlock.equalsIgnoreCase("Sand"))
-			return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.sand.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
-		else if (baseStats.spawnBlock.equalsIgnoreCase("Rock"))
-			return this.worldObj.getBlockId(var1, var2 - 1, var3) == Block.sand.blockID && this.worldObj.getFullBlockLightValue(var1, var2, var3) > 8 && super.getCanSpawnHere();
-		else
-			return true;
+		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
+		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
+		boolean[] conds = { true, lightLevel > 8 };
+		for (SpawnConditions s : baseStats.spawnConditions) {
+			if (s == SpawnConditions.Grass && blockId != Block.grass.blockID)
+				conds[s.index] = false;
+			if (s == SpawnConditions.Rock && blockId != Block.stone.blockID)
+				conds[s.index] = false;
+			if (s == SpawnConditions.Sand && blockId != Block.sand.blockID)
+				conds[s.index] = false;
+			if (s == SpawnConditions.Darkness && lightLevel > 8)
+				conds[s.index] = false;
+			if (s == SpawnConditions.DayLight && lightLevel < 8)
+				conds[s.index] = false;
+		}
+		return conds[0] && conds[1];
+	}
+
+	@Override
+	public void onUpdate() {
+		if (getOwner() == null && baseStats != null && baseStats.spawnConditions.length > 0) {
+			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness && worldObj.isDaytime())
+				setDead();
+			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight && !worldObj.isDaytime())
+				setDead();
+		}
+		super.onUpdate();
 	}
 
 	@Override

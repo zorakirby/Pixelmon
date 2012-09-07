@@ -36,27 +36,8 @@ public class ChunkDataEvents {
 
 	@ForgeSubscribe
 	public void spawnOnChunkLoad(ChunkDataEvent.Load event) {
-		int numPixelmon;
-		int[] chunkPos = new int[] { event.getChunk().xPosition, event.getChunk().zPosition };
-		if (!event.getData().hasKey("NumberOfPixelmon")) {
-			numPixelmon = generateChunkPixelmonNumber();
-			if (numPixelmon < 0)
-				numPixelmon = 0;
-		} else {
-			numPixelmon = event.getData().getInteger("NumberOfPixelmon");
-		}
+		int numPixelmon = generateChunkPixelmonNumber();
 		numPosList.add(new NumPos(event.getChunk().xPosition, event.getChunk().zPosition, numPixelmon));
-	}
-
-	@ForgeSubscribe
-	public void saveChunk(ChunkDataEvent.Save event) {
-		for (int i = 0; i < numPosList.size(); i++) {
-			if (numPosList.get(i).x == event.getChunk().xPosition && numPosList.get(i).z == event.getChunk().zPosition) {
-				event.getData().setInteger("NumberOfPixelmon", numPosList.get(i).num);
-				numPosList.remove(i);
-				break;
-			}
-		}
 	}
 
 	private Random rand = new Random();

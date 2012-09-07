@@ -3,11 +3,16 @@ package pixelmon.database;
 import java.util.List;
 
 public enum SpawnConditions {
-	Grass, Sand, Rock, Darkness, DayLight;
+	Grass(0), Sand(0), Rock(0), Darkness(1), DayLight(1);
 
+	public int index;
+	private SpawnConditions(int index) {
+		this.index = index;
+	}
+	
 	public static SpawnConditions[] ParseSpawnConditions(String conditions) {
 		if (conditions == null)
-			return null;
+			return new SpawnConditions[0];
 		String[] splits = conditions.split(";");
 		SpawnConditions[] conds = new SpawnConditions[splits.length];
 		int i = 0;

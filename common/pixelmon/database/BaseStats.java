@@ -30,8 +30,8 @@ public class BaseStats {
 	public Aggression aggression;
 	public EnumCreatureType creatureType;
 	public String droppedItem;
-	public String spawnBlock;
 	public SwimmingParameters swimmingParameters;
+	public SpawnConditions[] spawnConditions;
 
 	public class SwimmingParameters {
 		public int depthRangeStart;

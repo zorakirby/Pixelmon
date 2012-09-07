@@ -126,7 +126,7 @@ public class DatabaseStats {
 				if (type.equalsIgnoreCase("Land")) stats.creatureType = EnumCreatureType.creature;
 				else stats.creatureType = EnumCreatureType.waterCreature;
 				stats.droppedItem = rs.getString("DroppedItem");
-				stats.spawnBlock = rs.getString("SpawnConditions");
+				stats.spawnConditions = SpawnConditions.ParseSpawnConditions(rs.getString("SpawnConditions"));
 				
 				String sp = rs.getString("SwimmingParameters");
 				if (!rs.wasNull())
