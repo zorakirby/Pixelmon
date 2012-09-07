@@ -40,7 +40,7 @@ public class GuiChoosePokemon extends GuiScreen {
 		for (PixelmonDataPacket p : pokemon) {
 			if (p != null) {
 				if (!p.isFainted && p.pokemonID != userPacket.pokemonID) {
-					controlList.add(new GuiButton(p.order, width / 2 - 100, height / 8 + i * 24 + 20 + 12, p.nickname));
+					controlList.add(new GuiButton(p.order, width / 2 - 100, height / 8 + i * 24 + 20 + 12, p.nickname.equals("") ? p.name : p.nickname));
 					i++;
 				}
 			}

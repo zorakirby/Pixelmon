@@ -99,21 +99,7 @@ public class PCClick extends PacketHandlerBase {
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).changePokemon(e.originalPosition, e.nbt);
 			else
 				PixelmonStorage.ComputerManager.getPlayerStorage(player).changePokemon(e.originalBox, e.originalPosition, e.nbt);
-			return;
-		} else if (box == -5) {
-			// PlayerComputerStorage s =
-			// PixelmonStorage.ComputerManager.getPlayerStorage(player);
-			// for(ComputerBox b : s.getBoxList()){
-			// for(NBTTagCompound n: b.getStoredPokemon()){
-			// if (n != null) {
-			// PixelmonDataPacket p = new PixelmonDataPacket(n,
-			// EnumPackets.AddToTempStore);
-			// ((EntityPlayerMP)player).serverForThisPlayer.sendPacketToPlayer(p.getPacket());
-			// }
-			// }
-			// }
-			// player.openGui(Pixelmon.instance, EnumGui.PC.getIndex(),
-			// player.worldObj, 0,0,0);
+			return;		
 		}
 
 	}

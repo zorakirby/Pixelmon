@@ -54,6 +54,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		isImmuneToFire = type.contains(EnumType.Fire);
 
 		if (level.getLevel() == -1) {
+			setHealth(stats.HP);
 			if (baseStats.SpawnLevelRange <= 0)
 				level.setLevel(baseStats.SpawnLevel);
 			else

@@ -71,7 +71,7 @@ public class EntityPokeBall extends EntityThrowable {
 			return false;
 		return dataWatcher.getWatchableObjectShort(12) == (short) 1;
 	}
-	
+
 	private void setIsOnGround(boolean value) {
 		dataWatcher.updateObject(13, value ? (short) 1 : (short) 0);
 	}
@@ -159,6 +159,16 @@ public class EntityPokeBall extends EntityThrowable {
 				if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)) {
 					EntityPixelmon entitypixelmon = (EntityPixelmon) movingobjectposition.entityHit;
 					p = entitypixelmon;
+
+					if (p.getOwner() != null) {
+						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
+						if (dropItem) {
+							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+						}
+						setDead();
+						return;
+					}
+
 					if (p.hitByPokeball) {
 						if (dropItem) {
 							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
@@ -167,11 +177,6 @@ public class EntityPokeBall extends EntityThrowable {
 						return;
 					}
 					p.hitByPokeball = true;
-					if (p.getOwner() == (EntityPlayer) thrower) {
-						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
-						// spawnFailParticles();
-						return;
-					}
 					doCaptureCalc(p);
 					setIsWaiting(true);
 					motionX = motionZ = 0;
@@ -262,8 +267,8 @@ public class EntityPokeBall extends EntityThrowable {
 		super.onUpdate();
 		if (!getIsOnGround()) {
 			rotationYaw += 50;
-		}else{
-			motionY=0;
+		} else {
+			motionY = 0;
 		}
 		rotationPitch = 0;
 		if (getIsOnGround() && worldObj.isRemote) {
