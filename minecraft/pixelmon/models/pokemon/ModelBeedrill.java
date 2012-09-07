@@ -87,12 +87,9 @@ public class ModelBeedrill extends ModelBase
     {
       textureWidth = 512;
       textureHeight = 256;
-      setTextureOffset("Beedrill.body", 0, 0);
-      setTextureOffset("ArmL.DELETE", 0, 0);
-      setTextureOffset("ArmR.DELETE", 0, 0);
       
       Beedrill = new ModelRenderer(this, "Beedrill");
-      Beedrill.setRotationPoint(0F, 0F, 0F);
+      Beedrill.setRotationPoint(0F, -60F, 0F);
       setRotation(Beedrill, 0F, 0F, 0F);
       Beedrill.mirror = true;
         HeadCenter = new ModelRenderer(this, 0, 227);
