@@ -162,14 +162,16 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		this.posX = par1;
 		this.posY = par3;
 		this.posZ = par5;
-		float halfWidth = this.width * getScale() / 2.0F;
-		float halfLength = this.length * getScale() / 2.0F;
+		float scale =1;
+		if (isInitialised) scale = getScale();
+		float halfWidth = this.width * scale / 2.0F;
+		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height * getScale() + hoverHeight, par5 + (double) halfLength);
+					- (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5 + (double) halfLength);
 		else
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height * getScale(), par5 + (double) halfLength);
+					- (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
 	}
 
 	public void updateStats() {
