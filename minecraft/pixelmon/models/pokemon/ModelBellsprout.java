@@ -116,13 +116,13 @@ public class ModelBellsprout extends ModelBase
       Stem_10.setRotationPoint(0F, -4.5F, 1.3F);
       Stem_10.setTextureSize(128, 128);
       Stem_10.mirror = true;
-      setRotation(Stem_10, 0F, -1.58825F, 1.867502F);
+      setRotation(Stem_10, -1.58825F, 0F, 1.867502F);
       Stem_9 = new ModelRenderer(this, 49, 17);
       Stem_9.addBox(-4F, -1F, -1F, 5, 2, 2);
       Stem_9.setRotationPoint(0F, -3.2F, 0.9F);
       Stem_9.setTextureSize(128, 128);
       Stem_9.mirror = true;
-      setRotation(Stem_9, 0F, -1.58825F, 1.867502F);
+      setRotation(Stem_9, -1.58825F, 0F, 1.867502F);
       
       StemBase.addChild(Stem_10);
       StemBase.addChild(Stem_9);
@@ -136,13 +136,13 @@ public class ModelBellsprout extends ModelBase
       Stem_8.setRotationPoint(0F, -5.5F, 1.4F);
       Stem_8.setTextureSize(128, 128);
       Stem_8.mirror = true;
-      setRotation(Stem_8, 0F, -1.58825F, 1.867502F);
+      setRotation(Stem_8, -1.58825F, 0F, 1.867502F);
       Stem_7 = new ModelRenderer(this, 49, 29);
       Stem_7.addBox(0F, -1F, -1F, 5, 2, 2);
       Stem_7.setRotationPoint(0F, -9.5F, 2.2F);
       Stem_7.setTextureSize(128, 128);
       Stem_7.mirror = true;
-      setRotation(Stem_7, 0F, -1.58825F, 1.780236F);
+      setRotation(Stem_7, -1.58825F, 0F, 1.780236F);
       
       StemPiece1.addChild(Stem_8);
       StemPiece1.addChild(Stem_7);
@@ -157,25 +157,25 @@ public class ModelBellsprout extends ModelBase
       Stem_6.setRotationPoint(0F, -3.3F, 0.1F);
       Stem_6.setTextureSize(128, 128);
       Stem_6.mirror = true;
-      setRotation(Stem_6, 0F, -1.58825F, 1.623156F);
+      setRotation(Stem_6, -1.58825F, 0F, 1.623156F);
       Stem_5 = new ModelRenderer(this, 49, 42);
       Stem_5.addBox(0F, -1F, -1F, 5, 2, 2);
       Stem_5.setRotationPoint(0F, -9.2F, -0.1F);
       Stem_5.setTextureSize(128, 128);
       Stem_5.mirror = true;
-      setRotation(Stem_5, 0F, -1.58825F, 1.53589F);
+      setRotation(Stem_5,-1.58825F, 0F, 1.53589F);
       Leaf_L = new ModelRenderer(this, 66, 57);
       Leaf_L.addBox(-4F, 0F, -19F, 14, 0, 18);
       Leaf_L.setRotationPoint(0F, -5F, 0F);
       Leaf_L.setTextureSize(128, 128);
-      Leaf_L.mirror = true;
-      setRotation(Leaf_L, 0F, -1.383618F, 1.58825F);
+      Leaf_L.mirror = false;
+      setRotation(Leaf_L, -1.383618F, 0F, -1.58825F);
       Leaf_R = new ModelRenderer(this, 65, 77);
       Leaf_R.addBox(-5F, 0F, 1F, 14, 0, 18);
       Leaf_R.setRotationPoint(0F, -5F, 0F);
       Leaf_R.setTextureSize(128, 128);
-      Leaf_R.mirror = true;
-      setRotation(Leaf_R, 0F, -1.62441F, 1.58825F);
+      Leaf_R.mirror = false;
+      setRotation(Leaf_R, -1.62441F, 0F, -1.58825F);
       
       StemPiece2.addChild(Stem_6);
       StemPiece2.addChild(Stem_5);
@@ -192,13 +192,13 @@ public class ModelBellsprout extends ModelBase
       Stem_4.setRotationPoint(0F, -4.6F, -0.8F);
       Stem_4.setTextureSize(128, 128);
       Stem_4.mirror = true;
-      setRotation(Stem_4, 0F, -1.58825F, 1.37881F);
+      setRotation(Stem_4, -1.58825F, 0F, 1.37881F);
       Stem_3 = new ModelRenderer(this, 49, 54);
       Stem_3.addBox(0F, -1F, -1F, 5, 2, 2);
       Stem_3.setRotationPoint(0F, -8.8F, -2.1F);
       Stem_3.setTextureSize(128, 128);
       Stem_3.mirror = true;
-      setRotation(Stem_3, 0F, -1.58825F, 1.27409F);
+      setRotation(Stem_3, -1.58825F, 0F, 1.27409F);
       
       StemPiece3.addChild(Stem_4);
       StemPiece3.addChild(Stem_3);
@@ -279,13 +279,13 @@ public class ModelBellsprout extends ModelBase
       Lip3.setRotationPoint(2.5F, -2.7F, -14.2F);
       Lip3.setTextureSize(128, 128);
       Lip3.mirror = true;
-      setRotation(Lip3, 0F, -1.58825F, 1.239184F);
+      setRotation(Lip3, -1.58825F, 0F, 1.239184F);
       Lip4 = new ModelRenderer(this, 48, 107);
       Lip4.addBox(-2F, 0F, -1F, 5, 1, 1);
       Lip4.setRotationPoint(-3.4F, -2.7F, -14.2F);
       Lip4.setTextureSize(128, 128);
       Lip4.mirror = true;
-      setRotation(Lip4, 0F, -1.58825F, 1.239184F);
+      setRotation(Lip4, -1.58825F, 0F, 1.239184F);
       
       StemHead.addChild(Stem_2);
       StemHead.addChild(HeadMain);
@@ -300,6 +300,7 @@ public class ModelBellsprout extends ModelBase
       StemHead.addChild(Lip2);
       StemHead.addChild(Lip3);
       StemHead.addChild(Lip4);
+      StemPiece3.addChild(StemHead);
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
