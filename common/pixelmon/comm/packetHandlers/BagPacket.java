@@ -31,6 +31,7 @@ public class BagPacket extends PacketHandlerBase {
 	public void handlePacket(int index, Player player, DataInputStream dataStream) throws IOException {
 		int itemIndex = dataStream.readInt();
 		int battleIndex = dataStream.readInt();
+		int additionalInfo = dataStream.readInt();
 
 		ItemStack usedStack = null;
 		for (ItemStack i : ((EntityPlayer) player).inventory.mainInventory) {
@@ -51,7 +52,7 @@ public class BagPacket extends PacketHandlerBase {
 			return;
 		}
 		
-		bc.setUseItem(player, usedStack);
+		bc.setUseItem(player, usedStack, additionalInfo);
 	}
 
 }

@@ -27,6 +27,10 @@ public class PixelmonItem extends Item {
 
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {	}
 	
+	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon, int additionalInfo) {
+		useFromBag(userPokemon, targetPokemon);
+	}
+	
 	public boolean isUsableOutSideBattle(){
 		return isUsableOutsideBattle;
 	}

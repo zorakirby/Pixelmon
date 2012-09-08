@@ -239,6 +239,8 @@ public class BattleController {
 	boolean pixelmon2IsSwitching = false;
 	ItemStack pixelmon1WillUseItemInStack = null;
 	ItemStack pixelmon2WillUseItemInStack = null;
+	int pixelmon1WillUseItemInStackInfo = 0;
+	int pixelmon2WillUseItemInStackInfo = 0;
 
 	private void pickMoves() {
 		pixelmon1CanAttack = true;
@@ -373,12 +375,14 @@ public class BattleController {
 		}
 	}
 
-	public void setUseItem(Player user, ItemStack usedStack){
+	public void setUseItem(Player user, ItemStack usedStack, int additionalInfo){
 		if (participant1 instanceof PlayerParticipant && ((PlayerParticipant) participant1).player == (EntityPlayerMP) user) {
 			pixelmon1WillUseItemInStack = usedStack;
+			pixelmon1WillUseItemInStackInfo = additionalInfo;
 			participant1Wait = false;
 		} else {
 			pixelmon2WillUseItemInStack = usedStack;
+			pixelmon2WillUseItemInStackInfo = additionalInfo;
 			participant2Wait = false;
 		}
 	}
@@ -415,22 +419,27 @@ public class BattleController {
 		PixelmonItem item = null;
 		EntityPlayer user = null;
 		ItemStack usedStack = null;
+		int additionalInfo = 0;
 		if (isP1) {
 			userPokemon = participant1.currentPokemon();
 			targetPokemon = participant2.currentPokemon();
 			usedStack = pixelmon1WillUseItemInStack;
+			additionalInfo = pixelmon1WillUseItemInStackInfo;
 			user = ((PlayerParticipant) participant1).player;
 			pixelmon1WillUseItemInStack = null;
+			pixelmon1WillUseItemInStackInfo = 0;
 		} else {
 			userPokemon = participant2.currentPokemon();
 			targetPokemon = participant1.currentPokemon();
 			usedStack = pixelmon2WillUseItemInStack;
+			additionalInfo = pixelmon2WillUseItemInStackInfo;
 			user = ((PlayerParticipant) participant2).player;
 			pixelmon2WillUseItemInStack = null;
+			pixelmon2WillUseItemInStackInfo = 0;
 		}
 		
 		item = (PixelmonItem) usedStack.getItem();
-		item.useFromBag(userPokemon, targetPokemon);
+		item.useFromBag(userPokemon, targetPokemon, additionalInfo);
 
 		ItemStack[] inv = user.inventory.mainInventory;
 		if (((EntityPlayer) Minecraft.getMinecraft().thePlayer).entityId == user.entityId) {
