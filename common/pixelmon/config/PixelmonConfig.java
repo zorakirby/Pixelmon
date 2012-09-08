@@ -7,9 +7,9 @@ import java.util.Iterator;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 
-import pixelmon.entities.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
+import pixelmon.entities.trainers.EntityTrainer;
 
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.EntityList;
@@ -19,6 +19,7 @@ import net.minecraftforge.common.Configuration;
 
 public class PixelmonConfig {
 	
+
 	public static boolean isInMetric = true;
 	
 	public static Configuration config;
@@ -29,6 +30,7 @@ public class PixelmonConfig {
 	
 	public static int chanceOfNoPokemon;
 	
+	public static int idTrainers = 199;
 	public static int idPixelmon=200;
 	public static int idPokeball=201;
 	public static void loadConfig(Configuration configuration)
@@ -37,11 +39,10 @@ public class PixelmonConfig {
 		config.load();
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
-		//IDListPixelmon.load(config);
-		IDListTrainer.load(config);
 		allowNonPixelmonMobs = config.getOrCreateBooleanProperty("Allow vanilla mobs", "general", false).getBoolean(false);
 		maxPokemonPerChunk = config.getOrCreateIntProperty("Max number of pokemon per chunk", "general", 4).getInt(4);
 		chanceOfNoPokemon = config.getOrCreateIntProperty("Percent chance of no pokemon in chunk", "general", 30).getInt(20);
+		idTrainers = config.getOrCreateIntProperty("Trainer ID", "IDs", 199).getInt(199);
 		idPixelmon = config.getOrCreateIntProperty("Pixelmon ID", "IDs", 200).getInt(200);
 		idPokeball = config.getOrCreateIntProperty("Pokeball ID", "IDs", 201).getInt(201);
 		config.save();

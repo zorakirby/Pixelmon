@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.*;
+import pixelmon.enums.EnumPokemon;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.CommandBase;
@@ -55,11 +56,8 @@ public class CommandSpawn extends CommandBase {
 	public List addTabCompletionOptions(ICommandSender sender, String[] par2ArrayOfStr)
 	{
 		ArrayList<String> pokemon = new ArrayList<String>();
-		Iterator it = PixelmonEntityList.idToStringMapping.entrySet().iterator();
-		while(it.hasNext())
-		{
-			pokemon.add((String)((Entry)it.next()).getValue());
-		}
+		for (EnumPokemon p: EnumPokemon.values())
+			pokemon.add(p.name);
 		return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, pokemon.toArray(new String[]{})): null;
 	}
 

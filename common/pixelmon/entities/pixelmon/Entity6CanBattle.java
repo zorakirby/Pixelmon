@@ -10,7 +10,7 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.database.BattleStats;
 import pixelmon.database.DatabaseMoves;
-import pixelmon.entities.EntityTrainer;
+import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.DamageSource;

@@ -9,4 +9,6 @@ public class TrainerInfo {
 	public String greeting;
 	public String winMessage;
 	public String loseMessage;
+	public String model;
+	public int rarity;
 }
