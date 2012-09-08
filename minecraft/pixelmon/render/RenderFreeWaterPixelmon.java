@@ -17,7 +17,7 @@ import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import pixelmon.entities.pixelmon.helpers.LevelHelper;
+import pixelmon.entities.pixelmon.stats.LevelHelper;
 
 public class RenderFreeWaterPixelmon extends RenderLiving {
 	public RenderFreeWaterPixelmon(ModelBase par1ModelBase, float par2) { // par2

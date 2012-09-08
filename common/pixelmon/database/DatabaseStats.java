@@ -8,8 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import pixelmon.database.BaseStats.Aggression;
-import pixelmon.database.BaseStats.SwimmingParameters;
+import pixelmon.entities.pixelmon.stats.BaseStats;
+import pixelmon.entities.pixelmon.stats.BaseStats.Aggression;
+import pixelmon.entities.pixelmon.stats.BaseStats.SwimmingParameters;
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumType;
@@ -131,6 +132,13 @@ public class DatabaseStats {
 				String sp = rs.getString("SwimmingParameters");
 				if (!rs.wasNull())
 					stats.swimmingParameters = stats.new SwimmingParameters(sp, pixelmonName);
+				
+				stats.evGain[0] = rs.getInt("EvGainHP");
+				stats.evGain[1] = rs.getInt("EvGainAtk");
+				stats.evGain[2] = rs.getInt("EvGainDef");
+				stats.evGain[3] = rs.getInt("EvGainSpAtk");
+				stats.evGain[4] = rs.getInt("EvGainSpDef");
+				stats.evGain[5] = rs.getInt("EvGainSpeed");
 			}
 			conn.close();
 			return stats;

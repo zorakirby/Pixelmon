@@ -75,5 +75,6 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		super.readEntityFromNBT(nbt);
 		dataWatcher.updateObject(5, nbt.getBoolean("IsShiny") ? (short) 1 : (short) 0);
 		dataWatcher.updateObject(6, nbt.getBoolean("IsRoasted") ? (short) 1 : (short) 0);
+		alreadyInitialised = true;
 	}
 }

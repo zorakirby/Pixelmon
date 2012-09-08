@@ -16,8 +16,8 @@ import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonEntityList;
-import pixelmon.database.BattleStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pixelmon.stats.BattleStats;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumHeldItems;
@@ -342,9 +342,12 @@ public class BattleController {
 				double exp = ((a * b * L) / (5 * s) * (Math.pow(2 * L + 10, 2.5) / Math.pow(L + Lp + 10, 2.5)) + 1) * t * e * p;
 				if (userIndex == entityPixelmon.getPokemonId()) {
 					entityPixelmon.getLvl().awardEXP((int) exp);
+					if (entityPixelmon.getLvl().canLevelUp())
+						entityPixelmon.stats.EVs.gainEV(target.baseStats.evGain);
 				} else {
 					EntityPixelmon pix = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)entityPixelmon.getOwner()).sendOut(userIndex, entityPixelmon.getOwner().worldObj);
 					pix.getLvl().awardEXP((int) exp);
+					pix.stats.EVs.gainEV(target.baseStats.evGain);
 					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).retrieve(pix);
 				}
 				doneUsers.add(userIndex);

@@ -1,6 +1,8 @@
-package pixelmon.database;
+package pixelmon.entities.pixelmon.stats;
 
 import net.minecraft.src.EnumCreatureType;
+import pixelmon.database.ExperienceGroup;
+import pixelmon.database.SpawnConditions;
 import pixelmon.enums.EnumType;
 
 public class BaseStats {
@@ -32,6 +34,7 @@ public class BaseStats {
 	public String droppedItem;
 	public SwimmingParameters swimmingParameters;
 	public SpawnConditions[] spawnConditions;
+	public int[] evGain = new int[6];
 
 	public class SwimmingParameters {
 		public int depthRangeStart;

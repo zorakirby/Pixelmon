@@ -6,9 +6,9 @@ import java.io.IOException;
 
 import cpw.mods.fml.common.network.NetworkMod;
 
-import pixelmon.database.BaseStats;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pixelmon.stats.BaseStats;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.Entity;

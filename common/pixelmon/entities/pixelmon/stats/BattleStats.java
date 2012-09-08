@@ -1,4 +1,4 @@
-package pixelmon.database;
+package pixelmon.entities.pixelmon.stats;
 
 import net.minecraft.src.NBTTagCompound;
 

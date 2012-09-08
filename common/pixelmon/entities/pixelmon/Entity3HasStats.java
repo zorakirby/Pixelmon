@@ -6,11 +6,12 @@ import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 
 import pixelmon.RandomHelper;
-import pixelmon.database.BaseStats;
 import pixelmon.database.DatabaseStats;
-import pixelmon.database.PixelmonIVStore;
-import pixelmon.database.Stats;
 import pixelmon.entities.pixelmon.helpers.*;
+import pixelmon.entities.pixelmon.stats.BaseStats;
+import pixelmon.entities.pixelmon.stats.LevelHelper;
+import pixelmon.entities.pixelmon.stats.IVStore;
+import pixelmon.entities.pixelmon.stats.Stats;
 import pixelmon.enums.EnumType;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.EntityPlayerMP;
@@ -42,7 +43,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	protected void init(String name) {
 		super.init(name);
 		baseStats = DatabaseStats.GetBaseStats(name);
-		stats.IVs = PixelmonIVStore.CreateNewIVs();
+		stats.IVs = IVStore.CreateNewIVs();
 		setSize(baseStats.Width, baseStats.Height + hoverHeight);
 		setType();
 		length = baseStats.Length;

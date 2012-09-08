@@ -1,4 +1,4 @@
-package pixelmon.entities.pixelmon.helpers;
+package pixelmon.entities.pixelmon.stats;
 
 import java.util.ArrayList;
 

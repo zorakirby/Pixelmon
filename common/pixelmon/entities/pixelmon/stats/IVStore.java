@@ -1,9 +1,9 @@
-package pixelmon.database;
+package pixelmon.entities.pixelmon.stats;
 
 import pixelmon.RandomHelper;
 import net.minecraft.src.NBTTagCompound;
 
-public class PixelmonIVStore {
+public class IVStore {
 	public int HP;
 	public int Attack;
 	public int Defence;
@@ -11,8 +11,8 @@ public class PixelmonIVStore {
 	public int SpDef;
 	public int Speed;
 
-	public static PixelmonIVStore CreateNewIVs() {
-		PixelmonIVStore iv = new PixelmonIVStore();
+	public static IVStore CreateNewIVs() {
+		IVStore iv = new IVStore();
 		iv.SpDef = RandomHelper.getRandomNumberBetween(0, 32);
 		iv.SpAtt = RandomHelper.getRandomNumberBetween(0, 32);
 		iv.Speed = RandomHelper.getRandomNumberBetween(0, 32);
@@ -40,7 +40,7 @@ public class PixelmonIVStore {
 		Speed = var1.getInteger("IVSpeed");
 	}
 
-	public void CopyIVs(PixelmonIVStore iVs) {
+	public void CopyIVs(IVStore iVs) {
 		HP = iVs.HP;
 		Attack = iVs.Attack;
 		Defence = iVs.Defence;
