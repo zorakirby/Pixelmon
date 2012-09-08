@@ -37,12 +37,29 @@ public class PixelmonItem extends Item {
 		return isEquippable;
 	}
 	
-	public void removeFromInventory(ItemStack[] inv){
+	public int removeFromInventory(ItemStack[] inv){
+		int newStackSize = -1;
 		for (int i = 0; i < inv.length; i++) {
 			if (inv[i] != null && inv[i].getItem().shiftedIndex == shiftedIndex){
 				inv[i].stackSize--;
+				newStackSize = inv[i].stackSize;
 				if (inv[i].stackSize < 1){
 					inv[i] = null;
+				}
+				break;
+			}
+		}
+		return newStackSize;
+	}
+	
+	public void removeFromInventory(ItemStack[] inv, ItemStack[] c_inv){
+		int newStackSize = removeFromInventory(inv);
+		for (int i = 0; i < c_inv.length; i++) {
+			if (c_inv[i] != null && c_inv[i].getItem().shiftedIndex == shiftedIndex){
+				if ( newStackSize > 0 ){
+					c_inv[i].stackSize = newStackSize;
+				} else {
+					c_inv[i] = null;
 				}
 				break;
 			}

@@ -434,9 +434,11 @@ public class BattleController {
 
 		ItemStack[] inv = user.inventory.mainInventory;
 		if (((EntityPlayer) Minecraft.getMinecraft().thePlayer).entityId == user.entityId) {
-			inv = ((EntityPlayer) Minecraft.getMinecraft().thePlayer).inventory.mainInventory;
+			ItemStack[] c_inv = ((EntityPlayer) Minecraft.getMinecraft().thePlayer).inventory.mainInventory;
+			item.removeFromInventory(inv,c_inv);
+		} else {
+			item.removeFromInventory(inv);
 		}
-		item.removeFromInventory(inv);
 
 		ChatHandler.sendChat(user, item.getItemDisplayName(usedStack) + " used!");
 	}
