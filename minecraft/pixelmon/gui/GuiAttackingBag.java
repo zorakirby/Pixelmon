@@ -21,16 +21,19 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.PixelmonItem;
+import pixelmon.items.ItemEther;
 
 public class GuiAttackingBag extends GuiScreen {
 
 	private GuiAttacking parent;
+	private PixelmonDataPacket userPacket;
 	private boolean choiceSelected;
 	private ArrayList<GuiAttackingBagSlot> bagSlots;
 	private GuiAttackingBagSlot selected;
 
-	public GuiAttackingBag(GuiAttacking parent) {
+	public GuiAttackingBag(PixelmonDataPacket userPacket, GuiAttacking parent) {
 		this.parent = parent;
+		this.userPacket = userPacket;
 		choiceSelected = false;
 		bagSlots = new ArrayList<GuiAttackingBagSlot>();
 		selected = null;
@@ -87,9 +90,13 @@ public class GuiAttackingBag extends GuiScreen {
 				return;
 			}
 			Item item = selected.getItem().getItem();
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.battleControllerIndex,0));
-			mc.displayGuiScreen(null);
-			mc.setIngameFocus();
+			if (item instanceof ItemEther && !((ItemEther)item).type.restoresAllMoves()){
+				mc.displayGuiScreen(new GuiMoveSelectForItem(userPacket, this, item));
+			} else {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.battleControllerIndex,0));
+				mc.displayGuiScreen(null);
+				mc.setIngameFocus();
+			}
 		}
 	}
 
@@ -110,6 +117,10 @@ public class GuiAttackingBag extends GuiScreen {
 		super.drawScreen(par1, par2, par3);
 	}
 
+	public GuiAttacking getParent(){
+		return this.parent;
+	}
+	
 	public void keyTyped(char i, int i1) {
 	}
 
