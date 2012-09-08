@@ -614,6 +614,12 @@ public class ModelCamerupt extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    HEADPIECE.rotateAngleY = f3 / (180F / (float)Math.PI);
+    HEADPIECE.rotateAngleX = f4 / (180F / (float)Math.PI);
+    UPPERRIGHTLEGPIECE.rotateAngleX = MathHelper.cos(f * .8F) * 1.1F * f1;
+    BOTTOMRIGHTLEGPIECE.rotateAngleX = MathHelper.cos(f * .8F + (float)Math.PI) * 1.1F * f1;
+    BOTTOMLEFTLEGPIECE.rotateAngleX = MathHelper.cos(f * .8F) * 1.1F * f1;
+    UPPERLEFTLEGPIECE.rotateAngleX = MathHelper.cos(f * .8F + (float)Math.PI) * 1.1F * f1;
   }
 
 }
