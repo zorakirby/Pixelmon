@@ -141,11 +141,11 @@ public class PixelmonItems {
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(5);
 		potion = new ItemPotion(potionID).setItemName("Potion").setIconIndex(2).setMaxStackSize(16);
 		coalDust = new PixelmonItem(coalDustID).setItemName("CoalDust").setIconIndex(4);
-		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.FIRESTONE, 3).setItemName("FireStone");
-		waterStone = new ItemEvolutionStone(waterStoneID, EnumEvolutionStone.WATERSTONE, 1).setItemName("WaterStone");
-		moonStone = new ItemEvolutionStone(moonStoneID, EnumEvolutionStone.MOONSTONE, 4).setItemName("MoonStone");
-		thunderStone = new ItemEvolutionStone(thunderStoneID, EnumEvolutionStone.THUNDERSTONE, 0).setItemName("ThunderStone");
-		leafStone = new ItemEvolutionStone(leafStoneID, EnumEvolutionStone.LEAFSTONE, 2).setItemName("LeafStone");
+		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.Firestone, 3).setItemName("FireStone");
+		waterStone = new ItemEvolutionStone(waterStoneID, EnumEvolutionStone.Waterstone, 1).setItemName("WaterStone");
+		moonStone = new ItemEvolutionStone(moonStoneID, EnumEvolutionStone.Moonstone, 4).setItemName("MoonStone");
+		thunderStone = new ItemEvolutionStone(thunderStoneID, EnumEvolutionStone.Thunderstone, 0).setItemName("ThunderStone");
+		leafStone = new ItemEvolutionStone(leafStoneID, EnumEvolutionStone.Leafstone, 2).setItemName("LeafStone");
 		pcItem = new ItemBlock(pcItemID, PixelmonBlocks.pc, 38).setItemName("PC");
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 54).setItemName("Healer");
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID).setItemName("ThunderStoneShard").setIconIndex(7);
