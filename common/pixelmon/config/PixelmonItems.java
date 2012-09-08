@@ -10,11 +10,13 @@ import net.minecraft.src.Item;
 
 import net.minecraftforge.common.Configuration;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.enums.EnumEthers;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumPotions;
 import pixelmon.items.ItemBlock;
+import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPokeBall;
@@ -39,6 +41,10 @@ public class PixelmonItems {
 	public static int superPotionID;
 	public static int hyperPotionID;
 	public static int maxPotionID;
+	public static int etherID;
+	public static int maxEtherID;
+	public static int elixirID;
+	public static int maxElixirID;
 	public static int coalDustID;
 	public static int fireStoneID;
 	public static int waterStoneID;
@@ -73,6 +79,7 @@ public class PixelmonItems {
 	
 	@Mod.Item(name = "Rare Candy", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item rareCandy;
+	
 	@Mod.Item(name = "Potion", typeClass = "pixelmon.items.ItemPotion")
 	public static Item potion;
 	@Mod.Item(name = "Super Potion", typeClass = "pixelmon.items.ItemPotion")
@@ -81,6 +88,15 @@ public class PixelmonItems {
 	public static Item hyperPotion;
 	@Mod.Item(name = "Max Potion", typeClass = "pixelmon.items.ItemPotion")
 	public static Item maxPotion;
+	@Mod.Item(name = "Ether", typeClass = "pixelmon.items.ItemEther")
+	public static Item ether;
+	@Mod.Item(name = "Max Ether", typeClass = "pixelmon.items.ItemEther")
+	public static Item maxEther;
+	@Mod.Item(name = "Elixir", typeClass = "pixelmon.items.ItemEther")
+	public static Item elixir;
+	@Mod.Item(name = "Max Elixir", typeClass = "pixelmon.items.ItemEther")
+	public static Item maxElixir;
+	
 	@Mod.Item(name = "Coal Dust", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item coalDust;
 	
@@ -130,6 +146,10 @@ public class PixelmonItems {
 		superPotionID = cfg.getOrCreateIntProperty("SuperPotion", "item", 10050).getInt();
 		hyperPotionID = cfg.getOrCreateIntProperty("HyperPotion", "item", 10051).getInt();
 		maxPotionID = cfg.getOrCreateIntProperty("MaxPotion", "item", 10052).getInt();
+		etherID = cfg.getOrCreateIntProperty("Ether", "item", 10053).getInt();
+		maxEtherID = cfg.getOrCreateIntProperty("MaxEther", "item", 10054).getInt();
+		elixirID = cfg.getOrCreateIntProperty("Elixir", "item", 10055).getInt();
+		maxElixirID = cfg.getOrCreateIntProperty("MaxElixir", "item", 10056).getInt();
 		coalDustID = cfg.getOrCreateIntProperty("CoalDust", "item", 10007).getInt();
 		fireStoneID = cfg.getOrCreateIntProperty("FireStone", "item", 10008).getInt();
 		waterStoneID = cfg.getOrCreateIntProperty("WaterStone", "item", 10009).getInt();
@@ -156,6 +176,10 @@ public class PixelmonItems {
 		superPotion = new ItemPotion(superPotionID, EnumPotions.SuperPotion).setItemName("Super Potion");
 		hyperPotion = new ItemPotion(hyperPotionID, EnumPotions.HyperPotion).setItemName("Hyper Potion");
 		maxPotion = new ItemPotion(maxPotionID, EnumPotions.MaxPotion).setItemName("Max Potion");
+		ether = new ItemEther(etherID, EnumEthers.Ether).setItemName("Ether");
+		maxEther = new ItemEther(maxEtherID, EnumEthers.MaxEther).setItemName("Max Ether");
+		elixir = new ItemEther(elixirID, EnumEthers.Elixir).setItemName("Elixir");
+		maxElixir = new ItemEther(maxElixirID, EnumEthers.MaxElixir).setItemName("Max Elixir");
 		coalDust = new PixelmonItem(coalDustID).setItemName("CoalDust").setIconIndex(4);
 		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.Firestone, 3).setItemName("FireStone");
 		waterStone = new ItemEvolutionStone(waterStoneID, EnumEvolutionStone.Waterstone, 1).setItemName("WaterStone");
