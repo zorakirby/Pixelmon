@@ -61,7 +61,7 @@ public class DatabaseHelper {
 				}
 				else
 				{
-					checkVersion();
+					//checkVersion();
 				}
 				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
 				if (!sqlitejar.exists())

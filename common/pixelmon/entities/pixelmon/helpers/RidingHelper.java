@@ -66,7 +66,7 @@ public class RidingHelper {
 	}
 
 	public void moveEntity(double d, double d1, double d2) {
-		if (parent.riddenByEntity != null) {
+		if (parent.riddenByEntity != null && worldObj.isRemote) {
 			/**
 			 * initiate sprinting while ridden via keybind. Basically, if the
 			 * player has tapped once, it begins the timer which counts down

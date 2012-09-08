@@ -44,6 +44,7 @@ public class BattleController {
 	private ArrayList<Integer> attackersList2 = new ArrayList<Integer>();
 
 	public ArrayList<StatusEffectBase> battleStatusList = new ArrayList<StatusEffectBase>();
+	private boolean battleEnded = false;
 
 	public BattleController(IBattleParticipant participant1, IBattleParticipant participant2) {
 		BattleRegistry.registerBattle(this);
@@ -76,6 +77,7 @@ public class BattleController {
 	private Attack[] attacks = new Attack[2];
 
 	public void endBattle(boolean did1Win) {
+		battleEnded = true;
 		participant1.EndBattle(did1Win, participant2);
 		participant2.EndBattle(!did1Win, participant1);
 		BattleRegistry.deRegisterBattle(this);
@@ -109,7 +111,7 @@ public class BattleController {
 				}
 
 				checkAndReplaceFaintedPokemon(participant1, participant2);
-				checkAndReplaceFaintedPokemon(participant2, participant1);
+				if (!battleEnded) checkAndReplaceFaintedPokemon(participant2, participant1);
 				moveStage = MoveStage.SecondMove;
 			} else if (moveStage == MoveStage.SecondMove) { // Second Move
 				if (attacks[0] == null || (attacks[0] != null && !attacks[0].flinched)) {
@@ -138,7 +140,7 @@ public class BattleController {
 				}
 
 				checkAndReplaceFaintedPokemon(participant1, participant2);
-				checkAndReplaceFaintedPokemon(participant2, participant1);
+				if (!battleEnded) checkAndReplaceFaintedPokemon(participant2, participant1);
 				moveStage = MoveStage.PickAttacks;
 			}
 			battleTicks = 0;
@@ -179,7 +181,7 @@ public class BattleController {
 					pixelmon2CanAttack = false;
 				}
 			} else {
-				endBattle(true);
+				endBattle(foe==participant1);
 			}
 		}
 	}

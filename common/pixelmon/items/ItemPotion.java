@@ -18,9 +18,9 @@ public class ItemPotion extends PixelmonItem {
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
 		if (userPokemon.getHealth() + 20 >= userPokemon.stats.HP) {
-			userPokemon.setHealth(userPokemon.stats.HP);
+			userPokemon.setEntityHealth(userPokemon.stats.HP);
 		} else {
-			userPokemon.setHealth(userPokemon.getHealth() + 20);
+			userPokemon.setEntityHealth(userPokemon.getHealth() + 20);
 		}
 		if (userPokemon.getOwner()!=null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)userPokemon.getOwner()).updateNBT(userPokemon);

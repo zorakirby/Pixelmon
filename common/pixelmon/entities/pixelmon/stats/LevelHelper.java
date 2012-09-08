@@ -60,15 +60,18 @@ public class LevelHelper {
 		setScale();
 		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
 		setExp(0);
-		float oldHp = pixelmon.stats.HP;
-		updateStats();
-		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
-		float newHealth;
-		if (oldHp == 0)
-			newHealth = pixelmon.getMaxHealth();
-		else
-			newHealth = ((float) pixelmon.getHealth()) * percentGain;
-		pixelmon.setHealth((int) Math.ceil(newHealth));
+		if (pixelmon.getHealth() == pixelmon.stats.HP) {
+			updateStats();
+			pixelmon.setEntityHealth(pixelmon.stats.HP);
+		} else {
+			float oldHp = pixelmon.stats.HP;
+			float oldHealth = pixelmon.getHealth();
+			updateStats();
+			float newHealth = pixelmon.stats.HP;
+			if (oldHp!=0) 
+				newHealth = oldHealth / oldHp * pixelmon.stats.HP;
+			pixelmon.setEntityHealth((int) Math.ceil(newHealth));
+		}
 	}
 
 	private int getExpForLevel(int level2) {

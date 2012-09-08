@@ -37,7 +37,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 			pixelmon.setDead();
 		else{
 			pixelmon.battleStats.clearBattleStats();
-			pixelmon.setHealth(pixelmon.stats.HP);
+			pixelmon.setEntityHealth(pixelmon.stats.HP);
 		}
 	}
 

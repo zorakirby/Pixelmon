@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Random;
 
 import pixelmon.enums.EnumBiomes;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.BiomeGenBase;
@@ -28,9 +30,14 @@ public class DatabaseTrainers {
 				info.name = nameListSplits[rand.nextInt(nameListSplits.length)];
 				String pokemonListString = rs.getString("UsablePokemon");
 				String[] pokemonListSplits = pokemonListString.split(";");
+				ArrayList<String> newList = new ArrayList<String>();
+				for (String s : pokemonListSplits)
+					if (EnumPokemon.hasPokemon(s))
+						newList.add(s);
+
 				int numPokemon = rand.nextInt(6) + 1;
 				for (int i = 0; i < numPokemon; i++) {
-					info.partypokemon.add(pokemonListSplits[rand.nextInt(pokemonListSplits.length)]);
+					info.partypokemon.add(newList.get(rand.nextInt(newList.size())));
 				}
 				int baseLevel = rs.getInt("BaseLevel");
 				int topLevel = rs.getInt("TopLevel");

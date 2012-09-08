@@ -177,4 +177,9 @@ public class ClientProxy extends CommonProxy {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public int getTexture(String string, String string2) {
+		return RenderingRegistry.addTextureOverride(string, string2);
+	}
 }

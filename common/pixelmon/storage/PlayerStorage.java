@@ -78,7 +78,8 @@ public class PlayerStorage {
 			PixelmonStorage.ComputerManager.getPlayerStorage(player).addToComputer(p);
 			return;
 		}
-		if (p.caughtBall == null) p.caughtBall = EnumPokeballs.MasterBall;
+		if (p.caughtBall == null)
+			p.caughtBall = EnumPokeballs.MasterBall;
 		if (mode == PokeballManagerMode.Player)
 			p.setOwner(player.username);
 		else if (mode == PokeballManagerMode.Trainer)
@@ -104,7 +105,7 @@ public class PlayerStorage {
 		} while (contains(id));
 
 		p.setPokemonId(id);
-		p.writeEntityToNBT(n);
+		p.writeEntityToStorageNBT(n);
 		p.writeToNBT(n);
 		p.getLvl().writeToNBT(n);
 		n.setString("id", "Pixelmon");
@@ -116,7 +117,7 @@ public class PlayerStorage {
 			n.setCompoundTag("Held Item", p.getHeldItem().writeToNBT(new NBTTagCompound()));
 		}
 		partyPokemon[getNextOpen()] = n;
-		if (n.getShort("Health") > 0)
+		if (p.getHealth() > 0)
 			n.setBoolean("IsFainted", false);
 		if (mode == PokeballManagerMode.Player)
 			((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.AddToStorage).getPacket());
@@ -153,7 +154,10 @@ public class PlayerStorage {
 				if (n.getInteger("pixelmonID") == id) {
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
-					e.setOwner(player.username);
+					if (mode == PokeballManagerMode.Player)
+						e.setOwner(player.username);
+					else
+						e.setTrainer(trainer);
 					e.motionX = e.motionY = e.motionZ = 0;
 					e.isDead = false;
 					return e;
@@ -261,6 +265,7 @@ public class PlayerStorage {
 					pixelmon.writeToNBT(nbt);
 					nbt.setString("id", pixelmon.getName());
 					nbt.setName(pixelmon.getName());
+					if (pixelmon.getHealth()<=0) nbt.setBoolean("IsFainted", true);
 					if (mode == PokeballManagerMode.Player)
 						player.serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 				}
@@ -367,7 +372,7 @@ public class PlayerStorage {
 	}
 
 	private void heal(NBTTagCompound nbt) {
-		nbt.setShort("Health", (short) nbt.getInteger("StatsHP"));
+		nbt.setShort("Health", (short)nbt.getInteger("StatsHP"));
 		nbt.setBoolean("IsFainted", false);
 		int numMoves = nbt.getInteger("PixelmonNumberMoves");
 		for (int i = 0; i < numMoves; i++) {

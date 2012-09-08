@@ -55,11 +55,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		isImmuneToFire = type.contains(EnumType.Fire);
 
 		if (level.getLevel() == -1) {
-			setHealth(stats.HP);
 			if (baseStats.SpawnLevelRange <= 0)
 				level.setLevel(baseStats.SpawnLevel);
 			else
 				level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
+			setEntityHealth(stats.HP);
 		}
 	}
 
@@ -127,10 +127,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			return 10;
 	}
 
-	public void setHealth(int i) {
-		health = i;
+	@Override
+	public void setEntityHealth(int par1) {
+		super.setEntityHealth(par1);
 		updateHealth();
 	}
+	
 
 	public void updateHealth() {
 		if (health > stats.HP)
@@ -203,5 +205,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super.readEntityFromNBT(nbt);
 		stats.readFromNBT(nbt);
 		level.readFromNBT(nbt);
+		updateHealth();
 	}
 }

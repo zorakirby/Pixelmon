@@ -84,7 +84,7 @@ public class PixelmonEntityList {
 	}
 
 	public static void registerEntities() {
-		EntityRegistry.registerModEntity(EntityPixelmon.class, "Trainer", PixelmonConfig.idTrainers, Pixelmon.instance, 100, 1, true);
+		EntityRegistry.registerModEntity(EntityTrainer.class, "Trainer", PixelmonConfig.idTrainers, Pixelmon.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityPixelmon.class, "Pixelmon", PixelmonConfig.idPixelmon, Pixelmon.instance, 100, 1, true);
 	}
 

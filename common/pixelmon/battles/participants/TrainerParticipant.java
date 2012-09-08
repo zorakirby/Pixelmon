@@ -42,14 +42,20 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
-		trainer.releasedPokemon.battleStats.clearBattleStats();
-		trainer.releasedPokemon.EndBattle();
-		trainer.healAllPokemon();
-		this.trainer.setAttackTarget(null);
-		if (didWin)
+		if (didWin) {
+			trainer.releasedPokemon.battleStats.clearBattleStats();
+			trainer.releasedPokemon.EndBattle();
+			trainer.healAllPokemon();
+			this.trainer.setAttackTarget(null);
+			trainer.releasedPokemon.setDead();
 			trainer.winBattle(foe.currentPokemon().getOwner());
-		else
+		} else {
 			trainer.loseBattle(foe.currentPokemon().getOwner());
+			if (trainer.releasedPokemon != null)
+				trainer.releasedPokemon.EndBattle();
+			trainer.setDead();
+		}
+		trainer.releasedPokemon = null;
 	}
 
 	@Override
@@ -61,7 +67,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted || trainer.releasedPokemon.getHealth() <= 0;
+		return trainer.releasedPokemon == null || trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted || trainer.releasedPokemon.getHealth() <= 0;
 	}
 
 	@Override
@@ -75,7 +81,8 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {	}
+	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
+	}
 
 	@Override
 	public boolean checkPokemon() {

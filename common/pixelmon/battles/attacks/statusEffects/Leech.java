@@ -39,6 +39,6 @@ public class Leech extends StatusEffectBase {
 		if (user.getHealth() < 16)
 			dmg = 1;
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), dmg);
-		target.setHealth(target.getHealth() + dmg);
+		target.setEntityHealth(target.getHealth() + dmg);
 	}
 }

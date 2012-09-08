@@ -90,7 +90,7 @@ public class GuiHealer extends GuiScreen {
 		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
 			int offset = 0;
 			if (p != null) {
-				drawPokemonStats(p, width / 2 - 100 - fontRenderer.getStringWidth(p.nickname) - 1, height * (j + 2) / 10);
+				drawPokemonStats(p, width / 2 - 100 - fontRenderer.getStringWidth(p.nickname.equals("") ? p.name : p.nickname) - 1, height * (j + 2) / 10);
 				progressBars[j].draw(width / 2, height * (j + 2) / 10, 20, 200, width, height);
 				if (progressBars[j].value != 100)
 					drawString(fontRenderer, progressBars[j].value + " %", width / 2 + 110, height * (j + 2) / 10 + 6, 0xDDDDDD);
@@ -102,15 +102,9 @@ public class GuiHealer extends GuiScreen {
 
 	}
 
-	public void drawPokemonStats(NBTTagCompound pixelmon, int x, int y) {
-		fontRenderer.FONT_HEIGHT = 10;
-		drawString(fontRenderer, pixelmon.getString("Nickname"), x, y, 0xDDDDDD);
-		drawCenteredString(fontRenderer, pixelmon.getShort("Health") + "/" + pixelmon.getInteger("StatsHP"), x + fontRenderer.getStringWidth(pixelmon.getString("Nickname")) / 2, y + 15, 0xDDDDDD);
-	}
-
 	public void drawPokemonStats(PixelmonDataPacket pixelmon, int x, int y) {
 		fontRenderer.FONT_HEIGHT = 10;
-		drawString(fontRenderer, pixelmon.nickname, x, y, 0xDDDDDD);
-		drawCenteredString(fontRenderer, pixelmon.health + "/" + pixelmon.hp, x + fontRenderer.getStringWidth(pixelmon.nickname) / 2, y + 15, 0xDDDDDD);
+		drawString(fontRenderer, pixelmon.nickname.equals("") ? pixelmon.name : pixelmon.nickname, x, y, 0xDDDDDD);
+		drawCenteredString(fontRenderer, pixelmon.health + "/" + pixelmon.hp, x + fontRenderer.getStringWidth(pixelmon.nickname.equals("") ? pixelmon.name : pixelmon.nickname) / 2, y + 15, 0xDDDDDD);
 	}
 }

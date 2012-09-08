@@ -10,6 +10,7 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.entities.trainers.EntityTrainer;
+import pixelmon.enums.EnumTrainers;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.BiomeGenBase;
@@ -81,7 +82,7 @@ public class PixelmonSpawner {
 					break;
 				}
 			}
-			if (DatabaseStats.GetCreatureType(creatureName) == null) {
+			if (EnumTrainers.has(creatureName)) {
 				Entity trainer = PixelmonEntityList.createEntityByName(creatureName, world);
 				trainer.setLocationAndAngles(xRand, y, zRand, rand.nextFloat() * 360.0F, 0.0F);
 				if (((EntityLiving) trainer).getCanSpawnHere())

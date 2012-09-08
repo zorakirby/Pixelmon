@@ -70,7 +70,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 				String s = "Your " + getName() + " fainted!";
 				ChatHandler.sendChat(getOwner(), s);
 				isFainted = true;
-				setHealth(0);
+				setEntityHealth(0);
 				catchInPokeball();
 			} else {
 				super.onDeath(damagesource);
@@ -85,10 +85,10 @@ public class EntityPixelmon extends Entity9HasSounds {
 			ItemStack itemstack = entity1.getCurrentEquippedItem();
 			boolean flag = false;
 			// if (itemstack == null) {
-			// if (stats.BaseStats.IsRideable &&
-			// PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)entity).isIn(this))
-			// {
-			// entity.mountEntity((EntityLiving) pixelmon);
+			// if (baseStats.IsRideable &&
+			// PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)
+			// entity).isIn(this)) {
+			// entity.mountEntity(this);
 			// return true;
 			// }
 			// return false;
@@ -107,16 +107,16 @@ public class EntityPixelmon extends Entity9HasSounds {
 			}
 			if (itemstack != null && itemstack.itemID == PixelmonItems.potion.shiftedIndex && getOwner() == entity) {
 				if (getHealth() + 20 > stats.HP)
-					setHealth(stats.HP);
+					setEntityHealth(stats.HP);
 				else
-					setHealth(getHealth() + 20);
+					setEntityHealth(getHealth() + 20);
 				if (getOwner() != null)
 					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 				updateHealth();
 				if (!entity.capabilities.isCreativeMode)
 					itemstack.stackSize--;
 				if (getHealth() > stats.HP)
-					setHealth(stats.HP);
+					setEntityHealth(stats.HP);
 				flag = true;
 			}
 			// if (itemstack.itemID == mod_Pixelmon.pokeDex.shiftedIndex) {
@@ -232,7 +232,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	@Override
 	public void onUpdate() {
-		if (getOwner() == null && baseStats != null && baseStats.spawnConditions.length > 0) {
+		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness && worldObj.isDaytime())
 				setDead();
 			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight && !worldObj.isDaytime())

@@ -13,7 +13,9 @@ public class RenderTrainer extends RenderLiving {
 
 	@Override
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
-		mainModel = ((EntityTrainer) entityLiving).model;
+		mainModel = ((EntityTrainer) entityLiving).getModel();
+		if (mainModel == null)
+			return;
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
 	}
 }
