@@ -59,7 +59,6 @@ public class LevelHelper {
 		pixelmon.getDataWatcher().updateObject(9, (short) i);
 		setScale();
 		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
-		setExp(0);
 		if (pixelmon.getHealth() == pixelmon.stats.HP) {
 			updateStats();
 			pixelmon.setEntityHealth(pixelmon.stats.HP);
@@ -167,6 +166,7 @@ public class LevelHelper {
 			return;
 		}
 		while (getExp() >= getExpToNextLevel()) {
+			int newExp = getExp() - getExpToNextLevel();
 			setLevel(getLevel() + 1);
 			onLevelUp();
 			if (getLevel() >= pixelmon.baseStats.EvolveLevel) {
@@ -174,8 +174,7 @@ public class LevelHelper {
 			}
 			if (!canLevelUp())
 				return;
-			setExp(getExp() - getExpToNextLevel());
-			setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
+			setExp(newExp);
 		}
 	}
 
