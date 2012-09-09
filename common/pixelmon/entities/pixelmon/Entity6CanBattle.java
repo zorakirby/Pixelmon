@@ -56,8 +56,8 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		if (!worldObj.isRemote) {
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
+			updateHealth();
 			if (health - par2 < 0) {
-				par2 = health;
 				this.onDeath(par1DamageSource);
 			}
 
@@ -68,7 +68,6 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 				setAttackTarget((EntityLiving) entity);
 				setTarget(entity);
 			}
-			updateHealth();
 			return flag;
 		}
 		return false;

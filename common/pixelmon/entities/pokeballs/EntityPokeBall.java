@@ -4,6 +4,7 @@ import java.util.Random;
 
 import pixelmon.Pixelmon;
 import pixelmon.RandomHelper;
+import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.TrainerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
@@ -154,8 +155,14 @@ public class EntityPokeBall extends EntityThrowable {
 					pixelmon.releaseFromPokeball();
 					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)
 							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn((EntityPixelmon) movingobjectposition.entityHit)) {
-						WildPixelmonParticipant part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
+						IBattleParticipant part;
+						if (((EntityPixelmon) movingobjectposition.entityHit).getOwner() != null)
+							part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(), (EntityPixelmon) movingobjectposition.entityHit);
+						else
+							part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
+
 						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
+
 					} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
 						TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
 						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), trainer);
@@ -280,11 +287,11 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onUpdate() {
-		if (getIsOpen() && openAngle > (float)(-Math.PI/2)) {
-			openAngle-=(float)(Math.PI/20);
+		if (getIsOpen() && openAngle > (float) (-Math.PI / 2)) {
+			openAngle -= (float) (Math.PI / 20);
 		}
-		if (!getIsOpen() && openAngle <0)
-			openAngle+=(float)(Math.PI/20);
+		if (!getIsOpen() && openAngle < 0)
+			openAngle += (float) (Math.PI / 20);
 
 		super.onUpdate();
 		if (!getIsOnGround()) {
@@ -349,7 +356,7 @@ public class EntityPokeBall extends EntityThrowable {
 			setIsCaptured(true);
 			waitTime = 0;
 		} else {
-			openAngle = (float)-Math.PI/2;
+			openAngle = (float) -Math.PI / 2;
 			spawnFailParticles();
 			waitTime = 0;
 			setIsWaiting(false);
