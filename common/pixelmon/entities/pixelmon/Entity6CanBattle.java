@@ -7,7 +7,9 @@ import pixelmon.battles.BattleController;
 import pixelmon.battles.Moveset;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.participants.IBattleParticipant;
+import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.stats.BattleStats;
 import pixelmon.entities.trainers.EntityTrainer;
@@ -100,6 +102,17 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		return entity instanceof EntityPixelmon;
 	}
 
+	public boolean removeStatus(String status){
+		for (int i = 0; i < this.status.size(); i++) {
+			StatusEffectBase base = this.status.get(i);
+			if (base.type.isStatusEffect(status)) {
+				this.status.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);

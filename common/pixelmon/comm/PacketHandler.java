@@ -20,6 +20,7 @@ import net.minecraft.src.Packet250CustomPayload;
 public class PacketHandler implements IConnectionHandler, IPacketHandler {
 	private static ArrayList<PacketHandlerBase> handlers = new ArrayList<PacketHandlerBase>();
 	static {
+		handlers.add(new BagPacket());
 		handlers.add(new ChooseAttack());
 		handlers.add(new ChooseStarter());
 		handlers.add(new Flee());

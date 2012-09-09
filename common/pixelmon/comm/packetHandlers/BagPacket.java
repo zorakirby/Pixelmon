@@ -31,11 +31,15 @@ public class BagPacket extends PacketHandlerBase {
 	public void handlePacket(int index, Player player, DataInputStream dataStream) throws IOException {
 		int itemIndex = dataStream.readInt();
 		int battleIndex = dataStream.readInt();
+		int additionalInfo = dataStream.readInt();
 
 		ItemStack usedStack = null;
-		for (ItemStack i : ((EntityPlayer) player).inventory.mainInventory)
-			if (i.getItem().shiftedIndex == itemIndex)
+		for (ItemStack i : ((EntityPlayer) player).inventory.mainInventory) {
+			if (i != null && i.getItem().shiftedIndex == itemIndex){
 				usedStack = i;
+				break;
+			}
+		}
 
 		if (usedStack == null) {
 			ChatHandler.sendChat((EntityPlayer) player, "Item Could not be found!");
@@ -47,23 +51,8 @@ public class BagPacket extends PacketHandlerBase {
 			ChatHandler.sendChat((EntityPlayer) player, "Battle Could not be found!");
 			return;
 		}
-
-		EntityPixelmon userPokemon = null, targetPokemon = null;
-
-		if (bc.participant1 instanceof PlayerParticipant) {
-			if (((PlayerParticipant) bc.participant1).player == (EntityPlayerMP) player) {
-				userPokemon = bc.participant1.currentPokemon();
-				targetPokemon = bc.participant2.currentPokemon();
-			} else {
-				userPokemon = bc.participant2.currentPokemon();
-				targetPokemon = bc.participant1.currentPokemon();
-			}
-		}
-
-		PixelmonItem item = (PixelmonItem) usedStack.getItem();
-		item.useFromBag(userPokemon, targetPokemon);
-
-		usedStack.stackSize--;
+		
+		bc.setUseItem(player, usedStack, additionalInfo);
 	}
 
 }

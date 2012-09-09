@@ -3,6 +3,8 @@ package pixelmon.battles;
 import java.util.ArrayList;
 import java.util.Random;
 
+import cpw.mods.fml.common.network.Player;
+
 import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.EffectType;
@@ -22,9 +24,11 @@ import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.items.ItemHeld;
+import pixelmon.items.PixelmonItem;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PokeballManager;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
@@ -233,6 +237,10 @@ public class BattleController {
 	int player2EscapeAttempts = 0;
 	boolean pixelmon1IsSwitching = false;
 	boolean pixelmon2IsSwitching = false;
+	ItemStack pixelmon1WillUseItemInStack = null;
+	ItemStack pixelmon2WillUseItemInStack = null;
+	int pixelmon1WillUseItemInStackInfo = 0;
+	int pixelmon2WillUseItemInStackInfo = 0;
 
 	private void pickMoves() {
 		pixelmon1CanAttack = true;
@@ -280,19 +288,19 @@ public class BattleController {
 	}
 
 	private void takeTurn(IBattleParticipant user, IBattleParticipant target, Attack a) {
-		if (user == participant1 && pixelmon1WillTryFlee)
+		boolean isP1 = user == participant1;
+		boolean isP2 = user == participant2;
+		if ((isP1 && pixelmon1WillTryFlee) || (isP2 && pixelmon2WillTryFlee))
 			calculateEscape(user.currentPokemon(), target.currentPokemon());
-		else if (user == participant2 && pixelmon2WillTryFlee)
-			calculateEscape(user.currentPokemon(), target.currentPokemon());
-		else if (pixelmon1IsSwitching && user == participant1) {
+		else if (pixelmon1IsSwitching && isP1) {
 			pixelmon1IsSwitching = false;
-		} else if (pixelmon2IsSwitching && user == participant2) {
+		} else if (pixelmon2IsSwitching && isP2) {
 			pixelmon2IsSwitching = false;
+		} else if ((pixelmon1WillUseItemInStack != null && isP1) || (pixelmon2WillUseItemInStack != null && isP2)) {
+			useItem(isP1);
 		} else {
-			if (user == participant1)
-				a.use(user.currentPokemon(), target.currentPokemon(), attackList1);
-			else
-				a.use(user.currentPokemon(), target.currentPokemon(), attackList2);
+			ArrayList al = (isP1 ? attackList1 : attackList2);
+			a.use(user.currentPokemon(), target.currentPokemon(), al);
 		}
 	}
 
@@ -367,6 +375,18 @@ public class BattleController {
 		}
 	}
 
+	public void setUseItem(Player user, ItemStack usedStack, int additionalInfo){
+		if (participant1 instanceof PlayerParticipant && ((PlayerParticipant) participant1).player == (EntityPlayerMP) user) {
+			pixelmon1WillUseItemInStack = usedStack;
+			pixelmon1WillUseItemInStackInfo = additionalInfo;
+			participant1Wait = false;
+		} else {
+			pixelmon2WillUseItemInStack = usedStack;
+			pixelmon2WillUseItemInStackInfo = additionalInfo;
+			participant2Wait = false;
+		}
+	}
+	
 	public void SwitchPokemon(EntityPixelmon currentPixelmon, int newPixelmonId) {
 		boolean wasInitiator = false;
 		if (participant1.currentPokemon() == currentPixelmon) {
@@ -394,6 +414,44 @@ public class BattleController {
 		}
 	}
 
+	public void useItem(boolean isP1){
+		EntityPixelmon userPokemon = null, targetPokemon = null;
+		PixelmonItem item = null;
+		EntityPlayer user = null;
+		ItemStack usedStack = null;
+		int additionalInfo = 0;
+		if (isP1) {
+			userPokemon = participant1.currentPokemon();
+			targetPokemon = participant2.currentPokemon();
+			usedStack = pixelmon1WillUseItemInStack;
+			additionalInfo = pixelmon1WillUseItemInStackInfo;
+			user = ((PlayerParticipant) participant1).player;
+			pixelmon1WillUseItemInStack = null;
+			pixelmon1WillUseItemInStackInfo = 0;
+		} else {
+			userPokemon = participant2.currentPokemon();
+			targetPokemon = participant1.currentPokemon();
+			usedStack = pixelmon2WillUseItemInStack;
+			additionalInfo = pixelmon2WillUseItemInStackInfo;
+			user = ((PlayerParticipant) participant2).player;
+			pixelmon2WillUseItemInStack = null;
+			pixelmon2WillUseItemInStackInfo = 0;
+		}
+		
+		item = (PixelmonItem) usedStack.getItem();
+		item.useFromBag(userPokemon, targetPokemon, additionalInfo);
+
+		ItemStack[] inv = user.inventory.mainInventory;
+		if (((EntityPlayer) Minecraft.getMinecraft().thePlayer).entityId == user.entityId) {
+			ItemStack[] c_inv = ((EntityPlayer) Minecraft.getMinecraft().thePlayer).inventory.mainInventory;
+			item.removeFromInventory(inv,c_inv);
+		} else {
+			item.removeFromInventory(inv);
+		}
+
+		ChatHandler.sendChat(user, item.getItemDisplayName(usedStack) + " used!");
+	}
+	
 	public boolean isTrainerVsTrainer() {
 		return false;
 	}
