@@ -7,6 +7,7 @@ import pixelmon.battles.BattleController;
 import pixelmon.battles.Moveset;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.stats.BattleStats;
@@ -59,7 +60,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 				par2 = health;
 				this.onDeath(par1DamageSource);
 			}
-			
+
 			Entity entity = par1DamageSource.getEntity();
 			if (getOwner() != null)
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
@@ -98,6 +99,17 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	protected boolean isValidTarget(Entity entity) {
 		return entity instanceof EntityPixelmon;
+	}
+
+	public boolean removeStatus(StatusEffectType s) {
+		for (int i = 0; i < this.status.size(); i++) {
+			StatusEffectBase base = this.status.get(i);
+			if (base.type == s) {
+				this.status.remove(i);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

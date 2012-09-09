@@ -15,25 +15,17 @@ public class ItemBerryRawst extends ItemHeld {
 	}
 
 	public boolean effectEntity(EntityPixelmon helper) {
-		for (int i = 0; i < helper.status.size(); i++) {
-			StatusEffectBase base = helper.status.get(i);
-			if (base.type == StatusEffectType.Burn) {
-				helper.status.remove(i);
-				ChatHandler.sendChat(helper.getOwner(), helper.getName() + " just consumed a Rawst Berry and was healed of it's burn!");
-				return true;
-			}
+		if (helper.removeStatus(StatusEffectType.Burn)) {
+			ChatHandler.sendChat(helper.getOwner(), helper.getName() + " just consumed a Rawst Berry and was healed of it's burn!");
+			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
-		for (int i = 0; i < userPokemon.status.size(); i++) {
-			StatusEffectBase base = userPokemon.status.get(i);
-			if (base.type == StatusEffectType.Burn) {
-				userPokemon.status.remove(i);
-				ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getName() + " was healed of it's burn!");
-			}
+		if (userPokemon.removeStatus(StatusEffectType.Burn)) {
+			ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getName() + " was healed of it's burn!");
 		}
 	}
 

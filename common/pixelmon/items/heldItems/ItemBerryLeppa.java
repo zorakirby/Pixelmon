@@ -21,7 +21,7 @@ public class ItemBerryLeppa extends ItemHeld {
 			if (move == null) {
 				continue;
 			}
-			if (move.pp < move.ppmax - 10) {
+			if (move.pp < move.ppBase - 10) {
 				move.pp += 10;
 				helper.setHeldItem(null);
 				ChatHandler.sendChat(helper.getOwner(), helper.getName() + " just consumed a Leppa Berry. " + move.attackName + " gained 10 pp!");
@@ -33,6 +33,6 @@ public class ItemBerryLeppa extends ItemHeld {
 
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
-		
+
 	}
 }

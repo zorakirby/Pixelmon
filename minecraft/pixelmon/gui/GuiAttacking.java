@@ -88,7 +88,7 @@ public class GuiAttacking extends GuiScreen {
 		} else if (par1GuiButton.id == 11) {
 			mc.displayGuiScreen(new GuiChoosePokemon(userPacket, battleControllerIndex, this));
 		} else if (par1GuiButton.id == 12) {
-			mc.displayGuiScreen(new GuiAttackingBag(this));
+			mc.displayGuiScreen(new GuiAttackingBag(userPacket, this));
 		} else if (par1GuiButton.id == 10) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 			mc.displayGuiScreen(null);
