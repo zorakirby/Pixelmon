@@ -27,6 +27,7 @@ import pixelmon.enums.EnumType;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPotion;
+import pixelmon.items.ItemStatusAilmentHealer;
 import pixelmon.items.PixelmonItem;
 import pixelmon.storage.PixelmonStorage;
 
@@ -111,6 +112,13 @@ public class EntityPixelmon extends Entity9HasSounds {
 					if (itemstack.getItem() instanceof ItemPotion) {
 						if (getHealth() < stats.HP){
 							((ItemPotion)itemstack.getItem()).healPokemon(this);
+							if (!entity.capabilities.isCreativeMode)
+								entity.inventory.consumeInventoryItem(itemstack.itemID);
+							return true;
+						}
+					}
+					if (itemstack.getItem() instanceof ItemStatusAilmentHealer) {
+						if (((ItemStatusAilmentHealer)itemstack.getItem()).healPokemon(this)){
 							if (!entity.capabilities.isCreativeMode)
 								entity.inventory.consumeInventoryItem(itemstack.itemID);
 							return true;
