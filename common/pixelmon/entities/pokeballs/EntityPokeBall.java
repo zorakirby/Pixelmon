@@ -4,6 +4,7 @@ import java.util.Random;
 
 import pixelmon.Pixelmon;
 import pixelmon.RandomHelper;
+import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.TrainerParticipant;
@@ -181,7 +182,17 @@ public class EntityPokeBall extends EntityThrowable {
 					EntityPixelmon entitypixelmon = (EntityPixelmon) movingobjectposition.entityHit;
 					p = entitypixelmon;
 
-					if (p.getOwner() != null) {
+					if (p.battleController != null) {
+						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch pokemon who are battling in another battle!");
+						if (dropItem) {
+							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+						}
+						setDead();
+						return;
+
+					}
+
+					if (p.getOwner() != null || p.trainer != null) {
 						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
 						if (dropItem) {
 							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
