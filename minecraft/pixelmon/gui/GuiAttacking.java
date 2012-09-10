@@ -105,8 +105,9 @@ public class GuiAttacking extends GuiScreen {
 
 		drawDefaultBackground();
 		super.drawScreen(i, i1, f);
-
-		drawCenteredString(fontRenderer, "Which move do you want your " + userPacket.nickname + " to use against the " + ("wild ") + targetPacket.nickname + "?", width / 2, 10, 0xFFFFFF);
+		String name = userPacket.nickname.equals("") ? userPacket.name : userPacket.nickname;
+		String targetName = targetPacket.nickname.equals("") ? targetPacket.name : targetPacket.nickname;
+		drawCenteredString(fontRenderer, "Which move do you want your " + name + " to use against " + targetName + "?", width / 2, 10, 0xFFFFFF);
 		drawPokemonStats(userPacket, width / 8, height * 2 / 6, true);
 		drawPokemonStats(targetPacket, width * 5 / 8, height * 2 / 6, false);
 		drawHealthBar(userPacket.health, userPacket.hp, width / 8, height * 2 / 6 + 10, 0, 0, 0);
