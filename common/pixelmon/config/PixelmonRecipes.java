@@ -28,7 +28,6 @@ public class PixelmonRecipes {
 				new ItemStack(Item.dyePowder, 1, 1), Character.valueOf('G'), Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.thunderStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), PixelmonItems.thunderStoneShard });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.leafStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), PixelmonItems.leafStoneShard });
-		GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.pcItem, 1), new Object[] { Block.dirt });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pcItem, 1), new Object[]{"DPD", "DGD", "DRD", Character.valueOf('D'), Item.diamond, Character.valueOf('P'), Block.thinGlass, Character.valueOf('G'), Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone});
 	}
 }

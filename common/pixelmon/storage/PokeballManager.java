@@ -96,14 +96,13 @@ public class PokeballManager{
 						break;
 					}
 
-				if (playerConnected) {
-					File playerSaveFile = new File(getSaveFolder(player) + player.username + ".pk");
-					FileOutputStream f = new FileOutputStream(playerSaveFile);
-					DataOutputStream s = new DataOutputStream(f);
-					CompressedStreamTools.write(getData(player), s);
-					s.close();
-					f.close();
-				} else {
+				File playerSaveFile = new File(getSaveFolder(player) + player.username + ".pk");
+				FileOutputStream f = new FileOutputStream(playerSaveFile);
+				DataOutputStream s = new DataOutputStream(f);
+				CompressedStreamTools.write(getData(player), s);
+				s.close();
+				f.close();
+				if (!playerConnected) {
 					playerPokemonList.remove(i);
 					i--;
 				}
@@ -140,5 +139,9 @@ public class PokeballManager{
 	public boolean hasPlayerFile(Player player) {
 		File playerSaveFile = new File(getSaveFolder((EntityPlayerMP)player) + ((EntityPlayerMP)player).username + ".pk");
 		return playerSaveFile.exists();
+	}
+
+	public void unloadDCPlayers() {
+		save();
 	}
 }

@@ -45,8 +45,7 @@ public class ConnectionHandler implements IConnectionHandler {
 
 	@Override
 	public void connectionClosed(NetworkManager manager) {
-		// TODO Auto-generated method stub
-		
+		PixelmonStorage.PokeballManager.unloadDCPlayers();	
 	}
 
 	@Override
