@@ -12,6 +12,7 @@ import net.minecraft.src.EntityAIWatchClosest;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EnumCreatureType;
 import pixelmon.AI.AIIsInBattle;
+import pixelmon.AI.AIMoveTowardsTarget;
 import pixelmon.AI.AIStartBattle;
 import pixelmon.AI.AISwimming;
 import pixelmon.AI.AITargetNearest;
@@ -54,9 +55,9 @@ public class AIHelper {
 			tasks.addTask(i++, new EntityAISwimming(entity));
 		tasks.addTask(i++, new AIIsInBattle(entity));
 		if (entity.aggression == Aggression.aggressive) {
-			tasks.addTask(i++, new EntityAIMoveTowardsTarget(entity, entity.getMoveSpeed(), 15));
-			tasks.addTask(i++, new AITargetNearest(entity, 10, true));
 			tasks.addTask(i++, new AIStartBattle(entity));
+			tasks.addTask(i++, new AIMoveTowardsTarget(entity, entity.getMoveSpeed(), 10));
+			tasks.addTask(i++, new AITargetNearest(entity, 10, true));
 		} else if (entity.aggression == Aggression.timid) {
 			tasks.addTask(i++, new EntityAIAvoidEntity(entity, EntityPlayer.class, 16.0F, 0.23F, 0.4F));
 		}

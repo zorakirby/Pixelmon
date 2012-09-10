@@ -174,16 +174,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 		setAttackTarget(null);
 	}
 
-	public void setAttackTarget(EntityLiving e) {
-		super.setAttackTarget(e);
-		super.setTarget(e);
-		if (e instanceof EntityPixelmon) {
-			EntityPixelmon e1 = (EntityPixelmon) e;
-			if (e1.getAttackTarget() == null)
-				e1.setAttackTarget(this);
-		}
-	}
-
 	// public void renderLevelUpEffects() {
 	// EntityCrit2FX entitycrit2fx = new EntityCrit2FX(worldObj, this,
 	// "magicCrit");

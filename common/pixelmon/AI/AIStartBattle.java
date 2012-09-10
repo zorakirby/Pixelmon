@@ -28,13 +28,13 @@ public class AIStartBattle extends EntityAIBase {
 			return false;
 		if (theEntity.getAttackTarget() == null)
 			return false;
-		if (theEntity.getAttackTarget() instanceof EntityPlayer) {
-			EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
-			EntityPixelmon firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getFirstAblePokemon(player.worldObj);
-			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon)theEntity), new PlayerParticipant(player, firstPokemon));
-			return true;
-		}
-		if (((EntityLiving) theEntity).getAttackTarget().getDistanceSqToEntity((Entity) this.theEntity) < 2) {
+		if (((EntityLiving) theEntity).getAttackTarget().getDistanceSqToEntity((Entity) this.theEntity) < 40) {
+			if (theEntity.getAttackTarget() instanceof EntityPlayer) {
+				EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
+				EntityPixelmon firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getFirstAblePokemon(player.worldObj);
+				theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon)theEntity), new PlayerParticipant(player, firstPokemon));
+				return true;
+			}
 			EntityPixelmon target = (EntityPixelmon)theEntity.getAttackTarget();
 			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon)theEntity), new WildPixelmonParticipant(target));
 			return true;

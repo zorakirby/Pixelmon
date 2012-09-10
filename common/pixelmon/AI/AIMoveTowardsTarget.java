@@ -1,5 +1,6 @@
 package pixelmon.AI;
 
+import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.EntityAIBase;
 import net.minecraft.src.EntityCreature;
@@ -8,7 +9,7 @@ import net.minecraft.src.RandomPositionGenerator;
 import net.minecraft.src.Vec3;
 
 public class AIMoveTowardsTarget extends EntityAIBase {
-	private EntityPixelmon theEntity;
+	private Entity7HasAI theEntity;
 	private EntityLiving targetEntity;
 	private double movePosX;
 	private double movePosY;
@@ -16,7 +17,7 @@ public class AIMoveTowardsTarget extends EntityAIBase {
 	private float field_75425_f;
 	private float field_75426_g;
 
-	public AIMoveTowardsTarget(EntityPixelmon par1EntityCreature, float par2, float par3) {
+	public AIMoveTowardsTarget(Entity7HasAI par1EntityCreature, float par2, float par3) {
 		this.theEntity = par1EntityCreature;
 		this.field_75425_f = par2;
 		this.field_75426_g = par3;
@@ -36,8 +37,7 @@ public class AIMoveTowardsTarget extends EntityAIBase {
 		} else if (targetEntity.getDistanceSqToEntity(theEntity) > (double) (field_75426_g * field_75426_g)) {
 			return false;
 		} else {
-			Vec3 var1 = RandomPositionGenerator.findRandomTargetBlockTowards(theEntity, 16, 7,
-					Vec3.getVec3Pool().getVecFromPool(targetEntity.posX, targetEntity.posY, targetEntity.posZ));
+			Vec3 var1 = RandomPositionGenerator.findRandomTargetBlockTowards(theEntity, 16, 7, Vec3.getVec3Pool().getVecFromPool(targetEntity.posX, targetEntity.posY, targetEntity.posZ));
 
 			if (var1 == null) {
 				return false;
@@ -54,10 +54,10 @@ public class AIMoveTowardsTarget extends EntityAIBase {
 	 * Returns whether an in-progress EntityAIBase should continue executing
 	 */
 	public boolean continueExecuting() {
-		if (theEntity.battleController != null)
-			return false;
-		return !(theEntity.getNavigator().noPath() && targetEntity.isEntityAlive()
-				&& targetEntity.getDistanceSqToEntity(theEntity) < (double) (field_75426_g * field_75426_g));
+//		if (theEntity.battleController != null)
+//			return false;
+//		return !(theEntity.getNavigator().noPath() && targetEntity.isEntityAlive() && targetEntity.getDistanceSqToEntity(theEntity) < (double) (field_75426_g * field_75426_g));
+		return false;
 	}
 
 	/**

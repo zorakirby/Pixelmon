@@ -73,7 +73,31 @@ public class ModelDragonair extends ModelBase
       tail6_2.setRotationPoint(0F,0F,0F);
       tail6_2.setTextureSize(64, 64);
       tail6_2.mirror = true;
-      setRotation(tail6_2, 0F, 0F, 0F);
+      
+      tail4 = new ModelRenderer(this, 29, 50);
+      tail4.addBox(-2F,-2F,0F, 4,4,8);
+      tail4.setRotationPoint(0F,0F,0F);
+      tail4.setTextureSize(64, 64);
+      tail4.mirror = true;
+      
+      tail5 = new ModelRenderer(this, 31, 52);
+      tail5.addBox(-2F,-2F,0F, 4,4,6);
+      tail5.setRotationPoint(0F,0F,0F);
+      tail5.setTextureSize(64, 64);
+      tail5.mirror = true;
+      
+      tail6 = new ModelRenderer(this, 26, 33);
+      tail6.addBox(-1.5F,-1F,0F, 3,3,6);
+      tail6.setRotationPoint(0F,0F,0F);
+      tail6.setTextureSize(64, 64);
+      tail6.mirror = true;
+      
+      tail7 = new ModelRenderer(this, 0,0);
+      tail7.addBox(0F,0F,0F, 1,1,5);
+      tail7.setRotationPoint(0F,0F,0F);
+      tail7.setTextureSize(64, 64);
+      tail7.mirror = true;
+     
       tail6slope_2 = new ModelRenderer(this, 0, 0);
       tail6slope_2.addBox(-1F, -2.8F, 5.6F, 2, 1, 4);
       tail6slope_2.setRotationPoint(0F,0F,0F);
@@ -111,7 +135,7 @@ public class ModelDragonair extends ModelBase
       ear1.mirror = true;
       setRotation(ear1, -0.1963495F, 0.5890486F, 0F);
       noseslope = new ModelRenderer(this, 0, 0);
-      noseslope.addBox(0F, -3F, -7.48F, 4, 1, 3);
+      noseslope.addBox(-2F, -3F, -6.48F, 4, 1, 3);
       noseslope.setRotationPoint(0F,0F,0F);
       noseslope.setTextureSize(64, 64);
       noseslope.mirror = true;
@@ -249,8 +273,8 @@ public class ModelDragonair extends ModelBase
       tailrattle10.mirror = true;
       setRotation(tailrattle10, 0F, 0F, 0F);
       tailrattle11 = new ModelRenderer(this, 0, 0);
-      tailrattle11.addBox(0F, 0F, 0F, 1, 1, 2);
-      tailrattle11.setRotationPoint(-0.5F, -0.8F, 3F);
+      tailrattle11.addBox(-1F, -1.5F, -2F, 1, 1, 2);
+      tailrattle11.setRotationPoint(0.5F,0.5F,5F);
       tailrattle11.setTextureSize(64, 64);
       tailrattle11.mirror = true;
       setRotation(tailrattle11, 0F, 0F, 0F);
@@ -286,6 +310,7 @@ public class ModelDragonair extends ModelBase
       TAIL6PIECE.addChild(tail6);
       TAIL6PIECE.addChild(tail6_2);
       TAIL6PIECE.addChild(tail6slope_2);
+      TAIL6PIECE.addChild(tail6slope);
       TAIL6PIECE.addChild(TAIL7PIECE);
       
       TAIL7PIECE.addChild(tail7);

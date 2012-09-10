@@ -49,7 +49,7 @@ public class AITargetNearest extends AITarget {
 			Entity var3 = (Entity) var2.next();
 			EntityLiving var4 = (EntityLiving) var3;
 
-			if (this.isSuitableTarget(var1, true)) {
+			if (this.isSuitableTarget(var4, true)) {
 				this.targetEntity = var4;
 				return true;
 			}
