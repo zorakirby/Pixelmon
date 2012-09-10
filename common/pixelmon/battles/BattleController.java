@@ -37,6 +37,8 @@ import net.minecraft.src.NBTTagCompound;
 
 public class BattleController {
 
+	public int battleIndex;
+	
 	public IBattleParticipant participant1;
 	public IBattleParticipant participant2;
 	private int battleTicks = 0;
