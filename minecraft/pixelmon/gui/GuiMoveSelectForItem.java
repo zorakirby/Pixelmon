@@ -45,8 +45,10 @@ public class GuiMoveSelectForItem extends GuiScreen {
 
 	public void loadMoves() {
 		for (int a = 0; a < userPacket.moveset.length; a++) {
-			GuiItemMoveSlot ms = new GuiItemMoveSlot(userPacket.moveset, a);
-			moveSlots.add(ms);
+			if (userPacket.moveset[a] != null) {
+				GuiItemMoveSlot ms = new GuiItemMoveSlot(userPacket.moveset, a);
+				moveSlots.add(ms);
+			}
 		}
 	}
 
