@@ -25,6 +25,7 @@ import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumType;
 import pixelmon.items.ItemEvolutionStone;
+import pixelmon.items.ItemPotion;
 import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.client.Minecraft;
@@ -105,19 +106,13 @@ public class EntityPixelmon extends Entity9HasSounds {
 					((EntityPlayer) getOwner()).openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 				flag = true;
 			}
-			if (itemstack != null && itemstack.itemID == PixelmonItems.potion.shiftedIndex && getOwner() == entity) {
-				if (getHealth() + 20 > stats.HP)
-					setEntityHealth(stats.HP);
-				else
-					setEntityHealth(getHealth() + 20);
-				if (getOwner() != null)
-					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
-				updateHealth();
-				if (!entity.capabilities.isCreativeMode)
-					itemstack.stackSize--;
-				if (getHealth() > stats.HP)
-					setEntityHealth(stats.HP);
-				flag = true;
+			if (itemstack != null && itemstack.getItem() instanceof ItemPotion && getOwner() == entity) {
+				if (getHealth() < stats.HP){
+					((ItemPotion)itemstack.getItem()).healPokemon(this);
+					if (!entity.capabilities.isCreativeMode)
+						itemstack.stackSize--;
+					return true;
+				}
 			}
 			if (itemstack != null && itemstack.itemID == PixelmonItems.pokeDex.shiftedIndex) {
 				if (getOwner() == entity) {
