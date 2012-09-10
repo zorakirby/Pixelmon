@@ -140,6 +140,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		if (health < 0)
 			health = 0;
 		dataWatcher.updateObject(7, (short) health);
+		if (getOwner()!=null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT((EntityPixelmon)this);
 	}
 
 	public void setScale(float scale) {
@@ -203,8 +205,9 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
+		int h = health;
 		stats.readFromNBT(nbt);
 		level.readFromNBT(nbt);
-		updateHealth();
+		setEntityHealth(h);
 	}
 }

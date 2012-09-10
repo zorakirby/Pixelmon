@@ -20,7 +20,7 @@ public abstract class Entity1Base extends EntityTameable {
 	public boolean isInBall = false;
 	public boolean isFainted = false;
 	protected boolean isInitialised = false;
-	
+
 	public Entity1Base(World par1World) {
 		super(par1World);
 		dataWatcher.addObject(2, ""); // Name
@@ -84,14 +84,13 @@ public abstract class Entity1Base extends EntityTameable {
 			init(getName());
 		}
 	}
-	
+
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		nbt.setInteger("pixelmonID", dataWatcher.getWatchableObjectInt(4));
 		nbt.setString("Name", dataWatcher.getWatchableObjectString(2));
-		if (!dataWatcher.getWatchableObjectString(3).equals(""))
-			nbt.setString("Nickname", dataWatcher.getWatchableObjectString(3));
+		nbt.setString("Nickname", dataWatcher.getWatchableObjectString(3));
 		if (caughtBall != null)
 			nbt.setInteger("CaughtBall", caughtBall.getIndex());
 		nbt.setBoolean("IsMale", isMale);
@@ -107,10 +106,9 @@ public abstract class Entity1Base extends EntityTameable {
 		init(getName());
 		if (nbt.hasKey("Nickname"))
 			dataWatcher.updateObject(3, nbt.getString("Nickname"));
-		else
-			dataWatcher.updateObject(3, nbt.getString(""));
+
 		if (nbt.hasKey("CaughtBall"))
-			caughtBall= EnumPokeballs.getFromIndex(nbt.getInteger("CaughtBall"));
+			caughtBall = EnumPokeballs.getFromIndex(nbt.getInteger("CaughtBall"));
 		isMale = nbt.getBoolean("IsMale");
 		isInBall = nbt.getBoolean("IsInBall");
 		isFainted = nbt.getBoolean("IsFainted");
@@ -120,7 +118,7 @@ public abstract class Entity1Base extends EntityTameable {
 	public int getAge() {
 		return 0;
 	}
-	
+
 	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
 		return null;
 	}
