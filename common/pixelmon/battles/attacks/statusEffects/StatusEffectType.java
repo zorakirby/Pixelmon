@@ -1,28 +1,36 @@
 package pixelmon.battles.attacks.statusEffects;
 
 public enum StatusEffectType {
-	Burn,
+	Burn(true),
 	Confusion,
 	Infatuated,
 	Flee,
 	Flying,
-	Freeze,
+	Freeze(true),
 	FireSpin,
 	Leech,
 	LightScreen,
 	Mist,
-	Paralysis,
-	Poison,
-	PoisonBadly,
+	Paralysis(true),
+	Poison(true),
+	PoisonBadly(true),
 	Protect,
 	SafeGuard,
-	Sleep,
+	Sleep(true),
 	SmackedDown,
 	Substitute,
 	Sunny,
-	WaitAfter, 
+	WaitAfter,
 	TrickRoom,
 	Perish;
+	
+	public boolean canStack=false;
+	
+	private StatusEffectType(){}
+		
+	private StatusEffectType(boolean canStack){
+		this.canStack = canStack;
+	}
 	
 	public static StatusEffectType getStatusEffect(String string){
 		if (string.equalsIgnoreCase("Burn")) return StatusEffectType.Burn;
