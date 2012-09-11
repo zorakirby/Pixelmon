@@ -61,7 +61,10 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(pixelmon.moveset, participant2.currentPokemon().type, pixelmon, participant2.currentPokemon());
+		if (pixelmon.moveset.size()>0)
+			return Attack.getWhichMoveIsBest(pixelmon.moveset, participant2.currentPokemon().type, pixelmon, participant2.currentPokemon());
+		bc.setFlee(pixelmon);
+		return null;
 	}
 
 	@Override

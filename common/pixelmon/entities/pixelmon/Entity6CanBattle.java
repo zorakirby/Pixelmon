@@ -27,10 +27,11 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	public Moveset moveset = new Moveset();
 	public BattleController battleController;
 	public boolean wasBattleInitiator = false;
-	public EntityTrainer trainer;
+	protected EntityTrainer trainer;
 
 	public Entity6CanBattle(World par1World) {
 		super(par1World);
+		dataWatcher.addObject(15, ""); // Trainer Name
 	}
 
 	public void loadMoveset() {
@@ -44,6 +45,8 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		battleController = new BattleController(p1, p2);
 		wasBattleInitiator = true;
 		p2.currentPokemon().battleController = battleController;
+		if (p2.currentPokemon().moveset.size() == 0)
+			p2.currentPokemon().loadMoveset();
 
 		// pixelmon.isSwimming = false;
 	}
@@ -51,6 +54,19 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	public void EndBattle() {
 		// pixelmon.isSwimming = true;
 		battleController = null;
+	}
+	
+	public void setTrainer(EntityTrainer trainer){
+		this.trainer = trainer;
+		dataWatcher.updateObject(15, trainer.info.name);
+	}
+	
+	public EntityTrainer getTrainer(){
+		return trainer;
+	}
+	
+	public String getTrainerName(){
+		return dataWatcher.getWatchableObjectString(15);
 	}
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {

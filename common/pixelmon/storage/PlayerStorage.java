@@ -107,7 +107,6 @@ public class PlayerStorage {
 		p.setPokemonId(id);
 		p.writeEntityToStorageNBT(n);
 		p.writeToNBT(n);
-		p.getLvl().writeToNBT(n);
 		n.setString("id", "Pixelmon");
 		n.setName(p.getName());
 		n.setBoolean("IsInBall", true);

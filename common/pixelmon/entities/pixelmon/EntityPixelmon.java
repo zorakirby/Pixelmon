@@ -253,6 +253,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 		super.readEntityFromNBT(nbt);
 		if (nbt.hasKey("pixelmonOwner"))
 			super.setOwner("pixelmonOwner");
+		int h = health;
+		level.readFromNBT(nbt);
+		setEntityHealth(h);
 	}
 
 	public void unloadEntity() {

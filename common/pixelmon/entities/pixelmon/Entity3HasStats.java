@@ -22,7 +22,7 @@ import net.minecraft.src.World;
 
 public abstract class Entity3HasStats extends Entity2HasModel {
 
-	private LevelHelper level;
+	protected LevelHelper level;
 	public Stats stats;
 	public BaseStats baseStats;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
@@ -187,11 +187,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	public LevelHelper getLvl() {
-		if (level == null) {
-			level = new LevelHelper((EntityPixelmon) this);
-			level.setLevel(RandomHelper.getRandomNumberBetween(baseStats.SpawnLevel, baseStats.SpawnLevel + baseStats.SpawnLevelRange));
-			setEntityHealth(stats.HP);
-		}
 		return level;
 	}
 
@@ -205,9 +200,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		int h = health;
 		stats.readFromNBT(nbt);
-		level.readFromNBT(nbt);
-		setEntityHealth(h);
 	}
 }

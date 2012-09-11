@@ -52,8 +52,8 @@ public class RenderPixelmon extends RenderLiving {
 			s += entitypixelmon.getNickname();
 			if (entitypixelmon.getOwner() != null) {
 				s += " (" + ((EntityPlayer) entitypixelmon.getOwner()).username + ")";
-			} else if (entitypixelmon.trainer != null) {
-				s += " (" + entitypixelmon.trainer.info.name + ")";
+			} else if (!entitypixelmon.getTrainerName().equals("")) {
+				s += " (" + entitypixelmon.getTrainerName() + ")";
 			} else
 				s += " (Wild)";
 			if (!entitypixelmon.isSneaking()) {

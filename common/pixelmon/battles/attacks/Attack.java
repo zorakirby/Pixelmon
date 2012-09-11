@@ -163,10 +163,10 @@ public class Attack {
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)user.getOwner()).updateNBT(user);
 		if (target.getOwner() != null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)target.getOwner()).updateNBT(target);
-		if (user.trainer != null)
-			user.trainer.pokemonStorage.updateNBT(user);
-		if (target.trainer != null)
-			target.trainer.pokemonStorage.updateNBT(target);
+		if (user.getTrainer() != null)
+			user.getTrainer().pokemonStorage.updateNBT(user);
+		if (target.getTrainer() != null)
+			target.getTrainer().pokemonStorage.updateNBT(target);
 		pp--;
 		ItemHeld.useBattleItems(user, target);
 		return;

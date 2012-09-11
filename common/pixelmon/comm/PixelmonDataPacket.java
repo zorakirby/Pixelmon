@@ -41,14 +41,15 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public int SpecialAttack;
 	public int SpecialDefence;
 	public int nextLvlXP;
-	public int boxNumber=0;
+	public int boxNumber = 0;
 	public boolean isShiny;
 	public ItemStack heldItem;
-	
+	public boolean hasOwner;
+
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
-	
+
 	public PixelmonDataPacket() {
-		
+
 	}
 
 	public PixelmonDataPacket(NBTTagCompound p, EnumPackets packetType) {
@@ -67,8 +68,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = p.getBoolean("IsShiny");
 		order = p.getInteger("PixelmonOrder");
 		numMoves = p.getInteger("PixelmonNumberMoves");
-		for (int i =0; i < numMoves; i++){
-			moveset[i] = PixelmonMovesetDataPacket.createPacket(p,i);
+		for (int i = 0; i < numMoves; i++) {
+			moveset[i] = PixelmonMovesetDataPacket.createPacket(p, i);
 		}
 		type1 = b.Type1;
 		type2 = b.Type2;
@@ -78,12 +79,12 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		Defence = p.getInteger("StatsDefence");
 		SpecialAttack = p.getInteger("StatsSpecialAttack");
 		SpecialDefence = p.getInteger("StatsSpecialDefence");
-		if(p.hasKey("Held Item"))
-		{
+		if (p.hasKey("Held Item")) {
 			heldItem = ItemStack.loadItemStackFromNBT(p.getCompoundTag("Held Item"));
 		}
 		if (p.hasKey("BoxNumber"))
 			boxNumber = p.getInteger("BoxNumber");
+		hasOwner = true;
 	}
 
 	public PixelmonDataPacket(EntityPixelmon p, EnumPackets packetType) {
@@ -100,21 +101,25 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isFainted = p.isFainted;
 		isShiny = p.getIsShiny();
 		order = 0;
-		if (p.moveset.size() ==0) p.loadMoveset();
+		if (p.moveset.size() == 0)
+			p.loadMoveset();
 		numMoves = p.moveset.size();
-		for (int i =0; i < numMoves; i++){
-			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.moveset,i);
+		for (int i = 0; i < numMoves; i++) {
+			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.moveset, i);
 		}
 		type1 = p.type.get(0);
-		if (p.type.size()==1) type2 = EnumType.Mystery;
-		else type2 = p.type.get(1);
+		if (p.type.size() == 1)
+			type2 = EnumType.Mystery;
+		else
+			type2 = p.type.get(1);
 		HP = p.stats.HP;
 		Speed = p.stats.Speed;
 		Attack = p.stats.Attack;
 		Defence = p.stats.Defence;
 		SpecialAttack = p.stats.SpecialAttack;
-		SpecialDefence = p.stats.SpecialDefence;	
+		SpecialDefence = p.stats.SpecialDefence;
 		heldItem = p.heldItem;
+		hasOwner = p.getOwner() != null || p.getTrainer() != null;
 	}
 
 	@Override
@@ -123,8 +128,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	}
 
 	@Override
-	public void writePacketData(DataOutputStream data)
-			throws IOException {
+	public void writePacketData(DataOutputStream data) throws IOException {
 		data.writeInt(pokemonID);
 		data.writeShort(nationalPokedexNumber);
 		Packet.writeString(name, data);
@@ -135,9 +139,10 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeShort(health);
 		data.writeBoolean(isMale);
 		data.writeBoolean(isFainted);
+		data.writeBoolean(hasOwner);
 		data.writeShort(order);
 		data.writeShort(numMoves);
-		for (int i=0; i < numMoves; i++){
+		for (int i = 0; i < numMoves; i++) {
 			moveset[i].writeData(data);
 		}
 		data.writeShort(type1.getIndex());
@@ -154,8 +159,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	}
 
 	@Override
-	public void readPacketData(DataInputStream data)
-			throws IOException {
+	public void readPacketData(DataInputStream data) throws IOException {
 		pokemonID = data.readInt();
 		nationalPokedexNumber = data.readShort();
 		name = Packet.readString(data, 64);
@@ -166,9 +170,10 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		health = data.readShort();
 		isMale = data.readBoolean();
 		isFainted = data.readBoolean();
+		hasOwner = data.readBoolean();
 		order = data.readShort();
 		numMoves = data.readShort();
-		for (int i=0; i < numMoves; i++){
+		for (int i = 0; i < numMoves; i++) {
 			moveset[i] = new PixelmonMovesetDataPacket();
 			moveset[i].readData(data);
 		}

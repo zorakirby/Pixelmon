@@ -55,7 +55,8 @@ public class GuiAttacking extends GuiScreen {
 			controlList.add(new GuiButton(3, width * 2 / 3 - width / 3, height * 3 / 4 + 30, width / 3 - 10, 20, userPacket.moveset[3].attackName + "(" + userPacket.moveset[3].pp + "/"
 					+ userPacket.moveset[3].ppBase + ")"));
 
-		controlList.add(new GuiButton(10, width * 3 / 4, height * 3 / 4, width / 4 - 5, 20, "Run"));
+		if (!targetPacket.hasOwner)
+			controlList.add(new GuiButton(10, width * 3 / 4, height * 3 / 4, width / 4 - 5, 20, "Run"));
 		controlList.add(new GuiButton(11, width * 3 / 4, height * 3 / 4 + 30, width / 4 - 5, 20, "Switch"));
 		controlList.add(new GuiButton(12, width * 3 / 4, height * 3 / 4 - 30, width / 4 - 5, 20, "Bag"));
 	}
