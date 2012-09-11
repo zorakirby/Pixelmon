@@ -254,14 +254,16 @@ public class BattleController {
 		pixelmon2WillTryFlee = false;
 		pixelmon1IsSwitching = false;
 		pixelmon2IsSwitching = false;
-		for (StatusEffectBase e : participant1.currentPokemon().status) {
+		for (int i =0; i < participant1.currentPokemon().status.size(); i++){
+			StatusEffectBase e = participant1.currentPokemon().status.get(i);
 			if (!e.canAttackThisTurn(participant1.currentPokemon(), participant2.currentPokemon())) {
 				pixelmon1CanAttack = false;
 				attackList1.add("None");
 				break;
 			}
 		}
-		for (StatusEffectBase e : participant2.currentPokemon().status) {
+		for (int i =0; i < participant1.currentPokemon().status.size(); i++){
+			StatusEffectBase e = participant1.currentPokemon().status.get(i);
 			if (!e.canAttackThisTurn(participant2.currentPokemon(), participant1.currentPokemon())) {
 				pixelmon2CanAttack = false;
 				attackList2.add("None");

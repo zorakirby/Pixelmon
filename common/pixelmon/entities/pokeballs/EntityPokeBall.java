@@ -193,7 +193,10 @@ public class EntityPokeBall extends EntityThrowable {
 					}
 
 					if (p.getOwner() != null || p.getTrainer() != null) {
-						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
+						if (p.getOwner() == thrower)
+							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch Pokemon you already own!");	
+						else
+							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
 						if (dropItem) {
 							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
 						}

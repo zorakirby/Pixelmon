@@ -119,14 +119,12 @@ public class EntityPixelmon extends Entity9HasSounds {
 					setEntityHealth(stats.HP);
 				flag = true;
 			}
-			// if (itemstack.itemID == mod_Pixelmon.pokeDex.shiftedIndex) {
-			// if (getOwner() == entity) {
-			// getOwner().openGui(mod_Pixelmon.instance,
-			// EnumGui.Pokedex.getIndex(), getOwner().worldObj, getPokemonId(),
-			// 0, 0); // Pokedex
-			// flag = true;
-			// }
-			// }
+			if (itemstack != null && itemstack.itemID == PixelmonItems.pokeDex.shiftedIndex) {
+				if (getOwner() == entity) {
+					((EntityPlayer) getOwner()).openGui(Pixelmon.instance, EnumGui.Pokedex.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokedex
+					flag = true;
+				}
+			}
 			if (itemstack != null && itemstack.getItem() instanceof ItemEvolutionStone && getOwner() == entity) {
 				ItemEvolutionStone i = (ItemEvolutionStone) itemstack.getItem();
 				return i.useOnEntity(itemstack, this, entity);

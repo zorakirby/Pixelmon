@@ -73,18 +73,21 @@ public class Attack {
 		double accuracy = ((double) this.accuracy) * ((double) user.battleStats.Accuracy) / ((double) target.battleStats.Evasion);
 		double crit = calcCriticalHit(null);
 		/* Check for Protect */
-		for (StatusEffectBase e : target.status) {
+		for (int i = 0; i < target.status.size(); i++) {
+			StatusEffectBase e = target.status.get(i);
 			if (e.stopsIncomingAttack(user, target, this))
 				return;
 		}
-		for (StatusEffectBase e : user.status) {
+		for (int i = 0; i < user.status.size(); i++) {
+			StatusEffectBase e = user.status.get(i);
 			if (!e.canAttackThisTurn(user, target))
 				return;
 		}
 
 		if (this.accuracy == -1)
 			cantMiss = true;
-		for (EffectBase e : effects) {
+		for (int i = 0; i < effects.size(); i++) {
+			EffectBase e = effects.get(i);
 			if (e.hasSpecialAccuracyEffect())
 				accuracy = e.getAccuracy(user, target);
 		}
@@ -108,7 +111,8 @@ public class Attack {
 				if (e.effectType == EffectType.AttackModifier) {
 				}
 			}
-			for (EffectBase e : effects) {
+			for (int i = 0; i < effects.size(); i++) {
+				EffectBase e = effects.get(i);
 				if (e.applyStage == ApplyStage.During) {
 					if (e.effectType == EffectType.AttackModifier) {
 						if (((AttackModifierBase) e).type == AttackModifierType.CriticalHit)
@@ -145,7 +149,8 @@ public class Attack {
 				}
 			}
 
-			for (EffectBase e : effects) {
+			for (int i = 0; i < effects.size(); i++) {
+				EffectBase e = effects.get(i);
 				if (e.applyStage == ApplyStage.End) {
 					if (e.effectType == EffectType.AttackModifier) {
 						if (((AttackModifierBase) e).type == AttackModifierType.Flinch)
@@ -156,13 +161,15 @@ public class Attack {
 			}
 		} else {
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " tried to use " + attackName + ", but it missed!");
-			for (EffectBase e : effects)
+			for (int i = 0; i < effects.size(); i++) {
+				EffectBase e = effects.get(i);
 				e.ApplyMissEffect(user, target);
+			}
 		}
 		if (user.getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)user.getOwner()).updateNBT(user);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) user.getOwner()).updateNBT(user);
 		if (target.getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)target.getOwner()).updateNBT(target);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) target.getOwner()).updateNBT(target);
 		if (user.getTrainer() != null)
 			user.getTrainer().pokemonStorage.updateNBT(user);
 		if (target.getTrainer() != null)
@@ -195,8 +202,10 @@ public class Attack {
 		}
 		double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250 * (attack / defence) * basePower + 2) * modifier;
 
-		for (StatusEffectBase e : target.status)
+		for (int i = 0; i < target.status.size(); i++) {
+			StatusEffectBase e = target.status.get(i);
 			Damage = e.adjustDamage(this, Damage, user, target, crit);
+		}
 		return (int) Math.floor(Damage);
 	}
 
@@ -289,12 +298,15 @@ public class Attack {
 
 	public boolean doesPersist(EntityPixelmon entityPixelmon) {
 		if (attackName.equalsIgnoreCase("Fly") || attackName.equalsIgnoreCase("Bounce")) {
-			for (StatusEffectBase s : entityPixelmon.status)
+			for (int i = 0; i < entityPixelmon.status.size(); i++) {
+				StatusEffectBase s = entityPixelmon.status.get(i);
 				if (s.type == StatusEffectType.Flying)
 					return true;
+			}
 			return false;
 		}
-		for (EffectBase e : effects) {
+		for (int i = 0; i < effects.size(); i++) {
+			EffectBase e = effects.get(i);
 			if (e.persists)
 				return true;
 		}
@@ -302,7 +314,8 @@ public class Attack {
 	}
 
 	public boolean cantMiss() {
-		for (EffectBase e : effects) {
+		for (int i = 0; i < effects.size(); i++) {
+			EffectBase e = effects.get(i);
 			if (e instanceof MultiTurnSpecialAttackBase)
 				if (((MultiTurnSpecialAttackBase) e).cantMiss())
 					return true;
