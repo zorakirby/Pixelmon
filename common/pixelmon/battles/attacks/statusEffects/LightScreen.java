@@ -17,8 +17,10 @@ public class LightScreen extends StatusEffectBase {
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 
 		if (checkChance()) {
-			if (user.status.contains(this))
+			if (user.status.contains(this)){
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " already has a lightscreen!");
+				return;
+			}
 			target.status.add(this);
 			effectTurns = 5;
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " has put up a screen of shimmering light!");
