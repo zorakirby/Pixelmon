@@ -1,7 +1,9 @@
 package pixelmon.items;
 
 import net.minecraft.src.CreativeTabs;
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.ItemStack;
 
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
@@ -30,16 +32,16 @@ public class ItemPotion extends PixelmonItem {
 		}
 	}
 
+	public void healPokemon(EntityPixelmon pxm) {
+		int newHP = pxm.getHealth() + healAmount(pxm);
+		pxm.setEntityHealth(newHP);
+		if (pxm.getOwner()!=null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pxm.getOwner()).updateNBT(pxm);
+	}
+
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
-		int newHP = userPokemon.getHealth() + healAmount(userPokemon);
-		if (newHP >= userPokemon.stats.HP) {
-			userPokemon.setEntityHealth(userPokemon.stats.HP);
-		} else {
-			userPokemon.setEntityHealth(newHP);
-		}
-		if (userPokemon.getOwner()!=null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)userPokemon.getOwner()).updateNBT(userPokemon);
+		healPokemon(userPokemon);
 	}
 
 }
