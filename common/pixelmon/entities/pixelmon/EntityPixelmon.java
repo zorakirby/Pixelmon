@@ -25,6 +25,7 @@ import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumType;
 import pixelmon.items.ItemEvolutionStone;
+import pixelmon.items.ItemEther;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPotion;
 import pixelmon.items.ItemStatusAilmentHealer;
@@ -122,6 +123,26 @@ public class EntityPixelmon extends Entity9HasSounds {
 							if (!entity.capabilities.isCreativeMode)
 								entity.inventory.consumeInventoryItem(itemstack.itemID);
 							return true;
+						}
+					}
+					if (itemstack.getItem() instanceof ItemEther) {
+						boolean canUseEther = false;
+						for(Attack a: this.moveset) {
+							if (a.pp < a.ppBase) {
+								canUseEther = true;
+								break;
+							}
+						}
+						if (canUseEther){
+							ItemEther ether = (ItemEther) itemstack.getItem();
+							if (ether.type.restoresAllMoves()){
+								ether.restoreAllMoves(this);
+								if (!entity.capabilities.isCreativeMode)
+									entity.inventory.consumeInventoryItem(itemstack.itemID);
+								return true;
+							} else {
+								
+							}
 						}
 					}
 					if (itemstack.getItem() instanceof ItemEvolutionStone) {
