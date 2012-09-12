@@ -1,22 +1,18 @@
-package pixelmon.entities.pokemon;
+package pixelmon.entities.pixelmon.interactions;
 
-import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
+import pixelmon.entities.pixelmon.Entity8HoldsItems;
 
-public class EntityMiltank extends EntityPixelmon {
+public class MiltankInteraction extends PixelmonInteraction {
 
-	public EntityMiltank(World world) {
-		super(world);
-		init();
+	public MiltankInteraction(Entity8HoldsItems pixelmon) {
+		super(pixelmon);
+		// TODO Auto-generated constructor stub
 	}
 
-	public void init() {
-		super.init("Miltank");
-	}
-
+	@Override
 	public boolean interact(EntityPlayer par1EntityPlayer) {
 		ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
 
@@ -24,7 +20,8 @@ public class EntityMiltank extends EntityPixelmon {
 			par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, new ItemStack(Item.bucketMilk));
 			return true;
 		} else {
-			return super.interact(par1EntityPlayer);
+			return false;
 		}
 	}
+
 }

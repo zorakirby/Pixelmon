@@ -84,9 +84,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 		}
 	}
 
-	public boolean interact(EntityPlayer entity) {
-		if (entity instanceof EntityPlayerMP) {
-			ItemStack itemstack = ((EntityPlayer) entity).getCurrentEquippedItem();
+	public boolean interact(EntityPlayer player) {
+		if (player instanceof EntityPlayerMP) {
+			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 			// if (itemstack == null) {
 			// if (baseStats.IsRideable &&
 			// PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)
@@ -98,30 +98,30 @@ public class EntityPixelmon extends Entity9HasSounds {
 			// }
 			if (itemstack != null) {
 				if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
-					if (getOwner() == entity)
+					if (getOwner() == player)
 						((EntityPlayer) getOwner()).openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
 					return true;
 				}
 
-				if (getOwner() == entity) {
+				if (getOwner() == player) {
 					if (itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex) {
 						getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
-						if (!entity.capabilities.isCreativeMode)
-							entity.inventory.consumeInventoryItem(itemstack.itemID);
+						if (!player.capabilities.isCreativeMode)
+							player.inventory.consumeInventoryItem(itemstack.itemID);
 						return true;
 					}
 					if (itemstack.getItem() instanceof ItemPotion) {
 						if (getHealth() < stats.HP){
 							((ItemPotion)itemstack.getItem()).healPokemon(this);
-							if (!entity.capabilities.isCreativeMode)
-								entity.inventory.consumeInventoryItem(itemstack.itemID);
+							if (!player.capabilities.isCreativeMode)
+								player.inventory.consumeInventoryItem(itemstack.itemID);
 							return true;
 						}
 					}
 					if (itemstack.getItem() instanceof ItemStatusAilmentHealer) {
 						if (((ItemStatusAilmentHealer)itemstack.getItem()).healPokemon(this)){
-							if (!entity.capabilities.isCreativeMode)
-								entity.inventory.consumeInventoryItem(itemstack.itemID);
+							if (!player.capabilities.isCreativeMode)
+								player.inventory.consumeInventoryItem(itemstack.itemID);
 							return true;
 						}
 					}
@@ -137,8 +137,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 							ItemEther ether = (ItemEther) itemstack.getItem();
 							if (ether.type.restoresAllMoves()){
 								ether.restoreAllMoves(this);
-								if (!entity.capabilities.isCreativeMode)
-									entity.inventory.consumeInventoryItem(itemstack.itemID);
+								if (!player.capabilities.isCreativeMode)
+									player.inventory.consumeInventoryItem(itemstack.itemID);
 								return true;
 							} else {
 								
@@ -147,7 +147,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 					}
 					if (itemstack.getItem() instanceof ItemEvolutionStone) {
 						ItemEvolutionStone i = (ItemEvolutionStone) itemstack.getItem();
-						return i.useOnEntity(itemstack, this, entity);
+						return i.useOnEntity(itemstack, this, player);
 					}
 					if (itemstack.getItem() instanceof ItemHeld) {
 						if (getHeldItem() != null) {
@@ -158,7 +158,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 						}
 						ItemStack itemstack1 = itemstack.copy();
 						itemstack1.stackSize = 1;
-						entity.inventory.consumeInventoryItem(itemstack.itemID);
+						player.inventory.consumeInventoryItem(itemstack.itemID);
 						this.setHeldItem(itemstack1);
 						PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 						return true;
@@ -168,7 +168,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 			}
 		}
 
-		return false;
+		return super.interact(player);
 	}
 
 	public void catchInPokeball() {

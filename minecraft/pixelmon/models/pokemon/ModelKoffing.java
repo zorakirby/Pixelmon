@@ -6,7 +6,6 @@
 package pixelmon.models.pokemon;
 
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pokemon.EntityKoffing;
 import net.minecraft.src.Entity;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;

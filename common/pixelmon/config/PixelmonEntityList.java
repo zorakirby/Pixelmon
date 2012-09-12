@@ -24,7 +24,6 @@ import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.entities.pokemon.*;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
