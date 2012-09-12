@@ -22,6 +22,16 @@ public class ItemStatusAilmentHealer extends PixelmonItem {
 		setIconIndex(type.getIndex());
 	}
 
+	public boolean healPokemon(EntityPixelmon pxm) {
+		boolean healedAilment = false;
+		for(StatusEffectType s: this.type.statusesHealed()){
+			if (pxm.removeStatus(s)){
+				healedAilment = true;
+			}
+		}
+		return healedAilment;
+	}
+	
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
 		for(StatusEffectType s: this.type.statusesHealed()){

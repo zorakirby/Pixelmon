@@ -32,12 +32,16 @@ public class ItemEther extends PixelmonItem {
 		}
 	}
 
+	public void restoreAllMoves(EntityPixelmon pxm) {
+		for (int a = 0; a < pxm.moveset.size(); a++) {
+			 restorePP(pxm, a);
+		}
+	}
+	
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon, int selectedMove) {
 		if (this.type.restoresAllMoves()){
-			for (int a = 0; a < userPokemon.moveset.size(); a++) {
-				 restorePP(userPokemon, a);
-			}
+			restoreAllMoves(userPokemon);
 		} else {
 			restorePP(userPokemon, selectedMove);
 		}
