@@ -33,6 +33,8 @@ public class CommandSpawn extends CommandBase {
 			if (EnumPokemon.hasPokemon(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, var4.worldObj);
 				var6.setPosition(var4.posX, var4.posY + 1, var4.posZ);
+				if (var2.length>1) if (var2[1].equalsIgnoreCase("s"))
+					((EntityPixelmon)var6).setIsShiny(true);
 				var4.worldObj.spawnEntityInWorld(var6);
 			} else {
 				var1.sendChatToPlayer(var5 + " is not in game!");
