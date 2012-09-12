@@ -64,7 +64,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	}
 
 	public void onDeath(DamageSource damagesource) {
-		if (worldObj.isRemote) {
+		if (!worldObj.isRemote) {
 			super.onDeath(damagesource);
 			if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).isIn(this)) {
 				String s = "Your " + getName() + " fainted!";

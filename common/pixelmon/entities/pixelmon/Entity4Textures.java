@@ -2,6 +2,8 @@ package pixelmon.entities.pixelmon;
 
 import java.util.Random;
 
+import pixelmon.entities.pixelmon.particleEffects.ParticleEffects;
+
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -14,6 +16,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	public float maxScale = 1.25F;
 	public float hoverTimer;
 	public boolean alreadyInitialised = false;
+	private ParticleEffects particleEffects;
 
 	public Entity4Textures(World par1World) {
 		super(par1World);
@@ -30,6 +33,8 @@ public abstract class Entity4Textures extends Entity3HasStats {
 			}
 		}
 		alreadyInitialised = true;
+		
+		particleEffects = ParticleEffects.getParticleEffects(this);
 	}
 
 	@Override
@@ -61,6 +66,13 @@ public abstract class Entity4Textures extends Entity3HasStats {
 			dataWatcher.updateObject(5, (short) 1);
 		else
 			dataWatcher.updateObject(5, (short) 0);
+	}
+	
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if (worldObj.isRemote)
+			if (particleEffects!=null) particleEffects.onUpdate();
 	}
 
 	@Override

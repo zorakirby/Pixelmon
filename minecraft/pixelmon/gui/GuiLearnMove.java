@@ -29,8 +29,10 @@ public class GuiLearnMove extends GuiScreen {
 		controlList.clear();
 
 		dataPacket = ServerStorageDisplay.get(pokemonId);
-		for (int i = 0; i < dataPacket.numMoves; i++) {
-			controlList.add(new GuiButton(i, width / 2 - 100, height / 4 + i * 24 + 20 + 12, dataPacket.moveset[i].attackName));
+		if (dataPacket != null) {
+			for (int i = 0; i < dataPacket.numMoves; i++) {
+				controlList.add(new GuiButton(i, width / 2 - 100, height / 4 + i * 24 + 20 + 12, dataPacket.moveset[i].attackName));
+			}
 		}
 
 		controlList.add(new GuiButton(10, width / 2 - 100, height / 4 + 96 + 20 + 12, "Cancel"));

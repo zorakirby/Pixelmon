@@ -59,6 +59,8 @@ public class DropItemHelper {
 			return Item.silk.shiftedIndex;
 		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Thunderstone Shard"))
 			return PixelmonItems.thunderStoneShardID;
+		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Wool"))
+			return Block.cloth.blockID;;
 
 		return 0;
 	}

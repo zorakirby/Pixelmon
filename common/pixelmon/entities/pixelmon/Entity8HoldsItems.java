@@ -34,6 +34,7 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 		super.readEntityFromNBT(nbt);	
 	}
 	
+	@Override
 	protected int getDropItemId() {
 		return dropItemHelper.getDropItemID();
 	}

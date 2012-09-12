@@ -38,7 +38,7 @@ import net.minecraft.src.NBTTagCompound;
 public class BattleController {
 
 	public int battleIndex;
-	
+
 	public IBattleParticipant participant1;
 	public IBattleParticipant participant2;
 	private int battleTicks = 0;
@@ -155,17 +155,24 @@ public class BattleController {
 	}
 
 	private void checkAndReplaceFaintedPokemon(IBattleParticipant participant, IBattleParticipant foe) {
-		if (participant.getIsFaintedOrDead()) {
+		if (participant.getIsFaintedOrDead()){
+			String name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon().getNickname();
 			if (participant == participant1) {
 				if (participant1.isWild)
 					ChatHandler.sendChat(participant2.currentPokemon().getOwner(), "The wild " + participant1.currentPokemon().getName() + " fainted!");
-				if (participant1.currentPokemon().getOwner() != null || participant2.currentPokemon().getOwner() != null)
+				if (participant1.currentPokemon().getOwner() != null || participant2.currentPokemon().getOwner() != null) {
 					awardExp(attackersList2, participant2.currentPokemon(), participant1.currentPokemon());
+					ChatHandler.sendChat(participant.currentPokemon().getOwner(), "Your " + name + " fainted!");
+					ChatHandler.sendChat(foe.currentPokemon().getOwner(), name + " fainted!");
+				}
 			} else if (participant == participant2) {
 				if (participant2.isWild)
 					ChatHandler.sendChat(participant1.currentPokemon().getOwner(), "The wild " + participant2.currentPokemon().getName() + " fainted!");
-				if (participant1.currentPokemon().getOwner() != null || participant2.currentPokemon().getOwner() != null)
+				if (participant1.currentPokemon().getOwner() != null || participant2.currentPokemon().getOwner() != null) {
 					awardExp(attackersList1, participant1.currentPokemon(), participant2.currentPokemon());
+					ChatHandler.sendChat(participant.currentPokemon().getOwner(), "Your " + name + " fainted!");
+					ChatHandler.sendChat(foe.currentPokemon().getOwner(), name + " fainted!");
+				}
 			}
 			participant.currentPokemon().setEntityHealth(0);
 			participant.currentPokemon().setDead();
@@ -173,7 +180,8 @@ public class BattleController {
 			if (participant.hasMorePokemon()) {
 				participant.getNextPokemon();
 				participant.currentPokemon().battleController = this;
-				ChatHandler.sendChat(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out " + participant.currentPokemon().getName() + "!");
+				name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon().getNickname();
+				ChatHandler.sendChat(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out " + name + "!");
 				attackersList1.clear();
 				attackersList2.clear();
 				if (participant == participant1) {
@@ -254,7 +262,7 @@ public class BattleController {
 		pixelmon2WillTryFlee = false;
 		pixelmon1IsSwitching = false;
 		pixelmon2IsSwitching = false;
-		for (int i =0; i < participant1.currentPokemon().status.size(); i++){
+		for (int i = 0; i < participant1.currentPokemon().status.size(); i++) {
 			StatusEffectBase e = participant1.currentPokemon().status.get(i);
 			if (!e.canAttackThisTurn(participant1.currentPokemon(), participant2.currentPokemon())) {
 				pixelmon1CanAttack = false;
@@ -262,7 +270,7 @@ public class BattleController {
 				break;
 			}
 		}
-		for (int i =0; i < participant1.currentPokemon().status.size(); i++){
+		for (int i = 0; i < participant1.currentPokemon().status.size(); i++) {
 			StatusEffectBase e = participant1.currentPokemon().status.get(i);
 			if (!e.canAttackThisTurn(participant2.currentPokemon(), participant1.currentPokemon())) {
 				pixelmon2CanAttack = false;
@@ -448,17 +456,21 @@ public class BattleController {
 		item = (PixelmonItem) usedStack.getItem();
 		item.useFromBag(userPokemon, targetPokemon, additionalInfo);
 
-		/* This code has the serious issue that battle controller is run on the server and doesn't have access to Minecraft.thePlayer*/
-//		ItemStack[] inv = user.inventory.mainInventory;
-//		if (((EntityPlayer) Minecraft.getMinecraft().thePlayer).entityId == user.entityId) {
-//			ItemStack[] c_inv = ((EntityPlayer) Minecraft.getMinecraft().thePlayer).inventory.mainInventory;
-//			item.removeFromInventory(inv, c_inv);
-//		} else {
-//			item.removeFromInventory(inv);
-//		}
+		/*
+		 * This code has the serious issue that battle controller is run on the
+		 * server and doesn't have access to Minecraft.thePlayer
+		 */
+		// ItemStack[] inv = user.inventory.mainInventory;
+		// if (((EntityPlayer) Minecraft.getMinecraft().thePlayer).entityId ==
+		// user.entityId) {
+		// ItemStack[] c_inv = ((EntityPlayer)
+		// Minecraft.getMinecraft().thePlayer).inventory.mainInventory;
+		// item.removeFromInventory(inv, c_inv);
+		// } else {
+		// item.removeFromInventory(inv);
+		// }
 		ChatHandler.sendChat(user, item.getItemDisplayName(usedStack) + " used!");
 	}
-	
 
 	public boolean isTrainerVsTrainer() {
 		return false;
