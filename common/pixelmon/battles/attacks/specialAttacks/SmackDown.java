@@ -16,7 +16,7 @@ public class SmackDown extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
 		target.status.add(new SmackedDown());
 		for (int i = 0; i < target.status.size(); i++) {
 			StatusEffectBase s = target.status.get(i);

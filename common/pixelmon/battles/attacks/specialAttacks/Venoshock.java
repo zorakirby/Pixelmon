@@ -17,7 +17,7 @@ public class Venoshock extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
 		a.basePower = 65;
 		boolean isPoisoned=false;
 		for(StatusEffectBase e:target.status)

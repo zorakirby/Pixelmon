@@ -24,7 +24,7 @@ public abstract class MultiTurnSpecialAttackBase extends EffectBase {
 			this.mtsatype = type;
 		}
 
-		public abstract boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList);
+		public abstract boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList);
 		
 		@Override
 		public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {

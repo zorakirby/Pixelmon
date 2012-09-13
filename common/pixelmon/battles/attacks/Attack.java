@@ -13,6 +13,7 @@ import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
 import pixelmon.battles.attacks.attackModifiers.AttackModifierBase;
 import pixelmon.battles.attacks.attackModifiers.AttackModifierType;
 import pixelmon.battles.attacks.specialAttacks.MultiTurnSpecialAttackBase;
+import pixelmon.battles.attacks.specialAttacks.SpecialAttackBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
@@ -66,7 +67,7 @@ public class Attack {
 
 	public boolean flinched = false;
 
-	public void use(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void use(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
 		boolean attackHandled = false, cantMiss = false;
 		flinched = false;
 		user.getLookHelper().setLookPositionWithEntity(target, 0, 0);
@@ -120,6 +121,10 @@ public class Attack {
 						else
 							attackHandled = ((AttackModifierBase) e).ApplyEffect(user, target, this);
 					}
+					else if (e.effectType== EffectType.SpecialAttack)
+						((SpecialAttackBase)e).ApplyEffect(user, target, this, attackList, targetAttackList);
+					else if (e.effectType== EffectType.MultiTurnSpecialAttack)
+						((MultiTurnSpecialAttackBase)e).ApplyEffect(user, target, this, attackList, targetAttackList);
 				}
 
 			}

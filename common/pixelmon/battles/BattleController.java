@@ -155,7 +155,7 @@ public class BattleController {
 	}
 
 	private void checkAndReplaceFaintedPokemon(IBattleParticipant participant, IBattleParticipant foe) {
-		if (participant.getIsFaintedOrDead()){
+		if (participant.getIsFaintedOrDead()) {
 			String name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon().getNickname();
 			if (participant == participant1) {
 				if (participant1.isWild)
@@ -315,7 +315,8 @@ public class BattleController {
 			useItem(isP1);
 		} else {
 			ArrayList al = (isP1 ? attackList1 : attackList2);
-			a.use(user.currentPokemon(), target.currentPokemon(), al);
+			ArrayList al2 = (isP1 ? attackList2 : attackList1);
+			a.use(user.currentPokemon(), target.currentPokemon(), al, al2);
 		}
 	}
 

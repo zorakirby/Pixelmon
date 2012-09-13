@@ -17,7 +17,7 @@ public class Facade extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
 		a.basePower = 70;
 		for (StatusEffectBase e :target.status){
 			if (e.type == StatusEffectType.Burn || e.type == StatusEffectType.Poison || e.type == StatusEffectType.PoisonBadly || e.type == StatusEffectType.Paralysis)

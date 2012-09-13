@@ -15,7 +15,7 @@ public class NightShade extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
 		target.attackEntityFrom(DamageSource.causeMobDamage(user), user.getLvl().getLevel());
 		return true;
 	}
