@@ -55,14 +55,14 @@ public class BattleController {
 		BattleRegistry.registerBattle(this);
 		this.participant1 = participant1;
 		this.participant2 = participant2;
-		participant1.setBattleController(this);
-		participant2.setBattleController(this);
-		participant1.currentPokemon().battleController = this;
-		participant2.currentPokemon().battleController = this;
 		if (!participant1.checkPokemon())
 			return;
 		if (!participant2.checkPokemon())
 			return;
+		participant1.setBattleController(this);
+		participant2.setBattleController(this);
+		participant1.currentPokemon().battleController = this;
+		participant2.currentPokemon().battleController = this;
 		if (participant1.canGainXP())
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
 		if (participant2.canGainXP())
