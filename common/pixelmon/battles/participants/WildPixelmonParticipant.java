@@ -69,7 +69,6 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
-		// TODO Auto-generated method stub
 
 	}
 

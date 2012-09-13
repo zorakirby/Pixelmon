@@ -41,7 +41,7 @@ import net.minecraft.src.World;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 
-public class PokeballManager{
+public class PokeballManager {
 	private File workingDir;
 
 	private ArrayList<PlayerStorage> playerPokemonList = new ArrayList<PlayerStorage>();
@@ -128,7 +128,14 @@ public class PokeballManager{
 
 	@ForgeSubscribe
 	public void onWorldLoad(WorldEvent.Load event) {
+		ArrayList<EntityPlayerMP> playerList = new ArrayList<EntityPlayerMP>();
+		for (int i = 0; i < playerPokemonList.size(); i++) {
+			playerList.add(playerPokemonList.get(i).player);
+		}
 		playerPokemonList.clear();
+		for (EntityPlayerMP player : playerList) {
+			loadPlayer(player);
+		}
 	}
 
 	@ForgeSubscribe
@@ -137,7 +144,7 @@ public class PokeballManager{
 	}
 
 	public boolean hasPlayerFile(Player player) {
-		File playerSaveFile = new File(getSaveFolder((EntityPlayerMP)player) + ((EntityPlayerMP)player).username + ".pk");
+		File playerSaveFile = new File(getSaveFolder((EntityPlayerMP) player) + ((EntityPlayerMP) player).username + ".pk");
 		return playerSaveFile.exists();
 	}
 
