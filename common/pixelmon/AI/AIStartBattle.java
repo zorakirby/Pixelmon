@@ -34,6 +34,8 @@ public class AIStartBattle extends EntityAIBase {
 				EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
 				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).countAblePokemon() == 0) return false;
 				EntityPixelmon firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getFirstAblePokemon(player.worldObj);
+				firstPokemon.releaseFromPokeball();
+				firstPokemon.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
 				theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon)theEntity), new PlayerParticipant(player, firstPokemon));
 				return true;
 			}
