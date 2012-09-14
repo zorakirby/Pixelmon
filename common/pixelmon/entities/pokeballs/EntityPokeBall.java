@@ -194,7 +194,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 					if (p.getOwner() != null || p.getTrainer() != null) {
 						if (p.getOwner() == thrower)
-							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch Pokemon you already own!");	
+							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch Pokemon you already own!");
 						else
 							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
 						if (dropItem) {
@@ -241,6 +241,7 @@ public class EntityPokeBall extends EntityThrowable {
 		if (!worldObj.isRemote && getIsWaiting()) {
 			if (!isUnloaded) {
 				if (waitTime == 0) {
+					p.setIsRed(true);
 					setIsOpen(true);
 					initialScale = p.getScale();
 					initPos = Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
@@ -270,6 +271,7 @@ public class EntityPokeBall extends EntityThrowable {
 					isUnloaded = true;
 					waitTime = 0;
 					setIsOpen(false);
+					p.setIsRed(false);
 				}
 			}
 			if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY) - 2, (int) this.posZ) && this.posY % 1 <= this.height) {
