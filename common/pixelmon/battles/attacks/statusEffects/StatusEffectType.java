@@ -3,6 +3,7 @@ package pixelmon.battles.attacks.statusEffects;
 public enum StatusEffectType {
 	Burn(true),
 	Confusion,
+	Cursed,
 	Infatuated,
 	Flee,
 	Flying,
@@ -35,6 +36,7 @@ public enum StatusEffectType {
 	public static StatusEffectType getStatusEffect(String string){
 		if (string.equalsIgnoreCase("Burn")) return StatusEffectType.Burn;
 		if (string.equalsIgnoreCase("Confusion")) return StatusEffectType.Confusion;
+		if (string.equalsIgnoreCase("Cursed")) return StatusEffectType.Cursed;
 		if (string.equalsIgnoreCase("FireSpin")) return StatusEffectType.FireSpin;
 		if (string.equalsIgnoreCase("Flee")) return StatusEffectType.Flee;
 		if (string.equalsIgnoreCase("Flying")) return StatusEffectType.Flying;
@@ -61,6 +63,7 @@ public enum StatusEffectType {
 	public static boolean isStatusEffect(String string){
 		if (string.equalsIgnoreCase("Burn")) return true;
 		if (string.equalsIgnoreCase("Confusion")) return true;
+		if (string.equalsIgnoreCase("Cursed")) return true;
 		if (string.equalsIgnoreCase("FireSpin")) return true;
 		if (string.equalsIgnoreCase("Flee")) return true;
 		if (string.equalsIgnoreCase("Flying")) return true;

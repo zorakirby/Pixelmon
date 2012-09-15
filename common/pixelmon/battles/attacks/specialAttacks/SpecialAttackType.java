@@ -2,6 +2,7 @@ package pixelmon.battles.attacks.specialAttacks;
 
 public enum SpecialAttackType {
 	Acupressure,
+	Curse,
 	EchoedVoice,
 	Facade,
 	Frustration,
@@ -19,6 +20,7 @@ public enum SpecialAttackType {
 
 	public static SpecialAttackType getSpecialAttackType(String string) {
 		if (string.equalsIgnoreCase("Acupressure")) return SpecialAttackType.Acupressure;
+		if (string.equalsIgnoreCase("Curse")) return SpecialAttackType.Curse;
 		if (string.equalsIgnoreCase("EchoedVoice")) return SpecialAttackType.EchoedVoice;
 		if (string.equalsIgnoreCase("Facade")) return SpecialAttackType.Facade;
 		if (string.equalsIgnoreCase("Frustration")) return SpecialAttackType.Frustration;
@@ -38,6 +40,7 @@ public enum SpecialAttackType {
 
 	public static boolean isSpecialAttackType(String string) {
 		if (string.equalsIgnoreCase("Acupressure")) return true;
+		if (string.equalsIgnoreCase("Curse")) return true;
 		if (string.equalsIgnoreCase("EchoedVoice")) return true;
 		if (string.equalsIgnoreCase("Facade")) return true;
 		if (string.equalsIgnoreCase("Frustration")) return true;
