@@ -1,5 +1,7 @@
 package pixelmon.models.pokemon;
 
+import java.util.Random;
+
 import net.minecraft.src.Entity;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
@@ -317,13 +319,32 @@ public class ModelKrabby extends ModelBase
     model.rotateAngleZ = z;
   }
   
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
-  {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5);
-  	RIGHT_LEG_1.rotateAngleX = MathHelper.cos(f * 1.4F) * 1F * f1;
-  	LEFT_LEG_1.rotateAngleX = MathHelper.cos(f * 1.4F + 3.141593F) * 1F * f1;
-  	RIGHT_LEG_2.rotateAngleX = MathHelper.cos(f * 1.4F + 3.141593F) * 1F * f1;
-  	LEFT_LEG_2.rotateAngleX = MathHelper.cos(f * 1.4F) * 1F * f1;
-  }
+  Random randomGenerator = new Random();
+	int count = 0;
+	boolean clawispinching = false;
+
+public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
+{
+  super.setRotationAngles(f, f1, f2, f3, f4, f5);
+	RIGHT_LEG_1.rotateAngleX = MathHelper.cos(f * 1.6F) * 1F * f1;
+	LEFT_LEG_1.rotateAngleX = MathHelper.cos(f * 1.6F + 3.141593F) * 1F * f1;
+	RIGHT_LEG_2.rotateAngleX = MathHelper.cos(f * 1.6F + 3.141593F) * 1F * f1;
+	LEFT_LEG_2.rotateAngleX = MathHelper.cos(f * 1.6F) * 1F * f1;
+	
+	int randomInt = randomGenerator.nextInt(151);
+	
+	if (randomInt == 1) {			
+		clawispinching = true;
+	}else if (clawispinching == true) {
+		Left_bottom_Claw.rotateAngleX = MathHelper.cos(f2 * 1F)* .4F + 1F;
+		Right_bottom_Claw.rotateAngleX = MathHelper.cos(f2 * 1F)* .4F - 1F;
+		count++;
+	}
+	
+	if (count >= 35) {
+		clawispinching = false;
+		count = 0;
+		}
+}
 
 }
