@@ -252,12 +252,11 @@ public class Attack {
 	}
 
 	public static boolean canMovesHit(EntityPixelmon entity, EntityPixelmon target) {
-		Iterator<Attack> i = entity.moveset.iterator();
 		boolean[] b = new boolean[4];
 		int i1 = 0;
 		b[0] = b[1] = b[2] = b[3] = true;
-		while (i.hasNext()) {
-			Attack a = i.next();
+		for (int i =0; i < entity.moveset.size(); i++){
+			Attack a = entity.moveset.get(i);
 			if (!a.canHit(entity, target)) {
 				b[i1] = false;
 			}
@@ -271,14 +270,6 @@ public class Attack {
 
 	public static Attack getWhichMoveIsBest(List<Attack> moves, ArrayList<EnumType> types, EntityPixelmon releasedPokemon, EntityPixelmon entityPixelmon) {
 		int i1 = 0;
-		// for (int i = 0; i < moves.size(); i++) {
-		// float f = Type
-		// .getTotalEffectiveness(types, moves.get(i).attackType);
-		// if (f > f1 && moves.get(i).canHit(pixelmon1, pixelmon2)) {
-		// i1 = i;
-		// f1 = f;
-		// }
-		// }
 		Random r = new Random();
 		i1 = r.nextInt(moves.size());
 		return moves.get(i1);

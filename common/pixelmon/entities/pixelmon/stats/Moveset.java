@@ -1,4 +1,4 @@
-package pixelmon.battles;
+package pixelmon.entities.pixelmon.stats;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -96,12 +96,12 @@ implements List<Attack>, RandomAccess, Cloneable
 	
 	public int size() 
 	{
-		return createArrayList().size();
-	}
-	
-	public Iterator<Attack> iterator()
-	{
-		return createArrayList().iterator();
+		int count=0;
+		if (move1!=null) count++;
+		if (move2!=null) count++;
+		if (move3!=null) count++;
+		if (move4!=null) count++;
+		return count;
 	}
 	
 	public boolean isEmpty()
@@ -136,16 +136,6 @@ implements List<Attack>, RandomAccess, Cloneable
 			   move2 == a ||
 			   move3 == a ||
 			   move4 == a;
-	}
-	
-	public ArrayList<Attack> createArrayList()
-	{
-		ArrayList<Attack> list = new ArrayList<Attack>();
-		if(move1 != null) list.add(move1);
-		if(move2 != null) list.add(move2);
-		if(move3 != null) list.add(move3);
-		if(move4 != null) list.add(move4);
-		return list;
 	}
 	
 	public void clear()
