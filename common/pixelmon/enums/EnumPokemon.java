@@ -43,6 +43,7 @@ public enum EnumPokemon {
 	Koffing("Koffing", ClassType.Pixelmon),
 	Krabby("Krabby", ClassType.Pixelmon),
 	Krokorok("Krokorok", ClassType.Pixelmon),
+	Kabutops("Kabutops", ClassType.Pixelmon),
 	Lapras("Lapras", ClassType.WaterPixelmon),
 	Lunatone("Lunatone", ClassType.Pixelmon),
 	Magikarp("Magikarp", ClassType.WaterPixelmon),
