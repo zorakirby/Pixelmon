@@ -126,8 +126,8 @@ public class Attack {
 					else if (e.effectType== EffectType.MultiTurnSpecialAttack)
 						((MultiTurnSpecialAttackBase)e).ApplyEffect(user, target, this, attackList, targetAttackList);
 				}
-
 			}
+
 			if (!attackHandled) {
 				int power = doDamageCalc(user, target, crit);
 				if (attackCategory == ATTACK_STATUS)

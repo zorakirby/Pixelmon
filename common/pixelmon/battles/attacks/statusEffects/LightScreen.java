@@ -21,7 +21,7 @@ public class LightScreen extends StatusEffectBase {
 				ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " already has a lightscreen!");
 				return;
 			}
-			target.status.add(this);
+			user.status.add(this);
 			effectTurns = 5;
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " has put up a screen of shimmering light!");
 		} else
