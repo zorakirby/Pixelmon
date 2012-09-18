@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import pixelmon.Pixelmon;
 import pixelmon.battles.BattleController;
-import pixelmon.battles.Moveset;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.stats.BattleStats;
+import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;

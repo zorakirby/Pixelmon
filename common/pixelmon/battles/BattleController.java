@@ -52,13 +52,13 @@ public class BattleController {
 	private boolean battleEnded = false;
 
 	public BattleController(IBattleParticipant participant1, IBattleParticipant participant2) {
-		BattleRegistry.registerBattle(this);
 		this.participant1 = participant1;
 		this.participant2 = participant2;
 		if (!participant1.checkPokemon())
 			return;
 		if (!participant2.checkPokemon())
 			return;
+		BattleRegistry.registerBattle(this);
 		participant1.setBattleController(this);
 		participant2.setBattleController(this);
 		participant1.currentPokemon().battleController = this;

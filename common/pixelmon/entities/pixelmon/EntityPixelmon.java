@@ -127,7 +127,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 					}
 					if (itemstack.getItem() instanceof ItemEther) {
 						boolean canUseEther = false;
-						for(Attack a: this.moveset) {
+						for (int i=0; i < moveset.size(); i++){
+							Attack a = moveset.get(i);
 							if (a.pp < a.ppBase) {
 								canUseEther = true;
 								break;
