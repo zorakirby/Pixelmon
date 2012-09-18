@@ -51,6 +51,7 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
+		if (aggression==null) aggression = Aggression.passive;
 		nbt.setInteger("Aggression", aggression.index);
 	}
 

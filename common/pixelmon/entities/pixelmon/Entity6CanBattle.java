@@ -42,7 +42,12 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (moveset.size() == 0)
 			loadMoveset();
 
-		battleController = new BattleController(p1, p2);
+		try{
+			battleController = new BattleController(p1, p2);
+		}catch(Exception e){
+			battleController = null;
+			return;
+		}
 		wasBattleInitiator = true;
 		p2.currentPokemon().battleController = battleController;
 		if (p2.currentPokemon().moveset.size() == 0)
