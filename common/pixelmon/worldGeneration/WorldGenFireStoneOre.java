@@ -30,7 +30,7 @@ public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenera
 		for (int i = 0; i < 50; i++) {
 			int xPos = random.nextInt(16) + chunkX;
 			int zPos = random.nextInt(16) + chunkZ;
-			int yPos = random.nextInt(40);
+			int yPos = random.nextInt(20);
 			generate(world, random, xPos, yPos, zPos);
 		}
 	}
