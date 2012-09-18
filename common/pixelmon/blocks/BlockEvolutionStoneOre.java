@@ -44,6 +44,8 @@ public class BlockEvolutionStoneOre extends Block {
 			break;
 		case Waterstone:
 			result = PixelmonItems.waterStone.shiftedIndex;
+		case Firestone:
+			result = PixelmonItems.fireStone.shiftedIndex;
 		}
 
 		return result;
