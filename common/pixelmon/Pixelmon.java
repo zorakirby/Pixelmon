@@ -22,6 +22,7 @@ import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.spawning.PixelmonWaterSpawner;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.worldGeneration.WorldGenFireStoneOre;
 import pixelmon.worldGeneration.WorldGenLeafStoneOre;
 import pixelmon.worldGeneration.WorldGenThunderStoneOre;
 import pixelmon.worldGeneration.WorldGenWaterStoneOre;
@@ -96,6 +97,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
+		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
