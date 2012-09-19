@@ -43,18 +43,14 @@ public class BlockEvolutionStoneOre extends Block {
 			result = PixelmonItems.leafStoneShard.shiftedIndex;
 			break;
 		case Waterstone:
-			result = PixelmonItems.waterStone.shiftedIndex;
+			result = PixelmonItems.waterStoneShard.shiftedIndex;
+			break;
+		case Firestone:
+			result = PixelmonItems.fireStoneShard.shiftedIndex;
+			break;
 		}
 
 		return result;
-	}
-
-	public int quantityDropped(Random rand) {
-		if (type == EnumEvolutionStone.Waterstone) {
-			return 1;
-		} else {
-			return rand.nextInt(3) + 2;
-		}
 	}
 
 }

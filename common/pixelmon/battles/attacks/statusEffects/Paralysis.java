@@ -35,7 +35,7 @@ public class Paralysis extends StatusEffectBase {
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 25) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is paralyzed!");
+			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is paralyzed and cannot move!");
 			return false;
 		} else {
 			return true;

@@ -17,7 +17,8 @@ public class ItemBerryLeppa extends ItemHeld {
 	}
 
 	public boolean effectEntity(EntityPixelmon helper) {
-		for (Attack move : helper.moveset) {
+		for (int i=0; i < helper.moveset.size(); i++){
+			Attack move = helper.moveset.get(i);
 			if (move == null) {
 				continue;
 			}

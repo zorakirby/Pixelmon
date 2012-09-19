@@ -68,6 +68,11 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
+		if (bc==null) return null;
+		if (currentPixelmon.moveset.size()==0) {
+			bc.endBattle(false);
+			return null;
+		}
 		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 		int x = 0, y = 0;
 		x = currentPokemon().getPokemonId();

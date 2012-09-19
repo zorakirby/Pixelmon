@@ -67,6 +67,8 @@ public class EffectParser {
 				effect = new Burn();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Confusion)
 				effect = new Confusion();
+			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Cursed)
+				effect = new Cursed();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.FireSpin)
 				effect = new FireSpin();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Flee)
@@ -134,6 +136,8 @@ public class EffectParser {
 		}else if (effectType == EffectType.SpecialAttack){
 			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acupressure)
 				effect = new Acupressure();
+			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Curse)
+				effect = new Curse();
 			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.EchoedVoice)
 				effect = new EchoedVoice();
 			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Facade)

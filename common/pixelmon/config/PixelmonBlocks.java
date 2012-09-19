@@ -26,6 +26,7 @@ public class PixelmonBlocks {
 	public static int leafStoneOreId;
 	public static int waterStoneOreId;
 	public static int pcId;
+	public static int fireStoneOreId;
 
 	@Mod.Block(name = "Healer", itemTypeClass = ItemBlock.class)
 	public static Block healer;
@@ -37,18 +38,22 @@ public class PixelmonBlocks {
 	public static Block waterStoneOre;
 	@Mod.Block(name = "Pokemon PC", itemTypeClass = ItemBlock.class)
 	public static Block pc;
+	@Mod.Block(name = "FireStone Ore", itemTypeClass = ItemBlock.class)
+	public static Block fireStoneOre;
 
 	public static void load(Configuration configuration) {
 		pokemonHealerActiveId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PokemonHealerActive", 201).value);
 		pokemonHealerIdleId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PokemonHealerIdle", 202).value);
 		thunderStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ThunderStoneOre", 203).value);
 		leafStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("LeafStoneOre", 204).value);
+		fireStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("FireStoneOre", 207).value);
 		pcId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PC", 205).value);
 		waterStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("WaterStoneOre", 206).value);
 		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f).setBlockName("LeafStoneOre");
 		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, EnumEvolutionStone.Waterstone, 3.0f).setBlockName("WaterStoneOre");
+		fireStoneOre = new BlockEvolutionStoneOre(fireStoneOreId, EnumEvolutionStone.Firestone, 3.0f).setBlockName("FireStoneOre");
 		pc = new BlockPC(pcId, 0).setBlockName("pc");
 	}
 
@@ -57,6 +62,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(thunderStoneOre);
 		GameRegistry.registerBlock(leafStoneOre);
 		GameRegistry.registerBlock(waterStoneOre);
+		GameRegistry.registerBlock(fireStoneOre);
 		GameRegistry.registerBlock(pc);
 		
 		GameRegistry.registerTileEntity(TileEntityPC.class, "Pokemon PC");

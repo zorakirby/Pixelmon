@@ -51,14 +51,14 @@ public class BattleController {
 	public ArrayList<StatusEffectBase> battleStatusList = new ArrayList<StatusEffectBase>();
 	private boolean battleEnded = false;
 
-	public BattleController(IBattleParticipant participant1, IBattleParticipant participant2) {
-		BattleRegistry.registerBattle(this);
+	public BattleController(IBattleParticipant participant1, IBattleParticipant participant2) throws Exception {
 		this.participant1 = participant1;
 		this.participant2 = participant2;
 		if (!participant1.checkPokemon())
-			return;
+			throw new Exception("Battle Could not start!");
 		if (!participant2.checkPokemon())
-			return;
+			throw new Exception("Battle Could not start!");
+		BattleRegistry.registerBattle(this);
 		participant1.setBattleController(this);
 		participant2.setBattleController(this);
 		participant1.currentPokemon().battleController = this;
@@ -270,8 +270,8 @@ public class BattleController {
 				break;
 			}
 		}
-		for (int i = 0; i < participant1.currentPokemon().status.size(); i++) {
-			StatusEffectBase e = participant1.currentPokemon().status.get(i);
+		for (int i = 0; i < participant2.currentPokemon().status.size(); i++) {
+			StatusEffectBase e = participant2.currentPokemon().status.get(i);
 			if (!e.canAttackThisTurn(participant2.currentPokemon(), participant1.currentPokemon())) {
 				pixelmon2CanAttack = false;
 				attackList2.add("None");

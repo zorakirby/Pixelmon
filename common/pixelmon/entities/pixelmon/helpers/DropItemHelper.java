@@ -15,6 +15,8 @@ public class DropItemHelper {
 	}
 
 	public int getDropItemID() {
+		if (pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
+			return 0;
 		if (pixelmon.baseStats.droppedItem == null)
 			return 0;
 
@@ -60,7 +62,8 @@ public class DropItemHelper {
 		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Thunderstone Shard"))
 			return PixelmonItems.thunderStoneShardID;
 		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Wool"))
-			return Block.cloth.blockID;;
+			return Block.cloth.blockID;
+		;
 
 		return 0;
 	}

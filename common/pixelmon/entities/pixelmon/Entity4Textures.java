@@ -22,6 +22,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		super(par1World);
 		dataWatcher.addObject(5, (short) 0); // shiny
 		dataWatcher.addObject(6, (short) 0); // roasted
+		dataWatcher.addObject(18, (short) 0); // red
 	}
 
 	protected void init(String name) {
@@ -33,7 +34,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 			}
 		}
 		alreadyInitialised = true;
-		
+
 		particleEffects = ParticleEffects.getParticleEffects(this);
 	}
 
@@ -68,11 +69,23 @@ public abstract class Entity4Textures extends Entity3HasStats {
 			dataWatcher.updateObject(5, (short) 0);
 	}
 	
+	public boolean getIsRed() {
+		return dataWatcher.getWatchableObjectShort(18) == (short) 1;
+	}
+
+	public void setIsRed(boolean isRed) {
+		if (isRed)
+			dataWatcher.updateObject(18, (short) 1);
+		else
+			dataWatcher.updateObject(18, (short) 0);
+	}
+
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if (worldObj.isRemote)
-			if (particleEffects!=null) particleEffects.onUpdate();
+			if (particleEffects != null)
+				particleEffects.onUpdate();
 	}
 
 	@Override

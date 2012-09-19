@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import pixelmon.Pixelmon;
 import pixelmon.battles.BattleController;
-import pixelmon.battles.Moveset;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.stats.BattleStats;
+import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
@@ -42,7 +42,12 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (moveset.size() == 0)
 			loadMoveset();
 
-		battleController = new BattleController(p1, p2);
+		try{
+			battleController = new BattleController(p1, p2);
+		}catch(Exception e){
+			battleController = null;
+			return;
+		}
 		wasBattleInitiator = true;
 		p2.currentPokemon().battleController = battleController;
 		if (p2.currentPokemon().moveset.size() == 0)

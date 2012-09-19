@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet;
-import pixelmon.battles.Moveset;
+import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.enums.EnumType;
 
 public class PixelmonMovesetDataPacket {

@@ -39,9 +39,7 @@ public class RidingHelper {
 										// activated.
 			sprintToggleTimer--;
 		}
-		if (jumpTicks > 0 && !(parent instanceof EntityFlyingPixelmon)) // used
-																		// to
-																		// limit
+		if (jumpTicks > 0 && !(parent instanceof EntityFlyingPixelmon)) // used to limit
 																		// how
 																		// long
 																		// the
