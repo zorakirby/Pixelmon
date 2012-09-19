@@ -255,7 +255,8 @@ public class RenderPixelmon extends RenderLiving {
 			float var13 = 1.6F;
 			float var14 = 0.016666668F * var13;
 			GL11.glPushMatrix();
-			GL11.glTranslatef((float) par3 + 0.0F, (float) par5 + 1.1f + entityLiving.height * ((EntityPixelmon) entityLiving).getScale(), (float) par7);
+			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+			GL11.glTranslatef((float) par3 + 0.0F, (float) par5 + 1.1f + entityLiving.height * ((EntityPixelmon) entityLiving).getScale() * scaleFactor, (float) par7);
 			GL11.glNormal3f(0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
@@ -294,7 +295,8 @@ public class RenderPixelmon extends RenderLiving {
 		float f3 = 0.01666667F * f2;
 		if ((float) entityLiving.getDistanceToEntity(renderManager.livingPlayer) < 28F && Minecraft.isGuiEnabled()) {
 			GL11.glPushMatrix();
-			GL11.glTranslatef((float) d + 0.0F, (float) d1 + entityLiving.height * ((EntityPixelmon) entityLiving).getScale(), (float) d2);
+			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+			GL11.glTranslatef((float) d + 0.0F, (float) d1 + entityLiving.height * ((EntityPixelmon) entityLiving).getScale() * scaleFactor, (float) d2);
 			GL11.glNormal3f(0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
@@ -339,7 +341,8 @@ public class RenderPixelmon extends RenderLiving {
 		float f3 = 0.01666667F * f2;
 		if ((float) entityLiving.getDistanceToEntity(renderManager.livingPlayer) < 28F && Minecraft.isGuiEnabled()) {
 			GL11.glPushMatrix();
-			GL11.glTranslatef((float) d + 0.0F, (float) d1 + entityLiving.height * ((EntityPixelmon) entityLiving).getScale(), (float) d2);
+			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+			GL11.glTranslatef((float) d + 0.0F, (float) d1 + entityLiving.height * ((EntityPixelmon) entityLiving).getScale() * scaleFactor, (float) d2);
 			GL11.glNormal3f(0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
@@ -379,7 +382,8 @@ public class RenderPixelmon extends RenderLiving {
 
 	protected void preRenderScale(EntityPixelmon entity, float f) {
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
-		GL11.glScalef(scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale);
+		GL11.glScalef(scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale()
+				* entity.baseStats.giScale);
 		if (entity.doesHover) {
 			GL11.glTranslatef(0, -1 * entity.hoverHeight, 0);
 		}
