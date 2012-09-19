@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL12;
 import pixelmon.Pixelmon;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.stats.LevelHelper;
 
@@ -110,8 +111,8 @@ public class RenderPixelmon extends RenderLiving {
 			this.mainModel.setLivingAnimations(pixelmon, var16, var15, par9);
 			if (!pixelmon.getIsRed())
 				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
-			else{
-				GL11.glColor4f(0 , 0 , 0 , 1F);
+			else {
+				GL11.glColor4f(0, 0, 0, 1F);
 				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
 			}
 			float var19;
@@ -377,7 +378,8 @@ public class RenderPixelmon extends RenderLiving {
 	}
 
 	protected void preRenderScale(EntityPixelmon entity, float f) {
-		GL11.glScalef(entity.getScale() * entity.baseStats.giScale, entity.getScale() * entity.baseStats.giScale, entity.getScale() * entity.baseStats.giScale);
+		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+		GL11.glScalef(scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale);
 		if (entity.doesHover) {
 			GL11.glTranslatef(0, -1 * entity.hoverHeight, 0);
 		}

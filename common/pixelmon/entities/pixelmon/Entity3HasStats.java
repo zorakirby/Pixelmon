@@ -6,6 +6,7 @@ import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 
 import pixelmon.RandomHelper;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.helpers.*;
 import pixelmon.entities.pixelmon.stats.BaseStats;
@@ -132,7 +133,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super.setEntityHealth(par1);
 		updateHealth();
 	}
-	
 
 	public void updateHealth() {
 		if (health > stats.HP)
@@ -140,8 +140,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		if (health < 0)
 			health = 0;
 		dataWatcher.updateObject(7, (short) health);
-		if (getOwner()!=null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).updateNBT((EntityPixelmon)this);
+		if (getOwner() != null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
 	}
 
 	public void setScale(float scale) {
@@ -168,8 +168,10 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		this.posX = par1;
 		this.posY = par3;
 		this.posZ = par5;
-		float scale =1;
-		if (isInitialised) scale = getScale();
+		float scale = 1;
+		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+		if (isInitialised)
+			scale = getScale() * scaleFactor;
 		float halfWidth = this.width * scale / 2.0F;
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
