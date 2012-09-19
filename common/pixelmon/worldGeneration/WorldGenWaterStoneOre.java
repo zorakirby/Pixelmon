@@ -30,7 +30,7 @@ public class WorldGenWaterStoneOre extends WorldGenerator implements IWorldGener
 			int xPos = random.nextInt(16) + chunkX;
 			int zPos = random.nextInt(16) + chunkZ;
 			int yPos = random.nextInt(40) + 40;
-			new WorldGenWaterStoneOre().generate(world, random, xPos, yPos, zPos);
+			generate(world, random, xPos, yPos, zPos);
 		}
 	}
 
