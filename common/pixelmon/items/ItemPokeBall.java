@@ -19,7 +19,7 @@ public class ItemPokeBall extends PixelmonItem {
 
 	public ItemPokeBall(int i, EnumPokeballs type) {
 		super(i);
-		SetUsableInBattle(false); // update this when the effect is properly added
+		SetUsableInBattle(true);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);
 		this.type = type;
@@ -47,7 +47,8 @@ public class ItemPokeBall extends PixelmonItem {
 	
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
-		ChatHandler.sendChat(userPokemon.getOwner(), "Using pokeballs in battle is not implemented yet");
+		EntityPokeBall p = new EntityPokeBall(userPokemon.worldObj, userPokemon.getOwner(), targetPokemon, type, true);
+		userPokemon.getOwner().worldObj.spawnEntityInWorld(p);
 		//EntityPokeBall p = new EntityPokeBall(userPokemon.getEntity().worldObj, userPokemon.getOwner(), type, !userPokemon.getOwner().capabilities.isCreativeMode);
 		
 	}

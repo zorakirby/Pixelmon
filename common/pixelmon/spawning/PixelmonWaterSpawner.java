@@ -257,6 +257,7 @@ public class PixelmonWaterSpawner implements ITickHandler {
 
 	@Override
 	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
+		PixelmonSpawner.spawnTick(MinecraftServer.getServer().worldServerForDimension(0));
 		findChunksForSpawning(MinecraftServer.getServer().worldServerForDimension(0));
 	}
 
