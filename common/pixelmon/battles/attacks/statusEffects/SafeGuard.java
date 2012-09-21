@@ -23,7 +23,7 @@ public class SafeGuard extends StatusEffectBase {
 					return;
 				}
 
-			target.status.add(this);
+			user.status.add(this);
 			effectTurns = 5;
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is looking a bit guarded!");
 		} else

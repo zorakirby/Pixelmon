@@ -87,15 +87,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
-			// if (itemstack == null) {
-			// if (baseStats.IsRideable &&
-			// PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)
-			// entity).isIn(this)) {
-			// entity.mountEntity(this);
-			// return true;
-			// }
-			// return false;
-			// }
+			
 			if (itemstack != null) {
 				if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
 					if (getOwner() == player)
@@ -127,7 +119,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 					}
 					if (itemstack.getItem() instanceof ItemEther) {
 						boolean canUseEther = false;
-						for(Attack a: this.moveset) {
+						for (int i=0; i < moveset.size(); i++){
+							Attack a = moveset.get(i);
 							if (a.pp < a.ppBase) {
 								canUseEther = true;
 								break;

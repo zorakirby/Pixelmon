@@ -39,6 +39,8 @@ public enum EnumPokemon {
 	Ivysaur("Ivysaur", ClassType.Pixelmon),
 	Jigglypuff("Jigglypuff", ClassType.Pixelmon),
 	Jolteon("Jolteon", ClassType.Pixelmon),
+	Kabuto("Kabuto", ClassType.WaterPixelmon),
+	Kabutops("Kabutops", ClassType.Pixelmon),
 	Kakuna("Kakuna", ClassType.Pixelmon),
 	Koffing("Koffing", ClassType.Pixelmon),
 	Krabby("Krabby", ClassType.Pixelmon),

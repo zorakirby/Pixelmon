@@ -15,6 +15,7 @@ import pixelmon.battles.attacks.animations.AttackAnimationParser;
 import pixelmon.battles.attacks.animations.IAttackAnimation;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.comm.ChatHandler;
+import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.enums.EnumType;
 
 public class DatabaseMoves {

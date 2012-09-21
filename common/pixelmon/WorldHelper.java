@@ -13,4 +13,13 @@ public class WorldHelper {
 		return count;
 	}
 
+	public static int getLavaDepth(int posX,int posY, int posZ, World worldObj){
+		int count=0;
+		while (worldObj.getBlockId(posX, posY, posZ) == Block.lavaStill.blockID){
+			posY++;
+			count++;
+		}
+		return count;
+	}
+
 }

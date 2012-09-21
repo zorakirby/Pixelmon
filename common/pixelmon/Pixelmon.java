@@ -18,10 +18,12 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.migration.Migration;
 import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.spawning.PixelmonWaterSpawner;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.worldGeneration.WorldGenFireStoneOre;
 import pixelmon.worldGeneration.WorldGenLeafStoneOre;
 import pixelmon.worldGeneration.WorldGenThunderStoneOre;
 import pixelmon.worldGeneration.WorldGenWaterStoneOre;
@@ -42,6 +44,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.asm.SideOnly;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -56,7 +59,7 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.7.1")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.7.2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false,
 clientPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandler=ClientPacketHandler.class),
 serverPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandler=PacketHandler.class))
@@ -64,6 +67,9 @@ serverPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandl
 public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
+	
+	@SideOnly(Side.SERVER)
+	public static Migration migration;
 	
 	@SidedProxy(clientSide = "pixelmon.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
@@ -77,7 +83,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 		
-		event.getModMetadata().version = "Pixelmon 1.7.1 for 1.3.1";
+		event.getModMetadata().version = "Pixelmon 1.7.2 for 1.3.1";
 
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
 	}
@@ -96,6 +102,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
+		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
@@ -116,6 +123,7 @@ public class Pixelmon {
 		{
 			((ServerCommandManager)MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
 		}
+		migration = new Migration(event.getServer().worldServerForDimension(0).provider);
 	}
 	
 }

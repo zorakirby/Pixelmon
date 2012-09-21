@@ -66,6 +66,8 @@ public class PixelmonItems {
 	public static int healerItemID;
 	public static int thunderStoneShardID;
 	public static int leafStoneShardID;
+	public static int waterStoneShardID;
+	public static int fireStoneShardID;
 	
 	public static int luckyEggID;
 	public static int expShareID;
@@ -145,6 +147,10 @@ public class PixelmonItems {
 	public static Item thunderStoneShard;
 	@Mod.Item(name = "Leaf Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item leafStoneShard;
+	@Mod.Item(name = "Water Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item waterStoneShard;
+	@Mod.Item(name = "Fire Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item fireStoneShard;
 	
 	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.heldItems.ItemLuckyEgg")
 	public static Item luckyEgg;
@@ -192,6 +198,8 @@ public class PixelmonItems {
 		healerItemID = cfg.getOrCreateIntProperty("HealerItem", "item", 10014).getInt();
 		thunderStoneShardID = cfg.getOrCreateIntProperty("ThunderStoneShard", "item", 10021).getInt();
 		leafStoneShardID = cfg.getOrCreateIntProperty("LeafStoneShard", "item", 10022).getInt();
+		waterStoneShardID = cfg.getOrCreateIntProperty("WaterStoneShard", "item", 10023).getInt();
+		fireStoneShardID = cfg.getOrCreateIntProperty("FireStoneShard", "item", 10024).getInt();
 		luckyEggID = cfg.getOrCreateIntProperty("LuckyEgg", "item", 10035).getInt();
 		expShareID = cfg.getOrCreateIntProperty("EXPShare", "item", 10036).getInt();
 		berryOranID = cfg.getOrCreateIntProperty("OranBerry", "item", 10040).getInt();
@@ -230,6 +238,8 @@ public class PixelmonItems {
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 54).setItemName("Healer");
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID).setItemName("ThunderStoneShard").setIconIndex(7);
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(39);
+		waterStoneShard = new PixelmonItem(waterStoneShardID).setItemName("WaterStoneShard").setIconIndex(23);
+		fireStoneShard = new PixelmonItem(fireStoneShardID).setItemName("FireStoneShard").setIconIndex(55);
 		luckyEgg = new ItemLuckyEgg(luckyEggID).setItemName("LuckyEgg").setIconIndex(11);
 		expShare = new ItemExpShare(expShareID).setItemName("ExpShare").setIconIndex(0);
 		berryOran = new ItemBerryOran(berryOranID).setItemName("OranBerry").setIconIndex(9);

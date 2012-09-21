@@ -30,6 +30,8 @@ public class PixelmonConfig {
 	
 	public static int chanceOfNoPokemon;
 	
+	public static boolean scaleModelsUp;
+	
 	public static int idTrainers = 199;
 	public static int idPixelmon=200;
 	public static int idPokeball=201;
@@ -42,6 +44,7 @@ public class PixelmonConfig {
 		allowNonPixelmonMobs = config.getOrCreateBooleanProperty("Allow vanilla mobs", "general", false).getBoolean(false);
 		maxPokemonPerChunk = config.getOrCreateIntProperty("Max number of pokemon per chunk", "general", 4).getInt(4);
 		chanceOfNoPokemon = config.getOrCreateIntProperty("Percent chance of no pokemon in chunk", "general", 30).getInt(20);
+		scaleModelsUp = config.getOrCreateBooleanProperty("Scale Models Up", "general", true).getBoolean(true);
 		idTrainers = config.getOrCreateIntProperty("Trainer ID", "IDs", 199).getInt(199);
 		idPixelmon = config.getOrCreateIntProperty("Pixelmon ID", "IDs", 200).getInt(200);
 		idPokeball = config.getOrCreateIntProperty("Pokeball ID", "IDs", 201).getInt(201);

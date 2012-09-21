@@ -20,8 +20,10 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.network.Player;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.AnvilSaveHandler;
 import net.minecraft.src.Chunk;
@@ -30,7 +32,9 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityList;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.ISaveFormat;
 import net.minecraft.src.ISaveHandler;
+import net.minecraft.src.ModLoader;
 
 import net.minecraft.src.NBTBase;
 import net.minecraft.src.NBTTagCompound;
