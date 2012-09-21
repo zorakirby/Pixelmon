@@ -1,6 +1,7 @@
 package pixelmon.entities.pixelmon;
 
 import pixelmon.entities.pixelmon.helpers.AIHelper;
+import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
