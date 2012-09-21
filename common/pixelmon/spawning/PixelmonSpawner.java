@@ -28,7 +28,23 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.ChunkEvent;
 
 public class PixelmonSpawner {
-	private Random random = new Random();
+	private static Random random = new Random();
+
+	private class SpawnInfo {
+		public String name;
+		public int x;
+		public int y;
+		public int z;
+
+		public SpawnInfo(String name, int x, int y, int z) {
+			this.name = name;
+			this.x = x;
+			this.y = y;
+			this.z = z;
+		}
+	}
+
+	private static ArrayList<SpawnInfo> spawnList = new ArrayList<SpawnInfo>();
 
 	@ForgeSubscribe
 	public void spawnOnChunkLoad(ChunkEvent.Load event) {
@@ -58,7 +74,6 @@ public class PixelmonSpawner {
 			return;
 		int x = xPosition * 16;
 		int z = zPosition * 16;
-		Random rand = new Random();
 		BiomeGenBase biome = world.getBiomeGenForCoords(x + 8, z + 8);
 		List<SpawnData> creatureList = SpawnRegistry.getSpawnsForBiome(biome);
 
@@ -69,10 +84,10 @@ public class PixelmonSpawner {
 			totRarityCount += s.rarity;
 
 		for (int i = 0; i < num; i++) {
-			int xRand = x + rand.nextInt(16);
-			int zRand = z + rand.nextInt(16);
+			int xRand = x + random.nextInt(16);
+			int zRand = z + random.nextInt(16);
 			int y = getTopSolidOrLiquidBlock(chunk, xRand, zRand);
-			int index = rand.nextInt(totRarityCount);
+			int index = random.nextInt(totRarityCount);
 			String creatureName = null;
 			int tot = 0;
 			for (SpawnData s : creatureList) {
@@ -82,17 +97,23 @@ public class PixelmonSpawner {
 					break;
 				}
 			}
-			if (EnumTrainers.has(creatureName)) {
-				Entity trainer = PixelmonEntityList.createEntityByName(creatureName, world);
-				trainer.setLocationAndAngles(xRand, y, zRand, rand.nextFloat() * 360.0F, 0.0F);
+			spawnList.add(new SpawnInfo(creatureName, xRand, y, zRand));
+		}
+	}
+
+	public static void spawnTick(World world) {
+		if (spawnList.size() > 0) {
+			if (EnumTrainers.has(spawnList.get(0).name)) {
+				Entity trainer = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
+				trainer.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
 				if (((EntityLiving) trainer).getCanSpawnHere())
 					world.spawnEntityInWorld(trainer);
-			} else if (SpawnerAnimals.canCreatureTypeSpawnAtLocation(DatabaseStats.GetCreatureType(creatureName), world, xRand, y, zRand)) {
-				Entity pixelmon = PixelmonEntityList.createEntityByName(creatureName, world);
-				pixelmon.setLocationAndAngles(xRand, y, zRand, rand.nextFloat() * 360.0F, 0.0F);
-				if (((EntityLiving) pixelmon).getCanSpawnHere())
-					world.spawnEntityInWorld(pixelmon);
 			}
+		} else if (SpawnerAnimals.canCreatureTypeSpawnAtLocation(DatabaseStats.GetCreatureType(spawnList.get(0).name), world, spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z)) {
+			Entity pixelmon = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
+			pixelmon.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
+			if (((EntityLiving) pixelmon).getCanSpawnHere())
+				world.spawnEntityInWorld(pixelmon);
 		}
 	}
 
