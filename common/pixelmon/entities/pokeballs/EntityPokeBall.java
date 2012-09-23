@@ -116,7 +116,9 @@ public class EntityPokeBall extends EntityThrowable {
 		return dataWatcher.getWatchableObjectShort(14) == (short) 1;
 	}
 
-	public EntityPokeBall(World world, EntityLiving thrower, EntityPixelmon target, EnumPokeballs type, boolean isBattle) {
+	private BattleController battleController;
+	
+	public EntityPokeBall(World world, EntityLiving thrower, EntityPixelmon target, EnumPokeballs type, BattleController battleController) {
 		super(world, thrower);
 		this.thrower = thrower;
 		endRotationYaw = thrower.rotationYawHead;
@@ -128,6 +130,8 @@ public class EntityPokeBall extends EntityThrowable {
 		dataWatcher.addObject(14, (short) 0);// IsOpen
 		mode = Mode.battle;
 		isBattleThrown = true;
+		this.battleController = battleController;
+		battleController.waitForCapture();
 		this.setLocationAndAngles(thrower.posX, thrower.posY + (double) thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
 		this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
 		this.posY -= 0.10000000149011612D;

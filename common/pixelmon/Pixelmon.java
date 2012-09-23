@@ -18,6 +18,7 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.migration.Migration;
 import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.spawning.PixelmonWaterSpawner;
@@ -43,6 +44,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.asm.SideOnly;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -65,6 +67,9 @@ serverPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandl
 public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
+	
+	@SideOnly(Side.SERVER)
+	public static Migration migration;
 	
 	@SidedProxy(clientSide = "pixelmon.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
@@ -118,6 +123,7 @@ public class Pixelmon {
 		{
 			((ServerCommandManager)MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
 		}
+		migration = new Migration(event.getServer().worldServerForDimension(0).provider);
 	}
 	
 }
