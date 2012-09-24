@@ -1,9 +1,8 @@
 package pixelmon.migration.groupings;
 
-public class Flock {
+public class Flock extends Grouping {
 
-	public Flock() {
-		// TODO Auto-generated constructor stub
-	}
-
+	public Flock(String creatureName) {
+		super(creatureName);
+	}	
 }

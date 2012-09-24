@@ -1,9 +1,8 @@
 package pixelmon.migration.groupings;
 
-public class Herd {
+public class Herd extends Grouping {
 
-	public Herd() {
-		// TODO Auto-generated constructor stub
+	public Herd(String creatureName) {
+		super(creatureName);
 	}
-
 }

@@ -23,6 +23,7 @@ import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.spawning.PixelmonWaterSpawner;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
 import pixelmon.worldGeneration.WorldGenLeafStoneOre;
 import pixelmon.worldGeneration.WorldGenThunderStoneOre;
@@ -103,6 +104,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
+		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
@@ -123,7 +125,7 @@ public class Pixelmon {
 		{
 			((ServerCommandManager)MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
 		}
-		migration = new Migration(event.getServer().worldServerForDimension(0).provider);
+		//mgalmigration = new Migration(event.getServer().worldServerForDimension(0).provider);
 	}
 	
 }
