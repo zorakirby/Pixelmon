@@ -25,12 +25,13 @@ import net.minecraft.src.World;
 
 public class BlockApricornTree extends BlockContainer {
 	private Random rand = new Random();
-	private EnumApricornTrees tree;
-	public int apricornStage = 0;
+	public EnumApricornTrees tree;
 
-	public BlockApricornTree(int id, EnumApricornTrees tree){
+	public BlockApricornTree(int id, EnumApricornTrees tree) {
 		super(id, Material.wood);
 		this.tree = tree;
+		setTickRandomly(true);
+		setBlockBounds();
 	}
 
 	@Override
@@ -86,7 +87,7 @@ public class BlockApricornTree extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World var1) {
-		return new TileEntityApricornTree(this, tree);
+		return new TileEntityApricornTree(tree);
 	}
 
 	@Override
@@ -95,14 +96,36 @@ public class BlockApricornTree extends BlockContainer {
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
-		if (apricornStage == tree.modelList.length - 1) {
-			EntityItem var3 = new EntityItem(world, par2, par3 + maxY, par4, new ItemStack(new ItemApricorn(tree.apricorn)));
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+		if (world.isRemote)
+			return false;
+		if (world.getBlockMetadata(x, y, z) == tree.modelList.length - 1) {
+			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(new ItemApricorn(tree.apricorn)));
 			var3.delayBeforeCanPickup = 10;
 
 			world.spawnEntityInWorld(var3);
+			world.setBlockMetadata(x, y, z, tree.modelList.length - 2);
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	/**
+	 * Ticks the block if it's been scheduled
+	 */
+	public void updateTick(World world, int x, int y, int z, Random par5Random) {
+		super.updateTick(world, x, y, z, par5Random);
+
+		if (world.getBlockLightValue(x, y + 1, z) >= 9) {
+			int stage = world.getBlockMetadata(x, y, z);
+			if (stage < tree.modelList.length - 1) {
+				float var7 = 10;
+
+				if (par5Random.nextInt((int) (25.0F / var7) + 1) == 0) {
+					world.setBlockMetadataWithNotify(x, y, z, stage + 1);
+				}
+			}
+		}
 	}
 }
