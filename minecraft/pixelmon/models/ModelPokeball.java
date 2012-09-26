@@ -46,7 +46,7 @@ public class ModelPokeball extends ModelBase {
 		WhiteTop.mirror = true;
 		setRotation(WhiteTop, 0F, 0F, 0F);
 		ModelRenderer WhiteBottom = new ModelRenderer(this, 0, 16);
-		WhiteBottom.addBox(-1.5F, 0.4F, -1.5F, 3, 1, 3);
+		WhiteBottom.addBox(-1.5F, 0.5F, -1.5F, 3, 1, 3);
 		WhiteBottom.setRotationPoint(0F, 0F, 0F);
 		WhiteBottom.setTextureSize(32, 32);
 		WhiteBottom.mirror = true;
@@ -147,7 +147,7 @@ public class ModelPokeball extends ModelBase {
 		setRotation(RedTip, 0F, 0F, 0F);
 		ModelRenderer RedTop = new ModelRenderer(this, 0, 0);
 		RedTop.addBox(-1.5F, -1.2F, -1.5F, 3, 1, 3);
-		RedTop.setRotationPoint(0F, -0.5F, -1.5F);
+		RedTop.setRotationPoint(0F, -0.6F, -1.5F);
 		RedTop.setTextureSize(32, 32);
 		RedTop.mirror = true;
 		setRotation(RedTop, 0F, 0F, 0F);
