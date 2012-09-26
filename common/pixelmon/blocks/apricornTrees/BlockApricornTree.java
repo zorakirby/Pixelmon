@@ -25,7 +25,7 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
 public class BlockApricornTree extends BlockContainer {
-	public static final int numStages = 5;
+	public static final int numStages = 6;
 	private Random rand = new Random();
 	public EnumApricornTrees tree;
 
@@ -140,11 +140,10 @@ public class BlockApricornTree extends BlockContainer {
 			if (stage < numStages - 1) {
 				float var7 = 10;
 
-				if (par5Random.nextInt((int) (25.0F / var7) + 1) == 0) {
-					System.out.println("Growth to stage " + stage + 1 +" at " + x + " " + y + " " + z + " ");
-					world.setBlockMetadataWithNotify(x, y, z, stage + 1);
+				if (par5Random.nextInt(1) == 0) {
+					world.setBlockMetadata(x, y, z, stage + 1);
 					world.getBlockTileEntity(x, y, z).updateContainingBlockInfo();
-					System.out.println("Growth at " + x + " " + y + " " + z + " ");
+					world.getBlockTileEntity(x, y, z).invalidate();
 				}
 			}
 		}

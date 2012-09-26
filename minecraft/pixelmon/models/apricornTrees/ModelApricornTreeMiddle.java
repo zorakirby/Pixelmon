@@ -5,7 +5,7 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
-public class ModelApricornTreeMiddle extends ModelBase
+public class ModelApricornTreeMiddle extends ModelApricornTreeBase
 {
   //fields
     ModelRenderer Base;

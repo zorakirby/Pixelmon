@@ -9,7 +9,7 @@ public class ApricornTreeStore {
 
 	private static ArrayList<ModelStageEnum> treeModels = new ArrayList<ModelStageEnum>();
 
-	private static final String[] modelList=new String[]{"ModelApricornTreeSprout", "ModelApricornTreeStage1", "ModelApricornTreeStage2", "ModelApricornTreeStage3", "ModelApricornTreeFinal" };
+	private static final String[] modelList=new String[]{"ModelApricornTreeSprout", "ModelApricornTreeStage1", "ModelApricornTreeMiddle", "ModelApricornTreeStage2", "ModelApricornTreeStage3", "ModelApricornTreeFinal" };
 	
 	public static ModelApricornTreeBase getModel(int stage) {
 		for (int i = 0; i < treeModels.size(); i++) {
