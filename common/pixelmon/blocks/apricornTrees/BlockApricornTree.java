@@ -23,6 +23,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import net.minecraft.src.WorldServer;
 
 public class BlockApricornTree extends BlockContainer {
 	public static final int numStages = 6;
@@ -33,7 +34,6 @@ public class BlockApricornTree extends BlockContainer {
 		super(id, Material.wood);
 		this.tree = tree;
 		setTickRandomly(true);
-		setBlockBounds();
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class BlockApricornTree extends BlockContainer {
 	 * box can change after the pool has been cleared to be reused)
 	 */
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
-		this.setBlockBounds();
+		this.setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
 		return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
 	}
 
@@ -75,16 +75,25 @@ public class BlockApricornTree extends BlockContainer {
 	 * Returns the bounding box of the wired rectangular prism to render.
 	 */
 	public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
-		this.setBlockBounds();
+		this.setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
 		return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
 	}
 
 	/**
 	 * Updates the blocks bounds based on its current state. Args: world, x, y,
 	 * z
+	 * 
+	 * @param world
 	 */
-	public void setBlockBounds() {
-		this.setBlockBounds(0, 0, 0, 1, 2, 1);
+	public void setBlockBounds(int stage) {
+		if (stage == 0)
+			this.setBlockBounds(0.4f, 0, 0.4f, 0.6f, 0.2f, 0.6f);
+		else if (stage == 1)
+			this.setBlockBounds(0.25f, 0, 0.25f, 0.75f, 0.7f, 0.75f);
+		else if (stage == 2)
+			this.setBlockBounds(0.17f, 0, 0.17f, 0.83f, 1.1f, 0.83f);
+		else
+			this.setBlockBounds(0.06f, 0, 0.06f, 0.94f, 1.65f, 0.94f);
 	}
 
 	@Override
@@ -140,10 +149,9 @@ public class BlockApricornTree extends BlockContainer {
 			if (stage < numStages - 1) {
 				float var7 = 10;
 
-				if (par5Random.nextInt(1) == 0) {
+				if (par5Random.nextInt(3) == 0) {
 					world.setBlockMetadata(x, y, z, stage + 1);
-					world.getBlockTileEntity(x, y, z).updateContainingBlockInfo();
-					world.getBlockTileEntity(x, y, z).invalidate();
+					((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 				}
 			}
 		}
