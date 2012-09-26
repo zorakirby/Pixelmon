@@ -69,7 +69,7 @@ public class ModelApricornTreeSprout extends ModelApricornTreeBase {
 		Leaf1.setRotationPoint(0F, 21.8F, 0F);
 		Leaf1.setTextureSize(64, 32);
 		Leaf1.mirror = true;
-		setRotation(Leaf1, 0F, 0F, -0.3490659F);
+		setRotation(Leaf1, -0.3490659F, 0F, 0F);
 		BaseTop = new ModelRenderer(this, 10, 3);
 		BaseTop.addBox(-0.5F, 0F, -0.5F, 1, 1, 1);
 		BaseTop.setRotationPoint(0F, 21.6F, 0F);
