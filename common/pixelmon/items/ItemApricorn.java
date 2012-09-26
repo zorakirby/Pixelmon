@@ -9,8 +9,8 @@ import pixelmon.enums.EnumApricorns;
 public class ItemApricorn extends PixelmonItem {
 	EnumApricorns apricorn;
 
-	public ItemApricorn(EnumApricorns apricorn) {
-		super(apricorn.itemIndex);
+	public ItemApricorn(int id, EnumApricorns apricorn) {
+		super(id);
 
 		this.apricorn = apricorn;
 		SetUsableInBattle(true);

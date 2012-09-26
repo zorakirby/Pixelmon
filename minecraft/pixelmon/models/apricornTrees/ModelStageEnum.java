@@ -5,12 +5,10 @@ import pixelmon.enums.EnumApricornTrees;
 
 public class ModelStageEnum {
 
-	public EnumApricornTrees tree;
 	public ModelApricornTreeBase model;
 	public int stage;
 
-	public ModelStageEnum(EnumApricornTrees tree, int stage, ModelApricornTreeBase model) {
-		this.tree = tree;
+	public ModelStageEnum(int stage, ModelApricornTreeBase model) {
 		this.stage = stage;
 		this.model = model;
 	}

@@ -18,12 +18,14 @@ import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
 public class BlockApricornTree extends BlockContainer {
+	public static final int numStages = 5;
 	private Random rand = new Random();
 	public EnumApricornTrees tree;
 
@@ -99,12 +101,28 @@ public class BlockApricornTree extends BlockContainer {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
 		if (world.isRemote)
 			return false;
-		if (world.getBlockMetadata(x, y, z) == tree.modelList.length - 1) {
-			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(new ItemApricorn(tree.apricorn)));
+		if (world.getBlockMetadata(x, y, z) == numStages - 1) {
+			Item item = null;
+			if (tree == EnumApricornTrees.Black)
+				item = PixelmonItems.apricornBlack;
+			else if (tree == EnumApricornTrees.White)
+				item = PixelmonItems.apricornWhite;
+			else if (tree == EnumApricornTrees.Pink)
+				item = PixelmonItems.apricornPink;
+			else if (tree == EnumApricornTrees.Green)
+				item = PixelmonItems.apricornGreen;
+			else if (tree == EnumApricornTrees.Blue)
+				item = PixelmonItems.apricornBlue;
+			else if (tree == EnumApricornTrees.Yellow)
+				item = PixelmonItems.apricornYellow;
+			else if (tree == EnumApricornTrees.Red)
+				item = PixelmonItems.apricornRed;
+			
+			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 			var3.delayBeforeCanPickup = 10;
 
 			world.spawnEntityInWorld(var3);
-			world.setBlockMetadata(x, y, z, tree.modelList.length - 2);
+			world.setBlockMetadata(x, y, z, numStages - 2);
 			return true;
 		}
 		return false;
@@ -119,7 +137,7 @@ public class BlockApricornTree extends BlockContainer {
 
 		if (world.getBlockLightValue(x, y + 1, z) >= 9) {
 			int stage = world.getBlockMetadata(x, y, z);
-			if (stage < tree.modelList.length - 1) {
+			if (stage < numStages - 1) {
 				float var7 = 10;
 
 				if (par5Random.nextInt((int) (25.0F / var7) + 1) == 0) {
