@@ -24,7 +24,7 @@ public class WorldGenApricornTrees implements IWorldGenerator {
 			return;
 		BiomeGenBase biome = world.getBiomeGenForCoords(chunkX * 16, chunkZ * 16);
 		if (biome == EnumBiomes.Forest.getBiome() || biome == EnumBiomes.ForestHills.getBiome() || biome == EnumBiomes.Taiga.getBiome() || biome == EnumBiomes.TaigaHills.getBiome()) {
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < random.nextInt(3) - 1; i++) {
 				int x = random.nextInt(16) + chunkX * 16;
 				int z = random.nextInt(16) + chunkZ * 16;
 				int y = world.getHeightValue(x, z);

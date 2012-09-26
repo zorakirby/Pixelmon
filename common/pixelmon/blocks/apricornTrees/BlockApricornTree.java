@@ -117,12 +117,12 @@ public class BlockApricornTree extends BlockContainer {
 				item = PixelmonItems.apricornYellow;
 			else if (tree == EnumApricornTrees.Red)
 				item = PixelmonItems.apricornRed;
-			
+
 			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 			var3.delayBeforeCanPickup = 10;
 
 			world.spawnEntityInWorld(var3);
-			world.setBlockMetadata(x, y, z, numStages - 2);
+			world.setBlockMetadata(x, y, z, numStages - 3);
 			return true;
 		}
 		return false;
@@ -141,7 +141,10 @@ public class BlockApricornTree extends BlockContainer {
 				float var7 = 10;
 
 				if (par5Random.nextInt((int) (25.0F / var7) + 1) == 0) {
+					System.out.println("Growth to stage " + stage + 1 +" at " + x + " " + y + " " + z + " ");
 					world.setBlockMetadataWithNotify(x, y, z, stage + 1);
+					world.getBlockTileEntity(x, y, z).updateContainingBlockInfo();
+					System.out.println("Growth at " + x + " " + y + " " + z + " ");
 				}
 			}
 		}
