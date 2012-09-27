@@ -5,8 +5,8 @@ import pixelmon.config.PixelmonItemsPokeballs;
 import net.minecraft.src.Item;
 
 public enum EnumPokeballs {
-	PokeBall(0, 1, "pokeball", 0, 0), GreatBall(1, 1.5, "greatball", 0, 1), UltraBall(2, 2, "ultraball", 0, 2), MasterBall(3, 255, "masterball", 0, 3), LevelBall(
-			4, 1, "levelball", 1, 8), MoonBall(5, 1, "moonball", 1, 15);
+	PokeBall(0, 1, "pokeball", 0, 0, 0, 0, 0, 0), GreatBall(1, 1.5, "greatball", 0, 1, 0, 0, 0, 0), UltraBall(2, 2, "ultraball", 0, 2, 0, 0, 0, 0), MasterBall(3, 255, "masterball", 0, 3, 0, 0, 0, 0), LevelBall(
+			4, 1, "levelball", 1, 8, 16, 13, 16, 14), MoonBall(5, 1, "moonball", 1, 15, 15, 13, 15, 14);
 
 	private EnumPokeballs(int index, double ballBonus, String filenamePrefix, int iconIndexX, int iconIndexY, int lidIconIndexX, int lidIconIndexY,
 			int discIconIndexX, int discIconIndexY) {
