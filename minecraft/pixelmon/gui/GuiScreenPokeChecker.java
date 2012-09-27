@@ -63,6 +63,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 		drawCenteredString(fontRenderer, "Defence: " + targetPacket.Defence, width / 3, height / 7 + 90, 0xdddddd);
 		drawCenteredString(fontRenderer, "Special Attack: " + targetPacket.SpecialAttack, width / 3, height / 7 + 100, 0xdddddd);
 		drawCenteredString(fontRenderer, "Special Defence: " + targetPacket.SpecialDefence, width / 3, height / 7 + 110, 0xdddddd);
+		drawCenteredString(fontRenderer, "Speed: " + targetPacket.Speed, width / 3, height / 7 + 120, 0xdddddd);
 		// MOVES
 		drawCenteredString(fontRenderer, "Moves", width * 2 / 3, height / 7 + 25, 0xdddddd);
 		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
