@@ -112,63 +112,9 @@ public class ModelVileplume extends ModelBase
   {
     textureWidth = 64;
     textureHeight = 32;
-    
-    LEFTLEGPIECE = new ModelRenderer(this, "LEFTLEGPIECE");
-    LEFTLEGPIECE.setRotationPoint(2F, 9F, -2F);
-    setRotation(LEFTLEGPIECE, 0F, 0F, 0F);
-    LEFTLEGPIECE.mirror = true;
-      leftleg1 = new ModelRenderer(this, 55, 0);
-      leftleg1.addBox(-0.5F, 0F, -0.5F, 1, 2, 1);
-      leftleg1.setRotationPoint(0F, 0F, 0F);
-      leftleg1.setTextureSize(64, 32);
-      leftleg1.mirror = true;
-      setRotation(leftleg1, 0F, 0F, 0F);
-      leftleg2 = new ModelRenderer(this, 50, 0);
-      leftleg2.addBox(-0.8F, 2F, -3.5F, 1, 1, 4);
-      leftleg2.setRotationPoint(0F, 0F, 0F);
-      leftleg2.setTextureSize(64, 32);
-      leftleg2.mirror = true;
-      setRotation(leftleg2, 0F, -0.2617994F, 0F);
-      leftleg4 = new ModelRenderer(this, 50, 0);
-      leftleg4.addBox(-0.3F, 2F, -3.5F, 1, 1, 4);
-      leftleg4.setRotationPoint(0F, 0F, 0F);
-      leftleg4.setTextureSize(64, 32);
-      leftleg4.mirror = true;
-      setRotation(leftleg4, 0F, -0.2617994F, 0F);
-      
-      LEFTLEGPIECE.addChild(leftleg1);
-      LEFTLEGPIECE.addChild(leftleg2);
-      LEFTLEGPIECE.addChild(leftleg4);
-      
-    RIGHTLEGPIECE = new ModelRenderer(this, "RIGHTLEGPIECE");
-    RIGHTLEGPIECE.setRotationPoint(-2F, 9F, -2F);
-    setRotation(RIGHTLEGPIECE, 0F, 0F, 0F);
-    RIGHTLEGPIECE.mirror = true;
-      rightleg1 = new ModelRenderer(this, 59, 0);
-      rightleg1.addBox(-0.5F, 0F, -0.5F, 1, 2, 1);
-      rightleg1.setRotationPoint(0F, 0F, 0F);
-      rightleg1.setTextureSize(64, 32);
-      rightleg1.mirror = true;
-      setRotation(rightleg1, 0F, 0F, 0F);
-      rightleg2 = new ModelRenderer(this, 53, 0);
-      rightleg2.addBox(-0.8F, 2F, -3.5F, 1, 1, 4);
-      rightleg2.setRotationPoint(0F, 0F, 0F);
-      rightleg2.setTextureSize(64, 32);
-      rightleg2.mirror = true;
-      setRotation(rightleg2, 0F, 0.2617994F, 0F);
-      rightleg3 = new ModelRenderer(this, 53, 0);
-      rightleg3.addBox(-0.3F, 2F, -3.5F, 1, 1, 4);
-      rightleg3.setRotationPoint(0F, 0F, 0F);
-      rightleg3.setTextureSize(64, 32);
-      rightleg3.mirror = true;
-      setRotation(rightleg3, 0F, 0.2617994F, 0F);
-      
-      RIGHTLEGPIECE.addChild(rightleg1);
-      RIGHTLEGPIECE.addChild(rightleg2);
-      RIGHTLEGPIECE.addChild(rightleg3);
-      
+  
     BODYPIECE = new ModelRenderer(this, "BODYPIECE");
-    BODYPIECE.setRotationPoint(0F, 7F, -2F);
+    BODYPIECE.setRotationPoint(0F, 19F, -2F);
     setRotation(BODYPIECE, 0F, 0F, 0F);
     BODYPIECE.mirror = true;
       body1 = new ModelRenderer(this, 54, 0);
@@ -468,7 +414,7 @@ public class ModelVileplume extends ModelBase
       flower2.setRotationPoint(0F, 0F, 0F);
       flower2.setTextureSize(64, 32);
       flower2.mirror = true;
-      setRotation(flower2, 0F, -0.8726646F, -0.1745329F);
+      setRotation(flower2, 0F, -0.8726646F, 10.1745329F);
       flower3 = new ModelRenderer(this, 2, 0);
       flower3.addBox(-8.4F, -0.5F, -2.2F, 5, 2, 3);
       flower3.setRotationPoint(0F, 0F, 0F);
@@ -628,7 +574,7 @@ public class ModelVileplume extends ModelBase
       flower24.mirror = true;
       setRotation(flower24, 0.0872665F, 1.396263F, 0F);
       flower25 = new ModelRenderer(this, 0, 0);
-      flower25.addBox(0.5F, 2.5F, 1.4F, 3, 2, 8);
+      flower25.addBox(-1F, 2F, 0.4F, 3, 2, 8);
       flower25.setRotationPoint(0F, 0F, 0F);
       flower25.setTextureSize(64, 32);
       flower25.mirror = true;
@@ -803,15 +749,71 @@ public class ModelVileplume extends ModelBase
       FLOWER6PIECE.addChild(flower45);
       BODYPIECE.addChild(FLOWER6PIECE);
       
+      
+      LEFTLEGPIECE = new ModelRenderer(this, "LEFTLEGPIECE");
+      LEFTLEGPIECE.setRotationPoint(2F, 21F, -2F);
+      setRotation(LEFTLEGPIECE, 0F, 0F, 0F);
+      LEFTLEGPIECE.mirror = true;
+        leftleg1 = new ModelRenderer(this, 55, 0);
+        leftleg1.addBox(-0.5F, 0F, -0.5F, 1, 2, 1);
+        leftleg1.setRotationPoint(0F, 0F, 0F);
+        leftleg1.setTextureSize(64, 32);
+        leftleg1.mirror = true;
+        setRotation(leftleg1, 0F, 0F, 0F);
+        leftleg2 = new ModelRenderer(this, 50, 0);
+        leftleg2.addBox(-0.8F, 2F, -3.5F, 1, 1, 4);
+        leftleg2.setRotationPoint(0F, 0F, 0F);
+        leftleg2.setTextureSize(64, 32);
+        leftleg2.mirror = true;
+        setRotation(leftleg2, 0F, -0.2617994F, 0F);
+        leftleg4 = new ModelRenderer(this, 50, 0);
+        leftleg4.addBox(-0.3F, 2F, -3.5F, 1, 1, 4);
+        leftleg4.setRotationPoint(0F, 0F, 0F);
+        leftleg4.setTextureSize(64, 32);
+        leftleg4.mirror = true;
+        setRotation(leftleg4, 0F, -0.2617994F, 0F);
+        
+        LEFTLEGPIECE.addChild(leftleg1);
+        LEFTLEGPIECE.addChild(leftleg2);
+        LEFTLEGPIECE.addChild(leftleg4);
+        
+      RIGHTLEGPIECE = new ModelRenderer(this, "RIGHTLEGPIECE");
+      RIGHTLEGPIECE.setRotationPoint(-2F, 21F, -2F);
+      setRotation(RIGHTLEGPIECE, 0F, 0F, 0F);
+      RIGHTLEGPIECE.mirror = true;
+        rightleg1 = new ModelRenderer(this, 59, 0);
+        rightleg1.addBox(-0.5F, 0F, -0.5F, 1, 2, 1);
+        rightleg1.setRotationPoint(0F, 0F, 0F);
+        rightleg1.setTextureSize(64, 32);
+        rightleg1.mirror = true;
+        setRotation(rightleg1, 0F, 0F, 0F);
+        rightleg2 = new ModelRenderer(this, 53, 0);
+        rightleg2.addBox(-0.8F, 2F, -3.5F, 1, 1, 4);
+        rightleg2.setRotationPoint(0F, 0F, 0F);
+        rightleg2.setTextureSize(64, 32);
+        rightleg2.mirror = true;
+        setRotation(rightleg2, 0F, 0.2617994F, 0F);
+        rightleg3 = new ModelRenderer(this, 53, 0);
+        rightleg3.addBox(-0.3F, 2F, -3.5F, 1, 1, 4);
+        rightleg3.setRotationPoint(0F, 0F, 0F);
+        rightleg3.setTextureSize(64, 32);
+        rightleg3.mirror = true;
+        setRotation(rightleg3, 0F, 0.2617994F, 0F);
+        
+        RIGHTLEGPIECE.addChild(rightleg1);
+        RIGHTLEGPIECE.addChild(rightleg2);
+        RIGHTLEGPIECE.addChild(rightleg3);
+      
+      
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5);
-    LEFTLEGPIECE.render(f5);
-    RIGHTLEGPIECE.render(f5);
     BODYPIECE.render(f5);
+    RIGHTLEGPIECE.render(f5);
+    LEFTLEGPIECE.render(f5);
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
@@ -824,6 +826,10 @@ public class ModelVileplume extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    BODYPIECE.rotateAngleY = f3 / (270F / (float)Math.PI);
+    BODYPIECE.rotateAngleX = f4 / (270F / (float)Math.PI);
+    RIGHTLEGPIECE.rotateAngleX = MathHelper.cos(f * 0.7F) * 1F * f1;
+    LEFTLEGPIECE.rotateAngleX = MathHelper.cos(f * 0.7F + (float)Math.PI) *1F * f1;
   }
 
 }
