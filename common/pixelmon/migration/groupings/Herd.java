@@ -1,9 +1,10 @@
 package pixelmon.migration.groupings;
 
-public class Herd {
+import net.minecraft.src.World;
 
-	public Herd() {
-		
+public class Herd extends Grouping {
+
+	public Herd(String creatureName, World w) {
+		super(creatureName, w);
 	}
-
 }

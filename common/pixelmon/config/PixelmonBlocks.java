@@ -11,6 +11,7 @@ import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.blocks.apricornTrees.BlockApricornTree;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.items.ItemBlock;
 import net.minecraft.src.Block;
@@ -55,6 +56,7 @@ public class PixelmonBlocks {
 		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, EnumEvolutionStone.Waterstone, 3.0f).setBlockName("WaterStoneOre");
 		fireStoneOre = new BlockEvolutionStoneOre(fireStoneOreId, EnumEvolutionStone.Firestone, 3.0f).setBlockName("FireStoneOre");
 		pc = new BlockPC(pcId, 0).setBlockName("pc");
+		PixelmonBlocksApricornTrees.load(configuration);
 	}
 
 	public static void registerBlocks() {
@@ -67,6 +69,8 @@ public class PixelmonBlocks {
 		
 		GameRegistry.registerTileEntity(TileEntityPC.class, "Pokemon PC");
 		GameRegistry.registerTileEntity(TileEntityHealer.class, "Healer");
+		
+		PixelmonBlocksApricornTrees.registerBlocks();
 	}
 
 	public static void addNames() {
@@ -85,5 +89,7 @@ public class PixelmonBlocks {
 		{
 			e.printStackTrace();
 		}
+		PixelmonBlocksApricornTrees.addNames();
 	}
+	
 }

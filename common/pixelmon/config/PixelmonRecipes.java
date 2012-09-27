@@ -11,11 +11,11 @@ public class PixelmonRecipes {
 	public static void addRecipes() {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.healerItem),
 				new Object[] { "IRI", "RDR", "IRI", Character.valueOf('D'), new ItemStack(Item.diamond), Character.valueOf('I'), Item.ingotIron, Character.valueOf('R'), Block.stone });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pokeBall, 3), new Object[] { "RRR", "CBC", "III", Character.valueOf('R'), new ItemStack(Item.dyePowder, 1, 1), Character.valueOf('B'), Block.button,
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.pokeBall, 3), new Object[] { "RRR", "CBC", "III", Character.valueOf('R'), new ItemStack(Item.dyePowder, 1, 1), Character.valueOf('B'), Block.button,
 				Character.valueOf('I'), Item.ingotIron, Character.valueOf('C'), PixelmonItems.coalDust });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItems.greatBall, 2),new Object[] { "LLL", "CBC", "III", Character.valueOf('L'), new ItemStack(Item.dyePowder, 1, 4), Character.valueOf('C'), PixelmonItems.coalDust, Character.valueOf('B'), Block.button,
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.greatBall, 2),new Object[] { "LLL", "CBC", "III", Character.valueOf('L'), new ItemStack(Item.dyePowder, 1, 4), Character.valueOf('C'), PixelmonItems.coalDust, Character.valueOf('B'), Block.button,
 						Character.valueOf('I'), Item.ingotIron });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItems.ultraBall, 1), new Object[] { "GGG", "CBC", "III", Character.valueOf('G'), Item.ingotGold, Character.valueOf('C'), PixelmonItems.coalDust, Character.valueOf('B'),
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ultraBall, 1), new Object[] { "GGG", "CBC", "III", Character.valueOf('G'), Item.ingotGold, Character.valueOf('C'), PixelmonItems.coalDust, Character.valueOf('B'),
 				Block.button, Character.valueOf('I'), Item.ingotIron });
 //		GameRegistry.addRecipe(new ItemStack(PixelmonItems.masterBall), new Object[] { "PPP", "OBO", "DDD", Character.valueOf('P'), new ItemStack(Item.dyePowder, 1, 5), Character.valueOf('O'), Block.obsidian,
 //				Character.valueOf('B'), Block.button, Character.valueOf('D'), Item.diamond });

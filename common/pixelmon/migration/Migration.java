@@ -15,6 +15,15 @@ public class Migration extends Thread {
 
 	@Override
 	public void run() {
+		init();
+		loop();
+	}
+	
+	private void init(){
 		saveManager = new MigrationSaveManager(worldProvider);
+	}
+	
+	private void loop(){
+		
 	}
 }

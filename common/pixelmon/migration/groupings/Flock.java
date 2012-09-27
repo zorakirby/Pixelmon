@@ -1,9 +1,10 @@
 package pixelmon.migration.groupings;
 
-public class Flock {
+import net.minecraft.src.World;
 
-	public Flock() {
-		
-	}
+public class Flock extends Grouping {
 
+	public Flock(String creatureName, World w) {
+		super(creatureName, w);
+	}	
 }
