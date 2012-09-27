@@ -26,6 +26,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	protected LevelHelper level;
 	public Stats stats;
 	public BaseStats baseStats;
+	public FriendShipHelper friendship;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public boolean doesHover = false;
 	public float hoverHeight = 0f;
@@ -48,6 +49,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		setSize(baseStats.Width, baseStats.Height + hoverHeight);
 		setType();
 		length = baseStats.Length;
+		friendship = new FriendShipHelper((EntityPixelmon)this);
 
 		if (rand.nextInt(100) < baseStats.MalePercent)
 			isMale = true;
@@ -197,11 +199,13 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super.writeEntityToNBT(nbt);
 		stats.writeToNBT(nbt);
 		level.writeToNBT(nbt);
+		friendship.writeToNBT(nbt);
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		stats.readFromNBT(nbt);
+		friendship.readFromNBT(nbt);
 	}
 }

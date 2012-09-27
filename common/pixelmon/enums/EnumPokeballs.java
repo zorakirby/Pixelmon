@@ -6,7 +6,7 @@ import net.minecraft.src.Item;
 
 public enum EnumPokeballs {
 	PokeBall(0, 1, "pokeball", 0, 0), GreatBall(1, 1.5, "greatball", 0, 1), UltraBall(2, 2, "ultraball", 0, 2), MasterBall(3, 255, "masterball", 0, 3), LevelBall(
-			4, 1, "levelball", 1, 8);
+			4, 1, "levelball", 1, 8), MoonBall(5, 1, "moonball", 1, 15);
 
 	private EnumPokeballs(int index, double ballBonus, String filenamePrefix, int iconIndexX, int iconIndexY) {
 		this.ballBonus = ballBonus;
@@ -59,8 +59,9 @@ public enum EnumPokeballs {
 	}
 
 	public static EnumPokeballs getFromIndex(int index) {
-		for (EnumPokeballs b: values())
-			if (b.index == index) return b;
+		for (EnumPokeballs b : values())
+			if (b.index == index)
+				return b;
 
 		return EnumPokeballs.PokeBall;
 	}

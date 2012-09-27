@@ -470,23 +470,7 @@ public class EntityPokeBall extends EntityThrowable {
 		int hpMax = p2.getMaxHealth();
 		int hpCurrent = p2.getHealth();
 		int bonusStatus = 1;
-		double ballBonus = getType().getBallBonus();
-		if (getType() == EnumPokeballs.LevelBall) {
-			if (mode == Mode.battle) {
-				BattleController bc = BattleRegistry.getBattle((EntityPlayer) thrower);
-				int ownerPokemonLevel = 0;
-				if (bc.participant1 instanceof PlayerParticipant && ((PlayerParticipant) bc.participant1).player == thrower)
-					ownerPokemonLevel = ((PlayerParticipant) bc.participant1).currentPokemon().getLvl().getLevel();
-				else if (bc.participant2 instanceof PlayerParticipant && ((PlayerParticipant) bc.participant2).player == thrower)
-					ownerPokemonLevel = ((PlayerParticipant) bc.participant2).currentPokemon().getLvl().getLevel();
-				if (ownerPokemonLevel > 1 * p2.getLvl().getLevel())
-					ballBonus = 2;
-				if (ownerPokemonLevel > 2 * p2.getLvl().getLevel())
-					ballBonus = 4;
-				if (ownerPokemonLevel > 4 * p2.getLvl().getLevel())
-					ballBonus = 8;
-			}
-		}
+		double ballBonus = PokeballTypeHelper.getBallBonus(getType(), thrower, p2, mode);
 		double a, b, p;
 		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * ballBonus) / (3 * hpMax)) * bonusStatus;
 		b = (Math.pow(2, 16) - 1) * Math.sqrt(Math.sqrt((a / (Math.pow(2, 8) - 1))));
