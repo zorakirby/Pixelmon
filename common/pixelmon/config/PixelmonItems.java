@@ -6,6 +6,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.src.Block;
+import net.minecraft.src.EnumToolMaterial;
 import net.minecraft.src.Item;
 
 import net.minecraftforge.common.Configuration;
@@ -21,6 +22,7 @@ import pixelmon.items.ItemApricorn;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
+import pixelmon.items.ItemHammer;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokedex;
@@ -85,7 +87,12 @@ public class PixelmonItems {
 	public static int apricornBlueID;
 	public static int apricornYellowID;
 	public static int apricornRedID;
-
+	
+	public static int hammerWoodID;
+	public static int hammerStoneID;
+	public static int hammerIronID;
+	public static int hammerGoldID;
+	public static int hammerDiamondID;
 	
 	@Mod.Item(name = "PokeChecker", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item pokeChecker;
@@ -182,6 +189,18 @@ public class PixelmonItems {
 	public static Item apricornYellow;
 	@Mod.Item(name = "Red Apricorn", typeClass = "pixelmon.items.heldItems.ItemApricorn")
 	public static Item apricornRed;
+	
+	@Mod.Item(name = "Wood Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	public static Item hammerWood;
+	@Mod.Item(name = "Stone Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	public static Item hammerStone;
+	@Mod.Item(name = "Iron Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	public static Item hammerIron;
+	@Mod.Item(name = "Gold Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	public static Item hammerGold;
+	@Mod.Item(name = "Diamond Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	public static Item hammerDiamond;
+	
 
 	
 	public static void load(Configuration cfg)
@@ -232,6 +251,12 @@ public class PixelmonItems {
 		apricornYellowID = cfg.getOrCreateIntProperty("Yellow Apricorn", "item", 10105).getInt();
 		apricornRedID = cfg.getOrCreateIntProperty("Red Apricorn", "item", 10106).getInt();
 
+		hammerWoodID = cfg.getOrCreateIntProperty("Wood Hammer", "item", 10107).getInt();
+		hammerStoneID = cfg.getOrCreateIntProperty("Stone Hammer", "item", 10108).getInt();
+		hammerIronID = cfg.getOrCreateIntProperty("Iron Hammer", "item", 10109).getInt();
+		hammerGoldID = cfg.getOrCreateIntProperty("Gold Hammer", "item", 10110).getInt();
+		hammerDiamondID = cfg.getOrCreateIntProperty("Diamond Hammer", "item", 10111).getInt();
+		
 		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(5);
@@ -276,6 +301,12 @@ public class PixelmonItems {
 		apricornBlue = new ItemApricorn(apricornBlueID, EnumApricorns.Blue).setItemName("Blue Apricorn");
 		apricornYellow = new ItemApricorn(apricornYellowID, EnumApricorns.Yellow).setItemName("Yellow Apricorn");
 		apricornRed = new ItemApricorn(apricornRedID, EnumApricorns.Red).setItemName("Red Apricorn");
+		
+		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, 244);
+		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, 245);
+		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, 246);
+		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, 248);
+		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, 247);
 	}
 	
 	public static void addNames() {
