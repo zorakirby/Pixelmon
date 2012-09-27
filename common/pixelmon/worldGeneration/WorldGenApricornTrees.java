@@ -4,7 +4,7 @@ import java.util.Random;
 
 import pixelmon.WorldHelper;
 import pixelmon.blocks.apricornTrees.BlockApricornTree;
-import pixelmon.config.ApricornTreeBlocks;
+import pixelmon.config.PixelmonBlocksApricornTrees;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.enums.EnumApricornTrees;
 import pixelmon.enums.EnumBiomes;
@@ -34,25 +34,25 @@ public class WorldGenApricornTrees implements IWorldGenerator {
 					int newId = 0;
 					switch (random.nextInt(7)) {
 					case 0:
-						newId = ApricornTreeBlocks.apricornTreeBlack.blockID;
+						newId = PixelmonBlocksApricornTrees.apricornTreeBlack.blockID;
 						break;
 					case 1:
-						newId = ApricornTreeBlocks.apricornTreeWhite.blockID;
+						newId = PixelmonBlocksApricornTrees.apricornTreeWhite.blockID;
 						break;
 					case 2:
-						newId = ApricornTreeBlocks.apricornTreePink.blockID;
+						newId = PixelmonBlocksApricornTrees.apricornTreePink.blockID;
 						break;
 					case 3:
-						newId = ApricornTreeBlocks.apricornTreeGreen.blockID;
+						newId = PixelmonBlocksApricornTrees.apricornTreeGreen.blockID;
 						break;
 					case 4:
-						newId = ApricornTreeBlocks.apricornTreeBlue.blockID;
+						newId = PixelmonBlocksApricornTrees.apricornTreeBlue.blockID;
 						break;
 					case 5:
-						newId = ApricornTreeBlocks.apricornTreeYellow.blockID;
+						newId = PixelmonBlocksApricornTrees.apricornTreeYellow.blockID;
 						break;
 					case 6:
-						newId = ApricornTreeBlocks.apricornTreeRed.blockID;
+						newId = PixelmonBlocksApricornTrees.apricornTreeRed.blockID;
 						break;
 					}
 					world.setBlockWithNotify(x, y, z, newId);

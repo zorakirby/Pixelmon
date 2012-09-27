@@ -8,7 +8,7 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
-import pixelmon.config.ApricornTreeBlocks;
+import pixelmon.config.PixelmonBlocksApricornTrees;
 import pixelmon.enums.EnumApricorns;
 
 public class ItemApricorn extends PixelmonItem {
@@ -25,19 +25,19 @@ public class ItemApricorn extends PixelmonItem {
 		setTextureFile("/pixelmon/image/pitems.png");
 		setTabToDisplayOn(CreativeTabs.tabMisc);
 		if (apricorn == EnumApricorns.Black)
-			spawnID = ApricornTreeBlocks.apricornTreeBlack.blockID;
+			spawnID = PixelmonBlocksApricornTrees.apricornTreeBlack.blockID;
 		else if (apricorn == EnumApricorns.White)
-			spawnID = ApricornTreeBlocks.apricornTreeWhite.blockID;
+			spawnID = PixelmonBlocksApricornTrees.apricornTreeWhite.blockID;
 		else if (apricorn == EnumApricorns.Pink)
-			spawnID = ApricornTreeBlocks.apricornTreePink.blockID;
+			spawnID = PixelmonBlocksApricornTrees.apricornTreePink.blockID;
 		else if (apricorn == EnumApricorns.Green)
-			spawnID = ApricornTreeBlocks.apricornTreeGreen.blockID;
+			spawnID = PixelmonBlocksApricornTrees.apricornTreeGreen.blockID;
 		else if (apricorn == EnumApricorns.Blue)
-			spawnID = ApricornTreeBlocks.apricornTreeBlue.blockID;
+			spawnID = PixelmonBlocksApricornTrees.apricornTreeBlue.blockID;
 		else if (apricorn == EnumApricorns.Yellow)
-			spawnID = ApricornTreeBlocks.apricornTreeYellow.blockID;
+			spawnID = PixelmonBlocksApricornTrees.apricornTreeYellow.blockID;
 		else if (apricorn == EnumApricorns.Red)
-			spawnID = ApricornTreeBlocks.apricornTreeRed.blockID;
+			spawnID = PixelmonBlocksApricornTrees.apricornTreeRed.blockID;
 	}
 
 	/** The ID of the block the reed will spawn when used from inventory bar. */

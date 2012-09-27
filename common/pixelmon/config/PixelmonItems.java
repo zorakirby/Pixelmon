@@ -34,14 +34,9 @@ import pixelmon.items.heldItems.ItemExpShare;
 import pixelmon.items.heldItems.ItemLuckyEgg;
 
 public class PixelmonItems {
-	public static int pokeBallID;
-	public static int greatBallID;
-	public static int ultraBallID;
-	public static int masterBallID;
 	public static int pokeCheckerID;
 	public static int pokeDexID;
 	public static int rareCandyID;
-
 	public static int potionID;
 	public static int superPotionID;
 	public static int hyperPotionID;
@@ -85,15 +80,7 @@ public class PixelmonItems {
 	public static int apricornBlueID;
 	public static int apricornYellowID;
 	public static int apricornRedID;
-	
-	@Mod.Item(name = "PokeBall", typeClass = "pixelmon.items.ItemPokeBall")
-	public static Item pokeBall;
-	@Mod.Item(name = "GreatBall", typeClass = "pixelmon.items.ItemPokeBall")
-	public static Item greatBall;
-	@Mod.Item(name = "UltraBall", typeClass = "pixelmon.items.ItemPokeBall")
-	public static Item ultraBall;
-	@Mod.Item(name = "MasterBall", typeClass = "pixelmon.items.ItemPokeBall")
-	public static Item masterBall;
+
 	
 	@Mod.Item(name = "PokeChecker", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item pokeChecker;
@@ -192,10 +179,8 @@ public class PixelmonItems {
 	
 	public static void load(Configuration cfg)
 	{
-		pokeBallID = cfg.getOrCreateIntProperty("PokeBall", "item", 10000).getInt();
-		greatBallID = cfg.getOrCreateIntProperty("GreatBall", "item", 10001).getInt();
-		ultraBallID = cfg.getOrCreateIntProperty("UltraBall", "item", 10002).getInt();
-		masterBallID = cfg.getOrCreateIntProperty("MasterBall", "item", 10003).getInt();
+		PixelmonItemsPokeballs.load(cfg);
+		
 		pokeCheckerID = cfg.getOrCreateIntProperty("PokeChecker", "item", 10004).getInt();
 		pokeDexID = cfg.getOrCreateIntProperty("PokeDex", "item", 10027).getInt();
 		rareCandyID = cfg.getOrCreateIntProperty("RareCandy", "item", 10005).getInt();
@@ -239,10 +224,6 @@ public class PixelmonItems {
 		apricornYellowID = cfg.getOrCreateIntProperty("Yellow Apricorn", "item", 10105).getInt();
 		apricornRedID = cfg.getOrCreateIntProperty("Red Apricorn", "item", 10106).getInt();
 
-		pokeBall = new ItemPokeBall(pokeBallID, EnumPokeballs.PokeBall).setItemName("PokeBall");
-		ultraBall = new ItemPokeBall(ultraBallID, EnumPokeballs.UltraBall).setItemName("UltraBall");
-		greatBall = new ItemPokeBall(greatBallID, EnumPokeballs.GreatBall).setItemName("GreatBall");
-		masterBall = new ItemPokeBall(masterBallID, EnumPokeballs.MasterBall).setItemName("MasterBall");
 		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(5);
@@ -289,6 +270,7 @@ public class PixelmonItems {
 	}
 	
 	public static void addNames() {
+		PixelmonItemsPokeballs.addNames();
 		try
 		{
 			for(Field field : PixelmonItems.class.getFields())

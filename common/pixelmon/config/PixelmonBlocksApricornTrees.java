@@ -15,7 +15,7 @@ import pixelmon.enums.EnumApricornTrees;
 import net.minecraft.src.Block;
 import net.minecraftforge.common.Configuration;
 
-public class ApricornTreeBlocks {
+public class PixelmonBlocksApricornTrees {
 
 	public static int apTreeBlackId;
 	public static int apTreeWhiteId;

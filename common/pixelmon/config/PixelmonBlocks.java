@@ -56,7 +56,7 @@ public class PixelmonBlocks {
 		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, EnumEvolutionStone.Waterstone, 3.0f).setBlockName("WaterStoneOre");
 		fireStoneOre = new BlockEvolutionStoneOre(fireStoneOreId, EnumEvolutionStone.Firestone, 3.0f).setBlockName("FireStoneOre");
 		pc = new BlockPC(pcId, 0).setBlockName("pc");
-		ApricornTreeBlocks.load(configuration);
+		PixelmonBlocksApricornTrees.load(configuration);
 	}
 
 	public static void registerBlocks() {
@@ -70,7 +70,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerTileEntity(TileEntityPC.class, "Pokemon PC");
 		GameRegistry.registerTileEntity(TileEntityHealer.class, "Healer");
 		
-		ApricornTreeBlocks.registerBlocks();
+		PixelmonBlocksApricornTrees.registerBlocks();
 	}
 
 	public static void addNames() {
@@ -89,7 +89,7 @@ public class PixelmonBlocks {
 		{
 			e.printStackTrace();
 		}
-		ApricornTreeBlocks.addNames();
+		PixelmonBlocksApricornTrees.addNames();
 	}
 	
 }
