@@ -23,7 +23,7 @@ public class ItemApricorn extends PixelmonItem {
 		setMaxDamage(0xf4240);
 		setIconIndex(apricorn.iconIndex);
 		setTextureFile("/pixelmon/image/pitems.png");
-		setTabToDisplayOn(CreativeTabs.tabMisc);
+		setTabToDisplayOn(CreativeTabs.tabMaterials);
 		if (apricorn == EnumApricorns.Black)
 			spawnID = PixelmonBlocksApricornTrees.apricornTreeBlack.blockID;
 		else if (apricorn == EnumApricorns.White)

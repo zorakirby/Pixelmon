@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.items.ItemPokeBall;
+import pixelmon.items.ItemPokeballDisc;
 import pixelmon.items.ItemPokeballLid;
 import net.minecraft.src.Item;
 import net.minecraftforge.common.Configuration;
@@ -50,8 +51,6 @@ public class PixelmonItemsPokeballs {
 	public static Item greatBallLid;
 	@Mod.Item(name = "Ultra Ball Lid", typeClass = "pixelmon.items.ItemPokeBallLid")
 	public static Item ultraBallLid;
-	@Mod.Item(name = "Master Ball Lid", typeClass = "pixelmon.items.ItemPokeBallLid")
-	public static Item masterBallLid;
 	@Mod.Item(name = "Level Ball Lid", typeClass = "pixelmon.items.ItemPokeBallLid")
 	public static Item levelBallLid;
 	@Mod.Item(name = "Moon Ball Lid", typeClass = "pixelmon.items.ItemPokeBallLid")
@@ -63,8 +62,6 @@ public class PixelmonItemsPokeballs {
 	public static Item greatBallDisc;
 	@Mod.Item(name = "Ultra Ball Disc", typeClass = "pixelmon.items.ItemPokeBallDisc")
 	public static Item ultraBallDisc;
-	@Mod.Item(name = "Master Ball Disc", typeClass = "pixelmon.items.ItemPokeBallDisc")
-	public static Item masterBallDisc;
 	@Mod.Item(name = "Level Ball Disc", typeClass = "pixelmon.items.ItemPokeBallDisc")
 	public static Item levelBallDisc;
 	@Mod.Item(name = "Moon Ball Disc", typeClass = "pixelmon.items.ItemPokeBallDisc")
@@ -78,17 +75,17 @@ public class PixelmonItemsPokeballs {
 		levelBallID = cfg.getOrCreateIntProperty("LevelBall", "item", 8004).getInt();
 		moonBallID = cfg.getOrCreateIntProperty("MoonBall", "item", 8005).getInt();
 		
-		pokeBallLidID = cfg.getOrCreateIntProperty("PokeBall Lid", "item", 8030).getInt();
-		greatBallLidID = cfg.getOrCreateIntProperty("GreatBall Lid", "item", 8031).getInt();
-		ultraBallLidID = cfg.getOrCreateIntProperty("UltraBall Lid", "item", 8032).getInt();
-		levelBallLidID = cfg.getOrCreateIntProperty("LevelBall Lid", "item", 8034).getInt();
-		moonBallLidID = cfg.getOrCreateIntProperty("MoonBall Lid", "item", 8035).getInt();
+		pokeBallLidID = cfg.getOrCreateIntProperty("PokeBallLid", "item", 8030).getInt();
+		greatBallLidID = cfg.getOrCreateIntProperty("GreatBallLid", "item", 8031).getInt();
+		ultraBallLidID = cfg.getOrCreateIntProperty("UltraBallLid", "item", 8032).getInt();
+		levelBallLidID = cfg.getOrCreateIntProperty("LevelBallLid", "item", 8034).getInt();
+		moonBallLidID = cfg.getOrCreateIntProperty("MoonBallLid", "item", 8035).getInt();
 		
-		pokeBallDiscID = cfg.getOrCreateIntProperty("PokeBall", "item", 8050).getInt();
-		greatBallDiscID = cfg.getOrCreateIntProperty("GreatBall", "item", 8051).getInt();
-		ultraBallDiscID = cfg.getOrCreateIntProperty("UltraBall", "item", 8052).getInt();
-		levelBallDiscID = cfg.getOrCreateIntProperty("LevelBall", "item", 8054).getInt();
-		moonBallDiscID = cfg.getOrCreateIntProperty("MoonBall", "item", 8055).getInt();
+		pokeBallDiscID = cfg.getOrCreateIntProperty("PokeBallDisc", "item", 8050).getInt();
+		greatBallDiscID = cfg.getOrCreateIntProperty("GreatBallDisc", "item", 8051).getInt();
+		ultraBallDiscID = cfg.getOrCreateIntProperty("UltraBallDisc", "item", 8052).getInt();
+		levelBallDiscID = cfg.getOrCreateIntProperty("LevelBallDisc", "item", 8054).getInt();
+		moonBallDiscID = cfg.getOrCreateIntProperty("MoonBallDisc", "item", 8055).getInt();
 		
 		pokeBall = new ItemPokeBall(pokeBallID, EnumPokeballs.PokeBall).setItemName("Poke Ball");
 		ultraBall = new ItemPokeBall(ultraBallID, EnumPokeballs.UltraBall).setItemName("Ultra Ball");
@@ -103,11 +100,11 @@ public class PixelmonItemsPokeballs {
 		levelBallLid = new ItemPokeballLid(levelBallLidID, EnumPokeballs.LevelBall).setItemName("Level Ball Lid");
 		moonBallLid = new ItemPokeballLid(moonBallLidID, EnumPokeballs.MoonBall).setItemName("Moon Ball Lid");
 
-		pokeBallDisc = new ItemPokeballLid(pokeBallDiscID, EnumPokeballs.PokeBall).setItemName("Poke Ball Disc");
-		ultraBallDisc = new ItemPokeballLid(ultraBallDiscID, EnumPokeballs.UltraBall).setItemName("Ultra Ball Disc");
-		greatBallDisc = new ItemPokeballLid(greatBallDiscID, EnumPokeballs.GreatBall).setItemName("Great Ball Disc");
-		levelBallDisc = new ItemPokeballLid(levelBallDiscID, EnumPokeballs.LevelBall).setItemName("Level Ball Disc");
-		moonBallDisc = new ItemPokeballLid(moonBallDiscID, EnumPokeballs.MoonBall).setItemName("Moon Ball Disc");
+		pokeBallDisc = new ItemPokeballDisc(pokeBallDiscID, EnumPokeballs.PokeBall).setItemName("Poke Ball Disc");
+		ultraBallDisc = new ItemPokeballDisc(ultraBallDiscID, EnumPokeballs.UltraBall).setItemName("Ultra Ball Disc");
+		greatBallDisc = new ItemPokeballDisc(greatBallDiscID, EnumPokeballs.GreatBall).setItemName("Great Ball Disc");
+		levelBallDisc = new ItemPokeballDisc(levelBallDiscID, EnumPokeballs.LevelBall).setItemName("Level Ball Disc");
+		moonBallDisc = new ItemPokeballDisc(moonBallDiscID, EnumPokeballs.MoonBall).setItemName("Moon Ball Disc");
 	}
 	public static void addNames() {
 		try
@@ -125,6 +122,24 @@ public class PixelmonItemsPokeballs {
 		{
 			e.printStackTrace();
 		}
+	}
+	public static Item getItemFromID(int itemId) {
+		try
+		{
+			for(Field field : PixelmonItemsPokeballs.class.getFields())
+			{
+				if(field.isAnnotationPresent(Mod.Item.class))
+				{
+					Item item = (Item)field.get(null);
+					if (item.shiftedIndex == itemId) return item;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 

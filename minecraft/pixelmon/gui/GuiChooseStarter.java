@@ -41,7 +41,7 @@ public class GuiChooseStarter extends GuiScreen {
 		String pixelmonName = starterList[button.id];
 		Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, button.id);
 		PacketDispatcher.sendPacketToServer(packet);
-		mc.displayGuiScreen(null);
+		mc.thePlayer.closeScreen();
 	}
 
 	public void drawScreen(int par1, int par2, float par3) {

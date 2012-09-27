@@ -18,7 +18,6 @@ public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenera
 		if (world.getBlockId(x, y + 1, z) == Block.lavaStill.blockID) {
 			if (world.getBlockId(x, y, z) != Block.lavaStill.blockID) {
 				world.setBlockWithNotify(x, y, z, PixelmonBlocks.fireStoneOre.blockID);
-				System.out.println("Firestone spawned at " + x + " " + y + " " + z);
 				return true;
 			}
 		}

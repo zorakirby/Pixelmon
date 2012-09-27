@@ -70,8 +70,7 @@ public class GuiMoveSelectForItem extends GuiScreen {
 			}
 			int moveIndex = selected.getAttackIndex();
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.getParent().battleControllerIndex, moveIndex));
-			mc.displayGuiScreen(null);
-			mc.setIngameFocus();
+			mc.thePlayer.closeScreen();
 		}
 	}
 

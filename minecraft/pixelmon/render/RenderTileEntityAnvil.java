@@ -2,13 +2,16 @@ package pixelmon.render;
 
 import org.lwjgl.opengl.GL11;
 
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.Item;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
 import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonItemsPokeballs;
+import pixelmon.items.ItemPokeballDisc;
+import pixelmon.items.ItemPokeballLid;
 import pixelmon.models.ModelAnvil;
 import pixelmon.models.ModelPC;
 
@@ -39,7 +42,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 			j = 270;
 		}
 
-		if (i <0)
+		if (i < 0)
 			return;
 
 		bindTextureByName("/pixelmon/texture/blocks/anvil.png"); // texture
@@ -50,6 +53,14 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 										// and you can see what happens
 		model.renderModel(tile, 0.0625F); // renders and yes 0.0625 is a random
 											// number
+		if (tile.itemOnAnvil != -1) {
+			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
+			if (itemToRender instanceof ItemPokeballDisc) {
+				
+			} else if (itemToRender instanceof ItemPokeballLid) {
+				
+			}
+		}
 		GL11.glPopMatrix(); // end
 
 	}

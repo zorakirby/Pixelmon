@@ -16,7 +16,7 @@ public class ItemHammer extends ItemTool {
 		super(par1, 2, par3EnumToolMaterial, new Block[] { PixelmonBlocks.anvil });
 		this.setIconIndex(i);
 		setTextureFile("/pixelmon/image/pitems.png");
-		setTabToDisplayOn(CreativeTabs.tabMisc);
+		setTabToDisplayOn(CreativeTabs.tabTools);
 	}
 
 	/**
