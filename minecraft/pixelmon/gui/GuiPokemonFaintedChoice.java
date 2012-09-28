@@ -39,7 +39,7 @@ public class GuiPokemonFaintedChoice extends GuiScreen {
 		} else {
 
 		}
-		mc.displayGuiScreen(null);
+		mc.thePlayer.closeScreen();
 		mc.setIngameFocus();
 	}
 

@@ -32,8 +32,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 0:
-			mc.displayGuiScreen(null);
-			mc.setIngameFocus();
+			mc.thePlayer.closeScreen();
 			break;
 		case 1:
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));

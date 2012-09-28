@@ -56,7 +56,6 @@ public class GuiChoosePokemon extends GuiScreen {
 		if (par1GuiButton.id < 6) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwitchPokemon, par1GuiButton.id, bcIndex, 0));
 			mc.displayGuiScreen(parentGui);
-			mc.setIngameFocus();
 		} else
 			mc.displayGuiScreen(parentGui);
 	}

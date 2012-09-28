@@ -51,7 +51,7 @@ public class GuiLearnMove extends GuiScreen {
 	public void actionPerformed(GuiButton b) {
 		if (b.id != 10)
 			teachMove(b.id, moveToLearn);
-		mc.displayGuiScreen(null);
+		mc.thePlayer.closeScreen();
 	}
 
 	public void drawScreen(int par1, int par2, float par3) {
