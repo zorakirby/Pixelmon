@@ -15,7 +15,7 @@ public class ItemPokeballLid extends PixelmonItem {
 		setMaxDamage(0xf4240);
 		setIconIndex(pokeball.lidIconIndex);
 		setTextureFile("/pixelmon/image/pitems.png");
-		setTabToDisplayOn(CreativeTabs.tabMisc);
+		setTabToDisplayOn(CreativeTabs.tabMaterials);
 	}
 
 }

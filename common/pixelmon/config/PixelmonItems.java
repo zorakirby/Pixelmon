@@ -6,6 +6,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.src.Block;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EnumToolMaterial;
 import net.minecraft.src.Item;
 
@@ -175,30 +176,30 @@ public class PixelmonItems {
 	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.heldItems.ItemBerryLeppa")
 	public static Item berryLeppa;
 
-	@Mod.Item(name = "Black Apricorn", typeClass = "pixelmon.items.heldItems.ItemApricorn")
+	@Mod.Item(name = "Black Apricorn", typeClass = "pixelmon.items.ItemApricorn")
 	public static Item apricornBlack;
-	@Mod.Item(name = "White Apricorn", typeClass = "pixelmon.items.heldItems.ItemApricorn")
+	@Mod.Item(name = "White Apricorn", typeClass = "pixelmon.items.ItemApricorn")
 	public static Item apricornWhite;
-	@Mod.Item(name = "Pink Apricorn", typeClass = "pixelmon.items.heldItems.ItemApricorn")
+	@Mod.Item(name = "Pink Apricorn", typeClass = "pixelmon.items.ItemApricorn")
 	public static Item apricornPink;
-	@Mod.Item(name = "Green Apricorn", typeClass = "pixelmon.items.heldItems.ItemApricorn")
+	@Mod.Item(name = "Green Apricorn", typeClass = "pixelmon.items.ItemApricorn")
 	public static Item apricornGreen;
-	@Mod.Item(name = "Blue Apricorn", typeClass = "pixelmon.items.heldItems.ItemApricorn")
+	@Mod.Item(name = "Blue Apricorn", typeClass = "pixelmon.items.ItemApricorn")
 	public static Item apricornBlue;
-	@Mod.Item(name = "Yellow Apricorn", typeClass = "pixelmon.items.heldItems.ItemApricorn")
+	@Mod.Item(name = "Yellow Apricorn", typeClass = "pixelmon.items.ItemApricorn")
 	public static Item apricornYellow;
-	@Mod.Item(name = "Red Apricorn", typeClass = "pixelmon.items.heldItems.ItemApricorn")
+	@Mod.Item(name = "Red Apricorn", typeClass = "pixelmon.items.ItemApricorn")
 	public static Item apricornRed;
 	
-	@Mod.Item(name = "Wood Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	@Mod.Item(name = "Wood Hammer", typeClass = "pixelmon.items.ItemHammer")
 	public static Item hammerWood;
-	@Mod.Item(name = "Stone Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	@Mod.Item(name = "Stone Hammer", typeClass = "pixelmon.items.ItemTool")
 	public static Item hammerStone;
-	@Mod.Item(name = "Iron Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	@Mod.Item(name = "Iron Hammer", typeClass = "pixelmon.items.ItemTool")
 	public static Item hammerIron;
-	@Mod.Item(name = "Gold Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	@Mod.Item(name = "Gold Hammer", typeClass = "pixelmon.items.ItemTool")
 	public static Item hammerGold;
-	@Mod.Item(name = "Diamond Hammer", typeClass = "pixelmon.items.heldItems.ItemTool")
+	@Mod.Item(name = "Diamond Hammer", typeClass = "pixelmon.items.ItemTool")
 	public static Item hammerDiamond;
 	
 
@@ -257,7 +258,7 @@ public class PixelmonItems {
 		hammerGoldID = cfg.getOrCreateIntProperty("Gold Hammer", "item", 10110).getInt();
 		hammerDiamondID = cfg.getOrCreateIntProperty("Diamond Hammer", "item", 10111).getInt();
 		
-		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
+		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1).setTabToDisplayOn(CreativeTabs.tabTools);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(5);
 		potion = new ItemPotion(potionID, EnumPotions.Potion).setItemName("Potion");
@@ -302,11 +303,11 @@ public class PixelmonItems {
 		apricornYellow = new ItemApricorn(apricornYellowID, EnumApricorns.Yellow).setItemName("Yellow Apricorn");
 		apricornRed = new ItemApricorn(apricornRedID, EnumApricorns.Red).setItemName("Red Apricorn");
 		
-		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, 244);
-		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, 245);
-		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, 246);
-		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, 248);
-		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, 247);
+		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, 244).setItemName("Wood Hammer");
+		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, 245).setItemName("Stone Hammer");
+		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, 246).setItemName("Iron Hammer");
+		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, 248).setItemName("Gold Hammer");
+		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, 247).setItemName("Diamond Hammer");
 	}
 	
 	public static void addNames() {
