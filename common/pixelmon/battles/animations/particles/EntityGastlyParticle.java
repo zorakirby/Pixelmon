@@ -27,6 +27,15 @@ public class EntityGastlyParticle extends EntityFX
         this.particleMaxAge = (int)(8.0D / (Math.random() * 0.8D + 0.3D));
         this.particleMaxAge = (int)((float)this.particleMaxAge * var14);
         this.noClip = false;
+        if (isShiny){
+            this.particleRed = 0.35F;
+            this.particleGreen = 0.52F;
+            this.particleBlue = 0.68F;
+        } else{
+            this.particleRed = 0.19F;
+            this.particleGreen = 0.0F;
+            this.particleBlue = 0.38F;
+        }
     }
 
     public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
