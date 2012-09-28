@@ -1,28 +1,19 @@
 package pixelmon.gui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
-
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiContainer;
+import net.minecraft.src.Packet250CustomPayload;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
-import pixelmon.config.PixelmonEntityList;
-import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.storage.PokeballManager;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
-
-public class GuiChooseStarter extends GuiScreen {
+public class GuiChooseStarter extends GuiContainer {
 
 	String[] starterList;
 
 	public GuiChooseStarter() {
+		super(new ContainerEmpty());
 		starterList = StarterList.getStarterStringList();
 	}
 
@@ -45,7 +36,7 @@ public class GuiChooseStarter extends GuiScreen {
 		mc.thePlayer.closeScreen();
 	}
 
-	public void drawScreen(int par1, int par2, float par3) {
+	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		drawDefaultBackground();
 		super.drawScreen(par1, par2, par3);
 		drawCenteredString(fontRenderer, "Welcome to the world of Pixelmon!! Thank you for installing this mod!", width / 2, 10, 0xFFFFFF);
