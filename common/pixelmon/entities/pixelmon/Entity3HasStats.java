@@ -39,6 +39,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		dataWatcher.addObject(14, (short) 1000); // scale
 		stats = new Stats();
 		level = new Level((EntityPixelmon) this);
+		friendship = new FriendShip((EntityPixelmon)this);
 		dataWatcher.addObject(10, (short) 10); // MaxHP
 		dataWatcher.addObject(7, (short) health);
 	}
@@ -51,7 +52,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		setSize(baseStats.Width, baseStats.Height + hoverHeight);
 		setType();
 		length = baseStats.Length;
-		friendship = new FriendShip((EntityPixelmon)this);
 
 		if (rand.nextInt(100) < baseStats.MalePercent)
 			isMale = true;

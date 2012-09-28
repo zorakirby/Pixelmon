@@ -36,6 +36,7 @@ import pixelmon.items.heldItems.ItemLuckyEgg;
 public class PixelmonItems {
 	public static int pokeCheckerID;
 	public static int pokeDexID;
+	
 	public static int rareCandyID;
 	public static int potionID;
 	public static int superPotionID;
@@ -54,13 +55,17 @@ public class PixelmonItems {
 	public static int fullHealID;
 
 	public static int coalDustID;
+	
+	public static int pcItemID;
+	public static int healerItemID;
+	public static int anvilItemID;
+	
+	
 	public static int fireStoneID;
 	public static int waterStoneID;
 	public static int moonStoneID;
 	public static int thunderStoneID;
 	public static int leafStoneID;
-	public static int pcItemID;
-	public static int healerItemID;
 	public static int thunderStoneShardID;
 	public static int leafStoneShardID;
 	public static int waterStoneShardID;
@@ -139,6 +144,8 @@ public class PixelmonItems {
 	public static Item pcItem;
 	@Mod.Item(name = "Healer", typeClass = "pixelmon.items.ItemBlock")
 	public static Item healerItem;
+	@Mod.Item(name = "Anvil", typeClass = "pixelmon.items.ItemBlock")
+	public static Item anvilItem;
 	
 	@Mod.Item(name = "Thunder Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item thunderStoneShard;
@@ -207,6 +214,7 @@ public class PixelmonItems {
 		leafStoneID = cfg.getOrCreateIntProperty("LeafStone", "item", 10012).getInt();
 		pcItemID = cfg.getOrCreateIntProperty("PCItem", "item", 10013).getInt();
 		healerItemID = cfg.getOrCreateIntProperty("HealerItem", "item", 10014).getInt();
+		anvilItemID = cfg.getOrCreateIntProperty("AnvilItem", "item", 10015).getInt();
 		thunderStoneShardID = cfg.getOrCreateIntProperty("ThunderStoneShard", "item", 10021).getInt();
 		leafStoneShardID = cfg.getOrCreateIntProperty("LeafStoneShard", "item", 10022).getInt();
 		waterStoneShardID = cfg.getOrCreateIntProperty("WaterStoneShard", "item", 10023).getInt();
@@ -250,6 +258,7 @@ public class PixelmonItems {
 		leafStone = new ItemEvolutionStone(leafStoneID, EnumEvolutionStone.Leafstone, 2).setItemName("LeafStone");
 		pcItem = new ItemBlock(pcItemID, PixelmonBlocks.pc, 38).setItemName("PC");
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 54).setItemName("Healer");
+		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, 70).setItemName("Anvil");
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID).setItemName("ThunderStoneShard").setIconIndex(7);
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(39);
 		waterStoneShard = new PixelmonItem(waterStoneShardID).setItemName("WaterStoneShard").setIconIndex(23);

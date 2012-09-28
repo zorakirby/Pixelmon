@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import pixelmon.battles.animations.particles.EntityGastlyParticle;
+import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
@@ -39,6 +40,7 @@ import pixelmon.keybindings.SendPokemonKey;
 import pixelmon.render.RenderFreeWaterPixelmon;
 import pixelmon.render.RenderPixelmon;
 import pixelmon.render.RenderPokeball;
+import pixelmon.render.RenderTileEntityAnvil;
 import pixelmon.render.RenderTileEntityApricornTrees;
 import pixelmon.render.RenderTileEntityHealer;
 import pixelmon.render.RenderTileEntityPC;
@@ -75,6 +77,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityApricornTree.class, new RenderTileEntityApricornTrees());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvil.class, new RenderTileEntityAnvil());
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());

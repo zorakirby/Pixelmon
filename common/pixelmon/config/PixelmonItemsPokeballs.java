@@ -16,6 +16,7 @@ public class PixelmonItemsPokeballs {
 	public static int ultraBallID;
 	public static int masterBallID;
 	public static int levelBallID;
+	public static int moonBallID;
 
 	@Mod.Item(name = "Poke Ball", typeClass = "pixelmon.items.ItemPokeBall")
 	public static Item pokeBall;
@@ -27,18 +28,22 @@ public class PixelmonItemsPokeballs {
 	public static Item masterBall;
 	@Mod.Item(name = "Level Ball", typeClass = "pixelmon.items.ItemPokeBall")
 	public static Item levelBall;
+	@Mod.Item(name = "Moon Ball", typeClass = "pixelmon.items.ItemPokeBall")
+	public static Item moonBall;
 	public static void load(Configuration cfg) {
 		pokeBallID = cfg.getOrCreateIntProperty("PokeBall", "item", 8000).getInt();
 		greatBallID = cfg.getOrCreateIntProperty("GreatBall", "item", 8001).getInt();
 		ultraBallID = cfg.getOrCreateIntProperty("UltraBall", "item", 8002).getInt();
 		masterBallID = cfg.getOrCreateIntProperty("MasterBall", "item", 8003).getInt();
 		levelBallID = cfg.getOrCreateIntProperty("LevelBall", "item", 8004).getInt();
+		moonBallID = cfg.getOrCreateIntProperty("MoonBall", "item", 8005).getInt();
 		
 		pokeBall = new ItemPokeBall(pokeBallID, EnumPokeballs.PokeBall).setItemName("Poke Ball");
 		ultraBall = new ItemPokeBall(ultraBallID, EnumPokeballs.UltraBall).setItemName("Ultra Ball");
 		greatBall = new ItemPokeBall(greatBallID, EnumPokeballs.GreatBall).setItemName("Great Ball");
 		masterBall = new ItemPokeBall(masterBallID, EnumPokeballs.MasterBall).setItemName("Master Ball");
 		levelBall = new ItemPokeBall(levelBallID, EnumPokeballs.LevelBall).setItemName("Level Ball");
+		moonBall = new ItemPokeBall(moonBallID, EnumPokeballs.MoonBall).setItemName("Moon Ball");
 	}
 	public static void addNames() {
 		try
