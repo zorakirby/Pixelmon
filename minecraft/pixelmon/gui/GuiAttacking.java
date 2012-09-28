@@ -105,6 +105,10 @@ public class GuiAttacking extends GuiContainer {
 		drawCenteredString(fontRenderer, "Which move do you want your " + name + " to use against " + targetName + "?", width / 2, 10, 0xFFFFFF);
 		drawPokemonStats(userPacket, width / 8, height * 2 / 6, true);
 		drawPokemonStats(targetPacket, width * 5 / 8, height * 2 / 6, false);
+	}
+	
+	public void drawScreen(int i, int i1, float f){
+		super.drawScreen(i, i1, f);
 		drawHealthBar(userPacket.health, userPacket.hp, width / 8, height * 2 / 6 + 10, 0, 0, 0);
 		drawHealthBar(targetPacket.health, targetPacket.hp, width * 5 / 8, height * 2 / 6 + 10, 0, 0, 0);
 	}
