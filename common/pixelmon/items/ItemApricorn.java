@@ -18,7 +18,7 @@ public class ItemApricorn extends PixelmonItem {
 		super(id);
 
 		this.apricorn = apricorn;
-		SetUsableInBattle(true);
+		SetUsableInBattle(false);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);
 		setIconIndex(apricorn.iconIndex);
