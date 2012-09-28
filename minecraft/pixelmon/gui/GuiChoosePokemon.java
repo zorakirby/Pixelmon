@@ -3,6 +3,7 @@ package pixelmon.gui;
 import java.util.ArrayList;
 
 import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.GuiScreen;
 
 import net.minecraft.src.NBTTagCompound;
@@ -18,7 +19,7 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.storage.PokeballManager;
 
-public class GuiChoosePokemon extends GuiScreen {
+public class GuiChoosePokemon extends GuiContainer {
 
 	private BattleController bc;
 	private GuiScreen parentGui;
@@ -26,6 +27,7 @@ public class GuiChoosePokemon extends GuiScreen {
 	int bcIndex;
 
 	public GuiChoosePokemon(PixelmonDataPacket userPacket, int bcIndex, GuiAttacking parentGui) {
+		super(new ContainerEmpty());
 		this.parentGui = parentGui;
 		this.userPacket = userPacket;
 		this.bcIndex = bcIndex;
@@ -65,7 +67,7 @@ public class GuiChoosePokemon extends GuiScreen {
 		super.mouseClicked(par1, par2, par3);
 	}
 
-	public void drawScreen(int i, int i1, float f) {
+	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 
 		drawDefaultBackground();
 		super.drawScreen(i, i1, f);

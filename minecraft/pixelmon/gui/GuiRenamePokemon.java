@@ -1,24 +1,26 @@
 package pixelmon.gui;
 
-import org.lwjgl.input.Keyboard;
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiContainer;
+import net.minecraft.src.GuiScreen;
+import net.minecraft.src.GuiTextField;
+import net.minecraft.src.StringTranslate;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
+import org.lwjgl.input.Keyboard;
 
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.EntityPixelmon;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
-
-public class GuiRenamePokemon extends GuiScreen {
+public class GuiRenamePokemon extends GuiContainer {
 
 	private GuiScreen parentGuiScreen;
 	private GuiTextField theGuiTextField;
 	private PixelmonDataPacket targetPacket;
 
 	public GuiRenamePokemon(PixelmonDataPacket targetPacket, GuiScreenPokeChecker parent) {
+		super(new ContainerEmpty());
 		this.targetPacket = targetPacket;
 		parentGuiScreen = parent;
 	}
@@ -74,7 +76,7 @@ public class GuiRenamePokemon extends GuiScreen {
 		theGuiTextField.mouseClicked(par1, par2, par3);
 	}
 
-	public void drawScreen(int par1, int par2, float par3) {
+	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		StringTranslate stringtranslate = StringTranslate.getInstance();
 		drawDefaultBackground();
 		drawCenteredString(fontRenderer, stringtranslate.translateKey("Rename Pokemon"), width / 2, (height / 4 - 60) + 20, 0xffffff);

@@ -1,17 +1,17 @@
 package pixelmon.gui;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiContainer;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.EntityWaterPixelmon;
-import net.minecraft.src.*;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class GuiLearnMove extends GuiScreen {
+public class GuiLearnMove extends GuiContainer {
 
 	private int pokemonId;
 	private EntityPlayer player;
@@ -19,6 +19,7 @@ public class GuiLearnMove extends GuiScreen {
 	private PixelmonDataPacket dataPacket;
 
 	public GuiLearnMove(int x, EntityPlayer player, Attack attack) {
+		super(new ContainerEmpty());
 		pokemonId = x;
 		this.player = player;
 		moveToLearn = attack;
@@ -55,7 +56,7 @@ public class GuiLearnMove extends GuiScreen {
 		mc.thePlayer.closeScreen();
 	}
 
-	public void drawScreen(int par1, int par2, float par3) {
+	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		drawDefaultBackground();
 		super.drawScreen(par1, par2, par3);
 		drawCenteredString(fontRenderer, "Your " + dataPacket.name + " wants to learn the move " + moveToLearn.attackName + ",", width / 2, 10, 0xFFFFFF);
