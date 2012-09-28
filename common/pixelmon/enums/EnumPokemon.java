@@ -87,6 +87,7 @@ public enum EnumPokemon {
 	Venusaur("Venusaur", ClassType.Pixelmon),
 	Vaporeon("Vaporeon", ClassType.Pixelmon),
 	Vibrava("Vibrava", ClassType.Pixelmon),
+	Vileplume("Vileplume", ClassType.Pixelmon),
 	Voltorb("Voltorb", ClassType.Pixelmon),
 	Vulpix("Vulpix", ClassType.Pixelmon),
 	Wartortle("Wartortle", ClassType.Pixelmon),
