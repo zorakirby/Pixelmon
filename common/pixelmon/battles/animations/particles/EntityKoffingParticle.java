@@ -22,9 +22,9 @@ public class EntityKoffingParticle extends EntityFX
         this.motionX += par8;
         this.motionY += par10;
         this.motionZ += par12;
-        this.particleRed = 0F;
-        this.particleGreen = 200F; 
-        this.particleBlue = 0F;
+        this.particleRed = 0.6F;
+        this.particleGreen = 0.6F; 
+        this.particleBlue = 0.48F;
         this.particleScale *= 0.75F;
         this.particleScale *= par14;
         this.smokeParticleScale = this.particleScale;
