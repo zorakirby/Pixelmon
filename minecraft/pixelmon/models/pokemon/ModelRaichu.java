@@ -568,6 +568,10 @@ public class ModelRaichu extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    HeadPiece.rotateAngleY = f3 / (180F / (float)Math.PI);
+    HeadPiece.rotateAngleX = f4 / (180F / (float)Math.PI);
+    LegLPiece.rotateAngleX = MathHelper.cos(f*.7F)*1F*f1;
+    LegRPiece.rotateAngleX = MathHelper.cos(f*.7F + (float)Math.PI)*1F*f1;
   }
 
 }
