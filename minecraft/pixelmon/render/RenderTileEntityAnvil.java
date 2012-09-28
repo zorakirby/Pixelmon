@@ -14,12 +14,24 @@ import pixelmon.items.ItemPokeballDisc;
 import pixelmon.items.ItemPokeballLid;
 import pixelmon.models.ModelAnvil;
 import pixelmon.models.ModelPC;
+import pixelmon.models.discs.ModelDiscFlat;
+import pixelmon.models.discs.ModelDiscHemiSphere;
+import pixelmon.models.discs.ModelDiscStage1;
+import pixelmon.models.discs.ModelDiscStage2;
 
 public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 	private ModelAnvil model;
+	private ModelDiscFlat modelDiscFlat;
+	private ModelDiscHemiSphere modelDiscHemiSphere;
+	private ModelDiscStage1 modelDiscStage1;
+	private ModelDiscStage2 modelDiscStage2;
 
 	public RenderTileEntityAnvil() {
 		model = new ModelAnvil();
+		modelDiscFlat = new ModelDiscFlat();
+		modelDiscHemiSphere = new ModelDiscHemiSphere();
+		modelDiscStage1 = new ModelDiscStage1();
+		modelDiscStage2 = new ModelDiscStage2();
 	}
 
 	public void renderAModelAt(TileEntityAnvil tile, double d, double d1, double d2, float f) {
@@ -56,9 +68,11 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		if (tile.itemOnAnvil != -1) {
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
 			if (itemToRender instanceof ItemPokeballDisc) {
-				bindTextureByName(((ItemPokeballDisc)itemToRender).pokeball.getTexture());
+				bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture());
+				modelDiscFlat.renderModel(0.0625f);
+
 			} else if (itemToRender instanceof ItemPokeballLid) {
-				bindTextureByName(((ItemPokeballLid)itemToRender).pokeball.getTexture());
+				bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
 			}
 		}
 		GL11.glPopMatrix(); // end

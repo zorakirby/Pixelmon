@@ -1,6 +1,5 @@
 package pixelmon.models.discs;
 
-import pixelmon.blocks.Discs.TileEntityDiscs;
 import net.minecraft.src.Entity;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
@@ -65,7 +64,7 @@ public class ModelDiscStage1 extends ModelBase
       setRotation(RedBack, 0F, 0F, 0F);
   }
   
-  public void renderModel(TileEntityDiscs entity, float f5){
+  public void renderModel(float f5){
 	    RedTip.render(f5);
 	    RedTop.render(f5);
 	    RedFront.render(f5);
