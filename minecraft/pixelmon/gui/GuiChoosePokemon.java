@@ -70,7 +70,6 @@ public class GuiChoosePokemon extends GuiContainer {
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 
 		drawDefaultBackground();
-		super.drawScreen(i, i1, f);
 		drawCenteredString(fontRenderer, "Who do you want to send out?", width / 2, 10, 0xFFFFFF);
 	}
 }

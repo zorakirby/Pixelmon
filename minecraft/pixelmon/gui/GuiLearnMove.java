@@ -58,7 +58,6 @@ public class GuiLearnMove extends GuiContainer {
 
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		drawDefaultBackground();
-		super.drawScreen(par1, par2, par3);
 		drawCenteredString(fontRenderer, "Your " + dataPacket.name + " wants to learn the move " + moveToLearn.attackName + ",", width / 2, 10, 0xFFFFFF);
 		drawCenteredString(fontRenderer, "but " + dataPacket.name + " already knows four moves. Which move should be forgotten?", width / 2, 20, 0xFFFFFF);
 	}

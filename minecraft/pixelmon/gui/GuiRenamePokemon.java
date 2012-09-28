@@ -82,6 +82,5 @@ public class GuiRenamePokemon extends GuiContainer {
 		drawCenteredString(fontRenderer, stringtranslate.translateKey("Rename Pokemon"), width / 2, (height / 4 - 60) + 20, 0xffffff);
 		drawString(fontRenderer, stringtranslate.translateKey("Nickname"), width / 2 - 100, 47, 0xa0a0a0);
 		theGuiTextField.drawTextBox();
-		super.drawScreen(par1, par2, par3);
 	}
 }
