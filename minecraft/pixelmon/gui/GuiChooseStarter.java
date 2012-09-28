@@ -38,7 +38,6 @@ public class GuiChooseStarter extends GuiContainer {
 
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		drawDefaultBackground();
-		super.drawScreen(par1, par2, par3);
 		drawCenteredString(fontRenderer, "Welcome to the world of Pixelmon!! Thank you for installing this mod!", width / 2, 10, 0xFFFFFF);
 		drawCenteredString(fontRenderer, "Now, please pick your desired starter Pokemon!", width / 2, 20, 0xFFFFFF);
 	}

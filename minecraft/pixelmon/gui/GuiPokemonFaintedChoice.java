@@ -52,7 +52,6 @@ public class GuiPokemonFaintedChoice extends GuiContainer {
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 
 		drawDefaultBackground();
-		super.drawScreen(i, i1, f);
 		drawCenteredString(fontRenderer, mypixelmon.getName()
 				+ "can no longer fight", width / 2, 10, 0xFFFFFF);
 	}

@@ -205,10 +205,6 @@ public class GuiPC extends GuiContainer {
 		mouseSlot.setXandY(par1 - 15, par2 - 15);
 	}
 
-	public void drawScreen(int var1, int var2, float var3) {
-		super.drawScreen(var1, var2, var3);
-	}
-
 	public void onGuiClosed() {
 		super.onGuiClosed();
 		if (mouseSlot.pokemonData != null) {

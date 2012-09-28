@@ -79,7 +79,6 @@ public class GuiMoveSelectForItem extends GuiContainer {
 				fontRenderer.drawString(bs.getDisplay(), width / 2 - 50, height / 2 - 70 + i * 20, 0xffff00);
 			}
 		}
-		super.drawScreen(par1, par2, par3);
 	}
 
 	public void keyTyped(char i, int i1) {

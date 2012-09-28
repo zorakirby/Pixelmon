@@ -67,7 +67,5 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
 			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10), targetPacket.moveset[i2].type.getColor());
 		}
-
-		super.drawScreen(i, i1, f);
 	}
 }
