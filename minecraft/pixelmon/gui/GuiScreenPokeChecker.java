@@ -1,18 +1,16 @@
 package pixelmon.gui;
 
-import pixelmon.battles.attacks.Attack;
-import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumType;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiScreen;
-
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.StatCollector;
+import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.enums.EnumType;
 
-public class GuiScreenPokeChecker extends GuiScreen {
+public class GuiScreenPokeChecker extends GuiContainer {
 	protected PixelmonDataPacket targetPacket;
 
 	public GuiScreenPokeChecker(PixelmonDataPacket pixelmonDataPacket) {
+		super(new ContainerEmpty());
 		targetPacket = pixelmonDataPacket;
 	}
 
@@ -41,7 +39,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 
 	}
 
-	public void drawScreen(int i, int i1, float f) {
+	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 		drawDefaultBackground();
 		drawCenteredString(fontRenderer, "PokeChecker", width / 2, height / 7, 0xffffff);
 		drawCenteredString(fontRenderer, "Lv: " + targetPacket.lvl + " " + targetPacket.nickname + " (" + targetPacket.name + ")", width / 2, height / 7 + 15, 0xcccccc);
