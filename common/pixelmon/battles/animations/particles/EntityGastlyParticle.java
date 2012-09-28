@@ -11,16 +11,16 @@ public class EntityGastlyParticle extends EntityFX
     public EntityGastlyParticle(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
-        float var14 = 2.5F;
+        float var14 = 3F;
         this.motionX *= 0.10000000149011612D;
         this.motionY *= 0.10000000149011612D;
         this.motionZ *= 0.10000000149011612D;
         this.motionX += par8;
         this.motionY += par10;
         this.motionZ += par12;
-        this.particleRed = 100F;
-        this.particleGreen = 0F;
-        this.particleBlue = 100F;
+        this.particleRed = 0.19F;
+        this.particleGreen = 0.0F;
+        this.particleBlue = 0.38F;
         this.particleScale *= .5F;
         this.particleScale *= var14;
         this.field_70569_a = this.particleScale;
