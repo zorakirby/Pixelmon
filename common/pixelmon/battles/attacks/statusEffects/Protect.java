@@ -23,7 +23,7 @@ public class Protect extends StatusEffectBase {
 		if (chance < 0.125f) chance = 0.125f;
 		
 		if ((new Random()).nextInt(100)<= chance*100) {
-			target.status.add(this);
+			user.status.add(this);
 			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is readying itself!");
 
 		} else

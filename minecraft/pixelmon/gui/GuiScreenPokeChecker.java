@@ -1,18 +1,16 @@
 package pixelmon.gui;
 
-import pixelmon.battles.attacks.Attack;
-import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumType;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiScreen;
-
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.StatCollector;
+import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.enums.EnumType;
 
-public class GuiScreenPokeChecker extends GuiScreen {
+public class GuiScreenPokeChecker extends GuiContainer {
 	protected PixelmonDataPacket targetPacket;
 
 	public GuiScreenPokeChecker(PixelmonDataPacket pixelmonDataPacket) {
+		super(new ContainerEmpty());
 		targetPacket = pixelmonDataPacket;
 	}
 
@@ -22,6 +20,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		controlList.clear();
 		controlList.add(new GuiButton(0, width / 2 - 100, (int) (height * 0.8), StatCollector.translateToLocal("menu.returnToGame")));
 		String s = "";
@@ -32,8 +31,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 	public void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 0:
-			mc.displayGuiScreen(null);
-			mc.setIngameFocus();
+			mc.thePlayer.closeScreen();
 			break;
 		case 1:
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
@@ -41,7 +39,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 
 	}
 
-	public void drawScreen(int i, int i1, float f) {
+	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 		drawDefaultBackground();
 		drawCenteredString(fontRenderer, "PokeChecker", width / 2, height / 7, 0xffffff);
 		drawCenteredString(fontRenderer, "Lv: " + targetPacket.lvl + " " + targetPacket.nickname + " (" + targetPacket.name + ")", width / 2, height / 7 + 15, 0xcccccc);
@@ -63,12 +61,11 @@ public class GuiScreenPokeChecker extends GuiScreen {
 		drawCenteredString(fontRenderer, "Defence: " + targetPacket.Defence, width / 3, height / 7 + 90, 0xdddddd);
 		drawCenteredString(fontRenderer, "Special Attack: " + targetPacket.SpecialAttack, width / 3, height / 7 + 100, 0xdddddd);
 		drawCenteredString(fontRenderer, "Special Defence: " + targetPacket.SpecialDefence, width / 3, height / 7 + 110, 0xdddddd);
+		drawCenteredString(fontRenderer, "Speed: " + targetPacket.Speed, width / 3, height / 7 + 120, 0xdddddd);
 		// MOVES
 		drawCenteredString(fontRenderer, "Moves", width * 2 / 3, height / 7 + 25, 0xdddddd);
 		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
 			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10), targetPacket.moveset[i2].type.getColor());
 		}
-
-		super.drawScreen(i, i1, f);
 	}
 }

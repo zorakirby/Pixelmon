@@ -6,19 +6,24 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.src.Block;
+import net.minecraft.src.CreativeTabs;
+import net.minecraft.src.EnumToolMaterial;
 import net.minecraft.src.Item;
 
 import net.minecraftforge.common.Configuration;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.enums.EnumApricorns;
 import pixelmon.enums.EnumEthers;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumPotions;
 import pixelmon.enums.EnumStatusAilmentHealers;
+import pixelmon.items.ItemApricorn;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
+import pixelmon.items.ItemHammer;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokedex;
@@ -32,14 +37,10 @@ import pixelmon.items.heldItems.ItemExpShare;
 import pixelmon.items.heldItems.ItemLuckyEgg;
 
 public class PixelmonItems {
-	public static int pokeBallID;
-	public static int greatBallID;
-	public static int ultraBallID;
-	public static int masterBallID;
 	public static int pokeCheckerID;
 	public static int pokeDexID;
+	
 	public static int rareCandyID;
-
 	public static int potionID;
 	public static int superPotionID;
 	public static int hyperPotionID;
@@ -57,13 +58,17 @@ public class PixelmonItems {
 	public static int fullHealID;
 
 	public static int coalDustID;
+	
+	public static int pcItemID;
+	public static int healerItemID;
+	public static int anvilItemID;
+	
+	
 	public static int fireStoneID;
 	public static int waterStoneID;
 	public static int moonStoneID;
 	public static int thunderStoneID;
 	public static int leafStoneID;
-	public static int pcItemID;
-	public static int healerItemID;
 	public static int thunderStoneShardID;
 	public static int leafStoneShardID;
 	public static int waterStoneShardID;
@@ -76,14 +81,19 @@ public class PixelmonItems {
 	public static int berryRawstID;
 	public static int berryLeppaID;
 	
-	@Mod.Item(name = "PokeBall", typeClass = "pixelmon.items.ItemPokeBall")
-	public static Item pokeBall;
-	@Mod.Item(name = "GreatBall", typeClass = "pixelmon.items.ItemPokeBall")
-	public static Item greatBall;
-	@Mod.Item(name = "UltraBall", typeClass = "pixelmon.items.ItemPokeBall")
-	public static Item ultraBall;
-	@Mod.Item(name = "MasterBall", typeClass = "pixelmon.items.ItemPokeBall")
-	public static Item masterBall;
+	public static int apricornBlackID;
+	public static int apricornWhiteID;
+	public static int apricornPinkID;
+	public static int apricornGreenID;
+	public static int apricornBlueID;
+	public static int apricornYellowID;
+	public static int apricornRedID;
+	
+	public static int hammerWoodID;
+	public static int hammerStoneID;
+	public static int hammerIronID;
+	public static int hammerGoldID;
+	public static int hammerDiamondID;
 	
 	@Mod.Item(name = "PokeChecker", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item pokeChecker;
@@ -142,6 +152,8 @@ public class PixelmonItems {
 	public static Item pcItem;
 	@Mod.Item(name = "Healer", typeClass = "pixelmon.items.ItemBlock")
 	public static Item healerItem;
+	@Mod.Item(name = "Anvil", typeClass = "pixelmon.items.ItemBlock")
+	public static Item anvilItem;
 	
 	@Mod.Item(name = "Thunder Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item thunderStoneShard;
@@ -164,12 +176,38 @@ public class PixelmonItems {
 	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.heldItems.ItemBerryLeppa")
 	public static Item berryLeppa;
 
+	@Mod.Item(name = "Black Apricorn", typeClass = "pixelmon.items.ItemApricorn")
+	public static Item apricornBlack;
+	@Mod.Item(name = "White Apricorn", typeClass = "pixelmon.items.ItemApricorn")
+	public static Item apricornWhite;
+	@Mod.Item(name = "Pink Apricorn", typeClass = "pixelmon.items.ItemApricorn")
+	public static Item apricornPink;
+	@Mod.Item(name = "Green Apricorn", typeClass = "pixelmon.items.ItemApricorn")
+	public static Item apricornGreen;
+	@Mod.Item(name = "Blue Apricorn", typeClass = "pixelmon.items.ItemApricorn")
+	public static Item apricornBlue;
+	@Mod.Item(name = "Yellow Apricorn", typeClass = "pixelmon.items.ItemApricorn")
+	public static Item apricornYellow;
+	@Mod.Item(name = "Red Apricorn", typeClass = "pixelmon.items.ItemApricorn")
+	public static Item apricornRed;
+	
+	@Mod.Item(name = "Wood Hammer", typeClass = "pixelmon.items.ItemHammer")
+	public static Item hammerWood;
+	@Mod.Item(name = "Stone Hammer", typeClass = "pixelmon.items.ItemTool")
+	public static Item hammerStone;
+	@Mod.Item(name = "Iron Hammer", typeClass = "pixelmon.items.ItemTool")
+	public static Item hammerIron;
+	@Mod.Item(name = "Gold Hammer", typeClass = "pixelmon.items.ItemTool")
+	public static Item hammerGold;
+	@Mod.Item(name = "Diamond Hammer", typeClass = "pixelmon.items.ItemTool")
+	public static Item hammerDiamond;
+	
+
+	
 	public static void load(Configuration cfg)
 	{
-		pokeBallID = cfg.getOrCreateIntProperty("PokeBall", "item", 10000).getInt();
-		greatBallID = cfg.getOrCreateIntProperty("GreatBall", "item", 10001).getInt();
-		ultraBallID = cfg.getOrCreateIntProperty("UltraBall", "item", 10002).getInt();
-		masterBallID = cfg.getOrCreateIntProperty("MasterBall", "item", 10003).getInt();
+		PixelmonItemsPokeballs.load(cfg);
+		
 		pokeCheckerID = cfg.getOrCreateIntProperty("PokeChecker", "item", 10004).getInt();
 		pokeDexID = cfg.getOrCreateIntProperty("PokeDex", "item", 10027).getInt();
 		rareCandyID = cfg.getOrCreateIntProperty("RareCandy", "item", 10005).getInt();
@@ -196,6 +234,7 @@ public class PixelmonItems {
 		leafStoneID = cfg.getOrCreateIntProperty("LeafStone", "item", 10012).getInt();
 		pcItemID = cfg.getOrCreateIntProperty("PCItem", "item", 10013).getInt();
 		healerItemID = cfg.getOrCreateIntProperty("HealerItem", "item", 10014).getInt();
+		anvilItemID = cfg.getOrCreateIntProperty("AnvilItem", "item", 10015).getInt();
 		thunderStoneShardID = cfg.getOrCreateIntProperty("ThunderStoneShard", "item", 10021).getInt();
 		leafStoneShardID = cfg.getOrCreateIntProperty("LeafStoneShard", "item", 10022).getInt();
 		waterStoneShardID = cfg.getOrCreateIntProperty("WaterStoneShard", "item", 10023).getInt();
@@ -205,12 +244,21 @@ public class PixelmonItems {
 		berryOranID = cfg.getOrCreateIntProperty("OranBerry", "item", 10040).getInt();
 		berryRawstID = cfg.getOrCreateIntProperty("RawstBerry", "item", 10041).getInt();
 		berryLeppaID = cfg.getOrCreateIntProperty("LeppaBerry", "item", 10042).getInt();
+		apricornBlackID = cfg.getOrCreateIntProperty("Black Apricorn", "item", 10100).getInt();
+		apricornWhiteID = cfg.getOrCreateIntProperty("White Apricorn", "item", 10101).getInt();
+		apricornPinkID = cfg.getOrCreateIntProperty("Pink Apricorn", "item", 10102).getInt();
+		apricornGreenID = cfg.getOrCreateIntProperty("Green Apricorn", "item", 10103).getInt();
+		apricornBlueID = cfg.getOrCreateIntProperty("Blue Apricorn", "item", 10104).getInt();
+		apricornYellowID = cfg.getOrCreateIntProperty("Yellow Apricorn", "item", 10105).getInt();
+		apricornRedID = cfg.getOrCreateIntProperty("Red Apricorn", "item", 10106).getInt();
 
-		pokeBall = new ItemPokeBall(pokeBallID, EnumPokeballs.PokeBall).setItemName("PokeBall");
-		ultraBall = new ItemPokeBall(ultraBallID, EnumPokeballs.UltraBall).setItemName("UltraBall");
-		greatBall = new ItemPokeBall(greatBallID, EnumPokeballs.GreatBall).setItemName("GreatBall");
-		masterBall = new ItemPokeBall(masterBallID, EnumPokeballs.MasterBall).setItemName("MasterBall");
-		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1);
+		hammerWoodID = cfg.getOrCreateIntProperty("Wood Hammer", "item", 10107).getInt();
+		hammerStoneID = cfg.getOrCreateIntProperty("Stone Hammer", "item", 10108).getInt();
+		hammerIronID = cfg.getOrCreateIntProperty("Iron Hammer", "item", 10109).getInt();
+		hammerGoldID = cfg.getOrCreateIntProperty("Gold Hammer", "item", 10110).getInt();
+		hammerDiamondID = cfg.getOrCreateIntProperty("Diamond Hammer", "item", 10111).getInt();
+		
+		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(6).setMaxStackSize(1).setTabToDisplayOn(CreativeTabs.tabTools);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(22).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(5);
 		potion = new ItemPotion(potionID, EnumPotions.Potion).setItemName("Potion");
@@ -236,18 +284,34 @@ public class PixelmonItems {
 		leafStone = new ItemEvolutionStone(leafStoneID, EnumEvolutionStone.Leafstone, 2).setItemName("LeafStone");
 		pcItem = new ItemBlock(pcItemID, PixelmonBlocks.pc, 38).setItemName("PC");
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 54).setItemName("Healer");
+		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, 70).setItemName("Anvil");
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID).setItemName("ThunderStoneShard").setIconIndex(7);
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(39);
 		waterStoneShard = new PixelmonItem(waterStoneShardID).setItemName("WaterStoneShard").setIconIndex(23);
 		fireStoneShard = new PixelmonItem(fireStoneShardID).setItemName("FireStoneShard").setIconIndex(55);
 		luckyEgg = new ItemLuckyEgg(luckyEggID).setItemName("LuckyEgg").setIconIndex(11);
-		expShare = new ItemExpShare(expShareID).setItemName("ExpShare").setIconIndex(0);
+		expShare = new ItemExpShare(expShareID).setItemName("ExpShare").setIconIndex(27);
 		berryOran = new ItemBerryOran(berryOranID).setItemName("OranBerry").setIconIndex(9);
 		berryLeppa = new ItemBerryLeppa(berryLeppaID).setItemName("LeppaBerry").setIconIndex(25);
 		berryRawst = new ItemBerryRawst(berryRawstID).setItemName("RawstBerry").setIconIndex(41);
+		
+		apricornBlack = new ItemApricorn(apricornBlackID, EnumApricorns.Black).setItemName("Black Apricorn");
+		apricornWhite = new ItemApricorn(apricornWhiteID, EnumApricorns.White).setItemName("White Apricorn");
+		apricornPink = new ItemApricorn(apricornPinkID, EnumApricorns.Pink).setItemName("Pink Apricorn");
+		apricornGreen = new ItemApricorn(apricornGreenID, EnumApricorns.Green).setItemName("Green Apricorn");
+		apricornBlue = new ItemApricorn(apricornBlueID, EnumApricorns.Blue).setItemName("Blue Apricorn");
+		apricornYellow = new ItemApricorn(apricornYellowID, EnumApricorns.Yellow).setItemName("Yellow Apricorn");
+		apricornRed = new ItemApricorn(apricornRedID, EnumApricorns.Red).setItemName("Red Apricorn");
+		
+		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, 244).setItemName("Wood Hammer");
+		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, 245).setItemName("Stone Hammer");
+		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, 246).setItemName("Iron Hammer");
+		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, 248).setItemName("Gold Hammer");
+		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, 247).setItemName("Diamond Hammer");
 	}
 	
 	public static void addNames() {
+		PixelmonItemsPokeballs.addNames();
 		try
 		{
 			for(Field field : PixelmonItems.class.getFields())

@@ -89,7 +89,7 @@ public class BattleController {
 	}
 
 	public void update() {
-		if (isWaiting())
+		if (isWaiting() || isCapturing)
 			return;
 		int tickTop;
 		if (moveStage == MoveStage.PickAttacks)
@@ -479,7 +479,12 @@ public class BattleController {
 
 	boolean participant1Wait;
 	boolean participant2Wait;
-
+	boolean isCapturing = false;
+	
+	public void waitForCapture(){
+		isCapturing = true;
+	}
+	
 	public void waitForMove(PlayerParticipant playerParticipant) {
 		if (playerParticipant == participant1)
 			participant1Wait = true;

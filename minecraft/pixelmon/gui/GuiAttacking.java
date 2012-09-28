@@ -1,19 +1,13 @@
 package pixelmon.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.EntityLiving;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiScreen;
-
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.RenderHelper;
-import net.minecraft.src.RenderManager;
 import net.minecraft.src.Tessellator;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.PixelmonServerStore;
 import pixelmon.ServerStorageDisplay;
@@ -21,10 +15,9 @@ import pixelmon.battles.BattleController;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.storage.PixelmonStorage;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class GuiAttacking extends GuiScreen {
+public class GuiAttacking extends GuiContainer {
 
 	private BattleController bc;
 
@@ -32,6 +25,7 @@ public class GuiAttacking extends GuiScreen {
 	public int battleControllerIndex;
 
 	public GuiAttacking(int pokemon1Index, int pokemon2Index, int battleControllerIndex) {
+		super(new ContainerEmpty());
 		userPacket = ServerStorageDisplay.get(pokemon1Index);
 		targetPacket = PixelmonServerStore.getPixelmonData(pokemon2Index);
 		this.battleControllerIndex = battleControllerIndex;
@@ -39,6 +33,7 @@ public class GuiAttacking extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
 		fontRenderer.FONT_HEIGHT = 10;
@@ -84,7 +79,7 @@ public class GuiAttacking extends GuiScreen {
 
 		if (par1GuiButton.id < 4 && userPacket.moveset[par1GuiButton.id].pp > 0) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, par1GuiButton.id, battleControllerIndex, userPacket.pokemonID));
-			mc.displayGuiScreen(null);
+			mc.thePlayer.closeScreen();
 			mc.setIngameFocus();
 		} else if (par1GuiButton.id == 11) {
 			mc.displayGuiScreen(new GuiChoosePokemon(userPacket, battleControllerIndex, this));
@@ -92,7 +87,7 @@ public class GuiAttacking extends GuiScreen {
 			mc.displayGuiScreen(new GuiAttackingBag(userPacket, this));
 		} else if (par1GuiButton.id == 10) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
-			mc.displayGuiScreen(null);
+			mc.thePlayer.closeScreen();
 			mc.setIngameFocus();
 		}
 
@@ -102,15 +97,18 @@ public class GuiAttacking extends GuiScreen {
 		super.mouseClicked(par1, par2, par3);
 	}
 
-	public void drawScreen(int i, int i1, float f) {
+	public void drawGuiContainerBackgroundLayer(float f, int i, int i1){
 
 		drawDefaultBackground();
-		super.drawScreen(i, i1, f);
 		String name = userPacket.nickname.equals("") ? userPacket.name : userPacket.nickname;
 		String targetName = targetPacket.nickname.equals("") ? targetPacket.name : targetPacket.nickname;
 		drawCenteredString(fontRenderer, "Which move do you want your " + name + " to use against " + targetName + "?", width / 2, 10, 0xFFFFFF);
 		drawPokemonStats(userPacket, width / 8, height * 2 / 6, true);
 		drawPokemonStats(targetPacket, width * 5 / 8, height * 2 / 6, false);
+	}
+	
+	public void drawScreen(int i, int i1, float f){
+		super.drawScreen(i, i1, f);
 		drawHealthBar(userPacket.health, userPacket.hp, width / 8, height * 2 / 6 + 10, 0, 0, 0);
 		drawHealthBar(targetPacket.health, targetPacket.hp, width * 5 / 8, height * 2 / 6 + 10, 0, 0, 0);
 	}

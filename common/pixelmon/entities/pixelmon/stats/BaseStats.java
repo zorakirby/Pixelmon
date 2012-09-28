@@ -35,6 +35,7 @@ public class BaseStats {
 	public SwimmingParameters swimmingParameters;
 	public SpawnConditions[] spawnConditions;
 	public int[] evGain = new int[6];
+	public int friendshipBase;
 
 	public class SwimmingParameters {
 		public int depthRangeStart;

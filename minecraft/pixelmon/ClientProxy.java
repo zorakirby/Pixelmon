@@ -7,8 +7,10 @@ import java.util.Map;
 import java.util.Random;
 
 import pixelmon.battles.animations.particles.EntityGastlyParticle;
+import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonEntityList.ClassType;
@@ -38,6 +40,8 @@ import pixelmon.keybindings.SendPokemonKey;
 import pixelmon.render.RenderFreeWaterPixelmon;
 import pixelmon.render.RenderPixelmon;
 import pixelmon.render.RenderPokeball;
+import pixelmon.render.RenderTileEntityAnvil;
+import pixelmon.render.RenderTileEntityApricornTrees;
 import pixelmon.render.RenderTileEntityHealer;
 import pixelmon.render.RenderTileEntityPC;
 import pixelmon.render.RenderTrainer;
@@ -72,6 +76,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityApricornTree.class, new RenderTileEntityApricornTrees());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvil.class, new RenderTileEntityAnvil());
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
@@ -84,7 +90,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preloadTextures() {
-		for (EnumPokemon pokemon: EnumPokemon.values())
+		for (EnumPokemon pokemon : EnumPokemon.values())
 			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + pokemon.name.toLowerCase() + ".png");
 	}
 
@@ -168,16 +174,20 @@ public class ClientProxy extends CommonProxy {
 		PixelmonServerStore.clearList();
 	}
 
-	public static void spawnParticle(EnumPixelmonParticles particle, World worldObj, double posX, double posY, double posZ) {
+	public static void spawnParticle(EnumPixelmonParticles particle, World worldObj, double posX, double posY, double posZ, boolean isShiny) {
 		try {
-			EntityFX fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class).newInstance(worldObj, posX,
-					posY, posZ, 0d, 0d, 0d);
+			EntityFX fx;
+			if (particle.particleClass == EntityGastlyParticle.class)
+				fx = new EntityGastlyParticle(worldObj, posX, posY, posZ, 0, 0, 0, isShiny);
+			else
+				fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class,
+						double.class).newInstance(worldObj, posX, posY, posZ, 0d, 0d, 0d);
 			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public int getTexture(String string, String string2) {
 		return RenderingRegistry.addTextureOverride(string, string2);

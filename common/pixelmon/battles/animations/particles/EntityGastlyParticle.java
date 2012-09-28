@@ -8,25 +8,34 @@ public class EntityGastlyParticle extends EntityFX
 {
     float field_70569_a;
 
-    public EntityGastlyParticle(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
+    public EntityGastlyParticle(World par1World, double par2, double par4, double par6, double par8, double par10, double par12, boolean isShiny)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
-        float var14 = 2.5F;
+        float var14 = 3F;
         this.motionX *= 0.10000000149011612D;
         this.motionY *= 0.10000000149011612D;
         this.motionZ *= 0.10000000149011612D;
         this.motionX += par8;
         this.motionY += par10;
         this.motionZ += par12;
-        this.particleRed = 100F;
-        this.particleGreen = 0F;
-        this.particleBlue = 100F;
+        this.particleRed = 0.19F;
+        this.particleGreen = 0.0F;
+        this.particleBlue = 0.38F;
         this.particleScale *= .5F;
         this.particleScale *= var14;
         this.field_70569_a = this.particleScale;
         this.particleMaxAge = (int)(8.0D / (Math.random() * 0.8D + 0.3D));
         this.particleMaxAge = (int)((float)this.particleMaxAge * var14);
         this.noClip = false;
+        if (isShiny){
+            this.particleRed = 0.35F;
+            this.particleGreen = 0.52F;
+            this.particleBlue = 0.68F;
+        } else{
+            this.particleRed = 0.19F;
+            this.particleGreen = 0.0F;
+            this.particleBlue = 0.38F;
+        }
     }
 
     public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)

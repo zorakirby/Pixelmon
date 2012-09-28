@@ -20,7 +20,7 @@ public class GastlyParticles extends ParticleEffects {
 		float var7 = MathHelper.cos(var4) * var2 * .5F * var5;
 		float var8 = rand.nextFloat() * var2;
 		for (int i = 0; i < 2; i++)
-			ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var6, pixelmon.posY + 1.3F + var8, pixelmon.posZ + (double) var7);
+			ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var6, pixelmon.posY + 1.3F + var8, pixelmon.posZ + (double) var7, pixelmon.getIsShiny());
 	}
 
 }

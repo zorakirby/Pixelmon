@@ -3,28 +3,18 @@ package pixelmon.gui;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.InventoryPlayer;
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-
 
 import org.lwjgl.input.Keyboard;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.comm.PixelmonMovesetDataPacket;
-import pixelmon.config.PixelmonItems;
-import pixelmon.items.ItemPokeBall;
-import pixelmon.items.PixelmonItem;
-import pixelmon.items.ItemEther;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class GuiMoveSelectForItem extends GuiScreen {
+public class GuiMoveSelectForItem extends GuiContainer {
 
 	private GuiAttackingBag parent;
 	private PixelmonDataPacket userPacket;
@@ -34,6 +24,7 @@ public class GuiMoveSelectForItem extends GuiScreen {
 	private Item item;
 
 	public GuiMoveSelectForItem(PixelmonDataPacket userPacket, GuiAttackingBag parent, Item item) {
+		super(new ContainerEmpty());
 		this.parent = parent;
 		this.userPacket = userPacket;
 		this.item = item;
@@ -70,13 +61,12 @@ public class GuiMoveSelectForItem extends GuiScreen {
 			}
 			int moveIndex = selected.getAttackIndex();
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.getParent().battleControllerIndex, moveIndex));
-			mc.displayGuiScreen(null);
-			mc.setIngameFocus();
+			mc.thePlayer.closeScreen();
 		}
 	}
 
 	@Override
-	public void drawScreen(int par1, int par2, float par3) {
+	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		drawDefaultBackground();
 		for (int i = 0; i < moveSlots.size(); i++) {
 			GuiItemMoveSlot bs = moveSlots.get(i);
@@ -89,7 +79,6 @@ public class GuiMoveSelectForItem extends GuiScreen {
 				fontRenderer.drawString(bs.getDisplay(), width / 2 - 50, height / 2 - 70 + i * 20, 0xffff00);
 			}
 		}
-		super.drawScreen(par1, par2, par3);
 	}
 
 	public void keyTyped(char i, int i1) {

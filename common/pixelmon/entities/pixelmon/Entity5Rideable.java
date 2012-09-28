@@ -1,27 +1,47 @@
 package pixelmon.entities.pixelmon;
 
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
+import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.EntityAnimal;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.World;
 
 public abstract class Entity5Rideable extends Entity4Textures {
 
 	private RidingHelper ridingHelper;
-	
+
 	public Entity5Rideable(World par1World) {
 		super(par1World);
 	}
-	
+
 	@Override
 	protected void init(String name) {
 		super.init(name);
 		if (baseStats.IsRideable && worldObj.isRemote)
-			ridingHelper = new RidingHelper((EntityPixelmon)this, worldObj);
+			ridingHelper = new RidingHelper((EntityPixelmon) this, worldObj);
 	}
+
 	@Override
 	public void jump() {
 		super.jump();
+	}
+
+	@Override
+	public boolean interact(EntityPlayer player) {
+		if (player instanceof EntityPlayerMP) {
+			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
+			if (itemstack == null) {
+				if (baseStats.IsRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon)this)) {
+					player.mountEntity(this);
+					return true;
+				}
+				return false;
+			}
+		}
+		return super.interact(player);
 	}
 
 	@Override

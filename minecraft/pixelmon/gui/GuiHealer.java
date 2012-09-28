@@ -1,26 +1,21 @@
 package pixelmon.gui;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-import pixelmon.Pixelmon;
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiContainer;
+import net.minecraft.src.StatCollector;
 import pixelmon.ServerStorageDisplay;
-import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.enums.EnumType;
-import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiScreen;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.ScaledResolution;
-import net.minecraft.src.StatCollector;
-
-public class GuiHealer extends GuiScreen {
+public class GuiHealer extends GuiContainer {
 
 	private boolean isHealing = false;
 	public ProgressBar[] progressBars;
 
 	public GuiHealer() {
+		super(new ContainerEmpty());
 		progressBars = new ProgressBar[6];
 		for (int i = 0; i < progressBars.length; i++)
 			progressBars[i] = new ProgressBar();
@@ -30,6 +25,7 @@ public class GuiHealer extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		int j = 0;
 		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
 			if (p != null) {
@@ -76,14 +72,15 @@ public class GuiHealer extends GuiScreen {
 	public void actionPerformed(GuiButton b) {
 		if (b.id == 0)
 			isHealing = true;
-		else
-			mc.displayGuiScreen(null);
+		else{
+				mc.thePlayer.closeScreen();
+			}
+		
 
 	}
 
-	public void drawScreen(int i, int i1, float f) {
+	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 		drawDefaultBackground();
-		super.drawScreen(i, i1, f);
 		drawCenteredString(fontRenderer, "Heal your pokemon?", width / 2, 10, 0xFFFFFF);
 
 		int j = 0;

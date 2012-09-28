@@ -5,25 +5,21 @@ import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiScreen;
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-
 import org.lwjgl.input.Keyboard;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.config.PixelmonItems;
-import pixelmon.items.ItemPokeBall;
-import pixelmon.items.PixelmonItem;
 import pixelmon.items.ItemEther;
+import pixelmon.items.PixelmonItem;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class GuiAttackingBag extends GuiScreen {
+public class GuiAttackingBag extends GuiContainer {
 
 	private GuiAttacking parent;
 	private PixelmonDataPacket userPacket;
@@ -32,6 +28,7 @@ public class GuiAttackingBag extends GuiScreen {
 	private GuiAttackingBagSlot selected;
 
 	public GuiAttackingBag(PixelmonDataPacket userPacket, GuiAttacking parent) {
+		super(new ContainerEmpty());
 		this.parent = parent;
 		this.userPacket = userPacket;
 		choiceSelected = false;
@@ -94,14 +91,13 @@ public class GuiAttackingBag extends GuiScreen {
 				mc.displayGuiScreen(new GuiMoveSelectForItem(userPacket, this, item));
 			} else {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, item.shiftedIndex, parent.battleControllerIndex,0));
-				mc.displayGuiScreen(null);
-				mc.setIngameFocus();
+				mc.thePlayer.closeScreen();
 			}
 		}
 	}
 
 	@Override
-	public void drawScreen(int par1, int par2, float par3) {
+	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		drawDefaultBackground();
 		for (int i = 0; i < bagSlots.size(); i++) {
 			GuiAttackingBagSlot bs = bagSlots.get(i);
@@ -114,7 +110,6 @@ public class GuiAttackingBag extends GuiScreen {
 				fontRenderer.drawString(bs.getName() + " : " + bs.getCount(), width / 2 - 50, height / 2 - 70 + i * 20, 0xffff00);
 			}
 		}
-		super.drawScreen(par1, par2, par3);
 	}
 
 	public GuiAttacking getParent(){

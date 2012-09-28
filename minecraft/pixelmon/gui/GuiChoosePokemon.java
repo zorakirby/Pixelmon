@@ -3,6 +3,7 @@ package pixelmon.gui;
 import java.util.ArrayList;
 
 import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.GuiScreen;
 
 import net.minecraft.src.NBTTagCompound;
@@ -18,7 +19,7 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.storage.PokeballManager;
 
-public class GuiChoosePokemon extends GuiScreen {
+public class GuiChoosePokemon extends GuiContainer {
 
 	private BattleController bc;
 	private GuiScreen parentGui;
@@ -26,6 +27,7 @@ public class GuiChoosePokemon extends GuiScreen {
 	int bcIndex;
 
 	public GuiChoosePokemon(PixelmonDataPacket userPacket, int bcIndex, GuiAttacking parentGui) {
+		super(new ContainerEmpty());
 		this.parentGui = parentGui;
 		this.userPacket = userPacket;
 		this.bcIndex = bcIndex;
@@ -33,6 +35,7 @@ public class GuiChoosePokemon extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
 		int i = 0;
@@ -56,7 +59,6 @@ public class GuiChoosePokemon extends GuiScreen {
 		if (par1GuiButton.id < 6) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwitchPokemon, par1GuiButton.id, bcIndex, 0));
 			mc.displayGuiScreen(parentGui);
-			mc.setIngameFocus();
 		} else
 			mc.displayGuiScreen(parentGui);
 	}
@@ -64,11 +66,13 @@ public class GuiChoosePokemon extends GuiScreen {
 	protected void mouseClicked(int par1, int par2, int par3) {
 		super.mouseClicked(par1, par2, par3);
 	}
+	
+	public void keyTyped(char i, int i1) {
+	}
 
-	public void drawScreen(int i, int i1, float f) {
+	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 
 		drawDefaultBackground();
-		super.drawScreen(i, i1, f);
 		drawCenteredString(fontRenderer, "Who do you want to send out?", width / 2, 10, 0xFFFFFF);
 	}
 }
