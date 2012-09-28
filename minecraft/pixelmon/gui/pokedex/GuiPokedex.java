@@ -55,6 +55,7 @@ public class GuiPokedex extends GuiContainer {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		left = (width - xSize) / 2;
 		top = (height - ySize) / 2;
 		controlList.clear();

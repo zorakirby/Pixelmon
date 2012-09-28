@@ -39,6 +39,7 @@ public class GuiAttacking extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
 		fontRenderer.FONT_HEIGHT = 10;

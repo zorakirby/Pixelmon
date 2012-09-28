@@ -20,6 +20,7 @@ public class GuiPokemonFaintedChoice extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
 		controlList.add(new GuiButton(10, width / 2 - 100, height / 2 - 20,

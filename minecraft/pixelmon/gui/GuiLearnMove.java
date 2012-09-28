@@ -26,6 +26,7 @@ public class GuiLearnMove extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		controlList.clear();
 
 		dataPacket = ServerStorageDisplay.get(pokemonId);

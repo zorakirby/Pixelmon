@@ -38,6 +38,7 @@ public class GuiPC extends GuiContainer {
 	}
 
 	public void initGui() {
+		super.initGui();
 		controlList.clear();
 		controlList.add(new GuiButton(0, width / 2 - 131, height / 6 + 60, 20, 20, "<-"));
 		controlList.add(new GuiButton(1, width / 2 - 91 + 205, height / 6 + 60, 20, 20, "->"));

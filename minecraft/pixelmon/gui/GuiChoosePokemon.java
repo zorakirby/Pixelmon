@@ -33,6 +33,7 @@ public class GuiChoosePokemon extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
 		int i = 0;

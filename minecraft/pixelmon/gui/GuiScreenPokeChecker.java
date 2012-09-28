@@ -22,6 +22,7 @@ public class GuiScreenPokeChecker extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		controlList.clear();
 		controlList.add(new GuiButton(0, width / 2 - 100, (int) (height * 0.8), StatCollector.translateToLocal("menu.returnToGame")));
 		String s = "";

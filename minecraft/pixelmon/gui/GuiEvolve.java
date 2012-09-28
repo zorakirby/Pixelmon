@@ -22,6 +22,7 @@ public class GuiEvolve extends GuiScreen
 	
 	public void initGui()
 	{
+		super.initGui();
 		controlList.clear();
 	}
 	

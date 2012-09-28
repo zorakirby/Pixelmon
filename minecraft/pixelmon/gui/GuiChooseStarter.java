@@ -28,6 +28,7 @@ public class GuiChooseStarter extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		controlList.clear();
 		for (int i = 0; i < starterList.length; i++) {
 			controlList.add(new GuiButton(i, width / 3 - 100, height / 6 + i * 20, starterList[i]));

@@ -22,6 +22,7 @@ public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 	}
 
 	public void initGui() {
+		super.initGui();
 		controlList.clear();
 		controlList.add(new GuiButton(0, width / 2 - 100, (int) (height * 0.8), "Back to PC"));
 	}
