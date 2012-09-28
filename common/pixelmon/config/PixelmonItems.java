@@ -289,7 +289,7 @@ public class PixelmonItems {
 		waterStoneShard = new PixelmonItem(waterStoneShardID).setItemName("WaterStoneShard").setIconIndex(23);
 		fireStoneShard = new PixelmonItem(fireStoneShardID).setItemName("FireStoneShard").setIconIndex(55);
 		luckyEgg = new ItemLuckyEgg(luckyEggID).setItemName("LuckyEgg").setIconIndex(11);
-		expShare = new ItemExpShare(expShareID).setItemName("ExpShare").setIconIndex(0);
+		expShare = new ItemExpShare(expShareID).setItemName("ExpShare").setIconIndex(27);
 		berryOran = new ItemBerryOran(berryOranID).setItemName("OranBerry").setIconIndex(9);
 		berryLeppa = new ItemBerryLeppa(berryLeppaID).setItemName("LeppaBerry").setIconIndex(25);
 		berryRawst = new ItemBerryRawst(berryRawstID).setItemName("RawstBerry").setIconIndex(41);
