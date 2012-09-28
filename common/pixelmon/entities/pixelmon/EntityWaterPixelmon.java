@@ -20,7 +20,7 @@ import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
 import pixelmon.entities.pixelmon.stats.BattleStats;
-import pixelmon.entities.pixelmon.stats.LevelHelper;
+import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.pixelmon.stats.IVStore;
 import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.entities.pixelmon.stats.Stats;

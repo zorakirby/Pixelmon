@@ -10,11 +10,13 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.helpers.*;
 import pixelmon.entities.pixelmon.stats.BaseStats;
-import pixelmon.entities.pixelmon.stats.LevelHelper;
+import pixelmon.entities.pixelmon.stats.FriendShip;
+import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.pixelmon.stats.IVStore;
 import pixelmon.entities.pixelmon.stats.Stats;
 import pixelmon.enums.EnumType;
 import pixelmon.storage.PixelmonStorage;
+import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EnumCreatureType;
 import net.minecraft.src.ModelBase;
@@ -23,10 +25,10 @@ import net.minecraft.src.World;
 
 public abstract class Entity3HasStats extends Entity2HasModel {
 
-	protected LevelHelper level;
+	protected Level level;
 	public Stats stats;
 	public BaseStats baseStats;
-	public FriendShipHelper friendship;
+	public FriendShip friendship;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public boolean doesHover = false;
 	public float hoverHeight = 0f;
@@ -36,7 +38,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super(par1World);
 		dataWatcher.addObject(14, (short) 1000); // scale
 		stats = new Stats();
-		level = new LevelHelper((EntityPixelmon) this);
+		level = new Level((EntityPixelmon) this);
 		dataWatcher.addObject(10, (short) 10); // MaxHP
 		dataWatcher.addObject(7, (short) health);
 	}
@@ -49,7 +51,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		setSize(baseStats.Width, baseStats.Height + hoverHeight);
 		setType();
 		length = baseStats.Length;
-		friendship = new FriendShipHelper((EntityPixelmon)this);
+		friendship = new FriendShip((EntityPixelmon)this);
 
 		if (rand.nextInt(100) < baseStats.MalePercent)
 			isMale = true;
@@ -65,7 +67,20 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			setEntityHealth(stats.HP);
 		}
 	}
+	
+	@Override
+	public void onDeath(DamageSource par1DamageSource) {
+		if (getOwner()!=null) friendship.onFaint();
+		super.onDeath(par1DamageSource);
+	}
 
+	@Override
+	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
+		if (par1DamageSource.getSourceOfDamage() == getOwner())
+			friendship.hurtByOwner();
+		return super.attackEntityFrom(par1DamageSource, par2);
+	}
+	
 	private void setType() {
 		type.add(baseStats.Type1);
 		if (baseStats.Type2 != EnumType.Mystery)
@@ -190,10 +205,16 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		updateHealth();
 	}
 
-	public LevelHelper getLvl() {
+	public Level getLvl() {
 		return level;
 	}
 
+	@Override
+	public void onUpdate() {
+		if (getOwner()!=null) friendship.tick();
+		super.onUpdate();
+	}
+	
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);

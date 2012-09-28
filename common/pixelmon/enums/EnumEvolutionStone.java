@@ -18,4 +18,10 @@ public enum EnumEvolutionStone {
 		return null;
 	}
 
+	public static boolean isEvolutionStone(String name) {
+		for (EnumEvolutionStone e: values())
+			if (e.toString().equalsIgnoreCase(name)) return true;
+		return false;
+	}
+
 }

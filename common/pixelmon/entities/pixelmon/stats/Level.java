@@ -6,10 +6,14 @@ import pixelmon.Pixelmon;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
+import pixelmon.database.DatabaseStats;
+import pixelmon.database.EvolutionInfo;
 import pixelmon.database.ExperienceGroup;
+import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
+import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 
@@ -20,12 +24,12 @@ import net.minecraft.src.EntityPlayerMP;
 
 import net.minecraft.src.NBTTagCompound;
 
-public class LevelHelper {
+public class Level {
 
 	private EntityPixelmon pixelmon;
 	private int baseLevel = 0;
 
-	public LevelHelper(EntityPixelmon p) {
+	public Level(EntityPixelmon p) {
 		this.pixelmon = p;
 		pixelmon.getDataWatcher().addObject(9, (short) -1); // Level
 		pixelmon.getDataWatcher().addObject(11, (short) 0); // Experience
@@ -67,7 +71,7 @@ public class LevelHelper {
 			float oldHealth = pixelmon.getHealth();
 			updateStats();
 			float newHealth = pixelmon.stats.HP;
-			if (oldHp!=0) 
+			if (oldHp != 0)
 				newHealth = oldHealth / oldHp * pixelmon.stats.HP;
 			pixelmon.setEntityHealth((int) Math.ceil(newHealth));
 		}
@@ -142,11 +146,15 @@ public class LevelHelper {
 		}
 		String name = pixelmon.getName();
 
+		if (pixelmon.getOwner() != null)
+			pixelmon.friendship.onLevelUp();
+
 		if (DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
 			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
 			for (Attack a : newAttacks) {
 				if (pixelmon.moveset.size() >= 4) {
-					((EntityPlayer) pixelmon.getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj, pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
+					((EntityPlayer) pixelmon.getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj,
+							pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
 				} else {
 					pixelmon.moveset.add(a);
 					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
@@ -171,6 +179,23 @@ public class LevelHelper {
 			onLevelUp();
 			if (getLevel() >= pixelmon.baseStats.EvolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.EvolveInto);
+			}
+			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
+				if (e.mode == InfoMode.friendship) {
+					boolean evolves = true;
+					if (e.extraParam!=null)
+					{
+						if (e.extraParam.equalsIgnoreCase("day") && !pixelmon.worldObj.isDaytime()) evolves = false;
+						else if (e.extraParam.equalsIgnoreCase("night") && pixelmon.worldObj.isDaytime()) evolves = false;
+					}
+					if (evolves)
+						pixelmon.evolve(e.pokemonName);
+				}
+				else if (e.mode == InfoMode.biome){
+					if (pixelmon.worldObj.getBiomeGenForCoords((int)pixelmon.posX, (int)pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome())
+						pixelmon.evolve(e.pokemonName);
+					
+				}
 			}
 			if (!canLevelUp())
 				return;

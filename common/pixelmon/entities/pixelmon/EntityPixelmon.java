@@ -20,7 +20,7 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
 import pixelmon.database.*;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
-import pixelmon.entities.pixelmon.stats.LevelHelper;
+import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumType;
@@ -78,7 +78,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 				setEntityHealth(0);
 				catchInPokeball();
 			} else {
-				super.onDeath(damagesource);
 				this.setDead();
 			}
 		}

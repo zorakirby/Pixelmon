@@ -71,7 +71,7 @@ public class DatabaseHelper {
 			
 			
 			Class.forName("org.sqlite.JDBC");
-			Connection c = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/Pixelmon.db");
+			Connection c = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
 			if(c == null)
 			{
 				return false;

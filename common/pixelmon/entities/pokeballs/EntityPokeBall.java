@@ -393,6 +393,7 @@ public class EntityPokeBall extends EntityThrowable {
 				p.clearAttackTarget();
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).addToParty(p);
 				p.catchInPokeball();
+				p.friendship.initFromCapture();
 				setIsWaiting(false);
 				setDead();
 			}
@@ -426,7 +427,8 @@ public class EntityPokeBall extends EntityThrowable {
 	private void catchPokemon() {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-
+			
+			
 			spawnCaptureParticles();
 			setIsCaptured(true);
 			waitTime = 0;

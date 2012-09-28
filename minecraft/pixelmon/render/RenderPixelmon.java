@@ -20,7 +20,7 @@ import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.stats.LevelHelper;
+import pixelmon.entities.pixelmon.stats.Level;
 
 public class RenderPixelmon extends RenderLiving {
 	public RenderPixelmon(float par2) { // par2 = shadow size

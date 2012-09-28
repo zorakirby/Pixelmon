@@ -32,6 +32,7 @@ public class ChooseStarter extends PacketHandlerBase {
 		p.setEntityHealth(p.stats.HP);
 		p.loadMoveset();
 		p.caughtBall = EnumPokeballs.MasterBall;
+		p.friendship.initFromCapture();
 		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).addToParty(p);
 	}
 
