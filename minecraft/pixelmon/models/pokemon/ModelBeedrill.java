@@ -640,10 +640,14 @@ public class ModelBeedrill extends ModelBase
     {
       super.setRotationAngles(f, f1, f2, f3, f4, f5);
       Beedrill.rotationPointY = MathHelper.cos(.5F * f2)*5F - 50F;
-      LWT.rotateAngleY = MathHelper.cos(.2F*f2) * .5F - .4F;
-      LWB.rotateAngleY = MathHelper.cos(.2F*f2) * .5F - .4F;
-      RWT.rotateAngleY = MathHelper.cos(.2F*f2 + (float)Math.PI) * .5F + .4F;
-      RWB.rotateAngleY = MathHelper.cos(.2F*f2 + (float)Math.PI) * .5F + 3.4F;
+      LWT.rotateAngleY = MathHelper.cos(3.2F*f2) * .5F - .4F;
+      LWB.rotateAngleY = MathHelper.cos(3.5F*f2) * .5F - .6F;
+      RWT.rotateAngleY = MathHelper.cos(3.5F*f2 + (float)Math.PI) * .5F + .4F;
+      RWB.rotateAngleY = MathHelper.cos(3.5F*f2 + (float)Math.PI) * .5F + 3.6F;
+      HeadBase.rotateAngleX = f4 / 57.29578F;
+      HeadBase.rotateAngleY = f3 / 57.29578F;
+      ArmL.rotateAngleZ = MathHelper.cos(.5F*f2) * .5F;
+      ArmR.rotateAngleZ = MathHelper.cos(.5F*f2 + (float)Math.PI) * .5F;
       
     }
 
