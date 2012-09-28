@@ -34,6 +34,9 @@ public class GuiPokemonFaintedChoice extends GuiContainer {
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
 	}
+	
+	public void keyTyped(char i, int i1) {
+	}
 
 	protected void actionPerformed(GuiButton par1GuiButton) {
 		if (par1GuiButton.id == 0) {
