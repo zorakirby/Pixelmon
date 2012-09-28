@@ -646,8 +646,9 @@ public class ModelBeedrill extends ModelBase
       RWB.rotateAngleY = MathHelper.cos(3.5F*f2 + (float)Math.PI) * .5F + 3.6F;
       HeadBase.rotateAngleX = f4 / 57.29578F;
       HeadBase.rotateAngleY = f3 / 57.29578F;
-      ArmL.rotateAngleZ = MathHelper.cos(.5F*f2) * .5F;
-      ArmR.rotateAngleZ = MathHelper.cos(.5F*f2 + (float)Math.PI) * .5F;
+      ArmL.rotateAngleZ = MathHelper.cos(.5F*f2 + (float)Math.PI) * .2F + .3F;
+      ArmR.rotateAngleZ = MathHelper.cos(.5F*f2 + .3F) * .2F - .3F;
+      StingerBase.rotateAngleX = MathHelper.cos(.5F * f2 + (float)Math.PI + .3F)*.1F;
       
     }
 
