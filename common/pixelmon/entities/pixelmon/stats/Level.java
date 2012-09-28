@@ -181,7 +181,7 @@ public class Level {
 				pixelmon.evolve(pixelmon.baseStats.EvolveInto);
 			}
 			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
-				if (e.mode == InfoMode.friendship) {
+				if (e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
 					boolean evolves = true;
 					if (e.extraParam!=null)
 					{
