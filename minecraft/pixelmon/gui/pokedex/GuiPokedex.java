@@ -55,6 +55,7 @@ public class GuiPokedex extends GuiContainer {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		left = (width - xSize) / 2;
 		top = (height - ySize) / 2;
 		controlList.clear();
@@ -65,8 +66,7 @@ public class GuiPokedex extends GuiContainer {
 	int mouseX, mouseY;
 	float mfloat;
 
-	public void drawScreen(int par1, int par2, float par3) {
-		super.drawScreen(par1, par2, par3);
+	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		left = (width - xSize) / 2;
 		top = (height - ySize) / 2;
 		mouseX = par1;
@@ -134,11 +134,6 @@ public class GuiPokedex extends GuiContainer {
 	protected void drawModelToScreen(float size, int xPos, int yPos) {
 		GraphicsHelper.drawModelToScreen(size, xSize, ySize, xPos, yPos,
 				selectedEntity, this, true);
-	}
-
-	protected void drawGuiContainerBackgroundLayer(float var1, int var2,
-			int var3) {
-
 	}
 
 	protected void drawGuiContainerForegroundLayer() {

@@ -25,6 +25,7 @@ public class GuiHealer extends GuiContainer {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		int j = 0;
 		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
 			if (p != null) {

@@ -38,6 +38,7 @@ public class GuiPC extends GuiContainer {
 	}
 
 	public void initGui() {
+		super.initGui();
 		controlList.clear();
 		controlList.add(new GuiButton(0, width / 2 - 131, height / 6 + 60, 20, 20, "<-"));
 		controlList.add(new GuiButton(1, width / 2 - 91 + 205, height / 6 + 60, 20, 20, "->"));
@@ -202,10 +203,6 @@ public class GuiPC extends GuiContainer {
 	protected void mouseMovedOrUp(int par1, int par2, int par3) {
 		super.mouseMovedOrUp(par1, par2, par3);
 		mouseSlot.setXandY(par1 - 15, par2 - 15);
-	}
-
-	public void drawScreen(int var1, int var2, float var3) {
-		super.drawScreen(var1, var2, var3);
 	}
 
 	public void onGuiClosed() {

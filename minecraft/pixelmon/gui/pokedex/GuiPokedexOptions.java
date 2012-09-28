@@ -2,19 +2,23 @@ package pixelmon.gui.pokedex;
 
 import java.util.ArrayList;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiContainer;
+import net.minecraft.src.GuiScreen;
+
 import org.lwjgl.input.Keyboard;
 
 import pixelmon.config.PixelmonConfig;
+import pixelmon.gui.ContainerEmpty;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
-
-public class GuiPokedexOptions extends GuiScreen {
+public class GuiPokedexOptions extends GuiContainer {
 
 	private GuiScreen parentScreen;
 	private ArrayList<GuiButton> buttonList = new ArrayList<GuiButton>();
 
 	public GuiPokedexOptions(GuiScreen gui) {
+		super(new ContainerEmpty());
 		mc = Minecraft.getMinecraft();
 		parentScreen = gui;
 		for (EnumPokedexButtons e : EnumPokedexButtons.allButtons)
@@ -23,14 +27,14 @@ public class GuiPokedexOptions extends GuiScreen {
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		controlList.clear();
 		controlList.add(new GuiButton(0, width / 2 - 100, height - 25, "Done"));
 		controlList.addAll(buttonList);
 	}
 
-	public void drawScreen(int x, int y, float f) {
+	public void drawGuiContainerBackgroundLayer(float f, int x, int y) {
 		drawDefaultBackground();
-		super.drawScreen(x, y, f);
 		String s = "Pokedex Options";
 		fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, 10, 0xFFFFFF);
 	}

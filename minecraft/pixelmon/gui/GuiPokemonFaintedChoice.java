@@ -1,25 +1,27 @@
 package pixelmon.gui;
 
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiScreen;
+import net.minecraft.src.GuiContainer;
 
 import org.lwjgl.input.Keyboard;
 
 import pixelmon.battles.BattleController;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
-public class GuiPokemonFaintedChoice extends GuiScreen {
+public class GuiPokemonFaintedChoice extends GuiContainer {
 
 	private EntityPixelmon mypixelmon;
 	private BattleController bc;
 
 	public GuiPokemonFaintedChoice(BattleController bc, EntityPixelmon entity) {
+		super(new ContainerEmpty());
 		mypixelmon = entity;
 		this.bc = bc;
 	}
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
+		super.initGui();
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
 		controlList.add(new GuiButton(10, width / 2 - 100, height / 2 - 20,
@@ -31,6 +33,9 @@ public class GuiPokemonFaintedChoice extends GuiScreen {
 
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
+	}
+	
+	public void keyTyped(char i, int i1) {
 	}
 
 	protected void actionPerformed(GuiButton par1GuiButton) {
@@ -47,10 +52,9 @@ public class GuiPokemonFaintedChoice extends GuiScreen {
 		super.mouseClicked(par1, par2, par3);
 	}
 
-	public void drawScreen(int i, int i1, float f) {
+	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 
 		drawDefaultBackground();
-		super.drawScreen(i, i1, f);
 		drawCenteredString(fontRenderer, mypixelmon.getName()
 				+ "can no longer fight", width / 2, 10, 0xFFFFFF);
 	}
