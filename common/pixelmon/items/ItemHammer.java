@@ -35,11 +35,11 @@ public class ItemHammer extends ItemTool {
 
 		return true;
 	}
-	
+
 	@Override
 	public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player) {
-		if (player.worldObj.getBlockId(X, Y, Z) == PixelmonBlocks.anvilId){
-			((TileEntityAnvil)player.worldObj.getBlockTileEntity(X, Y, Z)).blockHit();
+		if (player.worldObj.getBlockId(X, Y, Z) == PixelmonBlocks.anvilId) {
+			((TileEntityAnvil) player.worldObj.getBlockTileEntity(X, Y, Z)).blockHit((int)getStrVsBlock(null, PixelmonBlocks.anvil));
 			return true;
 		}
 		return super.onBlockStartBreak(itemstack, X, Y, Z, player);
@@ -50,7 +50,21 @@ public class ItemHammer extends ItemTool {
 	 * (Quality+1)*2 if correct blocktype, 1.5F if sword
 	 */
 	public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block) {
-		return 0;
+		if (par2Block == PixelmonBlocks.anvil){
+			if (toolMaterial == EnumToolMaterial.WOOD)
+				return 1;
+			else if (toolMaterial == EnumToolMaterial.STONE)
+				return 2;
+			else if (toolMaterial == EnumToolMaterial.IRON)
+				return 3;
+			else if (toolMaterial == EnumToolMaterial.GOLD)
+				return 4;
+			else if (toolMaterial == EnumToolMaterial.EMERALD)
+				return 5;
+			
+ 
+		}
+		return 1;
 	}
 
 }

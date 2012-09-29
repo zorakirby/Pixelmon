@@ -32,8 +32,8 @@ import net.minecraft.src.WorldServer;
 public class BlockAnvil extends BlockContainer {
 
 	public BlockAnvil(int i) {
-		super(i, Material.iron);
-		setHardness(4f);
+		super(i, Material.wood);
+		setHardness(1f);
 	}
 
 	/**

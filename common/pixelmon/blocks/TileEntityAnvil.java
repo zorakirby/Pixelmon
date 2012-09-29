@@ -47,12 +47,12 @@ public class TileEntityAnvil extends TileEntity {
 
 	int count = 0;
 
-	public void blockHit() {
+	public void blockHit(int f) {
 		if (itemOnAnvil != -1) {
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemOnAnvil);
 			if (item instanceof ItemPokeballDisc || item == PixelmonItemsPokeballs.ironDisc) {
-				count++;
-				if (count == 4) {
+				count += f;
+				if (count >= 16) {
 					count = 0;
 					state++;
 					if (state == 3) {
