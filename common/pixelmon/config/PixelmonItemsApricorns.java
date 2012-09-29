@@ -93,7 +93,7 @@ public class PixelmonItemsApricorns {
 	public static void addNames() {
 		PixelmonItemsPokeballs.addNames();
 		try {
-			for (Field field : PixelmonItems.class.getFields()) {
+			for (Field field : PixelmonItemsApricorns.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					LanguageRegistry.addName(item, field.getAnnotation(Mod.Item.class).name());
