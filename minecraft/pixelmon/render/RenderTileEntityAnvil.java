@@ -56,9 +56,9 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		if (tile.itemOnAnvil != -1) {
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
 			if (itemToRender instanceof ItemPokeballDisc) {
-				
+				bindTextureByName(((ItemPokeballDisc)itemToRender).pokeball.getTexture());
 			} else if (itemToRender instanceof ItemPokeballLid) {
-				
+				bindTextureByName(((ItemPokeballLid)itemToRender).pokeball.getTexture());
 			}
 		}
 		GL11.glPopMatrix(); // end

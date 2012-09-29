@@ -5,7 +5,7 @@ import pixelmon.enums.EnumPokeballs;
 
 public class ItemPokeballLid extends PixelmonItem {
 
-	private EnumPokeballs pokeball;
+	public EnumPokeballs pokeball;
 
 	public ItemPokeballLid(int id, EnumPokeballs pokeball) {
 		super(id);

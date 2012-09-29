@@ -5,7 +5,7 @@ import net.minecraft.src.CreativeTabs;
 
 public class ItemPokeballDisc extends PixelmonItem {
 
-	private EnumPokeballs pokeball;
+	public EnumPokeballs pokeball;
 
 	public ItemPokeballDisc(int id, EnumPokeballs pokeball) {
 		super(id);
