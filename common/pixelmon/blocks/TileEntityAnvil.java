@@ -1,6 +1,7 @@
 package pixelmon.blocks;
 
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet132TileEntityData;
 import net.minecraft.src.TileEntity;
@@ -29,5 +30,10 @@ public class TileEntityAnvil extends TileEntity {
 		NBTTagCompound var1 = new NBTTagCompound();
 		this.writeToNBT(var1);
 		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, var1);
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, Packet132TileEntityData pkt) {
+		readFromNBT(pkt.customParam1);
 	}
 }

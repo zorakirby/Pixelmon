@@ -27,6 +27,7 @@ import net.minecraft.src.Material;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import net.minecraft.src.WorldServer;
 
 public class BlockAnvil extends BlockContainer {
 
@@ -105,8 +106,10 @@ public class BlockAnvil extends BlockContainer {
 		if (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc) {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
+			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 			return true;
 		}
+		((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 		return false;
 	}
 
