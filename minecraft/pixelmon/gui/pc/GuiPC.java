@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.RenderHelper;
 import net.minecraft.src.Tessellator;
 
 import org.lwjgl.opengl.GL11;
@@ -261,6 +262,10 @@ public class GuiPC extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
 		int w = width;
 		int h = height;
+		
+		RenderHelper.disableStandardItemLighting();
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		
 		int partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcPartyBox.png");
 		Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
 		drawTexturedModalRect(width / 2 - 91, height / 6 + 151, 0, 0, 182, 29);
