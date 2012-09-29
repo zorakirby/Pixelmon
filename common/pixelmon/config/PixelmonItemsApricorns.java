@@ -2,6 +2,7 @@ package pixelmon.config;
 
 import java.lang.reflect.Field;
 
+import pixelmon.enums.EnumApricornTrees;
 import pixelmon.enums.EnumApricorns;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.items.ItemApricorn;
@@ -110,6 +111,22 @@ public class PixelmonItemsApricorns {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemApricornCooked)
 						if (((ItemApricornCooked) item).apricorn == type)
+							return item;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Item getApricorn(EnumApricorns type) {
+		try {
+			for (Field field : PixelmonItemsApricorns.class.getFields()) {
+				if (field.isAnnotationPresent(Mod.Item.class)) {
+					Item item = (Item) field.get(null);
+					if (item instanceof ItemApricorn)
+						if (((ItemApricorn) item).apricorn == type)
 							return item;
 				}
 			}

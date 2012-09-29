@@ -1,5 +1,6 @@
 package pixelmon.config;
 
+import pixelmon.enums.EnumApricorns;
 import pixelmon.enums.EnumPokeballs;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.src.Block;
@@ -38,13 +39,9 @@ public class PixelmonRecipes {
 				new Object[] { "DPD", "DGD", "DRD", Character.valueOf('D'), Item.diamond, Character.valueOf('P'), Block.thinGlass, Character.valueOf('G'),
 						Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
 
-		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornBlack.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornBlackCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornWhite.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornWhiteCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornGreen.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornGreenCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornPink.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornPinkCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornBlue.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornBlueCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornYellow.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornYellowCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornRed.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornRedCooked, 1), 1);
+		for (EnumApricorns a: EnumApricorns.values()){
+			GameRegistry.addSmelting(PixelmonItemsApricorns.getApricorn(a).shiftedIndex, new ItemStack(PixelmonItemsApricorns.getCookedApricorn(a), 1), 1);
+		}
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ironDisc, 5), new Object[] { "XXX", Character.valueOf('X'), Item.ingotIron });
 

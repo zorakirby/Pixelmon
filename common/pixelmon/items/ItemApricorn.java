@@ -12,7 +12,7 @@ import pixelmon.config.PixelmonBlocksApricornTrees;
 import pixelmon.enums.EnumApricorns;
 
 public class ItemApricorn extends PixelmonItem {
-	EnumApricorns apricorn;
+	public EnumApricorns apricorn;
 
 	public ItemApricorn(int id, EnumApricorns apricorn) {
 		super(id);
