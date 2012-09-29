@@ -165,6 +165,8 @@ public class Level {
 	}
 
 	public void awardEXP(int i) {
+		if (!pixelmon.doesLevel)
+			return;
 		setExp(getExp() + i);
 		if ((pixelmon.getOwner() != null) && getLevel() != 100)
 			if (pixelmon.getOwner() != null)
@@ -183,18 +185,18 @@ public class Level {
 			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
 				if (e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
 					boolean evolves = true;
-					if (e.extraParam!=null)
-					{
-						if (e.extraParam.equalsIgnoreCase("day") && !pixelmon.worldObj.isDaytime()) evolves = false;
-						else if (e.extraParam.equalsIgnoreCase("night") && pixelmon.worldObj.isDaytime()) evolves = false;
+					if (e.extraParam != null) {
+						if (e.extraParam.equalsIgnoreCase("day") && !pixelmon.worldObj.isDaytime())
+							evolves = false;
+						else if (e.extraParam.equalsIgnoreCase("night") && pixelmon.worldObj.isDaytime())
+							evolves = false;
 					}
 					if (evolves)
 						pixelmon.evolve(e.pokemonName);
-				}
-				else if (e.mode == InfoMode.biome){
-					if (pixelmon.worldObj.getBiomeGenForCoords((int)pixelmon.posX, (int)pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome())
+				} else if (e.mode == InfoMode.biome) {
+					if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome())
 						pixelmon.evolve(e.pokemonName);
-					
+
 				}
 			}
 			if (!canLevelUp())
