@@ -81,6 +81,7 @@ public enum EnumPokemon {
 	Squirtle("Squirtle", ClassType.Pixelmon),
 	Staryu("Staryu", ClassType.WaterPixelmon),
 	Starmie("Starmie", ClassType.WaterPixelmon),
+	Swinub("Swinub", ClassType.Pixelmon),
 	Tentacool("Tentacool", ClassType.WaterPixelmon),
 	Trapinch("Trapinch", ClassType.Pixelmon),
 	Umbreon("Umbreon", ClassType.Pixelmon),
