@@ -47,7 +47,8 @@ public class TileEntityAnvil extends TileEntity {
 
 	int count = 0;
 
-	public void blockHit(int f) {
+	public boolean blockHit(int f) {
+		boolean returnVal = false;
 		if (itemOnAnvil != -1) {
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemOnAnvil);
 			if (item instanceof ItemPokeballDisc || item == PixelmonItemsPokeballs.ironDisc) {
@@ -55,6 +56,7 @@ public class TileEntityAnvil extends TileEntity {
 				if (count >= 16) {
 					count = 0;
 					state++;
+					returnVal = true;
 					if (state == 3) {
 						state = 0;
 						if (item == PixelmonItemsPokeballs.ironDisc)
@@ -65,5 +67,6 @@ public class TileEntityAnvil extends TileEntity {
 				}
 			}
 		}
+		return returnVal;
 	}
 }

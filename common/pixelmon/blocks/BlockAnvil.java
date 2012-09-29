@@ -106,6 +106,7 @@ public class BlockAnvil extends BlockContainer {
 
 			world.spawnEntityInWorld(var3);
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
+			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).state = 0;
 		}
 		if (player.getCurrentEquippedItem() != null
 				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc || player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc)) {
