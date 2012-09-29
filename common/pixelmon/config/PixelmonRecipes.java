@@ -39,20 +39,22 @@ public class PixelmonRecipes {
 				new Object[] { "DPD", "DGD", "DRD", Character.valueOf('D'), Item.diamond, Character.valueOf('P'), Block.thinGlass, Character.valueOf('G'),
 						Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
 
-		for (EnumApricorns a: EnumApricorns.values()){
+		for (EnumApricorns a : EnumApricorns.values()) {
 			GameRegistry.addSmelting(PixelmonItemsApricorns.getApricorn(a).shiftedIndex, new ItemStack(PixelmonItemsApricorns.getCookedApricorn(a), 1), 1);
 		}
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ironDisc, 5), new Object[] { "XXX", Character.valueOf('X'), Item.ingotIron });
 
-		for (EnumPokeballs p: EnumPokeballs.values()){
-			if (p != EnumPokeballs.MasterBall)
-				GameRegistry.addRecipe(new ItemStack(p.getDisc(), p.quantityMade), new Object[] { "XYZ", 
-					Character.valueOf('X'), PixelmonItemsApricorns.getCookedApricorn(p.recipe[0]), 
-					Character.valueOf('Y'), PixelmonItemsApricorns.getCookedApricorn(p.recipe[1]), 
-					Character.valueOf('Z'), PixelmonItemsApricorns.getCookedApricorn(p.recipe[2])});
-					
+		for (EnumPokeballs p : EnumPokeballs.values()) {
+			if (p != EnumPokeballs.MasterBall) {
+				GameRegistry.addRecipe(
+						new ItemStack(p.getDisc(), p.quantityMade),
+						new Object[] { "XYZ", Character.valueOf('X'), PixelmonItemsApricorns.getCookedApricorn(p.recipe[0]), Character.valueOf('Y'),
+								PixelmonItemsApricorns.getCookedApricorn(p.recipe[1]), Character.valueOf('Z'),
+								PixelmonItemsApricorns.getCookedApricorn(p.recipe[2]) });
+
 				GameRegistry.addShapelessRecipe(new ItemStack(p.getItem(), 1), new Object[] { Block.button, PixelmonItemsPokeballs.ironBase, p.getLid() });
+			}
 		}
 	}
 }
