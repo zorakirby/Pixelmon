@@ -66,13 +66,20 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		model.renderModel(tile, 0.0625F); // renders and yes 0.0625 is a random
 											// number
 		if (tile.itemOnAnvil != -1) {
+			GL11.glTranslatef((float) 0, (float) 0.03F, (float) 0); // size
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
 			if (itemToRender instanceof ItemPokeballDisc) {
 				bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture());
-				modelDiscFlat.renderModel(0.0625f);
+				if (tile.state == 0)
+					modelDiscFlat.renderModel(0.0625f);
+				else if (tile.state == 1)
+					modelDiscStage1.renderModel(0.0625f);
+				else if (tile.state == 2)
+					modelDiscStage2.renderModel(0.0625f);
 
 			} else if (itemToRender instanceof ItemPokeballLid) {
 				bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
+				modelDiscHemiSphere.renderModel(0.0625f);
 			}
 		}
 		GL11.glPopMatrix(); // end

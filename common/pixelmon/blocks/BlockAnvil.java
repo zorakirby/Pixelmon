@@ -33,7 +33,7 @@ public class BlockAnvil extends BlockContainer {
 
 	public BlockAnvil(int i) {
 		super(i, Material.iron);
-		setHardness(2.5f);
+		setHardness(4f);
 	}
 
 	/**
@@ -96,6 +96,10 @@ public class BlockAnvil extends BlockContainer {
 		if (((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil != -1) {
 			int itemId = ((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil;
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
+			if (item == null) {
+				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
+				return true;
+			}
 			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 
 			var3.delayBeforeCanPickup = 10;
@@ -103,7 +107,7 @@ public class BlockAnvil extends BlockContainer {
 			world.spawnEntityInWorld(var3);
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
 		}
-		if (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc) {
+		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc) {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
 			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);

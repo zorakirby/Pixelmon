@@ -1,9 +1,11 @@
 package pixelmon.items;
 
+import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.config.PixelmonBlocks;
 import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityLiving;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EnumToolMaterial;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ItemTool;
@@ -32,6 +34,15 @@ public class ItemHammer extends ItemTool {
 		}
 
 		return true;
+	}
+	
+	@Override
+	public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player) {
+		if (player.worldObj.getBlockId(X, Y, Z) == PixelmonBlocks.anvilId){
+			((TileEntityAnvil)player.worldObj.getBlockTileEntity(X, Y, Z)).blockHit();
+			return true;
+		}
+		return super.onBlockStartBreak(itemstack, X, Y, Z, player);
 	}
 
 	/**
