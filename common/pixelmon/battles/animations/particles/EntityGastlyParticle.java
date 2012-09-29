@@ -24,7 +24,7 @@ public class EntityGastlyParticle extends EntityFX
         this.particleScale *= .5F;
         this.particleScale *= var14;
         this.field_70569_a = this.particleScale;
-        this.particleMaxAge = (int)(8.0D / (Math.random() * 0.8D + 0.3D));
+        this.particleMaxAge = (int)(2.0D / (Math.random() * 0.8D + 0.3D));
         this.particleMaxAge = (int)((float)this.particleMaxAge * var14);
         this.noClip = false;
         if (isShiny){
