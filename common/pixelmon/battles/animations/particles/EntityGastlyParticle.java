@@ -8,7 +8,7 @@ public class EntityGastlyParticle extends EntityFX
 {
     float field_70569_a;
 
-    public EntityGastlyParticle(World par1World, double par2, double par4, double par6, double par8, double par10, double par12)
+    public EntityGastlyParticle(World par1World, double par2, double par4, double par6, double par8, double par10, double par12, boolean isShiny)
     {
         super(par1World, par2, par4, par6, 0.0D, 0.0D, 0.0D);
         float var14 = 3F;

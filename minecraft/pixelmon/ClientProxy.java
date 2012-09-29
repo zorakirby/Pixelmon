@@ -90,7 +90,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preloadTextures() {
-		for (EnumPokemon pokemon: EnumPokemon.values())
+		for (EnumPokemon pokemon : EnumPokemon.values())
 			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + pokemon.name.toLowerCase() + ".png");
 	}
 
@@ -174,16 +174,20 @@ public class ClientProxy extends CommonProxy {
 		PixelmonServerStore.clearList();
 	}
 
-	public static void spawnParticle(EnumPixelmonParticles particle, World worldObj, double posX, double posY, double posZ) {
+	public static void spawnParticle(EnumPixelmonParticles particle, World worldObj, double posX, double posY, double posZ, boolean isShiny) {
 		try {
-			EntityFX fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class).newInstance(worldObj, posX,
-					posY, posZ, 0d, 0d, 0d);
+			EntityFX fx;
+			if (particle.particleClass == EntityGastlyParticle.class)
+				fx = new EntityGastlyParticle(worldObj, posX, posY, posZ, 0, 0, 0, isShiny);
+			else
+				fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class,
+						double.class).newInstance(worldObj, posX, posY, posZ, 0d, 0d, 0d);
 			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public int getTexture(String string, String string2) {
 		return RenderingRegistry.addTextureOverride(string, string2);

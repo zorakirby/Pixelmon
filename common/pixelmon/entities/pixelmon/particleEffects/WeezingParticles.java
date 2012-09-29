@@ -33,7 +33,7 @@ public class WeezingParticles extends ParticleEffects {
 		}
 		count--;
 		if (particlesOn)
-			ClientProxy.spawnParticle(EnumPixelmonParticles.koffing, pixelmon.worldObj, pixelmon.posX + (double) var6, pixelmon.posY + pixelmon.hoverTimer + 2.5F, pixelmon.posZ + (double) var7);
+			ClientProxy.spawnParticle(EnumPixelmonParticles.koffing, pixelmon.worldObj, pixelmon.posX + (double) var6, pixelmon.posY + pixelmon.hoverTimer + 2.5F, pixelmon.posZ + (double) var7, pixelmon.getIsShiny());
 	}
 
 }
