@@ -96,6 +96,13 @@ public class ModelGastly extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    Body1.rotationPointY = MathHelper.cos(.2F*f2) * 1F + 1F;
+    body2.rotationPointY = MathHelper.cos(.2F*f2) * 1F + 1F;
+    body3.rotationPointY = MathHelper.cos(.2F*f2) * 1F + 1F;
+    body4.rotationPointY = MathHelper.cos(.2F*f2) * 1F + 1F;
+    righteye.rotationPointY = MathHelper.cos(.2F*f2) * 1F + 2.7F;
+    lefteye.rotationPointY = MathHelper.cos(.2F*f2) * 1F + 2.7F;
+    Mouth.rotationPointY = MathHelper.cos(.2F*f2) * 1F + 1F;
   }
 
 }
