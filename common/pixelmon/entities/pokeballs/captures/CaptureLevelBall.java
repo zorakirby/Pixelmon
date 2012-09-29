@@ -1,10 +1,11 @@
-package pixelmon.entities.pokeballs;
+package pixelmon.entities.pokeballs.captures;
 
 import net.minecraft.src.EntityPlayer;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
 import pixelmon.enums.EnumPokeballs;
 

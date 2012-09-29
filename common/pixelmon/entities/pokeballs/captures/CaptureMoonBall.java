@@ -1,9 +1,10 @@
-package pixelmon.entities.pokeballs;
+package pixelmon.entities.pokeballs.captures;
 
 import net.minecraft.src.EntityPlayer;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPokeballs;

@@ -272,7 +272,7 @@ public class PixelmonItems {
 		apricornGreenID = cfg.getOrCreateIntProperty("Green Apricorn", "item", 10103).getInt();
 		apricornBlueID = cfg.getOrCreateIntProperty("Blue Apricorn", "item", 10104).getInt();
 		apricornYellowID = cfg.getOrCreateIntProperty("Yellow Apricorn", "item", 10105).getInt();
-		apricornRedCookedID = cfg.getOrCreateIntProperty("Red Apricorn", "item", 10106).getInt();
+		apricornRedID = cfg.getOrCreateIntProperty("Red Apricorn", "item", 10106).getInt();
 		apricornBlackCookedID = cfg.getOrCreateIntProperty("Cooked Black Apricorn", "item", 10112).getInt();
 		apricornWhiteCookedID = cfg.getOrCreateIntProperty("Cooked White Apricorn", "item", 10113).getInt();
 		apricornPinkCookedID = cfg.getOrCreateIntProperty("Cooked Pink Apricorn", "item", 10114).getInt();

@@ -5,8 +5,9 @@ import pixelmon.config.PixelmonItemsPokeballs;
 import net.minecraft.src.Item;
 
 public enum EnumPokeballs {
-	PokeBall(0, 1, "pokeball", 0, 0, 4, 12, 4, 13), GreatBall(1, 1.5, "greatball", 0, 1, 5, 12, 5, 13), UltraBall(2, 2, "ultraball", 0, 2, 6, 12, 6, 13), MasterBall(3, 255, "masterball", 0, 3, 0, 0, 0, 0), LevelBall(
-			4, 1, "levelball", 1, 8, 15, 12, 15, 13), MoonBall(5, 1, "moonball", 1, 15, 14, 12, 14, 13);
+	PokeBall(0, 1, "pokeball", 0, 0, 4, 12, 4, 13), GreatBall(1, 1.5, "greatball", 0, 1, 5, 12, 5, 13), UltraBall(2, 2, "ultraball", 0, 2, 6, 12, 6, 13), MasterBall(
+			3, 255, "masterball", 0, 3, 0, 0, 0, 0), LevelBall(4, 1, "levelball", 1, 8, 15, 12, 15, 13), MoonBall(5, 1, "moonball", 1, 15, 14, 12, 14, 13), FriendBall(
+			6, 1, "friendball", 1, 3, 12, 12, 12, 13), LoveBall(7, 1, "loveball", 0, 6, 11, 12, 11, 13);
 
 	private EnumPokeballs(int index, double ballBonus, String filenamePrefix, int iconIndexX, int iconIndexY, int lidIconIndexX, int lidIconIndexY,
 			int discIconIndexX, int discIconIndexY) {
@@ -38,19 +39,7 @@ public enum EnumPokeballs {
 	}
 
 	public Item getItem() {
-		if (index == 0)
-			return PixelmonItemsPokeballs.pokeBall;
-		if (index == 1)
-			return PixelmonItemsPokeballs.greatBall;
-		if (index == 2)
-			return PixelmonItemsPokeballs.ultraBall;
-		if (index == 3)
-			return PixelmonItemsPokeballs.masterBall;
-		if (index == 4)
-			return PixelmonItemsPokeballs.levelBall;
-		if (index == 5)
-			return PixelmonItemsPokeballs.moonBall;
-		return PixelmonItemsPokeballs.pokeBall;
+		return PixelmonItemsPokeballs.getItemFromEnum(this);
 	}
 
 	public String getTexture() {
@@ -71,5 +60,9 @@ public enum EnumPokeballs {
 				return b;
 
 		return EnumPokeballs.PokeBall;
+	}
+
+	public Object getLid() {
+		return PixelmonItemsPokeballs.getLidFromEnum(this);
 	}
 }

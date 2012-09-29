@@ -14,7 +14,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 
 public class ItemPokeBall extends PixelmonItem {
-	private EnumPokeballs type;
+	public EnumPokeballs type;
 	
 	public static HashMap<EntityPlayer, Integer> playerTimers;
 

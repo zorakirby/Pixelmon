@@ -4,6 +4,7 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.items.ItemPokeballDisc;
 import pixelmon.items.PixelmonItem;
+import net.minecraft.src.Item;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet;
@@ -48,14 +49,18 @@ public class TileEntityAnvil extends TileEntity {
 
 	public void blockHit() {
 		if (itemOnAnvil != -1) {
-			if (PixelmonItemsPokeballs.getItemFromID(itemOnAnvil) instanceof ItemPokeballDisc) {
+			Item item = PixelmonItemsPokeballs.getItemFromID(itemOnAnvil);
+			if (item instanceof ItemPokeballDisc || item == PixelmonItemsPokeballs.ironDisc) {
 				count++;
 				if (count == 4) {
 					count = 0;
 					state++;
 					if (state == 3) {
 						state = 0;
-						itemOnAnvil -= 20;
+						if (item == PixelmonItemsPokeballs.ironDisc)
+							itemOnAnvil = PixelmonItemsPokeballs.ironBase.shiftedIndex;
+						else
+							itemOnAnvil -= 20;
 					}
 				}
 			}

@@ -1,5 +1,6 @@
 package pixelmon.config;
 
+import pixelmon.enums.EnumPokeballs;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
@@ -10,14 +11,6 @@ public class PixelmonRecipes {
 	public static void addRecipes() {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.healerItem), new Object[] { "IRI", "RDR", "IRI", Character.valueOf('D'),
 				new ItemStack(Item.diamond), Character.valueOf('I'), Item.ingotIron, Character.valueOf('R'), Block.stone });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.pokeBall, 3), new Object[] { "RRR", "CBC", "III", Character.valueOf('R'),
-				new ItemStack(Item.dyePowder, 1, 1), Character.valueOf('B'), Block.button, Character.valueOf('I'), Item.ingotIron, Character.valueOf('C'),
-				PixelmonItems.coalDust });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.greatBall, 2),
-				new Object[] { "LLL", "CBC", "III", Character.valueOf('L'), new ItemStack(Item.dyePowder, 1, 4), Character.valueOf('C'),
-						PixelmonItems.coalDust, Character.valueOf('B'), Block.button, Character.valueOf('I'), Item.ingotIron });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ultraBall, 1), new Object[] { "GGG", "CBC", "III", Character.valueOf('G'), Item.ingotGold,
-				Character.valueOf('C'), PixelmonItems.coalDust, Character.valueOf('B'), Block.button, Character.valueOf('I'), Item.ingotIron });
 		// GameRegistry.addRecipe(new ItemStack(PixelmonItems.masterBall), new
 		// Object[] { "PPP", "OBO", "DDD", Character.valueOf('P'), new
 		// ItemStack(Item.dyePowder, 1, 5), Character.valueOf('O'),
@@ -53,7 +46,27 @@ public class PixelmonRecipes {
 		GameRegistry.addSmelting(PixelmonItems.apricornYellow.shiftedIndex, new ItemStack(PixelmonItems.apricornYellowCooked, 1), 1);
 		GameRegistry.addSmelting(PixelmonItems.apricornRed.shiftedIndex, new ItemStack(PixelmonItems.apricornRedCooked, 1), 1);
 
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ironDisc, 5), new Object[] { "XXX", Character.valueOf('X'), Item.ingotIron });
+
 		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.pokeBallDisc, 5), new Object[] { "XXX", Character.valueOf('X'),
 				PixelmonItems.apricornRedCooked });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.greatBallDisc, 2), new Object[] { "BRB", Character.valueOf('R'),
+				PixelmonItems.apricornRedCooked, Character.valueOf('B'), PixelmonItems.apricornBlueCooked });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ultraBallDisc, 1), new Object[] { "BYB", Character.valueOf('B'),
+				PixelmonItems.apricornBlackCooked, Character.valueOf('X'), PixelmonItems.apricornYellowCooked });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.friendBallDisc, 3), new Object[] { "GYR", Character.valueOf('G'),
+				PixelmonItems.apricornGreenCooked, Character.valueOf('Y'), PixelmonItems.apricornYellowCooked, Character.valueOf('R'),
+				PixelmonItems.apricornRedCooked });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.moonBallDisc, 2), new Object[] { "BYX", Character.valueOf('B'),
+				PixelmonItems.apricornBlueCooked, Character.valueOf('Y'), PixelmonItems.apricornYellowCooked, Character.valueOf('X'),
+				PixelmonItems.apricornBlackCooked });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.loveBallDisc, 5), new Object[] { "XXX", Character.valueOf('X'),
+				PixelmonItems.apricornPinkCooked });
+
+		for (EnumPokeballs p: EnumPokeballs.values()){
+			if (p != EnumPokeballs.MasterBall)
+				GameRegistry.addShapelessRecipe(new ItemStack(p.getItem(), 1), new Object[] { Block.button, PixelmonItemsPokeballs.ironBase,
+				p.getLid() });
+		}
 	}
 }
