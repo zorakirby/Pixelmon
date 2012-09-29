@@ -572,6 +572,16 @@ public class ModelRaichu extends ModelBase
     HeadPiece.rotateAngleX = f4 / (180F / (float)Math.PI);
     LegLPiece.rotateAngleX = MathHelper.cos(f*.7F)*1F*f1;
     LegRPiece.rotateAngleX = MathHelper.cos(f*.7F + (float)Math.PI)*1F*f1;
+    ArmL.rotateAngleZ = .7F;
+    ArmR.rotateAngleZ = -.7F;
+    ArmL.rotateAngleY = MathHelper.cos(f*.7F)*.5F*f1;
+    ArmR.rotateAngleY = MathHelper.cos(f*.7F)*.5F*f1;
+    TailBase.rotateAngleY = MathHelper.cos(f*.7F)*.5F*f1;
+    TailBase.rotateAngleX = .5F;
+    TailPiece1.rotateAngleX = .5F;
+    TailPiece2.rotateAngleX = .5F;
+    TailPiece4.rotateAngleX = -.7F;
+    TailPiece5.rotateAngleX = -.5F;
   }
 
 }
