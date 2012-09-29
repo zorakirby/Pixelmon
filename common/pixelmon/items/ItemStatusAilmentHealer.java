@@ -19,7 +19,7 @@ public class ItemStatusAilmentHealer extends PixelmonItem {
 		SetUsableInBattle(true);
 		this.type = type;
 		setMaxStackSize(16);
-		setIconIndex(type.getIndex());
+		setIconIndex(type.getIconIndex());
 	}
 
 	public boolean healPokemon(EntityPixelmon pxm) {

@@ -40,13 +40,13 @@ public enum EnumEthers {
 
 	public Item getItem() {
 		if (index == 178)
-			return PixelmonItems.potion;
+			return PixelmonItems.ether;
 		if (index == 194)
-			return PixelmonItems.superPotion;
+			return PixelmonItems.maxEther;
 		if (index == 210)
-			return PixelmonItems.hyperPotion;
+			return PixelmonItems.elixir;
 		if (index == 226)
-			return PixelmonItems.maxPotion;
+			return PixelmonItems.maxElixir;
 		return PixelmonItems.potion;
 	}
 

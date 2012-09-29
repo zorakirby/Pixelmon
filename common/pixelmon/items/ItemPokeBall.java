@@ -26,7 +26,7 @@ public class ItemPokeBall extends PixelmonItem {
 		this.type = type;
 		playerTimers = new HashMap<EntityPlayer, Integer>();
 		setIconIndex(type.getIconIndex());
-		setTextureFile("/pixelmon/image/pitems.png");
+		setTextureFile("/pixelmon/image/pitems2.png");
 		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
 

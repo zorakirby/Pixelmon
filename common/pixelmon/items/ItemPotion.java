@@ -19,7 +19,7 @@ public class ItemPotion extends PixelmonItem {
 		SetUsableInBattle(true);
 		this.type = type;
 		setMaxStackSize(16);
-		setIconIndex(type.getIndex());
+		setIconIndex(type.getIconIndex());
 	}
 
 	private int healAmount(EntityPixelmon userPokemon) {

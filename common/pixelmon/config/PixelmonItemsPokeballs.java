@@ -150,8 +150,10 @@ public class PixelmonItemsPokeballs {
 		friendBallDisc = new ItemPokeballDisc(friendBallDiscID, EnumPokeballs.FriendBall).setItemName("Friend Ball Disc");
 		loveBallDisc = new ItemPokeballDisc(loveBallDiscID, EnumPokeballs.LoveBall).setItemName("Love Ball Disc");
 
-		ironBase = new PixelmonItem(ironBaseID).setIconIndex(9 + 10 * 16).setItemName("Iron Base").setTabToDisplayOn(CreativeTabs.tabMaterials);
-		ironDisc = new PixelmonItem(ironDiscID).setIconIndex(9 + 11 * 16).setItemName("Iron Disc").setTabToDisplayOn(CreativeTabs.tabMaterials);
+		ironBase = new PixelmonItem(ironBaseID).setIconIndex(3 + 6 * 16).setItemName("Iron Base").setTabToDisplayOn(CreativeTabs.tabMaterials);
+		ironDisc = new PixelmonItem(ironDiscID).setIconIndex(3 + 7 * 16).setItemName("Iron Disc").setTabToDisplayOn(CreativeTabs.tabMaterials);
+		ironBase.setTextureFile("/pixelmon/image/pitems2.png");
+		ironDisc.setTextureFile("/pixelmon/image/pitems2.png");
 	}
 
 	public static void addNames() {

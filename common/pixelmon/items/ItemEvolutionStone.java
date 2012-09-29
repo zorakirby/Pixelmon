@@ -22,7 +22,7 @@ public class ItemEvolutionStone extends Item {
 	public ItemEvolutionStone(int id, EnumEvolutionStone stoneType, int i) {
 		super(id);
 		this.stoneType = stoneType;
-		this.iconIndex = 8 + i * 16;
+		this.iconIndex = 4 + i * 16;
 		setTextureFile("/pixelmon/image/pitems.png");
 		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
