@@ -1,6 +1,7 @@
 package pixelmon.models.pokemon;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -363,6 +364,12 @@ public class ModelPonyta extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    HEADPIECE.rotateAngleY = f3 / (180F / (float)Math.PI);
+    HEADPIECE.rotateAngleX = f4 / (180F / (float)Math.PI);
+    FRONTLEFTLEGPIECE.rotateAngleX = MathHelper.cos(f*.5F + (float)Math.PI)*.4F*f1;
+    FRONTRIGHTLEGPIECE.rotateAngleX = MathHelper.cos(f*.5F)*.4F*f1;
+    BACKLEFTLEGPIECE.rotateAngleX = MathHelper.cos(f*.5F)*.7F*f1;
+    BACKRIGHTLEGPIECE.rotateAngleX = MathHelper.cos(f*.5F + (float)Math.PI)*.7F*f1;
   }
 
 }
