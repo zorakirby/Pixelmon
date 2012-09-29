@@ -1,8 +1,11 @@
 package pixelmon.gui;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.StatCollector;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumType;
 
@@ -12,11 +15,15 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	public GuiScreenPokeChecker(PixelmonDataPacket pixelmonDataPacket) {
 		super(new ContainerEmpty());
 		targetPacket = pixelmonDataPacket;
+		doesLevel = targetPacket.doesLevel;
 	}
 
 	public boolean doesGuiPauseGame() {
 		return true;
 	}
+
+	boolean doesLevel;
+	GuiButton levelButton;
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
@@ -26,6 +33,10 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		String s = "";
 		s = !targetPacket.name.equals(targetPacket.nickname) ? "Give Nickname" : "Change Nickname";
 		controlList.add(new GuiButton(1, width / 2 - 100, (int) (height * 0.8 - 25), s));
+		levelButton = new GuiButton(2, width / 2 - 100, (int) (height * 0.8 + 25), "Stop pokemon levelling");
+		if (!targetPacket.doesLevel)
+			levelButton.displayString = "Start pokemon levelling";
+		controlList.add(levelButton);
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -35,6 +46,15 @@ public class GuiScreenPokeChecker extends GuiContainer {
 			break;
 		case 1:
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			break;
+		case 2:
+			if (doesLevel)
+				levelButton.displayString = "Stop pokemon levelling";
+			else
+				levelButton.displayString = "Start pokemon levelling";
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.StopStartLevelling, targetPacket.pokemonID));
+			mc.thePlayer.closeScreen();
+			break;
 		}
 
 	}
@@ -42,7 +62,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 		drawDefaultBackground();
 		drawCenteredString(fontRenderer, "PokeChecker", width / 2, height / 7, 0xffffff);
-		drawCenteredString(fontRenderer, "Lv: " + targetPacket.lvl + " " + targetPacket.nickname + " (" + targetPacket.name + ")", width / 2, height / 7 + 15, 0xcccccc);
+		drawCenteredString(fontRenderer, "Lv: " + targetPacket.lvl + " " + targetPacket.nickname + " (" + targetPacket.name + ")", width / 2, height / 7 + 15,
+				0xcccccc);
 		this.drawHorizontalLine(width / 5, height / 7 + 20, width * 4 / 5, 0xffffff);
 		// STATS
 		drawCenteredString(fontRenderer, "Stats", width / 3, height / 7 + 25, 0xdddddd);
@@ -65,7 +86,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		// MOVES
 		drawCenteredString(fontRenderer, "Moves", width * 2 / 3, height / 7 + 25, 0xdddddd);
 		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
-			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10), targetPacket.moveset[i2].type.getColor());
+			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, width * 2 / 3, height / 7 + 40 + (i2 * 10),
+					targetPacket.moveset[i2].type.getColor());
 		}
 	}
 }

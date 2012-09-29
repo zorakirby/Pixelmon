@@ -394,6 +394,7 @@ public class EntityPokeBall extends EntityThrowable {
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).addToParty(p);
 				p.catchInPokeball();
 				p.friendship.initFromCapture();
+				PokeballTypeHelper.doAfterEffect(getType(), p);
 				setIsWaiting(false);
 				setDead();
 			}

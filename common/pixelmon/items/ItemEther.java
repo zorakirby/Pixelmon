@@ -18,7 +18,7 @@ public class ItemEther extends PixelmonItem {
 		SetUsableInBattle(true);
 		this.type = type;
 		setMaxStackSize(16);
-		setIconIndex(type.getIndex());
+		setIconIndex(type.getIconIndex());
 	}
 
 	private void restorePP(EntityPixelmon userPokemon, int moveIndex) {

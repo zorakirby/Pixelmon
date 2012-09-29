@@ -33,13 +33,14 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public boolean doesHover = false;
 	public float hoverHeight = 0f;
 	public float length;
+	public boolean doesLevel = true;
 
 	public Entity3HasStats(World par1World) {
 		super(par1World);
 		dataWatcher.addObject(14, (short) 1000); // scale
 		stats = new Stats();
 		level = new Level((EntityPixelmon) this);
-		friendship = new FriendShip((EntityPixelmon)this);
+		friendship = new FriendShip((EntityPixelmon) this);
 		dataWatcher.addObject(10, (short) 10); // MaxHP
 		dataWatcher.addObject(7, (short) health);
 	}
@@ -67,10 +68,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			setEntityHealth(stats.HP);
 		}
 	}
-	
+
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
-		if (getOwner()!=null) friendship.onFaint();
+		if (getOwner() != null)
+			friendship.onFaint();
 		super.onDeath(par1DamageSource);
 	}
 
@@ -80,7 +82,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			friendship.hurtByOwner();
 		return super.attackEntityFrom(par1DamageSource, par2);
 	}
-	
+
 	private void setType() {
 		type.add(baseStats.Type1);
 		if (baseStats.Type2 != EnumType.Mystery)
@@ -192,11 +194,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		float halfWidth = this.width * scale / 2.0F;
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5 + (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
+					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5
+					+ (double) halfLength);
 		else
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
+					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
 	}
 
 	public void updateStats() {
@@ -211,16 +214,18 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	@Override
 	public void onUpdate() {
-		if (getOwner()!=null) friendship.tick();
+		if (getOwner() != null)
+			friendship.tick();
 		super.onUpdate();
 	}
-	
+
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		stats.writeToNBT(nbt);
 		level.writeToNBT(nbt);
 		friendship.writeToNBT(nbt);
+		nbt.setBoolean("DoesLevel", doesLevel);
 	}
 
 	@Override
@@ -228,5 +233,9 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super.readEntityFromNBT(nbt);
 		stats.readFromNBT(nbt);
 		friendship.readFromNBT(nbt);
+		if (nbt.hasKey("DoesLevel"))
+			doesLevel = nbt.getBoolean("DoesLevel");
+		else
+			doesLevel = true;
 	}
 }

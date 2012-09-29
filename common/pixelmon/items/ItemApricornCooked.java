@@ -1,19 +1,17 @@
 package pixelmon.items;
 
-import pixelmon.enums.EnumPokeballs;
 import net.minecraft.src.CreativeTabs;
+import pixelmon.enums.EnumApricorns;
 
-public class ItemPokeballDisc extends PixelmonItem {
-
-	public EnumPokeballs pokeball;
-
-	public ItemPokeballDisc(int id, EnumPokeballs pokeball) {
+public class ItemApricornCooked extends PixelmonItem {
+	public EnumApricorns apricorn;
+	public ItemApricornCooked(int id, EnumApricorns apricorn) {
 		super(id);
-		this.pokeball = pokeball;
+		this.apricorn = apricorn;
 		SetUsableInBattle(false);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);
-		setIconIndex(pokeball.discIconIndex);
+		setIconIndex(apricorn.meltedIconIndex);
 		setTextureFile("/pixelmon/image/pitems2.png");
 		setTabToDisplayOn(CreativeTabs.tabMaterials);
 	}

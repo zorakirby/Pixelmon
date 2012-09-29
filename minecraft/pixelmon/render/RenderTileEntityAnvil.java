@@ -68,8 +68,11 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		if (tile.itemOnAnvil != -1) {
 			GL11.glTranslatef((float) 0, (float) 0.03F, (float) 0); // size
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
-			if (itemToRender instanceof ItemPokeballDisc) {
-				bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture());
+			if (itemToRender instanceof ItemPokeballDisc || itemToRender == PixelmonItemsPokeballs.ironDisc) {
+				if (itemToRender == PixelmonItemsPokeballs.ironDisc)
+					bindTextureByName("Missing");
+				else
+					bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture());
 				if (tile.state == 0)
 					modelDiscFlat.renderModel(0.0625f);
 				else if (tile.state == 1)
@@ -77,8 +80,10 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 				else if (tile.state == 2)
 					modelDiscStage2.renderModel(0.0625f);
 
-			} else if (itemToRender instanceof ItemPokeballLid) {
-				bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
+			} else if (itemToRender instanceof ItemPokeballLid || itemToRender == PixelmonItemsPokeballs.ironBase) {
+				if (itemToRender == PixelmonItemsPokeballs.ironBase)
+					bindTextureByName("Missing");
+				else bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
 				modelDiscHemiSphere.renderModel(0.0625f);
 			}
 		}

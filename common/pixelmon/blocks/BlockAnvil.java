@@ -32,8 +32,8 @@ import net.minecraft.src.WorldServer;
 public class BlockAnvil extends BlockContainer {
 
 	public BlockAnvil(int i) {
-		super(i, Material.iron);
-		setHardness(4f);
+		super(i, Material.wood);
+		setHardness(1f);
 	}
 
 	/**
@@ -107,7 +107,8 @@ public class BlockAnvil extends BlockContainer {
 			world.spawnEntityInWorld(var3);
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
 		}
-		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc) {
+		if (player.getCurrentEquippedItem() != null
+				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc || player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc)) {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
 			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);

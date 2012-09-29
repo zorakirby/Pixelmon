@@ -9,6 +9,7 @@ import pixelmon.Pixelmon;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsApricorns;
 import pixelmon.enums.EnumApricornTrees;
 import pixelmon.enums.EnumGui;
 import pixelmon.items.ItemApricorn;
@@ -111,21 +112,7 @@ public class BlockApricornTree extends BlockContainer {
 		if (world.isRemote)
 			return false;
 		if (world.getBlockMetadata(x, y, z) == numStages - 1) {
-			Item item = null;
-			if (tree == EnumApricornTrees.Black)
-				item = PixelmonItems.apricornBlack;
-			else if (tree == EnumApricornTrees.White)
-				item = PixelmonItems.apricornWhite;
-			else if (tree == EnumApricornTrees.Pink)
-				item = PixelmonItems.apricornPink;
-			else if (tree == EnumApricornTrees.Green)
-				item = PixelmonItems.apricornGreen;
-			else if (tree == EnumApricornTrees.Blue)
-				item = PixelmonItems.apricornBlue;
-			else if (tree == EnumApricornTrees.Yellow)
-				item = PixelmonItems.apricornYellow;
-			else if (tree == EnumApricornTrees.Red)
-				item = PixelmonItems.apricornRed;
+			Item item = PixelmonItemsApricorns.getApricorn(tree.apricorn);
 
 			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 			var3.delayBeforeCanPickup = 10;

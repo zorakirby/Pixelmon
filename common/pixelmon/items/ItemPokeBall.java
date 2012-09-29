@@ -14,7 +14,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 
 public class ItemPokeBall extends PixelmonItem {
-	private EnumPokeballs type;
+	public EnumPokeballs type;
 	
 	public static HashMap<EntityPlayer, Integer> playerTimers;
 
@@ -26,7 +26,7 @@ public class ItemPokeBall extends PixelmonItem {
 		this.type = type;
 		playerTimers = new HashMap<EntityPlayer, Integer>();
 		setIconIndex(type.getIconIndex());
-		setTextureFile("/pixelmon/image/pitems.png");
+		setTextureFile("/pixelmon/image/pitems2.png");
 		setTabToDisplayOn(CreativeTabs.tabMisc);
 	}
 

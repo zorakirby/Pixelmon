@@ -31,6 +31,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new SendPixelmon());
 		handlers.add(new SwitchPokemon());
 		handlers.add(new ReplaceMove());
+		handlers.add(new StopStartLevelling());
 	}
 
 	@Override
