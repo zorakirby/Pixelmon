@@ -1,5 +1,7 @@
 package pixelmon.entities.pixelmon;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.EntityAnimal;
@@ -13,8 +15,16 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	private RidingHelper ridingHelper;
 
+	@SideOnly (Side.CLIENT)
+	private double velocityX;
+	@SideOnly (Side.CLIENT)
+	private double velocityY;
+	@SideOnly (Side.CLIENT)
+	private double velocityZ;
+
 	public Entity5Rideable(World par1World) {
 		super(par1World);
+		
 	}
 
 	@Override
@@ -24,6 +34,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			ridingHelper = new RidingHelper((EntityPixelmon) this, worldObj);
 	}
 
+	
 	@Override
 	public void jump() {
 		super.jump();

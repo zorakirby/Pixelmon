@@ -37,9 +37,19 @@ public class PixelmonRecipes {
 				new Object[] { "DPD", "DGD", "DRD", Character.valueOf('D'), Item.diamond, Character.valueOf('P'), Block.thinGlass, Character.valueOf('G'),
 						Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
 
-		GameRegistry.addRecipe(new ItemStack(PixelmonItems.fireStone, 1), new Object[] { "XXX", "XX ", "XXX", Character.valueOf('X'),
-			Item.ingotIron });
-	
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerWood, 1),
+				new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Block.wood, Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerStone, 1),
+				new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Block.stone, Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerIron, 1), new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Item.ingotIron,
+				Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerGold, 1), new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Item.ingotGold,
+				Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerDiamond, 1), new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Item.diamond,
+				Character.valueOf('S'), Item.stick });
+
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.anvilItem, 1), new Object[] { "XXX", "XX ", "XXX", Character.valueOf('X'), Item.ingotIron });
+
 		for (EnumApricorns a : EnumApricorns.values()) {
 			GameRegistry.addSmelting(PixelmonItemsApricorns.getApricorn(a).shiftedIndex, new ItemStack(PixelmonItemsApricorns.getCookedApricorn(a), 1), 1);
 		}
