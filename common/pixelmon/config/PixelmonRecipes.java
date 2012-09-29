@@ -38,9 +38,9 @@ public class PixelmonRecipes {
 						Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerWood, 1),
-				new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Block.wood, Character.valueOf('S'), Item.stick });
+				new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Block.planks, Character.valueOf('S'), Item.stick });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerStone, 1),
-				new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Block.stone, Character.valueOf('S'), Item.stick });
+				new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Block.cobblestone, Character.valueOf('S'), Item.stick });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerIron, 1), new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Item.ingotIron,
 				Character.valueOf('S'), Item.stick });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerGold, 1), new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Item.ingotGold,
