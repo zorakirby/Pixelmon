@@ -4,7 +4,7 @@ import net.minecraft.src.CreativeTabs;
 import pixelmon.enums.EnumApricorns;
 
 public class ItemApricornCooked extends PixelmonItem {
-	EnumApricorns apricorn;
+	public EnumApricorns apricorn;
 	public ItemApricornCooked(int id, EnumApricorns apricorn) {
 		super(id);
 		this.apricorn = apricorn;

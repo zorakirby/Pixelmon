@@ -81,22 +81,7 @@ public class PixelmonItems {
 	public static int berryOranID;
 	public static int berryRawstID;
 	public static int berryLeppaID;
-	
-	public static int apricornBlackID;
-	public static int apricornWhiteID;
-	public static int apricornPinkID;
-	public static int apricornGreenID;
-	public static int apricornBlueID;
-	public static int apricornYellowID;
-	public static int apricornRedID;
-	public static int apricornBlackCookedID;
-	public static int apricornWhiteCookedID;
-	public static int apricornPinkCookedID;
-	public static int apricornGreenCookedID;
-	public static int apricornBlueCookedID;
-	public static int apricornYellowCookedID;
-	public static int apricornRedCookedID;
-	
+		
 	public static int hammerWoodID;
 	public static int hammerStoneID;
 	public static int hammerIronID;
@@ -184,34 +169,6 @@ public class PixelmonItems {
 	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.heldItems.ItemBerryLeppa")
 	public static Item berryLeppa;
 
-	@Mod.Item(name = "Black Apricorn", typeClass = "pixelmon.items.ItemApricorn")
-	public static Item apricornBlack;
-	@Mod.Item(name = "White Apricorn", typeClass = "pixelmon.items.ItemApricorn")
-	public static Item apricornWhite;
-	@Mod.Item(name = "Pink Apricorn", typeClass = "pixelmon.items.ItemApricorn")
-	public static Item apricornPink;
-	@Mod.Item(name = "Green Apricorn", typeClass = "pixelmon.items.ItemApricorn")
-	public static Item apricornGreen;
-	@Mod.Item(name = "Blue Apricorn", typeClass = "pixelmon.items.ItemApricorn")
-	public static Item apricornBlue;
-	@Mod.Item(name = "Yellow Apricorn", typeClass = "pixelmon.items.ItemApricorn")
-	public static Item apricornYellow;
-	@Mod.Item(name = "Red Apricorn", typeClass = "pixelmon.items.ItemApricorn")
-	public static Item apricornRed;
-	@Mod.Item(name = "Cooked Black Apricorn", typeClass = "pixelmon.items.ItemApricornCooked")
-	public static Item apricornBlackCooked;
-	@Mod.Item(name = "Cooked White Apricorn", typeClass = "pixelmon.items.ItemApricornCooked")
-	public static Item apricornWhiteCooked;
-	@Mod.Item(name = "Cooked Pink Apricorn", typeClass = "pixelmon.items.ItemApricornCooked")
-	public static Item apricornPinkCooked;
-	@Mod.Item(name = "Cooked Green Apricorn", typeClass = "pixelmon.items.ItemApricornCooked")
-	public static Item apricornGreenCooked;
-	@Mod.Item(name = "Cooked Blue Apricorn", typeClass = "pixelmon.items.ItemApricornCooked")
-	public static Item apricornBlueCooked;
-	@Mod.Item(name = "Cooked Yellow Apricorn", typeClass = "pixelmon.items.ItemApricornCooked")
-	public static Item apricornYellowCooked;
-	@Mod.Item(name = "Cooked Red Apricorn", typeClass = "pixelmon.items.ItemApricornCooked")
-	public static Item apricornRedCooked;
 	
 	@Mod.Item(name = "Wood Hammer", typeClass = "pixelmon.items.ItemHammer")
 	public static Item hammerWood;
@@ -229,6 +186,7 @@ public class PixelmonItems {
 	public static void load(Configuration cfg)
 	{
 		PixelmonItemsPokeballs.load(cfg);
+		PixelmonItemsApricorns.load(cfg);
 		
 		pokeCheckerID = cfg.getOrCreateIntProperty("PokeChecker", "item", 10004).getInt();
 		pokeDexID = cfg.getOrCreateIntProperty("PokeDex", "item", 10027).getInt();
@@ -266,21 +224,7 @@ public class PixelmonItems {
 		berryOranID = cfg.getOrCreateIntProperty("OranBerry", "item", 10040).getInt();
 		berryRawstID = cfg.getOrCreateIntProperty("RawstBerry", "item", 10041).getInt();
 		berryLeppaID = cfg.getOrCreateIntProperty("LeppaBerry", "item", 10042).getInt();
-		apricornBlackID = cfg.getOrCreateIntProperty("Black Apricorn", "item", 10100).getInt();
-		apricornWhiteID = cfg.getOrCreateIntProperty("White Apricorn", "item", 10101).getInt();
-		apricornPinkID = cfg.getOrCreateIntProperty("Pink Apricorn", "item", 10102).getInt();
-		apricornGreenID = cfg.getOrCreateIntProperty("Green Apricorn", "item", 10103).getInt();
-		apricornBlueID = cfg.getOrCreateIntProperty("Blue Apricorn", "item", 10104).getInt();
-		apricornYellowID = cfg.getOrCreateIntProperty("Yellow Apricorn", "item", 10105).getInt();
-		apricornRedID = cfg.getOrCreateIntProperty("Red Apricorn", "item", 10106).getInt();
-		apricornBlackCookedID = cfg.getOrCreateIntProperty("Cooked Black Apricorn", "item", 10112).getInt();
-		apricornWhiteCookedID = cfg.getOrCreateIntProperty("Cooked White Apricorn", "item", 10113).getInt();
-		apricornPinkCookedID = cfg.getOrCreateIntProperty("Cooked Pink Apricorn", "item", 10114).getInt();
-		apricornGreenCookedID = cfg.getOrCreateIntProperty("Cooked Green Apricorn", "item", 10115).getInt();
-		apricornBlueCookedID = cfg.getOrCreateIntProperty("Cooked Blue Apricorn", "item", 10116).getInt();
-		apricornYellowCookedID = cfg.getOrCreateIntProperty("Cooked Yellow Apricorn", "item", 10117).getInt();
-		apricornRedCookedID = cfg.getOrCreateIntProperty("Cooked Red Apricorn", "item", 10118).getInt();
-
+		
 		hammerWoodID = cfg.getOrCreateIntProperty("Wood Hammer", "item", 10107).getInt();
 		hammerStoneID = cfg.getOrCreateIntProperty("Stone Hammer", "item", 10108).getInt();
 		hammerIronID = cfg.getOrCreateIntProperty("Iron Hammer", "item", 10109).getInt();
@@ -324,21 +268,6 @@ public class PixelmonItems {
 		berryLeppa = new ItemBerryLeppa(berryLeppaID).setItemName("LeppaBerry").setIconIndex(25);
 		berryRawst = new ItemBerryRawst(berryRawstID).setItemName("RawstBerry").setIconIndex(41);
 		
-		apricornBlack = new ItemApricorn(apricornBlackID, EnumApricorns.Black).setItemName("Black Apricorn");
-		apricornWhite = new ItemApricorn(apricornWhiteID, EnumApricorns.White).setItemName("White Apricorn");
-		apricornPink = new ItemApricorn(apricornPinkID, EnumApricorns.Pink).setItemName("Pink Apricorn");
-		apricornGreen = new ItemApricorn(apricornGreenID, EnumApricorns.Green).setItemName("Green Apricorn");
-		apricornBlue = new ItemApricorn(apricornBlueID, EnumApricorns.Blue).setItemName("Blue Apricorn");
-		apricornYellow = new ItemApricorn(apricornYellowID, EnumApricorns.Yellow).setItemName("Yellow Apricorn");
-		apricornRed = new ItemApricorn(apricornRedID, EnumApricorns.Red).setItemName("Red Apricorn");
-		apricornBlackCooked = new ItemApricornCooked(apricornBlackCookedID, EnumApricorns.Black).setItemName("Cooked Black Apricorn");
-		apricornWhiteCooked = new ItemApricornCooked(apricornWhiteCookedID, EnumApricorns.White).setItemName("Cooked White Apricorn");
-		apricornPinkCooked = new ItemApricornCooked(apricornPinkCookedID, EnumApricorns.Pink).setItemName("Cooked Pink Apricorn");
-		apricornGreenCooked = new ItemApricornCooked(apricornGreenCookedID, EnumApricorns.Green).setItemName("Cooked Green Apricorn");
-		apricornBlueCooked = new ItemApricornCooked(apricornBlueCookedID, EnumApricorns.Blue).setItemName("Cooked Blue Apricorn");
-		apricornYellowCooked = new ItemApricornCooked(apricornYellowCookedID, EnumApricorns.Yellow).setItemName("Cooked Yellow Apricorn");
-		apricornRedCooked = new ItemApricornCooked(apricornRedCookedID, EnumApricorns.Red).setItemName("Cooked Red Apricorn");
-		
 		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, 244).setItemName("Wood Hammer");
 		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, 245).setItemName("Stone Hammer");
 		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, 246).setItemName("Iron Hammer");
@@ -348,6 +277,7 @@ public class PixelmonItems {
 	
 	public static void addNames() {
 		PixelmonItemsPokeballs.addNames();
+		PixelmonItemsApricorns.addNames();
 		try
 		{
 			for(Field field : PixelmonItems.class.getFields())

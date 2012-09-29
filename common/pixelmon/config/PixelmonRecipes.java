@@ -38,35 +38,24 @@ public class PixelmonRecipes {
 				new Object[] { "DPD", "DGD", "DRD", Character.valueOf('D'), Item.diamond, Character.valueOf('P'), Block.thinGlass, Character.valueOf('G'),
 						Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
 
-		GameRegistry.addSmelting(PixelmonItems.apricornBlack.shiftedIndex, new ItemStack(PixelmonItems.apricornBlackCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItems.apricornWhite.shiftedIndex, new ItemStack(PixelmonItems.apricornWhiteCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItems.apricornGreen.shiftedIndex, new ItemStack(PixelmonItems.apricornGreenCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItems.apricornPink.shiftedIndex, new ItemStack(PixelmonItems.apricornPinkCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItems.apricornBlue.shiftedIndex, new ItemStack(PixelmonItems.apricornBlueCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItems.apricornYellow.shiftedIndex, new ItemStack(PixelmonItems.apricornYellowCooked, 1), 1);
-		GameRegistry.addSmelting(PixelmonItems.apricornRed.shiftedIndex, new ItemStack(PixelmonItems.apricornRedCooked, 1), 1);
+		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornBlack.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornBlackCooked, 1), 1);
+		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornWhite.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornWhiteCooked, 1), 1);
+		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornGreen.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornGreenCooked, 1), 1);
+		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornPink.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornPinkCooked, 1), 1);
+		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornBlue.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornBlueCooked, 1), 1);
+		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornYellow.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornYellowCooked, 1), 1);
+		GameRegistry.addSmelting(PixelmonItemsApricorns.apricornRed.shiftedIndex, new ItemStack(PixelmonItemsApricorns.apricornRedCooked, 1), 1);
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ironDisc, 5), new Object[] { "XXX", Character.valueOf('X'), Item.ingotIron });
 
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.pokeBallDisc, 5), new Object[] { "XXX", Character.valueOf('X'),
-				PixelmonItems.apricornRedCooked });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.greatBallDisc, 2), new Object[] { "BRB", Character.valueOf('R'),
-				PixelmonItems.apricornRedCooked, Character.valueOf('B'), PixelmonItems.apricornBlueCooked });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ultraBallDisc, 1), new Object[] { "BYB", Character.valueOf('B'),
-				PixelmonItems.apricornBlackCooked, Character.valueOf('X'), PixelmonItems.apricornYellowCooked });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.friendBallDisc, 3), new Object[] { "GYR", Character.valueOf('G'),
-				PixelmonItems.apricornGreenCooked, Character.valueOf('Y'), PixelmonItems.apricornYellowCooked, Character.valueOf('R'),
-				PixelmonItems.apricornRedCooked });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.moonBallDisc, 2), new Object[] { "BYX", Character.valueOf('B'),
-				PixelmonItems.apricornBlueCooked, Character.valueOf('Y'), PixelmonItems.apricornYellowCooked, Character.valueOf('X'),
-				PixelmonItems.apricornBlackCooked });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.loveBallDisc, 5), new Object[] { "XXX", Character.valueOf('X'),
-				PixelmonItems.apricornPinkCooked });
-
 		for (EnumPokeballs p: EnumPokeballs.values()){
 			if (p != EnumPokeballs.MasterBall)
-				GameRegistry.addShapelessRecipe(new ItemStack(p.getItem(), 1), new Object[] { Block.button, PixelmonItemsPokeballs.ironBase,
-				p.getLid() });
+				GameRegistry.addRecipe(new ItemStack(p.getDisc(), p.quantityMade), new Object[] { "XYZ", 
+					Character.valueOf('X'), PixelmonItemsApricorns.getCookedApricorn(p.recipe[0]), 
+					Character.valueOf('Y'), PixelmonItemsApricorns.getCookedApricorn(p.recipe[1]), 
+					Character.valueOf('Z'), PixelmonItemsApricorns.getCookedApricorn(p.recipe[2])});
+					
+				GameRegistry.addShapelessRecipe(new ItemStack(p.getItem(), 1), new Object[] { Block.button, PixelmonItemsPokeballs.ironBase, p.getLid() });
 		}
 	}
 }

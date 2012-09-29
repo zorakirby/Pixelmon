@@ -7,6 +7,7 @@ import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokeballDisc;
 import pixelmon.items.ItemPokeballLid;
 import pixelmon.items.PixelmonItem;
+import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;
 import net.minecraftforge.common.Configuration;
@@ -205,6 +206,22 @@ public class PixelmonItemsPokeballs {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemPokeballLid)
 						if (((ItemPokeballLid) item).pokeball == type)
+							return item;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Item getDiscFromEnum(EnumPokeballs type) {
+		try {
+			for (Field field : PixelmonItemsPokeballs.class.getFields()) {
+				if (field.isAnnotationPresent(Mod.Item.class)) {
+					Item item = (Item) field.get(null);
+					if (item instanceof ItemPokeballDisc)
+						if (((ItemPokeballDisc) item).pokeball == type)
 							return item;
 				}
 			}
