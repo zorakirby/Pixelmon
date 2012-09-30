@@ -5,6 +5,7 @@ import java.util.List;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
+import pixelmon.entities.pixelmon.helpers.AIHelper;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.Block;
@@ -55,8 +56,14 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 			if (itemstack == null) {
 				if (baseStats.IsRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
-					player.mountEntity(this);
-					tasks.field_75782_a.clear();
+					if (riddenByEntity != null) {
+						player.mountEntity(this);
+						player.setPosition(posX, posY, posZ);
+						((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
+					} else {
+						player.mountEntity(this);
+						tasks.field_75782_a.clear();
+					}
 					return true;
 				}
 				return false;
@@ -110,6 +117,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		} else {
 			if (this.riddenByEntity != null) {
 				this.motionX += this.riddenByEntity.motionX * getMoveSpeed();
+				this.motionY += this.riddenByEntity.motionY * getMoveSpeed();
 				this.motionZ += this.riddenByEntity.motionZ * getMoveSpeed();
 			}
 
