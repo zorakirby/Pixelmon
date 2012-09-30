@@ -18,6 +18,7 @@ public enum EnumPokemon {
 	Charmeleon("Charmeleon", ClassType.Pixelmon),
 	Cubone("Cubone", ClassType.Pixelmon),
 	Diglett("Diglett", ClassType.Pixelmon),
+	Dodrio("Dodrio", ClassType.Pixelmon),
 	Doduo("Doduo", ClassType.Pixelmon),
 	Dragonair("Dragonair", ClassType.WaterPixelmon),
 	Dratini("Dratini", ClassType.WaterPixelmon),
