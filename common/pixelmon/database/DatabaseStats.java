@@ -155,9 +155,30 @@ public class DatabaseStats {
 			Class.forName("org.sqlite.JDBC");
 			conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + pixelmonName + "'");
+			ResultSet rs = stat.executeQuery("select Rarity from Pixelmon where Name='" + pixelmonName + "'");
 			while (rs.next()) {
 				return rs.getInt("Rarity");
+			}
+		} catch (Exception e) {
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		}
+		return -1;
+	}
+
+	public static float getWeight(String pixelmonName) {
+		Connection conn = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DatabaseHelper.getConnection();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select Weight from Pixelmon where Name='" + pixelmonName + "'");
+			while (rs.next()) {
+				return rs.getFloat("Weight");
 			}
 		} catch (Exception e) {
 			if (conn != null)

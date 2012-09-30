@@ -19,7 +19,8 @@ public class CaptureHeavyBall extends CaptureBase {
 	public double getBallBonus(EnumPokeballs type, EntityPlayer thrower, EntityPixelmon p2, Mode mode) {
 		double ballBonus = type.getBallBonus();
 		float weight = DatabaseStats.getWeight(p2.getName());
-
+			if (p2)
+			
 			
 		return ballBonus;
 	}
