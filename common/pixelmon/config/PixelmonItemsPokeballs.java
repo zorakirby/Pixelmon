@@ -154,7 +154,7 @@ public class PixelmonItemsPokeballs {
 		moonBallLid = new ItemPokeballLid(moonBallLidID, EnumPokeballs.MoonBall).setItemName("Moon Ball Lid");
 		friendBallLid = new ItemPokeballLid(friendBallLidID, EnumPokeballs.FriendBall).setItemName("Friend Ball Lid");
 		loveBallLid = new ItemPokeballLid(loveBallLidID, EnumPokeballs.LoveBall).setItemName("Love Ball Lid");
-		heavyBallLid = new ItemPokeBall(heavyBallLidID, EnumPokeballs.HeavyBall).setItemName("Heavy Ball Lid");
+		heavyBallLid = new ItemPokeBallLid(heavyBallLidID, EnumPokeballs.HeavyBall).setItemName("Heavy Ball Lid");
 
 		pokeBallDisc = new ItemPokeballDisc(pokeBallDiscID, EnumPokeballs.PokeBall).setItemName("Poke Ball Disc");
 		ultraBallDisc = new ItemPokeballDisc(ultraBallDiscID, EnumPokeballs.UltraBall).setItemName("Ultra Ball Disc");
@@ -163,7 +163,7 @@ public class PixelmonItemsPokeballs {
 		moonBallDisc = new ItemPokeballDisc(moonBallDiscID, EnumPokeballs.MoonBall).setItemName("Moon Ball Disc");
 		friendBallDisc = new ItemPokeballDisc(friendBallDiscID, EnumPokeballs.FriendBall).setItemName("Friend Ball Disc");
 		loveBallDisc = new ItemPokeballDisc(loveBallDiscID, EnumPokeballs.LoveBall).setItemName("Love Ball Disc");
-		heavyBallDisc = new ItemPokeBall(heavyBallDiscID, EnumPokeballs.HeavyBall).setItemName("Heavy Ball Disc");
+		heavyBallDisc = new ItemPokeBallDisc(heavyBallDiscID, EnumPokeballs.HeavyBall).setItemName("Heavy Ball Disc");
 
 		ironBase = new PixelmonItem(ironBaseID).setIconIndex(3 + 6 * 16).setItemName("Iron Base").setTabToDisplayOn(CreativeTabs.tabMaterials);
 		ironDisc = new PixelmonItem(ironDiscID).setIconIndex(3 + 7 * 16).setItemName("Iron Disc").setTabToDisplayOn(CreativeTabs.tabMaterials);
