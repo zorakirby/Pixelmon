@@ -88,6 +88,13 @@ public class BattleController {
 		BattleRegistry.deRegisterBattle(this);
 	}
 
+	public void endBattleWithoutXP() {
+		battleEnded = true;
+		BattleRegistry.deRegisterBattle(this);
+		participant1.EndBattle(false, participant2);
+		participant2.EndBattle(false, participant1);
+	}
+
 	public void update() {
 		if (isWaiting() || isCapturing)
 			return;
@@ -156,7 +163,8 @@ public class BattleController {
 
 	private void checkAndReplaceFaintedPokemon(IBattleParticipant participant, IBattleParticipant foe) {
 		if (participant.getIsFaintedOrDead()) {
-			String name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon().getNickname();
+			String name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon()
+					.getNickname();
 			if (participant == participant1) {
 				if (participant1.isWild)
 					ChatHandler.sendChat(participant2.currentPokemon().getOwner(), "The wild " + participant1.currentPokemon().getName() + " fainted!");
@@ -180,8 +188,10 @@ public class BattleController {
 			if (participant.hasMorePokemon()) {
 				participant.getNextPokemon();
 				participant.currentPokemon().battleController = this;
-				name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon().getNickname();
-				ChatHandler.sendChat(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out " + name + "!");
+				name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon()
+						.getNickname();
+				ChatHandler.sendChat(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out " + name
+						+ "!");
 				attackersList1.clear();
 				attackersList2.clear();
 				if (participant == participant1) {
@@ -204,6 +214,13 @@ public class BattleController {
 	}
 
 	private void checkMoveSpeed() {
+		if (pixelmon1WillUseItemInStack != null) {
+			pixelmon1MovesFirst = true;
+			return;
+		} else if (pixelmon2WillUseItemInStack != null) {
+			pixelmon1MovesFirst = false;
+			return;
+		}
 		int priority1 = 0, priority2 = 0;
 		if (attacks[0] != null) {
 			for (EffectBase e : attacks[0].effects)
@@ -371,7 +388,8 @@ public class BattleController {
 					if (entityPixelmon.getLvl().canLevelUp())
 						entityPixelmon.stats.EVs.gainEV(target.baseStats.evGain);
 				} else {
-					EntityPixelmon pix = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).sendOut(userIndex, entityPixelmon.getOwner().worldObj);
+					EntityPixelmon pix = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).sendOut(userIndex,
+							entityPixelmon.getOwner().worldObj);
 					pix.getLvl().awardEXP((int) exp);
 					pix.stats.EVs.gainEV(target.baseStats.evGain);
 					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).retrieve(pix);
@@ -396,10 +414,12 @@ public class BattleController {
 			pixelmon1WillUseItemInStack = usedStack;
 			pixelmon1WillUseItemInStackInfo = additionalInfo;
 			participant1Wait = false;
+			pixelmon1MovesFirst = true;
 		} else {
 			pixelmon2WillUseItemInStack = usedStack;
 			pixelmon2WillUseItemInStackInfo = additionalInfo;
 			participant2Wait = false;
+			pixelmon1MovesFirst = false;
 		}
 	}
 
@@ -480,11 +500,11 @@ public class BattleController {
 	boolean participant1Wait;
 	boolean participant2Wait;
 	boolean isCapturing = false;
-	
-	public void waitForCapture(){
+
+	public void waitForCapture() {
 		isCapturing = true;
 	}
-	
+
 	public void waitForMove(PlayerParticipant playerParticipant) {
 		if (playerParticipant == participant1)
 			participant1Wait = true;
@@ -494,5 +514,9 @@ public class BattleController {
 
 	public boolean isWaiting() {
 		return participant1Wait || participant2Wait;
+	}
+
+	public void endWaitForCapture() {
+		isCapturing = false;
 	}
 }

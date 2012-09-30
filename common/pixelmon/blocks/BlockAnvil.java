@@ -11,6 +11,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.enums.EnumGui;
+import pixelmon.items.ItemHammer;
 import pixelmon.items.ItemPokeballDisc;
 import pixelmon.items.PixelmonItem;
 import pixelmon.storage.ComputerBox;
@@ -25,6 +26,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.StepSound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldServer;
@@ -34,6 +36,7 @@ public class BlockAnvil extends BlockContainer {
 	public BlockAnvil(int i) {
 		super(i, Material.wood);
 		setHardness(1f);
+		setStepSound(new StepSound("pixelmon.anvilHits", 1, 1));
 	}
 
 	/**
