@@ -131,6 +131,7 @@ public class EntityPokeBall extends EntityThrowable {
 		mode = Mode.battle;
 		isBattleThrown = true;
 		this.battleController = battleController;
+		worldObj = thrower.worldObj;
 		battleController.waitForCapture();
 		this.setLocationAndAngles(thrower.posX, thrower.posY + (double) thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
 		this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
@@ -138,7 +139,7 @@ public class EntityPokeBall extends EntityThrowable {
 		this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
 		this.setPosition(this.posX, this.posY, this.posZ);
 		this.yOffset = 0.0F;
-
+		isInitialized = true;
 		Vec3 posVec = Vec3.createVectorHelper(posX, posY, posZ);
 		posVec.subtract(Vec3.createVectorHelper(pixelmon.posX, pixelmon.posY, pixelmon.posZ));
 		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) * 0.8;
@@ -173,16 +174,13 @@ public class EntityPokeBall extends EntityThrowable {
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
 
 		if (isBattleThrown && !worldObj.isRemote) {
-			if (movingobjectposition == null || movingobjectposition.typeOfHit != EnumMovingObjectType.TILE || movingobjectposition.entityHit != p)
-				return;
-			else {
-				p = pixelmon;
-				p.hitByPokeball = true;
-				doCaptureCalc(p);
-				setIsWaiting(true);
-				motionX = motionZ = 0;
-				motionY = 0;
-			}
+			p = pixelmon;
+			p.hitByPokeball = true;
+			doCaptureCalc(p);
+			setIsWaiting(true);
+			motionX = motionZ = 0;
+			motionY = 0;
+//			}
 		} else if (mode == Mode.full) {
 			if (movingobjectposition != null && !worldObj.isRemote) {
 				if (pixelmon != null) {
