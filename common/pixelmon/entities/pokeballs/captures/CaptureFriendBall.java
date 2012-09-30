@@ -15,9 +15,11 @@ public class CaptureFriendBall extends CaptureBase {
 	public double getBallBonus(EnumPokeballs type, EntityPlayer thrower, EntityPixelmon p2, Mode mode) {
 		return type.getBallBonus();
 	}
-
+	
 	@Override
 	public void doAfterEffect(EnumPokeballs type, EntityPixelmon p) {
 		p.friendship.friendship = 200;		
 	}
+	
+	
 }
