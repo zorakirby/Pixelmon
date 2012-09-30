@@ -15,7 +15,7 @@ public enum EnumPokeballs {
 	MoonBall(5, 1, "moonball", 1, 15, 13, 2, 13, 3, new EnumApricorns[]{EnumApricorns.Blue, EnumApricorns.Yellow, EnumApricorns.Black}, 2),
 	FriendBall(6, 1, "friendball", 1, 3, 11, 2, 11, 3, new EnumApricorns[]{EnumApricorns.Green, EnumApricorns.Yellow, EnumApricorns.Red}, 3),
 	LoveBall(7, 1, "loveball", 0, 6, 10, 2, 10, 3, new EnumApricorns[]{EnumApricorns.Pink, EnumApricorns.Pink, EnumApricorns.Pink}, 3),
-	HeavyBall(8, 1, "heavyball", 1, 6, 8, 3, 8, 4, new EnumApricorns[]{EnumApricorns.Black, EnumApricorns.Blue, EnumApricorns.Black}, 2);
+	HeavyBall(8, 1, "heavyball", 1, 6, 8, 2, 8, 3, new EnumApricorns[]{EnumApricorns.Black, EnumApricorns.Blue, EnumApricorns.Black}, 2);
 
 	private EnumPokeballs(int index, double ballBonus, String filenamePrefix, int iconIndexX, int iconIndexY, int lidIconIndexX, int lidIconIndexY,
 			int discIconIndexX, int discIconIndexY, EnumApricorns[] recipe, int quantityMade) {
