@@ -39,5 +39,9 @@ public class PokeballTypeHelper {
 			if (c.pokeball == type) c.doAfterEffect(type, p2);
 	}
 
+	public static int modifyCaptureRate(int captureRate) {
+		return captureRate;
+	}
+
 	
 }
