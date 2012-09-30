@@ -206,7 +206,8 @@ public class PlayerStorage {
 	public void changePokemon(int pos, NBTTagCompound n) {
 		if (partyPokemon[pos] != null) {
 			if (mode == PokeballManagerMode.Player)
-				player.serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.RemoveFromStorage, partyPokemon[pos].getInteger("pixelmonID")));
+				player.serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.RemoveFromStorage,
+						partyPokemon[pos].getInteger("pixelmonID")));
 		}
 		if (n != null) {
 			n.setInteger("PixelmonOrder", pos);
@@ -402,5 +403,19 @@ public class PlayerStorage {
 		}
 		if (mode == PokeballManagerMode.Player)
 			player.serverForThisPlayer.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
+	}
+
+	public void recallAllPokemon() {
+		for (int i = 0; i < partyPokemon.length; i++) {
+			if (partyPokemon[i] != null) {
+				if (EntityAlreadyExists(partyPokemon[i].getInteger("pixelmonID"), player.worldObj)) {
+					EntityPixelmon p = getAlreadyExists(partyPokemon[i].getInteger("pixelmonID"), player.worldObj);
+					PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve(p);
+					updateNBT(p);
+					p.isInBall = true;
+					p.unloadEntity();
+				}
+			}
+		}
 	}
 }

@@ -32,6 +32,8 @@ public class AIStartBattle extends EntityAIBase {
 		if (((EntityLiving) theEntity).getAttackTarget().getDistanceSqToEntity((Entity) this.theEntity) < 40) {
 			if (theEntity.getAttackTarget() instanceof EntityPlayer) {
 				EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
+				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).isIn((EntityPixelmon)theEntity))
+					return false;
 				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).countAblePokemon() == 0)
 					return false;
 				EntityPixelmon firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getFirstAblePokemon(player.worldObj);
