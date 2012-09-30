@@ -74,4 +74,9 @@ public class AIHelper {
 			tasks.addTask(i++, new EntityAILookIdle(entity));
 		}
 	}
+
+	public void clearAI() {
+		
+		
+	}
 }

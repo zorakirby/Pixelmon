@@ -23,7 +23,7 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 
 	public Aggression aggression;
 
-	private AIHelper aiHelper;
+	protected AIHelper aiHelper;
 	
 	public Entity7HasAI(World par1World) {
 		super(par1World);

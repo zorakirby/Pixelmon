@@ -19,6 +19,7 @@ import net.minecraft.src.Chunk;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.EntityVillager;
 import net.minecraft.src.EnumCreatureType;
 import net.minecraft.src.Material;
 import net.minecraft.src.SpawnerAnimals;
@@ -62,7 +63,8 @@ public class PixelmonSpawner {
 			while (calculatedNum < currentTotalNum) {
 				int listIndex = random.nextInt(filledLists.size());
 				int entityIndex = random.nextInt(filledLists.get(listIndex).size());
-				((Entity) filledLists.get(listIndex).get(entityIndex)).setDead();
+				if (!(((Entity) filledLists.get(listIndex).get(entityIndex)) instanceof EntityVillager))
+					((Entity) filledLists.get(listIndex).get(entityIndex)).setDead();
 				currentTotalNum--;
 			}
 		} else if (calculatedNum > currentTotalNum)
