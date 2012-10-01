@@ -45,6 +45,7 @@ public class PokedexEntry {
 			return pixelmon;
 
 		if (name.equals("???")) return null;
+		if (!EnumPokemon.hasPokemon(name)) return null;
 		pixelmon = new EntityPixelmon(Minecraft.getMinecraft().theWorld);
 		pixelmon.init(name);
 		return pixelmon;
