@@ -393,6 +393,9 @@ public class EntityPokeBall extends EntityThrowable {
 				p.catchInPokeball();
 				p.friendship.initFromCapture();
 				PokeballTypeHelper.doAfterEffect(getType(), p);
+				if (mode== Mode.battle) {
+					battleController.endBattleWithoutXP();
+				}
 				setIsWaiting(false);
 				setDead();
 			}

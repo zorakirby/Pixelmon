@@ -45,6 +45,12 @@ public class TileEntityAnvil extends TileEntity {
 		readFromNBT(pkt.customParam1);
 	}
 
+	@Override
+	public void receiveClientEvent(int par1, int par2) {
+		// TODO Auto-generated method stub
+		super.receiveClientEvent(par1, par2);
+	}
+	
 	int count = 0;
 
 	public boolean blockHit(int f) {

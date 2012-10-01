@@ -104,15 +104,6 @@ public class PixelmonEntityList {
 			if (rarity > 0)
 				SpawnRegistry.addSpawn(name, rarity, ClassType.Trainer);
 		}
-
-		// if (new File("resources/newsound/pixelmon/" +
-		// name.toLowerCase() + ".ogg").exists())
-		//
-		// Minecraft.getMinecraft().installResource("newsound/pixelmon/"
-		// + name.toLowerCase() + ".ogg", new
-		// File("resources/newsound/pixelmon/" + name.toLowerCase() +
-		// ".ogg"));
-
 	}
 
 	public enum ClassType {

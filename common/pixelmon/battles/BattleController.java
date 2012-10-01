@@ -87,6 +87,14 @@ public class BattleController {
 		participant2.EndBattle(!did1Win, participant1);
 		BattleRegistry.deRegisterBattle(this);
 	}
+	
+	public void endBattleWithoutXP() {
+		battleEnded = true;
+		BattleRegistry.deRegisterBattle(this);
+		participant1.EndBattle(false, participant2);
+		participant2.EndBattle(false, participant1);
+	}
+
 
 	public void update() {
 		if (isWaiting() || isCapturing)

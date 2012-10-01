@@ -45,6 +45,7 @@ import pixelmon.render.RenderTileEntityApricornTrees;
 import pixelmon.render.RenderTileEntityHealer;
 import pixelmon.render.RenderTileEntityPC;
 import pixelmon.render.RenderTrainer;
+import pixelmon.sounds.Sounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
@@ -191,5 +192,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public int getTexture(String string, String string2) {
 		return RenderingRegistry.addTextureOverride(string, string2);
+	}
+	
+	@Override
+	public void registerSounds() {
+		Sounds.installSounds();
 	}
 }
