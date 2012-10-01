@@ -18,4 +18,8 @@ public abstract class CaptureBase {
 
 	public void doAfterEffect(EnumPokeballs type, EntityPixelmon p) {
 	}
+
+	public int modifyCaptureRate(int captureRate) {
+		return captureRate;
+	}
 }

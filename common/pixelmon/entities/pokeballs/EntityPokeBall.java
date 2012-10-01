@@ -477,7 +477,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 	protected void doCaptureCalc(EntityPixelmon p2) {
 		int pokemonRate = p2.baseStats.CatchRate;
-		pokemonRate = PokeballTypeHelper.modifyCaptureRate(pokemonRate);
+		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), pokemonRate);
 		int hpMax = p2.getMaxHealth();
 		int hpCurrent = p2.getHealth();
 		int bonusStatus = 1;
