@@ -172,6 +172,10 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
+		
+		if(getIsWaiting()){
+			return;
+		}
 
 		if (isBattleThrown && !worldObj.isRemote) {
 			p = pixelmon;
@@ -307,6 +311,7 @@ public class EntityPokeBall extends EntityThrowable {
 					current.yCoord -= initPos.yCoord;
 					current.zCoord -= initPos.zCoord;
 					diff = current;
+					//TODO
 					p.setScale(initialScale / 1.1f);
 				}
 				if (waitTime == 10) {
