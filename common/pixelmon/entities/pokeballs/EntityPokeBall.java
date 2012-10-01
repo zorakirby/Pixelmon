@@ -430,7 +430,6 @@ public class EntityPokeBall extends EntityThrowable {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
 			
-			
 			spawnCaptureParticles();
 			setIsCaptured(true);
 			waitTime = 0;
@@ -444,6 +443,8 @@ public class EntityPokeBall extends EntityThrowable {
 			worldObj.spawnEntityInWorld(p);
 			p.setPosition(posX, posY, posZ);
 			p.isDead = false;
+			if (mode==Mode.battle)
+				battleController.endWaitForCapture();
 			setDead();
 		}
 	}
