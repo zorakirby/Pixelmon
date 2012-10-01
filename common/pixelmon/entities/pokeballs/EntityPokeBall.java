@@ -172,8 +172,8 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
-		
-		if(getIsWaiting()){
+
+		if (getIsWaiting()) {
 			return;
 		}
 
@@ -184,7 +184,7 @@ public class EntityPokeBall extends EntityThrowable {
 			setIsWaiting(true);
 			motionX = motionZ = 0;
 			motionY = 0;
-//			}
+			// }
 		} else if (mode == Mode.full) {
 			if (movingobjectposition != null && !worldObj.isRemote) {
 				if (pixelmon != null) {
@@ -311,7 +311,7 @@ public class EntityPokeBall extends EntityThrowable {
 					current.yCoord -= initPos.yCoord;
 					current.zCoord -= initPos.zCoord;
 					diff = current;
-					//TODO
+					// TODO
 					p.setScale(initialScale / 1.1f);
 				}
 				if (waitTime == 10) {
@@ -398,7 +398,7 @@ public class EntityPokeBall extends EntityThrowable {
 				p.catchInPokeball();
 				p.friendship.initFromCapture();
 				PokeballTypeHelper.doAfterEffect(getType(), p);
-				if (mode== Mode.battle) {
+				if (mode == Mode.battle) {
 					battleController.endBattleWithoutXP();
 				}
 				setIsWaiting(false);
@@ -434,7 +434,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private void catchPokemon() {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-			
+
 			spawnCaptureParticles();
 			setIsCaptured(true);
 			waitTime = 0;
@@ -448,7 +448,7 @@ public class EntityPokeBall extends EntityThrowable {
 			worldObj.spawnEntityInWorld(p);
 			p.setPosition(posX, posY, posZ);
 			p.isDead = false;
-			if (mode==Mode.battle)
+			if (mode == Mode.battle)
 				battleController.endWaitForCapture();
 			setDead();
 		}
@@ -476,6 +476,11 @@ public class EntityPokeBall extends EntityThrowable {
 	private int b;
 
 	protected void doCaptureCalc(EntityPixelmon p2) {
+		if (getType() == EnumPokeballs.MasterBall) {
+			canCatch = true;
+			numShakes = 4;
+			return;
+		}
 		int pokemonRate = p2.baseStats.CatchRate;
 		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), pokemonRate);
 		int hpMax = p2.getMaxHealth();
