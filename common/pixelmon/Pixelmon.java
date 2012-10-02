@@ -9,7 +9,6 @@ import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.logging.Level;
 
-import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
 import pixelmon.config.PixelmonBlocks;
@@ -112,7 +111,6 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
-		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
 	}
 

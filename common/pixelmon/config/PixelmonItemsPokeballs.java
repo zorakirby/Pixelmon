@@ -24,6 +24,7 @@ public class PixelmonItemsPokeballs {
 	public static int moonBallID;
 	public static int friendBallID;
 	public static int loveBallID;
+	public static int heavyBallID;
 
 	public static int pokeBallLidID;
 	public static int greatBallLidID;
@@ -32,7 +33,8 @@ public class PixelmonItemsPokeballs {
 	public static int moonBallLidID;
 	public static int friendBallLidID;
 	public static int loveBallLidID;
-
+	public static int heavyBallLidID;
+	
 	public static int pokeBallDiscID;
 	public static int greatBallDiscID;
 	public static int ultraBallDiscID;
@@ -40,6 +42,7 @@ public class PixelmonItemsPokeballs {
 	public static int moonBallDiscID;
 	public static int friendBallDiscID;
 	public static int loveBallDiscID;
+	public static int heavyBallDiscID;
 
 	public static int ironDiscID;
 	public static int ironBaseID;
@@ -60,6 +63,8 @@ public class PixelmonItemsPokeballs {
 	public static Item friendBall;
 	@Mod.Item(name = "Love Ball", typeClass = "pixelmon.items.ItemPokeBall")
 	public static Item loveBall;
+	@Mod.Item(name = "Heavy Ball", typeClass = "pixelmon.items.ItemPokeBall")
+	public static Item heavyBall;
 
 	@Mod.Item(name = "Poke Ball Lid", typeClass = "pixelmon.items.ItemPokeBallLid")
 	public static Item pokeBallLid;
@@ -75,6 +80,8 @@ public class PixelmonItemsPokeballs {
 	public static Item friendBallLid;
 	@Mod.Item(name = "Love Ball Lid", typeClass = "pixelmon.items.ItemPokeBallLid")
 	public static Item loveBallLid;
+	@Mod.Item(name = "Heavy Ball Lid", typeClass = "pixelmon.items.ItemPokeBallLid")
+	public static Item heavyBallLid;
 
 	@Mod.Item(name = "Poke Ball Disc", typeClass = "pixelmon.items.ItemPokeBallDisc")
 	public static Item pokeBallDisc;
@@ -90,6 +97,8 @@ public class PixelmonItemsPokeballs {
 	public static Item friendBallDisc;
 	@Mod.Item(name = "Love Ball Disc", typeClass = "pixelmon.items.ItemPokeBallDisc")
 	public static Item loveBallDisc;
+	@Mod.Item(name = "Heavy Ball Disc", typeClass = "pixelmon.items.ItemPokeBallDisc")
+	public static Item heavyBallDisc;
 
 	@Mod.Item(name = "Iron Disc", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item ironDisc;
@@ -105,6 +114,7 @@ public class PixelmonItemsPokeballs {
 		moonBallID = cfg.getOrCreateIntProperty("MoonBall", "item", 8005).getInt();
 		friendBallID = cfg.getOrCreateIntProperty("FriendBall", "item", 8006).getInt();
 		loveBallID = cfg.getOrCreateIntProperty("LoveBall", "item", 8007).getInt();
+		heavyBallID = cfg.getOrCreateIntProperty("HeavyBall", "item", 8008).getInt();
 
 		pokeBallLidID = cfg.getOrCreateIntProperty("PokeBallLid", "item", 8030).getInt();
 		greatBallLidID = cfg.getOrCreateIntProperty("GreatBallLid", "item", 8031).getInt();
@@ -113,6 +123,7 @@ public class PixelmonItemsPokeballs {
 		moonBallLidID = cfg.getOrCreateIntProperty("MoonBallLid", "item", 8035).getInt();
 		friendBallLidID = cfg.getOrCreateIntProperty("FriendBallLid", "item", 8036).getInt();
 		loveBallLidID = cfg.getOrCreateIntProperty("LoveBallLid", "item", 8037).getInt();
+		heavyBallLidID = cfg.getOrCreateIntProperty("HeavyBallLid", "item", 8038).getInt();
 
 		pokeBallDiscID = cfg.getOrCreateIntProperty("PokeBallDisc", "item", 8050).getInt();
 		greatBallDiscID = cfg.getOrCreateIntProperty("GreatBallDisc", "item", 8051).getInt();
@@ -121,6 +132,7 @@ public class PixelmonItemsPokeballs {
 		moonBallDiscID = cfg.getOrCreateIntProperty("MoonBallDisc", "item", 8055).getInt();
 		friendBallDiscID = cfg.getOrCreateIntProperty("FriendBallDisc", "item", 8056).getInt();
 		loveBallDiscID = cfg.getOrCreateIntProperty("LoveBallDisc", "item", 8057).getInt();
+		heavyBallLidID = cfg.getOrCreateIntProperty("HeavyBallDisc", "item", 8058).getInt();
 
 		ironBaseID = cfg.getOrCreateIntProperty("IronBase", "item", 8070).getInt();
 		ironDiscID = cfg.getOrCreateIntProperty("IronDisc", "item", 8071).getInt();
@@ -133,6 +145,7 @@ public class PixelmonItemsPokeballs {
 		moonBall = new ItemPokeBall(moonBallID, EnumPokeballs.MoonBall).setItemName("Moon Ball");
 		friendBall = new ItemPokeBall(friendBallID, EnumPokeballs.FriendBall).setItemName("Friend Ball");
 		loveBall = new ItemPokeBall(loveBallID, EnumPokeballs.LoveBall).setItemName("Love Ball");
+		heavyBall = new ItemPokeBall(heavyBallID, EnumPokeballs.HeavyBall).setItemName("Heavy Ball");
 
 		pokeBallLid = new ItemPokeballLid(pokeBallLidID, EnumPokeballs.PokeBall).setItemName("Poke Ball Lid");
 		ultraBallLid = new ItemPokeballLid(ultraBallLidID, EnumPokeballs.UltraBall).setItemName("Ultra Ball Lid");
@@ -141,6 +154,7 @@ public class PixelmonItemsPokeballs {
 		moonBallLid = new ItemPokeballLid(moonBallLidID, EnumPokeballs.MoonBall).setItemName("Moon Ball Lid");
 		friendBallLid = new ItemPokeballLid(friendBallLidID, EnumPokeballs.FriendBall).setItemName("Friend Ball Lid");
 		loveBallLid = new ItemPokeballLid(loveBallLidID, EnumPokeballs.LoveBall).setItemName("Love Ball Lid");
+		heavyBallLid = new ItemPokeballLid(heavyBallLidID, EnumPokeballs.HeavyBall).setItemName("Heavy Ball Lid");
 
 		pokeBallDisc = new ItemPokeballDisc(pokeBallDiscID, EnumPokeballs.PokeBall).setItemName("Poke Ball Disc");
 		ultraBallDisc = new ItemPokeballDisc(ultraBallDiscID, EnumPokeballs.UltraBall).setItemName("Ultra Ball Disc");
@@ -149,6 +163,7 @@ public class PixelmonItemsPokeballs {
 		moonBallDisc = new ItemPokeballDisc(moonBallDiscID, EnumPokeballs.MoonBall).setItemName("Moon Ball Disc");
 		friendBallDisc = new ItemPokeballDisc(friendBallDiscID, EnumPokeballs.FriendBall).setItemName("Friend Ball Disc");
 		loveBallDisc = new ItemPokeballDisc(loveBallDiscID, EnumPokeballs.LoveBall).setItemName("Love Ball Disc");
+		heavyBallDisc = new ItemPokeballDisc(heavyBallDiscID, EnumPokeballs.HeavyBall).setItemName("Heavy Ball Disc");
 
 		ironBase = new PixelmonItem(ironBaseID).setIconIndex(3 + 6 * 16).setItemName("Iron Base").setTabToDisplayOn(CreativeTabs.tabMaterials);
 		ironDisc = new PixelmonItem(ironDiscID).setIconIndex(3 + 7 * 16).setItemName("Iron Disc").setTabToDisplayOn(CreativeTabs.tabMaterials);

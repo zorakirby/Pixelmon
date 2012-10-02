@@ -11,6 +11,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
 import pixelmon.entities.pokeballs.captures.CaptureBase;
 import pixelmon.entities.pokeballs.captures.CaptureFriendBall;
+import pixelmon.entities.pokeballs.captures.CaptureHeavyBall;
 import pixelmon.entities.pokeballs.captures.CaptureLevelBall;
 import pixelmon.entities.pokeballs.captures.CaptureMoonBall;
 import pixelmon.enums.EnumPokeballs;
@@ -23,6 +24,7 @@ public class PokeballTypeHelper {
 		captureList.add(new CaptureLevelBall());
 		captureList.add(new CaptureMoonBall());
 		captureList.add(new CaptureFriendBall());
+		captureList.add(new CaptureHeavyBall());
 	}
 	
 	public static double getBallBonus(EnumPokeballs type, EntityLiving thrower, EntityPixelmon p2, Mode mode) {

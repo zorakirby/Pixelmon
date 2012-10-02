@@ -22,7 +22,6 @@ import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
-import net.minecraft.src.MovingObjectPosition;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldServer;
@@ -36,22 +35,6 @@ public class BlockApricornTree extends BlockContainer {
 		super(id, Material.wood);
 		this.tree = tree;
 		setTickRandomly(true);
-	}
-
-	@Override
-	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-		super.getPickBlock(target, world, x, y, z);
-		return new ItemStack(PixelmonItemsApricorns.getApricorn(tree.apricorn).shiftedIndex, 1, getDamageValue(world, x, y, z));
-	}
-
-	@Override
-	public void onNeighborBlockChange(World world, int x, int y, int z, int id) {
-		super.onNeighborBlockChange(world, x, y, z, id);
-
-		if (world.getBlockId(x, y - 1, z) == 0) {
-			this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-			world.setBlockWithNotify(x, y, z, 0);
-		}
 	}
 
 	@Override
@@ -125,7 +108,7 @@ public class BlockApricornTree extends BlockContainer {
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
 		if (world.isRemote)
 			return false;
 		if (world.getBlockMetadata(x, y, z) == numStages - 1) {
