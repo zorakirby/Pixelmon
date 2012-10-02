@@ -11,6 +11,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.TrainerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumPokeballs;
@@ -45,6 +46,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private EntityPixelmon pixelmon;
 	private float endRotationYaw = 0;
 	public boolean dropItem;
+	private int breakChance = rand.nextInt(30);
 
 	private boolean isBattleThrown = false;
 
@@ -121,6 +123,7 @@ public class EntityPokeBall extends EntityThrowable {
 	public EntityPokeBall(World world, EntityLiving thrower, EntityPixelmon target, EnumPokeballs type, BattleController battleController) {
 		super(world, thrower);
 		this.thrower = thrower;
+		dropItem = false;
 		endRotationYaw = thrower.rotationYawHead;
 		pixelmon = target;
 		dataWatcher.addObject(10, type.getIndex());
@@ -175,6 +178,14 @@ public class EntityPokeBall extends EntityThrowable {
 
 		if (getIsWaiting()) {
 			return;
+		}
+
+		if (dropItem && breakChance == 1) {
+			worldObj.playSoundAtEntity(this, "random.break", 0.8F, 0.8F + this.worldObj.rand.nextFloat() * 0.4F);
+			entityDropItem(new ItemStack(Block.button), 0.0F);
+			entityDropItem(new ItemStack(PixelmonItemsPokeballs.ironBase), 0.0F);
+			entityDropItem(new ItemStack(breakBall()), 0.0F);
+			setDead();
 		}
 
 		if (isBattleThrown && !worldObj.isRemote) {
@@ -288,6 +299,32 @@ public class EntityPokeBall extends EntityThrowable {
 				}
 			}
 		}
+	}
+
+	public Item breakBall() {
+		if (this.getType() == EnumPokeballs.PokeBall) {
+			return PixelmonItemsPokeballs.pokeBallLid;
+		}
+		if (this.getType() == EnumPokeballs.GreatBall) {
+			return PixelmonItemsPokeballs.greatBallLid;
+		}
+		if (this.getType() == EnumPokeballs.UltraBall) {
+			return PixelmonItemsPokeballs.ultraBallLid;
+		}
+		if (this.getType() == EnumPokeballs.LevelBall) {
+			return PixelmonItemsPokeballs.levelBallLid;
+		}
+		if (this.getType() == EnumPokeballs.MoonBall) {
+			return PixelmonItemsPokeballs.moonBallLid;
+		}
+		if (this.getType() == EnumPokeballs.FriendBall) {
+			return PixelmonItemsPokeballs.friendBallLid;
+		}
+		if (this.getType() == EnumPokeballs.LoveBall) {
+			return PixelmonItemsPokeballs.loveBallLid;
+		}
+
+		return PixelmonItemsPokeballs.pokeBallLid;
 	}
 
 	int numRocks = 0;
