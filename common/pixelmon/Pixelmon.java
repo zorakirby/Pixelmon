@@ -60,37 +60,37 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.7.5")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false,
-clientPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandler=ClientPacketHandler.class),
-serverPacketHandlerSpec = @SidedPacketHandler(channels={"Pixelmon"}, packetHandler=PacketHandler.class))
 
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.7.5")
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
-	
+
 	@SideOnly(Side.SERVER)
 	public static Migration migration;
-	
+
 	@SidedProxy(clientSide = "pixelmon.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
-	
+
+	public static boolean freeze = false;
+
 	@PreInit
-	public void preInit(FMLPreInitializationEvent event){
-		
+	public void preInit(FMLPreInitializationEvent event) {
+
 		if (!DatabaseHelper.has()) {
 			throw new RuntimeException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!");
 		}
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
-		
+
 		event.getModMetadata().version = "Pixelmon 1.7.5 for 1.3.1";
 
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
 	}
-	
+
 	@Init
-	public void load(FMLInitializationEvent event){
+	public void load(FMLInitializationEvent event) {
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
@@ -100,7 +100,7 @@ public class Pixelmon {
 		proxy.preloadTextures();
 		proxy.registerSounds();
 		PixelmonRecipes.addRecipes();
-		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball , Pixelmon.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
@@ -113,20 +113,20 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
 	}
-	
+
 	@PostInit
-	public void modsLoaded(FMLPostInitializationEvent event){
+	public void modsLoaded(FMLPostInitializationEvent event) {
 		PixelmonConfig.removeSpawns();
 	}
-	
+
 	@ServerStarting
-	public void onServerStart(FMLServerStartingEvent event)
-	{
-		if(MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager)
-		{
-			((ServerCommandManager)MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
+	public void onServerStart(FMLServerStartingEvent event) {
+		if (MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager) {
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandFreeze());
 		}
-		//mgalmigration = new Migration(event.getServer().worldServerForDimension(0).provider);
+		// mgalmigration = new
+		// Migration(event.getServer().worldServerForDimension(0).provider);
 	}
-	
+
 }

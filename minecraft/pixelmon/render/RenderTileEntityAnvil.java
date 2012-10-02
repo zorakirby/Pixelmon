@@ -70,7 +70,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
 			if (itemToRender instanceof ItemPokeballDisc || itemToRender == PixelmonItemsPokeballs.ironDisc) {
 				if (itemToRender == PixelmonItemsPokeballs.ironDisc)
-					bindTextureByName("Missing");
+					bindTextureByName("/pixelmon/texture/pokeballs/irondisc.png");
 				else
 					bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture());
 				if (tile.state == 0)
@@ -82,7 +82,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 
 			} else if (itemToRender instanceof ItemPokeballLid || itemToRender == PixelmonItemsPokeballs.ironBase) {
 				if (itemToRender == PixelmonItemsPokeballs.ironBase)
-					bindTextureByName("Missing");
+					bindTextureByName("/pixelmon/texture/pokeballs/irondisc.png");
 				else bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
 				modelDiscHemiSphere.renderModel(0.0625f);
 			}

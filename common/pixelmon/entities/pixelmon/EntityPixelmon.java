@@ -162,7 +162,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 		return super.interact(player);
 	}
-
+	
 	public void catchInPokeball() {
 		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 		isInBall = true;
@@ -228,6 +228,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	@Override
 	public void onUpdate() {
+		if (Pixelmon.freeze) return;
 		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness && worldObj.isDaytime())
 				setDead();

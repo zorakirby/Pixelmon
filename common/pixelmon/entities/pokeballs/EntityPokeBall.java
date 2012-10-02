@@ -11,6 +11,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.TrainerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumPokeballs;
@@ -45,6 +46,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private EntityPixelmon pixelmon;
 	private float endRotationYaw = 0;
 	public boolean dropItem;
+	private int breakChance = rand.nextInt(30);
 
 	private boolean isBattleThrown = false;
 
@@ -121,6 +123,7 @@ public class EntityPokeBall extends EntityThrowable {
 	public EntityPokeBall(World world, EntityLiving thrower, EntityPixelmon target, EnumPokeballs type, BattleController battleController) {
 		super(world, thrower);
 		this.thrower = thrower;
+		dropItem = false;
 		endRotationYaw = thrower.rotationYawHead;
 		pixelmon = target;
 		dataWatcher.addObject(10, type.getIndex());
@@ -140,8 +143,7 @@ public class EntityPokeBall extends EntityThrowable {
 		this.setPosition(this.posX, this.posY, this.posZ);
 		this.yOffset = 0.0F;
 		isInitialized = true;
-		Vec3 posVec = Vec3.createVectorHelper(posX, posY, posZ);
-		posVec.subtract(Vec3.createVectorHelper(pixelmon.posX, pixelmon.posY, pixelmon.posZ));
+		Vec3 posVec = Vec3.createVectorHelper(posX - pixelmon.posX, posY- pixelmon.posY, posZ- pixelmon.posZ);
 		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) * 0.8;
 		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) * 0.8;
 		this.motionY = (double) (-MathHelper.sin(0)) * 0.8;
@@ -172,9 +174,17 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
-		
-		if(getIsWaiting()){
+
+		if (getIsWaiting()) {
 			return;
+		}
+
+		if (dropItem && breakChance == 1) {
+			worldObj.playSoundAtEntity(this, "random.break", 0.8F, 0.8F + this.worldObj.rand.nextFloat() * 0.4F);
+			entityDropItem(new ItemStack(Block.button), 0.0F);
+			entityDropItem(new ItemStack(PixelmonItemsPokeballs.ironBase), 0.0F);
+			entityDropItem(new ItemStack(breakBall()), 0.0F);
+			setDead();
 		}
 
 		if (isBattleThrown && !worldObj.isRemote) {
@@ -184,7 +194,7 @@ public class EntityPokeBall extends EntityThrowable {
 			setIsWaiting(true);
 			motionX = motionZ = 0;
 			motionY = 0;
-//			}
+			// }
 		} else if (mode == Mode.full) {
 			if (movingobjectposition != null && !worldObj.isRemote) {
 				if (pixelmon != null) {
@@ -290,6 +300,32 @@ public class EntityPokeBall extends EntityThrowable {
 		}
 	}
 
+	public Item breakBall() {
+		if (this.getType() == EnumPokeballs.PokeBall) {
+			return PixelmonItemsPokeballs.pokeBallLid;
+		}
+		if (this.getType() == EnumPokeballs.GreatBall) {
+			return PixelmonItemsPokeballs.greatBallLid;
+		}
+		if (this.getType() == EnumPokeballs.UltraBall) {
+			return PixelmonItemsPokeballs.ultraBallLid;
+		}
+		if (this.getType() == EnumPokeballs.LevelBall) {
+			return PixelmonItemsPokeballs.levelBallLid;
+		}
+		if (this.getType() == EnumPokeballs.MoonBall) {
+			return PixelmonItemsPokeballs.moonBallLid;
+		}
+		if (this.getType() == EnumPokeballs.FriendBall) {
+			return PixelmonItemsPokeballs.friendBallLid;
+		}
+		if (this.getType() == EnumPokeballs.LoveBall) {
+			return PixelmonItemsPokeballs.loveBallLid;
+		}
+
+		return PixelmonItemsPokeballs.pokeBallLid;
+	}
+
 	int numRocks = 0;
 	boolean isUnloaded = false;
 
@@ -311,7 +347,7 @@ public class EntityPokeBall extends EntityThrowable {
 					current.yCoord -= initPos.yCoord;
 					current.zCoord -= initPos.zCoord;
 					diff = current;
-					//TODO
+					// TODO
 					p.setScale(initialScale / 1.1f);
 				}
 				if (waitTime == 10) {
@@ -398,7 +434,7 @@ public class EntityPokeBall extends EntityThrowable {
 				p.catchInPokeball();
 				p.friendship.initFromCapture();
 				PokeballTypeHelper.doAfterEffect(getType(), p);
-				if (mode== Mode.battle) {
+				if (mode == Mode.battle) {
 					battleController.endBattleWithoutXP();
 				}
 				setIsWaiting(false);
@@ -434,7 +470,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private void catchPokemon() {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-			
+
 			spawnCaptureParticles();
 			setIsCaptured(true);
 			waitTime = 0;
@@ -448,7 +484,7 @@ public class EntityPokeBall extends EntityThrowable {
 			worldObj.spawnEntityInWorld(p);
 			p.setPosition(posX, posY, posZ);
 			p.isDead = false;
-			if (mode==Mode.battle)
+			if (mode == Mode.battle)
 				battleController.endWaitForCapture();
 			setDead();
 		}
@@ -476,6 +512,11 @@ public class EntityPokeBall extends EntityThrowable {
 	private int b;
 
 	protected void doCaptureCalc(EntityPixelmon p2) {
+		if (getType() == EnumPokeballs.MasterBall) {
+			canCatch = true;
+			numShakes = 4;
+			return;
+		}
 		int pokemonRate = p2.baseStats.CatchRate;
 		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), pokemonRate);
 		int hpMax = p2.getMaxHealth();

@@ -58,7 +58,6 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				if (baseStats.IsRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
 					if (riddenByEntity != null) {
 						player.mountEntity(this);
-						player.setPosition(posX, posY, posZ);
 						((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
 					} else {
 						player.mountEntity(this);
@@ -119,6 +118,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				this.motionX += this.riddenByEntity.motionX * getMoveSpeed();
 				this.motionY += this.riddenByEntity.motionY * getMoveSpeed();
 				this.motionZ += this.riddenByEntity.motionZ * getMoveSpeed();
+				this.riddenByEntity.setPosition(posX, posY, posZ);
 			}
 
 			this.moveEntity(this.motionX, this.motionY, this.motionZ);
