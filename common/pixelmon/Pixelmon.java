@@ -61,7 +61,7 @@ import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.7.5")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.7.6")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 	@Instance
@@ -84,7 +84,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "Pixelmon 1.7.5 for 1.3.1";
+		event.getModMetadata().version = "Pixelmon 1.7.6 for 1.3.1";
 
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
 	}

@@ -481,15 +481,8 @@ public class BattleController {
 		 * This code has the serious issue that battle controller is run on the
 		 * server and doesn't have access to Minecraft.thePlayer
 		 */
-		// ItemStack[] inv = user.inventory.mainInventory;
-		// if (((EntityPlayer) Minecraft.getMinecraft().thePlayer).entityId ==
-		// user.entityId) {
-		// ItemStack[] c_inv = ((EntityPlayer)
-		// Minecraft.getMinecraft().thePlayer).inventory.mainInventory;
-		// item.removeFromInventory(inv, c_inv);
-		// } else {
-		// item.removeFromInventory(inv);
-		// }
+		ItemStack[] inv = user.inventory.mainInventory;
+		item.removeFromInventory(inv);
 		ChatHandler.sendChat(user, item.getItemName() + " used!");
 	}
 
