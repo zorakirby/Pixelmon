@@ -330,12 +330,12 @@ public class ModelUmbreon extends ModelBase
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
     HeadBase.rotateAngleX = f4 / 57.29578F;
     HeadBase.rotateAngleY = f3 / 57.29578F;
-    FrontLegR.rotateAngleX = MathHelper.cos(f * .8F) * 1F * f1;
-    BackLegR.rotateAngleX = MathHelper.cos(f * 1F + (float)Math.PI) * .8F * f1;
-    BackLegL.rotateAngleX = MathHelper.cos(f * 1F) * .8F * f1;
-    FrontLegL.rotateAngleX = MathHelper.cos(f * .8F + (float)Math.PI) * 1F * f1;
-    FrontBottomLegL.rotateAngleX = MathHelper.cos(f * .8F + 2 +(float)Math.PI) * .9F * f1 - .5F;
-    FrontBottomLegR.rotateAngleX = MathHelper.cos(f * .8F + 2) * .9F * f1 - .5F;
+    FrontLegR.rotateAngleX = MathHelper.cos(f * .8F) * .5F * f1;
+    BackLegR.rotateAngleX = MathHelper.cos(f * 1F + (float)Math.PI) * .4F * f1;
+    BackLegL.rotateAngleX = MathHelper.cos(f * 1F) * .4F * f1;
+    FrontLegL.rotateAngleX = MathHelper.cos(f * .8F + (float)Math.PI) * .5F * f1;
+    FrontBottomLegL.rotateAngleX = (MathHelper.cos(f * .8F + (float)Math.PI)-1) * .3F * f1;
+    FrontBottomLegR.rotateAngleX = (MathHelper.cos(f * .8F)-1) * .3F * f1;
     TailBase.rotateAngleZ = MathHelper.cos(f * 1F) * .3F * f1;
   }
 

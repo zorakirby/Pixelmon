@@ -490,7 +490,7 @@ public class BattleController {
 		// } else {
 		// item.removeFromInventory(inv);
 		// }
-		ChatHandler.sendChat(user, item.getItemDisplayName(usedStack) + " used!");
+		ChatHandler.sendChat(user, item.getItemName() + " used!");
 	}
 
 	public boolean isTrainerVsTrainer() {

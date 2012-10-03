@@ -9,6 +9,7 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.helpers.*;
 import pixelmon.enums.EnumPokemon;
+import pixelmon.enums.EnumTrainers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.CommandBase;
@@ -35,6 +36,10 @@ public class CommandSpawn extends CommandBase {
 				var6.setPosition(var4.posX, var4.posY + 1, var4.posZ);
 				if (var2.length>1) if (var2[1].equalsIgnoreCase("s"))
 					((EntityPixelmon)var6).setIsShiny(true);
+				var4.worldObj.spawnEntityInWorld(var6);
+			}else if(EnumTrainers.has(var5)){	
+				Entity var6 = PixelmonEntityList.createEntityByName(var5, var4.worldObj);
+				var6.setPosition(var4.posX, var4.posY + 1, var4.posZ);
 				var4.worldObj.spawnEntityInWorld(var6);
 			} else {
 				var1.sendChatToPlayer(var5 + " is not in game!");
