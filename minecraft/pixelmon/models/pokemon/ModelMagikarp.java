@@ -138,8 +138,10 @@ public class ModelMagikarp extends ModelBase {
 		BodyBase.render(f5);
 	}
 
-	private void setRotationAnglesOutOfWater(float f, float f1, float f2, float f3, float f4, float f5) {
-		
+	private void setRotationAnglesOutOfWater(float f, float f1, float f2, float f3, float f4, float f5) 
+	{
+		BodyBase.rotateAngleZ = 1.5F;
+		BodyBase.rotationPointY = 22F;
 		
 	}
 
