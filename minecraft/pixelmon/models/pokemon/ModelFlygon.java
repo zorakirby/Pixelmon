@@ -403,6 +403,19 @@ public class ModelFlygon extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    HeadBase.rotateAngleX = f4 / 57.29578F;
+    HeadBase.rotateAngleY = f3 / 57.29578F;
+    wing1.rotationPointY = MathHelper.cos(.5F * f2)*1.5F - 8F;
+    wing2.rotationPointY = MathHelper.cos(.5F * f2)*1.5F - 8F;
+    TailBase.rotationPointY = MathHelper.cos(.5F * f2)*1.5F - 2F;
+    LegR.rotationPointY = MathHelper.cos(.5F * f2)*1.5F - 1F;
+    LegL.rotationPointY = MathHelper.cos(.5F * f2)*1.5F - 1F;
+    BodyBase.rotationPointY = MathHelper.cos(.5F * f2)*1.5F - 6F;
+    wing2.rotateAngleZ = MathHelper.cos(2F * f2 + 3.14159F)*.5F - .5F;
+    wing1.rotateAngleZ = MathHelper.cos(2F * f2)*.5F + .5F;
+    LegR.rotateAngleX = MathHelper.cos(.5F * f2 + .2F + (float)Math.PI)*.2F;
+    LegL.rotateAngleX = MathHelper.cos(.5F * f2 + .5F + (float)Math.PI)*.2F;
+    TailBase.rotateAngleX = MathHelper.cos(.5F * f2)*.1F;
   }
 
 }
