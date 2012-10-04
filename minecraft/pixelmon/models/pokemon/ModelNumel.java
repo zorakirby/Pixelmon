@@ -1,6 +1,7 @@
 package pixelmon.models.pokemon;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -602,6 +603,10 @@ public class ModelNumel extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    FRONTLEFTLEGPIECE.rotateAngleX=MathHelper.cos(f*1F)*1F*f1;
+    BACKRIGHTLEGPIECE.rotateAngleX=MathHelper.cos(f*1F)*1F*f1;
+    FRONTRIGHTLEGPIECE.rotateAngleX=MathHelper.cos(f*1F + (float)Math.PI)*1F*f1;
+    BACKLEFTLEGPIECE.rotateAngleX=MathHelper.cos(f*1F + (float)Math.PI)*1F*f1;
   }
 
 }
