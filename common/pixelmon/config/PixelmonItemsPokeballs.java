@@ -132,7 +132,7 @@ public class PixelmonItemsPokeballs {
 		moonBallDiscID = cfg.getOrCreateIntProperty("MoonBallDisc", "item", 8055).getInt();
 		friendBallDiscID = cfg.getOrCreateIntProperty("FriendBallDisc", "item", 8056).getInt();
 		loveBallDiscID = cfg.getOrCreateIntProperty("LoveBallDisc", "item", 8057).getInt();
-		heavyBallLidID = cfg.getOrCreateIntProperty("HeavyBallDisc", "item", 8058).getInt();
+		heavyBallDiscID = cfg.getOrCreateIntProperty("HeavyBallDisc", "item", 8058).getInt();
 
 		ironBaseID = cfg.getOrCreateIntProperty("IronBase", "item", 8070).getInt();
 		ironDiscID = cfg.getOrCreateIntProperty("IronDisc", "item", 8071).getInt();
