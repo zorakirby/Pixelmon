@@ -12,15 +12,27 @@ public class CameruptInteraction extends PixelmonInteraction {
 	}
 
 	@Override
-	public boolean interact(EntityPlayer par1EntityPlayer) {
-		ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
+	  public boolean interact(EntityPlayer par1EntityPlayer)
+    {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
 
-		if (var2 != null && var2.itemID == Item.bucketEmpty.shiftedIndex) {
-			par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, new ItemStack(Item.bucketLava));
-			return true;
-		} else {
-			return false;
-		}
-	}
+        if (var2 != null && var2.itemID == Item.bucketEmpty.shiftedIndex)
+        {
+            if (--var2.stackSize <= 0)
+            {
+                par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, new ItemStack(Item.bucketLava));
+            }
+            else if (!par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.bucketLava)))
+            {
+                par1EntityPlayer.dropPlayerItem(new ItemStack(Item.bucketMilk.shiftedIndex, 1, 0));
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 }
