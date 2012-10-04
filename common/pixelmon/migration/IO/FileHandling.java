@@ -12,6 +12,13 @@ import net.minecraft.src.WorldProvider;
 
 public class FileHandling {
 
+	/**
+	 * Retrieves the save as an NBTTagCompound for processing
+	 * 
+	 * @param provider
+	 *            the world provider for the modelled world
+	 * @return the NBTTagCompound stored in the save
+	 */
 	public static NBTTagCompound loadMigration(WorldProvider provider) {
 		File migrationFile = getSaveFile(provider);
 		try {
@@ -22,6 +29,13 @@ public class FileHandling {
 		return null;
 	}
 
+	/**
+	 * Manages the path for saving and loading migration data
+	 * 
+	 * @param provider
+	 *            the world provider for the modelled world
+	 * @return the save file
+	 */
 	private static File getSaveFile(WorldProvider provider) {
 		File f = new File("saves/" + provider.getSaveFolder() + "/migration/migration.data");
 		if (!f.exists()) {

@@ -477,10 +477,6 @@ public class BattleController {
 		item = (PixelmonItem) usedStack.getItem();
 		item.useFromBag(userPokemon, targetPokemon, additionalInfo);
 
-		/*
-		 * This code has the serious issue that battle controller is run on the
-		 * server and doesn't have access to Minecraft.thePlayer
-		 */
 		ItemStack[] inv = user.inventory.mainInventory;
 		item.removeFromInventory(inv);
 		ChatHandler.sendChat(user, item.getItemName() + " used!");

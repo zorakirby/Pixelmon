@@ -6,6 +6,16 @@ import net.minecraft.src.WorldProvider;
 
 public class Migration extends Thread {
 	private WorldProvider worldProvider;
+
+	/**
+	 * Constructor for the Migration code base. It's a threaded class with the
+	 * normal sorts of functions, calls run on creation to create the thread and
+	 * get it set up
+	 * 
+	 * @param provider
+	 *            The world provider associated with the chosen dimension to
+	 *            model migration for
+	 */
 	public Migration(WorldProvider provider) {
 		worldProvider = provider;
 		start();
@@ -18,12 +28,16 @@ public class Migration extends Thread {
 		init();
 		loop();
 	}
-	
-	private void init(){
+
+	/*
+	 * Sets up initial migration set up, loading in any previous saves found and
+	 * setting up the file environment
+	 */
+	private void init() {
 		saveManager = new MigrationSaveManager(worldProvider);
 	}
-	
-	private void loop(){
-		
+
+	private void loop() {
+
 	}
 }
