@@ -1,19 +1,22 @@
 package pixelmon;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.src.EntityFX;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.ModelBase;
+import net.minecraft.src.World;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.world.WorldEvent;
 import pixelmon.battles.animations.particles.EntityGastlyParticle;
 import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.config.PixelmonEntityList;
-import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
@@ -22,12 +25,11 @@ import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumPokemon;
-import pixelmon.enums.EnumTrainers;
-import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiAttacking;
 import pixelmon.gui.GuiChoosePokemon;
 import pixelmon.gui.GuiChooseStarter;
 import pixelmon.gui.GuiHealer;
+import pixelmon.gui.GuiInventoryOverlay;
 import pixelmon.gui.GuiLearnMove;
 import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.gui.GuiScreenPokeChecker;
@@ -37,7 +39,6 @@ import pixelmon.keybindings.MinimizeMaximizeOverlayKey;
 import pixelmon.keybindings.NextPokemonKey;
 import pixelmon.keybindings.PreviousPokemonKey;
 import pixelmon.keybindings.SendPokemonKey;
-import pixelmon.render.RenderFreeWaterPixelmon;
 import pixelmon.render.RenderPixelmon;
 import pixelmon.render.RenderPokeball;
 import pixelmon.render.RenderTileEntityAnvil;
@@ -46,25 +47,9 @@ import pixelmon.render.RenderTileEntityHealer;
 import pixelmon.render.RenderTileEntityPC;
 import pixelmon.render.RenderTrainer;
 import pixelmon.sounds.Sounds;
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityPlayer;
-
-import net.minecraft.src.EntityFX;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.RenderLiving;
-import net.minecraft.src.World;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.world.WorldEvent;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
 
 public class ClientProxy extends CommonProxy {
 	@Override
@@ -82,6 +67,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
+		MinecraftForge.EVENT_BUS.register(new GuiInventoryOverlay());
 	}
 
 	@Override
