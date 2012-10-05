@@ -1,6 +1,7 @@
 package pixelmon.gui;
 
 import java.awt.Rectangle;
+import java.lang.reflect.Method;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.FontRenderer;
@@ -19,6 +20,9 @@ public class GuiInventoryOverlay extends GuiScreen{
 	Rectangle button;
 	boolean clicked = false;
 	boolean open = false;
+	
+	public GuiInventoryOverlay(){
+	}
 	
 	@ForgeSubscribe
 	public void onRenderWorldLast(RenderWorldLastEvent event){
