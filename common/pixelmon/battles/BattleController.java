@@ -50,6 +50,7 @@ public class BattleController {
 
 	public ArrayList<StatusEffectBase> battleStatusList = new ArrayList<StatusEffectBase>();
 	private boolean battleEnded = false;
+	public int turnCount = 0;
 
 	public BattleController(IBattleParticipant participant1, IBattleParticipant participant2) throws Exception {
 		this.participant1 = participant1;
@@ -156,6 +157,7 @@ public class BattleController {
 				if (!battleEnded)
 					checkAndReplaceFaintedPokemon(participant2, participant1);
 				moveStage = MoveStage.PickAttacks;
+				turnCount++;
 			}
 			battleTicks = 0;
 		}
