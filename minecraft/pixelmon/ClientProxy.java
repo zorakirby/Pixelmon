@@ -33,6 +33,7 @@ import pixelmon.gui.GuiInventoryOverlay;
 import pixelmon.gui.GuiLearnMove;
 import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.gui.GuiScreenPokeChecker;
+import pixelmon.gui.inventoryExtended.InventoryDetectionTickHandler;
 import pixelmon.gui.pc.GuiPC;
 import pixelmon.gui.pokedex.GuiPokedex;
 import pixelmon.keybindings.MinimizeMaximizeOverlayKey;
@@ -50,6 +51,8 @@ import pixelmon.sounds.Sounds;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.registry.TickRegistry;
 
 public class ClientProxy extends CommonProxy {
 	@Override
@@ -67,7 +70,6 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
-		MinecraftForge.EVENT_BUS.register(new GuiInventoryOverlay());
 	}
 
 	@Override
@@ -183,5 +185,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerSounds() {
 		Sounds.installSounds();
+	}
+	
+	@Override
+	public void registerTickHandlers() {
+		TickRegistry.registerTickHandler(new InventoryDetectionTickHandler(), Side.CLIENT);
 	}
 }

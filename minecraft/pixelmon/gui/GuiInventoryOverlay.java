@@ -1,10 +1,10 @@
 package pixelmon.gui;
 
 import java.awt.Rectangle;
-import java.lang.reflect.Method;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.FontRenderer;
+import net.minecraft.src.GuiContainerCreative;
 import net.minecraft.src.GuiInventory;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.RenderHelper;
@@ -21,13 +21,10 @@ public class GuiInventoryOverlay extends GuiScreen{
 	boolean clicked = false;
 	boolean open = false;
 	
-	public GuiInventoryOverlay(){
-	}
-	
 	@ForgeSubscribe
 	public void onRenderWorldLast(RenderWorldLastEvent event){
-		if(Minecraft.getMinecraft().currentScreen instanceof GuiInventory){
-			GuiInventory gui = (GuiInventory) Minecraft.getMinecraft().currentScreen;
+		if(Minecraft.getMinecraft().currentScreen instanceof GuiInventory || Minecraft.getMinecraft().currentScreen instanceof GuiContainerCreative){
+			//GuiInventory gui = (GuiInventory) Minecraft.getMinecraft().currentScreen;
 			FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
 			ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 			int var6 = var5.getScaledWidth();

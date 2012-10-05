@@ -52,4 +52,10 @@ public class CommonProxy implements IGuiHandler {
 
 	public void registerSounds() {
 	}
+
+	public void registerTickHandlers() {
+	}
+
+	public void loadEvents() {
+	}
 }

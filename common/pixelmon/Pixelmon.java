@@ -19,6 +19,7 @@ import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
+import pixelmon.migration.MigrationLoader;
 import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.spawning.PixelmonWaterSpawner;
@@ -67,7 +68,6 @@ public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
 
-	@SideOnly(Side.SERVER)
 	public static Migration migration;
 
 	@SidedProxy(clientSide = "pixelmon.ClientProxy", serverSide = "pixelmon.CommonProxy")
@@ -92,26 +92,32 @@ public class Pixelmon {
 	@Init
 	public void load(FMLInitializationEvent event) {
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
-		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
-		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
-		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
 		proxy.preloadTextures();
 		proxy.registerSounds();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
+		
+		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
+
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
-		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
-		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
+
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
+		MinecraftForge.EVENT_BUS.register(new MigrationLoader());
+		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
+		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
+
+		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
+		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
+		proxy.registerTickHandlers();
 	}
 
 	@PostInit
@@ -125,8 +131,6 @@ public class Pixelmon {
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandFreeze());
 		}
-		// mgalmigration = new
-		// Migration(event.getServer().worldServerForDimension(0).provider);
 	}
 
 }
