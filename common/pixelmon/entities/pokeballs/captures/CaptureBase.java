@@ -19,7 +19,7 @@ public abstract class CaptureBase {
 	public void doAfterEffect(EnumPokeballs type, EntityPixelmon p) {
 	}
 
-	public int modifyCaptureRate(int captureRate) {
+	public int modifyCaptureRate(String pokemonName, int captureRate) {
 		return captureRate;
 	}
 }

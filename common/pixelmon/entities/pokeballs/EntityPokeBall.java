@@ -143,7 +143,7 @@ public class EntityPokeBall extends EntityThrowable {
 		this.setPosition(this.posX, this.posY, this.posZ);
 		this.yOffset = 0.0F;
 		isInitialized = true;
-		Vec3 posVec = Vec3.createVectorHelper(posX - pixelmon.posX, posY- pixelmon.posY, posZ- pixelmon.posZ);
+		Vec3 posVec = Vec3.createVectorHelper(posX - pixelmon.posX, posY - pixelmon.posY, posZ - pixelmon.posZ);
 		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) * 0.8;
 		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI)) * 0.8;
 		this.motionY = (double) (-MathHelper.sin(0)) * 0.8;
@@ -518,7 +518,7 @@ public class EntityPokeBall extends EntityThrowable {
 			return;
 		}
 		int pokemonRate = p2.baseStats.CatchRate;
-		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), pokemonRate);
+		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), p2.getName(), pokemonRate);
 		int hpMax = p2.getMaxHealth();
 		int hpCurrent = p2.getHealth();
 		int bonusStatus = 1;

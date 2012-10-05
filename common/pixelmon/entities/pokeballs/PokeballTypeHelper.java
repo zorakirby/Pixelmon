@@ -39,9 +39,9 @@ public class PokeballTypeHelper {
 			if (c.pokeball == type) c.doAfterEffect(type, p2);
 	}
 
-	public static int modifyCaptureRate(EnumPokeballs type, int captureRate) {
+	public static int modifyCaptureRate(EnumPokeballs type, String pokemonName, int captureRate) {
 		for (CaptureBase c: captureList)
-			if (c.pokeball == type) return c.modifyCaptureRate(captureRate);
+			if (c.pokeball == type) return c.modifyCaptureRate(pokemonName, captureRate);
 		return captureRate;
 	}
 
