@@ -1,12 +1,13 @@
 package pixelmon.migration;
 
 import pixelmon.migration.IO.MigrationSaveManager;
+import pixelmon.migration.worldRenderer.WorldRenderer;
 import net.minecraft.src.WorldChunkManager;
 import net.minecraft.src.WorldProvider;
 
 public class Migration extends Thread {
 	private WorldProvider worldProvider;
-
+	private WorldRenderer worldRenderer;
 	/**
 	 * Constructor for the Migration code base. It's a threaded class with the
 	 * normal sorts of functions, calls run on creation to create the thread and
@@ -35,6 +36,8 @@ public class Migration extends Thread {
 	 */
 	private void init() {
 		saveManager = new MigrationSaveManager(worldProvider);
+		worldRenderer = new WorldRenderer(worldProvider);
+		worldRenderer.renderWorld();
 	}
 
 	private void loop() {

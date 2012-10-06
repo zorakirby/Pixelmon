@@ -55,4 +55,7 @@ public class CommonProxy implements IGuiHandler {
 
 	public void registerTickHandlers() {
 	}
+
+	public void loadEvents() {
+	}
 }
