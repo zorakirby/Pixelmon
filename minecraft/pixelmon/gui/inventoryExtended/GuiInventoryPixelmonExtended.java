@@ -9,6 +9,7 @@ import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.Tessellator;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
@@ -52,20 +53,25 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
-		super.drawGuiContainerBackgroundLayer(par1, par2, par3);
+		int var4 = this.mc.renderEngine.getTexture("/gui/inventory.png");
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        this.mc.renderEngine.bindTexture(var4);
+        this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png"));
+		this.drawTexturedModalRect(width/2 -130, height/2-83, 0, 0, 160, 182);
+        func_74223_a(this.mc, guiLeft + 51, guiTop + 75, 30, (float)(guiLeft + 51) - 102, (float)(guiTop + 75 - 50) - 100);
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glDepthMask(false);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		int textureIndex;
-		RenderHelper.enableGUIStandardItemLighting();
-		textureIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png");
-		Minecraft.getMinecraft().renderEngine.bindTexture(textureIndex);
+		GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_FOG);
+        Tessellator var2 = Tessellator.instance;
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
-		this.drawTexturedModalRect(width/2 -130, height/2-83, 0, 0, 160, 182);
+		RenderHelper.enableGUIStandardItemLighting();
 
 		fontRenderer.setUnicodeFlag(true);
 		int i = 0;
@@ -83,7 +89,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 				i = p.order;
 				fontRenderer.drawString(displayName, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
-				Minecraft.getMinecraft().renderEngine.bindTexture(textureIndex);
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png"));
 				if (p.isMale)
 					this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
 				else
