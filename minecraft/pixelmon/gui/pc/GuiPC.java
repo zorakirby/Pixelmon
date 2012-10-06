@@ -21,7 +21,6 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiPixelmonOverlay;
-import pixelmon.gui.GuiScreenPokeCheckerPC;
 import pixelmon.storage.ComputerBox;
 import pixelmon.storage.ComputerManager;
 import pixelmon.storage.PlayerComputerStorage;

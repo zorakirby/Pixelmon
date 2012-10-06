@@ -1,20 +1,19 @@
-package pixelmon.gui;
+package pixelmon.gui.pc;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiScreen;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.gui.pc.GuiPC;
-import net.minecraft.src.GuiButton;
-
-import net.minecraft.src.StatCollector;
+import pixelmon.gui.GuiScreenPokeChecker;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 
-	private GuiPC parent;
+	protected GuiScreen parent;
 	private int index, box;
 
-	public GuiScreenPokeCheckerPC(PixelmonDataPacket packet, GuiPC parent, int box, int index) {
+	public GuiScreenPokeCheckerPC(PixelmonDataPacket packet, GuiScreen parent, int box, int index) {
 		super(packet);
 		this.parent = parent;
 		this.index = index;
@@ -40,6 +39,12 @@ public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 			break;
 		}
 
+	}
+	
+	public void keyTyped(char c, int i){
+		if(i == 1){
+			mc.displayGuiScreen(parent);
+		}
 	}
 
 }

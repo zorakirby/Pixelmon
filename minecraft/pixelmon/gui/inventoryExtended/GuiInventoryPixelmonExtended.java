@@ -1,10 +1,5 @@
 package pixelmon.gui.inventoryExtended;
 
-import org.lwjgl.opengl.GL11;
-
-import pixelmon.ServerStorageDisplay;
-import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.gui.GuiPixelmonOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiButton;
@@ -13,18 +8,46 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.Tessellator;
 
+import org.lwjgl.opengl.GL11;
+
+import pixelmon.ServerStorageDisplay;
+import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.gui.GuiPixelmonOverlay;
+
 public class GuiInventoryPixelmonExtended extends GuiInventory {
+	
+	public SlotInventoryPixelmon[] pixelmonSlots;
 
 	GuiPixelmonOverlay overlay = new GuiPixelmonOverlay();
+	boolean pixelmonMenuOpen;
+	GuiButton pMenuButton;
+	PixelmonDataPacket selected;
 
 	public GuiInventoryPixelmonExtended(EntityPlayer par1EntityPlayer) {
 		super(par1EntityPlayer);
+		pixelmonMenuOpen = false;
+		pixelmonSlots = new SlotInventoryPixelmon[6];
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
-
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
+				Minecraft.getMinecraft().displayHeight);
+		int var6 = var5.getScaledWidth();
+		int var7 = var5.getScaledHeight();
+		for(int i = 0; i < pixelmonSlots.length; i++){
+			pixelmonSlots[i] = null;
+		}
+		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
+			int offset = 0;
+			if (p != null) {
+				int i = p.order;
+				int x = 3;
+				int y = var7 / 6 + i * 30 + 3 + offset;
+				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
+			}
+		}
 		controlList.add(new GuiButton(2, this.width * 4 / 5, this.height / 2, 50, 20, "Pixelmon"));
 	}
 
@@ -49,7 +72,11 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		fontRenderer.setUnicodeFlag(true);
 		int i = 0;
 
-		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
+		for (SlotInventoryPixelmon slot: pixelmonSlots) {
+			if(slot == null){
+				continue;
+			}
+			PixelmonDataPacket p = slot.pokemonData;
 			int offset = 0;
 			if (p != null) {
 				String displayName = p.name;
@@ -123,5 +150,42 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	protected void actionPerformed(GuiButton par1GuiButton) {
 		System.out.println("new gui action performed");
 		super.actionPerformed(par1GuiButton);
+		if(par1GuiButton.id == 3){
+			GuiScreenPokeCheckerInv poke = new GuiScreenPokeCheckerInv(selected, this);
+			mc.displayGuiScreen(poke);
+		}
+	}
+	
+	@Override
+	protected void mouseClicked(int x, int y, int par3) {
+		super.mouseClicked(x, y, par3);
+		 if(par3 == 0){
+				if(pixelmonMenuOpen){
+					controlList.remove(pMenuButton);
+					pMenuButton = null;
+					pixelmonMenuOpen = false;
+					selected = null;
+				}
+		 }
+		for(SlotInventoryPixelmon s: pixelmonSlots){
+			if(s != null){
+				if(s.getBounds().contains(x, y)){
+					if(par3 == 1){
+						if(pixelmonMenuOpen){
+							controlList.remove(pMenuButton);
+							pMenuButton = null;
+							pixelmonMenuOpen = false;
+							selected = null;
+						}
+						pMenuButton = new GuiButton(3, x, y, 50, 20, "Summary");
+						controlList.add(pMenuButton);
+						pixelmonMenuOpen = true;
+						selected = s.pokemonData;
+					}
+					else if(par3 == 0){
+					}
+				}
+			}
+		}
 	}
 }

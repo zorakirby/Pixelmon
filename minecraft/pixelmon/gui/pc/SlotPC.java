@@ -11,12 +11,13 @@ import net.minecraft.src.NBTTagCompound;
 public class SlotPC {
 
 	public PixelmonDataPacket pokemonData;
-	public int x, y;
+	public int x, y, swidth;
 
 	public SlotPC(int x, int y, PixelmonDataPacket pokemon) {
 		this.pokemonData = pokemon;
 		this.x = x;
 		this.y = y;
+		swidth = 30;
 	}
 
 	public int getRenderInt() {
@@ -46,7 +47,7 @@ public class SlotPC {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, 30, 30);
+		return new Rectangle(x, y, swidth, swidth);
 	}
 
 }
