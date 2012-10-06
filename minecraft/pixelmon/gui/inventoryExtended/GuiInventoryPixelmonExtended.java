@@ -52,6 +52,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
+		super.drawGuiContainerBackgroundLayer(par1, par2, par3);
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
@@ -119,13 +120,11 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			i++;
 		}
 		fontRenderer.setUnicodeFlag(false);
-
 		RenderHelper.disableStandardItemLighting();
 
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		super.drawGuiContainerBackgroundLayer(par1, par2, par3);
 	}
 
 	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
