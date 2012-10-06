@@ -93,8 +93,6 @@ public class Pixelmon {
 	public void load(FMLInitializationEvent event) {
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
-		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
-		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
 		proxy.preloadTextures();
@@ -111,7 +109,10 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
+		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
+		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
+		proxy.registerTickHandlers();
 	}
 
 	@PostInit
