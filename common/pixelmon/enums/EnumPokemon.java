@@ -54,6 +54,7 @@ public enum EnumPokemon {
 	Magneton("Magneton", ClassType.Pixelmon),
 	Mankey("Mankey", ClassType.Pixelmon),
 	Mareep("Mareep", ClassType.Pixelmon),
+	Meowth("Meowth", ClassType.Pixelmon),
 	Metapod("Metapod", ClassType.Pixelmon),
 	Mew("Mew", ClassType.Pixelmon),
 	Miltank("Miltank", ClassType.Pixelmon),
