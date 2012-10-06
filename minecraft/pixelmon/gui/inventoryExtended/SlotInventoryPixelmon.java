@@ -7,7 +7,7 @@ public class SlotInventoryPixelmon extends SlotPC{
 
 	public SlotInventoryPixelmon(int x, int y, PixelmonDataPacket pokemon) {
 		super(x, y, pokemon);
-		swidth = 30;
+		swidth = 18;
 		//change this when resized
 	}
 
