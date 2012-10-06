@@ -35,8 +35,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		super.initGui();
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);
-		int var6 = var5.getScaledWidth();
-		int var7 = var5.getScaledHeight();
+		int width = var5.getScaledWidth();
+		int height = var5.getScaledHeight();
 		for (int i = 0; i < pixelmonSlots.length; i++) {
 			pixelmonSlots[i] = null;
 		}
@@ -44,8 +44,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			int offset = 0;
 			if (p != null) {
 				int i = p.order;
-				int x = 3;
-				int y = var7 / 6 + i * 30 + 3 + offset;
+				int x = width/2 - 122;
+				int y = height/2+i * 18 -75;
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
 		}
