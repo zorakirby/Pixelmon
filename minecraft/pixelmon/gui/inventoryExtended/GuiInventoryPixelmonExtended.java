@@ -8,6 +8,7 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.Tessellator;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -44,8 +45,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			int offset = 0;
 			if (p != null) {
 				int i = p.order;
-				int x = width/2 - 122;
-				int y = height/2+i * 18 -75;
+				int x = width / 2 - 122;
+				int y = height / 2 + i * 18 - 75;
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
 		}
@@ -100,19 +101,36 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 				else
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-				drawImageQuad(spriteIndex, width/2 - 121, height/2+i * 18 -75, 16f, 16f, 0f, 0f, 1f, 1f);
+				drawImageQuad(spriteIndex, width / 2 - 121, height / 2 + i * 18 - 65, 16f, 16f, 0f, 0f, 1f, 1f);
 
 				if (p.heldItem != null) {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
-					drawImageQuad(spriteIndex, width/2 - 100, height/2+i * 18 -72, 16f, 16f, 0f, 0f, 16f / 256f, 16f / 256f);
-				}else{
+					drawImageQuad(spriteIndex, width / 2 - 99, height / 2 + i * 18 - 62, 16f, 16f, 0f, 0f, 16f / 256f, 16f / 256f);
+				} else {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
-					drawImageQuad(spriteIndex, width/2 - 100, height/2+i * 18 -72, 10f, 10f, 0f, 0f, 1f, 1f);
+					drawImageQuad(spriteIndex, width / 2 - 99, height / 2 + i * 18 - 62, 10f, 10f, 0f, 0f, 1f, 1f);
 				}
 
 			}
 			i++;
 		}
+
+		int mouseX = Mouse.getX() * this.width / this.mc.displayWidth;
+		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+		int ind = 0;
+		if (!pixelmonMenuOpen) {
+			for (SlotInventoryPixelmon s : pixelmonSlots) {
+				if (s != null) {
+					s.x = width / 2 - 121;
+					s.y = height / 2 + ind * 18 - 65;
+					if (s.getBounds().contains(mouseX, mouseY)) {
+						drawPokemonInfo(mouseX, mouseY, s);
+					}
+				}
+				ind++;
+			}
+		}
+
 		fontRenderer.setUnicodeFlag(false);
 		RenderHelper.disableStandardItemLighting();
 
@@ -120,6 +138,32 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		func_74223_a(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - 102, (float) (guiTop + 75 - 50) - 100);
+
+	}
+
+	private void drawPokemonInfo(int x, int y, SlotInventoryPixelmon s) {
+		if (s == null)
+			return;
+		this.drawGradientRect(s.x - 84, s.y - 2, s.x - 4, s.y + 20, -13158600, -13158600);
+		PixelmonDataPacket p = s.pokemonData;
+		String displayName = p.name;
+		if (!p.nickname.equals(""))
+			displayName = p.nickname;
+		int var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
+		fontRenderer.drawString(displayName, s.x - 82, s.y, 0xFFFFFF);
+		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+		if (p.isMale)
+			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 208, 5, 9);
+		else
+			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 218, 5, 9);
+
+		fontRenderer.drawString("Lvl " + p.lvl, s.x + -81, s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
+		if (p.health <= 0) {
+			fontRenderer.drawString("Fainted", s.x - 77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
+		} else {
+			fontRenderer.drawString("HP " + p.health + "/" + p.hp, s.x - 77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1,
+					0xFFFFFF);
+		}
 
 	}
 
