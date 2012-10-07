@@ -15,7 +15,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.gui.GuiPixelmonOverlay;
 
 public class GuiInventoryPixelmonExtended extends GuiInventory {
-	
+
 	public SlotInventoryPixelmon[] pixelmonSlots;
 
 	GuiPixelmonOverlay overlay = new GuiPixelmonOverlay();
@@ -36,7 +36,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
-		for(int i = 0; i < pixelmonSlots.length; i++){
+		for (int i = 0; i < pixelmonSlots.length; i++) {
 			pixelmonSlots[i] = null;
 		}
 		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
@@ -48,7 +48,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
 		}
-		controlList.add(new GuiButton(2, this.width * 4 / 5, this.height / 2, 50, 20, "Pixelmon"));
 	}
 
 	@Override
@@ -63,16 +62,16 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		int textureIndex;
 		RenderHelper.enableGUIStandardItemLighting();
-		textureIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended.png");
+		textureIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png");
 		Minecraft.getMinecraft().renderEngine.bindTexture(textureIndex);
 		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
-		this.drawTexturedModalRect(0, var7 / 6, 0, 0, 160, 182);
+		this.drawTexturedModalRect(width/2 -130, height/2-83, 0, 0, 160, 182);
 
 		fontRenderer.setUnicodeFlag(true);
 		int i = 0;
 
-		for (SlotInventoryPixelmon slot: pixelmonSlots) {
-			if(slot == null){
+		for (SlotInventoryPixelmon slot : pixelmonSlots) {
+			if (slot == null) {
 				continue;
 			}
 			PixelmonDataPacket p = slot.pokemonData;
@@ -129,7 +128,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
-	
+
 	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureHandle);
@@ -147,30 +146,29 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 	@Override
 	protected void actionPerformed(GuiButton par1GuiButton) {
-		System.out.println("new gui action performed");
 		super.actionPerformed(par1GuiButton);
-		if(par1GuiButton.id == 3){
+		if (par1GuiButton.id == 3) {
 			GuiScreenPokeCheckerInv poke = new GuiScreenPokeCheckerInv(selected, this);
 			mc.displayGuiScreen(poke);
 		}
 	}
-	
+
 	@Override
 	protected void mouseClicked(int x, int y, int par3) {
 		super.mouseClicked(x, y, par3);
-		 if(par3 == 0){
-				if(pixelmonMenuOpen){
-					controlList.remove(pMenuButton);
-					pMenuButton = null;
-					pixelmonMenuOpen = false;
-					selected = null;
-				}
-		 }
-		for(SlotInventoryPixelmon s: pixelmonSlots){
-			if(s != null){
-				if(s.getBounds().contains(x, y)){
-					if(par3 == 1){
-						if(pixelmonMenuOpen){
+		if (par3 == 0) {
+			if (pixelmonMenuOpen) {
+				controlList.remove(pMenuButton);
+				pMenuButton = null;
+				pixelmonMenuOpen = false;
+				selected = null;
+			}
+		}
+		for (SlotInventoryPixelmon s : pixelmonSlots) {
+			if (s != null) {
+				if (s.getBounds().contains(x, y)) {
+					if (par3 == 1) {
+						if (pixelmonMenuOpen) {
 							controlList.remove(pMenuButton);
 							pMenuButton = null;
 							pixelmonMenuOpen = false;
@@ -180,8 +178,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 						controlList.add(pMenuButton);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;
-					}
-					else if(par3 == 0){
+					} else if (par3 == 0) {
 					}
 				}
 			}
