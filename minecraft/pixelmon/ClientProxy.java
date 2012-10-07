@@ -29,7 +29,6 @@ import pixelmon.gui.GuiAttacking;
 import pixelmon.gui.GuiChoosePokemon;
 import pixelmon.gui.GuiChooseStarter;
 import pixelmon.gui.GuiHealer;
-import pixelmon.gui.GuiInventoryOverlay;
 import pixelmon.gui.GuiLearnMove;
 import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.gui.GuiScreenPokeChecker;
