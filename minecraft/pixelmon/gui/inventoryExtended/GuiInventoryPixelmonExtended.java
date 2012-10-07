@@ -37,14 +37,13 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		int var7 = var5.getScaledHeight();
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthMask(false);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		int var4;
-		var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended.png");
-		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+		int textureIndex;
+		RenderHelper.enableGUIStandardItemLighting();
+		textureIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended.png");
+		Minecraft.getMinecraft().renderEngine.bindTexture(textureIndex);
 		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
 		this.drawTexturedModalRect(0, var7 / 6, 0, 0, 160, 182);
-		RenderHelper.enableGUIStandardItemLighting();
 
 		fontRenderer.setUnicodeFlag(true);
 		int i = 0;
@@ -58,7 +57,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 				i = p.order;
 				fontRenderer.drawString(displayName, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
-				Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+				Minecraft.getMinecraft().renderEngine.bindTexture(textureIndex);
 				if (p.isMale)
 					this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
 				else
@@ -71,15 +70,15 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 					numString = "0" + p.nationalPokedexNumber;
 				else
 					numString = "" + p.nationalPokedexNumber;
-				int var9;
+				int spriteIndex;
 				if (p.isShiny)
-					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 				else
-					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-				drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
+					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+				drawImageQuad(spriteIndex, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItem != null) {
-					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
-					drawImageQuad(var9, 17, var7 / 6 + i * 30 + 17 + offset, 8, 8, 0f, 0f, 16f / 256f, 16f / 256f);
+					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
+					drawImageQuad(spriteIndex, 17, var7 / 6 + i * 30 + 17 + offset, 8, 8, 0f, 0f, 16f / 256f, 16f / 256f);
 				}
 
 				fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);

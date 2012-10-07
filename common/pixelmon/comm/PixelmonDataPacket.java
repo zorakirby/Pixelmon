@@ -46,6 +46,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public ItemStack heldItem;
 	public boolean hasOwner;
 	public boolean doesLevel;
+	
 
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
 
