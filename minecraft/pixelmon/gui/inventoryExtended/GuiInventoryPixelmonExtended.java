@@ -103,6 +103,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				else
 					numString = "" + p.nationalPokedexNumber;
 				int spriteIndex;
+				
 				if (p.isShiny)
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 				else
