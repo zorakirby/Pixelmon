@@ -25,6 +25,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	GuiButton pMenuButton;
 	PixelmonDataPacket selected;
 
+	private float xSize_lo, ySize_lo;
+
 	public GuiInventoryPixelmonExtended(EntityPlayer par1EntityPlayer) {
 		super(par1EntityPlayer);
 		pixelmonMenuOpen = false;
@@ -50,6 +52,13 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
 		}
+	}
+
+	@Override
+	public void drawScreen(int par1, int par2, float par3) {
+		super.drawScreen(par1, par2, par3);
+		this.xSize_lo = (float) par1;
+		this.ySize_lo = (float) par2;
 	}
 
 	@Override
@@ -137,7 +146,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		func_74223_a(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - 102, (float) (guiTop + 75 - 50) - 100);
+		func_74223_a(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - this.xSize_lo, (float) (guiTop + 75 - 50) - this.ySize_lo);
 
 	}
 
