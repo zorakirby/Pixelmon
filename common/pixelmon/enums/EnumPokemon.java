@@ -27,6 +27,7 @@ public enum EnumPokemon {
 	Eevee("Eevee", ClassType.Pixelmon),
 	Ekans("Ekans", ClassType.Pixelmon),
 	Electrode("Electrode", ClassType.Pixelmon),
+	Farfetchd("Farfetchd", ClassType.Pixelmon),
 	Flareon("Flareon", ClassType.Pixelmon),
 	Flygon("Flygon", ClassType.Pixelmon),
 	Gastly("Gastly", ClassType.Pixelmon),

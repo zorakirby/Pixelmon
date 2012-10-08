@@ -302,6 +302,15 @@ public class ModelMeowth extends ModelBase
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    HeadPiece.rotateAngleY = f3 / (180F / (float)Math.PI);
+    HeadPiece.rotateAngleX = f4 / (180F / (float)Math.PI);
+    RightLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
+    LeftLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.4F * f1;
+    RightLeg.rotateAngleY = 0.0F;
+    LeftLeg.rotateAngleY = 0.0F;
+    Tail.rotateAngleY = MathHelper.cos(f * 0.6662F) * .8F * f1;
+    RightArm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * .5F * f1;
+    LeftArm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .5F * f1;
   }
 
 }
