@@ -90,8 +90,8 @@ public class ModelVaporeon extends ModelBase
       TailTip.setTextureSize(64, 32);
       TailTip.mirror = true;
       setRotation(TailTip, -0.4363323F, 0F, 0F);
-      TailFlipper = new ModelRenderer(this, 43, 19);
-      TailFlipper.addBox(-1.5F, 2.5F, 7F, 3, 0, 3);
+      TailFlipper = new ModelRenderer(this, 41, 18);
+      TailFlipper.addBox(-2F, 2.5F, 7F, 4, 0, 4);
       TailFlipper.setRotationPoint(0F, 17.5F, 5F);
       TailFlipper.setTextureSize(64, 32);
       TailFlipper.mirror = true;
@@ -125,13 +125,13 @@ public class ModelVaporeon extends ModelBase
       Nose.setTextureSize(64, 32);
       Nose.mirror = true;
       setRotation(Nose, 0.1745329F, 0F, 0F);
-      ModelRenderer   HeadLeftFin = new ModelRenderer(this, 31, 26);
+      ModelRenderer   HeadLeftFin = new ModelRenderer(this, 31, 25);
       HeadLeftFin.addBox(2.5F, -2.9F, 0.3F, 0, 3, 3);
       HeadLeftFin.setRotationPoint(0F, 0F, 0F);
       HeadLeftFin.setTextureSize(64, 32);
       HeadLeftFin.mirror = true;
       setRotation(HeadLeftFin, 0.0872665F, 0.8203047F, 0.0872665F);
-      ModelRenderer    HeadRightFin = new ModelRenderer(this, 31, 26);
+      ModelRenderer    HeadRightFin = new ModelRenderer(this, 31, 25);
       HeadRightFin.addBox(-2.5F, -2.9F, 0.3F, 0, 3, 3);
       HeadRightFin.setRotationPoint(0F, 0F, 0F);
       HeadRightFin.setTextureSize(64, 32);
