@@ -36,8 +36,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		super.initGui();
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);
-		int var6 = var5.getScaledWidth();
-		int var7 = var5.getScaledHeight();
+		int width = var5.getScaledWidth();
+		int height = var5.getScaledHeight();
 		for (int i = 0; i < pixelmonSlots.length; i++) {
 			pixelmonSlots[i] = null;
 		}
@@ -45,8 +45,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			int offset = 0;
 			if (p != null) {
 				int i = p.order;
-				int x = 3;
-				int y = var7 / 6 + i * 30 + 3 + offset;
+				int x = width / 2 - 122;
+				int y = height / 2 + i * 18 - 75;
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
 		}
@@ -130,8 +130,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				ind++;
 			}
 		}
-		fontRenderer.setUnicodeFlag(false);
 
+		fontRenderer.setUnicodeFlag(false);
 		RenderHelper.disableStandardItemLighting();
 
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -144,24 +144,24 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	private void drawPokemonInfo(int x, int y, SlotInventoryPixelmon s) {
 		if (s == null)
 			return;
-		this.drawGradientRect(s.x - 84, s.y - 2, s.x -4, s.y + 20, -13158600, -13158600);
+		this.drawGradientRect(s.x - 84, s.y - 2, s.x - 4, s.y + 20, -13158600, -13158600);
 		PixelmonDataPacket p = s.pokemonData;
 		String displayName = p.name;
 		if (!p.nickname.equals(""))
 			displayName = p.nickname;
 		int var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
-		fontRenderer.drawString(displayName, s.x -82, s.y, 0xFFFFFF);
+		fontRenderer.drawString(displayName, s.x - 82, s.y, 0xFFFFFF);
 		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
 		if (p.isMale)
-			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x -81, s.y, 33, 208, 5, 9);
+			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 208, 5, 9);
 		else
-			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x -81, s.y, 33, 218, 5, 9);
+			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 218, 5, 9);
 
 		fontRenderer.drawString("Lvl " + p.lvl, s.x + -81, s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
 		if (p.health <= 0) {
-			fontRenderer.drawString("Fainted", s.x -77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
+			fontRenderer.drawString("Fainted", s.x - 77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
 		} else {
-			fontRenderer.drawString("HP " + p.health + "/" + p.hp, s.x -77+ fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1,
+			fontRenderer.drawString("HP " + p.health + "/" + p.hp, s.x - 77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1,
 					0xFFFFFF);
 		}
 
