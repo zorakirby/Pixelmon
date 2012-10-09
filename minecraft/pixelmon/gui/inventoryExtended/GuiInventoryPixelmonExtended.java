@@ -221,7 +221,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 							pixelmonMenuOpen = false;
 							selected = null;
 						}
-						pMenuButton = new GuiButton(3, x, y, 50, 20, "Summary");
+						pMenuButton = new GuiButton(3, x - 50, y, 50, 20, "Summary");
 						controlList.add(pMenuButton);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;
