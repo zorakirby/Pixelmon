@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiInventory;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.Tessellator;
@@ -14,7 +15,9 @@ import org.lwjgl.opengl.GL12;
 
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonItems;
 import pixelmon.gui.GuiPixelmonOverlay;
+import pixelmon.items.ItemHeld;
 
 public class GuiInventoryPixelmonExtended extends GuiInventory {
 
@@ -112,9 +115,14 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(spriteIndex, width / 2 - 121, height / 2 + i * 18 - 65, 16f, 16f, 0f, 0f, 1f, 1f);
 
-				if (p.heldItem != null) {
+				if (p.heldItemId != -1) {
+					ItemHeld heldItem = (ItemHeld) PixelmonItems.getHeldItem(p.heldItemId);
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
-					drawImageQuad(spriteIndex, width / 2 - 99, height / 2 + i * 18 - 62, 16f, 16f, 0f, 0f, 16f / 256f, 16f / 256f);
+					int iconIndex = heldItem.getIconIndex(new ItemStack(heldItem));
+					int yindex = (int) Math.floor(((double) iconIndex) / 16.0);
+					int xindex = iconIndex - yindex * 16;
+					drawImageQuad(spriteIndex, width / 2 - 99, height / 2 + i * 18 - 62, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f,
+							(16f * (xindex + 1)) / 256f, 16f * (yindex + 1) / 256f);
 				} else {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
 					drawImageQuad(spriteIndex, width / 2 - 99, height / 2 + i * 18 - 62, 10f, 10f, 0f, 0f, 1f, 1f);
@@ -165,7 +173,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 208, 5, 9);
 		else
 			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 218, 5, 9);
-
 		fontRenderer.drawString("Lvl " + p.lvl, s.x + -81, s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
 		if (p.health <= 0) {
 			fontRenderer.drawString("Fainted", s.x - 77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
@@ -221,7 +228,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 							pixelmonMenuOpen = false;
 							selected = null;
 						}
-						pMenuButton = new GuiButton(3, x, y, 50, 20, "Summary");
+						pMenuButton = new GuiButton(3, x - 50, y, 50, 20, "Summary");
 						controlList.add(pMenuButton);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;

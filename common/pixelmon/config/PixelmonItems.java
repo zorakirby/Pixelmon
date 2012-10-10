@@ -27,6 +27,7 @@ import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemHammer;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPokeBall;
+import pixelmon.items.ItemPokeballDisc;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.ItemPotion;
 import pixelmon.items.ItemStatusAilmentHealer;
@@ -277,4 +278,21 @@ public class PixelmonItems {
 			e.printStackTrace();
 		}
 	}
+	
+	public static Item getHeldItem(int id) {
+		try {
+			for (Field field : PixelmonItems.class.getFields()) {
+				if (field.isAnnotationPresent(Mod.Item.class)) {
+					Item item = (Item) field.get(null);
+					if (item instanceof ItemHeld)
+						if (item.shiftedIndex == id)
+							return item;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
