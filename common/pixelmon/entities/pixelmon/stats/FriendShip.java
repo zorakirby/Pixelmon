@@ -10,7 +10,8 @@ public class FriendShip {
 	public int friendship = 0;
 	private EntityPixelmon pixelmon;
 	private Random rand = new Random();
-
+	boolean luxuryBall = false;
+	
 	public FriendShip(EntityPixelmon pixelmon) {
 		this.pixelmon = pixelmon;
 	}
@@ -33,10 +34,20 @@ public class FriendShip {
 
 	public void writeToNBT(NBTTagCompound nbt) {
 		nbt.setInteger("Friendship", friendship);
+		nbt.setBoolean("LuxuryBall", luxuryBall);
 	}
 
 	public void readFromNBT(NBTTagCompound nbt) {
 		friendship = nbt.getInteger("Friendship");
+		luxuryBall = nbt.getBoolean("LuxuryBall");
+	}
+	
+	private int luxuryBonus(){
+		
+		if(luxuryBall)
+		return 1 + rand.nextInt(2);
+		else
+			return 0;
 	}
 
 	private int tickCounter = 0;
@@ -45,6 +56,7 @@ public class FriendShip {
 		tickCounter++;
 		if (tickCounter == 1000) {
 			friendship++;
+			friendship+= luxuryBonus();
 			tickCounter = 0;
 		}
 	}
@@ -54,10 +66,14 @@ public class FriendShip {
 	}
 
 	public void onLevelUp() {
-		friendship += rand.nextInt(2) + 5;
+		friendship += rand.nextInt(2) + 5 + luxuryBonus();
 	}
 
 	public void onFaint() {
 		friendship -= 2;
+	}
+
+	public void captureLuxuryBall() {
+		this.luxuryBall = true;
 	}
 }
