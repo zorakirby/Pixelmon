@@ -5,10 +5,10 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
 import pixelmon.enums.EnumPokeballs;
 
-public class CaptureFriendBall extends CaptureBase {
+public class CaptureHealBall extends CaptureBase {
 
-	public CaptureFriendBall() {
-		super(EnumPokeballs.FriendBall);
+	public CaptureHealBall() {
+		super(EnumPokeballs.HealBall);
 	}
 
 	@Override
@@ -18,6 +18,6 @@ public class CaptureFriendBall extends CaptureBase {
 
 	@Override
 	public void doAfterEffect(EnumPokeballs type, EntityPixelmon p) {
-		p.friendship.friendship = 200;		
+		p.setEntityHealth(p.getMaxHealth());
 	}
 }

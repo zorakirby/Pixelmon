@@ -300,30 +300,65 @@ public class EntityPokeBall extends EntityThrowable {
 		}
 	}
 
-	public Item breakBall() {
-		if (this.getType() == EnumPokeballs.PokeBall) {
+public Item breakBall(){
+		
+		if(this.getType() == EnumPokeballs.PokeBall){
 			return PixelmonItemsPokeballs.pokeBallLid;
 		}
-		if (this.getType() == EnumPokeballs.GreatBall) {
+		if(this.getType() == EnumPokeballs.GreatBall){
 			return PixelmonItemsPokeballs.greatBallLid;
 		}
-		if (this.getType() == EnumPokeballs.UltraBall) {
+		if(this.getType() == EnumPokeballs.UltraBall){
 			return PixelmonItemsPokeballs.ultraBallLid;
 		}
-		if (this.getType() == EnumPokeballs.LevelBall) {
+		if(this.getType() == EnumPokeballs.LevelBall){
 			return PixelmonItemsPokeballs.levelBallLid;
 		}
-		if (this.getType() == EnumPokeballs.MoonBall) {
+		if(this.getType() == EnumPokeballs.MoonBall){
 			return PixelmonItemsPokeballs.moonBallLid;
 		}
-		if (this.getType() == EnumPokeballs.FriendBall) {
+		if(this.getType() == EnumPokeballs.FriendBall){
 			return PixelmonItemsPokeballs.friendBallLid;
 		}
-		if (this.getType() == EnumPokeballs.LoveBall) {
+		if(this.getType() == EnumPokeballs.LoveBall){
 			return PixelmonItemsPokeballs.loveBallLid;
 		}
-
+		if(this.getType() == EnumPokeballs.SafariBall){
+			return PixelmonItemsPokeballs.safariBallLid;
+		}
+		if(this.getType() == EnumPokeballs.HeavyBall){
+			return PixelmonItemsPokeballs.heavyBallLid;
+		}
+		if(this.getType() == EnumPokeballs.FastBall){
+			return PixelmonItemsPokeballs.fastBallLid;
+		}
+		if(this.getType() == EnumPokeballs.RepeatBall){
+			return PixelmonItemsPokeballs.repeatBallLid;
+		}
+		if(this.getType() == EnumPokeballs.TimerBall){
+			return PixelmonItemsPokeballs.timerBallLid;
+		}
+		if(this.getType() == EnumPokeballs.NestBall){
+			return PixelmonItemsPokeballs.nestBallLid;
+		}
+		if(this.getType() == EnumPokeballs.NetBall){
+			return PixelmonItemsPokeballs.netBallLid;
+		}
+		if(this.getType() == EnumPokeballs.DiveBall){
+			return PixelmonItemsPokeballs.diveBallLid;
+		}
+		if(this.getType() == EnumPokeballs.LuxuryBall){
+			return PixelmonItemsPokeballs.luxuryBallLid;
+		}
+		if(this.getType() == EnumPokeballs.HealBall){
+			return PixelmonItemsPokeballs.healBallLid;
+		}
+		if(this.getType() == EnumPokeballs.DuskBall){
+			return PixelmonItemsPokeballs.duskBallLid;
+		}
+		
 		return PixelmonItemsPokeballs.pokeBallLid;
+		
 	}
 
 	int numRocks = 0;

@@ -9,11 +9,7 @@ import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
-import pixelmon.entities.pokeballs.captures.CaptureBase;
-import pixelmon.entities.pokeballs.captures.CaptureFriendBall;
-import pixelmon.entities.pokeballs.captures.CaptureHeavyBall;
-import pixelmon.entities.pokeballs.captures.CaptureLevelBall;
-import pixelmon.entities.pokeballs.captures.CaptureMoonBall;
+import pixelmon.entities.pokeballs.captures.*;
 import pixelmon.enums.EnumPokeballs;
 
 public class PokeballTypeHelper {
@@ -21,9 +17,17 @@ public class PokeballTypeHelper {
 	private static ArrayList<CaptureBase> captureList  = new ArrayList<CaptureBase>();
 	
 	static{
+		captureList.add(new CaptureLoveBall());
 		captureList.add(new CaptureLevelBall());
 		captureList.add(new CaptureMoonBall());
 		captureList.add(new CaptureFriendBall());
+		captureList.add(new CaptureSafariBall());
+		captureList.add(new CaptureDiveBall());
+		captureList.add(new CaptureDuskBall());
+		captureList.add(new CaptureHealBall());
+		captureList.add(new CaptureLuxuryBall());
+		captureList.add(new CaptureNetBall());
+		captureList.add(new CaptureNestBall());
 		captureList.add(new CaptureHeavyBall());
 	}
 	
