@@ -1,12 +1,14 @@
 package pixelmon.battles.attacks.specialAttacks;
 
 public enum MultiTurnSpecialAttackType {
+	Bide,
 	Fly,
 	PetalDance,
 	RazorWind,
 	SolarBeam;
 
 	public static MultiTurnSpecialAttackType getMultiTurnSpecialAttackType(String string) {
+		if (string.equalsIgnoreCase("Bide")) return MultiTurnSpecialAttackType.Bide;
 		if (string.equalsIgnoreCase("Fly")) return MultiTurnSpecialAttackType.Fly;
 		if (string.equalsIgnoreCase("PetalDance")) return MultiTurnSpecialAttackType.PetalDance;
 		if (string.equalsIgnoreCase("RazorWind")) return MultiTurnSpecialAttackType.RazorWind;
@@ -15,6 +17,7 @@ public enum MultiTurnSpecialAttackType {
 	}
 
 	public static boolean isMultiTurnSpecialAttackType(String string) {
+		if (string.equalsIgnoreCase("Bide")) return true;
 		if (string.equalsIgnoreCase("Fly")) return true;
 		if (string.equalsIgnoreCase("PetalDance")) return true;
 		if (string.equalsIgnoreCase("RazorWind")) return true;
