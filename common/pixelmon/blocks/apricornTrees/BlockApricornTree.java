@@ -35,6 +35,8 @@ public class BlockApricornTree extends BlockContainer {
 		super(id, Material.wood);
 		this.tree = tree;
 		setTickRandomly(true);
+		setTextureFile("/pixelmon/image/pitems2.png");
+		blockIndexInTexture = tree.apricorn.iconIndex;
 	}
 
 	@Override
