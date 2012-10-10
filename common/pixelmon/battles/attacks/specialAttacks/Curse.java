@@ -39,11 +39,14 @@ public class Curse extends SpecialAttackBase {
 				}
 			else{
 		user.battleStats.DecreaseSpeed(1);
-		user.battleStats.IncreaseAttack(1);
-		user.battleStats.IncreaseDefence(1);
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Speed was lowered!");
+		user.battleStats.IncreaseAttack(1);
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Attack was raised!");
+		user.battleStats.IncreaseDefence(1);
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Defense was raised!");
+		
+		
+	
 			}
 			return false;
 		
