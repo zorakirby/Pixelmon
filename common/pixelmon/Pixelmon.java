@@ -9,6 +9,7 @@ import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.logging.Level;
 
+import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
 import pixelmon.config.PixelmonBlocks;
@@ -87,6 +88,8 @@ public class Pixelmon {
 
 		event.getModMetadata().version = "Pixelmon 1.7.6b for 1.3.1";
 
+		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
+		
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
 	}
 
