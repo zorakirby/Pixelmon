@@ -6,6 +6,7 @@ import net.minecraft.src.Packet250CustomPayload;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
+import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiChooseStarter extends GuiContainer {
@@ -33,6 +34,7 @@ public class GuiChooseStarter extends GuiContainer {
 		String pixelmonName = starterList[button.id];
 		Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, button.id);
 		PacketDispatcher.sendPacketToServer(packet);
+		PlayerStorage.setCurrency(3000);
 		mc.thePlayer.closeScreen();
 	}
 

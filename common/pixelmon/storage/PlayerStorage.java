@@ -32,6 +32,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class PlayerStorage {
 	public NBTTagCompound[] partyPokemon = new NBTTagCompound[6];
+	private static int pokeDollars = 0;
 	private static final int carryLimit = 6;
 	public EntityPlayerMP player;
 	public EntityTrainer trainer;
@@ -48,6 +49,20 @@ public class PlayerStorage {
 		this.trainer = trainer;
 	}
 
+	public static int getCurrency(){
+		return pokeDollars;
+	}
+	
+	public static void setCurrency(int par1){
+		pokeDollars = par1;
+		if(pokeDollars >= 999999){
+			pokeDollars = 999999;
+		}
+		if(pokeDollars <= 0){
+			pokeDollars = 0;
+		}
+	}
+	
 	public boolean hasSpace() {
 		for (int i = 0; i < partyPokemon.length; i++) {
 			NBTTagCompound nbt = partyPokemon[i];
@@ -330,6 +345,7 @@ public class PlayerStorage {
 	}
 
 	public void writeToNBT(NBTTagCompound var1) {
+		var1.setInteger("pixelDollars", pokeDollars);
 		for (int i = 0; i < partyPokemon.length; i++) {
 			NBTTagCompound e = partyPokemon[i];
 			if (e != null) {
@@ -345,6 +361,7 @@ public class PlayerStorage {
 
 	@SuppressWarnings("rawtypes")
 	public void readFromNBT(NBTTagCompound var1) {
+		pokeDollars = var1.getInteger("pixelDollars");
 		Iterator iterator = var1.getTags().iterator();
 		do {
 			if (!iterator.hasNext())

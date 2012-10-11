@@ -178,7 +178,7 @@ public class EntityPokeBall extends EntityThrowable {
 			return;
 		}
 
-		if (dropItem && breakChance == 1) {
+		if (dropItem && breakChance == 1 && EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10)) != EnumPokeballs.MasterBall) {
 			worldObj.playSoundAtEntity(this, "random.break", 0.8F, 0.8F + this.worldObj.rand.nextFloat() * 0.4F);
 			entityDropItem(new ItemStack(Block.button), 0.0F);
 			entityDropItem(new ItemStack(PixelmonItemsPokeballs.ironBase), 0.0F);
@@ -300,7 +300,7 @@ public class EntityPokeBall extends EntityThrowable {
 		}
 	}
 
-public Item breakBall(){
+	public Item breakBall(){
 		return PixelmonItemsPokeballs.getLidFromEnum(getType());
 	}
 
@@ -377,9 +377,25 @@ public Item breakBall(){
 	int flashTime = 10;
 	int flashCounter = 0;
 
+	public void flash(){
+		if(EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10)) == EnumPokeballs.PremierBall){
+			worldObj.spawnParticle("reddust", this.posX + 0.1, this.posY + 0.2, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX, this.posY + 0.2, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX, this.posY + 0.2, this.posZ, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX + 0.1, this.posY + 0.2, this.posZ, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX + 0.1, this.posY + 0.2, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX + 0.1, this.posY + 0.4, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX, this.posY + 0.4, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX, this.posY + 0.4, this.posZ, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX + 0.1, this.posY + 0.4, this.posZ, 0.0D, 0.0D, 0.0D);
+			worldObj.spawnParticle("reddust", this.posX + 0.1, this.posY + 0.4, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
+		}
+	}
+	
 	@Override
 	public void onUpdate() {
 		if (getIsOpen() && openAngle > (float) (-Math.PI / 2)) {
+			flash();
 			openAngle -= (float) (Math.PI / 20);
 		}
 		if (!getIsOpen() && openAngle < 0)
