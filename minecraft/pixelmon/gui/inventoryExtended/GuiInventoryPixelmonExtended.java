@@ -1,5 +1,7 @@
 package pixelmon.gui.inventoryExtended;
 
+import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiButton;
@@ -7,6 +9,7 @@ import net.minecraft.src.GuiInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
+import net.minecraft.src.StatCollector;
 import net.minecraft.src.Tessellator;
 
 import org.lwjgl.input.Mouse;
@@ -16,8 +19,10 @@ import org.lwjgl.opengl.GL12;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
+import pixelmon.gui.FontScaler;
 import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.items.ItemHeld;
+import pixelmon.storage.PlayerStorage;
 
 public class GuiInventoryPixelmonExtended extends GuiInventory {
 
@@ -57,6 +62,11 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		}
 	}
 
+	@Override
+	protected void drawGuiContainerForegroundLayer(){
+		this.fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency()+""), -29, 154, 0xFFFFFF);
+	}
+	
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		super.drawScreen(par1, par2, par3);

@@ -35,6 +35,7 @@ public class PixelmonItemsPokeballs {
 	public static int luxuryBallID;
 	public static int healBallID;
 	public static int duskBallID;
+	public static int premierBallID;
 
 	public static int pokeBallLidID;
 	public static int greatBallLidID;
@@ -54,6 +55,7 @@ public class PixelmonItemsPokeballs {
 	public static int luxuryBallLidID;
 	public static int healBallLidID;
 	public static int duskBallLidID;
+	public static int premierBallLidID;
 
 	public static int pokeBallDiscID;
 	public static int greatBallDiscID;
@@ -73,6 +75,7 @@ public class PixelmonItemsPokeballs {
 	public static int luxuryBallDiscID;
 	public static int healBallDiscID;
 	public static int duskBallDiscID;
+	public static int premierBallDiscID;
 
 	public static int ironDiscID;
 	public static int ironBaseID;
@@ -115,6 +118,8 @@ public class PixelmonItemsPokeballs {
 	public static Item healBall;
 	@Mod.Item(name = "Dusk Ball", typeClass = "pixelmon.items.ItemPokeBall")
 	public static Item duskBall;
+	@Mod.Item(name = "Premier Ball", typeClass = "pixelmon.items.ItemPokeBall")
+	public static Item premierBall;
 
 	@Mod.Item(name = "Poke Ball Lid", typeClass = "pixelmon.items.ItemPokeBallLid")
 	public static Item pokeBallLid;
@@ -152,6 +157,8 @@ public class PixelmonItemsPokeballs {
 	public static Item healBallLid;
 	@Mod.Item(name = "Dusk Ball Lid", typeClass = "pixelmon.items.ItemPokeBall")
 	public static Item duskBallLid;
+	@Mod.Item(name = "Premier Ball Lid", typeClass = "pixelmon.items.ItemPokeBall")
+	public static Item premierBallLid;
 
 	@Mod.Item(name = "Poke Ball Disc", typeClass = "pixelmon.items.ItemPokeBallDisc")
 	public static Item pokeBallDisc;
@@ -189,6 +196,8 @@ public class PixelmonItemsPokeballs {
 	public static Item healBallDisc;
 	@Mod.Item(name = "Dusk Ball Disc", typeClass = "pixelmon.items.ItemPokeBall")
 	public static Item duskBallDisc;
+	@Mod.Item(name = "Premier Ball Disc", typeClass = "pixelmon.items.ItemPokeBall")
+	public static Item premierBallDisc;
 	
 	@Mod.Item(name = "Iron Disc", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item ironDisc;
@@ -215,6 +224,7 @@ public class PixelmonItemsPokeballs {
 		luxuryBallID = cfg.getOrCreateIntProperty("LuxuryBall", "item", 8016).getInt();
 		healBallID = cfg.getOrCreateIntProperty("HealBall", "item", 8017).getInt();
 		duskBallID = cfg.getOrCreateIntProperty("DuskBall", "item", 8018).getInt();
+		premierBallID = cfg.getOrCreateIntProperty("PremierBall", "item", 8019).getInt();
 
 		pokeBallLidID = cfg.getOrCreateIntProperty("PokeBallLid", "item", 8030).getInt();
 		greatBallLidID = cfg.getOrCreateIntProperty("GreatBallLid", "item", 8031).getInt();
@@ -234,6 +244,7 @@ public class PixelmonItemsPokeballs {
 		luxuryBallLidID = cfg.getOrCreateIntProperty("LuxuryBallLid", "item", 8046).getInt();
 		healBallLidID = cfg.getOrCreateIntProperty("HealBallLid", "item", 8047).getInt();
 		duskBallLidID = cfg.getOrCreateIntProperty("DuskBallLid", "item", 8048).getInt();
+		premierBallLidID = cfg.getOrCreateIntProperty("DuskBallLid", "item", 8049).getInt();
 
 		pokeBallDiscID = cfg.getOrCreateIntProperty("PokeBallDisc", "item", 8050).getInt();
 		greatBallDiscID = cfg.getOrCreateIntProperty("GreatBallDisc", "item", 8051).getInt();
@@ -253,6 +264,7 @@ public class PixelmonItemsPokeballs {
 		luxuryBallDiscID = cfg.getOrCreateIntProperty("LuxuryBallDisc", "item", 8066).getInt();
 		healBallDiscID = cfg.getOrCreateIntProperty("HealBallDisc", "item", 8067).getInt();
 		duskBallDiscID = cfg.getOrCreateIntProperty("DuskBallDisc", "item", 8068).getInt();
+		premierBallDiscID = cfg.getOrCreateIntProperty("PremierBallDisc", "item", 8069).getInt();
 
 		ironBaseID = cfg.getOrCreateIntProperty("IronBase", "item", 8070).getInt();
 		ironDiscID = cfg.getOrCreateIntProperty("IronDisc", "item", 8071).getInt();
@@ -276,6 +288,7 @@ public class PixelmonItemsPokeballs {
 		luxuryBall = new ItemPokeBall(luxuryBallID, EnumPokeballs.LuxuryBall).setItemName("Luxury Ball");
 		healBall = new ItemPokeBall(healBallID, EnumPokeballs.HealBall).setItemName("Heal Ball");
 		duskBall = new ItemPokeBall(duskBallID, EnumPokeballs.DuskBall).setItemName("Dusk Ball");
+		premierBall = new ItemPokeBall(premierBallID, EnumPokeballs.PremierBall).setItemName("Premier Ball");
 
 		pokeBallLid = new ItemPokeballLid(pokeBallLidID, EnumPokeballs.PokeBall).setItemName("Poke Ball Lid");
 		ultraBallLid = new ItemPokeballLid(ultraBallLidID, EnumPokeballs.UltraBall).setItemName("Ultra Ball Lid");
@@ -295,6 +308,7 @@ public class PixelmonItemsPokeballs {
 		luxuryBallLid = new ItemPokeballLid(luxuryBallLidID, EnumPokeballs.LuxuryBall).setItemName("Luxury Ball Lid");
 		healBallLid = new ItemPokeballLid(healBallLidID, EnumPokeballs.HealBall).setItemName("Heal Ball Lid");
 		duskBallLid = new ItemPokeballLid(duskBallLidID, EnumPokeballs.DuskBall).setItemName("Dusk Ball Lid");
+		premierBallLid = new ItemPokeballLid(premierBallLidID, EnumPokeballs.PremierBall).setItemName("Premier Ball Lid");
 
 		pokeBallDisc = new ItemPokeballDisc(pokeBallDiscID, EnumPokeballs.PokeBall).setItemName("Poke Ball Disc");
 		ultraBallDisc = new ItemPokeballDisc(ultraBallDiscID, EnumPokeballs.UltraBall).setItemName("Ultra Ball Disc");
@@ -314,6 +328,7 @@ public class PixelmonItemsPokeballs {
 		luxuryBallDisc = new ItemPokeballDisc(luxuryBallDiscID, EnumPokeballs.LuxuryBall).setItemName("Luxury Ball Disc");
 		healBallDisc = new ItemPokeballDisc(healBallDiscID, EnumPokeballs.HealBall).setItemName("Heal Ball Disc");
 		duskBallDisc = new ItemPokeballDisc(duskBallDiscID, EnumPokeballs.DuskBall).setItemName("Dusk Ball Disc");
+		premierBallDisc = new ItemPokeballDisc(premierBallDiscID, EnumPokeballs.PremierBall).setItemName("Premier Ball Disc");
 
 		ironBase = new PixelmonItem(ironBaseID).setIconIndex(3 + 6 * 16).setItemName("Iron Base").setTabToDisplayOn(CreativeTabs.tabMaterials);
 		ironDisc = new PixelmonItem(ironDiscID).setIconIndex(3 + 7 * 16).setItemName("Iron Disc").setTabToDisplayOn(CreativeTabs.tabMaterials);
