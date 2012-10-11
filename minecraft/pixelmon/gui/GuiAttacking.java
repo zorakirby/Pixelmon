@@ -97,9 +97,17 @@ public class GuiAttacking extends GuiContainer {
 		super.mouseClicked(par1, par2, par3);
 	}
 
+	@Override
+	public void drawBackground(int par1) {
+	}
+	
+	@Override
+	public void drawDefaultBackground() {
+	}
+	
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1){
 
-		drawDefaultBackground();
+//		drawDefaultBackground();
 		String name = userPacket.nickname.equals("") ? userPacket.name : userPacket.nickname;
 		String targetName = targetPacket.nickname.equals("") ? targetPacket.name : targetPacket.nickname;
 		drawCenteredString(fontRenderer, "Which move do you want your " + name + " to use against " + targetName + "?", width / 2, 10, 0xFFFFFF);

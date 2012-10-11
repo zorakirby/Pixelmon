@@ -43,10 +43,9 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public int nextLvlXP;
 	public int boxNumber = 0;
 	public boolean isShiny;
-	public ItemStack heldItem;
 	public boolean hasOwner;
 	public boolean doesLevel;
-	
+	public int heldItemId = -1;
 
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
 
@@ -82,7 +81,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		SpecialAttack = p.getInteger("StatsSpecialAttack");
 		SpecialDefence = p.getInteger("StatsSpecialDefence");
 		if (p.hasKey("Held Item")) {
-			heldItem = ItemStack.loadItemStackFromNBT(p.getCompoundTag("Held Item"));
+			heldItemId = p.getInteger("HeldItemId");
 		}
 		if (p.hasKey("BoxNumber"))
 			boxNumber = p.getInteger("BoxNumber");
@@ -121,7 +120,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		Defence = p.stats.Defence;
 		SpecialAttack = p.stats.SpecialAttack;
 		SpecialDefence = p.stats.SpecialDefence;
-		heldItem = p.heldItem;
+		if (p.heldItem!=null)
+			heldItemId = p.heldItem.itemID;
 		hasOwner = p.getOwner() != null || p.getTrainer() != null;
 		doesLevel = p.doesLevel;
 	}
@@ -160,7 +160,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeShort(boxNumber);
 		data.writeBoolean(isShiny);
 		data.writeBoolean(doesLevel);
-		Packet.writeItemStack(heldItem, data);
+		data.writeInt(heldItemId);
 	}
 
 	@Override
@@ -193,6 +193,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		boxNumber = data.readShort();
 		isShiny = data.readBoolean();
 		doesLevel = data.readBoolean();
-		heldItem = Packet.readItemStack(data);
+		heldItemId = data.readInt();
 	}
 }
