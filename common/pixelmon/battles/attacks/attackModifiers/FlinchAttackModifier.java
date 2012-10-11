@@ -12,7 +12,7 @@ public class FlinchAttackModifier extends AttackModifierBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		if (checkChance()){
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " flinched!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " flinched!");
 			return true;
 		}
 		return false;

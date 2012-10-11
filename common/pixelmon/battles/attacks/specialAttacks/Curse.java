@@ -30,20 +30,20 @@ public class Curse extends SpecialAttackBase {
 					for (StatusEffectBase e : target.status) {
 	
 					if (e.type == StatusEffectType.Cursed) {
-						ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already cursed!");
+						ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already cursed!");
 					}
 				}
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " cut its own HP and laid a curse on the  " + target.getName() + "!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " cut its own HP and laid a curse on the  " + target.getName() + "!");
 					user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 2));
 					target.status.add(new pixelmon.battles.attacks.statusEffects.Cursed());
 				}
 			else{
 		user.battleStats.DecreaseSpeed(1);
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Speed was lowered!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Speed was lowered!");
 		user.battleStats.IncreaseAttack(1);
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Attack was raised!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Attack was raised!");
 		user.battleStats.IncreaseDefence(1);
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Defense was raised!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Defense was raised!");
 		
 		
 	

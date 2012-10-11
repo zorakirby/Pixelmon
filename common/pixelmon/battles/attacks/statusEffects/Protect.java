@@ -24,15 +24,15 @@ public class Protect extends StatusEffectBase {
 		
 		if ((new Random()).nextInt(100)<= chance*100) {
 			user.status.add(this);
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is readying itself!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is readying itself!");
 
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
 	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " protects itself!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " protects itself!");
 		return true;
 	}
 

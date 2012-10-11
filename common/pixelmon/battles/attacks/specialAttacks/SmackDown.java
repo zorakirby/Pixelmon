@@ -21,7 +21,7 @@ public class SmackDown extends SpecialAttackBase {
 		for (int i = 0; i < target.status.size(); i++) {
 			StatusEffectBase s = target.status.get(i);
 			if (s.type == StatusEffectType.Flying) {
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " got knocked out of the sky!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " got knocked out of the sky!");
 				target.status.remove(s);
 			}
 		}

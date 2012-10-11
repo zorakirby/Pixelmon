@@ -24,7 +24,7 @@ public class WaitAfter extends StatusEffectBase {
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName()+ " is recharging!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName()+ " is recharging!");
 		return false;
 	}
 

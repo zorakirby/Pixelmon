@@ -18,14 +18,14 @@ public class LightScreen extends StatusEffectBase {
 
 		if (checkChance()) {
 			if (user.status.contains(this)){
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " already has a lightscreen!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " already has a lightscreen!");
 				return;
 			}
 			user.status.add(this);
 			effectTurns = 5;
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " has put up a screen of shimmering light!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " has put up a screen of shimmering light!");
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class LightScreen extends StatusEffectBase {
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (effectTurns == 0) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + "'s Lightscreen wears off!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + "'s Lightscreen wears off!");
 			user.status.remove(this);
 		}
 		effectTurns--;

@@ -26,7 +26,7 @@ public class RazorWind extends MultiTurnSpecialAttackBase {
 		}
 		turnCounter++;
 		if (turnCounter == 1){
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " whips up a strong wind!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " whips up a strong wind!");
 			return true;
 		}else{
 			persists = false;

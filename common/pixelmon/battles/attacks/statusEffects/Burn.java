@@ -20,22 +20,22 @@ public class Burn extends StatusEffectBase {
 
 		if (checkChance()) {
 			if (target.type.contains(EnumType.Fire)){
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "no effect!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Burn) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already burnt!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already burnt!");
 					return;
 				}
 			target.status.add(this);
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has been burnt!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has been burnt!");
 		}
 	}
 
 	@Override
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is hurt by its burn!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is hurt by its burn!");
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 8));
 	}
 
