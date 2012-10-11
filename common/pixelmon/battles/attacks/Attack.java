@@ -94,7 +94,7 @@ public class Attack {
 		}
 
 		if (cantMiss || RandomHelper.getRandomNumberBetween(0, 100) <= accuracy) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " used " + attackName + " on " + target.getName() + "!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " used " + attackName + " on " + target.getName() + "!");
 			for (int j = 0; j < effects.size(); j++) {
 				EffectBase e = effects.get(j);
 				if (e.effectType == EffectType.Stats) {
@@ -141,7 +141,7 @@ public class Attack {
 				String s = null;
 				if (attackCategory != ATTACK_STATUS) {
 					if (crit > 1)
-						ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Critical Hit!");
+						ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Critical Hit!");
 					float effectiveness = EnumType.getTotalEffectiveness(target.type, attackType);
 					if (effectiveness == EFFECTIVE_NONE)
 						s = "It had no effect!";
@@ -150,7 +150,7 @@ public class Attack {
 					if (effectiveness == EFFECTIVE_SUPER || effectiveness == EFFECTIVE_MAX)
 						s = "It's super effective!";
 					if (s != null)
-						ChatHandler.sendChat(user.getOwner(), target.getOwner(), s);
+						ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), s);
 				}
 			}
 
@@ -165,7 +165,7 @@ public class Attack {
 				}
 			}
 		} else {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " tried to use " + attackName + ", but it missed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " tried to use " + attackName + ", but it missed!");
 			for (int i = 0; i < effects.size(); i++) {
 				EffectBase e = effects.get(i);
 				e.ApplyMissEffect(user, target);

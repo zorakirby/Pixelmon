@@ -19,23 +19,23 @@ public class Paralysis extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Paralysis) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already paralyzed!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already paralyzed!");
 					return;
 				}
 
 			target.status.add(this);
 			target.battleStats.setIsParalyzed();
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is paralyzed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is paralyzed!");
 
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 
 	}
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 25) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is paralyzed and cannot move!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is paralyzed and cannot move!");
 			return false;
 		} else {
 			return true;

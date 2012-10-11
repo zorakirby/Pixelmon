@@ -21,29 +21,29 @@ public class Sleep extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Sleep) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already asleep!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already asleep!");
 					return;
 				}
 
 			target.status.add(this);
 
 			effectTurns = RandomHelper.getRandomNumberBetween(1, 4);
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has fallen asleep!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has fallen asleep!");
 
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is still sleeping!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is still sleeping!");
 		return false;
 	}
 
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (effectTurns == 0) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " wakes up!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " wakes up!");
 			user.status.remove(this);
 		}
 		effectTurns--;

@@ -23,16 +23,16 @@ public class Mist extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : user.status)
 				if (e.type == StatusEffectType.Paralysis) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is already surrounded by mist!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is already surrounded by mist!");
 					return;
 				}
 
 			user.status.add(this);
 			turnCount=0;
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " creates a cloud of mist!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " creates a cloud of mist!");
 
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class Mist extends StatusEffectBase {
 					for (ModifierBase m: (((StatsEffect)e).modifiers)){
 						if (m.type == ModifierType.User) return false;
 					}
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is protected by the mist!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is protected by the mist!");
 					return true;
 				}
 			}
@@ -57,7 +57,7 @@ public class Mist extends StatusEffectBase {
 		turnCount++;
 		if (turnCount==5) {
 			user.status.remove(this);
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), "The mist wore off!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The mist wore off!");
 		}
 	}
 

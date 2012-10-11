@@ -21,14 +21,14 @@ public class Infatuated extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Infatuated) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already in love!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already in love!");
 					return;
 				}
 			target.status.add(this);
 			originalTarget = user;
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has fallen in love!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has fallen in love!");
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class Infatuated extends StatusEffectBase {
 		}
 		
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 50) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is in love!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is in love!");
 			return false;
 		} else {
 			return true;

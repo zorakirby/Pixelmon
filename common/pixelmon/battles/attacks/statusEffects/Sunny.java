@@ -18,22 +18,22 @@ public class Sunny extends StatusEffectBase {
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		if (checkChance()) {
 			if (!user.getOwner().worldObj.isDaytime()) {
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "There's no sun at night!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "There's no sun at night!");
 				return;
 			}
 			for (StatusEffectBase e : user.status)
 				if (e.type == StatusEffectType.Sunny) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), "It's already sunny!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's already sunny!");
 					return;
 				}
 
 			turnCount=5;
 			target.status.add(this);
 			user.status.add(this);
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " makes the sun shine more brightly!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " makes the sun shine more brightly!");
 
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 
 	}
 
