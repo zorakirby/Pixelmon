@@ -26,7 +26,7 @@ public class RecoilAttackModifier extends AttackModifierBase {
 		double factor = ((double)value)/100;
 		double dmg = ((double)power) * factor;
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int)dmg);
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " took recoil damage!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " took recoil damage!");
 		return false;
 	}
 

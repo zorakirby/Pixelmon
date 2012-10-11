@@ -44,9 +44,9 @@ public class MultipleHitAttackModifier extends AttackModifierBase {
 					DamageSource.causeMobDamage(user), power);
 			a.doMove(user, target);
 			if (crit > 1)
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "Critical Hit!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Critical Hit!");
 		}
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user
 				.getName() + " attacked " + count + " times!");
 		return true;
 	}

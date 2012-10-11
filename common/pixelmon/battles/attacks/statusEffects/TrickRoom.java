@@ -18,7 +18,7 @@ public class TrickRoom extends StatusEffectBase {
 		for (int i=0; i < user.battleController.battleStatusList.size(); i++){
 			if (user.battleController.battleStatusList.get(i).type == type){
 				user.battleController.battleStatusList.remove(i);
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
 				return;
 			}
 		}
@@ -29,7 +29,7 @@ public class TrickRoom extends StatusEffectBase {
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (effectTurns == 0) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
 			user.status.remove(this);
 		}
 		effectTurns--;

@@ -23,22 +23,22 @@ public class Confusion extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Confusion) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already confused!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already confused!");
 					return;
 				}
 			target.status.add(this);
 			effectTurns = (new Random()).nextInt(4) + 1;
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has become confused!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has become confused!");
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is confused...");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is confused...");
 		if ((new Random()).nextInt(100) <= 50) {
 			user.attackEntityFrom(DamageSource.causeMobDamage(user), calculateConfusionDamage(user));
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " hurt itself in its confusion");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " hurt itself in its confusion");
 			return false;
 		}
 		return true;
@@ -60,7 +60,7 @@ public class Confusion extends StatusEffectBase {
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (effectTurns == 0) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " snaps out of confusion!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " snaps out of confusion!");
 			user.status.remove(this);
 		}
 		effectTurns--;

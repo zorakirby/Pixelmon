@@ -19,15 +19,15 @@ public class SafeGuard extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : user.status)
 				if (e.type == StatusEffectType.SafeGuard) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " already has a safeguard!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " already has a safeguard!");
 					return;
 				}
 
 			user.status.add(this);
 			effectTurns = 5;
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is looking a bit guarded!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is looking a bit guarded!");
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class SafeGuard extends StatusEffectBase {
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
 		if (effectTurns == 0) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + "'s Safeguard wears off!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + "'s Safeguard wears off!");
 			user.status.remove(this);
 		}
 		effectTurns--;

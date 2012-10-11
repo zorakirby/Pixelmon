@@ -20,7 +20,7 @@ public class RemoveEffect extends EffectBase {
 		for (StatusEffectBase e:target.status){
 			if (e.type == removeType) {
 				target.status.remove(e);
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), user
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user
 						.getName() + " removed " + target.getName() + "'s "+ e.type.toString() +"!");
 			}
 			

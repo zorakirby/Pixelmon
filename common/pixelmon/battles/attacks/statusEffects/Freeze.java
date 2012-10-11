@@ -19,28 +19,28 @@ public class Freeze extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Freeze) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already frozen!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already frozen!");
 					return;
 				}
 			if (target.type.contains(EnumType.Ice)){
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), "no effect!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
 			target.status.add(this);
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has been frozen solid");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has been frozen solid");
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 
 	}
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 20) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " breaks free from the ice!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " breaks free from the ice!");
 			user.status.remove(this);
 			return true;
 		} else {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is frozen solid!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is frozen solid!");
 			return false;
 		}
 	}

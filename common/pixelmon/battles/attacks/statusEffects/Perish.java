@@ -17,19 +17,19 @@ int turnCount = 0;
 if (checkChance()){
 		for (StatusEffectBase a : target.status)
 			if (a.type == StatusEffectType.Perish) {
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " has already heard the song!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has already heard the song!");
 			return;
 			}
 		for (StatusEffectBase b : user.status)
 			if (b.type == StatusEffectType.Perish) {
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getOwner()+" has already heard the song!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getOwner()+" has already heard the song!");
 		    return;
 			}
 		
 			 user.status.add(new Perish());
-				ChatHandler.sendChat(user.getOwner(), user.getName() + " heard the Perish Song!");
+				ChatHandler.sendBattleMessage(user.getOwner(), user.getName() + " heard the Perish Song!");
 			 target.status.add(new Perish());
-			    ChatHandler.sendChat(target.getOwner(), target.getName() + " heard the Perish Song!");
+			    ChatHandler.sendBattleMessage(target.getOwner(), target.getName() + " heard the Perish Song!");
 	
 			    
 		}
@@ -42,11 +42,11 @@ if (checkChance()){
 			if(turnCount == 3){
 				if (!target.isDead){
 					target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth());
-					ChatHandler.sendChat(target.getOwner(), user.getOwner(), "Perish Song struck " + target.getName() + "!");
+					ChatHandler.sendBattleMessage(target.getOwner(), user.getOwner(), "Perish Song struck " + target.getName() + "!");
 				}
 				if (!user.isDead){
 				user.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth());
-				ChatHandler.sendChat(target.getOwner(), user.getOwner(), "Perish Song struck " + user.getName() + "!");
+				ChatHandler.sendBattleMessage(target.getOwner(), user.getOwner(), "Perish Song struck " + user.getName() + "!");
 			}
 			}
 			turnCount++;

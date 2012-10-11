@@ -23,18 +23,18 @@ public class Leech extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Leech) {
-					ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " is already seeded!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already seeded!");
 					return;
 				}
 			target.status.add(this);
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " has planted a seed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " has planted a seed!");
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), target.getName() + " drains health from " + user.getName());
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " drains health from " + user.getName());
 		int dmg = (int) (((float) user.getMaxHealth()) / 8);
 		if (user.getHealth() < 16)
 			dmg = 1;
