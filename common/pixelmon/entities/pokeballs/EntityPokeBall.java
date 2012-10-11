@@ -174,7 +174,6 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movingobjectposition) {
-
 		if (getIsWaiting()) {
 			return;
 		}
@@ -185,6 +184,7 @@ public class EntityPokeBall extends EntityThrowable {
 			entityDropItem(new ItemStack(PixelmonItemsPokeballs.ironBase), 0.0F);
 			entityDropItem(new ItemStack(breakBall()), 0.0F);
 			setDead();
+			return;
 		}
 
 		if (isBattleThrown && !worldObj.isRemote) {
