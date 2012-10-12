@@ -133,6 +133,10 @@ public class EffectParser {
 				effect = new RazorWind();
 			if (MultiTurnSpecialAttackType.getMultiTurnSpecialAttackType(effectTypeString) == MultiTurnSpecialAttackType.SolarBeam)
 				effect = new SolarBeam();
+			if (MultiTurnSpecialAttackType.getMultiTurnSpecialAttackType(effectTypeString) == MultiTurnSpecialAttackType.Bide)
+				effect = new Bide();
+
+			
 		}else if (effectType == EffectType.SpecialAttack){
 			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acupressure)
 				effect = new Acupressure();
