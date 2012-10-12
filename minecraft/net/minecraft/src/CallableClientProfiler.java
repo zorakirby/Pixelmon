@@ -16,13 +16,16 @@ public class CallableClientProfiler implements Callable
         this.minecraftClientProfiler = par1Minecraft;
     }
 
-    public String func_74499_a()
+    /**
+     * Gets if Client Profiler (aka Snooper) is enabled.
+     */
+    public String getClientProfilerEnabled()
     {
-        return this.minecraftClientProfiler.mcProfiler.profilingEnabled ? this.minecraftClientProfiler.mcProfiler.func_76322_c() : "N/A (disabled)";
+        return this.minecraftClientProfiler.mcProfiler.profilingEnabled ? this.minecraftClientProfiler.mcProfiler.getNameOfLastSection() : "N/A (disabled)";
     }
 
     public Object call()
     {
-        return this.func_74499_a();
+        return this.getClientProfilerEnabled();
     }
 }

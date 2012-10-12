@@ -4,17 +4,22 @@ import java.util.Random;
 
 abstract class ComponentScatteredFeature extends StructureComponent
 {
-    protected final int field_74939_a;
-    protected final int field_74937_b;
-    protected final int field_74938_c;
+    /** The size of the bounding box for this feature in the X axis */
+    protected final int scatteredFeatureSizeX;
+
+    /** The size of the bounding box for this feature in the Y axis */
+    protected final int scatteredFeatureSizeY;
+
+    /** The size of the bounding box for this feature in the Z axis */
+    protected final int scatteredFeatureSizeZ;
     protected int field_74936_d = -1;
 
     protected ComponentScatteredFeature(Random par1Random, int par2, int par3, int par4, int par5, int par6, int par7)
     {
         super(0);
-        this.field_74939_a = par5;
-        this.field_74937_b = par6;
-        this.field_74938_c = par7;
+        this.scatteredFeatureSizeX = par5;
+        this.scatteredFeatureSizeY = par6;
+        this.scatteredFeatureSizeZ = par7;
         this.coordBaseMode = par1Random.nextInt(4);
 
         switch (this.coordBaseMode)

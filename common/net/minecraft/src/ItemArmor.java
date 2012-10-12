@@ -31,7 +31,7 @@ public class ItemArmor extends Item
         this.damageReduceAmount = par2EnumArmorMaterial.getDamageReductionAmount(par4);
         this.setMaxDamage(par2EnumArmorMaterial.getDurability(par4));
         this.maxStackSize = 1;
-        this.setTabToDisplayOn(CreativeTabs.tabCombat);
+        this.setCreativeTab(CreativeTabs.tabCombat);
     }
 
     /**

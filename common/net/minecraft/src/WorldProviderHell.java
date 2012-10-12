@@ -13,7 +13,7 @@ public class WorldProviderHell extends WorldProvider
         this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.hell, 1.0F, 0.0F);
         this.isHellWorld = true;
         this.hasNoSky = true;
-        this.worldType = -1;
+        this.dimensionId = -1;
     }
 
     @SideOnly(Side.CLIENT)
@@ -90,7 +90,10 @@ public class WorldProviderHell extends WorldProvider
         return true;
     }
 
-    public String func_80007_l()
+    /**
+     * Returns the dimension's name, e.g. "The End", "Nether", or "Overworld".
+     */
+    public String getDimensionName()
     {
         return "Nether";
     }

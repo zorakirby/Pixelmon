@@ -12,9 +12,11 @@ import java.util.logging.Logger;
 @SideOnly(Side.CLIENT)
 public class ThreadLanServerPing extends Thread
 {
-    private static Logger field_77530_a = Logger.getLogger("Minecraft");
+    private static Logger logger = Logger.getLogger("Minecraft");
     private final String motd;
-    private final DatagramSocket field_77529_c;
+
+    /** The socket we're using to send packets on. */
+    private final DatagramSocket socket;
     private boolean isStopping = true;
     private final String address;
 
@@ -24,7 +26,7 @@ public class ThreadLanServerPing extends Thread
         this.motd = par1Str;
         this.address = par2Str;
         this.setDaemon(true);
-        this.field_77529_c = new DatagramSocket();
+        this.socket = new DatagramSocket();
     }
 
     public void run()
@@ -38,11 +40,11 @@ public class ThreadLanServerPing extends Thread
             {
                 InetAddress var3 = InetAddress.getByName("224.0.2.60");
                 DatagramPacket var4 = new DatagramPacket(var2, var2.length, var3, 4445);
-                this.field_77529_c.send(var4);
+                this.socket.send(var4);
             }
             catch (IOException var6)
             {
-                field_77530_a.log(Level.WARNING, "LanServerPinger: " + var6.getMessage());
+                logger.log(Level.WARNING, "LanServerPinger: " + var6.getMessage());
                 break;
             }
 

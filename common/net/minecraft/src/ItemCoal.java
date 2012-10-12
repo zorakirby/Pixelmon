@@ -11,7 +11,7 @@ public class ItemCoal extends Item
         super(par1);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
-        this.setTabToDisplayOn(CreativeTabs.tabMaterials);
+        this.setCreativeTab(CreativeTabs.tabMaterials);
     }
 
     public String getItemNameIS(ItemStack par1ItemStack)

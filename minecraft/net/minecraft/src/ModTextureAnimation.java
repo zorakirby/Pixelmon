@@ -18,11 +18,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.FMLTextureFX;
 
 /**
- * A texture override for animations, it takes a vertical image of 
+ * A texture override for animations, it takes a vertical image of
  * texture frames and constantly rotates them in the texture.
  */
 public class ModTextureAnimation extends FMLTextureFX
@@ -31,45 +33,45 @@ public class ModTextureAnimation extends FMLTextureFX
     private byte[][] images;
     private int index = 0;
     private int ticks = 0;
-    
+
     private String targetTex = null;
     private BufferedImage imgData = null;
-    
+
     public ModTextureAnimation(int icon, int target, BufferedImage image, int tickCount)
     {
         this(icon, 1, target, image, tickCount);
     }
 
-    public ModTextureAnimation(int icon, int size, int target, BufferedImage image, int tickCount)    
+    public ModTextureAnimation(int icon, int size, int target, BufferedImage image, int tickCount)
     {
         this(icon, size, (target == 0 ? "/terrain.png" : "/gui/items.png"), image, tickCount);
     }
-    
+
     public ModTextureAnimation(int icon, int size, String target, BufferedImage image, int tickCount)
     {
         super(icon);
         RenderEngine re = FMLClientHandler.instance().getClient().renderEngine;
-        
+
         targetTex = target;
         tileSize = size;
         tileImage = re.getTexture(target);
-        
+
         tickRate = tickCount;
         ticks = tickCount;
         imgData = image;
     }
-    
+
     @Override
     public void setup()
     {
         super.setup();
-        
+
         int sWidth  = imgData.getWidth();
         int sHeight = imgData.getHeight();
         int tWidth  = tileSizeBase;
         int tHeight = tileSizeBase;
-        
-        
+
+
         int frames = (int)Math.floor((double)(sHeight / sWidth));
 
         if (frames < 1)
@@ -80,7 +82,7 @@ public class ModTextureAnimation extends FMLTextureFX
         {
             images = new byte[frames][];
             BufferedImage image = imgData;
-            
+
             if (sWidth != tWidth)
             {
                 BufferedImage b = new BufferedImage(tWidth, tHeight * frames, 6);
@@ -107,8 +109,8 @@ public class ModTextureAnimation extends FMLTextureFX
             }
         }
     }
-    
-    public void func_783_a()
+
+    public void onTick()
     {
         if (++ticks >= tickRate)
         {
@@ -121,4 +123,17 @@ public class ModTextureAnimation extends FMLTextureFX
             ticks = 0;
         }
     }
+
+    public void bindImage(RenderEngine renderEngine)
+    {
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, tileImage);
+    }
+
+    // TODO: REMOVE THIS - just for you dan200
+    @Deprecated
+    public void func_783_a()
+    {
+        onTick();
+    }
+
 }

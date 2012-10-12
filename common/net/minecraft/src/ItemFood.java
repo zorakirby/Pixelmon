@@ -38,7 +38,7 @@ public class ItemFood extends Item
         this.healAmount = par2;
         this.isWolfsFavoriteMeat = par4;
         this.saturationModifier = par3;
-        this.setTabToDisplayOn(CreativeTabs.tabFood);
+        this.setCreativeTab(CreativeTabs.tabFood);
     }
 
     public ItemFood(int par1, int par2, boolean par3)

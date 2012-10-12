@@ -165,7 +165,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP
     /**
      * Joins the passed in entity item with the world. Args: entityItem
      */
-    protected void joinEntityItemWithWorld(EntityItem par1EntityItem) {}
+    public void joinEntityItemWithWorld(EntityItem par1EntityItem) {}
 
     /**
      * Sends a chat message from the player. Args: chatMessage

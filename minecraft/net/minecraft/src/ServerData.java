@@ -8,9 +8,21 @@ public class ServerData
 {
     public String serverName;
     public String serverIP;
-    public String field_78846_c;
+
+    /**
+     * the string indicating number of players on and capacity of the server that is shown on the server browser (i.e.
+     * "5/20" meaning 5 slots used out of 20 slots total)
+     */
+    public String populationInfo;
+
+    /**
+     * (better variable name would be 'hostname') server name as displayed in the server browser's second line (grey
+     * text)
+     */
     public String serverMOTD;
-    public long field_78844_e;
+
+    /** last server ping that showed up in the server browser */
+    public long pingToServer;
     public boolean field_78841_f = false;
     private boolean field_78842_g = true;
     private boolean acceptsTextures = false;

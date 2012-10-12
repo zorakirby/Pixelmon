@@ -3,6 +3,7 @@ package net.minecraft.src;
 import java.util.Iterator;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -24,6 +25,11 @@ public class EntityItem extends Entity
     /** The EntityItem's random initial float height. */
     public float hoverStart = (float)(Math.random() * Math.PI * 2.0D);
 
+    /**
+     * The maximum age of this EntityItem.  The item is expired once this is reached.
+     */
+    public int lifespan = 6000;
+
     public EntityItem(World par1World, double par2, double par4, double par6, ItemStack par8ItemStack)
     {
         super(par1World);
@@ -35,6 +41,7 @@ public class EntityItem extends Entity
         this.motionX = (double)((float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D));
         this.motionY = 0.20000000298023224D;
         this.motionZ = (double)((float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D));
+        this.lifespan = (par8ItemStack.getItem() == null ? 6000 : par8ItemStack.getItem().getEntityLifespan(par8ItemStack, par1World));
     }
 
     /**
@@ -121,9 +128,17 @@ public class EntityItem extends Entity
 
         ++this.age;
 
-        if (this.age >= 6000)
+        if (this.age >= lifespan)
         {
-            this.setDead();
+            ItemExpireEvent event = new ItemExpireEvent(this, (item.getItem() == null ? 6000 : item.getItem().getEntityLifespan(item, worldObj)));
+            if (MinecraftForge.EVENT_BUS.post(event))
+            {
+                lifespan += event.extraLife;
+            }
+            else
+            {
+                this.setDead();
+            }
         }
 
         if (this.item == null || this.item.stackSize <= 0)
@@ -216,6 +231,7 @@ public class EntityItem extends Entity
     {
         par1NBTTagCompound.setShort("Health", (short)((byte)this.health));
         par1NBTTagCompound.setShort("Age", (short)this.age);
+        par1NBTTagCompound.setInteger("Lifespan", lifespan);
 
         if (this.item != null)
         {
@@ -236,6 +252,11 @@ public class EntityItem extends Entity
         if (this.item == null || this.item.stackSize <= 0)
         {
             this.setDead();
+        }
+
+        if (par1NBTTagCompound.hasKey("Lifespan"))
+        {
+            lifespan = par1NBTTagCompound.getInteger("Lifespan");
         }
     }
 

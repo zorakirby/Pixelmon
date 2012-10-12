@@ -6,19 +6,23 @@ import cpw.mods.fml.common.asm.SideOnly;
 @SideOnly(Side.CLIENT)
 class GuiChatConfirmLink extends GuiConfirmOpenLink
 {
-    final ChatClickData field_73949_a;
+    /** Instance of ChatClickData. */
+    final ChatClickData theChatClickData;
 
-    final GuiChat field_73948_b;
+    final GuiChat chatGui;
 
     GuiChatConfirmLink(GuiChat par1GuiChat, GuiScreen par2GuiScreen, String par3Str, int par4, ChatClickData par5ChatClickData)
     {
         super(par2GuiScreen, par3Str, par4);
-        this.field_73948_b = par1GuiChat;
-        this.field_73949_a = par5ChatClickData;
+        this.chatGui = par1GuiChat;
+        this.theChatClickData = par5ChatClickData;
     }
 
-    public void func_73945_e()
+    /**
+     * Copies the link to the system clipboard.
+     */
+    public void copyLinkToClipboard()
     {
-        setClipboardString(this.field_73949_a.func_78309_f());
+        setClipboardString(this.theChatClickData.getClickedUrl());
     }
 }

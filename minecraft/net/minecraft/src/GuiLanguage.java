@@ -90,9 +90,9 @@ public class GuiLanguage extends GuiScreen
     }
 
     /**
-     * the private theGameSettings field.
+     * Gets the relevant instance of GameSettings. Synthetic method for use in GuiSlotLanguage
      */
-    static GameSettings Returns(GuiLanguage par0GuiLanguage)
+    static GameSettings getGameSettings(GuiLanguage par0GuiLanguage)
     {
         return par0GuiLanguage.theGameSettings;
     }

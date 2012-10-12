@@ -19,7 +19,7 @@ public class CommandGive extends CommandBase
     {
         if (par2ArrayOfStr.length >= 2)
         {
-            EntityPlayer var3 = this.func_71537_a(par2ArrayOfStr[0]);
+            EntityPlayer var3 = this.getTargetPlayer(par2ArrayOfStr[0]);
             int var4 = parseIntWithMin(par1ICommandSender, par2ArrayOfStr[1], 1);
             int var5 = 1;
             int var6 = 0;
@@ -59,7 +59,7 @@ public class CommandGive extends CommandBase
         return par2ArrayOfStr.length == 1 ? getListOfStringsMatchingLastWord(par2ArrayOfStr, this.getPlayers()) : null;
     }
 
-    protected EntityPlayer func_71537_a(String par1Str)
+    protected EntityPlayer getTargetPlayer(String par1Str)
     {
         EntityPlayerMP var2 = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(par1Str);
 

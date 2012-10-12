@@ -4,7 +4,7 @@ public abstract class ASN1Object implements ASN1Encodable
 {
     public int hashCode()
     {
-        return this.func_71606_a().hashCode();
+        return this.toASN1Primitive().hashCode();
     }
 
     public boolean equals(Object par1Obj)
@@ -20,9 +20,9 @@ public abstract class ASN1Object implements ASN1Encodable
         else
         {
             ASN1Encodable var2 = (ASN1Encodable)par1Obj;
-            return this.func_71606_a().equals(var2.func_71606_a());
+            return this.toASN1Primitive().equals(var2.toASN1Primitive());
         }
     }
 
-    public abstract ASN1Primitive func_71606_a();
+    public abstract ASN1Primitive toASN1Primitive();
 }

@@ -442,7 +442,7 @@ public class EntityPlayerSP extends EntityPlayer
      */
     public void addChatMessage(String par1Str)
     {
-        this.mc.ingameGUI.getChatGUI().func_73757_a(par1Str, new Object[0]);
+        this.mc.ingameGUI.getChatGUI().addTranslatedMessage(par1Str, new Object[0]);
     }
 
     /**

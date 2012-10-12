@@ -237,7 +237,7 @@ public class ExtendedBlockStorage
     }
 
     @SideOnly(Side.CLIENT)
-    public void func_76676_h()
+    public void clearMSBArray()
     {
         this.blockMSBArray = null;
     }

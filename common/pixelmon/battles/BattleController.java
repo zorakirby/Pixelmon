@@ -62,6 +62,8 @@ public class BattleController {
 		BattleRegistry.registerBattle(this);
 		participant1.setBattleController(this);
 		participant2.setBattleController(this);
+		participant1.StartBattle(participant2);
+		participant2.StartBattle(participant1);
 		participant1.currentPokemon().battleController = this;
 		participant2.currentPokemon().battleController = this;
 		if (participant1.canGainXP())

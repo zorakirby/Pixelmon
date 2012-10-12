@@ -28,7 +28,7 @@ class ServerGuiCommandListener implements ActionListener
 
         if (var2.length() > 0)
         {
-            ServerGUI.func_79004_a(this.mcServerGui).addPendingCommand(var2, MinecraftServer.getServer());
+            ServerGUI.getDedicatedServer(this.mcServerGui).addPendingCommand(var2, MinecraftServer.getServer());
         }
 
         this.textField.setText("");

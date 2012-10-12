@@ -60,6 +60,8 @@ import net.minecraft.src.WorldServerMulti;
 import net.minecraft.src.WorldSettings;
 import net.minecraft.src.WorldType;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.WorldEvent;
 
 public abstract class MinecraftServer implements Runnable, IPlayerUsage, ICommandSender
 {
@@ -81,19 +83,25 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
 
     /** The server's hostname. */
     private String hostname;
+
+    /** The server's port. */
     private int serverPort = -1;
 
     /** The server world instances. */
-    public WorldServer[] theWorldServer;
+    public WorldServer[] worldServers;
 
     /** The ServerConfigurationManager instance. */
     private ServerConfigurationManager serverConfigManager;
-    private boolean serverShouldContinueRunning = true;
+
+    /**
+     * Indicates whether the server is running or not. Set to false to initiate a shutdown.
+     */
+    private boolean serverRunning = true;
 
     /** Indicates to other classes that the server is safely stopped. */
     private boolean serverStopped = false;
 
-    /** incremented every tick */
+    /** Incremented every tick. */
     private int tickCounter = 0;
 
     /**
@@ -106,8 +114,10 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
 
     /** True if the server is in online mode. */
     private boolean onlineMode;
-    private boolean canAnimalsSpawn;
-    private boolean canNPCsSpawn;
+
+    /** True if the server has animals turned on. */
+    private boolean canSpawnAnimals;
+    private boolean canSpawnNPCs;
 
     /** Indicates whether PvP is active on the server or not. */
     private boolean pvpEnabled;
@@ -122,17 +132,16 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     private int buildLimit;
     private long lastSentPacketID;
     private long lastSentPacketSize;
-    private long lastRecievedID;
-    private long lastRecievedSize;
+    private long lastReceivedID;
+    private long lastReceivedSize;
     public final long[] sentPacketCountArray = new long[100];
     public final long[] sentPacketSizeArray = new long[100];
-    public final long[] recievedPacketCountArray = new long[100];
-    public final long[] recievedPacketSizeArray = new long[100];
+    public final long[] receivedPacketCountArray = new long[100];
+    public final long[] receivedPacketSizeArray = new long[100];
     public final long[] tickTimeArray = new long[100];
 
-    /** stats are [dimension][tick%100] system.nanoTime is stored. */
-    //public long[][] timeOfLastDimenstionTick;
-    public List<WorldServer> worlds = new ArrayList<WorldServer>();
+    /** Stats are [dimension][tick%100] system.nanoTime is stored. */
+    //public long[][] timeOfLastDimensionTick;
     public Hashtable<Integer, long[]> worldTickTimes = new Hashtable<Integer, long[]>();
     public int spawnProtectionSize = 16;
     private KeyPair serverKeyPair;
@@ -146,14 +155,14 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     private boolean enableBonusChest;
 
     /**
-     * if this is set, there is no need to save chunks or stop the server, because that is already being done.
+     * If true, there is no need to save chunks or stop the server, because that is already being done.
      */
     private boolean worldIsBeingDeleted;
     private String texturePack = "";
     private boolean serverIsRunning = false;
 
     /**
-     * set when the client is warned for "can'tKeepUp", only trigger again after 15 seconds
+     * Set when warned for "Can't keep up", which triggers again after 15 seconds.
      */
     private long timeOfLastWarning;
     private String userMessage;
@@ -183,7 +192,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     /**
-     * typically menu.convertingLevel, menu.loadingLevel,  saving, or others
+     * Typically "menu.convertingLevel", "menu.loadingLevel" or others.
      */
     protected synchronized void setUserMessage(String par1Str)
     {
@@ -197,7 +206,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         return this.userMessage;
     }
 
-    protected void loadAllDimensions(String par1Str, String par2Str, long par3, WorldType par5WorldType)
+    protected void loadAllWorlds(String par1Str, String par2Str, long par3, WorldType par5WorldType)
     {
         this.convertMapIfNeeded(par1Str);
         this.setUserMessage("menu.loadingLevel");
@@ -220,18 +229,22 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         }
 
         WorldServer overWorld = (isDemo() ? new DemoWorldServer(this, var6, par2Str, 0, theProfiler) : new WorldServer(this, var6, par2Str, 0, var7, theProfiler));
-        for (int dim : DimensionManager.getIDs())
+        for (int dim : DimensionManager.getStaticDimensionIDs())
         {
             WorldServer world = (dim == 0 ? overWorld : new WorldServerMulti(this, var6, par2Str, dim, var7, overWorld, theProfiler));
             world.addWorldAccess(new WorldManager(this, world));
+
             if (!this.isSinglePlayer())
             {
                 world.getWorldInfo().setGameType(this.getGameType());
             }
+
+            this.serverConfigManager.setPlayerManager(this.worldServers);
+            MinecraftForge.EVENT_BUS.post(new WorldEvent.Load(world));
         }
 
         this.serverConfigManager.setPlayerManager(new WorldServer[]{ overWorld });
-        this.setDifficultyForAllDimensions(this.getDifficulty());
+        this.setDifficultyForAllWorlds(this.getDifficulty());
         this.initialWorldChunkLoad();
     }
 
@@ -244,7 +257,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         for (int var4 = 0; var4 < 1; ++var4)
         {
             logger.info("Preparing start region for level " + var4);
-            WorldServer var5 = this.theWorldServer[var4];
+            WorldServer var5 = this.worldServers[var4];
             ChunkCoordinates var6 = var5.getSpawnPoint();
 
             for (int var7 = -var1; var7 <= var1 && this.isServerRunning(); var7 += 16)
@@ -284,12 +297,12 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     public abstract EnumGameType getGameType();
 
     /**
-     * defaults to "1" for the dedicated server
+     * Defaults to "1" (Easy) for the dedicated server, defaults to "2" (Normal) on the client.
      */
     public abstract int getDifficulty();
 
     /**
-     * defaults to false
+     * Defaults to false.
      */
     public abstract boolean isHardcore();
 
@@ -313,13 +326,13 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     /**
-     * par1 indicates if a log message should be output
+     * par1 indicates if a log message should be output.
      */
-    protected void saveAllDimensions(boolean par1)
+    protected void saveAllWorlds(boolean par1)
     {
         if (!this.worldIsBeingDeleted)
         {
-            WorldServer[] var2 = this.theWorldServer;
+            WorldServer[] var2 = this.worldServers;
             int var3 = var2.length;
 
             for (int var4 = 0; var4 < var3; ++var4)
@@ -330,7 +343,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                 {
                     if (!par1)
                     {
-                        logger.info("Saving chunks for level \'" + var5.getWorldInfo().getWorldName() + "\'/" + var5.provider.func_80007_l());
+                        logger.info("Saving chunks for level \'" + var5.getWorldInfo().getWorldName() + "\'/" + var5.provider.getDimensionName());
                     }
 
                     try
@@ -368,14 +381,16 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
             }
 
             logger.info("Saving worlds");
-            this.saveAllDimensions(false);
-            WorldServer[] var1 = this.theWorldServer;
+            this.saveAllWorlds(false);
+            WorldServer[] var1 = this.worldServers;
             int var2 = var1.length;
 
             for (int var3 = 0; var3 < var2; ++var3)
             {
                 WorldServer var4 = var1[var3];
+                MinecraftForge.EVENT_BUS.post(new WorldEvent.Unload(var4));
                 var4.flush();
+                DimensionManager.setWorld(var4.provider.dimensionId, null);
             }
 
             if (this.usageSnooper != null && this.usageSnooper.isSnooperRunning())
@@ -385,27 +400,30 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         }
     }
 
-    public String getHostname()
+    /**
+     * "getHostname" is already taken, but both return the hostname.
+     */
+    public String getServerHostname()
     {
         return this.hostname;
     }
 
-    public void getHostName(String par1Str)
+    public void setHostname(String par1Str)
     {
         this.hostname = par1Str;
     }
 
     public boolean isServerRunning()
     {
-        return this.serverShouldContinueRunning;
+        return this.serverRunning;
     }
 
     /**
-     * sets serverRunning to false
+     * Sets the serverRunning variable to false, in order to get the server to shut down.
      */
-    public void setServerStopping()
+    public void initiateShutdown()
     {
-        this.serverShouldContinueRunning = false;
+        this.serverRunning = false;
     }
 
     public void run()
@@ -417,9 +435,9 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                 FMLCommonHandler.instance().handleServerStarted();
                 long var1 = System.currentTimeMillis();
 
-                FMLCommonHandler.instance().onWorldLoadTick(theWorldServer);
+                FMLCommonHandler.instance().onWorldLoadTick(worldServers);
 
-                for (long var50 = 0L; this.serverShouldContinueRunning; this.serverIsRunning = true)
+                for (long var50 = 0L; this.serverRunning; this.serverIsRunning = true)
                 {
                     long var5 = System.currentTimeMillis();
                     long var7 = var5 - var1;
@@ -440,7 +458,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                     var50 += var7;
                     var1 = var5;
 
-                    if (this.theWorldServer[0].areAllPlayersAsleep())
+                    if (this.worldServers[0].areAllPlayersAsleep())
                     {
                         this.tick();
                         var50 = 0L;
@@ -471,7 +489,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
 
             if (var48 instanceof ReportedException)
             {
-                var2 = this.addServerInfoToCrashReport(((ReportedException)var48).func_71575_a());
+                var2 = this.addServerInfoToCrashReport(((ReportedException)var48).getTheReportedExceptionCrashReport());
             }
             else
             {
@@ -515,17 +533,17 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     /**
-     * called on exit from the main run loop
+     * Called on exit from the main run() loop.
      */
     protected void finalTick(CrashReport par1CrashReport) {}
 
     /**
-     * directly calls system.exit, instantly killing the program
+     * Directly calls System.exit(0), instantly killing the program.
      */
     protected void systemExitNow() {}
 
     /**
-     * main function called by run() every loop
+     * Main function called by run() every loop.
      */
     public void tick()
     {
@@ -550,7 +568,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         {
             this.theProfiler.startSection("save");
             this.serverConfigManager.saveAllPlayerData();
-            this.saveAllDimensions(true);
+            this.saveAllWorlds(true);
             this.theProfiler.endSection();
         }
 
@@ -560,10 +578,10 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         this.lastSentPacketID = Packet.sentID;
         this.sentPacketSizeArray[this.tickCounter % 100] = Packet.sentSize - this.lastSentPacketSize;
         this.lastSentPacketSize = Packet.sentSize;
-        this.recievedPacketCountArray[this.tickCounter % 100] = Packet.recievedID - this.lastRecievedID;
-        this.lastRecievedID = Packet.recievedID;
-        this.recievedPacketSizeArray[this.tickCounter % 100] = Packet.recievedSize - this.lastRecievedSize;
-        this.lastRecievedSize = Packet.recievedSize;
+        this.receivedPacketCountArray[this.tickCounter % 100] = Packet.receivedID - this.lastReceivedID;
+        this.lastReceivedID = Packet.receivedID;
+        this.receivedPacketSizeArray[this.tickCounter % 100] = Packet.receivedSize - this.lastReceivedSize;
+        this.lastReceivedSize = Packet.receivedSize;
         this.theProfiler.endSection();
         this.theProfiler.startSection("snooper");
 
@@ -598,7 +616,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                 if (this.tickCounter % 20 == 0)
                 {
                     this.theProfiler.startSection("timeSync");
-                    this.serverConfigManager.sendPacketToAllPlayersInDimension(new Packet4UpdateTime(var4.getWorldTime()), var4.provider.worldType);
+                    this.serverConfigManager.sendPacketToAllPlayersInDimension(new Packet4UpdateTime(var4.getWorldTime()), var4.provider.dimensionId);
                     this.theProfiler.endSection();
                 }
 
@@ -615,7 +633,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                         this.theProfiler.endSection();
                         var4.updateEntities();
                         this.theProfiler.startSection("tracker");
-                        var4.getEntityTracker().processOutstandingEntries();
+                        var4.getEntityTracker().updateTrackedEntities();
                         this.theProfiler.endSection();
                         this.theProfiler.endSection();
                         break;
@@ -626,6 +644,8 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
             worldTickTimes.get(id)[this.tickCounter % 100] = System.nanoTime() - var2;
         }
 
+        this.theProfiler.endStartSection("dim_unloading");
+        DimensionManager.unloadWorlds(worldTickTimes);
         this.theProfiler.endStartSection("connection");
         this.getNetworkThread().networkTick();
         this.theProfiler.endStartSection("players");
@@ -660,20 +680,33 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         return new File(this.getDataDirectory(), par1Str);
     }
 
-    public void logInfoMessage(String par1Str)
+    /**
+     * Logs the message with a level of INFO.
+     */
+    public void logInfo(String par1Str)
     {
         logger.info(par1Str);
     }
 
-    public void logWarningMessage(String par1Str)
+    /**
+     * Logs the message with a level of WARN.
+     */
+    public void logWarning(String par1Str)
     {
         logger.warning(par1Str);
     }
 
+    /**
+     * Gets the worldServer by the given dimension.
+     */
     public WorldServer worldServerForDimension(int par1)
     {
         WorldServer ret = DimensionManager.getWorld(par1);
-        return (ret != null ? ret : DimensionManager.getWorld(0));
+        if (ret == null) {
+            DimensionManager.initDimension(par1);
+            ret = DimensionManager.getWorld(par1);
+        }
+        return ret;
     }
 
     @SideOnly(Side.SERVER)
@@ -686,15 +719,18 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         this.playersOnline.add(par1IUpdatePlayerListBox);
     }
 
-    public String getHostName()
+    /**
+     * Returns the server's hostname.
+     */
+    public String getHostname()
     {
         return this.hostname;
     }
 
     /**
-     * never used. Can not be called "getServerPort" is already taken
+     * Never used, but "getServerPort" is already taken.
      */
-    public int getMyServerPort()
+    public int getPort()
     {
         return this.serverPort;
     }
@@ -707,54 +743,75 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         return this.motd;
     }
 
+    /**
+     * Returns the server's Minecraft version as string.
+     */
     public String getMinecraftVersion()
     {
         return "1.3.2";
     }
 
-    public int getPlayerListSize()
+    /**
+     * Returns the number of players currently on the server.
+     */
+    public int getCurrentPlayerCount()
     {
-        return this.serverConfigManager.getPlayerListSize();
+        return this.serverConfigManager.getCurrentPlayerCount();
     }
 
+    /**
+     * Returns the maximum number of players allowed on the server.
+     */
     public int getMaxPlayers()
     {
         return this.serverConfigManager.getMaxPlayers();
     }
 
+    /**
+     * Returns an array of the usernames of all the connected players.
+     */
     public String[] getAllUsernames()
     {
         return this.serverConfigManager.getAllUsernames();
     }
 
     /**
-     * rename this when a patch comes out which uses it
+     * Used by RCon's Query in the form of "MajorServerMod 1.2.3: MyPlugin 1.3; AnotherPlugin 2.1; AndSoForth 1.0".
      */
-    public String returnAnEmptyString()
+    public String getPlugins()
     {
         return "";
     }
 
     public String executeCommand(String par1Str)
     {
-        RConConsoleSource.consoleBuffer.clearChatBuffer();
+        RConConsoleSource.consoleBuffer.resetLog();
         this.commandManager.executeCommand(RConConsoleSource.consoleBuffer, par1Str);
         return RConConsoleSource.consoleBuffer.getChatBuffer();
     }
 
-    public boolean doLogInfoEvent()
+    /**
+     * Returns true if debugging is enabled, false otherwise.
+     */
+    public boolean isDebuggingEnabled()
     {
         return false;
     }
 
-    public void logSevereEvent(String par1Str)
+    /**
+     * Logs the error message with a level of SEVERE.
+     */
+    public void logSevere(String par1Str)
     {
         logger.log(Level.SEVERE, par1Str);
     }
 
-    public void logInfoEvent(String par1Str)
+    /**
+     * If isDebuggingEnabled(), logs the message with a level of INFO.
+     */
+    public void logDebug(String par1Str)
     {
-        if (this.doLogInfoEvent())
+        if (this.isDebuggingEnabled())
         {
             logger.log(Level.INFO, par1Str);
         }
@@ -766,7 +823,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     /**
-     * iterates the worldServers and adds their info also
+     * Adds the server info, including from theWorldServer, to the crash report.
      */
     public CrashReport addServerInfoToCrashReport(CrashReport par1CrashReport)
     {
@@ -778,9 +835,9 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
             par1CrashReport.addCrashSectionCallable("Player Count", new CallablePlayers(this));
         }
 
-        if (this.theWorldServer != null)
+        if (this.worldServers != null)
         {
-            WorldServer[] var2 = this.theWorldServer;
+            WorldServer[] var2 = this.worldServers;
             int var3 = var2.length;
 
             for (int var4 = 0; var4 < var3; ++var4)
@@ -798,7 +855,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     /**
-     * if par2 begins with / then it searches for commands, otherwise it returns users
+     * If par2Str begins with /, then it searches for commands, otherwise it returns players.
      */
     public List getPossibleCompletions(ICommandSender par1ICommandSender, String par2Str)
     {
@@ -963,11 +1020,11 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         this.serverKeyPair = par1KeyPair;
     }
 
-    public void setDifficultyForAllDimensions(int par1)
+    public void setDifficultyForAllWorlds(int par1)
     {
-        for (int var2 = 0; var2 < this.theWorldServer.length; ++var2)
+        for (int var2 = 0; var2 < this.worldServers.length; ++var2)
         {
-            WorldServer var3 = this.theWorldServer[var2];
+            WorldServer var3 = this.worldServers[var2];
 
             if (var3 != null)
             {
@@ -984,7 +1041,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
                 else
                 {
                     var3.difficultySetting = par1;
-                    var3.setAllowedSpawnTypes(this.allowSpawnMonsters(), this.canAnimalsSpawn);
+                    var3.setAllowedSpawnTypes(this.allowSpawnMonsters(), this.canSpawnAnimals);
                 }
             }
         }
@@ -1023,25 +1080,26 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
 
     /**
      * WARNING : directly calls
-     * getActiveAnvilConverter().deleteWorldDirectory(dimensionServerList[0].getSaveHandler().getSaveDirectoryName());
+     * getActiveAnvilConverter().deleteWorldDirectory(theWorldServer[0].getSaveHandler().getSaveDirectoryName());
      */
     public void deleteWorldAndStopServer()
     {
         this.worldIsBeingDeleted = true;
         this.getActiveAnvilConverter().flushCache();
 
-        for (int var1 = 0; var1 < this.theWorldServer.length; ++var1)
+        for (int var1 = 0; var1 < this.worldServers.length; ++var1)
         {
-            WorldServer var2 = this.theWorldServer[var1];
+            WorldServer var2 = this.worldServers[var1];
 
             if (var2 != null)
             {
+                MinecraftForge.EVENT_BUS.post(new WorldEvent.Unload(var2));
                 var2.flush();
             }
         }
 
-        this.getActiveAnvilConverter().deleteWorldDirectory(this.theWorldServer[0].getSaveHandler().getSaveDirectoryName());
-        this.setServerStopping();
+        this.getActiveAnvilConverter().deleteWorldDirectory(this.worldServers[0].getSaveHandler().getSaveDirectoryName());
+        this.initiateShutdown();
     }
 
     public String getTexturePack()
@@ -1058,7 +1116,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     {
         par1PlayerUsageSnooper.addData("whitelist_enabled", Boolean.valueOf(false));
         par1PlayerUsageSnooper.addData("whitelist_count", Integer.valueOf(0));
-        par1PlayerUsageSnooper.addData("players_current", Integer.valueOf(this.getPlayerListSize()));
+        par1PlayerUsageSnooper.addData("players_current", Integer.valueOf(this.getCurrentPlayerCount()));
         par1PlayerUsageSnooper.addData("players_max", Integer.valueOf(this.getMaxPlayers()));
         par1PlayerUsageSnooper.addData("players_seen", Integer.valueOf(this.serverConfigManager.getAvailablePlayerDat().length));
         par1PlayerUsageSnooper.addData("uses_auth", Boolean.valueOf(this.onlineMode));
@@ -1066,17 +1124,17 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
         par1PlayerUsageSnooper.addData("avg_tick_ms", Integer.valueOf((int)(MathHelper.average(this.tickTimeArray) * 1.0E-6D)));
         par1PlayerUsageSnooper.addData("avg_sent_packet_count", Integer.valueOf((int)MathHelper.average(this.sentPacketCountArray)));
         par1PlayerUsageSnooper.addData("avg_sent_packet_size", Integer.valueOf((int)MathHelper.average(this.sentPacketSizeArray)));
-        par1PlayerUsageSnooper.addData("avg_rec_packet_count", Integer.valueOf((int)MathHelper.average(this.recievedPacketCountArray)));
-        par1PlayerUsageSnooper.addData("avg_rec_packet_size", Integer.valueOf((int)MathHelper.average(this.recievedPacketSizeArray)));
+        par1PlayerUsageSnooper.addData("avg_rec_packet_count", Integer.valueOf((int)MathHelper.average(this.receivedPacketCountArray)));
+        par1PlayerUsageSnooper.addData("avg_rec_packet_size", Integer.valueOf((int)MathHelper.average(this.receivedPacketSizeArray)));
         int var2 = 0;
 
-        for (int var3 = 0; var3 < this.theWorldServer.length; ++var3)
+        for (int var3 = 0; var3 < this.worldServers.length; ++var3)
         {
-            if (this.theWorldServer[var3] != null)
+            if (this.worldServers[var3] != null)
             {
-                WorldServer var4 = this.theWorldServer[var3];
+                WorldServer var4 = this.worldServers[var3];
                 WorldInfo var5 = var4.getWorldInfo();
-                par1PlayerUsageSnooper.addData("world[" + var2 + "][dimension]", Integer.valueOf(var4.provider.worldType));
+                par1PlayerUsageSnooper.addData("world[" + var2 + "][dimension]", Integer.valueOf(var4.provider.dimensionId));
                 par1PlayerUsageSnooper.addData("world[" + var2 + "][mode]", var5.getGameType());
                 par1PlayerUsageSnooper.addData("world[" + var2 + "][difficulty]", Integer.valueOf(var4.difficultySetting));
                 par1PlayerUsageSnooper.addData("world[" + var2 + "][hardcore]", Boolean.valueOf(var5.isHardcoreModeEnabled()));
@@ -1108,9 +1166,9 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     /**
-     * this is checked to be 16 on reception of the packet, and the packet is ignored otherwise
+     * This is checked to be 16 upon receiving the packet, otherwise the packet is ignored.
      */
-    public int textureFlag()
+    public int textureSize()
     {
         return 16;
     }
@@ -1129,22 +1187,22 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
 
     public boolean getCanSpawnAnimals()
     {
-        return this.canAnimalsSpawn;
+        return this.canSpawnAnimals;
     }
 
-    public void setSpawnAnimals(boolean par1)
+    public void setCanSpawnAnimals(boolean par1)
     {
-        this.canAnimalsSpawn = par1;
+        this.canSpawnAnimals = par1;
     }
 
-    public boolean getCanNPCsSpawn()
+    public boolean getCanSpawnNPCs()
     {
-        return this.canNPCsSpawn;
+        return this.canSpawnNPCs;
     }
 
-    public void setSpawnNpcs(boolean par1)
+    public void setCanSpawnNPCs(boolean par1)
     {
-        this.canNPCsSpawn = par1;
+        this.canSpawnNPCs = par1;
     }
 
     public boolean isPVPEnabled()
@@ -1203,13 +1261,13 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     /**
-     * sets the game type for all dimensions
+     * Sets the game type for all worlds.
      */
     public void setGameType(EnumGameType par1EnumGameType)
     {
-        for (int var2 = 0; var2 < this.theWorldServer.length; ++var2)
+        for (int var2 = 0; var2 < this.worldServers.length; ++var2)
         {
-            getServer().theWorldServer[var2].getWorldInfo().setGameType(par1EnumGameType);
+            getServer().worldServers[var2].getWorldInfo().setGameType(par1EnumGameType);
         }
     }
 
@@ -1227,7 +1285,7 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     /**
-     * does nothing on dedicated. on integrated, sets commandsAllowedForAll and gameType and allows external connections
+     * On dedicated does nothing. On integrated, sets commandsAllowedForAll, gameType and allows external connections.
      */
     public abstract String shareToLAN(EnumGameType var1, boolean var2);
 
@@ -1242,12 +1300,15 @@ public abstract class MinecraftServer implements Runnable, IPlayerUsage, IComman
     }
 
     @SideOnly(Side.CLIENT)
-    public PlayerUsageSnooper func_80003_ah()
+    public PlayerUsageSnooper getPlayerUsageSnooper()
     {
         return this.usageSnooper;
     }
 
-    public static ServerConfigurationManager func_71196_a(MinecraftServer par0MinecraftServer)
+    /**
+     * Gets the current player count, maximum player count, and player entity list.
+     */
+    public static ServerConfigurationManager getServerConfigurationManager(MinecraftServer par0MinecraftServer)
     {
         return par0MinecraftServer.serverConfigManager;
     }

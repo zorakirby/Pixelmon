@@ -8,7 +8,7 @@ public class ItemExpBottle extends Item
     public ItemExpBottle(int par1)
     {
         super(par1);
-        this.setTabToDisplayOn(CreativeTabs.tabMisc);
+        this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @SideOnly(Side.CLIENT)

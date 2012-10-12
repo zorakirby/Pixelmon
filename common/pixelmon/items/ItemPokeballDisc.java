@@ -15,7 +15,7 @@ public class ItemPokeballDisc extends PixelmonItem {
 		setMaxDamage(0xf4240);
 		setIconIndex(pokeball.discIconIndex);
 		setTextureFile("/pixelmon/image/pitems2.png");
-		setTabToDisplayOn(CreativeTabs.tabMaterials);
+		setCreativeTab(CreativeTabs.tabMaterials);
 	}
 
 }

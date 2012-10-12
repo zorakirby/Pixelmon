@@ -19,8 +19,8 @@ import net.minecraft.server.MinecraftServer;
 @SideOnly(Side.CLIENT)
 public class IntegratedServerListenThread extends NetworkListenThread
 {
-    private final MemoryConnection field_71760_c = new MemoryConnection((NetHandler)null);
-    private MemoryConnection field_71758_d;
+    private final MemoryConnection netMemoryConnection = new MemoryConnection((NetHandler)null);
+    private MemoryConnection theMemoryConnection;
     private String field_71759_e;
     private boolean field_71756_f = false;
     private ServerListenThread myServerListenThread;
@@ -32,7 +32,7 @@ public class IntegratedServerListenThread extends NetworkListenThread
 
     public void func_71754_a(MemoryConnection par1MemoryConnection, String par2Str)
     {
-        this.field_71758_d = par1MemoryConnection;
+        this.theMemoryConnection = par1MemoryConnection;
         this.field_71759_e = par2Str;
     }
 
@@ -67,7 +67,7 @@ public class IntegratedServerListenThread extends NetworkListenThread
             }
         }
 
-        return FMLNetworkHandler.computeLocalHost().getHostAddress() + ":" + this.myServerListenThread.func_71765_d();
+        return FMLNetworkHandler.computeLocalHost().getHostAddress() + ":" + this.myServerListenThread.getMyPort();
     }
 
     public void stopListening()
@@ -88,18 +88,18 @@ public class IntegratedServerListenThread extends NetworkListenThread
      */
     public void networkTick()
     {
-        if (this.field_71758_d != null)
+        if (this.theMemoryConnection != null)
         {
-            EntityPlayerMP var1 = this.func_71753_e().getConfigurationManager().createPlayerForUser(this.field_71759_e);
+            EntityPlayerMP var1 = this.getIntergatedServerMinecraftServerInstance().getConfigurationManager().createPlayerForUser(this.field_71759_e);
 
             if (var1 != null)
             {
-                this.field_71760_c.pairWith(this.field_71758_d);
+                this.netMemoryConnection.pairWith(this.theMemoryConnection);
                 this.field_71756_f = true;
-                this.func_71753_e().getConfigurationManager().initializeConnectionToPlayer(this.field_71760_c, var1);
+                this.getIntergatedServerMinecraftServerInstance().getConfigurationManager().initializeConnectionToPlayer(this.netMemoryConnection, var1);
             }
 
-            this.field_71758_d = null;
+            this.theMemoryConnection = null;
             this.field_71759_e = null;
         }
 
@@ -111,18 +111,21 @@ public class IntegratedServerListenThread extends NetworkListenThread
         super.networkTick();
     }
 
-    public IntegratedServer func_71753_e()
+    /**
+     * Gets MinecraftServer instance.
+     */
+    public IntegratedServer getIntergatedServerMinecraftServerInstance()
     {
         return (IntegratedServer)super.getServer();
     }
 
     public boolean func_71752_f()
     {
-        return this.field_71756_f && this.field_71760_c.getPairedConnection().isConnectionActive() && this.field_71760_c.getPairedConnection().isGamePaused();
+        return this.field_71756_f && this.netMemoryConnection.getPairedConnection().isConnectionActive() && this.netMemoryConnection.getPairedConnection().isGamePaused();
     }
 
     public MinecraftServer getServer()
     {
-        return this.func_71753_e();
+        return this.getIntergatedServerMinecraftServerInstance();
     }
 }

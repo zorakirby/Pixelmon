@@ -22,7 +22,7 @@ public class PlayerListBox extends JList implements IUpdatePlayerListBox
     }
 
     /**
-     * Updates the Jlist with a new model.
+     * Updates the JList with a new model.
      */
     public void update()
     {

@@ -18,7 +18,7 @@ public class ItemBlock extends Item {
 	public ItemBlock(int par1, Block block, int iconIndex) {
 		super(par1);
 		this.block = block;
-		setTabToDisplayOn(CreativeTabs.tabMisc);
+		setCreativeTab(CreativeTabs.tabMisc);
 		setIconIndex(iconIndex);
 		setTextureFile("/pixelmon/image/pitems.png");
 	}

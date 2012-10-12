@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 
 public class Chunk
@@ -146,18 +147,18 @@ public class Chunk
     }
 
     /**
-     * Metadata sensitive Chunk constructor for use in new ChunkProviders that 
+     * Metadata sensitive Chunk constructor for use in new ChunkProviders that
      * use metadata sensitive blocks during generation.
-     * 
+     *
      * @param world The world this chunk belongs to
-     * @param ids A ByteArray containing all the BlockID's to set this chunk to 
+     * @param ids A ByteArray containing all the BlockID's to set this chunk to
      * @param metadata A ByteArray containing all the metadata to set this chunk to
      * @param chunkX The chunk's X position
      * @param chunkZ The Chunk's Z position
      */
-    public Chunk(World world, byte[] ids, byte[] metadata, int chunkX, int chunkY)
+    public Chunk(World world, byte[] ids, byte[] metadata, int chunkX, int chunkZ)
     {
-        this(world, chunkX, chunkY);
+        this(world, chunkX, chunkZ);
         int var5 = ids.length / 256;
 
         for (int x = 0; x < 16; ++x)
@@ -251,7 +252,7 @@ public class Chunk
                     {
                         int var5 = this.getBlockID(var2, var4 - 1, var3);
 
-                        if (Block.lightOpacity[var5] == 0)
+                        if (getBlockLightOpacity(var2, var4 - 1, var3) == 0)
                         {
                             --var4;
                             continue;
@@ -316,7 +317,7 @@ public class Chunk
                                 if (var6 != null)
                                 {
                                     var6.setExtSkylightValue(var2, var5 & 15, var3, var4);
-                                    this.worldObj.func_72902_n((this.xPosition << 4) + var2, var5, (this.zPosition << 4) + var3);
+                                    this.worldObj.markBlockNeedsUpdateForAll((this.xPosition << 4) + var2, var5, (this.zPosition << 4) + var3);
                                 }
                             }
 
@@ -475,7 +476,7 @@ public class Chunk
                         if (var9 != null)
                         {
                             var9.setExtSkylightValue(par1, var8 & 15, par3, 15);
-                            this.worldObj.func_72902_n((this.xPosition << 4) + par1, var8, (this.zPosition << 4) + par3);
+                            this.worldObj.markBlockNeedsUpdateForAll((this.xPosition << 4) + par1, var8, (this.zPosition << 4) + par3);
                         }
                     }
                 }
@@ -488,7 +489,7 @@ public class Chunk
                         if (var9 != null)
                         {
                             var9.setExtSkylightValue(par1, var8 & 15, par3, 0);
-                            this.worldObj.func_72902_n((this.xPosition << 4) + par1, var8, (this.zPosition << 4) + par3);
+                            this.worldObj.markBlockNeedsUpdateForAll((this.xPosition << 4) + par1, var8, (this.zPosition << 4) + par3);
                         }
                     }
                 }
@@ -546,7 +547,10 @@ public class Chunk
 
     public int getBlockLightOpacity(int par1, int par2, int par3)
     {
-        return Block.lightOpacity[this.getBlockID(par1, par2, par3)];
+        int x = (xPosition << 4) + par1;
+        int z = (zPosition << 4) + par3;
+        Block block = Block.blocksList[getBlockID(par1, par2, par3)];
+        return (block == null ? 0 : block.getLightOpacity(worldObj, x, par2, z));
     }
 
     /**
@@ -666,7 +670,7 @@ public class Chunk
                 }
                 else
                 {
-                    if (Block.lightOpacity[par4 & 4095] > 0)
+                    if (getBlockLightOpacity(par1, par2, par3) > 0)
                     {
                         if (par2 >= var7)
                         {
@@ -856,7 +860,7 @@ public class Chunk
         {
             var4 = this.entityLists.length - 1;
         }
-
+        MinecraftForge.EVENT_BUS.post(new EntityEvent.EnteringChunk(par1Entity, this.xPosition, this.zPosition, par1Entity.chunkCoordX, par1Entity.chunkCoordZ));
         par1Entity.addedToChunk = true;
         par1Entity.chunkCoordX = this.xPosition;
         par1Entity.chunkCoordY = var4;
@@ -957,7 +961,7 @@ public class Chunk
     public void setChunkBlockTileEntity(int par1, int par2, int par3, TileEntity par4TileEntity)
     {
         ChunkPosition var5 = new ChunkPosition(par1, par2, par3);
-        par4TileEntity.func_70308_a(this.worldObj);
+        par4TileEntity.setWorldObj(this.worldObj);
         par4TileEntity.xCoord = this.xPosition * 16 + par1;
         par4TileEntity.yCoord = par2;
         par4TileEntity.zCoord = this.zPosition * 16 + par3;
@@ -1370,7 +1374,7 @@ public class Chunk
             }
             else if (par4 && this.storageArrays[var6] != null && this.storageArrays[var6].getBlockMSBArray() != null)
             {
-                this.storageArrays[var6].func_76676_h();
+                this.storageArrays[var6].clearMSBArray();
             }
         }
 
@@ -1405,7 +1409,7 @@ public class Chunk
             }
             tileEntity.updateContainingBlockInfo();
         }
-        
+
         for (TileEntity tileEntity : invalidList)
         {
             tileEntity.invalidate();
@@ -1519,7 +1523,7 @@ public class Chunk
     }
 
     /** FORGE: Used to remove only invalid TileEntities */
-    public void cleanChunkBlockTileEntity(int x, int y, int z) 
+    public void cleanChunkBlockTileEntity(int x, int y, int z)
     {
         ChunkPosition position = new ChunkPosition(x, y, z);
         if (isChunkLoaded)

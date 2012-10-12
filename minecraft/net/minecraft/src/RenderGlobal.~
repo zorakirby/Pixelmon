@@ -98,7 +98,7 @@ public class RenderGlobal implements IWorldAccess {
    private int field_72742_B;
    private int field_72743_C;
    private int field_72737_D;
-   private Map field_72738_E = new HashMap();
+   public Map field_72738_E = new HashMap();
    private int field_72739_F = -1;
    private int field_72740_G = 2;
    private int field_72748_H;

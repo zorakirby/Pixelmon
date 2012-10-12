@@ -18,9 +18,9 @@ public class DedicatedPlayerList extends ServerConfigurationManager
         super(par1DedicatedServer);
         this.opsList = par1DedicatedServer.getFile("ops.txt");
         this.whiteList = par1DedicatedServer.getFile("white-list.txt");
-        this.viewDistance = par1DedicatedServer.getOrSetIntProperty("view-distance", 10);
-        this.maxPlayers = par1DedicatedServer.getOrSetIntProperty("max-players", 20);
-        this.setWhiteListEnabled(par1DedicatedServer.getOrSetBoolProperty("white-list", false));
+        this.viewDistance = par1DedicatedServer.getIntProperty("view-distance", 10);
+        this.maxPlayers = par1DedicatedServer.getIntProperty("max-players", 20);
+        this.setWhiteListEnabled(par1DedicatedServer.getBooleanProperty("white-list", false));
 
         if (!par1DedicatedServer.isSinglePlayer())
         {
@@ -41,8 +41,8 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     public void setWhiteListEnabled(boolean par1)
     {
         super.setWhiteListEnabled(par1);
-        this.getDedicatedServerInstance().setArbitraryProperty("white-list", Boolean.valueOf(par1));
-        this.getDedicatedServerInstance().saveSettingsToFile();
+        this.getDedicatedServerInstance().setProperty("white-list", Boolean.valueOf(par1));
+        this.getDedicatedServerInstance().saveProperties();
     }
 
     /**
@@ -93,20 +93,20 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     {
         try
         {
-            this.getNamesWhiteList().clear();
+            this.getOps().clear();
             BufferedReader var1 = new BufferedReader(new FileReader(this.opsList));
             String var2 = "";
 
             while ((var2 = var1.readLine()) != null)
             {
-                this.getNamesWhiteList().add(var2.trim().toLowerCase());
+                this.getOps().add(var2.trim().toLowerCase());
             }
 
             var1.close();
         }
         catch (Exception var3)
         {
-            myLogger.warning("Failed to load operators list: " + var3);
+            logger.warning("Failed to load operators list: " + var3);
         }
     }
 
@@ -115,7 +115,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
         try
         {
             PrintWriter var1 = new PrintWriter(new FileWriter(this.opsList, false));
-            Iterator var2 = this.getNamesWhiteList().iterator();
+            Iterator var2 = this.getOps().iterator();
 
             while (var2.hasNext())
             {
@@ -127,7 +127,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
         }
         catch (Exception var4)
         {
-            myLogger.warning("Failed to save operators list: " + var4);
+            logger.warning("Failed to save operators list: " + var4);
         }
     }
 
@@ -135,20 +135,20 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     {
         try
         {
-            this.getIPWhiteList().clear();
+            this.getWhiteListedPlayers().clear();
             BufferedReader var1 = new BufferedReader(new FileReader(this.whiteList));
             String var2 = "";
 
             while ((var2 = var1.readLine()) != null)
             {
-                this.getIPWhiteList().add(var2.trim().toLowerCase());
+                this.getWhiteListedPlayers().add(var2.trim().toLowerCase());
             }
 
             var1.close();
         }
         catch (Exception var3)
         {
-            myLogger.warning("Failed to load white-list: " + var3);
+            logger.warning("Failed to load white-list: " + var3);
         }
     }
 
@@ -157,7 +157,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
         try
         {
             PrintWriter var1 = new PrintWriter(new FileWriter(this.whiteList, false));
-            Iterator var2 = this.getIPWhiteList().iterator();
+            Iterator var2 = this.getWhiteListedPlayers().iterator();
 
             while (var2.hasNext())
             {
@@ -169,7 +169,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
         }
         catch (Exception var4)
         {
-            myLogger.warning("Failed to save white-list: " + var4);
+            logger.warning("Failed to save white-list: " + var4);
         }
     }
 
@@ -179,7 +179,7 @@ public class DedicatedPlayerList extends ServerConfigurationManager
     public boolean isAllowedToLogin(String par1Str)
     {
         par1Str = par1Str.trim().toLowerCase();
-        return !this.isWhiteListEnabled() || this.areCommandsAllowed(par1Str) || this.getIPWhiteList().contains(par1Str);
+        return !this.isWhiteListEnabled() || this.areCommandsAllowed(par1Str) || this.getWhiteListedPlayers().contains(par1Str);
     }
 
     public DedicatedServer getDedicatedServerInstance()

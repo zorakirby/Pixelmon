@@ -8,12 +8,15 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 class GuiButtonNextPage extends GuiButton
 {
-    private final boolean field_73755_j;
+    /**
+     * True for pointing right (next page), false for pointing left (previous page).
+     */
+    private final boolean nextPage;
 
     public GuiButtonNextPage(int par1, int par2, int par3, boolean par4)
     {
         super(par1, par2, par3, 23, 13, "");
-        this.field_73755_j = par4;
+        this.nextPage = par4;
     }
 
     /**
@@ -34,7 +37,7 @@ class GuiButtonNextPage extends GuiButton
                 var5 += 23;
             }
 
-            if (!this.field_73755_j)
+            if (!this.nextPage)
             {
                 var6 += 13;
             }

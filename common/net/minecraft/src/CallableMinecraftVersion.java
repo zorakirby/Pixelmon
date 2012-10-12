@@ -12,13 +12,16 @@ public class CallableMinecraftVersion implements Callable
         this.crashReportMinecraftVersion = par1CrashReport;
     }
 
-    public String func_71493_a()
+    /**
+     * The current version of Minecraft
+     */
+    public String minecraftVersion()
     {
         return "1.3.2";
     }
 
     public Object call()
     {
-        return this.func_71493_a();
+        return this.minecraftVersion();
     }
 }

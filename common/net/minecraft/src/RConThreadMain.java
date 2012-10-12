@@ -21,33 +21,35 @@ public class RConThreadMain extends RConThreadBase
     /** Hostname RCon is running on */
     private String hostname;
 
-    /** The RCon ServerSocke */
+    /** The RCon ServerSocket. */
     private ServerSocket serverSocket = null;
 
     /** The RCon password */
     private String rconPassword;
-    private Map field_72648_l;
+
+    /** A map of client addresses to their running Threads */
+    private Map clientThreads;
 
     public RConThreadMain(IServer par1IServer)
     {
         super(par1IServer);
-        this.rconPort = par1IServer.getOrSetIntProperty("rcon.port", 0);
-        this.rconPassword = par1IServer.getOrSetProperty("rcon.password", "");
-        this.hostname = par1IServer.getHostName();
-        this.serverPort = par1IServer.getMyServerPort();
+        this.rconPort = par1IServer.getIntProperty("rcon.port", 0);
+        this.rconPassword = par1IServer.getStringProperty("rcon.password", "");
+        this.hostname = par1IServer.getHostname();
+        this.serverPort = par1IServer.getPort();
 
         if (0 == this.rconPort)
         {
             this.rconPort = this.serverPort + 10;
-            this.log("Setting default rcon port to " + this.rconPort);
-            par1IServer.setArbitraryProperty("rcon.port", Integer.valueOf(this.rconPort));
+            this.logInfo("Setting default rcon port to " + this.rconPort);
+            par1IServer.setProperty("rcon.port", Integer.valueOf(this.rconPort));
 
             if (0 == this.rconPassword.length())
             {
-                par1IServer.setArbitraryProperty("rcon.password", "");
+                par1IServer.setProperty("rcon.password", "");
             }
 
-            par1IServer.saveSettingsToFile();
+            par1IServer.saveProperties();
         }
 
         if (0 == this.hostname.length())
@@ -55,13 +57,13 @@ public class RConThreadMain extends RConThreadBase
             this.hostname = "0.0.0.0";
         }
 
-        this.initClientTh();
+        this.initClientThreadList();
         this.serverSocket = null;
     }
 
-    private void initClientTh()
+    private void initClientThreadList()
     {
-        this.field_72648_l = new HashMap();
+        this.clientThreads = new HashMap();
     }
 
     /**
@@ -69,7 +71,7 @@ public class RConThreadMain extends RConThreadBase
      */
     private void cleanClientThreadsMap()
     {
-        Iterator var1 = this.field_72648_l.entrySet().iterator();
+        Iterator var1 = this.clientThreads.entrySet().iterator();
 
         while (var1.hasNext())
         {
@@ -84,7 +86,7 @@ public class RConThreadMain extends RConThreadBase
 
     public void run()
     {
-        this.log("RCON running on " + this.hostname + ":" + this.rconPort);
+        this.logInfo("RCON running on " + this.hostname + ":" + this.rconPort);
 
         try
         {
@@ -96,7 +98,7 @@ public class RConThreadMain extends RConThreadBase
                     var1.setSoTimeout(500);
                     RConThreadClient var2 = new RConThreadClient(this.server, var1);
                     var2.startThread();
-                    this.field_72648_l.put(var1.getRemoteSocketAddress(), var2);
+                    this.clientThreads.put(var1.getRemoteSocketAddress(), var2);
                     this.cleanClientThreadsMap();
                 }
                 catch (SocketTimeoutException var7)
@@ -107,7 +109,7 @@ public class RConThreadMain extends RConThreadBase
                 {
                     if (this.running)
                     {
-                        this.log("IO: " + var8.getMessage());
+                        this.logInfo("IO: " + var8.getMessage());
                     }
                 }
             }

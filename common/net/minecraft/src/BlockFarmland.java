@@ -4,6 +4,9 @@ import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import java.util.Random;
 
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.IPlantable;
+
 public class BlockFarmland extends Block
 {
     protected BlockFarmland(int par1)
@@ -97,7 +100,8 @@ public class BlockFarmland extends Block
             {
                 int var8 = par1World.getBlockId(var6, par3 + 1, var7);
 
-                if (var8 == Block.crops.blockID || var8 == Block.melonStem.blockID || var8 == Block.pumpkinStem.blockID)
+                Block plant = blocksList[var8];
+                if (plant instanceof IPlantable && canSustainPlant(par1World, par2, par3, par4, ForgeDirection.UP, (IPlantable)plant))
                 {
                     return true;
                 }

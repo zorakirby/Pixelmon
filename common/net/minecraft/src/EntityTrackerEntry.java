@@ -198,7 +198,7 @@ public class EntityTrackerEntry
         while (var2.hasNext())
         {
             EntityPlayerMP var3 = (EntityPlayerMP)var2.next();
-            var3.serverForThisPlayer.sendPacketToPlayer(par1Packet);
+            var3.playerNetServerHandler.sendPacketToPlayer(par1Packet);
         }
     }
 
@@ -211,7 +211,7 @@ public class EntityTrackerEntry
 
         if (this.myEntity instanceof EntityPlayerMP)
         {
-            ((EntityPlayerMP)this.myEntity).serverForThisPlayer.sendPacketToPlayer(par1Packet);
+            ((EntityPlayerMP)this.myEntity).playerNetServerHandler.sendPacketToPlayer(par1Packet);
         }
     }
 
@@ -250,7 +250,7 @@ public class EntityTrackerEntry
                 {
                     this.trackedPlayers.add(par1EntityPlayerMP);
                     Packet var6 = this.getPacketForThisEntity();
-                    par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(var6);
+                    par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(var6);
                     this.motionX = this.myEntity.motionX;
                     this.motionY = this.myEntity.motionY;
                     this.motionZ = this.myEntity.motionZ;
@@ -264,12 +264,12 @@ public class EntityTrackerEntry
                     }
                     if (this.trackMotion && !(var6 instanceof Packet24MobSpawn))
                     {
-                        par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet28EntityVelocity(this.myEntity.entityId, this.myEntity.motionX, this.myEntity.motionY, this.myEntity.motionZ));
+                        par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet28EntityVelocity(this.myEntity.entityId, this.myEntity.motionX, this.myEntity.motionY, this.myEntity.motionZ));
                     }
 
                     if (this.myEntity.ridingEntity != null)
                     {
-                        par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet39AttachEntity(this.myEntity, this.myEntity.ridingEntity));
+                        par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet39AttachEntity(this.myEntity, this.myEntity.ridingEntity));
                     }
 
                     ItemStack[] var7 = this.myEntity.getLastActiveItems();
@@ -278,7 +278,7 @@ public class EntityTrackerEntry
                     {
                         for (int var8 = 0; var8 < var7.length; ++var8)
                         {
-                            par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet5PlayerInventory(this.myEntity.entityId, var8, var7[var8]));
+                            par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet5PlayerInventory(this.myEntity.entityId, var8, var7[var8]));
                         }
                     }
 
@@ -288,7 +288,7 @@ public class EntityTrackerEntry
 
                         if (var11.isPlayerSleeping())
                         {
-                            par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet17Sleep(this.myEntity, 0, MathHelper.floor_double(this.myEntity.posX), MathHelper.floor_double(this.myEntity.posY), MathHelper.floor_double(this.myEntity.posZ)));
+                            par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet17Sleep(this.myEntity, 0, MathHelper.floor_double(this.myEntity.posX), MathHelper.floor_double(this.myEntity.posY), MathHelper.floor_double(this.myEntity.posZ)));
                         }
                     }
 
@@ -300,7 +300,7 @@ public class EntityTrackerEntry
                         while (var9.hasNext())
                         {
                             PotionEffect var10 = (PotionEffect)var9.next();
-                            par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet41EntityEffect(this.myEntity.entityId, var10));
+                            par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(this.myEntity.entityId, var10));
                         }
                     }
                 }

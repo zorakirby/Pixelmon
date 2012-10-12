@@ -17,7 +17,10 @@ class CallableIsModded implements Callable
         this.integratedServerIsModded = par1IntegratedServer;
     }
 
-    public String func_76971_a()
+    /**
+     * Gets if your Minecraft is Modded.
+     */
+    public String getMinecraftIsModded()
     {
         String var1 = ClientBrandRetriever.getClientModName();
 
@@ -34,6 +37,6 @@ class CallableIsModded implements Callable
 
     public Object call()
     {
-        return this.func_76971_a();
+        return this.getMinecraftIsModded();
     }
 }

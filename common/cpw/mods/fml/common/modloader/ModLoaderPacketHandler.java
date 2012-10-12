@@ -21,7 +21,7 @@ public class ModLoaderPacketHandler implements IPacketHandler
     {
         if (player instanceof EntityPlayerMP)
         {
-            mod.serverCustomPayload(((EntityPlayerMP)player).serverForThisPlayer, packet);
+            mod.serverCustomPayload(((EntityPlayerMP)player).playerNetServerHandler, packet);
         }
         else
         {

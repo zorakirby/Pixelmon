@@ -1,12 +1,14 @@
 package net.minecraft.src;
 
+import java.util.HashMap;
+
 public class ItemBucketMilk extends Item
 {
     public ItemBucketMilk(int par1)
     {
         super(par1);
         this.setMaxStackSize(1);
-        this.setTabToDisplayOn(CreativeTabs.tabMisc);
+        this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     public ItemStack onFoodEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -18,7 +20,7 @@ public class ItemBucketMilk extends Item
 
         if (!par2World.isRemote)
         {
-            par3EntityPlayer.clearActivePotions();
+            par3EntityPlayer.curePotionEffects(par1ItemStack);
         }
 
         return par1ItemStack.stackSize <= 0 ? new ItemStack(Item.bucketEmpty) : par1ItemStack;

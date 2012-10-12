@@ -61,7 +61,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
 					} else {
 						player.mountEntity(this);
-						tasks.field_75782_a.clear();
+						tasks.taskEntries.clear();
 					}
 					return true;
 				}

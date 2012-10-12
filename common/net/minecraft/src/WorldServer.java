@@ -2,6 +2,8 @@ package net.minecraft.src;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,6 +12,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.ChestGenHooks;
+import static net.minecraftforge.common.ChestGenHooks.*;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
@@ -36,7 +40,7 @@ public class WorldServer extends World
 
     /** is false if there are no players */
     private boolean allPlayersSleeping;
-    private int field_80004_Q = 0;
+    private int updateEntityTick = 0;
 
     /**
      * Double buffer of ServerBlockEventList[] for holding pending BlockEventData's
@@ -48,10 +52,13 @@ public class WorldServer extends World
      * applied locally and send to clients.
      */
     private int blockEventCacheIndex = 0;
-    private static final WeightedRandomChestContent[] bonusChestContent = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.stick.shiftedIndex, 0, 1, 3, 10), new WeightedRandomChestContent(Block.planks.blockID, 0, 1, 3, 10), new WeightedRandomChestContent(Block.wood.blockID, 0, 1, 3, 10), new WeightedRandomChestContent(Item.axeStone.shiftedIndex, 0, 1, 1, 3), new WeightedRandomChestContent(Item.axeWood.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.pickaxeStone.shiftedIndex, 0, 1, 1, 3), new WeightedRandomChestContent(Item.pickaxeWood.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.appleRed.shiftedIndex, 0, 2, 3, 5), new WeightedRandomChestContent(Item.bread.shiftedIndex, 0, 2, 3, 3)};
+    public static final WeightedRandomChestContent[] bonusChestContent = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.stick.shiftedIndex, 0, 1, 3, 10), new WeightedRandomChestContent(Block.planks.blockID, 0, 1, 3, 10), new WeightedRandomChestContent(Block.wood.blockID, 0, 1, 3, 10), new WeightedRandomChestContent(Item.axeStone.shiftedIndex, 0, 1, 1, 3), new WeightedRandomChestContent(Item.axeWood.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.pickaxeStone.shiftedIndex, 0, 1, 1, 3), new WeightedRandomChestContent(Item.pickaxeWood.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.appleRed.shiftedIndex, 0, 2, 3, 5), new WeightedRandomChestContent(Item.bread.shiftedIndex, 0, 2, 3, 3)};
 
     /** An IntHashMap of entity IDs (integers) to their Entity objects. */
     private IntHashMap entityIdMap;
+
+    /** Stores the recently processed (lighting) chunks */
+    protected Set<ChunkCoordIntPair> doneChunks = new HashSet<ChunkCoordIntPair>();
 
     public WorldServer(MinecraftServer par1MinecraftServer, ISaveHandler par2ISaveHandler, String par3Str, int par4, WorldSettings par5WorldSettings, Profiler par6Profiler)
     {
@@ -183,10 +190,7 @@ public class WorldServer extends World
 
     private void resetRainAndThunder()
     {
-        this.worldInfo.setRainTime(0);
-        this.worldInfo.setRaining(false);
-        this.worldInfo.setThunderTime(0);
-        this.worldInfo.setThundering(false);
+        provider.resetRainAndThunder();
     }
 
     public boolean areAllPlayersAsleep()
@@ -258,6 +262,14 @@ public class WorldServer extends World
         int var2 = 0;
         Iterator var3 = this.activeChunkSet.iterator();
 
+        doneChunks.retainAll(activeChunkSet);
+        if (doneChunks.size() == activeChunkSet.size())
+        {
+            doneChunks.clear();
+        }
+
+        final long time = -System.currentTimeMillis();
+
         while (var3.hasNext())
         {
             ChunkCoordIntPair var4 = (ChunkCoordIntPair)var3.next();
@@ -267,14 +279,16 @@ public class WorldServer extends World
             Chunk var7 = this.getChunkFromChunkCoords(var4.chunkXPos, var4.chunkZPos);
             this.moodSoundAndLightCheck(var5, var6, var7);
             this.theProfiler.endStartSection("tickChunk");
-            var7.updateSkylight();
+            if (System.currentTimeMillis() + time <= 4 && doneChunks.add(var4)) { //Limits and evenly distributes the lighting update time
+                var7.updateSkylight();
+            }
             this.theProfiler.endStartSection("thunder");
             int var8;
             int var9;
             int var10;
             int var11;
 
-            if (this.rand.nextInt(100000) == 0 && this.isRaining() && this.isThundering())
+            if (provider.canDoLightning(var7) && this.rand.nextInt(100000) == 0 && this.isRaining() && this.isThundering())
             {
                 this.updateLCG = this.updateLCG * 3 + 1013904223;
                 var8 = this.updateLCG >> 2;
@@ -292,7 +306,7 @@ public class WorldServer extends World
             this.theProfiler.endStartSection("iceandsnow");
             int var13;
 
-            if (this.rand.nextInt(16) == 0)
+            if (provider.canDoRainSnowIce(var7) && this.rand.nextInt(16) == 0)
             {
                 this.updateLCG = this.updateLCG * 3 + 1013904223;
                 var8 = this.updateLCG >> 2;
@@ -366,7 +380,8 @@ public class WorldServer extends World
     public void scheduleBlockUpdate(int par1, int par2, int par3, int par4, int par5)
     {
         NextTickListEntry var6 = new NextTickListEntry(par1, par2, par3, par4);
-        byte var7 = 8;
+        boolean isForced = getPersistentChunks().containsKey(new ChunkCoordIntPair(var6.xCoord >> 4, var6.zCoord >> 4));
+        byte var7 = isForced ? (byte)0 : 8;
 
         if (this.scheduledUpdatesAreImmediate)
         {
@@ -422,16 +437,16 @@ public class WorldServer extends World
      */
     public void updateEntities()
     {
-        if (this.playerEntities.isEmpty())
+        if (this.playerEntities.isEmpty() && getPersistentChunks().isEmpty())
         {
-            if (this.field_80004_Q++ >= 60)
+            if (this.updateEntityTick++ >= 60)
             {
                 return;
             }
         }
         else
         {
-            this.field_80004_Q = 0;
+            this.updateEntityTick = 0;
         }
 
         super.updateEntities();
@@ -466,7 +481,8 @@ public class WorldServer extends World
 
                 this.pendingTickListEntries.remove(var4);
                 this.field_73064_N.remove(var4);
-                byte var5 = 8;
+                boolean isForced = getPersistentChunks().containsKey(new ChunkCoordIntPair(var4.xCoord >> 4, var4.zCoord >> 4));
+                byte var5 = isForced ? (byte)0 : 8;
 
                 if (this.checkChunksExist(var4.xCoord - var5, var4.yCoord - var5, var4.zCoord - var5, var4.xCoord + var5, var4.yCoord + var5, var4.zCoord + var5))
                 {
@@ -528,7 +544,7 @@ public class WorldServer extends World
             par1Entity.setDead();
         }
 
-        if (!this.mcServer.getCanNPCsSpawn() && par1Entity instanceof INpc)
+        if (!this.mcServer.getCanSpawnNPCs() && par1Entity instanceof INpc)
         {
             par1Entity.setDead();
         }
@@ -576,7 +592,7 @@ public class WorldServer extends World
                         TileEntity entity = (TileEntity)obj;
                         if (!entity.isInvalid())
                         {
-                            if (entity.xCoord >= par1 && entity.yCoord >= par2 && entity.zCoord >= par3 && 
+                            if (entity.xCoord >= par1 && entity.yCoord >= par2 && entity.zCoord >= par3 &&
                                 entity.xCoord <= par4 && entity.yCoord <= par5 && entity.zCoord <= par6)
                             {
                                 var7.add(entity);
@@ -594,6 +610,11 @@ public class WorldServer extends World
      * Called when checking if a certain block can be mined or not. The 'spawn safe zone' check is located here.
      */
     public boolean canMineBlock(EntityPlayer par1EntityPlayer, int par2, int par3, int par4)
+    {
+        return super.canMineBlock(par1EntityPlayer, par2, par3, par4);
+    }
+
+    public boolean canMineBlockBody(EntityPlayer par1EntityPlayer, int par2, int par3, int par4)
     {
         int var5 = MathHelper.abs_int(par2 - this.worldInfo.getSpawnX());
         int var6 = MathHelper.abs_int(par4 - this.worldInfo.getSpawnZ());
@@ -686,7 +707,7 @@ public class WorldServer extends World
      */
     protected void createBonusChest()
     {
-        WorldGeneratorBonusChest var1 = new WorldGeneratorBonusChest(bonusChestContent, 10);
+        WorldGeneratorBonusChest var1 = new WorldGeneratorBonusChest(ChestGenHooks.getItems(BONUS_CHEST), ChestGenHooks.getCount(BONUS_CHEST, rand));
 
         for (int var2 = 0; var2 < 10; ++var2)
         {
@@ -701,6 +722,9 @@ public class WorldServer extends World
         }
     }
 
+    /**
+     * Gets the hard-coded portal location to use when entering this dimension.
+     */
     public ChunkCoordinates getEntrancePortalLocation()
     {
         return this.provider.getEntrancePortalLocation();
@@ -799,7 +823,7 @@ public class WorldServer extends World
     {
         if (super.addWeatherEffect(par1Entity))
         {
-            this.mcServer.getConfigurationManager().sendToAllNear(par1Entity.posX, par1Entity.posY, par1Entity.posZ, 512.0D, this.provider.worldType, new Packet71Weather(par1Entity));
+            this.mcServer.getConfigurationManager().sendToAllNear(par1Entity.posX, par1Entity.posY, par1Entity.posZ, 512.0D, this.provider.dimensionId, new Packet71Weather(par1Entity));
             return true;
         }
         else
@@ -834,7 +858,7 @@ public class WorldServer extends World
 
             if (var12.getDistanceSq(par2, par4, par6) < 4096.0D)
             {
-                ((EntityPlayerMP)var12).serverForThisPlayer.sendPacketToPlayer(new Packet60Explosion(par2, par4, par6, par8, var10.field_77281_g, (Vec3)var10.func_77277_b().get(var12)));
+                ((EntityPlayerMP)var12).playerNetServerHandler.sendPacketToPlayer(new Packet60Explosion(par2, par4, par6, par8, var10.field_77281_g, (Vec3)var10.func_77277_b().get(var12)));
             }
         }
 
@@ -881,7 +905,7 @@ public class WorldServer extends World
 
                 if (this.onBlockEventReceived(var3))
                 {
-                    this.mcServer.getConfigurationManager().sendToAllNear((double)var3.getX(), (double)var3.getY(), (double)var3.getZ(), 64.0D, this.provider.worldType, new Packet54PlayNoteBlock(var3.getX(), var3.getY(), var3.getZ(), var3.getBlockID(), var3.getEventID(), var3.getEventParameter()));
+                    this.mcServer.getConfigurationManager().sendToAllNear((double)var3.getX(), (double)var3.getY(), (double)var3.getZ(), 64.0D, this.provider.dimensionId, new Packet54PlayNoteBlock(var3.getX(), var3.getY(), var3.getZ(), var3.getBlockID(), var3.getEventID(), var3.getEventParameter()));
                 }
             }
 
@@ -984,5 +1008,10 @@ public class WorldServer extends World
     public PlayerManager getPlayerManager()
     {
         return this.thePlayerManager;
+    }
+
+    public File getChunkSaveLocation()
+    {
+        return ((AnvilChunkLoader)theChunkProviderServer.currentChunkLoader).chunkSaveLocation;
     }
 }

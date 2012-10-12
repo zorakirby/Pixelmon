@@ -21,6 +21,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.NetHandler;
 import net.minecraft.src.NetServerHandler;
 import net.minecraft.src.NetworkManager;
@@ -40,29 +41,14 @@ import cpw.mods.fml.common.asm.SideOnly;
  */
 public interface BaseModProxy
 {
-    /**
-     *
-     */
     void modsLoaded();
 
-    /**
-     *
-     */
     void load();
 
-    /**
-     * @return
-     */
     String getName();
 
-    /**
-     * @return
-     */
     String getPriorities();
 
-    /**
-     * @return
-     */
     String getVersion();
 
     boolean doTickInGUI(TickType type, boolean end, Object... tickData);

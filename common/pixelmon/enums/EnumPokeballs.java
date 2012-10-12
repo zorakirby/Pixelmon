@@ -28,7 +28,7 @@ public enum EnumPokeballs {
 	LuxuryBall(16, 1, "luxuryball", 1, 12, 12, 0, 12, 1, new EnumApricorns[]{EnumApricorns.Black, EnumApricorns.Red, EnumApricorns.White}, 3, 35),
 	HealBall(17, 1, "healball", 1, 4, 7, 0, 7, 1, new EnumApricorns[]{EnumApricorns.White, EnumApricorns.Pink, EnumApricorns.White}, 3, 35),
 	DuskBall(18, 1, "duskball", 1, 13, 13, 0, 13, 1, new EnumApricorns[]{EnumApricorns.Green, EnumApricorns.Black, EnumApricorns.Green}, 3, 35),
-	PremierBall(19, 231, "premierball", 1, 5, 8, 0, 8, 1, new EnumApricorns[]{EnumApricorns.White, EnumApricorns.Red, EnumApricorns.White}, 3, 25);
+	PremierBall(19, 1, "premierball", 1, 5, 8, 0, 8, 1, new EnumApricorns[]{EnumApricorns.White, EnumApricorns.Red, EnumApricorns.White}, 3, 25);
 	
 	//TODO Add lure and cherish balls. 
 

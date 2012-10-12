@@ -2,7 +2,11 @@ package net.minecraft.src;
 
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Event;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 public class ItemInWorldManager
 {
@@ -50,6 +54,9 @@ public class ItemInWorldManager
         return this.gameType;
     }
 
+    /**
+     * Get if we are in creative game mode.
+     */
     public boolean isCreative()
     {
         return this.gameType.isCreative();
@@ -137,6 +144,13 @@ public class ItemInWorldManager
     {
         if (!this.gameType.isAdventure())
         {
+            PlayerInteractEvent event = ForgeEventFactory.onPlayerInteract(thisPlayerMP, Action.LEFT_CLICK_BLOCK, par1, par2, par3, par4);
+            if (event.isCanceled())
+            {
+                thisPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par1, par2, par3, theWorld));
+                return;
+            }
+
             if (this.isCreative())
             {
                 if (!this.theWorld.extinguishFire((EntityPlayer)null, par1, par2, par3, par4))
@@ -146,15 +160,32 @@ public class ItemInWorldManager
             }
             else
             {
-                this.theWorld.extinguishFire(this.thisPlayerMP, par1, par2, par3, par4);
                 this.initialDamage = this.curblockDamage;
                 float var5 = 1.0F;
                 int var6 = this.theWorld.getBlockId(par1, par2, par3);
+                Block block = Block.blocksList[var6];
 
-                if (var6 > 0)
+                if (block != null)
                 {
-                    Block.blocksList[var6].onBlockClicked(this.theWorld, par1, par2, par3, this.thisPlayerMP);
-                    var5 = Block.blocksList[var6].getPlayerRelativeBlockHardness(this.thisPlayerMP, this.thisPlayerMP.worldObj, par1, par2, par3);
+                    if (event.useBlock != Event.Result.DENY)
+                    {
+                        block.onBlockClicked(theWorld, par1, par2, par3, thisPlayerMP);
+                        theWorld.extinguishFire(thisPlayerMP, par1, par2, par3, par4);
+                    }
+                    else
+                    {
+                        thisPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par1, par2, par3, theWorld));
+                    }
+                    var5 = block.getPlayerRelativeBlockHardness(thisPlayerMP, thisPlayerMP.worldObj, par1, par2, par3);
+                }
+
+                if (event.useItem == Event.Result.DENY)
+                {
+                    if (var5 >= 1.0f)
+                    {
+                        thisPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par1, par2, par3, theWorld));
+                    }
+                    return;
                 }
 
                 if (var6 > 0 && var5 >= 1.0F)
@@ -262,7 +293,7 @@ public class ItemInWorldManager
             if (this.isCreative())
             {
                 var6 = this.removeBlock(par1, par2, par3);
-                this.thisPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet53BlockChange(par1, par2, par3, this.theWorld));
+                this.thisPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par1, par2, par3, this.theWorld));
             }
             else
             {
@@ -335,43 +366,56 @@ public class ItemInWorldManager
      */
     public boolean activateBlockOrUseItem(EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
-        if (par3ItemStack != null &&
-            par3ItemStack.getItem() != null &&
-            par3ItemStack.getItem().onItemUseFirst(par3ItemStack, par1EntityPlayer, par2World, par4, par5, par6, par7, par8, par9, par10))
+        PlayerInteractEvent event = ForgeEventFactory.onPlayerInteract(par1EntityPlayer, Action.RIGHT_CLICK_BLOCK, par4, par5, par6, par7);
+        if (event.isCanceled())
         {
-            return true;
-        }
-        int var11 = par2World.getBlockId(par4, par5, par6);
-
-        if (var11 > 0 && Block.blocksList[var11].onBlockActivated(par2World, par4, par5, par6, par1EntityPlayer, par7, par8, par9, par10))
-        {
-            return true;
-        }
-        else if (par3ItemStack == null)
-        {
+            thisPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par4, par5, par6, theWorld));
             return false;
         }
-        else if (this.isCreative())
+
+        Item item = (par3ItemStack != null ? par3ItemStack.getItem() : null);
+        if (item != null && item.onItemUseFirst(par3ItemStack, par1EntityPlayer, par2World, par4, par5, par6, par7, par8, par9, par10))
         {
-            int var12 = par3ItemStack.getItemDamage();
-            int var13 = par3ItemStack.stackSize;
-            boolean var14 = par3ItemStack.tryPlaceItemIntoWorld(par1EntityPlayer, par2World, par4, par5, par6, par7, par8, par9, par10);
-            par3ItemStack.setItemDamage(var12);
-            par3ItemStack.stackSize = var13;
-            return var14;
-        }
-        else
-        {
-            if (!par3ItemStack.tryPlaceItemIntoWorld(par1EntityPlayer, par2World, par4, par5, par6, par7, par8, par9, par10))
-            {
-                return false;
-            }
-            if (par3ItemStack.stackSize <= 0)
-            {
-                MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(thisPlayerMP, par3ItemStack));
-            }
+            if (par3ItemStack.stackSize <= 0) ForgeEventFactory.onPlayerDestroyItem(thisPlayerMP, par3ItemStack);
             return true;
         }
+
+        int var11 = par2World.getBlockId(par4, par5, par6);
+        Block block = Block.blocksList[var11];
+        boolean result = false;
+
+        if (block != null)
+        {
+            if (event.useBlock != Event.Result.DENY)
+            {
+                result = block.onBlockActivated(par2World, par4, par5, par6, par1EntityPlayer, par7, par8, par9, par10);
+            }
+            else
+            {
+                thisPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(par4, par5, par6, theWorld));
+                result = event.useItem != Event.Result.ALLOW;
+            }
+        }
+
+        if (par3ItemStack != null && !result)
+        {
+            int meta = par3ItemStack.getItemDamage();
+            int size = par3ItemStack.stackSize;
+            result = par3ItemStack.tryPlaceItemIntoWorld(par1EntityPlayer, par2World, par4, par5, par6, par7, par8, par9, par10);
+            if (isCreative())
+            {
+                par3ItemStack.setItemDamage(meta);
+                par3ItemStack.stackSize = size;
+            }
+            if (par3ItemStack.stackSize <= 0) ForgeEventFactory.onPlayerDestroyItem(thisPlayerMP, par3ItemStack);
+        }
+
+        /* Re-enable if this causes bukkit incompatibility, or re-write client side to only send a single packet per right click.
+        if (par3ItemStack != null && ((!result && event.useItem != Event.Result.DENY) || event.useItem == Event.Result.ALLOW))
+        {
+            this.tryUseItem(thisPlayerMP, par2World, par3ItemStack);
+        }*/
+        return result;
     }
 
     /**

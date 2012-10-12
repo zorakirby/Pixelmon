@@ -148,7 +148,7 @@ public class WorldType
 
         return null;
     }
-    
+
     public WorldChunkManager getChunkManager(World world)
     {
         return this == FLAT ? new WorldChunkManagerHell(BiomeGenBase.plains, 0.5F, 0.5F) : new WorldChunkManager(world);
@@ -185,16 +185,14 @@ public class WorldType
 
     public void addNewBiome(BiomeGenBase biome)
     {
-        Set<BiomeGenBase> newBiomesForWorld = Sets.newIdentityHashSet();
-        newBiomesForWorld.addAll(Arrays.asList(biomesForWorldType));
+        Set<BiomeGenBase> newBiomesForWorld = Sets.newLinkedHashSet(Arrays.asList(biomesForWorldType));
         newBiomesForWorld.add(biome);
         biomesForWorldType = newBiomesForWorld.toArray(new BiomeGenBase[0]);
     }
 
     public void removeBiome(BiomeGenBase biome)
     {
-        Set<BiomeGenBase> newBiomesForWorld = Sets.newIdentityHashSet();
-        newBiomesForWorld.addAll(Arrays.asList(biomesForWorldType));
+        Set<BiomeGenBase> newBiomesForWorld = Sets.newLinkedHashSet(Arrays.asList(biomesForWorldType));
         newBiomesForWorld.remove(biome);
         biomesForWorldType = newBiomesForWorld.toArray(new BiomeGenBase[0]);
     }
@@ -203,8 +201,19 @@ public class WorldType
     {
         return this == FLAT ? random.nextInt(4) != 1 : false;
     }
+
     /**
      * Called when 'Create New World' button is pressed before starting game
      */
     public void onGUICreateWorldPress() { }
+
+    /**
+     * Gets the spawn fuzz for players who join the world.
+     * Useful for void world types.
+     * @return Fuzz for entity initial spawn in blocks.
+     */
+    public int getSpawnFuzz()
+    {
+        return 20;
+    }
 }

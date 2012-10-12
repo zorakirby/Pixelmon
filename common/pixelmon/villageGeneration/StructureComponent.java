@@ -772,7 +772,7 @@ public abstract class StructureComponent
 
             if (var12 != null)
             {
-                WeightedRandomChestContent.func_76293_a(par3Random, par7ArrayOfWeightedRandomChestContent, var12, par8);
+                //WeightedRandomChestContent.func_76293_a(par3Random, par7ArrayOfWeightedRandomChestContent, var12, par8);
             }
 
             return true;
@@ -796,7 +796,7 @@ public abstract class StructureComponent
 
             if (var13 != null)
             {
-                WeightedRandomChestContent.func_76294_a(par3Random, par8ArrayOfWeightedRandomChestContent, var13, par9);
+                //WeightedRandomChestContent.func_76294_a(par3Random, par8ArrayOfWeightedRandomChestContent, var13, par9);
             }
 
             return true;

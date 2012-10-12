@@ -10,7 +10,7 @@ public class BlockEnderChest extends BlockContainer
     {
         super(par1, Material.rock);
         this.blockIndexInTexture = 37;
-        this.setCreativeTab(CreativeTabs.tabDeco);
+        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     /**
@@ -125,7 +125,7 @@ public class BlockEnderChest extends BlockContainer
     }
 
     /**
-     * each class overrdies this to return a new <className>
+     * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
     public TileEntity createNewTileEntity(World par1World)
     {

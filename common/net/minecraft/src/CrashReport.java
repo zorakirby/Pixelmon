@@ -89,7 +89,10 @@ public class CrashReport
         return this.description;
     }
 
-    public Throwable func_71505_b()
+    /**
+     * Returns the Throwable object that is the cause for the crash and Crash Report.
+     */
+    public Throwable getCrashCause()
     {
         return this.cause;
     }

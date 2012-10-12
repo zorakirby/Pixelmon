@@ -20,7 +20,7 @@ public class WorldGenApricornTrees implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		if (world.provider.worldType == -1) // if nether
+		if (world.provider.isHellWorld) // if nether
 			return;
 		BiomeGenBase biome = world.getBiomeGenForCoords(chunkX * 16, chunkZ * 16);
 		if (biome == EnumBiomes.Forest.getBiome() || biome == EnumBiomes.ForestHills.getBiome() || biome == EnumBiomes.Taiga.getBiome() || biome == EnumBiomes.TaigaHills.getBiome()) {

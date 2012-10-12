@@ -12,7 +12,7 @@ public class GuiEnchantment extends GuiContainer
 {
     /** The book model used on the GUI. */
     private static ModelBook bookModel = new ModelBook();
-    private Random field_74216_x = new Random();
+    private Random rand = new Random();
 
     /** ContainerEnchantment object associated with this gui */
     private ContainerEnchantment containerEnchantment;
@@ -203,7 +203,7 @@ public class GuiEnchantment extends GuiContainer
 
             do
             {
-                this.field_74211_r += (float)(this.field_74216_x.nextInt(4) - this.field_74216_x.nextInt(4));
+                this.field_74211_r += (float)(this.rand.nextInt(4) - this.rand.nextInt(4));
             }
             while (this.field_74213_p <= this.field_74211_r + 1.0F && this.field_74213_p >= this.field_74211_r - 1.0F);
         }

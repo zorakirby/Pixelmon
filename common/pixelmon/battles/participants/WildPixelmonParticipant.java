@@ -1,6 +1,5 @@
 package pixelmon.battles.participants;
 
-
 import net.minecraft.src.NBTTagCompound;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
@@ -31,11 +30,15 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	}
 
 	@Override
+	public void StartBattle(IBattleParticipant opponent) {
+	}
+
+	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		pixelmon.EndBattle();
 		if (!didWin)
 			pixelmon.setDead();
-		else{
+		else {
 			pixelmon.battleStats.clearBattleStats();
 			pixelmon.setEntityHealth(pixelmon.stats.HP);
 		}
@@ -48,7 +51,8 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return pixelmon.isDead || pixelmon.isFainted || pixelmon.getHealth() <= 0;
+		return pixelmon.isDead || pixelmon.isFainted
+				|| pixelmon.getHealth() <= 0;
 	}
 
 	boolean isWild = true;
@@ -61,8 +65,10 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		if (pixelmon.moveset.size()>0)
-			return Attack.getWhichMoveIsBest(pixelmon.moveset, participant2.currentPokemon().type, pixelmon, participant2.currentPokemon());
+		if (pixelmon.moveset.size() > 0)
+			return Attack.getWhichMoveIsBest(pixelmon.moveset,
+					participant2.currentPokemon().type, pixelmon,
+					participant2.currentPokemon());
 		bc.setFlee(pixelmon);
 		return null;
 	}
@@ -77,7 +83,8 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 		if (pixelmon.moveset.size() == 0) {
 			pixelmon.loadMoveset();
 			if (pixelmon.moveset.size() == 0) {
-				System.out.println("Couldn't load " + pixelmon.getName() + "'s moves");
+				System.out.println("Couldn't load " + pixelmon.getName()
+						+ "'s moves");
 				return false;
 			}
 		}

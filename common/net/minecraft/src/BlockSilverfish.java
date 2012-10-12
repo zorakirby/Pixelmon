@@ -7,13 +7,14 @@ import java.util.Random;
 
 public class BlockSilverfish extends Block
 {
-    public static final String[] field_72155_a = new String[] {"stone", "cobble", "brick"};
+    /** Block names that can be a silverfish stone. */
+    public static final String[] silverfishStoneTypes = new String[] {"stone", "cobble", "brick"};
 
     public BlockSilverfish(int par1)
     {
         super(par1, 1, Material.clay);
         this.setHardness(0.0F);
-        this.setCreativeTab(CreativeTabs.tabDeco);
+        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     /**

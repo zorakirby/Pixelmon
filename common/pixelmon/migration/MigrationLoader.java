@@ -15,7 +15,7 @@ public class MigrationLoader {
 
 	@ForgeSubscribe
 	public void onWorldLoad(WorldEvent.Load event) {
-		if (event.world.provider.worldType == 0)
+		if (!event.world.provider.hasNoSky && !event.world.provider.isHellWorld)
 			Pixelmon.migration = new Migration(event.world.provider);
 	}
 }

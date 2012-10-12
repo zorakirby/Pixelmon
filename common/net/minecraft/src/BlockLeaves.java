@@ -16,7 +16,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
      * switch the displayed version between fancy and fast graphics (fast is this index + 1).
      */
     private int baseIndexInPNG;
-    public static final String[] field_72136_a = new String[] {"oak", "spruce", "birch", "jungle"};
+    public static final String[] LEAF_TYPES = new String[] {"oak", "spruce", "birch", "jungle"};
     int[] adjacentTreeBlocks;
 
     protected BlockLeaves(int par1, int par2)
@@ -24,7 +24,7 @@ public class BlockLeaves extends BlockLeavesBase implements IShearable
         super(par1, par2, Material.leaves, false);
         this.baseIndexInPNG = par2;
         this.setTickRandomly(true);
-        this.setCreativeTab(CreativeTabs.tabDeco);
+        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     @SideOnly(Side.CLIENT)

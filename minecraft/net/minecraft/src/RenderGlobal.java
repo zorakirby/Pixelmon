@@ -75,7 +75,7 @@ public class RenderGlobal implements IWorldAccess
 
     /** Maximum block Z */
     private int maxBlockZ;
-    private Map field_72738_E = new HashMap();
+    public Map field_72738_E = new HashMap();
     private int renderDistance = -1;
 
     /** Render entities startup counter (init value=2) */
@@ -879,7 +879,7 @@ public class RenderGlobal implements IWorldAccess
             skyProvider.render(par1, this.theWorld, mc);
             return;
         }
-        if (this.mc.theWorld.provider.worldType == 1)
+        if (this.mc.theWorld.provider.dimensionId == 1)
         {
             GL11.glDisable(GL11.GL_FOG);
             GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -1544,6 +1544,11 @@ public class RenderGlobal implements IWorldAccess
 
     public void drawBlockDamageTexture(Tessellator par1Tessellator, EntityPlayer par2EntityPlayer, float par3)
     {
+        drawBlockDamageTexture(par1Tessellator, (EntityLiving)par2EntityPlayer, par3);
+    }
+
+    public void drawBlockDamageTexture(Tessellator par1Tessellator, EntityLiving par2EntityPlayer, float par3)
+    {
         double var4 = par2EntityPlayer.lastTickPosX + (par2EntityPlayer.posX - par2EntityPlayer.lastTickPosX) * (double)par3;
         double var6 = par2EntityPlayer.lastTickPosY + (par2EntityPlayer.posY - par2EntityPlayer.lastTickPosY) * (double)par3;
         double var8 = par2EntityPlayer.lastTickPosZ + (par2EntityPlayer.posZ - par2EntityPlayer.lastTickPosZ) * (double)par3;
@@ -1567,9 +1572,9 @@ public class RenderGlobal implements IWorldAccess
             while (var11.hasNext())
             {
                 DestroyBlockProgress var12 = (DestroyBlockProgress)var11.next();
-                double var13 = (double)var12.func_73110_b() - var4;
-                double var15 = (double)var12.func_73109_c() - var6;
-                double var17 = (double)var12.func_73108_d() - var8;
+                double var13 = (double)var12.getPartialBlockX() - var4;
+                double var15 = (double)var12.getPartialBlockY() - var6;
+                double var17 = (double)var12.getPartialBlockZ() - var8;
 
                 if (var13 * var13 + var15 * var15 + var17 * var17 > 1024.0D)
                 {
@@ -1577,7 +1582,7 @@ public class RenderGlobal implements IWorldAccess
                 }
                 else
                 {
-                    int var19 = this.theWorld.getBlockId(var12.func_73110_b(), var12.func_73109_c(), var12.func_73108_d());
+                    int var19 = this.theWorld.getBlockId(var12.getPartialBlockX(), var12.getPartialBlockY(), var12.getPartialBlockZ());
                     Block var20 = var19 > 0 ? Block.blocksList[var19] : null;
 
                     if (var20 == null)
@@ -1585,7 +1590,7 @@ public class RenderGlobal implements IWorldAccess
                         var20 = Block.stone;
                     }
 
-                    this.globalRenderBlocks.renderBlockUsingTexture(var20, var12.func_73110_b(), var12.func_73109_c(), var12.func_73108_d(), 240 + var12.func_73106_e());
+                    this.globalRenderBlocks.renderBlockUsingTexture(var20, var12.getPartialBlockX(), var12.getPartialBlockY(), var12.getPartialBlockZ(), 240 + var12.getPartialBlockDamage());
                 }
             }
 
@@ -2195,13 +2200,13 @@ public class RenderGlobal implements IWorldAccess
         {
             DestroyBlockProgress var6 = (DestroyBlockProgress)this.field_72738_E.get(Integer.valueOf(par1));
 
-            if (var6 == null || var6.func_73110_b() != par2 || var6.func_73109_c() != par3 || var6.func_73108_d() != par4)
+            if (var6 == null || var6.getPartialBlockX() != par2 || var6.getPartialBlockY() != par3 || var6.getPartialBlockZ() != par4)
             {
                 var6 = new DestroyBlockProgress(par1, par2, par3, par4);
                 this.field_72738_E.put(Integer.valueOf(par1), var6);
             }
 
-            var6.func_73107_a(par5);
+            var6.setPartialBlockDamage(par5);
         }
         else
         {

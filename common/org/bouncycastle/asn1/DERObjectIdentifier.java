@@ -27,7 +27,7 @@ public class DERObjectIdentifier extends ASN1Primitive
         return this.field_71611_a.hashCode();
     }
 
-    boolean func_71607_a(ASN1Primitive par1ASN1Primitive)
+    boolean asn1Equals(ASN1Primitive par1ASN1Primitive)
     {
         return !(par1ASN1Primitive instanceof DERObjectIdentifier) ? false : this.field_71611_a.equals(((DERObjectIdentifier)par1ASN1Primitive).field_71611_a);
     }

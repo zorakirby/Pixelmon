@@ -14,6 +14,7 @@ import net.minecraft.src.NetHandler;
 import net.minecraft.src.NetLoginHandler;
 import net.minecraft.src.NetServerHandler;
 import net.minecraft.src.NetworkManager;
+import net.minecraft.src.Packet131MapData;
 import net.minecraft.src.Packet1Login;
 import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.Packet3Chat;
@@ -79,7 +80,6 @@ public class NetworkRegistry
      * Is the specified channel active for the player?
      * @param channel
      * @param player
-     * @return
      */
     public boolean isChannelActive(String channel, Player player)
     {
@@ -206,12 +206,13 @@ public class NetworkRegistry
         }
     }
 
-    void connectionClosed(NetworkManager manager)
+    void connectionClosed(NetworkManager manager, EntityPlayer player)
     {
         for (IConnectionHandler handler : connectionHandlers)
         {
             handler.connectionClosed(manager);
         }
+        activeChannels.removeAll(player);
     }
 
     void generateChannelRegistration(EntityPlayer player, NetHandler netHandler, NetworkManager manager)
@@ -265,10 +266,7 @@ public class NetworkRegistry
             deactivateChannel(player, channel);
         }
     }
-    /**
-     * @param packet
-     * @return
-     */
+
     private List<String> extractChannelList(Packet250CustomPayload packet)
     {
         String request = new String(packet.data, Charsets.UTF_8);
@@ -311,7 +309,7 @@ public class NetworkRegistry
                 pkt.channel = "FML";
                 pkt.data = FMLPacket.makePacket(Type.GUIOPEN, windowId, nmh.getNetworkId(), modGuiId, x, y, z);
                 pkt.length = pkt.data.length;
-                player.serverForThisPlayer.sendPacketToPlayer(pkt);
+                player.playerNetServerHandler.sendPacketToPlayer(pkt);
                 player.craftingInventory = container;
                 player.craftingInventory.windowId = windowId;
                 player.craftingInventory.addCraftingToCrafters(player);
@@ -336,5 +334,22 @@ public class NetworkRegistry
         }
 
         return chat;
+    }
+    public void handleTinyPacket(NetHandler handler, Packet131MapData mapData)
+    {
+        NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler((int)mapData.itemID);
+        if (nmh == null)
+        {
+            FMLLog.info("Received a tiny packet for network id %d that is not recognised here", mapData.itemID);
+            return;
+        }
+        if (nmh.hasTinyPacketHandler())
+        {
+            nmh.getTinyPacketHandler().handle(handler, mapData);
+        }
+        else
+        {
+            FMLLog.info("Received a tiny packet for a network mod that does not accept tiny packets %s", nmh.getContainer().getModId());
+        }
     }
 }

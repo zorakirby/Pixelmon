@@ -50,13 +50,20 @@ public class TileEntity
         }
     }
 
-    public void func_70308_a(World par1World)
+    /**
+     * Sets the worldObj for this tileEntity.
+     */
+    public void setWorldObj(World par1World)
     {
         this.worldObj = par1World;
     }
 
     @SideOnly(Side.CLIENT)
-    public World func_70314_l()
+
+    /**
+     * Returns the worldObj for this tileEntity.
+     */
+    public World getWorldObj()
     {
         return this.worldObj;
     }
@@ -189,9 +196,9 @@ public class TileEntity
     }
 
     /**
-     * signs and mobSpawners use this to send text and meta-data
+     * Overriden in a sign to provide the text.
      */
-    public Packet getAuxillaryInfoPacket()
+    public Packet getDescriptionPacket()
     {
         return null;
     }

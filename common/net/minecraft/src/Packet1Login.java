@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import cpw.mods.fml.common.network.FMLNetworkHandler;
+
 public class Packet1Login extends Packet
 {
     /** The player's entity ID */
@@ -24,7 +26,11 @@ public class Packet1Login extends Packet
     /** The maximum players. */
     public byte maxPlayers;
 
-    public Packet1Login() {}
+    private boolean vanillaCompatible;
+
+    public Packet1Login() {
+        this.vanillaCompatible = FMLNetworkHandler.vanillaLoginPacketCompatibility();
+    }
 
     public Packet1Login(int par1, WorldType par2WorldType, EnumGameType par3EnumGameType, boolean par4, int par5, int par6, int par7, int par8)
     {
@@ -36,6 +42,7 @@ public class Packet1Login extends Packet
         this.worldHeight = (byte)par7;
         this.maxPlayers = (byte)par8;
         this.field_73560_c = par4;
+        this.vanillaCompatible = false;
     }
 
     /**
@@ -56,7 +63,14 @@ public class Packet1Login extends Packet
         this.field_73560_c = (var3 & 8) == 8;
         int var4 = var3 & -9;
         this.gameType = EnumGameType.getByID(var4);
-        this.dimension = par1DataInputStream.readByte();
+        if (vanillaCompatible)
+        {
+            this.dimension = par1DataInputStream.readByte();
+        }
+        else
+        {
+            this.dimension = par1DataInputStream.readInt();
+        }
         this.difficultySetting = par1DataInputStream.readByte();
         this.worldHeight = par1DataInputStream.readByte();
         this.maxPlayers = par1DataInputStream.readByte();
@@ -77,7 +91,14 @@ public class Packet1Login extends Packet
         }
 
         par1DataOutputStream.writeByte(var2);
-        par1DataOutputStream.writeByte(this.dimension);
+        if (vanillaCompatible)
+        {
+            par1DataOutputStream.writeByte(this.dimension);
+        }
+        else
+        {
+            par1DataOutputStream.writeInt(this.dimension);
+        }
         par1DataOutputStream.writeByte(this.difficultySetting);
         par1DataOutputStream.writeByte(this.worldHeight);
         par1DataOutputStream.writeByte(this.maxPlayers);
@@ -103,6 +124,6 @@ public class Packet1Login extends Packet
             var1 = this.terrainType.getWorldTypeName().length();
         }
 
-        return 6 + 2 * var1 + 4 + 4 + 1 + 1 + 1;
+        return 6 + 2 * var1 + 4 + 4 + 1 + 1 + 1 + (vanillaCompatible ? 0 : 3);
     }
 }

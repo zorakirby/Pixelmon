@@ -157,7 +157,7 @@ public class EffectRenderer
         }
     }
 
-    public void func_78872_b(Entity par1Entity, float par2)
+    public void renderLitParticles(Entity par1Entity, float par2)
     {
         float var4 = MathHelper.cos(par1Entity.rotationYaw * 0.017453292F);
         float var5 = MathHelper.sin(par1Entity.rotationYaw * 0.017453292F);
@@ -193,9 +193,9 @@ public class EffectRenderer
 
     public void addBlockDestroyEffects(int par1, int par2, int par3, int par4, int par5)
     {
-        if (par4 != 0)
+        Block var6 = Block.blocksList[par4];
+        if (var6 != null && !var6.addBlockDestroyEffects(worldObj, par1, par2, par3, par5, this))
         {
-            Block var6 = Block.blocksList[par4];
             byte var7 = 4;
 
             for (int var8 = 0; var8 < var7; ++var8)
@@ -306,5 +306,14 @@ public class EffectRenderer
         }        
         texture = ForgeHooks.getTexture(texture, obj);
         effectList.put(texture, effect);
+    }
+
+    public void addBlockHitEffects(int x, int y, int z, MovingObjectPosition target)
+    {
+        Block block = Block.blocksList[worldObj.getBlockId(x, y, z)];
+        if (block != null && !block.addBlockHitEffects(worldObj, target, this))
+        {
+            addBlockHitEffects(x, y, z, target.sideHit);
+        }
     }
 }

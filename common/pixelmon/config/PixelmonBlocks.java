@@ -48,14 +48,14 @@ public class PixelmonBlocks {
 	public static Block fireStoneOre;
 
 	public static void load(Configuration configuration) {
-		pokemonHealerActiveId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PokemonHealerActive", 201).value);
-		pokemonHealerIdleId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PokemonHealerIdle", 202).value);
-		thunderStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ThunderStoneOre", 203).value);
-		leafStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("LeafStoneOre", 204).value);
-		fireStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("FireStoneOre", 207).value);
-		pcId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("PC", 205).value);
-		anvilId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("Anvil", 215).value);
-		waterStoneOreId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("WaterStoneOre", 206).value);
+		pokemonHealerActiveId = Integer.parseInt(configuration.getBlock("PokemonHealerActive", 201).value);
+		pokemonHealerIdleId = Integer.parseInt(configuration.getBlock("PokemonHealerIdle", 202).value);
+		thunderStoneOreId = Integer.parseInt(configuration.getBlock("ThunderStoneOre", 203).value);
+		leafStoneOreId = Integer.parseInt(configuration.getBlock("LeafStoneOre", 204).value);
+		fireStoneOreId = Integer.parseInt(configuration.getBlock("FireStoneOre", 207).value);
+		pcId = Integer.parseInt(configuration.getBlock("PC", 205).value);
+		anvilId = Integer.parseInt(configuration.getBlock("Anvil", 215).value);
+		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 206).value);
 		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f).setBlockName("LeafStoneOre");

@@ -3,7 +3,6 @@ package net.minecraft.src;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 
-@SideOnly(Side.CLIENT)
 public class ModelBox
 {
     /**
@@ -99,6 +98,7 @@ public class ModelBox
     /**
      * Draw the six sided box defined by this ModelBox
      */
+    @SideOnly(Side.CLIENT)
     public void render(Tessellator par1Tessellator, float par2)
     {
         TexturedQuad[] var3 = this.quadList;

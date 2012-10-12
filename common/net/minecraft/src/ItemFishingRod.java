@@ -10,7 +10,7 @@ public class ItemFishingRod extends Item
         super(par1);
         this.setMaxDamage(64);
         this.setMaxStackSize(1);
-        this.setTabToDisplayOn(CreativeTabs.tabTools);
+        this.setCreativeTab(CreativeTabs.tabTools);
     }
 
     @SideOnly(Side.CLIENT)

@@ -13,10 +13,12 @@ public class GuiNewChat extends Gui
 {
     /** The Minecraft instance. */
     private final Minecraft mc;
-    private final List field_73770_b = new ArrayList();
 
-    /** Lines of chat */
-    private final List ChatLines = new ArrayList();
+    /** A list of messages previously sent through the chat GUI */
+    private final List sentMessages = new ArrayList();
+
+    /** Chat lines to be displayed in the chat box */
+    private final List chatLines = new ArrayList();
     private int field_73768_d = 0;
     private boolean field_73769_e = false;
 
@@ -25,19 +27,19 @@ public class GuiNewChat extends Gui
         this.mc = par1Minecraft;
     }
 
-    public void func_73762_a(int par1)
+    public void drawChat(int par1)
     {
         if (this.mc.gameSettings.chatVisibility != 2)
         {
             byte var2 = 10;
             boolean var3 = false;
             int var4 = 0;
-            int var5 = this.ChatLines.size();
+            int var5 = this.chatLines.size();
             float var6 = this.mc.gameSettings.chatOpacity * 0.9F + 0.1F;
 
             if (var5 > 0)
             {
-                if (this.func_73760_d())
+                if (this.getChatOpen())
                 {
                     var2 = 20;
                     var3 = true;
@@ -47,9 +49,9 @@ public class GuiNewChat extends Gui
                 int var9;
                 int var12;
 
-                for (var7 = 0; var7 + this.field_73768_d < this.ChatLines.size() && var7 < var2; ++var7)
+                for (var7 = 0; var7 + this.field_73768_d < this.chatLines.size() && var7 < var2; ++var7)
                 {
-                    ChatLine var8 = (ChatLine)this.ChatLines.get(var7 + this.field_73768_d);
+                    ChatLine var8 = (ChatLine)this.chatLines.get(var7 + this.field_73768_d);
 
                     if (var8 != null)
                     {
@@ -124,8 +126,8 @@ public class GuiNewChat extends Gui
 
     public void func_73761_a()
     {
-        this.ChatLines.clear();
-        this.field_73770_b.clear();
+        this.chatLines.clear();
+        this.sentMessages.clear();
     }
 
     /**
@@ -141,7 +143,7 @@ public class GuiNewChat extends Gui
      */
     public void printChatMessageWithOptionalDeletion(String par1Str, int par2)
     {
-        boolean var3 = this.func_73760_d();
+        boolean var3 = this.getChatOpen();
         boolean var4 = true;
 
         if (par2 != 0)
@@ -158,7 +160,7 @@ public class GuiNewChat extends Gui
             if (var3 && this.field_73768_d > 0)
             {
                 this.field_73769_e = true;
-                this.func_73758_b(1);
+                this.scroll(1);
             }
 
             if (!var4)
@@ -167,38 +169,50 @@ public class GuiNewChat extends Gui
             }
 
             var4 = false;
-            this.ChatLines.add(0, new ChatLine(this.mc.ingameGUI.getUpdateCounter(), var6, par2));
+            this.chatLines.add(0, new ChatLine(this.mc.ingameGUI.getUpdateCounter(), var6, par2));
         }
 
-        while (this.ChatLines.size() > 100)
+        while (this.chatLines.size() > 100)
         {
-            this.ChatLines.remove(this.ChatLines.size() - 1);
+            this.chatLines.remove(this.chatLines.size() - 1);
         }
     }
 
-    public List func_73756_b()
+    /**
+     * Gets the list of messages previously sent through the chat GUI
+     */
+    public List getSentMessages()
     {
-        return this.field_73770_b;
+        return this.sentMessages;
     }
 
-    public void func_73767_b(String par1Str)
+    /**
+     * Adds this string to the list of sent messages, for recall using the up/down arrow keys
+     */
+    public void addToSentMessages(String par1Str)
     {
-        if (this.field_73770_b.isEmpty() || !((String)this.field_73770_b.get(this.field_73770_b.size() - 1)).equals(par1Str))
+        if (this.sentMessages.isEmpty() || !((String)this.sentMessages.get(this.sentMessages.size() - 1)).equals(par1Str))
         {
-            this.field_73770_b.add(par1Str);
+            this.sentMessages.add(par1Str);
         }
     }
 
-    public void func_73764_c()
+    /**
+     * Resets the chat scroll (executed when the GUI is closed)
+     */
+    public void resetScroll()
     {
         this.field_73768_d = 0;
         this.field_73769_e = false;
     }
 
-    public void func_73758_b(int par1)
+    /**
+     * Scrolls the chat by the given number of lines.
+     */
+    public void scroll(int par1)
     {
         this.field_73768_d += par1;
-        int var2 = this.ChatLines.size();
+        int var2 = this.chatLines.size();
 
         if (this.field_73768_d > var2 - 20)
         {
@@ -214,7 +228,7 @@ public class GuiNewChat extends Gui
 
     public ChatClickData func_73766_a(int par1, int par2)
     {
-        if (!this.func_73760_d())
+        if (!this.getChatOpen())
         {
             return null;
         }
@@ -227,12 +241,12 @@ public class GuiNewChat extends Gui
 
             if (var5 >= 0 && var6 >= 0)
             {
-                int var7 = Math.min(20, this.ChatLines.size());
+                int var7 = Math.min(20, this.chatLines.size());
 
                 if (var5 <= 320 && var6 < this.mc.fontRenderer.FONT_HEIGHT * var7 + var7)
                 {
                     int var8 = var6 / (this.mc.fontRenderer.FONT_HEIGHT + 1) + this.field_73768_d;
-                    return new ChatClickData(this.mc.fontRenderer, (ChatLine)this.ChatLines.get(var8), var5, var6 - (var8 - this.field_73768_d) * this.mc.fontRenderer.FONT_HEIGHT + var8);
+                    return new ChatClickData(this.mc.fontRenderer, (ChatLine)this.chatLines.get(var8), var5, var6 - (var8 - this.field_73768_d) * this.mc.fontRenderer.FONT_HEIGHT + var8);
                 }
                 else
                 {
@@ -246,12 +260,18 @@ public class GuiNewChat extends Gui
         }
     }
 
-    public void func_73757_a(String par1Str, Object ... par2ArrayOfObj)
+    /**
+     * Adds a message to the chat after translating to the client's locale.
+     */
+    public void addTranslatedMessage(String par1Str, Object ... par2ArrayOfObj)
     {
         this.printChatMessage(StringTranslate.getInstance().translateKeyFormat(par1Str, par2ArrayOfObj));
     }
 
-    public boolean func_73760_d()
+    /**
+     * @return {@code true} if the chat GUI is open
+     */
+    public boolean getChatOpen()
     {
         return this.mc.currentScreen instanceof GuiChat;
     }
@@ -261,7 +281,7 @@ public class GuiNewChat extends Gui
      */
     public void deleteChatLine(int par1)
     {
-        Iterator var2 = this.ChatLines.iterator();
+        Iterator var2 = this.chatLines.iterator();
         ChatLine var3;
 
         do

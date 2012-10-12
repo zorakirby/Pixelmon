@@ -6,11 +6,11 @@ public class ItemSaddle extends Item
     {
         super(par1);
         this.maxStackSize = 1;
-        this.setTabToDisplayOn(CreativeTabs.tabTransport);
+        this.setCreativeTab(CreativeTabs.tabTransport);
     }
 
     /**
-     * die sheep, place saddles, etc ...
+     * dye sheep, place saddles, etc ...
      */
     public boolean itemInteractionForEntity(ItemStack par1ItemStack, EntityLiving par2EntityLiving)
     {

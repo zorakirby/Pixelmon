@@ -1,5 +1,8 @@
 package cpw.mods.fml.common.registry;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -20,6 +23,25 @@ public class LanguageRegistry
         return INSTANCE;
     }
 
+    public String getStringLocalization(String key)
+    {
+        return getStringLocalization(key, StringTranslate.getInstance().getCurrentLanguage());
+    }
+
+    public String getStringLocalization(String key, String lang)
+    {
+        String localizedString = "";
+        Properties langPack = modLanguageData.get(lang);
+
+        if (langPack != null) {
+            if (langPack.getProperty(key) != null) {
+                localizedString = langPack.getProperty(key);
+            }
+        }
+
+        return localizedString;
+    }
+
     public void addStringLocalization(String key, String value)
     {
         addStringLocalization(key, "en_US", value);
@@ -32,6 +54,21 @@ public class LanguageRegistry
             modLanguageData.put(lang, langPack);
         }
         langPack.put(key,value);
+    }
+
+    public void addStringLocalization(Properties langPackAdditions) {
+        addStringLocalization(langPackAdditions, "en_US");
+    }
+
+    public void addStringLocalization(Properties langPackAdditions, String lang) {
+        Properties langPack = modLanguageData.get(lang);
+        if (langPack == null) {
+            langPack = new Properties();
+            modLanguageData.put(lang, langPack);
+        }
+        if (langPackAdditions != null) {
+            langPack.putAll(langPackAdditions);
+        }
     }
 
     public static void reloadLanguageTable()
@@ -58,7 +95,7 @@ public class LanguageRegistry
         objectName+=".name";
         addStringLocalization(objectName, lang, name);
     }
-    
+
     public static void addName(Object objectToName, String name)
     {
         instance().addNameForObject(objectToName, "en_US", name);
@@ -75,5 +112,42 @@ public class LanguageRegistry
             return;
         }
         languagePack.putAll(langPack);
+    }
+
+    public void loadLocalization(String localizationFile, String lang, boolean isXML)
+    {
+        loadLocalization(this.getClass().getResource(localizationFile), lang, isXML);
+    }
+
+    public void loadLocalization(URL localizationFile, String lang, boolean isXML)
+    {
+        InputStream langStream = null;
+        Properties langPack = new Properties();
+
+        try    {
+            langStream = localizationFile.openStream();
+
+            if (isXML) {
+                langPack.loadFromXML(langStream);
+            }
+            else {
+                langPack.load(langStream);
+            }
+
+            addStringLocalization(langPack, lang);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally    {
+            try    {
+                if (langStream != null)    {
+                    langStream.close();
+                }
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

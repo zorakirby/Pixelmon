@@ -30,6 +30,9 @@ public class MemoryConnection implements NetworkManager
         this.myNetHandler = par1NetHandler;
     }
 
+    /**
+     * Sets the NetHandler for this NetworkManager. Server-only.
+     */
     public void setNetHandler(NetHandler par1NetHandler)
     {
         this.myNetHandler = par1NetHandler;
@@ -83,7 +86,7 @@ public class MemoryConnection implements NetworkManager
         if (this.shuttingDown && this.readPacketCache.isEmpty())
         {
             this.myNetHandler.handleErrorMessage(this.shutdownReason, this.field_74439_g);
-            FMLNetworkHandler.onConnectionClosed(this);
+            FMLNetworkHandler.onConnectionClosed(this, this.myNetHandler.getPlayer());
         }
     }
 

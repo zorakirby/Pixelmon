@@ -26,23 +26,23 @@ public class Bide extends MultiTurnSpecialAttackBase {
 		}
 		turnCounter++;
 		if (turnCounter == 1) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " bided its time!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " bided its time!");
 			initHealth = user.getHealth();
 		}
 		if (turnCounter == 2) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " is storing energy!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is storing energy!");
 		}
 
 		if (turnCounter == 3) {
 			endHealth = user.getHealth();
 			persists = false;
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " unleashed its energy!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " unleashed its energy!");
 			target.attackEntityFrom(DamageSource.causeMobDamage(user), ((initHealth - endHealth) * 2));
 			System.out.println((initHealth - endHealth) * 2);
 			System.out.println("Initial health value is " + initHealth + ". The end health value is " + endHealth);
 			
 			if (initHealth - endHealth == 0)
-				ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + "'s attack failed!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + "'s attack failed!");
 		}
 
 		return true;
@@ -53,4 +53,8 @@ public class Bide extends MultiTurnSpecialAttackBase {
 		return turnCounter < 2;
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> refs/remotes/MasterBranch/master

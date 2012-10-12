@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Side;
+
 class PlayerInstance
 {
     private final List playersInChunk;
@@ -38,7 +41,7 @@ class PlayerInstance
         else
         {
             this.playersInChunk.add(par1EntityPlayerMP);
-            par1EntityPlayerMP.chunksToLoad.add(this.chunkLocation);
+            par1EntityPlayerMP.loadedChunks.add(this.chunkLocation);
         }
     }
 
@@ -46,9 +49,9 @@ class PlayerInstance
     {
         if (this.playersInChunk.contains(par1EntityPlayerMP))
         {
-            par1EntityPlayerMP.serverForThisPlayer.sendPacketToPlayer(new Packet51MapChunk(PlayerManager.getWorldServer(this.myManager).getChunkFromChunkCoords(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos), true, 0));
+            par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet51MapChunk(PlayerManager.getWorldServer(this.myManager).getChunkFromChunkCoords(this.chunkLocation.chunkXPos, this.chunkLocation.chunkZPos), true, 0));
             this.playersInChunk.remove(par1EntityPlayerMP);
-            par1EntityPlayerMP.chunksToLoad.remove(this.chunkLocation);
+            par1EntityPlayerMP.loadedChunks.remove(this.chunkLocation);
 
             if (this.playersInChunk.isEmpty())
             {
@@ -98,9 +101,9 @@ class PlayerInstance
         {
             EntityPlayerMP var3 = (EntityPlayerMP)var2.next();
 
-            if (!var3.chunksToLoad.contains(this.chunkLocation))
+            if (!var3.loadedChunks.contains(this.chunkLocation))
             {
-                var3.serverForThisPlayer.sendPacketToPlayer(par1Packet);
+                var3.playerNetServerHandler.sendPacketToPlayer(par1Packet);
             }
         }
     }
@@ -140,7 +143,10 @@ class PlayerInstance
                         if ((this.field_73260_f & 1 << var3) != 0)
                         {
                             var4 = var3 << 4;
-                            List var5 = PlayerManager.getWorldServer(this.myManager).getAllTileEntityInBox(var1, var4, var2, var1 + 16, var4 + 16, var2 + 16);
+                            //BugFix: 16 makes it load an extra chunk, which isn't associated with a player, which makes it not unload unless a player walks near it.
+                            //ToDo: Find a way to efficiently clean abandoned chunks.
+                            //List var5 = PlayerManager.getWorldServer(this.myManager).getAllTileEntityInBox(var1, var4, var2, var1 + 16, var4 + 16, var2 + 16);
+                            List var5 = PlayerManager.getWorldServer(this.myManager).getAllTileEntityInBox(var1, var4, var2, var1 + 15, var4 + 16, var2 + 15);
                             Iterator var6 = var5.iterator();
 
                             while (var6.hasNext())
@@ -178,7 +184,7 @@ class PlayerInstance
     {
         if (par1TileEntity != null)
         {
-            Packet var2 = par1TileEntity.getAuxillaryInfoPacket();
+            Packet var2 = par1TileEntity.getDescriptionPacket();
 
             if (var2 != null)
             {

@@ -34,11 +34,11 @@ public class ItemBlockSilverfish extends ItemBlock
     {
         int var2 = par1ItemStack.getItemDamage();
 
-        if (var2 < 0 || var2 >= BlockSilverfish.field_72155_a.length)
+        if (var2 < 0 || var2 >= BlockSilverfish.silverfishStoneTypes.length)
         {
             var2 = 0;
         }
 
-        return super.getItemName() + "." + BlockSilverfish.field_72155_a[var2];
+        return super.getItemName() + "." + BlockSilverfish.silverfishStoneTypes[var2];
     }
 }

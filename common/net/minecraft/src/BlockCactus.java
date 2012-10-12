@@ -4,13 +4,17 @@ import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import java.util.Random;
 
-public class BlockCactus extends Block
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.IPlantable;
+
+public class BlockCactus extends Block implements IPlantable
 {
     protected BlockCactus(int par1, int par2)
     {
         super(par1, par2, Material.cactus);
         this.setTickRandomly(true);
-        this.setCreativeTab(CreativeTabs.tabDeco);
+        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     /**
@@ -143,7 +147,7 @@ public class BlockCactus extends Block
         else
         {
             int var5 = par1World.getBlockId(par2, par3 - 1, par4);
-            return var5 == Block.cactus.blockID || var5 == Block.sand.blockID;
+            return blocksList[var5] != null && blocksList[var5].canSustainPlant(par1World, par2, par3 - 1, par4, ForgeDirection.UP, this);
         }
     }
 
@@ -153,5 +157,23 @@ public class BlockCactus extends Block
     public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
     {
         par5Entity.attackEntityFrom(DamageSource.cactus, 1);
+    }
+
+    @Override
+    public EnumPlantType getPlantType(World world, int x, int y, int z)
+    {
+        return EnumPlantType.Desert;
+    }
+
+    @Override
+    public int getPlantID(World world, int x, int y, int z)
+    {
+        return blockID;
+    }
+
+    @Override
+    public int getPlantMetadata(World world, int x, int y, int z)
+    {
+        return -1;
     }
 }

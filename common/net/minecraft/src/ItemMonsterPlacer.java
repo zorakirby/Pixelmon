@@ -2,6 +2,8 @@ package net.minecraft.src;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.common.registry.VillagerRegistry;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class ItemMonsterPlacer extends Item
     {
         super(par1);
         this.setHasSubtypes(true);
-        this.setTabToDisplayOn(CreativeTabs.tabMisc);
+        this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @SideOnly(Side.CLIENT)
@@ -35,7 +37,11 @@ public class ItemMonsterPlacer extends Item
         return var3 != null ? (par2 == 0 ? var3.primaryColor : var3.secondaryColor) : 16777215;
     }
 
-    public boolean tryPlaceIntoWorld(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    /**
+     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
+     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
+     */
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
         if (par3World.isRemote)
         {
@@ -84,7 +90,7 @@ public class ItemMonsterPlacer extends Item
                 if (var8 instanceof EntityVillager)
                 {
                     EntityVillager var9 = (EntityVillager)var8;
-                    var9.setProfession(var9.getRNG().nextInt(5));
+                    VillagerRegistry.applyRandomTrade(var9, var9.getRNG());
                     par0World.spawnEntityInWorld(var9);
                     return true;
                 }

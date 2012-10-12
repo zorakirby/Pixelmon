@@ -6,7 +6,7 @@ public class ItemEnderPearl extends Item
     {
         super(par1);
         this.maxStackSize = 16;
-        this.setTabToDisplayOn(CreativeTabs.tabMisc);
+        this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     /**

@@ -9,7 +9,7 @@ public class ItemMap extends ItemMapBase
     {
         super(par1);
         this.setMaxStackSize(1);
-        this.setTabToDisplayOn(CreativeTabs.tabMisc);
+        this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     @SideOnly(Side.CLIENT)
@@ -40,7 +40,7 @@ public class ItemMap extends ItemMapBase
             var4.xCenter = par2World.getWorldInfo().getSpawnX();
             var4.zCenter = par2World.getWorldInfo().getSpawnZ();
             var4.scale = 3;
-            var4.dimension = (byte)par2World.provider.worldType;
+            var4.dimension = par2World.provider.dimensionId;
             var4.markDirty();
             par2World.setItemData(var3, var4);
         }
@@ -50,7 +50,7 @@ public class ItemMap extends ItemMapBase
 
     public void updateMapData(World par1World, Entity par2Entity, MapData par3MapData)
     {
-        if (par1World.provider.worldType == par3MapData.dimension)
+        if (par1World.provider.dimensionId == par3MapData.dimension)
         {
             short var4 = 128;
             short var5 = 128;
@@ -304,7 +304,7 @@ public class ItemMap extends ItemMapBase
         var5.xCenter = MathHelper.floor_double(par3EntityPlayer.posX);
         var5.zCenter = MathHelper.floor_double(par3EntityPlayer.posZ);
         var5.scale = 3;
-        var5.dimension = (byte)par2World.provider.worldType;
+        var5.dimension = par2World.provider.dimensionId;
         var5.markDirty();
     }
 

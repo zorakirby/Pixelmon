@@ -109,7 +109,7 @@ public class AESFastEngine implements BlockCipher
     {
         if (par2CipherParameters instanceof KeyParameter)
         {
-            this.field_71834_m = this.func_71823_a(((KeyParameter)par2CipherParameters).func_71783_a(), par1);
+            this.field_71834_m = this.func_71823_a(((KeyParameter)par2CipherParameters).getKey(), par1);
             this.field_71839_r = par1;
         }
         else
@@ -118,12 +118,18 @@ public class AESFastEngine implements BlockCipher
         }
     }
 
-    public String func_71802_a()
+    /**
+     * Return the name of the algorithm the cipher implements.
+     */
+    public String getAlgorithmName()
     {
         return "AES";
     }
 
-    public int func_71804_b()
+    /**
+     * Return the block size for this cipher (in bytes).
+     */
+    public int getBlockSize()
     {
         return 16;
     }

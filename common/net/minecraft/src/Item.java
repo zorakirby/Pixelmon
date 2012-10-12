@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Item
 {
-    private CreativeTabs field_77701_a = null;
+    private CreativeTabs tabToDisplayOn = null;
 
     /** The RNG used by the Item subclasses. */
     protected static Random itemRand = new Random();
@@ -20,11 +20,11 @@ public class Item
     public static Item flintAndSteel = (new ItemFlintAndSteel(3)).setIconCoord(5, 0).setItemName("flintAndSteel");
     public static Item appleRed = (new ItemFood(4, 4, 0.3F, false)).setIconCoord(10, 0).setItemName("apple");
     public static Item bow = (new ItemBow(5)).setIconCoord(5, 1).setItemName("bow");
-    public static Item arrow = (new Item(6)).setIconCoord(5, 2).setItemName("arrow").setTabToDisplayOn(CreativeTabs.tabCombat);
+    public static Item arrow = (new Item(6)).setIconCoord(5, 2).setItemName("arrow").setCreativeTab(CreativeTabs.tabCombat);
     public static Item coal = (new ItemCoal(7)).setIconCoord(7, 0).setItemName("coal");
-    public static Item diamond = (new Item(8)).setIconCoord(7, 3).setItemName("diamond").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item ingotIron = (new Item(9)).setIconCoord(7, 1).setItemName("ingotIron").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item ingotGold = (new Item(10)).setIconCoord(7, 2).setItemName("ingotGold").setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item diamond = (new Item(8)).setIconCoord(7, 3).setItemName("diamond").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item ingotIron = (new Item(9)).setIconCoord(7, 1).setItemName("ingotIron").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item ingotGold = (new Item(10)).setIconCoord(7, 2).setItemName("ingotGold").setCreativeTab(CreativeTabs.tabMaterials);
     public static Item swordSteel = (new ItemSword(11, EnumToolMaterial.IRON)).setIconCoord(2, 4).setItemName("swordIron");
     public static Item swordWood = (new ItemSword(12, EnumToolMaterial.WOOD)).setIconCoord(0, 4).setItemName("swordWood");
     public static Item shovelWood = (new ItemSpade(13, EnumToolMaterial.WOOD)).setIconCoord(0, 5).setItemName("shovelWood");
@@ -38,23 +38,23 @@ public class Item
     public static Item shovelDiamond = (new ItemSpade(21, EnumToolMaterial.EMERALD)).setIconCoord(3, 5).setItemName("shovelDiamond");
     public static Item pickaxeDiamond = (new ItemPickaxe(22, EnumToolMaterial.EMERALD)).setIconCoord(3, 6).setItemName("pickaxeDiamond");
     public static Item axeDiamond = (new ItemAxe(23, EnumToolMaterial.EMERALD)).setIconCoord(3, 7).setItemName("hatchetDiamond");
-    public static Item stick = (new Item(24)).setIconCoord(5, 3).setFull3D().setItemName("stick").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item bowlEmpty = (new Item(25)).setIconCoord(7, 4).setItemName("bowl").setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item stick = (new Item(24)).setIconCoord(5, 3).setFull3D().setItemName("stick").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item bowlEmpty = (new Item(25)).setIconCoord(7, 4).setItemName("bowl").setCreativeTab(CreativeTabs.tabMaterials);
     public static Item bowlSoup = (new ItemSoup(26, 8)).setIconCoord(8, 4).setItemName("mushroomStew");
     public static Item swordGold = (new ItemSword(27, EnumToolMaterial.GOLD)).setIconCoord(4, 4).setItemName("swordGold");
     public static Item shovelGold = (new ItemSpade(28, EnumToolMaterial.GOLD)).setIconCoord(4, 5).setItemName("shovelGold");
     public static Item pickaxeGold = (new ItemPickaxe(29, EnumToolMaterial.GOLD)).setIconCoord(4, 6).setItemName("pickaxeGold");
     public static Item axeGold = (new ItemAxe(30, EnumToolMaterial.GOLD)).setIconCoord(4, 7).setItemName("hatchetGold");
-    public static Item silk = (new ItemReed(31, Block.tripWire)).setIconCoord(8, 0).setItemName("string").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item feather = (new Item(32)).setIconCoord(8, 1).setItemName("feather").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item gunpowder = (new Item(33)).setIconCoord(8, 2).setItemName("sulphur").setPotionEffect(PotionHelper.gunpowderEffect).setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item silk = (new ItemReed(31, Block.tripWire)).setIconCoord(8, 0).setItemName("string").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item feather = (new Item(32)).setIconCoord(8, 1).setItemName("feather").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item gunpowder = (new Item(33)).setIconCoord(8, 2).setItemName("sulphur").setPotionEffect(PotionHelper.gunpowderEffect).setCreativeTab(CreativeTabs.tabMaterials);
     public static Item hoeWood = (new ItemHoe(34, EnumToolMaterial.WOOD)).setIconCoord(0, 8).setItemName("hoeWood");
     public static Item hoeStone = (new ItemHoe(35, EnumToolMaterial.STONE)).setIconCoord(1, 8).setItemName("hoeStone");
     public static Item hoeSteel = (new ItemHoe(36, EnumToolMaterial.IRON)).setIconCoord(2, 8).setItemName("hoeIron");
     public static Item hoeDiamond = (new ItemHoe(37, EnumToolMaterial.EMERALD)).setIconCoord(3, 8).setItemName("hoeDiamond");
     public static Item hoeGold = (new ItemHoe(38, EnumToolMaterial.GOLD)).setIconCoord(4, 8).setItemName("hoeGold");
     public static Item seeds = (new ItemSeeds(39, Block.crops.blockID, Block.tilledField.blockID)).setIconCoord(9, 0).setItemName("seeds");
-    public static Item wheat = (new Item(40)).setIconCoord(9, 1).setItemName("wheat").setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item wheat = (new Item(40)).setIconCoord(9, 1).setItemName("wheat").setCreativeTab(CreativeTabs.tabMaterials);
     public static Item bread = (new ItemFood(41, 5, 0.6F, false)).setIconCoord(9, 2).setItemName("bread");
     public static Item helmetLeather = (new ItemArmor(42, EnumArmorMaterial.CLOTH, 0, 0)).setIconCoord(0, 0).setItemName("helmetCloth");
     public static Item plateLeather = (new ItemArmor(43, EnumArmorMaterial.CLOTH, 0, 1)).setIconCoord(0, 1).setItemName("chestplateCloth");
@@ -76,7 +76,7 @@ public class Item
     public static Item plateGold = (new ItemArmor(59, EnumArmorMaterial.GOLD, 4, 1)).setIconCoord(4, 1).setItemName("chestplateGold");
     public static Item legsGold = (new ItemArmor(60, EnumArmorMaterial.GOLD, 4, 2)).setIconCoord(4, 2).setItemName("leggingsGold");
     public static Item bootsGold = (new ItemArmor(61, EnumArmorMaterial.GOLD, 4, 3)).setIconCoord(4, 3).setItemName("bootsGold");
-    public static Item flint = (new Item(62)).setIconCoord(6, 0).setItemName("flint").setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item flint = (new Item(62)).setIconCoord(6, 0).setItemName("flint").setCreativeTab(CreativeTabs.tabMaterials);
     public static Item porkRaw = (new ItemFood(63, 3, 0.3F, true)).setIconCoord(7, 5).setItemName("porkchopRaw");
     public static Item porkCooked = (new ItemFood(64, 8, 0.8F, true)).setIconCoord(8, 5).setItemName("porkchopCooked");
     public static Item painting = (new ItemPainting(65)).setIconCoord(10, 1).setItemName("painting");
@@ -92,29 +92,29 @@ public class Item
     public static Item redstone = (new ItemRedstone(75)).setIconCoord(8, 3).setItemName("redstone").setPotionEffect(PotionHelper.redstoneEffect);
     public static Item snowball = (new ItemSnowball(76)).setIconCoord(14, 0).setItemName("snowball");
     public static Item boat = (new ItemBoat(77)).setIconCoord(8, 8).setItemName("boat");
-    public static Item leather = (new Item(78)).setIconCoord(7, 6).setItemName("leather").setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item leather = (new Item(78)).setIconCoord(7, 6).setItemName("leather").setCreativeTab(CreativeTabs.tabMaterials);
     public static Item bucketMilk = (new ItemBucketMilk(79)).setIconCoord(13, 4).setItemName("milk").setContainerItem(bucketEmpty);
-    public static Item brick = (new Item(80)).setIconCoord(6, 1).setItemName("brick").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item clay = (new Item(81)).setIconCoord(9, 3).setItemName("clay").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item reed = (new ItemReed(82, Block.reed)).setIconCoord(11, 1).setItemName("reeds").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item paper = (new Item(83)).setIconCoord(10, 3).setItemName("paper").setTabToDisplayOn(CreativeTabs.tabMisc);
-    public static Item book = (new Item(84)).setIconCoord(11, 3).setItemName("book").setTabToDisplayOn(CreativeTabs.tabMisc);
-    public static Item slimeBall = (new Item(85)).setIconCoord(14, 1).setItemName("slimeball").setTabToDisplayOn(CreativeTabs.tabMisc);
+    public static Item brick = (new Item(80)).setIconCoord(6, 1).setItemName("brick").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item clay = (new Item(81)).setIconCoord(9, 3).setItemName("clay").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item reed = (new ItemReed(82, Block.reed)).setIconCoord(11, 1).setItemName("reeds").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item paper = (new Item(83)).setIconCoord(10, 3).setItemName("paper").setCreativeTab(CreativeTabs.tabMisc);
+    public static Item book = (new Item(84)).setIconCoord(11, 3).setItemName("book").setCreativeTab(CreativeTabs.tabMisc);
+    public static Item slimeBall = (new Item(85)).setIconCoord(14, 1).setItemName("slimeball").setCreativeTab(CreativeTabs.tabMisc);
     public static Item minecartCrate = (new ItemMinecart(86, 1)).setIconCoord(7, 9).setItemName("minecartChest");
     public static Item minecartPowered = (new ItemMinecart(87, 2)).setIconCoord(7, 10).setItemName("minecartFurnace");
     public static Item egg = (new ItemEgg(88)).setIconCoord(12, 0).setItemName("egg");
-    public static Item compass = (new Item(89)).setIconCoord(6, 3).setItemName("compass").setTabToDisplayOn(CreativeTabs.tabTools);
+    public static Item compass = (new Item(89)).setIconCoord(6, 3).setItemName("compass").setCreativeTab(CreativeTabs.tabTools);
     public static Item fishingRod = (new ItemFishingRod(90)).setIconCoord(5, 4).setItemName("fishingRod");
-    public static Item pocketSundial = (new Item(91)).setIconCoord(6, 4).setItemName("clock").setTabToDisplayOn(CreativeTabs.tabTools);
-    public static Item lightStoneDust = (new Item(92)).setIconCoord(9, 4).setItemName("yellowDust").setPotionEffect(PotionHelper.glowstoneEffect).setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item pocketSundial = (new Item(91)).setIconCoord(6, 4).setItemName("clock").setCreativeTab(CreativeTabs.tabTools);
+    public static Item lightStoneDust = (new Item(92)).setIconCoord(9, 4).setItemName("yellowDust").setPotionEffect(PotionHelper.glowstoneEffect).setCreativeTab(CreativeTabs.tabMaterials);
     public static Item fishRaw = (new ItemFood(93, 2, 0.3F, false)).setIconCoord(9, 5).setItemName("fishRaw");
     public static Item fishCooked = (new ItemFood(94, 5, 0.6F, false)).setIconCoord(10, 5).setItemName("fishCooked");
     public static Item dyePowder = (new ItemDye(95)).setIconCoord(14, 4).setItemName("dyePowder");
-    public static Item bone = (new Item(96)).setIconCoord(12, 1).setItemName("bone").setFull3D().setTabToDisplayOn(CreativeTabs.tabMisc);
-    public static Item sugar = (new Item(97)).setIconCoord(13, 0).setItemName("sugar").setPotionEffect(PotionHelper.sugarEffect).setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item cake = (new ItemReed(98, Block.cake)).setMaxStackSize(1).setIconCoord(13, 1).setItemName("cake").setTabToDisplayOn(CreativeTabs.tabFood);
+    public static Item bone = (new Item(96)).setIconCoord(12, 1).setItemName("bone").setFull3D().setCreativeTab(CreativeTabs.tabMisc);
+    public static Item sugar = (new Item(97)).setIconCoord(13, 0).setItemName("sugar").setPotionEffect(PotionHelper.sugarEffect).setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item cake = (new ItemReed(98, Block.cake)).setMaxStackSize(1).setIconCoord(13, 1).setItemName("cake").setCreativeTab(CreativeTabs.tabFood);
     public static Item bed = (new ItemBed(99)).setMaxStackSize(1).setIconCoord(13, 2).setItemName("bed");
-    public static Item redstoneRepeater = (new ItemReed(100, Block.redstoneRepeaterIdle)).setIconCoord(6, 5).setItemName("diode").setTabToDisplayOn(CreativeTabs.tabRedstone);
+    public static Item redstoneRepeater = (new ItemReed(100, Block.redstoneRepeaterIdle)).setIconCoord(6, 5).setItemName("diode").setCreativeTab(CreativeTabs.tabRedstone);
     public static Item cookie = (new ItemFood(101, 2, 0.1F, false)).setIconCoord(12, 5).setItemName("cookie");
     public static ItemMap map = (ItemMap)(new ItemMap(102)).setIconCoord(12, 3).setItemName("map");
 
@@ -131,20 +131,20 @@ public class Item
     public static Item chickenCooked = (new ItemFood(110, 6, 0.6F, true)).setIconCoord(10, 7).setItemName("chickenCooked");
     public static Item rottenFlesh = (new ItemFood(111, 4, 0.1F, true)).setPotionEffect(Potion.hunger.id, 30, 0, 0.8F).setIconCoord(11, 5).setItemName("rottenFlesh");
     public static Item enderPearl = (new ItemEnderPearl(112)).setIconCoord(11, 6).setItemName("enderPearl");
-    public static Item blazeRod = (new Item(113)).setIconCoord(12, 6).setItemName("blazeRod").setTabToDisplayOn(CreativeTabs.tabMaterials);
-    public static Item ghastTear = (new Item(114)).setIconCoord(11, 7).setItemName("ghastTear").setPotionEffect(PotionHelper.ghastTearEffect).setTabToDisplayOn(CreativeTabs.tabBrewing);
-    public static Item goldNugget = (new Item(115)).setIconCoord(12, 7).setItemName("goldNugget").setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item blazeRod = (new Item(113)).setIconCoord(12, 6).setItemName("blazeRod").setCreativeTab(CreativeTabs.tabMaterials);
+    public static Item ghastTear = (new Item(114)).setIconCoord(11, 7).setItemName("ghastTear").setPotionEffect(PotionHelper.ghastTearEffect).setCreativeTab(CreativeTabs.tabBrewing);
+    public static Item goldNugget = (new Item(115)).setIconCoord(12, 7).setItemName("goldNugget").setCreativeTab(CreativeTabs.tabMaterials);
     public static Item netherStalkSeeds = (new ItemSeeds(116, Block.netherStalk.blockID, Block.slowSand.blockID)).setIconCoord(13, 7).setItemName("netherStalkSeeds").setPotionEffect("+4");
     public static ItemPotion potion = (ItemPotion)(new ItemPotion(117)).setIconCoord(13, 8).setItemName("potion");
     public static Item glassBottle = (new ItemGlassBottle(118)).setIconCoord(12, 8).setItemName("glassBottle");
     public static Item spiderEye = (new ItemFood(119, 2, 0.8F, false)).setPotionEffect(Potion.poison.id, 5, 0, 1.0F).setIconCoord(11, 8).setItemName("spiderEye").setPotionEffect(PotionHelper.spiderEyeEffect);
-    public static Item fermentedSpiderEye = (new Item(120)).setIconCoord(10, 8).setItemName("fermentedSpiderEye").setPotionEffect(PotionHelper.fermentedSpiderEyeEffect).setTabToDisplayOn(CreativeTabs.tabBrewing);
-    public static Item blazePowder = (new Item(121)).setIconCoord(13, 9).setItemName("blazePowder").setPotionEffect(PotionHelper.blazePowderEffect).setTabToDisplayOn(CreativeTabs.tabBrewing);
-    public static Item magmaCream = (new Item(122)).setIconCoord(13, 10).setItemName("magmaCream").setPotionEffect(PotionHelper.magmaCreamEffect).setTabToDisplayOn(CreativeTabs.tabBrewing);
-    public static Item brewingStand = (new ItemReed(123, Block.brewingStand)).setIconCoord(12, 10).setItemName("brewingStand").setTabToDisplayOn(CreativeTabs.tabBrewing);
-    public static Item cauldron = (new ItemReed(124, Block.cauldron)).setIconCoord(12, 9).setItemName("cauldron").setTabToDisplayOn(CreativeTabs.tabBrewing);
+    public static Item fermentedSpiderEye = (new Item(120)).setIconCoord(10, 8).setItemName("fermentedSpiderEye").setPotionEffect(PotionHelper.fermentedSpiderEyeEffect).setCreativeTab(CreativeTabs.tabBrewing);
+    public static Item blazePowder = (new Item(121)).setIconCoord(13, 9).setItemName("blazePowder").setPotionEffect(PotionHelper.blazePowderEffect).setCreativeTab(CreativeTabs.tabBrewing);
+    public static Item magmaCream = (new Item(122)).setIconCoord(13, 10).setItemName("magmaCream").setPotionEffect(PotionHelper.magmaCreamEffect).setCreativeTab(CreativeTabs.tabBrewing);
+    public static Item brewingStand = (new ItemReed(123, Block.brewingStand)).setIconCoord(12, 10).setItemName("brewingStand").setCreativeTab(CreativeTabs.tabBrewing);
+    public static Item cauldron = (new ItemReed(124, Block.cauldron)).setIconCoord(12, 9).setItemName("cauldron").setCreativeTab(CreativeTabs.tabBrewing);
     public static Item eyeOfEnder = (new ItemEnderEye(125)).setIconCoord(11, 9).setItemName("eyeOfEnder");
-    public static Item speckledMelon = (new Item(126)).setIconCoord(9, 8).setItemName("speckledMelon").setPotionEffect(PotionHelper.speckledMelonEffect).setTabToDisplayOn(CreativeTabs.tabBrewing);
+    public static Item speckledMelon = (new Item(126)).setIconCoord(9, 8).setItemName("speckledMelon").setPotionEffect(PotionHelper.speckledMelonEffect).setCreativeTab(CreativeTabs.tabBrewing);
     public static Item monsterPlacer = (new ItemMonsterPlacer(127)).setIconCoord(9, 9).setItemName("monsterPlacer");
 
     /**
@@ -156,9 +156,9 @@ public class Item
      * Fire Charge. When used in a dispenser it fires a fireball similiar to a Ghast's.
      */
     public static Item fireballCharge = (new ItemFireball(129)).setIconCoord(14, 2).setItemName("fireball");
-    public static Item writableBook = (new ItemWritableBook(130)).setIconCoord(11, 11).setItemName("writingBook").setTabToDisplayOn(CreativeTabs.tabMisc);
+    public static Item writableBook = (new ItemWritableBook(130)).setIconCoord(11, 11).setItemName("writingBook").setCreativeTab(CreativeTabs.tabMisc);
     public static Item writtenBook = (new ItemEditableBook(131)).setIconCoord(12, 11).setItemName("writtenBook");
-    public static Item emerald = (new Item(132)).setIconCoord(10, 11).setItemName("emerald").setTabToDisplayOn(CreativeTabs.tabMaterials);
+    public static Item emerald = (new Item(132)).setIconCoord(10, 11).setItemName("emerald").setCreativeTab(CreativeTabs.tabMaterials);
     public static Item record13 = (new ItemRecord(2000, "13")).setIconCoord(0, 15).setItemName("record");
     public static Item recordCat = (new ItemRecord(2001, "cat")).setIconCoord(1, 15).setItemName("record");
     public static Item recordBlocks = (new ItemRecord(2002, "blocks")).setIconCoord(2, 15).setItemName("record");
@@ -247,7 +247,11 @@ public class Item
         return this.iconIndex;
     }
 
-    public boolean tryPlaceIntoWorld(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    /**
+     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
+     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
+     */
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
         return false;
     }
@@ -342,7 +346,7 @@ public class Item
         return false;
     }
 
-    public boolean func_77660_a(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLiving par7EntityLiving)
+    public boolean onBlockDestroyed(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLiving par7EntityLiving)
     {
         return false;
     }
@@ -364,7 +368,7 @@ public class Item
     }
 
     /**
-     * die sheep, place saddles, etc ...
+     * dye sheep, place saddles, etc ...
      */
     public boolean itemInteractionForEntity(ItemStack par1ItemStack, EntityLiving par2EntityLiving)
     {
@@ -642,9 +646,9 @@ public class Item
     /**
      * returns this;
      */
-    public Item setTabToDisplayOn(CreativeTabs par1CreativeTabs)
+    public Item setCreativeTab(CreativeTabs par1CreativeTabs)
     {
-        this.field_77701_a = par1CreativeTabs;
+        this.tabToDisplayOn = par1CreativeTabs;
         return this;
     }
 
@@ -655,7 +659,7 @@ public class Item
      */
     public CreativeTabs getCreativeTab()
     {
-        return this.field_77701_a;
+        return this.tabToDisplayOn;
     }
 
     static
@@ -856,5 +860,46 @@ public class Item
             return null;
         }
         return new ItemStack(getContainerItem());
+    }
+
+    /**
+     * Retrieves the normal 'lifespan' of this item when it is dropped on the ground as a EntityItem.
+     * This is in ticks, standard result is 6000, or 5 mins.
+     * 
+     * @param itemStack The current ItemStack
+     * @param world The world the entity is in
+     * @return The normal lifespan in ticks.
+     */
+    public int getEntityLifespan(ItemStack itemStack, World world)
+    {
+        return 6000;
+    }
+
+    /**
+     * Determines if this Item has a special entity for when they are in the world.
+     * Is called when a EntityItem is spawned in the world, if true and Item#createCustomEntity 
+     * returns non null, the EntityItem will be destroyed and the new Entity will be added to the world.
+     * 
+     * @param stack The current item stack
+     * @return True of the item has a custom entity, If true, Item#createCustomEntity will be called
+     */
+    public boolean hasCustomEntity(ItemStack stack)
+    {
+        return false;
+    }
+
+    /**
+     * This function should return a new entity to replace the dropped item.
+     * Returning null here will not kill the EntityItem and will leave it to function normally.
+     * Called when the item it placed in a world.
+     * 
+     * @param world The world object
+     * @param location The EntityItem object, useful for getting the position of the entity
+     * @param itemstack The current item stack
+     * @return A new Entity object to spawn or null
+     */
+    public Entity createEntity(World world, Entity location, ItemStack itemstack)
+    {
+        return null;
     }
 }

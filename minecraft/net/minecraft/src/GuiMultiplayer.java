@@ -27,7 +27,7 @@ public class GuiMultiplayer extends GuiScreen
 
     /** Slot container for the server list */
     private GuiSlotServer serverSlotContainer;
-    private ServerList field_74030_m;
+    private ServerList internetServerList;
 
     /** Index of the currently selected server */
     private int selectedServer = -1;
@@ -55,9 +55,11 @@ public class GuiMultiplayer extends GuiScreen
 
     /** This GUI's lag tooltip text or null if no lag icon is being hovered. */
     private String lagTooltip = null;
-    private ServerData field_74031_w = null;
-    private LanServerList field_74041_x;
-    private ThreadLanServerFind field_74040_y;
+
+    /** Instance of ServerData. */
+    private ServerData theServerData = null;
+    private LanServerList localNetworkServerList;
+    private ThreadLanServerFind localServerFindThread;
     private int field_74039_z;
     private boolean field_74024_A;
     private List field_74026_B = Collections.emptyList();
@@ -78,14 +80,14 @@ public class GuiMultiplayer extends GuiScreen
         if (!this.field_74024_A)
         {
             this.field_74024_A = true;
-            this.field_74030_m = new ServerList(this.mc);
-            this.field_74030_m.loadServerList();
-            this.field_74041_x = new LanServerList();
+            this.internetServerList = new ServerList(this.mc);
+            this.internetServerList.loadServerList();
+            this.localNetworkServerList = new LanServerList();
 
             try
             {
-                this.field_74040_y = new ThreadLanServerFind(this.field_74041_x);
-                this.field_74040_y.start();
+                this.localServerFindThread = new ThreadLanServerFind(this.localNetworkServerList);
+                this.localServerFindThread.start();
             }
             catch (Exception var2)
             {
@@ -129,10 +131,10 @@ public class GuiMultiplayer extends GuiScreen
         super.updateScreen();
         ++this.field_74039_z;
 
-        if (this.field_74041_x.func_77553_a())
+        if (this.localNetworkServerList.func_77553_a())
         {
-            this.field_74026_B = this.field_74041_x.func_77554_c();
-            this.field_74041_x.func_77552_b();
+            this.field_74026_B = this.localNetworkServerList.func_77554_c();
+            this.localNetworkServerList.func_77552_b();
         }
     }
 
@@ -143,10 +145,10 @@ public class GuiMultiplayer extends GuiScreen
     {
         Keyboard.enableRepeatEvents(false);
 
-        if (this.field_74040_y != null)
+        if (this.localServerFindThread != null)
         {
-            this.field_74040_y.interrupt();
-            this.field_74040_y = null;
+            this.localServerFindThread.interrupt();
+            this.localServerFindThread = null;
         }
     }
 
@@ -159,7 +161,7 @@ public class GuiMultiplayer extends GuiScreen
         {
             if (par1GuiButton.id == 2)
             {
-                String var2 = this.field_74030_m.getServerData(this.selectedServer).serverName;
+                String var2 = this.internetServerList.getServerData(this.selectedServer).serverName;
 
                 if (var2 != null)
                 {
@@ -180,18 +182,18 @@ public class GuiMultiplayer extends GuiScreen
             else if (par1GuiButton.id == 4)
             {
                 this.directClicked = true;
-                this.mc.displayGuiScreen(new GuiScreenServerList(this, this.field_74031_w = new ServerData(StatCollector.translateToLocal("selectServer.defaultName"), "")));
+                this.mc.displayGuiScreen(new GuiScreenServerList(this, this.theServerData = new ServerData(StatCollector.translateToLocal("selectServer.defaultName"), "")));
             }
             else if (par1GuiButton.id == 3)
             {
                 this.addClicked = true;
-                this.mc.displayGuiScreen(new GuiScreenAddServer(this, this.field_74031_w = new ServerData(StatCollector.translateToLocal("selectServer.defaultName"), "")));
+                this.mc.displayGuiScreen(new GuiScreenAddServer(this, this.theServerData = new ServerData(StatCollector.translateToLocal("selectServer.defaultName"), "")));
             }
             else if (par1GuiButton.id == 7)
             {
                 this.editClicked = true;
-                ServerData var9 = this.field_74030_m.getServerData(this.selectedServer);
-                this.mc.displayGuiScreen(new GuiScreenAddServer(this, this.field_74031_w = new ServerData(var9.serverName, var9.serverIP)));
+                ServerData var9 = this.internetServerList.getServerData(this.selectedServer);
+                this.mc.displayGuiScreen(new GuiScreenAddServer(this, this.theServerData = new ServerData(var9.serverName, var9.serverIP)));
             }
             else if (par1GuiButton.id == 0)
             {
@@ -216,8 +218,8 @@ public class GuiMultiplayer extends GuiScreen
 
             if (par1)
             {
-                this.field_74030_m.removeServerData(par2);
-                this.field_74030_m.saveServerList();
+                this.internetServerList.removeServerData(par2);
+                this.internetServerList.saveServerList();
                 this.selectedServer = -1;
             }
 
@@ -229,7 +231,7 @@ public class GuiMultiplayer extends GuiScreen
 
             if (par1)
             {
-                this.func_74002_a(this.field_74031_w);
+                this.func_74002_a(this.theServerData);
             }
             else
             {
@@ -242,8 +244,8 @@ public class GuiMultiplayer extends GuiScreen
 
             if (par1)
             {
-                this.field_74030_m.addServerData(this.field_74031_w);
-                this.field_74030_m.saveServerList();
+                this.internetServerList.addServerData(this.theServerData);
+                this.internetServerList.saveServerList();
                 this.selectedServer = -1;
             }
 
@@ -255,10 +257,10 @@ public class GuiMultiplayer extends GuiScreen
 
             if (par1)
             {
-                ServerData var3 = this.field_74030_m.getServerData(this.selectedServer);
-                var3.serverName = this.field_74031_w.serverName;
-                var3.serverIP = this.field_74031_w.serverIP;
-                this.field_74030_m.saveServerList();
+                ServerData var3 = this.internetServerList.getServerData(this.selectedServer);
+                var3.serverName = this.theServerData.serverName;
+                var3.serverIP = this.theServerData.serverIP;
+                this.internetServerList.saveServerList();
             }
 
             this.mc.displayGuiScreen(this);
@@ -274,19 +276,19 @@ public class GuiMultiplayer extends GuiScreen
 
         if (par2 == 59)
         {
-            this.mc.gameSettings.field_80005_w = !this.mc.gameSettings.field_80005_w;
+            this.mc.gameSettings.hideServerAddress = !this.mc.gameSettings.hideServerAddress;
             this.mc.gameSettings.saveOptions();
         }
         else
         {
             if (isShiftKeyDown() && par2 == 200)
             {
-                if (var3 > 0 && var3 < this.field_74030_m.countServers())
+                if (var3 > 0 && var3 < this.internetServerList.countServers())
                 {
-                    this.field_74030_m.swapServers(var3, var3 - 1);
+                    this.internetServerList.swapServers(var3, var3 - 1);
                     --this.selectedServer;
 
-                    if (var3 < this.field_74030_m.countServers() - 1)
+                    if (var3 < this.internetServerList.countServers() - 1)
                     {
                         this.serverSlotContainer.func_77208_b(-this.serverSlotContainer.slotHeight);
                     }
@@ -294,9 +296,9 @@ public class GuiMultiplayer extends GuiScreen
             }
             else if (isShiftKeyDown() && par2 == 208)
             {
-                if (var3 < this.field_74030_m.countServers() - 1)
+                if (var3 < this.internetServerList.countServers() - 1)
                 {
-                    this.field_74030_m.swapServers(var3, var3 + 1);
+                    this.internetServerList.swapServers(var3, var3 + 1);
                     ++this.selectedServer;
 
                     if (var3 > 0)
@@ -335,13 +337,13 @@ public class GuiMultiplayer extends GuiScreen
      */
     private void joinServer(int par1)
     {
-        if (par1 < this.field_74030_m.countServers())
+        if (par1 < this.internetServerList.countServers())
         {
-            this.func_74002_a(this.field_74030_m.getServerData(par1));
+            this.func_74002_a(this.internetServerList.getServerData(par1));
         }
         else
         {
-            par1 -= this.field_74030_m.countServers();
+            par1 -= this.internetServerList.countServers();
 
             if (par1 < this.field_74026_B.size())
             {
@@ -410,11 +412,11 @@ public class GuiMultiplayer extends GuiScreen
 
             if (var9 >= 0 && var10 > 0)
             {
-                par1ServerData.field_78846_c = "\u00a77" + var9 + "\u00a78/\u00a77" + var10;
+                par1ServerData.populationInfo = "\u00a77" + var9 + "\u00a78/\u00a77" + var10;
             }
             else
             {
-                par1ServerData.field_78846_c = "\u00a78???";
+                par1ServerData.populationInfo = "\u00a78???";
             }
         }
         finally
@@ -471,7 +473,7 @@ public class GuiMultiplayer extends GuiScreen
 
     static ServerList func_74006_a(GuiMultiplayer par0GuiMultiplayer)
     {
-        return par0GuiMultiplayer.field_74030_m;
+        return par0GuiMultiplayer.internetServerList;
     }
 
     static List func_74003_b(GuiMultiplayer par0GuiMultiplayer)
@@ -490,22 +492,25 @@ public class GuiMultiplayer extends GuiScreen
     }
 
     /**
+     * Return buttonSelect GuiButton
+     */
+    static GuiButton getButtonSelect(GuiMultiplayer par0GuiMultiplayer)
+    {
+        return par0GuiMultiplayer.buttonSelect;
+    }
+
+    /**
      * Return buttonEdit GuiButton
      */
     static GuiButton getButtonEdit(GuiMultiplayer par0GuiMultiplayer)
     {
-        return par0GuiMultiplayer.buttonSelect;
+        return par0GuiMultiplayer.buttonEdit;
     }
 
     /**
      * Return buttonDelete GuiButton
      */
     static GuiButton getButtonDelete(GuiMultiplayer par0GuiMultiplayer)
-    {
-        return par0GuiMultiplayer.buttonEdit;
-    }
-
-    static GuiButton func_74019_f(GuiMultiplayer par0GuiMultiplayer)
     {
         return par0GuiMultiplayer.buttonDelete;
     }

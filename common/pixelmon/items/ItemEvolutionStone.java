@@ -24,7 +24,7 @@ public class ItemEvolutionStone extends Item {
 		this.stoneType = stoneType;
 		this.iconIndex = 4 + i * 16;
 		setTextureFile("/pixelmon/image/pitems.png");
-		setTabToDisplayOn(CreativeTabs.tabMisc);
+		setCreativeTab(CreativeTabs.tabMisc);
 	}
 
 	public EnumEvolutionStone getType() {

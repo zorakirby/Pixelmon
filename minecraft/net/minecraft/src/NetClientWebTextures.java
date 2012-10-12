@@ -7,7 +7,8 @@ import net.minecraft.client.Minecraft;
 @SideOnly(Side.CLIENT)
 class NetClientWebTextures extends GuiScreen
 {
-    final String field_74244_a;
+    /** The Texture Pack's name. */
+    final String texturePackName;
 
     /** Initialises Web Textures? */
     final NetClientHandler netClientHandlerWebTextures;
@@ -15,7 +16,7 @@ class NetClientWebTextures extends GuiScreen
     NetClientWebTextures(NetClientHandler par1NetClientHandler, String par2Str)
     {
         this.netClientHandlerWebTextures = par1NetClientHandler;
-        this.field_74244_a = par2Str;
+        this.texturePackName = par2Str;
     }
 
     public void confirmClicked(boolean par1, int par2)
@@ -30,7 +31,7 @@ class NetClientWebTextures extends GuiScreen
 
         if (par1)
         {
-            this.mc.texturePackList.requestDownloadOfTexture(this.field_74244_a);
+            this.mc.texturePackList.requestDownloadOfTexture(this.texturePackName);
         }
 
         this.mc.displayGuiScreen((GuiScreen)null);

@@ -35,7 +35,7 @@ public class CipherOutputStream extends FilterOutputStream
         }
         else
         {
-            this.out.write(this.field_74847_b.func_74851_a((byte)par1));
+            this.out.write(this.field_74847_b.returnByte((byte)par1));
         }
     }
 

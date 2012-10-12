@@ -16,7 +16,10 @@ class CallableJVMFlags implements Callable
         this.crashReportJVMFlags = par1CrashReport;
     }
 
-    public String func_71487_a()
+    /**
+     * Returns the number of JVM Flags along with the passed JVM Flags.
+     */
+    public String getJVMFlagsAsString()
     {
         RuntimeMXBean var1 = ManagementFactory.getRuntimeMXBean();
         List var2 = var1.getInputArguments();
@@ -44,6 +47,6 @@ class CallableJVMFlags implements Callable
 
     public Object call()
     {
-        return this.func_71487_a();
+        return this.getJVMFlagsAsString();
     }
 }

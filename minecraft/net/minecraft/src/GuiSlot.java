@@ -62,7 +62,9 @@ public abstract class GuiSlot
 
     /** the time when this button was last clicked. */
     private long lastClicked = 0L;
-    private boolean field_77244_r = true;
+
+    /** true if a selected element in this gui will show an outline box */
+    private boolean showSelectionBox = true;
     private boolean field_77243_s;
     private int field_77242_t;
 
@@ -88,9 +90,9 @@ public abstract class GuiSlot
         this.right = par1;
     }
 
-    public void func_77216_a(boolean par1)
+    public void setShowSelectionBox(boolean par1)
     {
-        this.field_77244_r = par1;
+        this.showSelectionBox = par1;
     }
 
     protected void func_77223_a(boolean par1, int par2)
@@ -356,7 +358,7 @@ public abstract class GuiSlot
 
             if (var19 <= this.bottom && var19 + var13 >= this.top)
             {
-                if (this.field_77244_r && this.isSelected(var11))
+                if (this.showSelectionBox && this.isSelected(var11))
                 {
                     var14 = this.width / 2 - 110;
                     int var15 = this.width / 2 + 110;

@@ -48,17 +48,17 @@ public class GuiStatsComponent extends JComponent
         this.displayStrings[1] = "Threads: " + TcpConnection.field_74471_a.get() + " + " + TcpConnection.field_74469_b.get();
         this.displayStrings[2] = "Avg tick: " + field_79020_a.format(this.func_79015_a(this.field_79017_e.tickTimeArray) * 1.0E-6D) + " ms";
         this.displayStrings[3] = "Avg sent: " + (int)this.func_79015_a(this.field_79017_e.sentPacketCountArray) + ", Avg size: " + (int)this.func_79015_a(this.field_79017_e.sentPacketSizeArray);
-        this.displayStrings[4] = "Avg rec: " + (int)this.func_79015_a(this.field_79017_e.recievedPacketCountArray) + ", Avg size: " + (int)this.func_79015_a(this.field_79017_e.recievedPacketSizeArray);
+        this.displayStrings[4] = "Avg rec: " + (int)this.func_79015_a(this.field_79017_e.receivedPacketCountArray) + ", Avg size: " + (int)this.func_79015_a(this.field_79017_e.receivedPacketSizeArray);
 
-        if (this.field_79017_e.theWorldServer != null)
+        if (this.field_79017_e.worldServers != null)
         {
-            for (int var3 = 0; var3 < this.field_79017_e.theWorldServer.length; ++var3)
+            for (int var3 = 0; var3 < this.field_79017_e.worldServers.length; ++var3)
             {
-                this.displayStrings[5 + var3] = "Lvl " + var3 + " tick: " + field_79020_a.format(this.func_79015_a(this.field_79017_e.timeOfLastDimenstionTick[var3]) * 1.0E-6D) + " ms";
+                this.displayStrings[5 + var3] = "Lvl " + var3 + " tick: " + field_79020_a.format(this.func_79015_a(this.field_79017_e.timeOfLastDimensionTick[var3]) * 1.0E-6D) + " ms";
 
-                if (this.field_79017_e.theWorldServer[var3] != null && this.field_79017_e.theWorldServer[var3].theChunkProviderServer != null)
+                if (this.field_79017_e.worldServers[var3] != null && this.field_79017_e.worldServers[var3].theChunkProviderServer != null)
                 {
-                    this.displayStrings[5 + var3] = this.displayStrings[5 + var3] + ", " + this.field_79017_e.theWorldServer[var3].theChunkProviderServer.makeString();
+                    this.displayStrings[5 + var3] = this.displayStrings[5 + var3] + ", " + this.field_79017_e.worldServers[var3].theChunkProviderServer.makeString();
                 }
             }
         }

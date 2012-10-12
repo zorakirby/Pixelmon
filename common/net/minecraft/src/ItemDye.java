@@ -19,7 +19,7 @@ public class ItemDye extends Item
         super(par1);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
-        this.setTabToDisplayOn(CreativeTabs.tabMaterials);
+        this.setCreativeTab(CreativeTabs.tabMaterials);
     }
 
     @SideOnly(Side.CLIENT)
@@ -39,7 +39,11 @@ public class ItemDye extends Item
         return super.getItemName() + "." + dyeColorNames[var2];
     }
 
-    public boolean tryPlaceIntoWorld(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    /**
+     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
+     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
+     */
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
         if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6))
         {
@@ -122,7 +126,7 @@ public class ItemDye extends Item
                     return true;
                 }
 
-                if (var11 == Block.cocoa.blockID)
+                if (var11 == Block.cocoaPlant.blockID)
                 {
                     if (!par3World.isRemote)
                     {
@@ -217,11 +221,11 @@ public class ItemDye extends Item
 
                     if (par3World.isAirBlock(par4, par5, par6))
                     {
-                        par3World.setBlockWithNotify(par4, par5, par6, Block.cocoa.blockID);
+                        par3World.setBlockWithNotify(par4, par5, par6, Block.cocoaPlant.blockID);
 
-                        if (par3World.getBlockId(par4, par5, par6) == Block.cocoa.blockID)
+                        if (par3World.getBlockId(par4, par5, par6) == Block.cocoaPlant.blockID)
                         {
-                            Block.blocksList[Block.cocoa.blockID].updateBlockMetadata(par3World, par4, par5, par6, par7, par8, par9, par10);
+                            Block.blocksList[Block.cocoaPlant.blockID].updateBlockMetadata(par3World, par4, par5, par6, par7, par8, par9, par10);
                         }
 
                         if (!par2EntityPlayer.capabilities.isCreativeMode)
@@ -239,7 +243,7 @@ public class ItemDye extends Item
     }
 
     /**
-     * die sheep, place saddles, etc ...
+     * dye sheep, place saddles, etc ...
      */
     public boolean itemInteractionForEntity(ItemStack par1ItemStack, EntityLiving par2EntityLiving)
     {

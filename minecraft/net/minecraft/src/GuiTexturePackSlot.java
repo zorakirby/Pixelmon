@@ -68,7 +68,7 @@ class GuiTexturePackSlot extends GuiSlot
     protected void drawSlot(int par1, int par2, int par3, int par4, Tessellator par5Tessellator)
     {
         TexturePackBase var6 = (TexturePackBase)GuiTexturePacks.func_73953_j(this.parentTexturePackGui).texturePackList.availableTexturePacks().get(par1);
-        var6.func_77535_b(GuiTexturePacks.func_73961_k(this.parentTexturePackGui).renderEngine);
+        var6.bindThumbnailTexture(GuiTexturePacks.func_73961_k(this.parentTexturePackGui).renderEngine);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         par5Tessellator.startDrawingQuads();
         par5Tessellator.setColorOpaque_I(16777215);
@@ -77,8 +77,8 @@ class GuiTexturePackSlot extends GuiSlot
         par5Tessellator.addVertexWithUV((double)(par2 + 32), (double)par3, 0.0D, 1.0D, 0.0D);
         par5Tessellator.addVertexWithUV((double)par2, (double)par3, 0.0D, 0.0D, 0.0D);
         par5Tessellator.draw();
-        this.parentTexturePackGui.drawString(GuiTexturePacks.func_73960_l(this.parentTexturePackGui), var6.func_77538_c(), par2 + 32 + 2, par3 + 1, 16777215);
-        this.parentTexturePackGui.drawString(GuiTexturePacks.func_73963_m(this.parentTexturePackGui), var6.func_77531_d(), par2 + 32 + 2, par3 + 12, 8421504);
-        this.parentTexturePackGui.drawString(GuiTexturePacks.func_73954_n(this.parentTexturePackGui), var6.func_77537_e(), par2 + 32 + 2, par3 + 12 + 10, 8421504);
+        this.parentTexturePackGui.drawString(GuiTexturePacks.func_73960_l(this.parentTexturePackGui), var6.getTexturePackFileName(), par2 + 32 + 2, par3 + 1, 16777215);
+        this.parentTexturePackGui.drawString(GuiTexturePacks.func_73963_m(this.parentTexturePackGui), var6.getFirstDescriptionLine(), par2 + 32 + 2, par3 + 12, 8421504);
+        this.parentTexturePackGui.drawString(GuiTexturePacks.func_73954_n(this.parentTexturePackGui), var6.getSecondDescriptionLine(), par2 + 32 + 2, par3 + 12 + 10, 8421504);
     }
 }

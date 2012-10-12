@@ -13,6 +13,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.entities.EntityCamera;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
@@ -45,10 +46,19 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
+	public void StartBattle(IBattleParticipant opponent) {
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createStringPacket(EnumPackets.SetOpponentName, 0, opponent.getName()));
+		EntityCamera c = new EntityCamera(player.worldObj, player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+		player.worldObj.spawnEntityInWorld(c);
+		player.openGui(Pixelmon.instance, EnumGui.Battle.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), 0, 0);
+	}
+	
+	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		currentPixelmon.battleStats.clearBattleStats();
 		currentPixelmon.EndBattle();
-		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 	}
 
 	@Override
@@ -73,15 +83,15 @@ public class PlayerParticipant implements IBattleParticipant {
 			bc.endBattle(false);
 			return null;
 		}
-		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 		int x = 0, y = 0;
 		x = currentPokemon().getPokemonId();
 		PixelmonDataPacket p = new PixelmonDataPacket(participant2.currentPokemon(), EnumPackets.AddToTempStore);
 		y = 0;
-		player.serverForThisPlayer.sendPacketToPlayer(p.getPacket());
+		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 
 		bc.waitForMove(this);
-		player.openGui(Pixelmon.instance, EnumGui.ChooseAttack.getIndex(), player.worldObj, x, y, BattleRegistry.getIndex(bc));
+		//player.openGui(Pixelmon.instance, EnumGui.ChooseAttack.getIndex(), player.worldObj, x, y, BattleRegistry.getIndex(bc));
 		return null;
 	}
 

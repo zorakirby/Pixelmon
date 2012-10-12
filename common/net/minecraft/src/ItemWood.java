@@ -5,12 +5,13 @@ import cpw.mods.fml.common.asm.SideOnly;
 
 public class ItemWood extends ItemBlock
 {
-    private Block field_77886_a;
+    /** The instance of Block. */
+    private Block theWoodBlock;
 
     public ItemWood(int par1, Block par2Block)
     {
         super(par1);
-        this.field_77886_a = par2Block;
+        this.theWoodBlock = par2Block;
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
@@ -22,7 +23,7 @@ public class ItemWood extends ItemBlock
      */
     public int getIconFromDamage(int par1)
     {
-        return this.field_77886_a.getBlockTextureFromSideAndMetadata(2, par1);
+        return this.theWoodBlock.getBlockTextureFromSideAndMetadata(2, par1);
     }
 
     /**

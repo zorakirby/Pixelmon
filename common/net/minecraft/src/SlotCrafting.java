@@ -1,6 +1,8 @@
 package net.minecraft.src;
 
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -125,8 +127,14 @@ public class SlotCrafting extends Slot
                 if (var3.getItem().hasContainerItem())
                 {
                     ItemStack var4 = var3.getItem().getContainerItemStack(var3);
+                    
+                    if (var4.isItemStackDamageable() && var4.getItemDamage() >= var4.getMaxDamage())
+                    {
+                        MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(thePlayer, var4));
+                        var4 = null;
+                    }
 
-                    if (!var3.getItem().doesContainerItemLeaveCraftingGrid(var3) || !this.thePlayer.inventory.addItemStackToInventory(var4))
+                    if (var4 != null && (!var3.getItem().doesContainerItemLeaveCraftingGrid(var3) || !this.thePlayer.inventory.addItemStackToInventory(var4)))
                     {
                         if (this.craftMatrix.getStackInSlot(var2) == null)
                         {

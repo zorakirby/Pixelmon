@@ -32,7 +32,7 @@ public class TileEntityChestRenderer extends TileEntitySpecialRenderer
 
             if (var10 != null && var9 == 0)
             {
-                ((BlockChest)var10).unifyAdjacentChests(par1TileEntityChest.func_70314_l(), par1TileEntityChest.xCoord, par1TileEntityChest.yCoord, par1TileEntityChest.zCoord);
+                ((BlockChest)var10).unifyAdjacentChests(par1TileEntityChest.getWorldObj(), par1TileEntityChest.xCoord, par1TileEntityChest.yCoord, par1TileEntityChest.zCoord);
                 var9 = par1TileEntityChest.getBlockMetadata();
             }
 

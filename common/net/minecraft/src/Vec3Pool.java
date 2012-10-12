@@ -45,7 +45,7 @@ public class Vec3Pool
     }
 
     /**
-     * will truncate the array everyN clears to the maximum size observed since the last truncation
+     * Will truncate the array everyN clears to the maximum size observed since the last truncation.
      */
     public void clear()
     {

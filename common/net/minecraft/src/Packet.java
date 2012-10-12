@@ -25,10 +25,10 @@ public abstract class Packet
 
     /** the system time in milliseconds when this packet was created. */
     public final long creationTimeMillis = System.currentTimeMillis();
-    public static long recievedID;
-    public static long recievedSize;
+    public static long receivedID;
+    public static long receivedSize;
 
-    /** assumed to be sequential by the profiler */
+    /** Assumed to be sequential by the profiler. */
     public static long sentID;
     public static long sentSize;
 
@@ -153,8 +153,8 @@ public abstract class Packet
             }
 
             var3.readPacketData(par0DataInputStream);
-            ++recievedID;
-            recievedSize += (long)var3.getPacketSize();
+            ++receivedID;
+            receivedSize += (long)var3.getPacketSize();
         }
         catch (EOFException var5)
         {
@@ -163,8 +163,8 @@ public abstract class Packet
         }
 
         PacketCount.countPacket(var6, (long)var3.getPacketSize());
-        ++recievedID;
-        recievedSize += (long)var3.getPacketSize();
+        ++receivedID;
+        receivedSize += (long)var3.getPacketSize();
         return var3;
     }
 
@@ -418,7 +418,7 @@ public abstract class Packet
         addIdClassMapping(107, true, true, Packet107CreativeSetSlot.class);
         addIdClassMapping(108, false, true, Packet108EnchantItem.class);
         addIdClassMapping(130, true, true, Packet130UpdateSign.class);
-        addIdClassMapping(131, true, false, Packet131MapData.class);
+        addIdClassMapping(131, true, true, Packet131MapData.class);
         addIdClassMapping(132, true, false, Packet132TileEntityData.class);
         addIdClassMapping(200, true, false, Packet200Statistic.class);
         addIdClassMapping(201, true, false, Packet201PlayerInfo.class);

@@ -9,10 +9,10 @@ import java.util.List;
 
 public abstract class RConThreadBase implements Runnable
 {
-    /** True i */
+    /** True if the Thread is running, false otherwise */
     protected boolean running = false;
 
-    /** Reference to the server object */
+    /** Reference to the IServer object. */
     protected IServer server;
 
     /** Thread for this runnable class */
@@ -29,7 +29,7 @@ public abstract class RConThreadBase implements Runnable
     {
         this.server = par1IServer;
 
-        if (this.server.doLogInfoEvent())
+        if (this.server.isDebuggingEnabled())
         {
             this.logWarning("Debugging is enabled, performance maybe reduced!");
         }
@@ -54,19 +54,19 @@ public abstract class RConThreadBase implements Runnable
     }
 
     /**
+     * Log debug message
+     */
+    protected void logDebug(String par1Str)
+    {
+        this.server.logDebug(par1Str);
+    }
+
+    /**
      * Log information message
      */
     protected void logInfo(String par1Str)
     {
-        this.server.logInfoEvent(par1Str);
-    }
-
-    /**
-     * Log message
-     */
-    protected void log(String par1Str)
-    {
-        this.server.logInfoMessage(par1Str);
+        this.server.logInfo(par1Str);
     }
 
     /**
@@ -74,7 +74,7 @@ public abstract class RConThreadBase implements Runnable
      */
     protected void logWarning(String par1Str)
     {
-        this.server.logWarningMessage(par1Str);
+        this.server.logWarning(par1Str);
     }
 
     /**
@@ -82,7 +82,7 @@ public abstract class RConThreadBase implements Runnable
      */
     protected void logSevere(String par1Str)
     {
-        this.server.logSevereEvent(par1Str);
+        this.server.logSevere(par1Str);
     }
 
     /**
@@ -90,7 +90,7 @@ public abstract class RConThreadBase implements Runnable
      */
     protected int getNumberOfPlayers()
     {
-        return this.server.getPlayerListSize();
+        return this.server.getCurrentPlayerCount();
     }
 
     /**
@@ -98,16 +98,16 @@ public abstract class RConThreadBase implements Runnable
      */
     protected void registerSocket(DatagramSocket par1DatagramSocket)
     {
-        this.logInfo("registerSocket: " + par1DatagramSocket);
+        this.logDebug("registerSocket: " + par1DatagramSocket);
         this.socketList.add(par1DatagramSocket);
     }
 
     /**
-     * Closes the specified Da
+     * Closes the specified DatagramSocket
      */
     protected boolean closeSocket(DatagramSocket par1DatagramSocket, boolean par2)
     {
-        this.logInfo("closeSocket: " + par1DatagramSocket);
+        this.logDebug("closeSocket: " + par1DatagramSocket);
 
         if (null == par1DatagramSocket)
         {
@@ -145,7 +145,7 @@ public abstract class RConThreadBase implements Runnable
      */
     protected boolean closeServerSocket_do(ServerSocket par1ServerSocket, boolean par2)
     {
-        this.logInfo("closeSocket: " + par1ServerSocket);
+        this.logDebug("closeSocket: " + par1ServerSocket);
 
         if (null == par1ServerSocket)
         {
@@ -182,10 +182,13 @@ public abstract class RConThreadBase implements Runnable
      */
     protected void closeAllSockets()
     {
-        this.clos(false);
+        this.closeAllSockets_do(false);
     }
 
-    protected void clos(boolean par1)
+    /**
+     * Closes all of the opened sockets
+     */
+    protected void closeAllSockets_do(boolean par1)
     {
         int var2 = 0;
         Iterator var3 = this.socketList.iterator();

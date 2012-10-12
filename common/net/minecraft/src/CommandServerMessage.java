@@ -11,7 +11,7 @@ public class CommandServerMessage extends CommandBase
      */
     public boolean canCommandSenderUseCommand(ICommandSender par1ICommandSender)
     {
-        return (!MinecraftServer.getServer().isSinglePlayer() || MinecraftServer.getServer().getPlayerListSize() > 1) && super.canCommandSenderUseCommand(par1ICommandSender);
+        return (!MinecraftServer.getServer().isSinglePlayer() || MinecraftServer.getServer().getCurrentPlayerCount() > 1) && super.canCommandSenderUseCommand(par1ICommandSender);
     }
 
     public List getCommandAliases()

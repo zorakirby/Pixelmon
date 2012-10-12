@@ -12,7 +12,7 @@ public class Teleporter
      */
     public void placeInPortal(World par1World, Entity par2Entity)
     {
-        if (par1World.provider.worldType != 1)
+        if (par1World.provider.dimensionId != 1)
         {
             if (!this.placeInExistingPortal(par1World, par2Entity))
             {

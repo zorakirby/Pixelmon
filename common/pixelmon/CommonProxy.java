@@ -6,6 +6,7 @@ import net.minecraft.src.World;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.network.IGuiHandler;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.entities.EntityCamera;
 import pixelmon.gui.GuiHandler;
 import pixelmon.sounds.Sounds;
 
@@ -20,12 +21,14 @@ public class CommonProxy implements IGuiHandler {
 	public GuiHandler guiHandler = new GuiHandler();
 
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world,
+			int x, int y, int z) {
 		return guiHandler.getServerGuiElement(ID, player, world, x, y, z);
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
+			int x, int y, int z) {
 		return null;
 	}
 
@@ -57,5 +60,8 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void loadEvents() {
+	}
+
+	public void registerCameraEntity(EntityCamera entityCamera) {
 	}
 }

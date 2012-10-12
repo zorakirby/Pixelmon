@@ -40,6 +40,10 @@ public class ClientPacketHandler implements IPacketHandler {
 				PixelmonServerStore.clearList();
 			}else if (packetID == EnumPackets.BattleMessage.getIndex()){
 				ClientBattleManager.addMessage(Packet.readString(dataStream, 64));
+			}else if (packetID == EnumPackets.SetOpponentName.getIndex()){
+				dataStream.readInt();
+				ClientBattleManager.opponentName = Packet.readString(dataStream, 64);
+				ClientBattleManager.addMessage(ClientBattleManager.opponentName + " started a battle!");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

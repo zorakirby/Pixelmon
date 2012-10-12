@@ -12,7 +12,11 @@ class CallableMemoryInfo implements Callable
         this.crashReportMemoryInfo = par1CrashReport;
     }
 
-    public String func_71485_a()
+    /**
+     * Returns the memory information as a String.  Includes the Free Memory in bytes and MB, Total Memory in bytes and
+     * MB, and Max Memory in Bytes and MB.
+     */
+    public String getMemoryInfoAsString()
     {
         Runtime var1 = Runtime.getRuntime();
         long var2 = var1.maxMemory();
@@ -26,6 +30,6 @@ class CallableMemoryInfo implements Callable
 
     public Object call()
     {
-        return this.func_71485_a();
+        return this.getMemoryInfoAsString();
     }
 }

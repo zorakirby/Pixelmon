@@ -1,8 +1,17 @@
 package net.minecraftforge.common;
 
 import java.util.*;
+import java.util.Map.Entry;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
+
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
 
 import net.minecraft.src.*;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.living.LivingEvent.*;
 
@@ -19,7 +28,7 @@ public class ForgeHooks
             this.metadata = meta;
         }
     }
-    
+
     static class SeedEntry extends WeightedRandomItem
     {
         public final ItemStack seed;
@@ -31,7 +40,7 @@ public class ForgeHooks
     }
     static final List<GrassEntry> grassList = new ArrayList<GrassEntry>();
     static final List<SeedEntry> seedList = new ArrayList<SeedEntry>();
-    
+
     public static void plantGrass(World world, int x, int y, int z)
     {
         GrassEntry grass = (GrassEntry)WeightedRandom.getRandomItem(world.rand, grassList);
@@ -51,12 +60,12 @@ public class ForgeHooks
         }
         return entry.seed.copy();
     }
-    
+
     private static boolean toolInit = false;
     static HashMap<Item, List> toolClasses = new HashMap<Item, List>();
     static HashMap<List, Integer> toolHarvestLevels = new HashMap<List, Integer>();
     static HashSet<List> toolEffectiveness = new HashSet<List>();
-    
+
     public static boolean canHarvestBlock(Block block, EntityPlayer player, int metadata)
     {
         if (block.blockMaterial.isHarvestable())
@@ -104,7 +113,8 @@ public class ForgeHooks
 
         if (!canHarvestBlock(block, player, metadata))
         {
-            return 1.0F / hardness / 100F;
+            float speed = ForgeEventFactory.getBreakSpeed(player, block, metadata, 1.0f);
+            return (speed < 0 ? 0 : speed) / hardness / 100F;
         }
         else
         {
@@ -121,7 +131,7 @@ public class ForgeHooks
         }
         return toolEffectiveness.contains(Arrays.asList(block, metadata, (String)toolClass.get(0)));
     }
-    
+
     static void initTools()
     {
         if (toolInit)
@@ -213,15 +223,13 @@ public class ForgeHooks
         }
         return ret;
     }
-    
+
     static
     {
         grassList.add(new GrassEntry(Block.plantYellow, 0, 20));
         grassList.add(new GrassEntry(Block.plantRed,    0, 10));
         seedList.add(new SeedEntry(new ItemStack(Item.seeds), 10));
         initTools();
-        System.out.printf("MinecraftForge v%s Initialized\n", ForgeVersion.getVersion());
-        ModLoader.getLogger().info(String.format("MinecraftForge v%s Initialized", ForgeVersion.getVersion()));
     }
 
     /**
@@ -335,5 +343,22 @@ public class ForgeHooks
     public static void onLivingJump(EntityLiving entity)
     {
         MinecraftForge.EVENT_BUS.post(new LivingJumpEvent(entity));
+    }
+
+    public static EntityItem onPlayerTossEvent(EntityPlayer player, ItemStack item)
+    {
+        player.captureDrops = true;
+        EntityItem ret = player.dropPlayerItemWithRandomChoice(item, false);
+        player.capturedDrops.clear();
+        player.captureDrops = false;
+
+        ItemTossEvent event = new ItemTossEvent(ret, player);
+        if (MinecraftForge.EVENT_BUS.post(event))
+        {
+            return null;
+        }
+
+        player.joinEntityItemWithWorld(event.entityItem);
+        return event.entityItem;
     }
 }
