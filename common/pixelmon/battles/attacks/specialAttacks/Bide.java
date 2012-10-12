@@ -53,8 +53,4 @@ public class Bide extends MultiTurnSpecialAttackBase {
 		return turnCounter < 2;
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> refs/remotes/MasterBranch/master
