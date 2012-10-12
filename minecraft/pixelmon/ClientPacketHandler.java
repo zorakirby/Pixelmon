@@ -7,6 +7,7 @@ import cpw.mods.fml.common.network.Player;
 
 import pixelmon.Pixelmon;
 import pixelmon.StarterList;
+import pixelmon.comm.BattleMessagePacket;
 import pixelmon.comm.EnumPackets;
 import pixelmon.config.PixelmonEntityList;
 
@@ -14,6 +15,7 @@ import net.minecraft.src.EntityPlayer;
 
 import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.NetworkManager;
+import net.minecraft.src.Packet;
 import net.minecraft.src.Packet1Login;
 import net.minecraft.src.Packet250CustomPayload;
 
@@ -36,6 +38,8 @@ public class ClientPacketHandler implements IPacketHandler {
 				PixelmonServerStore.addToList(dataStream);
 			} else if (packetID == EnumPackets.ClearTempStore.getIndex()) {
 				PixelmonServerStore.clearList();
+			}else if (packetID == EnumPackets.BattleMessage.getIndex()){
+				ClientBattleManager.addMessage(Packet.readString(dataStream, 64));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

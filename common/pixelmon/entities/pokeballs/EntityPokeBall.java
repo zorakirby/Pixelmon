@@ -325,7 +325,6 @@ public Item breakBall(){
 					current.yCoord -= initPos.yCoord;
 					current.zCoord -= initPos.zCoord;
 					diff = current;
-					// TODO
 					p.setScale(initialScale / 1.1f);
 				}
 				if (waitTime == 10) {

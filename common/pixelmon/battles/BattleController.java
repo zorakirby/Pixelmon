@@ -192,7 +192,7 @@ public class BattleController {
 				participant.currentPokemon().battleController = this;
 				name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon()
 						.getNickname();
-				ChatHandler.sendChat(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out " + name
+				ChatHandler.sendBattleMessage(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out " + name
 						+ "!");
 				attackersList1.clear();
 				attackersList2.clear();
@@ -348,10 +348,10 @@ public class BattleController {
 		float C = player1EscapeAttempts++;
 		float F = A * 32 / B + 30 * C;
 		if (F > 255 || new Random().nextInt(255) < F) {
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " escaped!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " escaped!");
 			endBattle(target == participant1.currentPokemon());
 		} else
-			ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " couldn't escape!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " couldn't escape!");
 	}
 
 	private void awardExp(ArrayList<Integer> users, EntityPixelmon entityPixelmon, EntityPixelmon target) {
@@ -481,7 +481,7 @@ public class BattleController {
 
 		ItemStack[] inv = user.inventory.mainInventory;
 		item.removeFromInventory(inv);
-		ChatHandler.sendChat(user, item.getItemName() + " used!");
+		ChatHandler.sendBattleMessage(user, item.getItemName() + " used!");
 	}
 
 	public boolean isTrainerVsTrainer() {

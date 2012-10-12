@@ -3,7 +3,7 @@ package pixelmon.comm;
 public enum EnumPackets {
 	ChooseStarter(10), RegisterPlayer(11), AddToStorage(12), RemoveFromStorage(13), SendPokemon(14), AddToTempStore(15), 
 	ChooseAttack(16), ClearTempStore(17), UpdateStorage(18), HealPokemon(19), SwitchPokemon(20), Flee(21), 
-	RenamePokemon(22), PCClick(23), ReplaceMove(24), BagPacket(25), StopStartLevelling(26);
+	RenamePokemon(22), PCClick(23), ReplaceMove(24), BagPacket(25), StopStartLevelling(26), BattleMessage(27);
 
 	private int index;
 

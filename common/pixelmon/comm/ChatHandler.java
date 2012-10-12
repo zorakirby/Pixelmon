@@ -19,4 +19,15 @@ public class ChatHandler {
 
 	}
 
+	public static void sendBattleMessage(EntityLiving owner, EntityLiving owner2, String string) {
+		sendBattleMessage(owner, string);
+		sendBattleMessage(owner2, string);
+	}
+
+	public static void sendBattleMessage(EntityLiving user, String string) {
+		if (user!=null){
+			((EntityPlayerMP)user).serverForThisPlayer.sendPacketToPlayer(new BattleMessagePacket(string));
+		}		
+	}
+
 }
