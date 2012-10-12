@@ -34,6 +34,7 @@ public enum EnumPokemon {
 	Geodude("Geodude", ClassType.Pixelmon),
 	Gloom("Gloom", ClassType.Pixelmon),
 	Golbat("Golbat", ClassType.Pixelmon),
+	Golem("Golem", ClassType.Pixelmon),
 	Goldeen("Goldeen", ClassType.WaterPixelmon),
 	Growlithe("Growlithe", ClassType.Pixelmon),
 	Gyarados("Gyarados", ClassType.WaterPixelmon),
