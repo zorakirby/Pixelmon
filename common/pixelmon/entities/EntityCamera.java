@@ -70,6 +70,16 @@ public class EntityCamera extends EntityLiving {
 		motionY = 0;
 		motionZ = 0;
 	}
+	 
+	//problem was the rotation is being changed in the onUpdate method because it extends entity living
+	//I tried this in the onEntityUpdate but it still moved a bit so it must happen here, those numbers need to be
+	//replaced with whatever you want
+	public void onUpdate(){
+		super.onUpdate();
+		rotationPitch = 0f;
+		rotationYaw = 0f;
+		rotationYawHead = 0f;
+	}
 
 	public void updatePosition() {
 
