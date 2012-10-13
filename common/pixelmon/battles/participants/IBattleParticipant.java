@@ -9,6 +9,7 @@ public interface IBattleParticipant {
 	EntityPixelmon currentPokemon();
 	boolean hasMorePokemon();
 	boolean canGainXP();
+	void StartBattle(IBattleParticipant opponent);
 	void EndBattle(boolean didWin, IBattleParticipant participant2);
 	boolean getIsFaintedOrDead();
 	void getNextPokemon();

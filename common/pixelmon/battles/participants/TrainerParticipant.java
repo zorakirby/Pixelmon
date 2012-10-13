@@ -26,6 +26,10 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
+	public void StartBattle(IBattleParticipant opponent) {
+	}
+
+	@Override
 	public EntityPixelmon currentPokemon() {
 		return trainer.releasedPokemon;
 	}
@@ -61,13 +65,17 @@ public class TrainerParticipant implements IBattleParticipant {
 	@Override
 	public void getNextPokemon() {
 		trainer.pokemonStorage.updateNBT(currentPokemon());
-		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId())
+				.setBoolean("IsFainted", true);
 		trainer.releasePokemon();
 	}
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return trainer.releasedPokemon == null || trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted || trainer.releasedPokemon.getHealth() <= 0;
+		return trainer.releasedPokemon == null
+				|| trainer.releasedPokemon.isDead
+				|| trainer.releasedPokemon.isFainted
+				|| trainer.releasedPokemon.getHealth() <= 0;
 	}
 
 	@Override
@@ -77,7 +85,9 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, participant2.currentPokemon().type, trainer.releasedPokemon, participant2.currentPokemon());
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset,
+				participant2.currentPokemon().type, trainer.releasedPokemon,
+				participant2.currentPokemon());
 	}
 
 	@Override
@@ -97,6 +107,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId())
+				.setBoolean("IsFainted", true);
 	}
 }
