@@ -110,4 +110,10 @@ public class TrainerParticipant implements IBattleParticipant {
 		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId())
 				.setBoolean("IsFainted", true);
 	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }
