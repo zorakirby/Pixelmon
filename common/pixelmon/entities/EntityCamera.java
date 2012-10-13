@@ -1,6 +1,9 @@
 package pixelmon.entities;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
 import pixelmon.Pixelmon;
+import pixelmon.AI.AILookAtTarget;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.BattlePerspective;
 import pixelmon.battles.participants.IBattleParticipant;
@@ -34,7 +37,7 @@ public class EntityCamera extends EntityLiving {
 		this.player = player;
 		this.battleController = battleController;
 		setPositionAndUpdate(player.posX, player.posY, player.posZ);
-		this.tasks.taskEntries.clear();
+		tasks.addTask(0, new AILookAtTarget(this));
 	}
 
 	@Override
@@ -42,6 +45,12 @@ public class EntityCamera extends EntityLiving {
 		return 1;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public float getRenderSizeModifier() {
+		return 0;
+	}
+	
 	@Override
 	public boolean canBeCollidedWith() {
 		return false;
@@ -63,19 +72,32 @@ public class EntityCamera extends EntityLiving {
 
 	@Override
 	public void onEntityUpdate() {
+		super.onEntityUpdate();
 		if (battleController == null && !clientSided)
 			setDead();
-		super.onEntityUpdate();
-		motionX = 0;
-		motionY = 0;
-		motionZ = 0;
+		
 	}
 
-	public void updatePosition() {
+	@Override
+	protected boolean isAIEnabled() {
+		return true;
+	}
 
-		setPositionAndUpdate(player.posX + 1, player.posY + 0.5,
-				player.posZ + 1);
-		rotationPitch += 0.01f;
-		rotationYaw += 0.01f;
+	// problem was the rotation is being changed in the onUpdate method because
+	// it extends entity living
+	// I tried this in the onEntityUpdate but it still moved a bit so it must
+	// happen here, those numbers need to be
+	// replaced with whatever you want
+	public void onUpdate() {
+		super.onUpdate();
+	}
+
+	float newRotationPitch = 0;
+	float newRotationYaw = 0;
+
+	public void updatePosition() {
+		setAttackTarget(battleController.getOpponent(player).getEntity());
+		setPositionAndUpdate(player.posX + 2, player.posY + 2.5,
+				player.posZ + 2);
 	}
 }

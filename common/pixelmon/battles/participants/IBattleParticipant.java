@@ -1,5 +1,6 @@
 package pixelmon.battles.participants;
 
+import net.minecraft.src.EntityLiving;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -20,4 +21,5 @@ public interface IBattleParticipant {
 	void setBattleController(BattleController bc);
 	void updatePokemon();
 	void update();
+	EntityLiving getEntity();
 }

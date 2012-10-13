@@ -1,5 +1,6 @@
 package pixelmon.gui;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import pixelmon.ClientBattleManager;
@@ -24,6 +25,8 @@ public class GuiBattle extends GuiContainer {
 	private int guiWidth = 300;
 	private int guiHeight = 60;
 
+	boolean cameraEnabled = false;
+
 	public GuiBattle(int battleControllerIndex) {
 		super(new ContainerEmpty());
 		this.battleControllerIndex = battleControllerIndex;
@@ -34,10 +37,10 @@ public class GuiBattle extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float mfloat, int mouseX,
 			int mouseY) {
-		if (ClientBattleManager.camera!=null)
+		if (cameraEnabled && ClientBattleManager.camera != null)
 			if (Minecraft.getMinecraft().renderViewEntity != ClientBattleManager.camera)
 				Minecraft.getMinecraft().renderViewEntity = ClientBattleManager.camera;
-		
+
 		int left = (width - xSize) / 2;
 		int top = (height - ySize) / 2;
 		RenderHelper.disableStandardItemLighting();
@@ -49,15 +52,26 @@ public class GuiBattle extends GuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - guiWidth / 2, height - guiHeight,
 				guiWidth, guiHeight, 0, 0, 1, 146f / 480f);
-
 		if (mode == BattleMode.MainScreen) {
 			drawMessageBox();
-			drawButton(40, 40, "Attack");
+			drawButton(width / 2 +31, height - guiHeight + 9,
+					48, 16, "FIGHT", mouseX, mouseY, guiIndex);
+			drawButton(width / 2 +31, height - guiHeight + 35,
+					48, 16, "BAG", mouseX, mouseY, guiIndex);
+			drawButton(width / 2 +90, height - guiHeight + 9,
+					48, 16, "POKEMON", mouseX, mouseY, guiIndex);
+			drawButton(width / 2 + 90, height - guiHeight + 35,
+					48, 16, "RUN", mouseX, mouseY, guiIndex);
 		}
 	}
 
-	private void drawButton(int i, int j, String string) {
-
+	private void drawButton(int x, int y, int buttonWidth, int buttonHeight,
+			String string, int mouseX, int mouseY, int guiIndex) {
+		if (mouseX > x && mouseX < x + buttonWidth && mouseY > y
+				&& mouseY < y + buttonHeight) {
+			drawImageQuad(guiIndex, x, y, buttonWidth, buttonHeight, 387f/640f, 158f/480f, 489f/640f, 196f/480f);
+		}
+		drawCenteredString(fontRenderer, string, x + buttonWidth/2, y + buttonHeight/2-3, 0xFFFFFF);
 	}
 
 	private void drawMessageBox() {

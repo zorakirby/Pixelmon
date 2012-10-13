@@ -1,5 +1,6 @@
 package pixelmon.battles.participants;
 
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.NBTTagCompound;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
@@ -104,5 +105,10 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public EntityLiving getEntity() {
+		return pixelmon;
 	}
 }
