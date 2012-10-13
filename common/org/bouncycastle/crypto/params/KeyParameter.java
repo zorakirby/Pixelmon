@@ -4,7 +4,7 @@ import org.bouncycastle.crypto.CipherParameters;
 
 public class KeyParameter implements CipherParameters
 {
-    private byte[] field_71784_a;
+    private byte[] key;
 
     public KeyParameter(byte[] par1ArrayOfByte)
     {
@@ -13,12 +13,12 @@ public class KeyParameter implements CipherParameters
 
     public KeyParameter(byte[] par1ArrayOfByte, int par2, int par3)
     {
-        this.field_71784_a = new byte[par3];
-        System.arraycopy(par1ArrayOfByte, par2, this.field_71784_a, 0, par3);
+        this.key = new byte[par3];
+        System.arraycopy(par1ArrayOfByte, par2, this.key, 0, par3);
     }
 
-    public byte[] func_71783_a()
+    public byte[] getKey()
     {
-        return this.field_71784_a;
+        return this.key;
     }
 }

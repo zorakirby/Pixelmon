@@ -72,7 +72,7 @@ public class BlockPC extends BlockContainer {
 				for(NBTTagCompound n: b.getStoredPokemon()){
 					if (n != null) {
 						PixelmonDataPacket p = new PixelmonDataPacket(n, EnumPackets.AddToTempStore);
-						((EntityPlayerMP)player).serverForThisPlayer.sendPacketToPlayer(p.getPacket());
+						((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 					}
 				}
 			}

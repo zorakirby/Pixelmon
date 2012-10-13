@@ -9,11 +9,12 @@ import java.security.NoSuchAlgorithmException;
 @SideOnly(Side.CLIENT)
 public class MD5String
 {
-    private String theString;
+    /** The salt prepended to the string to be hashed */
+    private String salt;
 
     public MD5String(String par1Str)
     {
-        this.theString = par1Str;
+        this.salt = par1Str;
     }
 
     /**
@@ -23,7 +24,7 @@ public class MD5String
     {
         try
         {
-            String var2 = this.theString + par1Str;
+            String var2 = this.salt + par1Str;
             MessageDigest var3 = MessageDigest.getInstance("MD5");
             var3.update(var2.getBytes(), 0, var2.length());
             return (new BigInteger(1, var3.digest())).toString(16);

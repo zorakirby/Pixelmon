@@ -221,7 +221,7 @@ public class PixelmonItems {
 		hammerGoldID = cfg.getOrCreateIntProperty("Gold Hammer", "item", 10110).getInt();
 		hammerDiamondID = cfg.getOrCreateIntProperty("Diamond Hammer", "item", 10111).getInt();
 
-		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(2).setMaxStackSize(1).setTabToDisplayOn(CreativeTabs.tabTools);
+		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(2).setMaxStackSize(1).setCreativeTab(CreativeTabs.tabTools);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(18).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(6);
 		potion = new ItemPotion(potionID, EnumPotions.Potion).setItemName("Potion");

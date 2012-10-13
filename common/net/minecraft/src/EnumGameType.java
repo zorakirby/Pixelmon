@@ -73,7 +73,11 @@ public enum EnumGameType
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean func_77144_e()
+
+    /**
+     * Returns true if this is the SURVIVAL or ADVENTURE game type
+     */
+    public boolean isSurvivalOrAdventure()
     {
         return this == SURVIVAL || this == ADVENTURE;
     }

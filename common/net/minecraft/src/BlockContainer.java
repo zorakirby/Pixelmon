@@ -33,7 +33,7 @@ public abstract class BlockContainer extends Block
     }
 
     /**
-     * each class overrdies this to return a new <className>
+     * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
     public abstract TileEntity createNewTileEntity(World var1);
     

@@ -18,6 +18,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
@@ -25,6 +26,7 @@ import cpw.mods.fml.common.ModContainer;
 public class ModListRequestPacket extends FMLPacket
 {
     private List<String> sentModList;
+    private byte compatibilityLevel;
 
     public ModListRequestPacket()
     {
@@ -41,6 +43,7 @@ public class ModListRequestPacket extends FMLPacket
         {
             dat.writeUTF(mc.getModId());
         }
+        dat.writeByte(FMLNetworkHandler.getCompatibilityLevel());
         return dat.toByteArray();
     }
 
@@ -54,6 +57,14 @@ public class ModListRequestPacket extends FMLPacket
         {
             sentModList.add(in.readUTF());
         }
+        try
+        {
+            compatibilityLevel = in.readByte();
+        }
+        catch (IllegalStateException e)
+        {
+            FMLLog.fine("No compatibility byte found - the server is too old");
+        }
         return this;
     }
 
@@ -62,7 +73,7 @@ public class ModListRequestPacket extends FMLPacket
      * This packet is executed on the client to evaluate the server's mod list against
      * the client
      *
-     * @see cpw.mods.fml.common.network.FMLPacket#execute()
+     * @see cpw.mods.fml.common.network.FMLPacket#execute(NetworkManager, FMLNetworkHandler, NetHandler, String)
      */
     @Override
     public void execute(NetworkManager mgr, FMLNetworkHandler handler, NetHandler netHandler, String userName)
@@ -99,11 +110,9 @@ public class ModListRequestPacket extends FMLPacket
             }
         }
 
-        Packet250CustomPayload pkt = new Packet250CustomPayload();
-        pkt.channel = "FML";
-        pkt.data = FMLPacket.makePacket(MOD_LIST_RESPONSE, modVersions, missingMods);
-        pkt.length = pkt.data.length;
+        FMLLog.fine("The server has compatibility level %d", compatibilityLevel);
+        FMLCommonHandler.instance().getSidedDelegate().setClientCompatibilityLevel(compatibilityLevel);
 
-        mgr.addToSendQueue(pkt);
+        mgr.addToSendQueue(PacketDispatcher.getPacket("FML", FMLPacket.makePacket(MOD_LIST_RESPONSE, modVersions, missingMods)));
     }
 }

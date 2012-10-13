@@ -18,7 +18,7 @@ final class ServerWindowAdapter extends WindowAdapter
 
     public void windowClosing(WindowEvent par1WindowEvent)
     {
-        this.mc.setServerStopping();
+        this.mc.initiateShutdown();
 
         while (!this.mc.isServerStopped())
         {

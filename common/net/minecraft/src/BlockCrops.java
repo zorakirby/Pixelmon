@@ -6,6 +6,8 @@ import cpw.mods.fml.common.asm.SideOnly;
 import java.util.ArrayList;
 import java.util.Random;
 
+import net.minecraftforge.common.ForgeDirection;
+
 public class BlockCrops extends BlockFlower
 {
     protected BlockCrops(int par1, int par2)
@@ -86,11 +88,11 @@ public class BlockCrops extends BlockFlower
                 int var19 = par1World.getBlockId(var17, par3 - 1, var18);
                 float var20 = 0.0F;
 
-                if (var19 == Block.tilledField.blockID)
+                if (blocksList[var19] != null && blocksList[var19].canSustainPlant(par1World, var17, par3 - 1, var18, ForgeDirection.UP, this))
                 {
                     var20 = 1.0F;
 
-                    if (par1World.getBlockMetadata(var17, par3 - 1, var18) > 0)
+                    if (blocksList[var19].isFertile(par1World, var17, par3 - 1, var18))
                     {
                         var20 = 3.0F;
                     }

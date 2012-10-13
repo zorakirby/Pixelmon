@@ -104,7 +104,7 @@ public class ComponentVillagePathGen extends ComponentVillageRoadPiece
      */
     public boolean addComponentParts(World par1World, Random par2Random, StructureBoundingBox par3StructureBoundingBox)
     {
-        int var4 = this.func_74890_d(Block.gravel.blockID, 0);
+        int var4 = this.getBiomeSpecificBlock(Block.gravel.blockID, 0);
 
         for (int var5 = this.boundingBox.minX; var5 <= this.boundingBox.maxX; ++var5)
         {

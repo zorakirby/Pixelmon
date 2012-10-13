@@ -22,7 +22,7 @@ public class Packet202PlayerAbilities extends Packet
      */
     private boolean isCreativeMode = false;
     private float flySpeed;
-    private float field_73357_f;
+    private float walkSpeed;
 
     public Packet202PlayerAbilities() {}
 
@@ -62,7 +62,7 @@ public class Packet202PlayerAbilities extends Packet
             var2 = (byte)(var2 | 1);
         }
 
-        if (this.getIsFlying())
+        if (this.getFlying())
         {
             var2 = (byte)(var2 | 2);
         }
@@ -79,7 +79,7 @@ public class Packet202PlayerAbilities extends Packet
 
         par1DataOutputStream.writeByte(var2);
         par1DataOutputStream.writeByte((int)(this.flySpeed * 255.0F));
-        par1DataOutputStream.writeByte((int)(this.field_73357_f * 255.0F));
+        par1DataOutputStream.writeByte((int)(this.walkSpeed * 255.0F));
     }
 
     /**
@@ -111,7 +111,7 @@ public class Packet202PlayerAbilities extends Packet
         this.disableDamage = par1;
     }
 
-    public boolean getIsFlying()
+    public boolean getFlying()
     {
         return this.isFlying;
     }
@@ -163,7 +163,7 @@ public class Packet202PlayerAbilities extends Packet
      */
     public void setWalkSpeed(float par1)
     {
-        this.field_73357_f = par1;
+        this.walkSpeed = par1;
     }
 
     /**

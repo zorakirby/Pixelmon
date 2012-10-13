@@ -12,7 +12,7 @@ public class RenderPainting extends Render
     /** RNG. */
     private Random rand = new Random();
 
-    public void func_77009_a(EntityPainting par1EntityPainting, double par2, double par4, double par6, float par8, float par9)
+    public void renderThePainting(EntityPainting par1EntityPainting, double par2, double par4, double par6, float par8, float par9)
     {
         this.rand.setSeed(187L);
         GL11.glPushMatrix();
@@ -138,6 +138,6 @@ public class RenderPainting extends Render
      */
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.func_77009_a((EntityPainting)par1Entity, par2, par4, par6, par8, par9);
+        this.renderThePainting((EntityPainting)par1Entity, par2, par4, par6, par8, par9);
     }
 }

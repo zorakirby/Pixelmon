@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public abstract class Entity
 {
@@ -190,8 +191,9 @@ public abstract class Entity
     public EnumEntitySize myEntitySize;
     /** Forge: Used to store custom data for each entity. */
     private NBTTagCompound customEntityData;
-    protected boolean captureDrops = false;
-    protected ArrayList<EntityItem> capturedDrops = new ArrayList<EntityItem>();
+    public boolean captureDrops = false;
+    public ArrayList<EntityItem> capturedDrops = new ArrayList<EntityItem>();
+    private UUID persistentID;
 
     public Entity(World par1World)
     {
@@ -1388,6 +1390,11 @@ public abstract class Entity
         par1NBTTagCompound.setShort("Fire", (short)this.fire);
         par1NBTTagCompound.setShort("Air", (short)this.getAir());
         par1NBTTagCompound.setBoolean("OnGround", this.onGround);
+        if (persistentID != null)
+        {
+            par1NBTTagCompound.setLong("PersistentIDMSB", persistentID.getMostSignificantBits());
+            par1NBTTagCompound.setLong("PersistentIDLSB", persistentID.getLeastSignificantBits());
+        }
         if (customEntityData != null)
         {
             par1NBTTagCompound.setCompoundTag("ForgeData", customEntityData);
@@ -1436,6 +1443,10 @@ public abstract class Entity
         if (par1NBTTagCompound.hasKey("ForgeData"))
         {
             customEntityData = par1NBTTagCompound.getCompoundTag("ForgeData");
+        }
+        if (par1NBTTagCompound.hasKey("PersistentIDMSB") && par1NBTTagCompound.hasKey("PersistentIDLSB"))
+        {
+            persistentID = new UUID(par1NBTTagCompound.getLong("PersistentIDMSB"), par1NBTTagCompound.getLong("PersistentIDLSB"));
         }
         this.readEntityFromNBT(par1NBTTagCompound);
     }
@@ -2155,7 +2166,7 @@ public abstract class Entity
 
     /**
      * Called when a user uses the creative pick block button on this entity.
-     * 
+     *
      * @param target The full target the player is looking at
      * @return A ItemStack to add to the player's inventory, Null if nothing should be added.
      */
@@ -2176,11 +2187,24 @@ public abstract class Entity
         else
         {
             int id = EntityList.getEntityID(this);
-            if (id > 0 || EntityList.entityEggs.containsKey(id))
+            if (id > 0 && EntityList.entityEggs.containsKey(id))
             {
                 return new ItemStack(Item.monsterPlacer, 1, id);
             }
         }
         return null;
+    }
+
+    public UUID getPersistentID()
+    {
+        return persistentID;
+    }
+
+    public synchronized void generatePersistentID()
+    {
+        if (persistentID == null)
+        {
+            persistentID = UUID.randomUUID();
+        }
     }
 }

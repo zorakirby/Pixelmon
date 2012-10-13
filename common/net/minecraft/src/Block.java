@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.*;
 import static net.minecraftforge.common.ForgeDirection.*;
 
 public class Block
@@ -121,7 +119,7 @@ public class Block
     public static final Block workbench = (new BlockWorkbench(58)).setHardness(2.5F).setStepSound(soundWoodFootstep).setBlockName("workbench");
     public static final Block crops = (new BlockCrops(59, 88)).setHardness(0.0F).setStepSound(soundGrassFootstep).setBlockName("crops").disableStats().setRequiresSelfNotify();
     public static final Block tilledField = (new BlockFarmland(60)).setHardness(0.6F).setStepSound(soundGravelFootstep).setBlockName("farmland").setRequiresSelfNotify();
-    public static final Block stoneOvenIdle = (new BlockFurnace(61, false)).setHardness(3.5F).setStepSound(soundStoneFootstep).setBlockName("furnace").setRequiresSelfNotify().setCreativeTab(CreativeTabs.tabDeco);
+    public static final Block stoneOvenIdle = (new BlockFurnace(61, false)).setHardness(3.5F).setStepSound(soundStoneFootstep).setBlockName("furnace").setRequiresSelfNotify().setCreativeTab(CreativeTabs.tabDecorations);
     public static final Block stoneOvenActive = (new BlockFurnace(62, true)).setHardness(3.5F).setStepSound(soundStoneFootstep).setLightValue(0.875F).setBlockName("furnace").setRequiresSelfNotify();
     public static final Block signPost = (new BlockSign(63, TileEntitySign.class, true)).setHardness(1.0F).setStepSound(soundWoodFootstep).setBlockName("sign").disableStats().setRequiresSelfNotify();
     public static final Block doorWood = (new BlockDoor(64, Material.wood)).setHardness(3.0F).setStepSound(soundWoodFootstep).setBlockName("doorWood").disableStats().setRequiresSelfNotify();
@@ -186,14 +184,14 @@ public class Block
     public static final Block brewingStand = (new BlockBrewingStand(117)).setHardness(0.5F).setLightValue(0.125F).setBlockName("brewingStand").setRequiresSelfNotify();
     public static final Block cauldron = (new BlockCauldron(118)).setHardness(2.0F).setBlockName("cauldron").setRequiresSelfNotify();
     public static final Block endPortal = (new BlockEndPortal(119, Material.portal)).setHardness(-1.0F).setResistance(6000000.0F);
-    public static final Block endPortalFrame = (new BlockEndPortalFrame(120)).setStepSound(soundGlassFootstep).setLightValue(0.125F).setHardness(-1.0F).setBlockName("endPortalFrame").setRequiresSelfNotify().setResistance(6000000.0F).setCreativeTab(CreativeTabs.tabDeco);
+    public static final Block endPortalFrame = (new BlockEndPortalFrame(120)).setStepSound(soundGlassFootstep).setLightValue(0.125F).setHardness(-1.0F).setBlockName("endPortalFrame").setRequiresSelfNotify().setResistance(6000000.0F).setCreativeTab(CreativeTabs.tabDecorations);
     public static final Block whiteStone = (new Block(121, 175, Material.rock)).setHardness(3.0F).setResistance(15.0F).setStepSound(soundStoneFootstep).setBlockName("whiteStone").setCreativeTab(CreativeTabs.tabBlock);
     public static final Block dragonEgg = (new BlockDragonEgg(122, 167)).setHardness(3.0F).setResistance(15.0F).setStepSound(soundStoneFootstep).setLightValue(0.125F).setBlockName("dragonEgg");
     public static final Block redstoneLampIdle = (new BlockRedstoneLight(123, false)).setHardness(0.3F).setStepSound(soundGlassFootstep).setBlockName("redstoneLight").setCreativeTab(CreativeTabs.tabRedstone);
     public static final Block redstoneLampActive = (new BlockRedstoneLight(124, true)).setHardness(0.3F).setStepSound(soundGlassFootstep).setBlockName("redstoneLight");
     public static final BlockHalfSlab woodDoubleSlab = (BlockHalfSlab)(new BlockWoodSlab(125, true)).setHardness(2.0F).setResistance(5.0F).setStepSound(soundWoodFootstep).setBlockName("woodSlab");
     public static final BlockHalfSlab woodSingleSlab = (BlockHalfSlab)(new BlockWoodSlab(126, false)).setHardness(2.0F).setResistance(5.0F).setStepSound(soundWoodFootstep).setBlockName("woodSlab");
-    public static final Block cocoa = (new BlockCocoa(127)).setHardness(0.2F).setResistance(5.0F).setStepSound(soundWoodFootstep).setBlockName("cocoa").setRequiresSelfNotify();
+    public static final Block cocoaPlant = (new BlockCocoa(127)).setHardness(0.2F).setResistance(5.0F).setStepSound(soundWoodFootstep).setBlockName("cocoa").setRequiresSelfNotify();
     public static final Block stairsSandStone = (new BlockStairs(128, sandStone, 0)).setBlockName("stairsSandStone").setRequiresSelfNotify();
     public static final Block oreEmerald = (new BlockOre(129, 171)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundStoneFootstep).setBlockName("oreEmerald");
     public static final Block enderChest = (new BlockEnderChest(130)).setHardness(22.5F).setResistance(1000.0F).setStepSound(soundStoneFootstep).setBlockName("enderChest").setRequiresSelfNotify().setLightValue(0.5F);
@@ -1310,13 +1308,13 @@ public class Block
      * @param x X Position
      * @param y Y position
      * @param z Z position
-     * @param size The side to check
+     * @param side The side to check
      * @return True if the block is solid on the specified side.
      */
     public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) 
     {
         int meta = world.getBlockMetadata(x, y, z);
-        if (this instanceof BlockStep)
+        if (this instanceof BlockHalfSlab)
         {
             return (((meta & 8) == 8 && (side == UP)) || isOpaqueCube());
         }
@@ -1487,7 +1485,7 @@ public class Block
      * @param z The blocks Z position
      * @param metadata The blocks current metadata
      * @param side The face that the fire is coming from
-     * @return 
+     * @return True if this block sustains fire, meaning it will never go out.
      */
     public boolean isFireSource(World world, int x, int y, int z, int metadata, ForgeDirection side)
     {
@@ -1565,8 +1563,8 @@ public class Block
      * 
      * @param world The current world
      * @param x X Position
-     * @param Y Y Position
-     * @param Z Z Position
+     * @param y Y Position
+     * @param z Z Position
      * @param metadata Current metadata
      * @param fortune Breakers fortune level
      * @return A ArrayList containing all items this block drops
@@ -1826,15 +1824,15 @@ public class Block
     /**
      * Location sensitive version of getExplosionRestance
      * 
-     * @param par1Entity
+     * @param par1Entity The entity that caused the explosion
      * @param world The current world
      * @param x X Position
      * @param y Y Position
      * @param z Z Position
-     * @param explosionX
-     * @param explosionY
-     * @param explosionZ
-     * @return
+     * @param explosionX Explosion source X Position
+     * @param explosionY Explosion source X Position
+     * @param explosionZ Explosion source X Position
+     * @return The amount of the explosion absorbed.
      */
     public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
     {
@@ -1921,5 +1919,152 @@ public class Block
         }
 
         return new ItemStack(id, 1, getDamageValue(world, x, y, z));
+    }
+
+    /**
+     * Used by getTopSolidOrLiquidBlock while placing biome decorations, villages, etc
+     * Also used to determine if the player can spawn on this block.
+     * 
+     * @return False to disallow spawning
+     */
+    public boolean isBlockFoliage(World world, int x, int y, int z)
+    {
+        return false;
+    }
+
+    /**
+     * Spawn a digging particle effect in the world, this is a wrapper 
+     * around EffectRenderer.addBlockHitEffects to allow the block more 
+     * control over the particles. Useful when you have entirely different
+     * texture sheets for different sides/locations in the world.
+     * 
+     * @param world The current world
+     * @param target The target the player is looking at {x/y/z/side/sub}
+     * @param effectRenderer A reference to the current effect renderer.
+     * @return True to prevent vanilla digging particles form spawning.
+     */
+    @SideOnly(Side.CLIENT)
+    public boolean addBlockHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer)
+    {
+        return false;
+    }
+
+    /**
+     * Spawn particles for when the block is destroyed. Due to the nature 
+     * of how this is invoked, the x/y/z locations are not always guaranteed 
+     * to host your block. So be sure to do proper sanity checks before assuming
+     * that the location is this block.
+     * 
+     * @param world The current world
+     * @param x X position to spawn the particle
+     * @param y Y position to spawn the particle
+     * @param z Z position to spawn the particle
+     * @param meta The metadata for the block before it was destroyed.
+     * @param effectRenderer A reference to the current effect renderer.
+     * @return True to prevent vanilla break particles from spawning.
+     */
+    @SideOnly(Side.CLIENT)
+    public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer)
+    {
+        return false;
+    }
+
+    /**
+     * Determines if this block can support the passed in plant, allowing it to be planted and grow.
+     * Some examples:
+     *   Reeds check if its a reed, or if its sand/dirt/grass and adjacent to water
+     *   Cacti checks if its a cacti, or if its sand
+     *   Nether types check for soul sand
+     *   Crops check for tilled soil
+     *   Caves check if it's a colid surface
+     *   Plains check if its grass or dirt
+     *   Water check if its still water
+     *   
+     * @param world The current world
+     * @param x X Position
+     * @param y Y Position
+     * @param z Z position
+     * @param direction The direction relative to the given position the plant wants to be, typically its UP
+     * @param plant The plant that wants to check
+     * @return True to allow the plant to be planted/stay.
+     */
+    public boolean canSustainPlant(World world, int x, int y, int z, ForgeDirection direction, IPlantable plant)
+    {
+        int plantID = plant.getPlantID(world, x, y + 1, z);
+        EnumPlantType plantType = plant.getPlantType(world, x, y + 1, z);
+
+        if (plantID == cactus.blockID && blockID == cactus.blockID)
+        {
+            return true;
+        }
+
+        if (plantID == reed.blockID && blockID == reed.blockID)
+        {
+            return true;
+        }
+
+        if (plant instanceof BlockFlower && ((BlockFlower)plant).canThisPlantGrowOnThisBlockID(blockID))
+        {
+            return true;
+        }
+
+        switch (plantType)
+        {
+            case Desert: return blockID == sand.blockID;
+            case Nether: return blockID == slowSand.blockID;
+            case Crop:   return blockID == tilledField.blockID;
+            case Cave:   return isBlockSolidOnSide(world, x, y, z, UP);
+            case Plains: return blockID == grass.blockID || blockID == dirt.blockID;
+            case Water:  return world.getBlockMaterial(x, y, z) == Material.water && world.getBlockMetadata(x, y, z) == 0;
+            case Beach:
+                boolean isBeach = (blockID == Block.grass.blockID || blockID == Block.dirt.blockID || blockID == Block.sand.blockID);
+                boolean hasWater = (world.getBlockMaterial(x - 1, y - 1, z    ) == Material.water || 
+                                    world.getBlockMaterial(x + 1, y - 1, z    ) == Material.water || 
+                                    world.getBlockMaterial(x,     y - 1, z - 1) == Material.water ||
+                                    world.getBlockMaterial(x,     y - 1, z + 1) == Material.water);
+                return isBeach && hasWater;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if this soil is fertile, typically this means that growth rates 
+     * of plants on this soil will be slightly sped up.
+     * Only vanilla case is tilledField when it is within range of water.
+     * 
+     * @param world The current world
+     * @param x X Position
+     * @param y Y Position
+     * @param z Z position
+     * @return True if the soil should be considered fertile.
+     */
+    public boolean isFertile(World world, int x, int y, int z)
+    {
+        if (blockID == tilledField.blockID)
+        {
+            return world.getBlockMetadata(x, y, z) > 0;
+        }
+
+        return false;
+    }
+    
+    /**
+     * Location aware and overrideable version of the lightOpacity array,
+     * return the number to subtract from the light value when it passes through this block.
+     * 
+     * This is not guaranteed to have the tile entity in place before this is called, so it is
+     * Recommended that you have your tile entity call relight after being placed if you
+     * rely on it for light info.
+     * 
+     * @param world The current world
+     * @param x X Position
+     * @param y Y Position
+     * @param z Z position
+     * @return The amount of light to block, 0 for air, 255 for fully opaque.
+     */
+    public int getLightOpacity(World world, int x, int y, int z)
+    {
+        return lightOpacity[blockID];
     }
 }

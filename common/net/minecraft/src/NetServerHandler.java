@@ -10,13 +10,21 @@ import java.util.logging.Logger;
 
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.event.Event;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 
 public class NetServerHandler extends NetHandler
 {
     /** The logging system. */
     public static Logger logger = Logger.getLogger("Minecraft");
-    public NetworkManager theNetworkManager;
-    public boolean serverShuttingDown = false;
+
+    /** The underlying network manager for this server handler. */
+    public NetworkManager netManager;
+
+    /** This is set to true whenever a player disconnects from the server. */
+    public boolean connectionClosed = false;
 
     /** Reference to the MinecraftServer object. */
     private MinecraftServer mcServer;
@@ -55,10 +63,10 @@ public class NetServerHandler extends NetHandler
     public NetServerHandler(MinecraftServer par1MinecraftServer, NetworkManager par2NetworkManager, EntityPlayerMP par3EntityPlayerMP)
     {
         this.mcServer = par1MinecraftServer;
-        this.theNetworkManager = par2NetworkManager;
+        this.netManager = par2NetworkManager;
         par2NetworkManager.setNetHandler(this);
         this.playerEntity = par3EntityPlayerMP;
-        par3EntityPlayerMP.serverForThisPlayer = this;
+        par3EntityPlayerMP.playerNetServerHandler = this;
     }
 
     /**
@@ -69,7 +77,7 @@ public class NetServerHandler extends NetHandler
         this.field_72584_h = false;
         ++this.currentTicks;
         this.mcServer.theProfiler.startSection("packetflow");
-        this.theNetworkManager.processReadPackets();
+        this.netManager.processReadPackets();
         this.mcServer.theProfiler.endStartSection("keepAlive");
 
         if ((long)this.currentTicks - this.ticksOfLastKeepAlive > 20L)
@@ -92,7 +100,7 @@ public class NetServerHandler extends NetHandler
 
         this.mcServer.theProfiler.endStartSection("playerTick");
 
-        if (!this.field_72584_h && !this.playerEntity.playerHasConqueredTheEnd)
+        if (!this.field_72584_h && !this.playerEntity.playerConqueredTheEnd)
         {
             this.playerEntity.onUpdateEntity();
 
@@ -107,14 +115,14 @@ public class NetServerHandler extends NetHandler
 
     public void kickPlayerFromServer(String par1Str)
     {
-        if (!this.serverShuttingDown)
+        if (!this.connectionClosed)
         {
             this.playerEntity.mountEntityAndWakeUp();
             this.sendPacketToPlayer(new Packet255KickDisconnect(par1Str));
-            this.theNetworkManager.serverShutdown();
+            this.netManager.serverShutdown();
             this.mcServer.getConfigurationManager().sendPacketToAllPlayers(new Packet3Chat("\u00a7e" + this.playerEntity.username + " left the game."));
             this.mcServer.getConfigurationManager().playerLoggedOut(this.playerEntity);
-            this.serverShuttingDown = true;
+            this.connectionClosed = true;
         }
     }
 
@@ -123,7 +131,7 @@ public class NetServerHandler extends NetHandler
         WorldServer var2 = this.mcServer.worldServerForDimension(this.playerEntity.dimension);
         this.field_72584_h = true;
 
-        if (!this.playerEntity.playerHasConqueredTheEnd)
+        if (!this.playerEntity.playerConqueredTheEnd)
         {
             double var3;
 
@@ -189,6 +197,11 @@ public class NetServerHandler extends NetHandler
                     if (this.playerEntity.ridingEntity != null)
                     {
                         this.playerEntity.ridingEntity.updateRiderPosition();
+                    }
+
+                    if (!this.hasMoved) //Fixes teleportation kick while riding entities
+                    {
+                        return;
                     }
 
                     this.mcServer.getConfigurationManager().serverUpdateMountedMovingPlayer(this.playerEntity);
@@ -281,6 +294,11 @@ public class NetServerHandler extends NetHandler
                     this.playerEntity.addExhaustion(0.2F);
                 }
 
+                if (!this.hasMoved) //Fixes "Moved Too Fast" kick when being teleported while moving
+                {
+                    return;
+                }
+
                 this.playerEntity.moveEntity(var13, var15, var17);
                 this.playerEntity.onGround = par1Packet10Flying.onGround;
                 this.playerEntity.addMovementStat(var13, var15, var17);
@@ -303,6 +321,11 @@ public class NetServerHandler extends NetHandler
                     logger.warning(this.playerEntity.username + " moved wrongly!");
                 }
 
+                if (!this.hasMoved) //Fixes "Moved Too Fast" kick when being teleported while moving
+                {
+                    return;
+                }
+
                 this.playerEntity.setPositionAndRotation(var5, var7, var9, var11, var12);
                 boolean var32 = var2.getCollidingBoundingBoxes(this.playerEntity, this.playerEntity.boundingBox.copy().contract((double)var27, (double)var27, (double)var27)).isEmpty();
 
@@ -314,7 +337,7 @@ public class NetServerHandler extends NetHandler
 
                 AxisAlignedBB var33 = this.playerEntity.boundingBox.copy().expand((double)var27, (double)var27, (double)var27).addCoord(0.0D, -0.55D, 0.0D);
 
-                if (!this.mcServer.isFlightAllowed() && !this.playerEntity.theItemInWorldManager.isCreative() && !var2.isAABBNonEmpty(var33))
+                if (!this.mcServer.isFlightAllowed() && !this.playerEntity.theItemInWorldManager.isCreative() && !var2.isAABBNonEmpty(var33)  && !this.playerEntity.capabilities.allowFlying)
                 {
                     if (var29 >= -0.03125D)
                     {
@@ -333,6 +356,11 @@ public class NetServerHandler extends NetHandler
                     this.ticksForFloatKick = 0;
                 }
 
+                if (!this.hasMoved) //Fixes "Moved Too Fast" kick when being teleported while moving
+                {
+                    return;
+                }
+
                 this.playerEntity.onGround = par1Packet10Flying.onGround;
                 this.mcServer.getConfigurationManager().serverUpdateMountedMovingPlayer(this.playerEntity);
                 this.playerEntity.updateFlyingState(this.playerEntity.posY - var3, par1Packet10Flying.onGround);
@@ -340,6 +368,9 @@ public class NetServerHandler extends NetHandler
         }
     }
 
+    /**
+     * Moves the player to the specified destination and rotation
+     */
     public void setPlayerLocation(double par1, double par3, double par5, float par7, float par8)
     {
         this.hasMoved = false;
@@ -347,7 +378,7 @@ public class NetServerHandler extends NetHandler
         this.lastPosY = par3;
         this.lastPosZ = par5;
         this.playerEntity.setPositionAndRotation(par1, par3, par5, par7, par8);
-        this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet13PlayerLookMove(par1, par3 + 1.6200000047683716D, par3, par5, par7, par8, false));
+        this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet13PlayerLookMove(par1, par3 + 1.6200000047683716D, par3, par5, par7, par8, false));
     }
 
     public void handleBlockDig(Packet14BlockDig par1Packet14BlockDig)
@@ -364,7 +395,7 @@ public class NetServerHandler extends NetHandler
         }
         else
         {
-            boolean var3 = var2.actionsAllowed = var2.provider.worldType != 0 || this.mcServer.getConfigurationManager().areCommandsAllowed(this.playerEntity.username) || this.mcServer.isSinglePlayer();
+            boolean var3 = var2.actionsAllowed = var2.provider.dimensionId != 0 || this.mcServer.getConfigurationManager().areCommandsAllowed(this.playerEntity.username) || this.mcServer.isSinglePlayer();
             boolean var4 = false;
 
             if (par1Packet14BlockDig.status == 0)
@@ -415,7 +446,8 @@ public class NetServerHandler extends NetHandler
             {
                 if (var20 <= mcServer.spawnProtectionSize && !var3)
                 {
-                    this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
+                    ForgeEventFactory.onPlayerInteract(playerEntity, Action.LEFT_CLICK_BLOCK, var5, var6, var7, 0);
+                    this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
                 }
                 else
                 {
@@ -428,7 +460,7 @@ public class NetServerHandler extends NetHandler
 
                 if (var2.getBlockId(var5, var6, var7) != 0)
                 {
-                    this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
+                    this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
                 }
             }
             else if (par1Packet14BlockDig.status == 1)
@@ -437,7 +469,7 @@ public class NetServerHandler extends NetHandler
 
                 if (var2.getBlockId(var5, var6, var7) != 0)
                 {
-                    this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
+                    this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
                 }
             }
             else if (par1Packet14BlockDig.status == 3)
@@ -449,7 +481,7 @@ public class NetServerHandler extends NetHandler
 
                 if (var17 < 256.0D)
                 {
-                    this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
+                    this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
                 }
             }
 
@@ -466,7 +498,7 @@ public class NetServerHandler extends NetHandler
         int var6 = par1Packet15Place.getYPosition();
         int var7 = par1Packet15Place.getZPosition();
         int var8 = par1Packet15Place.getDirection();
-        boolean var9 = var2.actionsAllowed = var2.provider.worldType != 0 || this.mcServer.getConfigurationManager().areCommandsAllowed(this.playerEntity.username) || this.mcServer.isSinglePlayer();
+        boolean var9 = var2.actionsAllowed = var2.provider.dimensionId != 0 || this.mcServer.getConfigurationManager().areCommandsAllowed(this.playerEntity.username) || this.mcServer.isSinglePlayer();
 
         if (par1Packet15Place.getDirection() == 255)
         {
@@ -475,11 +507,15 @@ public class NetServerHandler extends NetHandler
                 return;
             }
 
-            this.playerEntity.theItemInWorldManager.tryUseItem(this.playerEntity, var2, var3);
+            PlayerInteractEvent event = ForgeEventFactory.onPlayerInteract(playerEntity, PlayerInteractEvent.Action.RIGHT_CLICK_AIR, 0, 0, 0, -1);
+            if (event.useItem != Event.Result.DENY)
+            {
+                this.playerEntity.theItemInWorldManager.tryUseItem(this.playerEntity, var2, var3);
+            }
         }
         else if (par1Packet15Place.getYPosition() >= this.mcServer.getBuildLimit() - 1 && (par1Packet15Place.getDirection() == 1 || par1Packet15Place.getYPosition() >= this.mcServer.getBuildLimit()))
         {
-            this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet3Chat("\u00a77Height limit for building is " + this.mcServer.getBuildLimit()));
+            this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet3Chat("\u00a77Height limit for building is " + this.mcServer.getBuildLimit()));
             var4 = true;
         }
         else
@@ -505,7 +541,7 @@ public class NetServerHandler extends NetHandler
 
         if (var4)
         {
-            this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
+            this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
 
             if (var8 == 0)
             {
@@ -537,7 +573,7 @@ public class NetServerHandler extends NetHandler
                 ++var5;
             }
 
-            this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
+            this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet53BlockChange(var5, var6, var7, var2));
         }
 
         var3 = this.playerEntity.inventory.getCurrentItem();
@@ -570,16 +606,20 @@ public class NetServerHandler extends NetHandler
         logger.info(this.playerEntity.username + " lost connection: " + par1Str);
         this.mcServer.getConfigurationManager().sendPacketToAllPlayers(new Packet3Chat("\u00a7e" + this.playerEntity.username + " left the game."));
         this.mcServer.getConfigurationManager().playerLoggedOut(this.playerEntity);
-        this.serverShuttingDown = true;
+        this.connectionClosed = true;
 
         if (this.mcServer.isSinglePlayer() && this.playerEntity.username.equals(this.mcServer.getServerOwner()))
         {
             logger.info("Stopping singleplayer server as player logged out");
-            this.mcServer.setServerStopping();
+            this.mcServer.initiateShutdown();
         }
     }
 
-    public void registerPacket(Packet par1Packet)
+    /**
+     * Default handler called for packets that don't have their own handlers in NetClientHandler; currentlly does
+     * nothing.
+     */
+    public void unexpectedPacket(Packet par1Packet)
     {
         logger.warning(this.getClass() + " wasn\'t prepared to deal with a " + par1Packet.getClass());
         this.kickPlayerFromServer("Protocol error, unexpected packet");
@@ -606,7 +646,7 @@ public class NetServerHandler extends NetHandler
             }
         }
 
-        this.theNetworkManager.addToSendQueue(par1Packet);
+        this.netManager.addToSendQueue(par1Packet);
     }
 
     public void handleBlockItemSwitch(Packet16BlockItemSwitch par1Packet16BlockItemSwitch)
@@ -722,7 +762,7 @@ public class NetServerHandler extends NetHandler
 
     public void handleKickDisconnect(Packet255KickDisconnect par1Packet255KickDisconnect)
     {
-        this.theNetworkManager.networkShutdown("disconnect.quitting", new Object[0]);
+        this.netManager.networkShutdown("disconnect.quitting", new Object[0]);
     }
 
     /**
@@ -730,7 +770,7 @@ public class NetServerHandler extends NetHandler
      */
     public int packetSize()
     {
-        return this.theNetworkManager.packetSize();
+        return this.netManager.packetSize();
     }
 
     public void handleUseEntity(Packet7UseEntity par1Packet7UseEntity)
@@ -766,7 +806,7 @@ public class NetServerHandler extends NetHandler
     {
         if (par1Packet205ClientCommand.forceRespawn == 1)
         {
-            if (this.playerEntity.playerHasConqueredTheEnd)
+            if (this.playerEntity.playerConqueredTheEnd)
             {
                 this.playerEntity = this.mcServer.getConfigurationManager().respawnPlayer(this.playerEntity, 0, true);
             }
@@ -774,7 +814,7 @@ public class NetServerHandler extends NetHandler
             {
                 if (this.mcServer.isSinglePlayer() && this.playerEntity.username.equals(this.mcServer.getServerOwner()))
                 {
-                    this.playerEntity.serverForThisPlayer.kickPlayerFromServer("You have died. Game over, man, it\'s game over!");
+                    this.playerEntity.playerNetServerHandler.kickPlayerFromServer("You have died. Game over, man, it\'s game over!");
                     this.mcServer.deleteWorldAndStopServer();
                 }
                 else
@@ -782,7 +822,7 @@ public class NetServerHandler extends NetHandler
                     BanEntry var2 = new BanEntry(this.playerEntity.username);
                     var2.setBanReason("Death in Hardcore");
                     this.mcServer.getConfigurationManager().getBannedPlayers().put(var2);
-                    this.playerEntity.serverForThisPlayer.kickPlayerFromServer("You have died. Game over, man, it\'s game over!");
+                    this.playerEntity.playerNetServerHandler.kickPlayerFromServer("You have died. Game over, man, it\'s game over!");
                 }
             }
             else
@@ -792,7 +832,7 @@ public class NetServerHandler extends NetHandler
                     return;
                 }
 
-                this.playerEntity = this.mcServer.getConfigurationManager().respawnPlayer(this.playerEntity, 0, false);
+                this.playerEntity = this.mcServer.getConfigurationManager().respawnPlayer(this.playerEntity, playerEntity.dimension, false);
             }
         }
     }
@@ -823,7 +863,7 @@ public class NetServerHandler extends NetHandler
 
             if (ItemStack.areItemStacksEqual(par1Packet102WindowClick.itemStack, var2))
             {
-                this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet106Transaction(par1Packet102WindowClick.window_Id, par1Packet102WindowClick.action, true));
+                this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet106Transaction(par1Packet102WindowClick.window_Id, par1Packet102WindowClick.action, true));
                 this.playerEntity.playerInventoryBeingManipulated = true;
                 this.playerEntity.craftingInventory.updateCraftingResults();
                 this.playerEntity.sendInventoryToPlayer();
@@ -832,7 +872,7 @@ public class NetServerHandler extends NetHandler
             else
             {
                 this.field_72586_s.addKey(this.playerEntity.craftingInventory.windowId, Short.valueOf(par1Packet102WindowClick.action));
-                this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet106Transaction(par1Packet102WindowClick.window_Id, par1Packet102WindowClick.action, false));
+                this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet106Transaction(par1Packet102WindowClick.window_Id, par1Packet102WindowClick.action, false));
                 this.playerEntity.craftingInventory.setPlayerIsPresent(this.playerEntity, false);
                 ArrayList var3 = new ArrayList();
 
@@ -921,7 +961,7 @@ public class NetServerHandler extends NetHandler
 
                 if (!var4.isEditable())
                 {
-                    this.mcServer.logWarningMessage("Player " + this.playerEntity.username + " just tried to change non-editable sign");
+                    this.mcServer.logWarning("Player " + this.playerEntity.username + " just tried to change non-editable sign");
                     return;
                 }
             }
@@ -992,7 +1032,7 @@ public class NetServerHandler extends NetHandler
      */
     public void handlePlayerAbilities(Packet202PlayerAbilities par1Packet202PlayerAbilities)
     {
-        this.playerEntity.capabilities.isFlying = par1Packet202PlayerAbilities.getIsFlying() && this.playerEntity.capabilities.allowFlying;
+        this.playerEntity.capabilities.isFlying = par1Packet202PlayerAbilities.getFlying() && this.playerEntity.capabilities.allowFlying;
     }
 
     public void handleAutoComplete(Packet203AutoComplete par1Packet203AutoComplete)
@@ -1000,7 +1040,7 @@ public class NetServerHandler extends NetHandler
         StringBuilder var2 = new StringBuilder();
         String var4;
 
-        for (Iterator var3 = this.mcServer.getPossibleCompletions(this.playerEntity, par1Packet203AutoComplete.func_73473_d()).iterator(); var3.hasNext(); var2.append(var4))
+        for (Iterator var3 = this.mcServer.getPossibleCompletions(this.playerEntity, par1Packet203AutoComplete.getText()).iterator(); var3.hasNext(); var2.append(var4))
         {
             var4 = (String)var3.next();
 
@@ -1010,7 +1050,7 @@ public class NetServerHandler extends NetHandler
             }
         }
 
-        this.playerEntity.serverForThisPlayer.sendPacketToPlayer(new Packet203AutoComplete(var2.toString()));
+        this.playerEntity.playerNetServerHandler.sendPacketToPlayer(new Packet203AutoComplete(var2.toString()));
     }
 
     public void handleClientInfo(Packet204ClientInfo par1Packet204ClientInfo)
@@ -1020,7 +1060,7 @@ public class NetServerHandler extends NetHandler
 
     public void handleCustomPayload(Packet250CustomPayload par1Packet250CustomPayload)
     {
-        FMLNetworkHandler.handlePacket250Packet(par1Packet250CustomPayload, theNetworkManager, this);
+        FMLNetworkHandler.handlePacket250Packet(par1Packet250CustomPayload, netManager, this);
     }
 
     public void handleVanilla250Packet(Packet250CustomPayload par1Packet250CustomPayload)
@@ -1096,6 +1136,16 @@ public class NetServerHandler extends NetHandler
                 var5.printStackTrace();
             }
         }
+    }
+
+    @Override
+
+    /**
+     * Contains logic for handling packets containing arbitrary unique item data. Currently this is only for maps.
+     */
+    public void handleMapData(Packet131MapData par1Packet131MapData)
+    {
+        FMLNetworkHandler.handlePacket131Packet(this, par1Packet131MapData);
     }
 
     // modloader compat -- yuk!

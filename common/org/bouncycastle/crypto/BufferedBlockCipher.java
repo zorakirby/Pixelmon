@@ -14,9 +14,9 @@ public class BufferedBlockCipher
     public BufferedBlockCipher(BlockCipher par1BlockCipher)
     {
         this.field_71797_d = par1BlockCipher;
-        this.field_71801_a = new byte[par1BlockCipher.func_71804_b()];
+        this.field_71801_a = new byte[par1BlockCipher.getBlockSize()];
         this.field_71799_b = 0;
-        String var2 = par1BlockCipher.func_71802_a();
+        String var2 = par1BlockCipher.getAlgorithmName();
         int var3 = var2.indexOf(47) + 1;
         this.field_71796_f = var3 > 0 && var2.startsWith("PGP", var3);
 
@@ -39,7 +39,7 @@ public class BufferedBlockCipher
 
     public int func_71792_a()
     {
-        return this.field_71797_d.func_71804_b();
+        return this.field_71797_d.getBlockSize();
     }
 
     public int func_71793_a(int par1)
@@ -49,7 +49,7 @@ public class BufferedBlockCipher
 
         if (this.field_71796_f)
         {
-            var3 = var2 % this.field_71801_a.length - (this.field_71797_d.func_71804_b() + 2);
+            var3 = var2 % this.field_71801_a.length - (this.field_71797_d.getBlockSize() + 2);
         }
         else
         {

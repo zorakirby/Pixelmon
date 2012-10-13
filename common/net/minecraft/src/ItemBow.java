@@ -11,7 +11,7 @@ public class ItemBow extends Item
         super(par1);
         this.maxStackSize = 1;
         this.setMaxDamage(384);
-        this.setTabToDisplayOn(CreativeTabs.tabCombat);
+        this.setCreativeTab(CreativeTabs.tabCombat);
     }
 
     /**

@@ -6,10 +6,10 @@ import org.bouncycastle.jcajce.provider.config.ProviderConfigurationPermission;
 
 class BouncyCastleProviderConfiguration implements ProviderConfiguration
 {
-    private static Permission field_74836_a = new ProviderConfigurationPermission(BouncyCastleProvider.field_74828_a, "threadLocalEcImplicitlyCa");
-    private static Permission field_74834_b = new ProviderConfigurationPermission(BouncyCastleProvider.field_74828_a, "ecImplicitlyCa");
-    private static Permission field_74835_c = new ProviderConfigurationPermission(BouncyCastleProvider.field_74828_a, "threadLocalDhDefaultParams");
-    private static Permission field_74832_d = new ProviderConfigurationPermission(BouncyCastleProvider.field_74828_a, "DhDefaultParams");
-    private ThreadLocal field_74833_e = new ThreadLocal();
-    private ThreadLocal field_74831_f = new ThreadLocal();
+    private static Permission BC_EC_LOCAL_PERMISSION = new ProviderConfigurationPermission(BouncyCastleProvider.PROVIDER_NAME, "threadLocalEcImplicitlyCa");
+    private static Permission BC_EC_PERMISSION = new ProviderConfigurationPermission(BouncyCastleProvider.PROVIDER_NAME, "ecImplicitlyCa");
+    private static Permission BC_DH_LOCAL_PERMISSION = new ProviderConfigurationPermission(BouncyCastleProvider.PROVIDER_NAME, "threadLocalDhDefaultParams");
+    private static Permission BC_DH_PERMISSION = new ProviderConfigurationPermission(BouncyCastleProvider.PROVIDER_NAME, "DhDefaultParams");
+    private ThreadLocal ecThreadSpec = new ThreadLocal();
+    private ThreadLocal dhThreadSpec = new ThreadLocal();
 }

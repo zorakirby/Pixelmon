@@ -13,7 +13,7 @@ public class ItemBucket extends Item
         super(par1);
         this.maxStackSize = 1;
         this.isFull = par2;
-        this.setTabToDisplayOn(CreativeTabs.tabMisc);
+        this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     /**
@@ -42,7 +42,22 @@ public class ItemBucket extends Item
 
             if (event.isHandeled())
             {
-                return event.result;
+                if (par3EntityPlayer.capabilities.isCreativeMode)
+                {
+                    return par1ItemStack;
+                }
+
+                if (--par1ItemStack.stackSize <= 0)
+                {
+                    return event.result;
+                }
+
+                if (!par3EntityPlayer.inventory.addItemStackToInventory(event.result))
+                {
+                    par3EntityPlayer.dropPlayerItem(event.result);
+                }
+
+                return par1ItemStack;
             }
 
             if (var12.typeOfHit == EnumMovingObjectType.TILE)

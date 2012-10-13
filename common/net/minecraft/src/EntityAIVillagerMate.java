@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.common.registry.VillagerRegistry;
+
 public class EntityAIVillagerMate extends EntityAIBase
 {
     private EntityVillager villagerObj;
@@ -119,7 +121,7 @@ public class EntityAIVillagerMate extends EntityAIBase
         this.mate.setGrowingAge(6000);
         this.villagerObj.setGrowingAge(6000);
         var1.setGrowingAge(-24000);
-        var1.setProfession(this.villagerObj.getRNG().nextInt(5));
+        VillagerRegistry.applyRandomTrade(var1, this.villagerObj.getRNG());
         var1.setLocationAndAngles(this.villagerObj.posX, this.villagerObj.posY, this.villagerObj.posZ, 0.0F, 0.0F);
         this.worldObj.spawnEntityInWorld(var1);
         this.worldObj.setEntityState(var1, (byte)12);

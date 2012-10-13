@@ -11,19 +11,24 @@ import java.net.SocketTimeoutException;
 @SideOnly(Side.CLIENT)
 public class ThreadLanServerFind extends Thread
 {
-    private final LanServerList field_77500_a;
-    private final InetAddress field_77498_b;
-    private final MulticastSocket field_77499_c;
+    /** The LanServerList */
+    private final LanServerList localServerList;
+
+    /** InetAddress for 224.0.2.60 */
+    private final InetAddress broadcastAddress;
+
+    /** The socket we're using to receive packets on. */
+    private final MulticastSocket socket;
 
     public ThreadLanServerFind(LanServerList par1LanServerList) throws IOException
     {
         super("LanServerDetector");
-        this.field_77500_a = par1LanServerList;
+        this.localServerList = par1LanServerList;
         this.setDaemon(true);
-        this.field_77499_c = new MulticastSocket(4445);
-        this.field_77498_b = InetAddress.getByName("224.0.2.60");
-        this.field_77499_c.setSoTimeout(5000);
-        this.field_77499_c.joinGroup(this.field_77498_b);
+        this.socket = new MulticastSocket(4445);
+        this.broadcastAddress = InetAddress.getByName("224.0.2.60");
+        this.socket.setSoTimeout(5000);
+        this.socket.joinGroup(this.broadcastAddress);
     }
 
     public void run()
@@ -36,7 +41,7 @@ public class ThreadLanServerFind extends Thread
 
             try
             {
-                this.field_77499_c.receive(var1);
+                this.socket.receive(var1);
             }
             catch (SocketTimeoutException var5)
             {
@@ -50,18 +55,18 @@ public class ThreadLanServerFind extends Thread
 
             String var3 = new String(var1.getData(), var1.getOffset(), var1.getLength());
             System.out.println(var1.getAddress() + ": " + var3);
-            this.field_77500_a.func_77551_a(var3, var1.getAddress());
+            this.localServerList.func_77551_a(var3, var1.getAddress());
         }
 
         try
         {
-            this.field_77499_c.leaveGroup(this.field_77498_b);
+            this.socket.leaveGroup(this.broadcastAddress);
         }
         catch (IOException var4)
         {
             ;
         }
 
-        this.field_77499_c.close();
+        this.socket.close();
     }
 }

@@ -61,12 +61,12 @@ public abstract class NetworkListenThread
                 var2.kickPlayerFromServer("Internal server error");
             }
 
-            if (var2.serverShuttingDown)
+            if (var2.connectionClosed)
             {
                 this.connections.remove(var1--);
             }
 
-            var2.theNetworkManager.wakeThreads();
+            var2.netManager.wakeThreads();
         }
     }
 

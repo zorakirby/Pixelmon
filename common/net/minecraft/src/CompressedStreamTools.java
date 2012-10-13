@@ -140,7 +140,6 @@ public class CompressedStreamTools
         NBTBase.writeNamedTag(par0NBTTagCompound, par1DataOutput);
     }
 
-    @SideOnly(Side.CLIENT)
     public static void write(NBTTagCompound par0NBTTagCompound, File par1File) throws IOException
     {
         DataOutputStream var2 = new DataOutputStream(new FileOutputStream(par1File));
@@ -155,7 +154,6 @@ public class CompressedStreamTools
         }
     }
 
-    @SideOnly(Side.CLIENT)
     public static NBTTagCompound read(File par0File) throws IOException
     {
         if (!par0File.exists())

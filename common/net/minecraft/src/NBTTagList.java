@@ -95,7 +95,11 @@ public class NBTTagList extends NBTBase
     }
 
     @SideOnly(Side.CLIENT)
-    public NBTBase func_74744_a(int par1)
+
+    /**
+     * Removes a tag at the given index.
+     */
+    public NBTBase removeTag(int par1)
     {
         return (NBTBase)this.tagList.remove(par1);
     }

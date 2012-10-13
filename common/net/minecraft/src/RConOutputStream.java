@@ -60,7 +60,7 @@ public class RConOutputStream
     }
 
     /**
-     * Resets
+     * Resets the byte array output.
      */
     public void reset()
     {

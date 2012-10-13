@@ -6,20 +6,25 @@ import java.util.List;
 
 public class EntityAITasks
 {
-    public List field_75782_a = new ArrayList();
-    private List field_75780_b = new ArrayList();
-    private final Profiler field_75781_c;
+    /** A list of EntityAITaskEntrys in EntityAITasks. */
+    public List taskEntries = new ArrayList();
+
+    /** A list of EntityAITaskEntrys that are currently being executed. */
+    private List executingTaskEntries = new ArrayList();
+
+    /** Instance of Profiler. */
+    private final Profiler theProfiler;
     private int field_75778_d = 0;
     private int field_75779_e = 3;
 
     public EntityAITasks(Profiler par1Profiler)
     {
-        this.field_75781_c = par1Profiler;
+        this.theProfiler = par1Profiler;
     }
 
     public void addTask(int par1, EntityAIBase par2EntityAIBase)
     {
-        this.field_75782_a.add(new EntityAITaskEntry(this, par1, par2EntityAIBase));
+        this.taskEntries.add(new EntityAITaskEntry(this, par1, par2EntityAIBase));
     }
 
     public void onUpdateTasks()
@@ -30,12 +35,12 @@ public class EntityAITasks
 
         if (this.field_75778_d++ % this.field_75779_e == 0)
         {
-            var2 = this.field_75782_a.iterator();
+            var2 = this.taskEntries.iterator();
 
             while (var2.hasNext())
             {
                 var3 = (EntityAITaskEntry)var2.next();
-                boolean var4 = this.field_75780_b.contains(var3);
+                boolean var4 = this.executingTaskEntries.contains(var3);
 
                 if (var4)
                 {
@@ -45,19 +50,19 @@ public class EntityAITasks
                     }
 
                     var3.action.resetTask();
-                    this.field_75780_b.remove(var3);
+                    this.executingTaskEntries.remove(var3);
                 }
 
                 if (this.func_75775_b(var3) && var3.action.shouldExecute())
                 {
                     var1.add(var3);
-                    this.field_75780_b.add(var3);
+                    this.executingTaskEntries.add(var3);
                 }
             }
         }
         else
         {
-            var2 = this.field_75780_b.iterator();
+            var2 = this.executingTaskEntries.iterator();
 
             while (var2.hasNext())
             {
@@ -71,44 +76,44 @@ public class EntityAITasks
             }
         }
 
-        this.field_75781_c.startSection("goalStart");
+        this.theProfiler.startSection("goalStart");
         var2 = var1.iterator();
 
         while (var2.hasNext())
         {
             var3 = (EntityAITaskEntry)var2.next();
-            this.field_75781_c.startSection(var3.action.getClass().getSimpleName());
+            this.theProfiler.startSection(var3.action.getClass().getSimpleName());
             var3.action.startExecuting();
-            this.field_75781_c.endSection();
+            this.theProfiler.endSection();
         }
 
-        this.field_75781_c.endSection();
-        this.field_75781_c.startSection("goalTick");
-        var2 = this.field_75780_b.iterator();
+        this.theProfiler.endSection();
+        this.theProfiler.startSection("goalTick");
+        var2 = this.executingTaskEntries.iterator();
 
         while (var2.hasNext())
         {
             var3 = (EntityAITaskEntry)var2.next();
-            this.field_75781_c.startSection(var3.action.getClass().getSimpleName());
+            this.theProfiler.startSection(var3.action.getClass().getSimpleName());
             var3.action.updateTask();
-            this.field_75781_c.endSection();
+            this.theProfiler.endSection();
         }
 
-        this.field_75781_c.endSection();
+        this.theProfiler.endSection();
     }
 
     private boolean func_75773_a(EntityAITaskEntry par1EntityAITaskEntry)
     {
-        this.field_75781_c.startSection("canContinue");
+        this.theProfiler.startSection("canContinue");
         boolean var2 = par1EntityAITaskEntry.action.continueExecuting();
-        this.field_75781_c.endSection();
+        this.theProfiler.endSection();
         return var2;
     }
 
     private boolean func_75775_b(EntityAITaskEntry par1EntityAITaskEntry)
     {
-        this.field_75781_c.startSection("canUse");
-        Iterator var2 = this.field_75782_a.iterator();
+        this.theProfiler.startSection("canUse");
+        Iterator var2 = this.taskEntries.iterator();
 
         while (var2.hasNext())
         {
@@ -118,21 +123,21 @@ public class EntityAITasks
             {
                 if (par1EntityAITaskEntry.priority >= var3.priority)
                 {
-                    if (this.field_75780_b.contains(var3) && !this.areTasksCompatible(par1EntityAITaskEntry, var3))
+                    if (this.executingTaskEntries.contains(var3) && !this.areTasksCompatible(par1EntityAITaskEntry, var3))
                     {
-                        this.field_75781_c.endSection();
+                        this.theProfiler.endSection();
                         return false;
                     }
                 }
-                else if (this.field_75780_b.contains(var3) && !var3.action.isContinuous())
+                else if (this.executingTaskEntries.contains(var3) && !var3.action.isContinuous())
                 {
-                    this.field_75781_c.endSection();
+                    this.theProfiler.endSection();
                     return false;
                 }
             }
         }
 
-        this.field_75781_c.endSection();
+        this.theProfiler.endSection();
         return true;
     }
 

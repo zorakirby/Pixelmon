@@ -21,10 +21,15 @@ public class ServerGUI extends JComponent
 {
     /** Reference to the logger. */
     public static Logger logger = Logger.getLogger("Minecraft");
-    private static boolean field_79008_b = false;
-    private DedicatedServer field_79009_c;
 
-    public static void func_79003_a(DedicatedServer par0DedicatedServer)
+    /** This is set to true after server GUI window has been initialized. */
+    private static boolean serverGuiInitialized = false;
+    private DedicatedServer serverInstance;
+
+    /**
+     * Sets up the server GUI
+     */
+    public static void initGUI(DedicatedServer par0DedicatedServer)
     {
         try
         {
@@ -36,7 +41,7 @@ public class ServerGUI extends JComponent
         }
 
         ServerGUI var1 = new ServerGUI(par0DedicatedServer);
-        field_79008_b = true;
+        serverGuiInitialized = true;
         JFrame var2 = new JFrame("Minecraft server");
         var2.add(var1);
         var2.pack();
@@ -47,7 +52,7 @@ public class ServerGUI extends JComponent
 
     public ServerGUI(DedicatedServer par1DedicatedServer)
     {
-        this.field_79009_c = par1DedicatedServer;
+        this.serverInstance = par1DedicatedServer;
         this.setPreferredSize(new Dimension(854, 480));
         this.setLayout(new BorderLayout());
 
@@ -68,7 +73,7 @@ public class ServerGUI extends JComponent
     private JComponent getStatsComponent()
     {
         JPanel var1 = new JPanel(new BorderLayout());
-        var1.add(new GuiStatsComponent(this.field_79009_c), "North");
+        var1.add(new GuiStatsComponent(this.serverInstance), "North");
         var1.add(this.getPlayerListComponent(), "Center");
         var1.setBorder(new TitledBorder(new EtchedBorder(), "Stats"));
         return var1;
@@ -79,7 +84,7 @@ public class ServerGUI extends JComponent
      */
     private JComponent getPlayerListComponent()
     {
-        PlayerListBox var1 = new PlayerListBox(this.field_79009_c);
+        PlayerListBox var1 = new PlayerListBox(this.serverInstance);
         JScrollPane var2 = new JScrollPane(var1, 22, 30);
         var2.setBorder(new TitledBorder(new EtchedBorder(), "Players"));
         return var2;
@@ -104,8 +109,8 @@ public class ServerGUI extends JComponent
         return var1;
     }
 
-    static DedicatedServer func_79004_a(ServerGUI par0ServerGUI)
+    static DedicatedServer getDedicatedServer(ServerGUI par0ServerGUI)
     {
-        return par0ServerGUI.field_79009_c;
+        return par0ServerGUI.serverInstance;
     }
 }

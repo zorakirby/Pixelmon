@@ -38,7 +38,8 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public class CryptManager
 {
-    public static final Charset field_75898_a = Charset.forName("ISO_8859_1");
+    /** ISO_8859_1 */
+    public static final Charset charSet = Charset.forName("ISO_8859_1");
 
     @SideOnly(Side.CLIENT)
     public static SecretKey func_75890_a()
@@ -141,7 +142,7 @@ public class CryptManager
     {
         try
         {
-            return func_75886_a(par0, par1Key.getAlgorithm(), par1Key).doFinal(par2ArrayOfByte);
+            return createTheChiperInstance(par0, par1Key.getAlgorithm(), par1Key).doFinal(par2ArrayOfByte);
         }
         catch (IllegalBlockSizeException var4)
         {
@@ -156,7 +157,10 @@ public class CryptManager
         return null;
     }
 
-    private static Cipher func_75886_a(int par0, String par1Str, Key par2Key)
+    /**
+     * Creates the Chiper Instance.
+     */
+    private static Cipher createTheChiperInstance(int par0, String par1Str, Key par2Key)
     {
         try
         {

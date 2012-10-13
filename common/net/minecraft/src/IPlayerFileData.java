@@ -13,7 +13,7 @@ public interface IPlayerFileData
     void readPlayerData(EntityPlayer var1);
 
     /**
-     * Gets an array of Usernames there are available player.dat files for.
+     * Returns an array of usernames for which player.dat exists for.
      */
     String[] getAvailablePlayerDat();
 }

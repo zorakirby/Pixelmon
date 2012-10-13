@@ -10,7 +10,8 @@ import java.util.logging.Logger;
 
 public class PropertyManager
 {
-    public static Logger myLogger = Logger.getLogger("Minecraft");
+    /** Reference to the logger. */
+    public static Logger logger = Logger.getLogger("Minecraft");
     private Properties properties = new Properties();
     private File associatedFile;
 
@@ -29,7 +30,7 @@ public class PropertyManager
             }
             catch (Exception var12)
             {
-                myLogger.log(Level.WARNING, "Failed to load " + par1File, var12);
+                logger.log(Level.WARNING, "Failed to load " + par1File, var12);
                 this.logMessageAndSave();
             }
             finally
@@ -49,7 +50,7 @@ public class PropertyManager
         }
         else
         {
-            myLogger.log(Level.WARNING, par1File + " does not exist");
+            logger.log(Level.WARNING, par1File + " does not exist");
             this.logMessageAndSave();
         }
     }
@@ -60,14 +61,14 @@ public class PropertyManager
      */
     public void logMessageAndSave()
     {
-        myLogger.log(Level.INFO, "Generating new properties file");
-        this.saveSettingsToFile();
+        logger.log(Level.INFO, "Generating new properties file");
+        this.saveProperties();
     }
 
     /**
-     * calls logMessageAndSave if an exception occurs
+     * Writes the properties to the properties file.
      */
-    public void saveSettingsToFile()
+    public void saveProperties()
     {
         FileOutputStream var1 = null;
 
@@ -78,7 +79,7 @@ public class PropertyManager
         }
         catch (Exception var11)
         {
-            myLogger.log(Level.WARNING, "Failed to save " + this.associatedFile, var11);
+            logger.log(Level.WARNING, "Failed to save " + this.associatedFile, var11);
             this.logMessageAndSave();
         }
         finally
@@ -97,33 +98,36 @@ public class PropertyManager
         }
     }
 
-    public File getFile()
+    /**
+     * Returns this PropertyManager's file object used for property saving.
+     */
+    public File getPropertiesFile()
     {
         return this.associatedFile;
     }
 
     /**
-     * set if it doesn't exist, otherwise get
+     * Gets a property. If it does not exist, set it to the specified value.
      */
-    public String getOrSetProperty(String par1Str, String par2Str)
+    public String getProperty(String par1Str, String par2Str)
     {
         if (!this.properties.containsKey(par1Str))
         {
             this.properties.setProperty(par1Str, par2Str);
-            this.saveSettingsToFile();
+            this.saveProperties();
         }
 
         return this.properties.getProperty(par1Str, par2Str);
     }
 
     /**
-     * set if it doesn't exist, otherwise get
+     * Gets an integer property. If it does not exist, set it to the specified value.
      */
-    public int getOrSetIntProperty(String par1Str, int par2)
+    public int getIntProperty(String par1Str, int par2)
     {
         try
         {
-            return Integer.parseInt(this.getOrSetProperty(par1Str, "" + par2));
+            return Integer.parseInt(this.getProperty(par1Str, "" + par2));
         }
         catch (Exception var4)
         {
@@ -133,13 +137,13 @@ public class PropertyManager
     }
 
     /**
-     * set if it doesn't exist, otherwise get
+     * Gets a boolean property. If it does not exist, set it to the specified value.
      */
-    public boolean getOrSetBoolProperty(String par1Str, boolean par2)
+    public boolean getBooleanProperty(String par1Str, boolean par2)
     {
         try
         {
-            return Boolean.parseBoolean(this.getOrSetProperty(par1Str, "" + par2));
+            return Boolean.parseBoolean(this.getProperty(par1Str, "" + par2));
         }
         catch (Exception var4)
         {
@@ -149,9 +153,9 @@ public class PropertyManager
     }
 
     /**
-     * returns void, rather than what you input
+     * Saves an Object with the given property name.
      */
-    public void setArbitraryProperty(String par1Str, Object par2Obj)
+    public void setProperty(String par1Str, Object par2Obj)
     {
         this.properties.setProperty(par1Str, "" + par2Obj);
     }

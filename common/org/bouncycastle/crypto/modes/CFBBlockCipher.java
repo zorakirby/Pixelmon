@@ -18,9 +18,9 @@ public class CFBBlockCipher implements BlockCipher
     {
         this.field_71811_e = par1BlockCipher;
         this.field_71810_d = par2 / 8;
-        this.field_71814_a = new byte[par1BlockCipher.func_71804_b()];
-        this.field_71812_b = new byte[par1BlockCipher.func_71804_b()];
-        this.field_71813_c = new byte[par1BlockCipher.func_71804_b()];
+        this.field_71814_a = new byte[par1BlockCipher.getBlockSize()];
+        this.field_71812_b = new byte[par1BlockCipher.getBlockSize()];
+        this.field_71813_c = new byte[par1BlockCipher.getBlockSize()];
     }
 
     public void func_71805_a(boolean par1, CipherParameters par2CipherParameters) throws IllegalArgumentException
@@ -30,7 +30,7 @@ public class CFBBlockCipher implements BlockCipher
         if (par2CipherParameters instanceof ParametersWithIV)
         {
             ParametersWithIV var3 = (ParametersWithIV)par2CipherParameters;
-            byte[] var4 = var3.func_71779_a();
+            byte[] var4 = var3.getIV();
 
             if (var4.length < this.field_71814_a.length)
             {
@@ -48,9 +48,9 @@ public class CFBBlockCipher implements BlockCipher
 
             this.func_71803_c();
 
-            if (var3.func_71780_b() != null)
+            if (var3.getParameters() != null)
             {
-                this.field_71811_e.func_71805_a(true, var3.func_71780_b());
+                this.field_71811_e.func_71805_a(true, var3.getParameters());
             }
         }
         else
@@ -60,12 +60,18 @@ public class CFBBlockCipher implements BlockCipher
         }
     }
 
-    public String func_71802_a()
+    /**
+     * Return the name of the algorithm the cipher implements.
+     */
+    public String getAlgorithmName()
     {
-        return this.field_71811_e.func_71802_a() + "/CFB" + this.field_71810_d * 8;
+        return this.field_71811_e.getAlgorithmName() + "/CFB" + this.field_71810_d * 8;
     }
 
-    public int func_71804_b()
+    /**
+     * Return the block size for this cipher (in bytes).
+     */
+    public int getBlockSize()
     {
         return this.field_71810_d;
     }

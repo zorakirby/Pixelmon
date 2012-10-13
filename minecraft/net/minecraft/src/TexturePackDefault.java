@@ -11,8 +11,11 @@ public class TexturePackDefault extends TexturePackImplementation
         super("default", "Default");
     }
 
-    protected void func_77540_a()
+    /**
+     * Load texture pack description from /pack.txt file in the texture pack
+     */
+    protected void loadDescription()
     {
-        this.field_77546_b = "The default look of Minecraft";
+        this.firstDescriptionLine = "The default look of Minecraft";
     }
 }

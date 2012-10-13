@@ -6,7 +6,9 @@ import java.util.Random;
 public class ComponentVillageStartPiece extends ComponentVillageWell
 {
     public final WorldChunkManager worldChunkMngr;
-    public final boolean field_74927_b;
+
+    /** Boolean that determines if the village is in a desert or not. */
+    public final boolean inDesert;
 
     /** World terrain type, 0 for normal, 1 for flap map */
     public final int terrainType;
@@ -27,8 +29,8 @@ public class ComponentVillageStartPiece extends ComponentVillageWell
         this.structureVillageWeightedPieceList = par6ArrayList;
         this.terrainType = par7;
         BiomeGenBase var8 = par1WorldChunkManager.getBiomeGenAt(par4, par5);
-        this.field_74927_b = var8 == BiomeGenBase.desert || var8 == BiomeGenBase.desertHills;
-        this.field_74897_k = this;
+        this.inDesert = var8 == BiomeGenBase.desert || var8 == BiomeGenBase.desertHills;
+        this.startPiece = this;
     }
 
     public WorldChunkManager getWorldChunkManager()

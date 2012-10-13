@@ -3,9 +3,13 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraftforge.common.ChestGenHooks;
+import static net.minecraftforge.common.ChestGenHooks.*;
+
 public class ComponentVillageHouse2 extends ComponentVillage
 {
-    private static final WeightedRandomChestContent[] field_74918_a = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.diamond.shiftedIndex, 0, 1, 3, 3), new WeightedRandomChestContent(Item.ingotIron.shiftedIndex, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.shiftedIndex, 0, 1, 3, 5), new WeightedRandomChestContent(Item.bread.shiftedIndex, 0, 1, 3, 15), new WeightedRandomChestContent(Item.appleRed.shiftedIndex, 0, 1, 3, 15), new WeightedRandomChestContent(Item.pickaxeSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.swordSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.plateSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.helmetSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.legsSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.bootsSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Block.obsidian.blockID, 0, 3, 7, 5), new WeightedRandomChestContent(Block.sapling.blockID, 0, 3, 7, 5)};
+    /** List of items that Village's Blacksmith chest can contain. */
+    public static final WeightedRandomChestContent[] villageBlacksmithChestContents = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.diamond.shiftedIndex, 0, 1, 3, 3), new WeightedRandomChestContent(Item.ingotIron.shiftedIndex, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.shiftedIndex, 0, 1, 3, 5), new WeightedRandomChestContent(Item.bread.shiftedIndex, 0, 1, 3, 15), new WeightedRandomChestContent(Item.appleRed.shiftedIndex, 0, 1, 3, 15), new WeightedRandomChestContent(Item.pickaxeSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.swordSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.plateSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.helmetSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.legsSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Item.bootsSteel.shiftedIndex, 0, 1, 1, 5), new WeightedRandomChestContent(Block.obsidian.blockID, 0, 3, 7, 5), new WeightedRandomChestContent(Block.sapling.blockID, 0, 3, 7, 5)};
     private int averageGroundLevel = -1;
     private boolean hasMadeChest;
 
@@ -87,7 +91,7 @@ public class ComponentVillageHouse2 extends ComponentVillage
             if (par3StructureBoundingBox.isVecInside(var5, var4, var6))
             {
                 this.hasMadeChest = true;
-                this.func_74879_a(par1World, par3StructureBoundingBox, par2Random, 5, 1, 5, field_74918_a, 3 + par2Random.nextInt(6));
+                this.generateStructureChestContents(par1World, par3StructureBoundingBox, par2Random, 5, 1, 5, ChestGenHooks.getItems(VILLAGE_BLACKSMITH), ChestGenHooks.getCount(VILLAGE_BLACKSMITH, par2Random));
             }
         }
 

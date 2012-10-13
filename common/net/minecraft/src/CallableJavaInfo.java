@@ -12,13 +12,16 @@ class CallableJavaInfo implements Callable
         this.crashReportJavaInfo = par1CrashReport;
     }
 
-    public String func_71489_a()
+    /**
+     * Returns the Java VM Information as a String.  Includes the Version and Vender.
+     */
+    public String getJavaInfoAsString()
     {
         return System.getProperty("java.version") + ", " + System.getProperty("java.vendor");
     }
 
     public Object call()
     {
-        return this.func_71489_a();
+        return this.getJavaInfoAsString();
     }
 }

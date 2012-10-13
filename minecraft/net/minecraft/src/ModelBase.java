@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SideOnly(Side.CLIENT)
 public abstract class ModelBase
 {
     public float onGround;
@@ -30,7 +29,9 @@ public abstract class ModelBase
     public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7) {}
 
     /**
-     * Sets the models various rotation angles.
+     * Sets the model's various rotation angles. For bipeds, par1 and par2 are used for animating the movement of arms
+     * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
+     * "far" arms and legs can swing at most.
      */
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6) {}
 

@@ -65,6 +65,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
+import cpw.mods.fml.common.versioning.VersionRange;
 
 public class ModLoaderModContainer implements ModContainer
 {
@@ -357,7 +358,6 @@ public class ModLoaderModContainer implements ModContainer
     /**
      * Find all the BaseMods in the system
      * @param <A>
-     * @return
      */
     public static <A extends BaseModProxy> List<A> findAll(Class<A> clazz)
     {
@@ -426,16 +426,11 @@ public class ModLoaderModContainer implements ModContainer
         return mod.getVersion();
     }
 
-    /**
-     * @return
-     */
     public BaseModTicker getGameTickHandler()
     {
         return this.gameTickHandler;
     }
-    /**
-     * @return
-     */
+
     public BaseModTicker getGUITickHandler()
     {
         return this.guiTickHandler;
@@ -614,5 +609,11 @@ public class ModLoaderModContainer implements ModContainer
     public void addServerCommand(ICommand command)
     {
         serverCommands .add(command);
+    }
+
+    @Override
+    public VersionRange acceptableMinecraftVersionRange()
+    {
+        return Loader.instance().getMinecraftModContainer().getStaticVersionRange();
     }
 }

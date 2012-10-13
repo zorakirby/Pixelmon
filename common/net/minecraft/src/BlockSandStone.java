@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BlockSandStone extends Block
 {
-    public static final String[] field_72189_a = new String[] {"default", "chiseled", "smooth"};
+    public static final String[] SAND_STONE_TYPES = new String[] {"default", "chiseled", "smooth"};
     public BlockSandStone(int par1)
     {
         super(par1, 192, Material.rock);

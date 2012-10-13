@@ -36,9 +36,9 @@ class GuiSlotServer extends GuiSlot
             GuiMultiplayer.func_74015_a(this.parentGui, par1);
             boolean var4 = GuiMultiplayer.func_74020_c(this.parentGui) >= 0 && GuiMultiplayer.func_74020_c(this.parentGui) < this.getSize();
             boolean var5 = GuiMultiplayer.func_74020_c(this.parentGui) < GuiMultiplayer.func_74006_a(this.parentGui).countServers();
-            GuiMultiplayer.getButtonEdit(this.parentGui).enabled = var4;
+            GuiMultiplayer.getButtonSelect(this.parentGui).enabled = var4;
+            GuiMultiplayer.getButtonEdit(this.parentGui).enabled = var5;
             GuiMultiplayer.getButtonDelete(this.parentGui).enabled = var5;
-            GuiMultiplayer.func_74019_f(this.parentGui).enabled = var5;
 
             if (par2 && var4)
             {
@@ -94,7 +94,7 @@ class GuiSlotServer extends GuiSlot
         this.parentGui.drawString(this.parentGui.fontRenderer, StatCollector.translateToLocal("lanServer.title"), par2 + 2, par3 + 1, 16777215);
         this.parentGui.drawString(this.parentGui.fontRenderer, var6.func_77487_a(), par2 + 2, par3 + 12, 8421504);
 
-        if (this.parentGui.mc.gameSettings.field_80005_w)
+        if (this.parentGui.mc.gameSettings.hideServerAddress)
         {
             this.parentGui.drawString(this.parentGui.fontRenderer, "(Hidden)", par2 + 2, par3 + 12 + 11, 3158064);
         }
@@ -135,9 +135,9 @@ class GuiSlotServer extends GuiSlot
             if (GuiMultiplayer.func_74012_i() < 5 && !var6.field_78841_f)
             {
                 var6.field_78841_f = true;
-                var6.field_78844_e = -2L;
+                var6.pingToServer = -2L;
                 var6.serverMOTD = "";
-                var6.field_78846_c = "";
+                var6.populationInfo = "";
                 GuiMultiplayer.func_74021_j();
                 (new ThreadPollServers(this, var6)).start();
             }
@@ -145,9 +145,9 @@ class GuiSlotServer extends GuiSlot
 
         this.parentGui.drawString(this.parentGui.fontRenderer, var6.serverName, par2 + 2, par3 + 1, 16777215);
         this.parentGui.drawString(this.parentGui.fontRenderer, var6.serverMOTD, par2 + 2, par3 + 12, 8421504);
-        this.parentGui.drawString(this.parentGui.fontRenderer, var6.field_78846_c, par2 + 215 - this.parentGui.fontRenderer.getStringWidth(var6.field_78846_c), par3 + 12, 8421504);
+        this.parentGui.drawString(this.parentGui.fontRenderer, var6.populationInfo, par2 + 215 - this.parentGui.fontRenderer.getStringWidth(var6.populationInfo), par3 + 12, 8421504);
 
-        if (this.parentGui.mc.gameSettings.field_80005_w)
+        if (this.parentGui.mc.gameSettings.hideServerAddress)
         {
             this.parentGui.drawString(this.parentGui.fontRenderer, "(Hidden)", par2 + 2, par3 + 12 + 11, 3158064);
         }
@@ -162,28 +162,28 @@ class GuiSlotServer extends GuiSlot
         byte var7;
         int var8;
 
-        if (var6.field_78841_f && var6.field_78844_e != -2L)
+        if (var6.field_78841_f && var6.pingToServer != -2L)
         {
             var7 = 0;
             boolean var12 = false;
 
-            if (var6.field_78844_e < 0L)
+            if (var6.pingToServer < 0L)
             {
                 var8 = 5;
             }
-            else if (var6.field_78844_e < 150L)
+            else if (var6.pingToServer < 150L)
             {
                 var8 = 0;
             }
-            else if (var6.field_78844_e < 300L)
+            else if (var6.pingToServer < 300L)
             {
                 var8 = 1;
             }
-            else if (var6.field_78844_e < 600L)
+            else if (var6.pingToServer < 600L)
             {
                 var8 = 2;
             }
-            else if (var6.field_78844_e < 1000L)
+            else if (var6.pingToServer < 1000L)
             {
                 var8 = 3;
             }
@@ -192,13 +192,13 @@ class GuiSlotServer extends GuiSlot
                 var8 = 4;
             }
 
-            if (var6.field_78844_e < 0L)
+            if (var6.pingToServer < 0L)
             {
                 var9 = "(no connection)";
             }
             else
             {
-                var9 = var6.field_78844_e + "ms";
+                var9 = var6.pingToServer + "ms";
             }
         }
         else

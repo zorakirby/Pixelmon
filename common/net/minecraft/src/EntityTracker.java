@@ -180,7 +180,7 @@ public class EntityTracker
         }
     }
 
-    public void processOutstandingEntries()
+    public void updateTrackedEntities()
     {
         ArrayList var1 = new ArrayList();
         Iterator var2 = this.trackedEntities.iterator();

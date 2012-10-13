@@ -6,15 +6,20 @@ import cpw.mods.fml.common.asm.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ScreenChatOptions extends GuiScreen
 {
-    private static final EnumOptions[] field_73891_a = new EnumOptions[] {EnumOptions.CHAT_VISIBILITY, EnumOptions.CHAT_COLOR, EnumOptions.CHAT_LINKS, EnumOptions.CHAT_OPACITY, EnumOptions.CHAT_LINKS_PROMPT};
-    private final GuiScreen field_73889_b;
-    private final GameSettings field_73890_c;
-    private String field_73888_d;
+    /** An array of all EnumOptions which are to do with chat. */
+    private static final EnumOptions[] allScreenChatOptions = new EnumOptions[] {EnumOptions.CHAT_VISIBILITY, EnumOptions.CHAT_COLOR, EnumOptions.CHAT_LINKS, EnumOptions.CHAT_OPACITY, EnumOptions.CHAT_LINKS_PROMPT};
+
+    /** Instance of GuiScreen. */
+    private final GuiScreen theGuiScreen;
+
+    /** Instance of GameSettings file. */
+    private final GameSettings theSettings;
+    private String theChatOptions;
 
     public ScreenChatOptions(GuiScreen par1GuiScreen, GameSettings par2GameSettings)
     {
-        this.field_73889_b = par1GuiScreen;
-        this.field_73890_c = par2GameSettings;
+        this.theGuiScreen = par1GuiScreen;
+        this.theSettings = par2GameSettings;
     }
 
     /**
@@ -24,8 +29,8 @@ public class ScreenChatOptions extends GuiScreen
     {
         StringTranslate var1 = StringTranslate.getInstance();
         int var2 = 0;
-        this.field_73888_d = var1.translateKey("options.chat.title");
-        EnumOptions[] var3 = field_73891_a;
+        this.theChatOptions = var1.translateKey("options.chat.title");
+        EnumOptions[] var3 = allScreenChatOptions;
         int var4 = var3.length;
 
         for (int var5 = 0; var5 < var4; ++var5)
@@ -34,11 +39,11 @@ public class ScreenChatOptions extends GuiScreen
 
             if (var6.getEnumFloat())
             {
-                this.controlList.add(new GuiSlider(var6.returnEnumOrdinal(), this.width / 2 - 155 + var2 % 2 * 160, this.height / 6 + 24 * (var2 >> 1), var6, this.field_73890_c.getKeyBinding(var6), this.field_73890_c.getOptionFloatValue(var6)));
+                this.controlList.add(new GuiSlider(var6.returnEnumOrdinal(), this.width / 2 - 155 + var2 % 2 * 160, this.height / 6 + 24 * (var2 >> 1), var6, this.theSettings.getKeyBinding(var6), this.theSettings.getOptionFloatValue(var6)));
             }
             else
             {
-                this.controlList.add(new GuiSmallButton(var6.returnEnumOrdinal(), this.width / 2 - 155 + var2 % 2 * 160, this.height / 6 + 24 * (var2 >> 1), var6, this.field_73890_c.getKeyBinding(var6)));
+                this.controlList.add(new GuiSmallButton(var6.returnEnumOrdinal(), this.width / 2 - 155 + var2 % 2 * 160, this.height / 6 + 24 * (var2 >> 1), var6, this.theSettings.getKeyBinding(var6)));
             }
 
             ++var2;
@@ -56,14 +61,14 @@ public class ScreenChatOptions extends GuiScreen
         {
             if (par1GuiButton.id < 100 && par1GuiButton instanceof GuiSmallButton)
             {
-                this.field_73890_c.setOptionValue(((GuiSmallButton)par1GuiButton).returnEnumOptions(), 1);
-                par1GuiButton.displayString = this.field_73890_c.getKeyBinding(EnumOptions.getEnumOptions(par1GuiButton.id));
+                this.theSettings.setOptionValue(((GuiSmallButton)par1GuiButton).returnEnumOptions(), 1);
+                par1GuiButton.displayString = this.theSettings.getKeyBinding(EnumOptions.getEnumOptions(par1GuiButton.id));
             }
 
             if (par1GuiButton.id == 200)
             {
                 this.mc.gameSettings.saveOptions();
-                this.mc.displayGuiScreen(this.field_73889_b);
+                this.mc.displayGuiScreen(this.theGuiScreen);
             }
         }
     }
@@ -74,7 +79,7 @@ public class ScreenChatOptions extends GuiScreen
     public void drawScreen(int par1, int par2, float par3)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRenderer, this.field_73888_d, this.width / 2, 20, 16777215);
+        this.drawCenteredString(this.fontRenderer, this.theChatOptions, this.width / 2, 20, 16777215);
         super.drawScreen(par1, par2, par3);
     }
 }

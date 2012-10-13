@@ -162,7 +162,7 @@ public class BlockDispenser extends BlockContainer
 
         if (var11 != null)
         {
-            int var12 = var11.func_70361_i();
+            int var12 = var11.getRandomStackFromInventory();
 
             if (var12 < 0)
             {
@@ -221,7 +221,7 @@ public class BlockDispenser extends BlockContainer
     }
 
     /**
-     * each class overrdies this to return a new <className>
+     * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
     public TileEntity createNewTileEntity(World par1World)
     {

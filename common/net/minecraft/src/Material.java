@@ -4,7 +4,7 @@ public class Material
 {
     public static final Material air = new MaterialTransparent(MapColor.airColor);
 
-    /** The material used by BlockGrass */
+    /** The material used by BlockGrass. */
     public static final Material grass = new Material(MapColor.grassColor);
     public static final Material ground = new Material(MapColor.dirtColor);
     public static final Material wood = (new Material(MapColor.woodColor)).setBurning();
@@ -175,7 +175,7 @@ public class Material
 
     /**
      * Returns the mobility information of the material, 0 = free, 1 = can't push but can move over, 2 = total
-     * immobility and stop pistons
+     * immobility and stop pistons.
      */
     public int getMaterialMobility()
     {

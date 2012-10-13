@@ -132,6 +132,7 @@ public class Loader
     private Exception capturedError;
     private File canonicalModsDir;
     private LoadController modController;
+    private MinecraftDummyContainer minecraft;
 
     private static File minecraftDir;
     private static List<String> injectedContainers;
@@ -161,12 +162,14 @@ public class Loader
     private Loader()
     {
         modClassLoader = new ModClassLoader(getClass().getClassLoader());
-        String actualMCVersion = new CallableMinecraftVersion(null).func_71493_a();
+        String actualMCVersion = new CallableMinecraftVersion(null).minecraftVersion();
         if (!mccversion.equals(actualMCVersion))
         {
             FMLLog.severe("This version of FML is built for Minecraft %s, we have detected Minecraft %s in your minecraft jar file", mccversion, actualMCVersion);
             throw new LoaderException();
         }
+
+        minecraft = new MinecraftDummyContainer(actualMCVersion);
     }
 
     /**
@@ -187,6 +190,11 @@ public class Loader
 
             for (ModContainer mod : getActiveModList())
             {
+                if (!mod.acceptableMinecraftVersionRange().containsVersion(minecraft.getProcessedVersion()))
+                {
+                    FMLLog.severe("The mod %s does not wish to run in Minecraft version %s. You will have to remove it to play.", mod.getModId(), getMCVersionString());
+                    throw new WrongMinecraftVersionException(mod);
+                }
                 Map<String,ArtifactVersion> names = Maps.uniqueIndex(mod.getRequirements(), new Function<ArtifactVersion, String>()
                 {
                     public String apply(ArtifactVersion v)
@@ -194,8 +202,8 @@ public class Loader
                         return v.getLabel();
                     }
                 });
-                Set<String> missingMods = Sets.difference(names.keySet(), modVersions.keySet());
                 Set<ArtifactVersion> versionMissingMods = Sets.newHashSet();
+                Set<String> missingMods = Sets.difference(names.keySet(), modVersions.keySet());
                 if (!missingMods.isEmpty())
                 {
                     FMLLog.severe("The mod %s (%s) requires mods %s to be available", mod.getModId(), mod.getName(), missingMods);
@@ -218,7 +226,7 @@ public class Loader
                 }
                 if (!versionMissingMods.isEmpty())
                 {
-                    FMLLog.severe("The mod %s (%s) requires mod versions %s to be available", mod.getModId(), mod.getName(), missingMods);
+                    FMLLog.severe("The mod %s (%s) requires mod versions %s to be available", mod.getModId(), mod.getName(), versionMissingMods);
                     throw new MissingModsException(versionMissingMods);
                 }
             }
@@ -424,7 +432,7 @@ public class Loader
 
     /**
      * Called from the hook to start mod loading. We trigger the
-     * {@link #identifyMods()} and {@link #preModInit()} phases here. Finally,
+     * {@link #identifyMods()} and Constructing, Preinitalization, and Initalization phases here. Finally,
      * the mod list is frozen completely and is consider immutable from then on.
      */
     public void loadMods()
@@ -512,16 +520,13 @@ public class Loader
      * Query if we know of a mod named modname
      *
      * @param modname
-     * @return
+     * @return If the mod is loaded
      */
     public static boolean isModLoaded(String modname)
     {
         return instance().namedMods.containsKey(modname) && instance().modController.getModState(instance.namedMods.get(modname))!=ModState.DISABLED;
     }
 
-    /**
-     * @return
-     */
     public File getConfigDir()
     {
         return canonicalConfigDir;
@@ -540,17 +545,11 @@ public class Loader
         return ret.toString();
     }
 
-    /**
-     * @return
-     */
     public String getFMLVersionString()
     {
-        return String.format("FML v%s.%s.%s.%s", major, minor, rev, build);
+        return String.format("%s.%s.%s.%s", major, minor, rev, build);
     }
 
-    /**
-     * @return
-     */
     public ClassLoader getModClassLoader()
     {
         return modClassLoader;
@@ -715,5 +714,10 @@ public class Loader
     public boolean isInState(LoaderState state)
     {
         return modController.isInState(state);
+    }
+
+    public MinecraftDummyContainer getMinecraftModContainer()
+    {
+        return minecraft;
     }
 }

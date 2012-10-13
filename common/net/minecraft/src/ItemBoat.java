@@ -9,7 +9,7 @@ public class ItemBoat extends Item
     {
         super(par1);
         this.maxStackSize = 1;
-        this.setTabToDisplayOn(CreativeTabs.tabTransport);
+        this.setCreativeTab(CreativeTabs.tabTransport);
     }
 
     /**

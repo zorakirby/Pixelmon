@@ -27,7 +27,10 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiScreen;
+import net.minecraft.src.NetClientHandler;
+import net.minecraft.src.NetHandler;
 import net.minecraft.src.Packet;
+import net.minecraft.src.Packet131MapData;
 import net.minecraft.src.Render;
 import net.minecraft.src.RenderManager;
 import net.minecraft.src.World;
@@ -51,6 +54,7 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.WrongMinecraftVersionException;
 import cpw.mods.fml.common.network.EntitySpawnAdjustmentPacket;
 import cpw.mods.fml.common.network.EntitySpawnPacket;
 import cpw.mods.fml.common.network.ModMissingPacket;
@@ -63,8 +67,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 /**
  * Handles primary communication from hooked code into the system
  *
- * The FML entry point is {@link #beginMinecraftLoading(MinecraftServer)} called from
- * {@link MinecraftServer}
+ * The FML entry point is {@link #beginMinecraftLoading(Minecraft)} called from
+ * {@link Minecraft}
  *
  * Obfuscated code should focus on this class and other members of the "server"
  * (or "client") code
@@ -91,13 +95,6 @@ public class FMLClientHandler implements IFMLSidedHandler
      */
     private Minecraft client;
 
-    /**
-     * Called to start the whole game off from
-     * {@link MinecraftServer#startServer}
-     *
-     * @param minecraftServer
-     */
-
     private DummyModContainer optifineContainer;
 
     private boolean guiLoaded;
@@ -108,6 +105,14 @@ public class FMLClientHandler implements IFMLSidedHandler
 
     private boolean loading;
 
+    private WrongMinecraftVersionException wrongMC;
+
+    /**
+     * Called to start the whole game off from
+     * {@link MinecraftServer#startServer}
+     *
+     * @param minecraftServer
+     */
     public void beginMinecraftLoading(Minecraft minecraft)
     {
         if (minecraft.isDemo())
@@ -140,6 +145,10 @@ public class FMLClientHandler implements IFMLSidedHandler
         {
             Loader.instance().loadMods();
         }
+        catch (WrongMinecraftVersionException wrong)
+        {
+            wrongMC = wrong;
+        }
         catch (MissingModsException missing)
         {
             modsMissing = missing;
@@ -165,7 +174,7 @@ public class FMLClientHandler implements IFMLSidedHandler
     @SuppressWarnings("deprecation")
     public void finishMinecraftLoading()
     {
-        if (modsMissing != null)
+        if (modsMissing != null || wrongMC != null)
         {
             return;
         }
@@ -187,7 +196,11 @@ public class FMLClientHandler implements IFMLSidedHandler
 
     public void onInitializationComplete()
     {
-        if (modsMissing != null)
+        if (wrongMC != null)
+        {
+            client.displayGuiScreen(new GuiWrongMinecraft(wrongMC));
+        }
+        else if (modsMissing != null)
         {
             client.displayGuiScreen(new GuiModsMissing(modsMissing));
         }
@@ -198,8 +211,6 @@ public class FMLClientHandler implements IFMLSidedHandler
     }
     /**
      * Get the server instance
-     *
-     * @return
      */
     public Minecraft getClient()
     {
@@ -394,10 +405,27 @@ public class FMLClientHandler implements IFMLSidedHandler
 
     /**
      * If the client is in the midst of loading, we disable saving so that custom settings aren't wiped out
-     * @return
      */
     public boolean isLoading()
     {
         return loading;
+    }
+
+    @Override
+    public void handleTinyPacket(NetHandler handler, Packet131MapData mapData)
+    {
+        ((NetClientHandler)handler).fmlPacket131Callback(mapData);
+    }
+
+    @Override
+    public void setClientCompatibilityLevel(byte compatibilityLevel)
+    {
+        NetClientHandler.setConnectionCompatibilityLevel(compatibilityLevel);
+    }
+
+    @Override
+    public byte getClientCompatibilityLevel()
+    {
+        return NetClientHandler.getConnectionCompatibilityLevel();
     }
 }

@@ -17,13 +17,16 @@ public class CallableGLInfo implements Callable
         this.minecraftGLInfo = par1Minecraft;
     }
 
-    public String func_74418_a()
+    /**
+     * Gets what OpenGL version you have.
+     */
+    public String getGLVersion()
     {
         return GL11.glGetString(GL11.GL_RENDERER) + " GL version " + GL11.glGetString(GL11.GL_VERSION) + ", " + GL11.glGetString(GL11.GL_VENDOR);
     }
 
     public Object call()
     {
-        return this.func_74418_a();
+        return this.getGLVersion();
     }
 }

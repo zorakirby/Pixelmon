@@ -23,7 +23,7 @@ public class PanelCrashReport extends Panel
         this.setBackground(new Color(3028036));
         this.setLayout(new BorderLayout());
         StringWriter var2 = new StringWriter();
-        par1CrashReport.func_71505_b().printStackTrace(new PrintWriter(var2));
+        par1CrashReport.getCrashCause().printStackTrace(new PrintWriter(var2));
         String var3 = var2.toString();
         String var4 = "";
         String var5 = "";

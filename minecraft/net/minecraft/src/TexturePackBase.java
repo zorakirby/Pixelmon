@@ -7,22 +7,44 @@ import java.io.InputStream;
 @SideOnly(Side.CLIENT)
 public interface TexturePackBase
 {
-    void func_77533_a(RenderEngine var1);
+    /**
+     * Delete the OpenGL texture id of the pack's thumbnail image, and close the zip file in case of TexturePackCustom.
+     */
+    void deleteTexturePack(RenderEngine var1);
 
-    void func_77535_b(RenderEngine var1);
+    /**
+     * Bind the texture id of the pack's thumbnail image, loading it if necessary.
+     */
+    void bindThumbnailTexture(RenderEngine var1);
 
     /**
      * Gives a texture resource as InputStream.
      */
     InputStream getResourceAsStream(String var1);
 
-    String func_77536_b();
+    /**
+     * Get the texture pack ID
+     */
+    String getTexturePackID();
 
-    String func_77538_c();
+    /**
+     * Get the file name of the texture pack, or Default if not from a custom texture pack
+     */
+    String getTexturePackFileName();
 
-    String func_77531_d();
+    /**
+     * Get the first line of the texture pack description (read from the pack.txt file)
+     */
+    String getFirstDescriptionLine();
 
-    String func_77537_e();
+    /**
+     * Get the second line of the texture pack description (read from the pack.txt file)
+     */
+    String getSecondDescriptionLine();
 
-    int func_77534_f();
+    /**
+     * Return the texture pack's resolution (16 by default). Used only by PlayerUsageSnooper. Presumably meant to be
+     * overriden by HD texture mods.
+     */
+    int getTexturePackResolution();
 }

@@ -10,7 +10,8 @@ import org.lwjgl.opengl.GL12;
 @SideOnly(Side.CLIENT)
 public class GuiMerchant extends GuiContainer
 {
-    private IMerchant field_74203_o;
+    /** Instance of IMerchant interface. */
+    private IMerchant theIMerchant;
     private GuiButtonMerchant nextRecipeButtonIndex;
     private GuiButtonMerchant previousRecipeButtonIndex;
     private int currentRecipeIndex = 0;
@@ -18,7 +19,7 @@ public class GuiMerchant extends GuiContainer
     public GuiMerchant(InventoryPlayer par1InventoryPlayer, IMerchant par2IMerchant, World par3World)
     {
         super(new ContainerMerchant(par1InventoryPlayer, par2IMerchant, par3World));
-        this.field_74203_o = par2IMerchant;
+        this.theIMerchant = par2IMerchant;
     }
 
     /**
@@ -50,7 +51,7 @@ public class GuiMerchant extends GuiContainer
     public void updateScreen()
     {
         super.updateScreen();
-        MerchantRecipeList var1 = this.field_74203_o.getRecipes(this.mc.thePlayer);
+        MerchantRecipeList var1 = this.theIMerchant.getRecipes(this.mc.thePlayer);
 
         if (var1 != null)
         {
@@ -114,7 +115,7 @@ public class GuiMerchant extends GuiContainer
     public void drawScreen(int par1, int par2, float par3)
     {
         super.drawScreen(par1, par2, par3);
-        MerchantRecipeList var4 = this.field_74203_o.getRecipes(this.mc.thePlayer);
+        MerchantRecipeList var4 = this.theIMerchant.getRecipes(this.mc.thePlayer);
 
         if (var4 != null && !var4.isEmpty())
         {
@@ -166,8 +167,11 @@ public class GuiMerchant extends GuiContainer
         }
     }
 
-    public IMerchant func_74199_h()
+    /**
+     * Gets the Instance of IMerchant interface.
+     */
+    public IMerchant getIMerchant()
     {
-        return this.field_74203_o;
+        return this.theIMerchant;
     }
 }

@@ -5,7 +5,7 @@ public class BlockJukeBox extends BlockContainer
     protected BlockJukeBox(int par1, int par2)
     {
         super(par1, par2, Material.wood);
-        this.setCreativeTab(CreativeTabs.tabDeco);
+        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     /**
@@ -103,7 +103,7 @@ public class BlockJukeBox extends BlockContainer
     }
 
     /**
-     * each class overrdies this to return a new <className>
+     * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
     public TileEntity createNewTileEntity(World par1World)
     {

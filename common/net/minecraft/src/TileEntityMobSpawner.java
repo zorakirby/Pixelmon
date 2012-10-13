@@ -213,9 +213,9 @@ public class TileEntityMobSpawner extends TileEntity
     }
 
     /**
-     * signs and mobSpawners use this to send text and meta-data
+     * Overriden in a sign to provide the text.
      */
-    public Packet getAuxillaryInfoPacket()
+    public Packet getDescriptionPacket()
     {
         NBTTagCompound var1 = new NBTTagCompound();
         this.writeToNBT(var1);

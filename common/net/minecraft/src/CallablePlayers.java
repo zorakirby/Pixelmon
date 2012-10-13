@@ -13,13 +13,16 @@ public class CallablePlayers implements Callable
         this.minecraftServerPlayers = par1MinecraftServer;
     }
 
-    public String func_74269_a()
+    /**
+     * Gets the current player count, maximum player count, and player entity list.
+     */
+    public String getPlayers()
     {
-        return MinecraftServer.func_71196_a(this.minecraftServerPlayers).getPlayerListSize() + " / " + MinecraftServer.func_71196_a(this.minecraftServerPlayers).getMaxPlayers() + "; " + MinecraftServer.func_71196_a(this.minecraftServerPlayers).playerEntityList;
+        return MinecraftServer.getServerConfigurationManager(this.minecraftServerPlayers).getCurrentPlayerCount() + " / " + MinecraftServer.getServerConfigurationManager(this.minecraftServerPlayers).getMaxPlayers() + "; " + MinecraftServer.getServerConfigurationManager(this.minecraftServerPlayers).playerEntityList;
     }
 
     public Object call()
     {
-        return this.func_74269_a();
+        return this.getPlayers();
     }
 }

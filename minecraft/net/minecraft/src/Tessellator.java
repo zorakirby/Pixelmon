@@ -23,7 +23,7 @@ public class Tessellator
     private int rawBufferSize = 0;
     public int textureID = 0;
     /**
-     * Boolean used to check whether quads should be drawn as four triangles. Initialized to true and never changed.
+     * Boolean used to check whether quads should be drawn as two triangles. Initialized to false and never changed.
      */
     private static boolean convertQuadsToTriangles = false;
 

@@ -15,6 +15,7 @@ import net.minecraft.src.StructureVillagePieces;
 import net.minecraft.src.Tuple;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 
@@ -33,6 +34,7 @@ public class VillagerRegistry
     private Multimap<Integer, IVillageTradeHandler> tradeHandlers = ArrayListMultimap.create();
     private Map<Class<?>, IVillageCreationHandler> villageCreationHandlers = Maps.newHashMap();
     private Map<Integer, String> newVillagers = Maps.newHashMap();
+    private List<Integer> newVillagerIds = Lists.newArrayList();
 
     /**
      * Allow access to the {@link StructureVillagePieces} array controlling new village
@@ -48,13 +50,11 @@ public class VillagerRegistry
          *
          * @param random
          * @param i
-         * @return
          */
         StructureVillagePieceWeight getVillagePieceWeight(Random random, int i);
 
         /**
          * The class of the root structure component to add to the village
-         * @return
          */
         Class<?> getComponentClass();
 
@@ -70,7 +70,6 @@ public class VillagerRegistry
          * @param p3
          * @param p4
          * @param p5
-         * @return
          */
         Object buildComponent(StructureVillagePieceWeight villagePiece, ComponentVillageStartPiece startPiece, List pieces, Random random, int p1,
                 int p2, int p3, int p4, int p5);
@@ -90,7 +89,6 @@ public class VillagerRegistry
          *
          * @param villager
          * @param recipeList
-         * @param random
          */
         void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random);
     }
@@ -114,6 +112,7 @@ public class VillagerRegistry
             throw new RuntimeException();
         }
         newVillagers.put(villagerId, villagerSkin);
+        newVillagerIds.add(villagerId);
     }
 
     /**
@@ -142,7 +141,6 @@ public class VillagerRegistry
      *
      * @param villagerType
      * @param defaultSkin
-     * @return
      */
     public static String getVillagerSkin(int villagerType, String defaultSkin)
     {
@@ -201,5 +199,12 @@ public class VillagerRegistry
             EntityVillager.blacksmithSellingList.put(item.shiftedIndex, new Tuple(min, max));
         }
         villager.addBlacksmithItem(list, item.getMaxDamage(), random, chance);
+    }
+
+    public static void applyRandomTrade(EntityVillager villager, Random rand)
+    {
+        int extra = instance().newVillagerIds.size();
+        int trade = rand.nextInt(5 + extra);
+        villager.setProfession(trade < 5 ? trade : instance().newVillagerIds.get(trade - 5));
     }
 }

@@ -145,6 +145,9 @@ public class TcpConnection implements NetworkManager
         this.readThread = null;
     }
 
+    /**
+     * Sets the NetHandler for this NetworkManager. Server-only.
+     */
     public void setNetHandler(NetHandler par1NetHandler)
     {
         this.theNetHandler = par1NetHandler;
@@ -443,7 +446,7 @@ public class TcpConnection implements NetworkManager
         if (this.isTerminating && this.readPackets.isEmpty())
         {
             this.theNetHandler.handleErrorMessage(this.terminationReason, this.field_74480_w);
-            FMLNetworkHandler.onConnectionClosed(this);
+            FMLNetworkHandler.onConnectionClosed(this, this.theNetHandler.getPlayer());
         }
     }
 

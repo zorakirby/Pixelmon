@@ -7,12 +7,14 @@ public abstract class ComponentVillage extends StructureComponent
 {
     /** The number of villagers that have been spawned in this component. */
     private int villagersSpawned;
-    protected ComponentVillageStartPiece field_74897_k;
+
+    /** The starting piece of the village. */
+    protected ComponentVillageStartPiece startPiece;
 
     protected ComponentVillage(ComponentVillageStartPiece par1ComponentVillageStartPiece, int par2)
     {
         super(par2);
-        this.field_74897_k = par1ComponentVillageStartPiece;
+        this.startPiece = par1ComponentVillageStartPiece;
     }
 
     /**
@@ -126,9 +128,12 @@ public abstract class ComponentVillage extends StructureComponent
         return 0;
     }
 
-    protected int func_74890_d(int par1, int par2)
+    /**
+     * Gets the replacement block for the current biome
+     */
+    protected int getBiomeSpecificBlock(int par1, int par2)
     {
-        if (this.field_74897_k.field_74927_b)
+        if (this.startPiece.inDesert)
         {
             if (par1 == Block.wood.blockID)
             {
@@ -164,9 +169,12 @@ public abstract class ComponentVillage extends StructureComponent
         return par1;
     }
 
-    protected int func_74892_e(int par1, int par2)
+    /**
+     * Gets the replacement block metadata for the current biome
+     */
+    protected int getBiomeSpecificBlockMetadata(int par1, int par2)
     {
-        if (this.field_74897_k.field_74927_b)
+        if (this.startPiece.inDesert)
         {
             if (par1 == Block.wood.blockID)
             {
@@ -192,8 +200,8 @@ public abstract class ComponentVillage extends StructureComponent
      */
     protected void placeBlockAtCurrentPosition(World par1World, int par2, int par3, int par4, int par5, int par6, StructureBoundingBox par7StructureBoundingBox)
     {
-        int var8 = this.func_74890_d(par2, par3);
-        int var9 = this.func_74892_e(par2, par3);
+        int var8 = this.getBiomeSpecificBlock(par2, par3);
+        int var9 = this.getBiomeSpecificBlockMetadata(par2, par3);
         super.placeBlockAtCurrentPosition(par1World, var8, var9, par4, par5, par6, par7StructureBoundingBox);
     }
 
@@ -203,11 +211,11 @@ public abstract class ComponentVillage extends StructureComponent
      */
     protected void fillWithBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, int par9, int par10, boolean par11)
     {
-        int var12 = this.func_74890_d(par9, 0);
-        int var13 = this.func_74892_e(par9, 0);
-        int var14 = this.func_74890_d(par10, 0);
-        int var15 = this.func_74892_e(par10, 0);
-        super.func_74872_a(par1World, par2StructureBoundingBox, par3, par4, par5, par6, par7, par8, var12, var13, var14, var15, par11);
+        int var12 = this.getBiomeSpecificBlock(par9, 0);
+        int var13 = this.getBiomeSpecificBlockMetadata(par9, 0);
+        int var14 = this.getBiomeSpecificBlock(par10, 0);
+        int var15 = this.getBiomeSpecificBlockMetadata(par10, 0);
+        super.fillWithMetadataBlocks(par1World, par2StructureBoundingBox, par3, par4, par5, par6, par7, par8, var12, var13, var14, var15, par11);
     }
 
     /**
@@ -215,8 +223,8 @@ public abstract class ComponentVillage extends StructureComponent
      */
     protected void fillCurrentPositionBlocksDownwards(World par1World, int par2, int par3, int par4, int par5, int par6, StructureBoundingBox par7StructureBoundingBox)
     {
-        int var8 = this.func_74890_d(par2, par3);
-        int var9 = this.func_74892_e(par2, par3);
+        int var8 = this.getBiomeSpecificBlock(par2, par3);
+        int var9 = this.getBiomeSpecificBlockMetadata(par2, par3);
         super.fillCurrentPositionBlocksDownwards(par1World, var8, var9, par4, par5, par6, par7StructureBoundingBox);
     }
 }

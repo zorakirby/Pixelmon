@@ -24,7 +24,7 @@ final class HttpUtilRunnable implements Runnable
 
     final File destinationFile;
 
-    final IDownloadSuccess field_76175_e;
+    final IDownloadSuccess downloadSuccess;
 
     final int field_76173_f;
 
@@ -34,7 +34,7 @@ final class HttpUtilRunnable implements Runnable
         this.sourceURL = par2Str;
         this.field_76177_c = par3Map;
         this.destinationFile = par4File;
-        this.field_76175_e = par5IDownloadSuccess;
+        this.downloadSuccess = par5IDownloadSuccess;
         this.field_76173_f = par6;
     }
 
@@ -85,7 +85,7 @@ final class HttpUtilRunnable implements Runnable
 
                 if (var29 == (long)var28)
                 {
-                    this.field_76175_e.onSuccess(this.destinationFile);
+                    this.downloadSuccess.onSuccess(this.destinationFile);
 
                     if (this.feedbackHook != null)
                     {
@@ -136,7 +136,7 @@ final class HttpUtilRunnable implements Runnable
                 var3.write(var4, 0, var30);
             }
 
-            this.field_76175_e.onSuccess(this.destinationFile);
+            this.downloadSuccess.onSuccess(this.destinationFile);
 
             if (this.feedbackHook != null)
             {

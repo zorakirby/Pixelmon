@@ -27,8 +27,8 @@ public class AIHelper {
 	int i = 0;
 
 	public AIHelper(String Name, Entity7HasAI entity, EntityAITasks tasks) {
-		if (tasks.field_75782_a.size() != 0)
-			tasks.field_75782_a.clear();
+		if (tasks.taskEntries.size() != 0)
+			tasks.taskEntries.clear();
 		initBaseAI(entity, tasks);
 		if (entity.baseStats.creatureType == EnumCreatureType.creature && !entity.baseStats.CanFly) {
 			initGroundAI(Name, entity, tasks);

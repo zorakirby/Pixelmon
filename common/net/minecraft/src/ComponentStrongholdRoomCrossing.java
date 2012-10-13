@@ -3,9 +3,12 @@ package net.minecraft.src;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraftforge.common.ChestGenHooks;
+import static net.minecraftforge.common.ChestGenHooks.*;
+
 public class ComponentStrongholdRoomCrossing extends ComponentStronghold
 {
-    private static final WeightedRandomChestContent[] field_75014_c = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.ingotIron.shiftedIndex, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.shiftedIndex, 0, 1, 3, 5), new WeightedRandomChestContent(Item.redstone.shiftedIndex, 0, 4, 9, 5), new WeightedRandomChestContent(Item.coal.shiftedIndex, 0, 3, 8, 10), new WeightedRandomChestContent(Item.bread.shiftedIndex, 0, 1, 3, 15), new WeightedRandomChestContent(Item.appleRed.shiftedIndex, 0, 1, 3, 15), new WeightedRandomChestContent(Item.pickaxeSteel.shiftedIndex, 0, 1, 1, 1)};
+    public static final WeightedRandomChestContent[] field_75014_c = new WeightedRandomChestContent[] {new WeightedRandomChestContent(Item.ingotIron.shiftedIndex, 0, 1, 5, 10), new WeightedRandomChestContent(Item.ingotGold.shiftedIndex, 0, 1, 3, 5), new WeightedRandomChestContent(Item.redstone.shiftedIndex, 0, 4, 9, 5), new WeightedRandomChestContent(Item.coal.shiftedIndex, 0, 3, 8, 10), new WeightedRandomChestContent(Item.bread.shiftedIndex, 0, 1, 3, 15), new WeightedRandomChestContent(Item.appleRed.shiftedIndex, 0, 1, 3, 15), new WeightedRandomChestContent(Item.pickaxeSteel.shiftedIndex, 0, 1, 1, 1)};
     protected final EnumDoor doorType;
     protected final int roomType;
 
@@ -137,7 +140,7 @@ public class ComponentStrongholdRoomCrossing extends ComponentStronghold
                     this.placeBlockAtCurrentPosition(par1World, Block.ladder.blockID, this.getMetadataWithOffset(Block.ladder.blockID, 4), 9, 1, 3, par3StructureBoundingBox);
                     this.placeBlockAtCurrentPosition(par1World, Block.ladder.blockID, this.getMetadataWithOffset(Block.ladder.blockID, 4), 9, 2, 3, par3StructureBoundingBox);
                     this.placeBlockAtCurrentPosition(par1World, Block.ladder.blockID, this.getMetadataWithOffset(Block.ladder.blockID, 4), 9, 3, 3, par3StructureBoundingBox);
-                    this.func_74879_a(par1World, par3StructureBoundingBox, par2Random, 3, 4, 8, field_75014_c, 1 + par2Random.nextInt(4));
+                    this.generateStructureChestContents(par1World, par3StructureBoundingBox, par2Random, 3, 4, 8, ChestGenHooks.getItems(STRONGHOLD_CROSSING), ChestGenHooks.getCount(STRONGHOLD_CROSSING, par2Random));
             }
 
             return true;

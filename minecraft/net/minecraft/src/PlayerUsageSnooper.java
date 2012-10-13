@@ -47,7 +47,7 @@ public class PlayerUsageSnooper
     }
 
     /**
-     * issuing start multiple times is not an error.
+     * Note issuing start multiple times is not an error.
      */
     public void startSnooper()
     {
@@ -145,7 +145,7 @@ public class PlayerUsageSnooper
     }
 
     @SideOnly(Side.CLIENT)
-    public String func_80006_f()
+    public String getUniqueID()
     {
         return this.uniqueID;
     }

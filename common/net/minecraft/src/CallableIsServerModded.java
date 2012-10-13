@@ -13,7 +13,10 @@ public class CallableIsServerModded implements Callable
         this.minecraftServerIsServerModded = par1MinecraftServer;
     }
 
-    public String func_74273_a()
+    /**
+     * Gets if Minecraft Server is Modded.
+     */
+    public String getServerIsModded()
     {
         String var1 = this.minecraftServerIsServerModded.getServerModName();
         return !var1.equals("vanilla") ? "Definitely; \'" + var1 + "\'" : "Unknown (can\'t tell)";
@@ -21,6 +24,6 @@ public class CallableIsServerModded implements Callable
 
     public Object call()
     {
-        return this.func_74273_a();
+        return this.getServerIsModded();
     }
 }

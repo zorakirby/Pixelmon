@@ -12,10 +12,10 @@ import org.bouncycastle.jcajce.provider.util.AlgorithmProvider;
 
 public final class BouncyCastleProvider extends Provider implements ConfigurableProvider
 {
-    private static String field_74827_c = "BouncyCastle Security Provider v1.47";
-    public static String field_74828_a = "BC";
-    public static final ProviderConfiguration field_74826_b = new BouncyCastleProviderConfiguration();
-    private static final Map field_74824_d = new HashMap();
+    private static String info = "BouncyCastle Security Provider v1.47";
+    public static String PROVIDER_NAME = "BC";
+    public static final ProviderConfiguration CONFIGURATION = new BouncyCastleProviderConfiguration();
+    private static final Map keyInfoConverters = new HashMap();
     private static final String[] field_74825_e = new String[] {"AES", "ARC4", "Blowfish", "Camellia", "CAST5", "CAST6", "DES", "DESede", "GOST28147", "Grainv1", "Grain128", "HC128", "HC256", "IDEA", "Noekeon", "RC2", "RC5", "RC6", "Rijndael", "Salsa20", "SEED", "Serpent", "Skipjack", "TEA", "Twofish", "VMPC", "VMPCKSA3", "XTEA"};
     private static final String[] field_74822_f = new String[] {"X509"};
     private static final String[] field_74823_g = new String[] {"DSA", "DH", "EC", "RSA", "GOST", "ECGOST", "ElGamal"};
@@ -23,7 +23,7 @@ public final class BouncyCastleProvider extends Provider implements Configurable
 
     public BouncyCastleProvider()
     {
-        super(field_74828_a, 1.47D, field_74827_c);
+        super(PROVIDER_NAME, 1.47D, info);
         AccessController.doPrivileged(new BouncyCastleProviderAction(this));
     }
 
@@ -280,7 +280,7 @@ public final class BouncyCastleProvider extends Provider implements Configurable
             {
                 try
                 {
-                    ((AlgorithmProvider)var4.newInstance()).func_74840_a(this);
+                    ((AlgorithmProvider)var4.newInstance()).configure(this);
                 }
                 catch (Exception var6)
                 {

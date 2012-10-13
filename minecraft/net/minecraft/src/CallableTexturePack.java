@@ -16,13 +16,13 @@ public class CallableTexturePack implements Callable
         this.mc = par1Minecraft;
     }
 
-    public String func_79001_a()
+    public String getTexturePack()
     {
         return this.mc.gameSettings.skin;
     }
 
     public Object call()
     {
-        return this.func_79001_a();
+        return this.getTexturePack();
     }
 }

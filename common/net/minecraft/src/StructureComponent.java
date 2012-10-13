@@ -543,7 +543,11 @@ public abstract class StructureComponent
         return !par5StructureBoundingBox.isVecInside(var6, var7, var8) ? 0 : par1World.getBlockId(var6, var7, var8);
     }
 
-    protected void func_74878_a(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8)
+    /**
+     * arguments: (World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
+     * maxZ)
+     */
+    protected void fillWithAir(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8)
     {
         for (int var9 = par4; var9 <= par7; ++var9)
         {
@@ -585,7 +589,12 @@ public abstract class StructureComponent
         }
     }
 
-    protected void func_74872_a(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, int par9, int par10, int par11, int par12, boolean par13)
+    /**
+     * arguments: (World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
+     * maxZ, int placeBlockId, int placeBlockMetadata, int replaceBlockId, int replaceBlockMetadata, boolean
+     * alwaysreplace)
+     */
+    protected void fillWithMetadataBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, int par9, int par10, int par11, int par12, boolean par13)
     {
         for (int var14 = par4; var14 <= par7; ++var14)
         {
@@ -746,7 +755,10 @@ public abstract class StructureComponent
         }
     }
 
-    protected boolean func_74879_a(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, WeightedRandomChestContent[] par7ArrayOfWeightedRandomChestContent, int par8)
+    /**
+     * Used to generate chests with items in it. ex: Temple Chests, Village Blacksmith Chests, Mineshaft Chests.
+     */
+    protected boolean generateStructureChestContents(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, WeightedRandomChestContent[] par7ArrayOfWeightedRandomChestContent, int par8)
     {
         int var9 = this.getXWithOffset(par4, par6);
         int var10 = this.getYWithOffset(par5);
@@ -759,7 +771,7 @@ public abstract class StructureComponent
 
             if (var12 != null)
             {
-                WeightedRandomChestContent.func_76293_a(par3Random, par7ArrayOfWeightedRandomChestContent, var12, par8);
+                WeightedRandomChestContent.generateChestContents(par3Random, par7ArrayOfWeightedRandomChestContent, var12, par8);
             }
 
             return true;
@@ -770,7 +782,10 @@ public abstract class StructureComponent
         }
     }
 
-    protected boolean func_74869_a(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, int par7, WeightedRandomChestContent[] par8ArrayOfWeightedRandomChestContent, int par9)
+    /**
+     * Used to generate dispenser contents for structures. ex: Jungle Temples.
+     */
+    protected boolean generateStructureDispenserContents(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, int par4, int par5, int par6, int par7, WeightedRandomChestContent[] par8ArrayOfWeightedRandomChestContent, int par9)
     {
         int var10 = this.getXWithOffset(par4, par6);
         int var11 = this.getYWithOffset(par5);
@@ -783,7 +798,7 @@ public abstract class StructureComponent
 
             if (var13 != null)
             {
-                WeightedRandomChestContent.func_76294_a(par3Random, par8ArrayOfWeightedRandomChestContent, var13, par9);
+                WeightedRandomChestContent.generateDispenserContents(par3Random, par8ArrayOfWeightedRandomChestContent, var13, par9);
             }
 
             return true;

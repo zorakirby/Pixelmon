@@ -10,53 +10,60 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiScreenBook extends GuiScreen
 {
-    private final EntityPlayer field_74169_a;
-    private final ItemStack field_74167_b;
-    private final boolean field_74168_c;
-    private boolean field_74166_d;
-    private boolean field_74172_m;
-    private int field_74170_n;
-    private int field_74171_o = 192;
-    private int field_74180_p = 192;
-    private int field_74179_q = 1;
-    private int field_74178_r;
-    private NBTTagList field_74177_s;
-    private String field_74176_t = "";
-    private GuiButtonNextPage field_74175_u;
-    private GuiButtonNextPage field_74174_v;
-    private GuiButton field_74173_w;
-    private GuiButton field_74183_x;
-    private GuiButton field_74182_y;
-    private GuiButton field_74181_z;
+    /** The player editing the book */
+    private final EntityPlayer editingPlayer;
+    private final ItemStack itemstackBook;
+
+    /** Whether the book is signed or can still be edited */
+    private final boolean bookIsUnsigned;
+    private boolean bookModified;
+    private boolean editingTitle;
+
+    /** Update ticks since the gui was opened */
+    private int updateCount;
+    private int bookImageWidth = 192;
+    private int bookImageHeight = 192;
+    private int bookTotalPages = 1;
+    private int currPage;
+    private NBTTagList bookPages;
+    private String bookTitle = "";
+    private GuiButtonNextPage buttonNextPage;
+    private GuiButtonNextPage buttonPreviousPage;
+    private GuiButton buttonDone;
+
+    /** The GuiButton to sign this book. */
+    private GuiButton buttonSign;
+    private GuiButton buttonFinalize;
+    private GuiButton buttonCancel;
 
     public GuiScreenBook(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack, boolean par3)
     {
-        this.field_74169_a = par1EntityPlayer;
-        this.field_74167_b = par2ItemStack;
-        this.field_74168_c = par3;
+        this.editingPlayer = par1EntityPlayer;
+        this.itemstackBook = par2ItemStack;
+        this.bookIsUnsigned = par3;
 
         if (par2ItemStack.hasTagCompound())
         {
             NBTTagCompound var4 = par2ItemStack.getTagCompound();
-            this.field_74177_s = var4.getTagList("pages");
+            this.bookPages = var4.getTagList("pages");
 
-            if (this.field_74177_s != null)
+            if (this.bookPages != null)
             {
-                this.field_74177_s = (NBTTagList)this.field_74177_s.copy();
-                this.field_74179_q = this.field_74177_s.tagCount();
+                this.bookPages = (NBTTagList)this.bookPages.copy();
+                this.bookTotalPages = this.bookPages.tagCount();
 
-                if (this.field_74179_q < 1)
+                if (this.bookTotalPages < 1)
                 {
-                    this.field_74179_q = 1;
+                    this.bookTotalPages = 1;
                 }
             }
         }
 
-        if (this.field_74177_s == null && par3)
+        if (this.bookPages == null && par3)
         {
-            this.field_74177_s = new NBTTagList("pages");
-            this.field_74177_s.appendTag(new NBTTagString("1", ""));
-            this.field_74179_q = 1;
+            this.bookPages = new NBTTagList("pages");
+            this.bookPages.appendTag(new NBTTagString("1", ""));
+            this.bookTotalPages = 1;
         }
     }
 
@@ -66,7 +73,7 @@ public class GuiScreenBook extends GuiScreen
     public void updateScreen()
     {
         super.updateScreen();
-        ++this.field_74170_n;
+        ++this.updateCount;
     }
 
     /**
@@ -77,23 +84,23 @@ public class GuiScreenBook extends GuiScreen
         this.controlList.clear();
         Keyboard.enableRepeatEvents(true);
 
-        if (this.field_74168_c)
+        if (this.bookIsUnsigned)
         {
-            this.controlList.add(this.field_74183_x = new GuiButton(3, this.width / 2 - 100, 4 + this.field_74180_p, 98, 20, StatCollector.translateToLocal("book.signButton")));
-            this.controlList.add(this.field_74173_w = new GuiButton(0, this.width / 2 + 2, 4 + this.field_74180_p, 98, 20, StatCollector.translateToLocal("gui.done")));
-            this.controlList.add(this.field_74182_y = new GuiButton(5, this.width / 2 - 100, 4 + this.field_74180_p, 98, 20, StatCollector.translateToLocal("book.finalizeButton")));
-            this.controlList.add(this.field_74181_z = new GuiButton(4, this.width / 2 + 2, 4 + this.field_74180_p, 98, 20, StatCollector.translateToLocal("gui.cancel")));
+            this.controlList.add(this.buttonSign = new GuiButton(3, this.width / 2 - 100, 4 + this.bookImageHeight, 98, 20, StatCollector.translateToLocal("book.signButton")));
+            this.controlList.add(this.buttonDone = new GuiButton(0, this.width / 2 + 2, 4 + this.bookImageHeight, 98, 20, StatCollector.translateToLocal("gui.done")));
+            this.controlList.add(this.buttonFinalize = new GuiButton(5, this.width / 2 - 100, 4 + this.bookImageHeight, 98, 20, StatCollector.translateToLocal("book.finalizeButton")));
+            this.controlList.add(this.buttonCancel = new GuiButton(4, this.width / 2 + 2, 4 + this.bookImageHeight, 98, 20, StatCollector.translateToLocal("gui.cancel")));
         }
         else
         {
-            this.controlList.add(this.field_74173_w = new GuiButton(0, this.width / 2 - 100, 4 + this.field_74180_p, 200, 20, StatCollector.translateToLocal("gui.done")));
+            this.controlList.add(this.buttonDone = new GuiButton(0, this.width / 2 - 100, 4 + this.bookImageHeight, 200, 20, StatCollector.translateToLocal("gui.done")));
         }
 
-        int var1 = (this.width - this.field_74171_o) / 2;
+        int var1 = (this.width - this.bookImageWidth) / 2;
         byte var2 = 2;
-        this.controlList.add(this.field_74175_u = new GuiButtonNextPage(1, var1 + 120, var2 + 154, true));
-        this.controlList.add(this.field_74174_v = new GuiButtonNextPage(2, var1 + 38, var2 + 154, false));
-        this.func_74161_g();
+        this.controlList.add(this.buttonNextPage = new GuiButtonNextPage(1, var1 + 120, var2 + 154, true));
+        this.controlList.add(this.buttonPreviousPage = new GuiButtonNextPage(2, var1 + 38, var2 + 154, false));
+        this.updateButtons();
     }
 
     /**
@@ -104,47 +111,47 @@ public class GuiScreenBook extends GuiScreen
         Keyboard.enableRepeatEvents(false);
     }
 
-    private void func_74161_g()
+    private void updateButtons()
     {
-        this.field_74175_u.drawButton = !this.field_74172_m && (this.field_74178_r < this.field_74179_q - 1 || this.field_74168_c);
-        this.field_74174_v.drawButton = !this.field_74172_m && this.field_74178_r > 0;
-        this.field_74173_w.drawButton = !this.field_74168_c || !this.field_74172_m;
+        this.buttonNextPage.drawButton = !this.editingTitle && (this.currPage < this.bookTotalPages - 1 || this.bookIsUnsigned);
+        this.buttonPreviousPage.drawButton = !this.editingTitle && this.currPage > 0;
+        this.buttonDone.drawButton = !this.bookIsUnsigned || !this.editingTitle;
 
-        if (this.field_74168_c)
+        if (this.bookIsUnsigned)
         {
-            this.field_74183_x.drawButton = !this.field_74172_m;
-            this.field_74181_z.drawButton = this.field_74172_m;
-            this.field_74182_y.drawButton = this.field_74172_m;
-            this.field_74182_y.enabled = this.field_74176_t.trim().length() > 0;
+            this.buttonSign.drawButton = !this.editingTitle;
+            this.buttonCancel.drawButton = this.editingTitle;
+            this.buttonFinalize.drawButton = this.editingTitle;
+            this.buttonFinalize.enabled = this.bookTitle.trim().length() > 0;
         }
     }
 
-    private void func_74163_a(boolean par1)
+    private void sendBookToServer(boolean par1)
     {
-        if (this.field_74168_c && this.field_74166_d)
+        if (this.bookIsUnsigned && this.bookModified)
         {
-            if (this.field_74177_s != null)
+            if (this.bookPages != null)
             {
-                while (this.field_74177_s.tagCount() > 1)
+                while (this.bookPages.tagCount() > 1)
                 {
-                    NBTTagString var2 = (NBTTagString)this.field_74177_s.tagAt(this.field_74177_s.tagCount() - 1);
+                    NBTTagString var2 = (NBTTagString)this.bookPages.tagAt(this.bookPages.tagCount() - 1);
 
                     if (var2.data != null && var2.data.length() != 0)
                     {
                         break;
                     }
 
-                    this.field_74177_s.func_74744_a(this.field_74177_s.tagCount() - 1);
+                    this.bookPages.removeTag(this.bookPages.tagCount() - 1);
                 }
 
-                if (this.field_74167_b.hasTagCompound())
+                if (this.itemstackBook.hasTagCompound())
                 {
-                    NBTTagCompound var7 = this.field_74167_b.getTagCompound();
-                    var7.setTag("pages", this.field_74177_s);
+                    NBTTagCompound var7 = this.itemstackBook.getTagCompound();
+                    var7.setTag("pages", this.bookPages);
                 }
                 else
                 {
-                    this.field_74167_b.func_77983_a("pages", this.field_74177_s);
+                    this.itemstackBook.func_77983_a("pages", this.bookPages);
                 }
 
                 String var8 = "MC|BEdit";
@@ -152,9 +159,9 @@ public class GuiScreenBook extends GuiScreen
                 if (par1)
                 {
                     var8 = "MC|BSign";
-                    this.field_74167_b.func_77983_a("author", new NBTTagString("author", this.field_74169_a.username));
-                    this.field_74167_b.func_77983_a("title", new NBTTagString("title", this.field_74176_t.trim()));
-                    this.field_74167_b.itemID = Item.writtenBook.shiftedIndex;
+                    this.itemstackBook.func_77983_a("author", new NBTTagString("author", this.editingPlayer.username));
+                    this.itemstackBook.func_77983_a("title", new NBTTagString("title", this.bookTitle.trim()));
+                    this.itemstackBook.itemID = Item.writtenBook.shiftedIndex;
                 }
 
                 ByteArrayOutputStream var3 = new ByteArrayOutputStream();
@@ -162,7 +169,7 @@ public class GuiScreenBook extends GuiScreen
 
                 try
                 {
-                    Packet.writeItemStack(this.field_74167_b, var4);
+                    Packet.writeItemStack(this.itemstackBook, var4);
                     this.mc.getSendQueue().addToSendQueue(new Packet250CustomPayload(var8, var3.toByteArray()));
                 }
                 catch (Exception var6)
@@ -183,56 +190,56 @@ public class GuiScreenBook extends GuiScreen
             if (par1GuiButton.id == 0)
             {
                 this.mc.displayGuiScreen((GuiScreen)null);
-                this.func_74163_a(false);
+                this.sendBookToServer(false);
             }
-            else if (par1GuiButton.id == 3 && this.field_74168_c)
+            else if (par1GuiButton.id == 3 && this.bookIsUnsigned)
             {
-                this.field_74172_m = true;
+                this.editingTitle = true;
             }
             else if (par1GuiButton.id == 1)
             {
-                if (this.field_74178_r < this.field_74179_q - 1)
+                if (this.currPage < this.bookTotalPages - 1)
                 {
-                    ++this.field_74178_r;
+                    ++this.currPage;
                 }
-                else if (this.field_74168_c)
+                else if (this.bookIsUnsigned)
                 {
-                    this.func_74165_h();
+                    this.addNewPage();
 
-                    if (this.field_74178_r < this.field_74179_q - 1)
+                    if (this.currPage < this.bookTotalPages - 1)
                     {
-                        ++this.field_74178_r;
+                        ++this.currPage;
                     }
                 }
             }
             else if (par1GuiButton.id == 2)
             {
-                if (this.field_74178_r > 0)
+                if (this.currPage > 0)
                 {
-                    --this.field_74178_r;
+                    --this.currPage;
                 }
             }
-            else if (par1GuiButton.id == 5 && this.field_74172_m)
+            else if (par1GuiButton.id == 5 && this.editingTitle)
             {
-                this.func_74163_a(true);
+                this.sendBookToServer(true);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
-            else if (par1GuiButton.id == 4 && this.field_74172_m)
+            else if (par1GuiButton.id == 4 && this.editingTitle)
             {
-                this.field_74172_m = false;
+                this.editingTitle = false;
             }
 
-            this.func_74161_g();
+            this.updateButtons();
         }
     }
 
-    private void func_74165_h()
+    private void addNewPage()
     {
-        if (this.field_74177_s != null && this.field_74177_s.tagCount() < 50)
+        if (this.bookPages != null && this.bookPages.tagCount() < 50)
         {
-            this.field_74177_s.appendTag(new NBTTagString("" + (this.field_74179_q + 1), ""));
-            ++this.field_74179_q;
-            this.field_74166_d = true;
+            this.bookPages.appendTag(new NBTTagString("" + (this.bookTotalPages + 1), ""));
+            ++this.bookTotalPages;
+            this.bookModified = true;
         }
     }
 
@@ -243,20 +250,23 @@ public class GuiScreenBook extends GuiScreen
     {
         super.keyTyped(par1, par2);
 
-        if (this.field_74168_c)
+        if (this.bookIsUnsigned)
         {
-            if (this.field_74172_m)
+            if (this.editingTitle)
             {
                 this.func_74162_c(par1, par2);
             }
             else
             {
-                this.func_74164_b(par1, par2);
+                this.keyTypedInBook(par1, par2);
             }
         }
     }
 
-    private void func_74164_b(char par1, int par2)
+    /**
+     * Processes keystrokes when editing the text of a book
+     */
+    private void keyTypedInBook(char par1, int par2)
     {
         switch (par1)
         {
@@ -292,36 +302,36 @@ public class GuiScreenBook extends GuiScreen
         switch (par2)
         {
             case 14:
-                if (this.field_74176_t.length() > 0)
+                if (this.bookTitle.length() > 0)
                 {
-                    this.field_74176_t = this.field_74176_t.substring(0, this.field_74176_t.length() - 1);
-                    this.func_74161_g();
+                    this.bookTitle = this.bookTitle.substring(0, this.bookTitle.length() - 1);
+                    this.updateButtons();
                 }
 
                 return;
             case 28:
-                if (this.field_74176_t.length() > 0)
+                if (this.bookTitle.length() > 0)
                 {
-                    this.func_74163_a(true);
+                    this.sendBookToServer(true);
                     this.mc.displayGuiScreen((GuiScreen)null);
                 }
 
                 return;
             default:
-                if (this.field_74176_t.length() < 16 && ChatAllowedCharacters.isAllowedCharacter(par1))
+                if (this.bookTitle.length() < 16 && ChatAllowedCharacters.isAllowedCharacter(par1))
                 {
-                    this.field_74176_t = this.field_74176_t + Character.toString(par1);
-                    this.func_74161_g();
-                    this.field_74166_d = true;
+                    this.bookTitle = this.bookTitle + Character.toString(par1);
+                    this.updateButtons();
+                    this.bookModified = true;
                 }
         }
     }
 
     private String func_74158_i()
     {
-        if (this.field_74177_s != null && this.field_74178_r >= 0 && this.field_74178_r < this.field_74177_s.tagCount())
+        if (this.bookPages != null && this.currPage >= 0 && this.currPage < this.bookPages.tagCount())
         {
-            NBTTagString var1 = (NBTTagString)this.field_74177_s.tagAt(this.field_74178_r);
+            NBTTagString var1 = (NBTTagString)this.bookPages.tagAt(this.currPage);
             return var1.toString();
         }
         else
@@ -332,11 +342,11 @@ public class GuiScreenBook extends GuiScreen
 
     private void func_74159_a(String par1Str)
     {
-        if (this.field_74177_s != null && this.field_74178_r >= 0 && this.field_74178_r < this.field_74177_s.tagCount())
+        if (this.bookPages != null && this.currPage >= 0 && this.currPage < this.bookPages.tagCount())
         {
-            NBTTagString var2 = (NBTTagString)this.field_74177_s.tagAt(this.field_74178_r);
+            NBTTagString var2 = (NBTTagString)this.bookPages.tagAt(this.currPage);
             var2.data = par1Str;
-            this.field_74166_d = true;
+            this.bookModified = true;
         }
     }
 
@@ -360,20 +370,20 @@ public class GuiScreenBook extends GuiScreen
         int var4 = this.mc.renderEngine.getTexture("/gui/book.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(var4);
-        int var5 = (this.width - this.field_74171_o) / 2;
+        int var5 = (this.width - this.bookImageWidth) / 2;
         byte var6 = 2;
-        this.drawTexturedModalRect(var5, var6, 0, 0, this.field_74171_o, this.field_74180_p);
+        this.drawTexturedModalRect(var5, var6, 0, 0, this.bookImageWidth, this.bookImageHeight);
         String var7;
         String var8;
         int var9;
 
-        if (this.field_74172_m)
+        if (this.editingTitle)
         {
-            var7 = this.field_74176_t;
+            var7 = this.bookTitle;
 
-            if (this.field_74168_c)
+            if (this.bookIsUnsigned)
             {
-                if (this.field_74170_n / 6 % 2 == 0)
+                if (this.updateCount / 6 % 2 == 0)
                 {
                     var7 = var7 + "\u00a70_";
                 }
@@ -388,7 +398,7 @@ public class GuiScreenBook extends GuiScreen
             this.fontRenderer.drawString(var8, var5 + 36 + (116 - var9) / 2, var6 + 16 + 16, 0);
             int var10 = this.fontRenderer.getStringWidth(var7);
             this.fontRenderer.drawString(var7, var5 + 36 + (116 - var10) / 2, var6 + 48, 0);
-            String var11 = String.format(StatCollector.translateToLocal("book.byAuthor"), new Object[] {this.field_74169_a.username});
+            String var11 = String.format(StatCollector.translateToLocal("book.byAuthor"), new Object[] {this.editingPlayer.username});
             int var12 = this.fontRenderer.getStringWidth(var11);
             this.fontRenderer.drawString("\u00a78" + var11, var5 + 36 + (116 - var12) / 2, var6 + 48 + 10, 0);
             String var13 = StatCollector.translateToLocal("book.finalizeWarning");
@@ -396,22 +406,22 @@ public class GuiScreenBook extends GuiScreen
         }
         else
         {
-            var7 = String.format(StatCollector.translateToLocal("book.pageIndicator"), new Object[] {Integer.valueOf(this.field_74178_r + 1), Integer.valueOf(this.field_74179_q)});
+            var7 = String.format(StatCollector.translateToLocal("book.pageIndicator"), new Object[] {Integer.valueOf(this.currPage + 1), Integer.valueOf(this.bookTotalPages)});
             var8 = "";
 
-            if (this.field_74177_s != null && this.field_74178_r >= 0 && this.field_74178_r < this.field_74177_s.tagCount())
+            if (this.bookPages != null && this.currPage >= 0 && this.currPage < this.bookPages.tagCount())
             {
-                NBTTagString var14 = (NBTTagString)this.field_74177_s.tagAt(this.field_74178_r);
+                NBTTagString var14 = (NBTTagString)this.bookPages.tagAt(this.currPage);
                 var8 = var14.toString();
             }
 
-            if (this.field_74168_c)
+            if (this.bookIsUnsigned)
             {
                 if (this.fontRenderer.getBidiFlag())
                 {
                     var8 = var8 + "_";
                 }
-                else if (this.field_74170_n / 6 % 2 == 0)
+                else if (this.updateCount / 6 % 2 == 0)
                 {
                     var8 = var8 + "\u00a70_";
                 }
@@ -422,7 +432,7 @@ public class GuiScreenBook extends GuiScreen
             }
 
             var9 = this.fontRenderer.getStringWidth(var7);
-            this.fontRenderer.drawString(var7, var5 - var9 + this.field_74171_o - 44, var6 + 16, 0);
+            this.fontRenderer.drawString(var7, var5 - var9 + this.bookImageWidth - 44, var6 + 16, 0);
             this.fontRenderer.drawSplitString(var8, var5 + 36, var6 + 16 + 16, 116, 0);
         }
 

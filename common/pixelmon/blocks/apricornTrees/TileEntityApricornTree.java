@@ -32,7 +32,7 @@ public class TileEntityApricornTree extends TileEntity {
 	}
 
 	@Override
-	public Packet getAuxillaryInfoPacket() {
+	public Packet getDescriptionPacket() {
 		NBTTagCompound var1 = new NBTTagCompound();
 		this.writeToNBT(var1);
 		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, var1);

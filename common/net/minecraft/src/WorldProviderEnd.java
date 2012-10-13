@@ -11,7 +11,7 @@ public class WorldProviderEnd extends WorldProvider
     public void registerWorldChunkManager()
     {
         this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.sky, 0.5F, 0.0F);
-        this.worldType = 1;
+        this.dimensionId = 1;
         this.hasNoSky = true;
     }
 
@@ -112,7 +112,7 @@ public class WorldProviderEnd extends WorldProvider
     }
 
     /**
-     * Gets the hard-coded portal location to use when entering this dimension
+     * Gets the hard-coded portal location to use when entering this dimension.
      */
     public ChunkCoordinates getEntrancePortalLocation()
     {
@@ -134,7 +134,10 @@ public class WorldProviderEnd extends WorldProvider
         return true;
     }
 
-    public String func_80007_l()
+    /**
+     * Returns the dimension's name, e.g. "The End", "Nether", or "Overworld".
+     */
+    public String getDimensionName()
     {
         return "The End";
     }

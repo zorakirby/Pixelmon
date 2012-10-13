@@ -12,6 +12,9 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityClientPlayerMP;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.KeyBinding;
+import net.minecraft.src.NetClientHandler;
+import net.minecraft.src.NetHandler;
+import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.Render;
 import net.minecraft.src.RenderManager;
@@ -23,6 +26,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.MapDifference;
 import com.google.common.collect.MapDifference.ValueDifference;
+import com.google.common.collect.MapMaker;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
@@ -41,12 +45,6 @@ import cpw.mods.fml.common.registry.EntityRegistry.EntityRegistration;
 
 public class ModLoaderClientHelper implements IModLoaderSidedHelper
 {
-
-    /**
-     * @param mod
-     * @param inventoryRenderer
-     * @return
-     */
     public static int obtainBlockModelIdFor(BaseMod mod, boolean inventoryRenderer)
     {
         int renderId=RenderingRegistry.getNextAvailableRenderId();
@@ -155,5 +153,25 @@ public class ModLoaderClientHelper implements IModLoaderSidedHelper
     public void sendClientPacket(BaseModProxy mod, Packet250CustomPayload packet)
     {
         ((net.minecraft.src.BaseMod)mod).clientCustomPayload(client.thePlayer.sendQueue, packet);
+    }
+
+    private Map<NetworkManager,NetHandler> managerLookups = new MapMaker().weakKeys().weakValues().makeMap();
+    @Override
+    public void clientConnectionOpened(NetHandler netClientHandler, NetworkManager manager, BaseModProxy mod)
+    {
+        managerLookups.put(manager, netClientHandler);
+        ((BaseMod)mod).clientConnect((NetClientHandler)netClientHandler);
+    }
+
+
+    @Override
+    public boolean clientConnectionClosed(NetworkManager manager, BaseModProxy mod)
+    {
+        if (managerLookups.containsKey(manager))
+        {
+            ((BaseMod)mod).clientDisconnect((NetClientHandler) managerLookups.get(manager));
+            return true;
+        }
+        return false;
     }
 }

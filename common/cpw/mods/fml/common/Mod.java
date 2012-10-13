@@ -32,31 +32,40 @@ public @interface Mod
 {
     /**
      * The unique mod identifier for this mod
-     * @return
      */
     String modid();
     /**
      * A user friendly name for the mod
-     * @return
      */
     String name() default "";
     /**
      * A version string for this mod
-     * @return
      */
     String version() default "";
     /**
      * A simple dependency string for this mod (see modloader's "priorities" string specification)
-     * @return
      */
     String dependencies() default "";
     /**
      * Whether to use the mcmod.info metadata by default for this mod.
      * If true, settings in the mcmod.info file will override settings in these annotations.
-     * @return
      */
     boolean useMetadata() default false;
 
+    /**
+     * The acceptable range of minecraft versions that this mod will load and run in
+     * The default ("empty string") indicates that only the current minecraft version is acceptable.
+     * FML will refuse to run with an error if the minecraft version is not in this range across all mods.
+     * @return A version range as specified by the maven version range specification or the empty string
+     */
+    String acceptedMinecraftVersions() default "";
+    /**
+     * An optional bukkit plugin that will be injected into the bukkit plugin framework if
+     * this mod is loaded into the FML framework and the bukkit coremod is present.
+     * Instances of the bukkit plugin can be obtained via the {@link BukkitPluginRef} annotation on fields.
+     * @return
+     */
+    String bukkitPlugin() default "";
     /**
      * Mark the designated method as being called at the "pre-initialization" phase
      * @author cpw
@@ -115,7 +124,6 @@ public @interface Mod
     public @interface Instance {
         /**
          * The mod object to inject into this field
-         * @return
          */
         String value() default "";
     }
@@ -129,7 +137,6 @@ public @interface Mod
     public @interface Metadata {
         /**
          * The mod id specifying the metadata to load here
-         * @return
          */
         String value() default "";
     }
@@ -143,12 +150,10 @@ public @interface Mod
     public @interface Block {
         /**
          * The block's name
-         * @return
          */
         String name();
         /**
          * The associated ItemBlock subtype for the item (can be null for an ItemBlock)
-         * @return
          */
         Class<?> itemTypeClass() default ItemBlock.class;
     }
@@ -162,12 +167,10 @@ public @interface Mod
     public @interface Item {
         /**
          * The name of the item
-         * @return
          */
         String name();
         /**
          * The type of the item
-         * @return
          */
         String typeClass();
     }

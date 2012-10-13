@@ -1,5 +1,6 @@
 package net.minecraft.src;
 
+import cpw.mods.fml.client.TextureFXManager;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -142,10 +143,17 @@ public class ItemRenderer
         float var10;
         float var11;
 
-        for (var8 = 0; var8 < 16; ++var8)
+        /* Gets the width/16 of the currently bound texture, used 
+         * to fix the side rendering issues on textures != 16 */
+        int tileSize = TextureFXManager.instance().getTextureDimensions(GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D)).width / 16;
+        
+        float tx = 1.0f / (32 * tileSize);
+        float tz = 1.0f /  tileSize;
+
+        for (var8 = 0; var8 < tileSize; ++var8)
         {
-            var9 = (float)var8 / 16.0F;
-            var10 = par2 + (par4 - par2) * var9 - 0.001953125F;
+            var9 = (float)var8 / tileSize;
+            var10 = par2 + (par4 - par2) * var9 - tx;
             var11 = var6 * var9;
             par1Tessellator.addVertexWithUV((double)var11, 0.0D, (double)(0.0F - var7), (double)var10, (double)par5);
             par1Tessellator.addVertexWithUV((double)var11, 0.0D, 0.0D, (double)var10, (double)par5);
@@ -157,11 +165,11 @@ public class ItemRenderer
         par1Tessellator.startDrawingQuads();
         par1Tessellator.setNormal(1.0F, 0.0F, 0.0F);
 
-        for (var8 = 0; var8 < 16; ++var8)
+        for (var8 = 0; var8 < tileSize; ++var8)
         {
-            var9 = (float)var8 / 16.0F;
-            var10 = par2 + (par4 - par2) * var9 - 0.001953125F;
-            var11 = var6 * var9 + 0.0625F;
+            var9 = (float)var8 / tileSize;
+            var10 = par2 + (par4 - par2) * var9 - tx;
+            var11 = var6 * var9 + tz;
             par1Tessellator.addVertexWithUV((double)var11, 1.0D, (double)(0.0F - var7), (double)var10, (double)par3);
             par1Tessellator.addVertexWithUV((double)var11, 1.0D, 0.0D, (double)var10, (double)par3);
             par1Tessellator.addVertexWithUV((double)var11, 0.0D, 0.0D, (double)var10, (double)par5);
@@ -172,11 +180,11 @@ public class ItemRenderer
         par1Tessellator.startDrawingQuads();
         par1Tessellator.setNormal(0.0F, 1.0F, 0.0F);
 
-        for (var8 = 0; var8 < 16; ++var8)
+        for (var8 = 0; var8 < tileSize; ++var8)
         {
-            var9 = (float)var8 / 16.0F;
-            var10 = par5 + (par3 - par5) * var9 - 0.001953125F;
-            var11 = var6 * var9 + 0.0625F;
+            var9 = (float)var8 / tileSize;
+            var10 = par5 + (par3 - par5) * var9 - tx;
+            var11 = var6 * var9 + tz;
             par1Tessellator.addVertexWithUV(0.0D, (double)var11, 0.0D, (double)par2, (double)var10);
             par1Tessellator.addVertexWithUV((double)var6, (double)var11, 0.0D, (double)par4, (double)var10);
             par1Tessellator.addVertexWithUV((double)var6, (double)var11, (double)(0.0F - var7), (double)par4, (double)var10);
@@ -187,10 +195,10 @@ public class ItemRenderer
         par1Tessellator.startDrawingQuads();
         par1Tessellator.setNormal(0.0F, -1.0F, 0.0F);
 
-        for (var8 = 0; var8 < 16; ++var8)
+        for (var8 = 0; var8 < tileSize; ++var8)
         {
-            var9 = (float)var8 / 16.0F;
-            var10 = par5 + (par3 - par5) * var9 - 0.001953125F;
+            var9 = (float)var8 / tileSize;
+            var10 = par5 + (par3 - par5) * var9 - tx;
             var11 = var6 * var9;
             par1Tessellator.addVertexWithUV((double)var6, (double)var11, 0.0D, (double)par4, (double)var10);
             par1Tessellator.addVertexWithUV(0.0D, (double)var11, 0.0D, (double)par2, (double)var10);

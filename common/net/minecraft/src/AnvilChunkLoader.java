@@ -20,7 +20,7 @@ public class AnvilChunkLoader implements IThreadedFileIO, IChunkLoader
     private Object syncLockObject = new Object();
 
     /** Save directory for chunks using the Anvil format */
-    private final File chunkSaveLocation;
+    final File chunkSaveLocation;
 
     public AnvilChunkLoader(File par1File)
     {
@@ -71,7 +71,7 @@ public class AnvilChunkLoader implements IThreadedFileIO, IChunkLoader
     }
 
     /**
-     * wraps readChunkFromNBT. checks the coordinates, and several NBT tags
+     * Wraps readChunkFromNBT. Checks the coordinates and several NBT tags.
      */
     protected Chunk checkedReadChunkFromNBT(World par1World, int par2, int par3, NBTTagCompound par4NBTTagCompound)
     {

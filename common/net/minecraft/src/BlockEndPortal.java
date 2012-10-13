@@ -19,7 +19,7 @@ public class BlockEndPortal extends BlockContainer
     }
 
     /**
-     * each class overrdies this to return a new <className>
+     * Returns a new instance of a block's tile entity class. Called on placing the block.
      */
     public TileEntity createNewTileEntity(World par1World)
     {
@@ -118,7 +118,7 @@ public class BlockEndPortal extends BlockContainer
     {
         if (!bossDefeated)
         {
-            if (par1World.provider.worldType != 0)
+            if (par1World.provider.dimensionId != 0)
             {
                 par1World.setBlockWithNotify(par2, par3, par4, 0);
             }

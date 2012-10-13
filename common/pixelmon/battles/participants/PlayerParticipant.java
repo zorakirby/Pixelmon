@@ -48,7 +48,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		currentPixelmon.battleStats.clearBattleStats();
 		currentPixelmon.EndBattle();
-		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 	}
 
 	@Override
@@ -73,12 +73,12 @@ public class PlayerParticipant implements IBattleParticipant {
 			bc.endBattle(false);
 			return null;
 		}
-		((EntityPlayerMP) player).serverForThisPlayer.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 		int x = 0, y = 0;
 		x = currentPokemon().getPokemonId();
 		PixelmonDataPacket p = new PixelmonDataPacket(participant2.currentPokemon(), EnumPackets.AddToTempStore);
 		y = 0;
-		player.serverForThisPlayer.sendPacketToPlayer(p.getPacket());
+		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 
 		bc.waitForMove(this);
 		player.openGui(Pixelmon.instance, EnumGui.ChooseAttack.getIndex(), player.worldObj, x, y, BattleRegistry.getIndex(bc));

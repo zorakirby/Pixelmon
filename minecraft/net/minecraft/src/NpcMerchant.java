@@ -6,7 +6,8 @@ import cpw.mods.fml.common.asm.SideOnly;
 @SideOnly(Side.CLIENT)
 public class NpcMerchant implements IMerchant
 {
-    private InventoryMerchant field_70937_a;
+    /** Instance of Merchants Inventory. */
+    private InventoryMerchant theMerchantInventory;
 
     /** This merchant's current player customer. */
     private EntityPlayer customer;
@@ -17,7 +18,7 @@ public class NpcMerchant implements IMerchant
     public NpcMerchant(EntityPlayer par1EntityPlayer)
     {
         this.customer = par1EntityPlayer;
-        this.field_70937_a = new InventoryMerchant(par1EntityPlayer, this);
+        this.theMerchantInventory = new InventoryMerchant(par1EntityPlayer, this);
     }
 
     public EntityPlayer getCustomer()

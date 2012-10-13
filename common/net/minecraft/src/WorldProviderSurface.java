@@ -2,7 +2,10 @@ package net.minecraft.src;
 
 public class WorldProviderSurface extends WorldProvider
 {
-    public String func_80007_l()
+    /**
+     * Returns the dimension's name, e.g. "The End", "Nether", or "Overworld".
+     */
+    public String getDimensionName()
     {
         return "Overworld";
     }

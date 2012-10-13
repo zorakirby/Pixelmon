@@ -2,25 +2,29 @@ package net.minecraft.src;
 
 public class ReportedException extends RuntimeException
 {
-    private final CrashReport field_71576_a;
+    /** Instance of CrashReport. */
+    private final CrashReport theReportedExceptionCrashReport;
 
     public ReportedException(CrashReport par1CrashReport)
     {
-        this.field_71576_a = par1CrashReport;
+        this.theReportedExceptionCrashReport = par1CrashReport;
     }
 
-    public CrashReport func_71575_a()
+    /**
+     * Gets the CrashReport Instance.
+     */
+    public CrashReport getTheReportedExceptionCrashReport()
     {
-        return this.field_71576_a;
+        return this.theReportedExceptionCrashReport;
     }
 
     public Throwable getCause()
     {
-        return this.field_71576_a.func_71505_b();
+        return this.theReportedExceptionCrashReport.getCrashCause();
     }
 
     public String getMessage()
     {
-        return this.field_71576_a.getDescription();
+        return this.theReportedExceptionCrashReport.getDescription();
     }
 }

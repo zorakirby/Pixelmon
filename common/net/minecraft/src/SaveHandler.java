@@ -8,15 +8,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+
 public class SaveHandler implements ISaveHandler, IPlayerFileData
 {
     /** Reference to the logger. */
     private static final Logger logger = Logger.getLogger("Minecraft");
 
-    /** The path to the current savegame directory */
-    private final File saveDirectory;
+    /** The directory in which to save world data. */
+    private final File worldDirectory;
 
-    /** The directory in which to save player information */
+    /** The directory in which to save player data. */
     private final File playersDirectory;
     private final File mapDataDir;
 
@@ -30,10 +32,10 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
 
     public SaveHandler(File par1File, String par2Str, boolean par3)
     {
-        this.saveDirectory = new File(par1File, par2Str);
-        this.saveDirectory.mkdirs();
-        this.playersDirectory = new File(this.saveDirectory, "players");
-        this.mapDataDir = new File(this.saveDirectory, "data");
+        this.worldDirectory = new File(par1File, par2Str);
+        this.worldDirectory.mkdirs();
+        this.playersDirectory = new File(this.worldDirectory, "players");
+        this.mapDataDir = new File(this.worldDirectory, "data");
         this.mapDataDir.mkdirs();
         this.saveDirectoryName = par2Str;
 
@@ -52,7 +54,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     {
         try
         {
-            File var1 = new File(this.saveDirectory, "session.lock");
+            File var1 = new File(this.worldDirectory, "session.lock");
             DataOutputStream var2 = new DataOutputStream(new FileOutputStream(var1));
 
             try
@@ -76,7 +78,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
      */
     protected File getSaveDirectory()
     {
-        return this.saveDirectory;
+        return this.worldDirectory;
     }
 
     /**
@@ -86,7 +88,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     {
         try
         {
-            File var1 = new File(this.saveDirectory, "session.lock");
+            File var1 = new File(this.worldDirectory, "session.lock");
             DataInputStream var2 = new DataInputStream(new FileInputStream(var1));
 
             try
@@ -120,17 +122,19 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
      */
     public WorldInfo loadWorldInfo()
     {
-        File var1 = new File(this.saveDirectory, "level.dat");
+        File var1 = new File(this.worldDirectory, "level.dat");
         NBTTagCompound var2;
         NBTTagCompound var3;
-
+        WorldInfo worldInfo = null;
         if (var1.exists())
         {
             try
             {
                 var2 = CompressedStreamTools.readCompressed(new FileInputStream(var1));
                 var3 = var2.getCompoundTag("Data");
-                return new WorldInfo(var3);
+                worldInfo = new WorldInfo(var3);
+                FMLCommonHandler.instance().handleWorldDataLoad(this, worldInfo, var2);
+                return worldInfo;
             }
             catch (Exception var5)
             {
@@ -138,7 +142,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
             }
         }
 
-        var1 = new File(this.saveDirectory, "level.dat_old");
+        var1 = new File(this.worldDirectory, "level.dat_old");
 
         if (var1.exists())
         {
@@ -146,7 +150,9 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
             {
                 var2 = CompressedStreamTools.readCompressed(new FileInputStream(var1));
                 var3 = var2.getCompoundTag("Data");
-                return new WorldInfo(var3);
+                worldInfo = new WorldInfo(var3);
+                FMLCommonHandler.instance().handleWorldDataLoad(this, worldInfo, var2);
+                return worldInfo;
             }
             catch (Exception var4)
             {
@@ -165,12 +171,12 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
         NBTTagCompound var3 = par1WorldInfo.cloneNBTCompound(par2NBTTagCompound);
         NBTTagCompound var4 = new NBTTagCompound();
         var4.setTag("Data", var3);
-
+        FMLCommonHandler.instance().handleWorldDataSave(this, par1WorldInfo, var4);
         try
         {
-            File var5 = new File(this.saveDirectory, "level.dat_new");
-            File var6 = new File(this.saveDirectory, "level.dat_old");
-            File var7 = new File(this.saveDirectory, "level.dat");
+            File var5 = new File(this.worldDirectory, "level.dat_new");
+            File var6 = new File(this.worldDirectory, "level.dat_old");
+            File var7 = new File(this.worldDirectory, "level.dat");
             CompressedStreamTools.writeCompressed(var4, new FileOutputStream(var5));
 
             if (var6.exists())
@@ -206,12 +212,12 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
         NBTTagCompound var2 = par1WorldInfo.getNBTTagCompound();
         NBTTagCompound var3 = new NBTTagCompound();
         var3.setTag("Data", var2);
-
+        FMLCommonHandler.instance().handleWorldDataSave(this, par1WorldInfo, var3);
         try
         {
-            File var4 = new File(this.saveDirectory, "level.dat_new");
-            File var5 = new File(this.saveDirectory, "level.dat_old");
-            File var6 = new File(this.saveDirectory, "level.dat");
+            File var4 = new File(this.worldDirectory, "level.dat_new");
+            File var5 = new File(this.worldDirectory, "level.dat_old");
+            File var6 = new File(this.worldDirectory, "level.dat");
             CompressedStreamTools.writeCompressed(var3, new FileOutputStream(var4));
 
             if (var5.exists())
@@ -309,7 +315,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     }
 
     /**
-     * Gets an array of Usernames there are available player.dat files for.
+     * Returns an array of usernames for which player.dat exists for.
      */
     public String[] getAvailablePlayerDat()
     {
@@ -340,7 +346,7 @@ public class SaveHandler implements ISaveHandler, IPlayerFileData
     }
 
     /**
-     * Returns the name of the directory where world information is saved
+     * Returns the name of the directory where world information is saved.
      */
     public String getSaveDirectoryName()
     {

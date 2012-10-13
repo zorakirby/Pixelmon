@@ -100,7 +100,12 @@ public abstract class EntityLiving extends Entity
     public float field_70730_aX = (float)(Math.random() * 0.8999999761581421D + 0.10000000149011612D);
     public float prevLegYaw;
     public float legYaw;
-    public float field_70754_ba;
+
+    /**
+     * Only relevant when legYaw is not 0(the entity is moving). Influences where in its swing legs and arms currently
+     * are.
+     */
+    public float legSwing;
 
     /** The most recent player that has attacked this entity */
     protected EntityPlayer attackingPlayer = null;
@@ -1372,7 +1377,7 @@ public abstract class EntityLiving extends Entity
         }
 
         this.legYaw += (var11 - this.legYaw) * 0.4F;
-        this.field_70754_ba += this.legYaw;
+        this.legSwing += this.legYaw;
     }
 
     /**
@@ -2221,6 +2226,32 @@ public abstract class EntityLiving extends Entity
             var4.rotateAroundY(-this.rotationYaw * (float)Math.PI / 180.0F);
             var4 = var4.addVector(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ);
             this.worldObj.spawnParticle("iconcrack_" + par1ItemStack.getItem().shiftedIndex, var4.xCoord, var4.yCoord, var4.zCoord, var3.xCoord, var3.yCoord + 0.05D, var3.zCoord);
+        }
+    }
+
+    /***
+     * Removes all potion effects that have curativeItem as a curative item for its effect
+     * @param curativeItem The itemstack we are using to cure potion effects
+     */
+    public void curePotionEffects(ItemStack curativeItem)
+    {
+        Iterator<Integer> potionKey = activePotionsMap.keySet().iterator();
+        
+        if (worldObj.isRemote)
+        {
+            return;
+        }
+        
+        while (potionKey.hasNext())
+        {
+            Integer key = potionKey.next();
+            PotionEffect effect = (PotionEffect)activePotionsMap.get(key);
+            
+            if (effect.isCurativeItem(curativeItem))
+            {
+                potionKey.remove();
+                onFinishedPotionEffect(effect);
+            }
         }
     }
 }

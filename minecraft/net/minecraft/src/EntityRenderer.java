@@ -732,7 +732,7 @@ public class EntityRenderer
                 var13 = var13 * 0.96F + 0.03F;
                 var14 = var14 * 0.96F + 0.03F;
 
-                if (var1.provider.worldType == 1)
+                if (var1.provider.dimensionId == 1)
                 {
                     var12 = 0.22F + var5 * 0.75F;
                     var13 = 0.28F + var10 * 0.75F;
@@ -1029,7 +1029,7 @@ public class EntityRenderer
                 var5.renderEntities(var4.getPosition(par1), var14, par1);
                 this.enableLightmap((double)par1);
                 this.mc.mcProfiler.endStartSection("litParticles");
-                var6.func_78872_b(var4, par1);
+                var6.renderLitParticles(var4, par1);
                 RenderHelper.disableStandardItemLighting();
                 this.setupFog(0, par1);
                 this.mc.mcProfiler.endStartSection("particles");
@@ -1120,7 +1120,7 @@ public class EntityRenderer
             this.mc.mcProfiler.endStartSection("destroyProgress");
             GL11.glEnable(GL11.GL_BLEND);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-            var5.drawBlockDamageTexture(Tessellator.instance, (EntityPlayer)var4, par1);
+            var5.drawBlockDamageTexture(Tessellator.instance, var4, par1);
             GL11.glDisable(GL11.GL_BLEND);
             this.mc.mcProfiler.endStartSection("weather");
             this.renderRainSnow(par1);

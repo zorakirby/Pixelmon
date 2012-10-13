@@ -13,13 +13,16 @@ public class CallableServerProfiler implements Callable
         this.minecraftServerProfiler = par1MinecraftServer;
     }
 
-    public String func_74271_a()
+    /**
+     * Gets if Server Profiler (aka Snooper) is enabled.
+     */
+    public String getServerProfilerEnabled()
     {
-        return this.minecraftServerProfiler.theProfiler.profilingEnabled ? this.minecraftServerProfiler.theProfiler.func_76322_c() : "N/A (disabled)";
+        return this.minecraftServerProfiler.theProfiler.profilingEnabled ? this.minecraftServerProfiler.theProfiler.getNameOfLastSection() : "N/A (disabled)";
     }
 
     public Object call()
     {
-        return this.func_74271_a();
+        return this.getServerProfilerEnabled();
     }
 }

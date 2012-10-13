@@ -14,7 +14,7 @@ public class BlockVine extends Block implements IShearable
     {
         super(par1, 143, Material.vine);
         this.setTickRandomly(true);
-        this.setCreativeTab(CreativeTabs.tabDeco);
+        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     /**

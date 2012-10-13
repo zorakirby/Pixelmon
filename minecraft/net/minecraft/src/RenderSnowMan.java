@@ -22,7 +22,10 @@ public class RenderSnowMan extends RenderLiving
         this.setRenderPassModel(this.snowmanModel);
     }
 
-    protected void func_77093_a(EntitySnowman par1EntitySnowman, float par2)
+    /**
+     * Renders this snowman's pumpkin.
+     */
+    protected void renderSnowmanPumpkin(EntitySnowman par1EntitySnowman, float par2)
     {
         super.renderEquippedItems(par1EntitySnowman, par2);
         ItemStack var3 = new ItemStack(Block.pumpkin, 1);
@@ -30,7 +33,7 @@ public class RenderSnowMan extends RenderLiving
         if (var3 != null && var3.getItem() instanceof ItemBlock)
         {
             GL11.glPushMatrix();
-            this.snowmanModel.field_78195_c.postRender(0.0625F);
+            this.snowmanModel.head.postRender(0.0625F);
 
             IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(var3, EQUIPPED);
             boolean is3D = (customRenderer != null && customRenderer.shouldUseRenderHelper(EQUIPPED, var3, BLOCK_3D));
@@ -50,6 +53,6 @@ public class RenderSnowMan extends RenderLiving
 
     protected void renderEquippedItems(EntityLiving par1EntityLiving, float par2)
     {
-        this.func_77093_a((EntitySnowman)par1EntityLiving, par2);
+        this.renderSnowmanPumpkin((EntitySnowman)par1EntityLiving, par2);
     }
 }
