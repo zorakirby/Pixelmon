@@ -41,13 +41,13 @@ public class PixelmonConfig {
 		config.load();
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
-		allowNonPixelmonMobs = config.getOrCreateBooleanProperty("Allow vanilla mobs", "general", false).getBoolean(false);
-		maxPokemonPerChunk = config.getOrCreateIntProperty("Max number of pokemon per chunk", "general", 4).getInt(4);
-		chanceOfNoPokemon = config.getOrCreateIntProperty("Percent chance of no pokemon in chunk", "general", 30).getInt(20);
-		scaleModelsUp = config.getOrCreateBooleanProperty("Scale Models Up", "general", true).getBoolean(true);
-		idTrainers = config.getOrCreateIntProperty("Trainer ID", "IDs", 199).getInt(199);
-		idPixelmon = config.getOrCreateIntProperty("Pixelmon ID", "IDs", 200).getInt(200);
-		idPokeball = config.getOrCreateIntProperty("Pokeball ID", "IDs", 201).getInt(201);
+		allowNonPixelmonMobs = config.get("Allow vanilla mobs", "general", false).getBoolean(false);
+		maxPokemonPerChunk = config.get("Max number of pokemon per chunk", "general", 4).getInt(4);
+		chanceOfNoPokemon = config.get("Percent chance of no pokemon in chunk", "general", 30).getInt(20);
+		scaleModelsUp = config.get("Scale Models Up", "general", true).getBoolean(true);
+		idTrainers = config.get("Trainer ID", "IDs", 199).getInt(199);
+		idPixelmon = config.get("Pixelmon ID", "IDs", 200).getInt(200);
+		idPokeball = config.get("Pokeball ID", "IDs", 201).getInt(201);
 		config.save();
 		
 		PixelmonItems.addNames();

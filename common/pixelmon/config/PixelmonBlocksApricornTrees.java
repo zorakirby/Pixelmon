@@ -41,13 +41,13 @@ public class PixelmonBlocksApricornTrees {
 	public static Block apricornTreeRed;
 	
 	public static void load(Configuration configuration) {
-		apTreeBlackId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ApricornTreeBlack", 208).value);
-		apTreeWhiteId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ApricornTreeWhite", 209).value);
-		apTreeOrangeId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ApricornTreeOrange", 210).value);
-		apTreeGreenId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ApricornTreeGreen", 211).value);
-		apTreeBlueId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ApricornTreeBlue", 212).value);
-		apTreeYellowId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ApricornTreeYellow", 213).value);
-		apTreeRedId = Integer.parseInt(configuration.getOrCreateBlockIdProperty("ApricornTreeRed", 214).value);
+		apTreeBlackId = Integer.parseInt(configuration.getBlock("ApricornTreeBlack", 208).value);
+		apTreeWhiteId = Integer.parseInt(configuration.getBlock("ApricornTreeWhite", 209).value);
+		apTreeOrangeId = Integer.parseInt(configuration.getBlock("ApricornTreeOrange", 210).value);
+		apTreeGreenId = Integer.parseInt(configuration.getBlock("ApricornTreeGreen", 211).value);
+		apTreeBlueId = Integer.parseInt(configuration.getBlock("ApricornTreeBlue", 212).value);
+		apTreeYellowId = Integer.parseInt(configuration.getBlock("ApricornTreeYellow", 213).value);
+		apTreeRedId = Integer.parseInt(configuration.getBlock("ApricornTreeRed", 214).value);
 		apricornTreeBlack = new BlockApricornTree(apTreeBlackId, EnumApricornTrees.Black).setBlockName("Black Apricorn Tree");
 		apricornTreeWhite = new BlockApricornTree(apTreeWhiteId, EnumApricornTrees.White).setBlockName("White Apricorn Tree");
 		apricornTreePink = new BlockApricornTree(apTreeOrangeId, EnumApricornTrees.Pink).setBlockName("Pink Apricorn Tree");
