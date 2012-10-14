@@ -37,4 +37,16 @@ public class PixelmonServerStore {
 		}
 		return null;
 	}
+
+	public static void addToList(PixelmonDataPacket p) {
+		store.add(p);
+	}
+
+	public static PixelmonDataPacket getPixelmonDataFromID(int id) {
+		for (PixelmonDataPacket p : store) {
+			if (p.pokemonID == id)
+				return p;
+		}
+		return null;
+	}
 }

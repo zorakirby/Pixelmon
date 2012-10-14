@@ -22,4 +22,5 @@ public interface IBattleParticipant {
 	void updatePokemon();
 	void update();
 	EntityLiving getEntity();
+	void updateOpponent(IBattleParticipant opponent);
 }
