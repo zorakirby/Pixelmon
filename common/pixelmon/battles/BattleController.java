@@ -51,6 +51,7 @@ public class BattleController {
 	public ArrayList<StatusEffectBase> battleStatusList = new ArrayList<StatusEffectBase>();
 	private boolean battleEnded = false;
 	public int turnCount = 0;
+	public BattlePerspective battlePerspective;
 
 	public BattleController(IBattleParticipant participant1, IBattleParticipant participant2) throws Exception {
 		this.participant1 = participant1;
@@ -62,8 +63,15 @@ public class BattleController {
 		BattleRegistry.registerBattle(this);
 		participant1.setBattleController(this);
 		participant2.setBattleController(this);
+		ChatHandler.sendBattleMessage(participant1.currentPokemon().getOwner(), "You initiated a battle with " + participant2.getName() + "!");
+		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), participant1.getName() + " initiated a battle with you!");
+		participant1.StartBattle(participant2);
+		participant2.StartBattle(participant1);
 		participant1.currentPokemon().battleController = this;
 		participant2.currentPokemon().battleController = this;
+		participant1.updateOpponent(participant2);
+		participant2.updateOpponent(participant1);
+		battlePerspective = BattlePerspective.Player;
 		if (participant1.canGainXP())
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
 		if (participant2.canGainXP())
@@ -97,6 +105,8 @@ public class BattleController {
 	}
 
 	public void update() {
+		participant1.update();
+		participant2.update();
 		if (isWaiting() || isCapturing)
 			return;
 		int tickTop;
@@ -105,6 +115,7 @@ public class BattleController {
 		else
 			tickTop = 50;
 		if (battleTicks++ > tickTop) {
+
 			if (moveStage == MoveStage.PickAttacks) { // Pick Moves
 				if (attacks[0] != null)
 					attacks[0].flinched = false;
@@ -192,8 +203,8 @@ public class BattleController {
 				participant.currentPokemon().battleController = this;
 				name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon()
 						.getNickname();
-				ChatHandler.sendBattleMessage(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out " + name
-						+ "!");
+				ChatHandler.sendBattleMessage(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out "
+						+ name + "!");
 				attackersList1.clear();
 				attackersList2.clear();
 				if (participant == participant1) {
@@ -509,5 +520,12 @@ public class BattleController {
 
 	public void endWaitForCapture() {
 		isCapturing = false;
+	}
+
+	public IBattleParticipant getOpponent(EntityPlayer player) {
+		if (participant1 instanceof PlayerParticipant && ((PlayerParticipant) participant1).player == player)
+			return participant2;
+		else
+			return participant1;
 	}
 }
