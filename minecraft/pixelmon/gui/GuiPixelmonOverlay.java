@@ -32,6 +32,7 @@ public class GuiPixelmonOverlay extends Gui {
 	public static boolean isGuiMinimized = false;
 	public FontRenderer fontRenderer;
 	public static int selectedPixelmon;
+	public static boolean isVisible = true;
 
 	public GuiPixelmonOverlay() {
 		fontRenderer = Minecraft.getMinecraft().fontRenderer;
@@ -39,7 +40,7 @@ public class GuiPixelmonOverlay extends Gui {
 
 	@ForgeSubscribe
 	public void onRenderWorldLast(RenderWorldLastEvent event) {
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null)
+		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null || !isVisible)
 			return;
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);

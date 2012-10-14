@@ -3,10 +3,17 @@ package pixelmon.gui.battles;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+
+import pixelmon.ServerStorageDisplay;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
+import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonMovesetDataPacket;
 import pixelmon.entities.EntityCamera;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.gui.ContainerEmpty;
+import pixelmon.gui.GuiPixelmonOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
@@ -19,7 +26,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		MainMenu, ChoosePokemon, UseBag, ChooseAttack;
+		Waiting, MainMenu, ChoosePokemon, UseBag, ChooseAttack;
 	}
 
 	private int battleControllerIndex;
@@ -32,8 +39,8 @@ public class GuiBattle extends GuiContainer {
 	public GuiBattle(int battleControllerIndex) {
 		super(new ContainerEmpty());
 		this.battleControllerIndex = battleControllerIndex;
-		mode = BattleMode.MainMenu;
-		ClientBattleManager.addMessage("Battle Started");
+		mode = BattleMode.Waiting;
+		GuiPixelmonOverlay.isVisible = false;
 	}
 
 	@Override
@@ -45,12 +52,14 @@ public class GuiBattle extends GuiContainer {
 		int left = (width - xSize) / 2;
 		int top = (height - ySize) / 2;
 		RenderHelper.disableStandardItemLighting();
-		if (ClientBattleManager.hasMoreMessages())
+		if (ClientBattleManager.hasMoreMessages() || mode == BattleMode.Waiting)
 			drawMessageScreen();
 		else if (mode == BattleMode.MainMenu)
 			drawMainMenu(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseAttack)
 			drawChooseAttack(mouseX, mouseY);
+		else if (mode == BattleMode.ChoosePokemon)
+			drawChoosePokemon(mouseX, mouseY);
 
 	}
 
@@ -62,12 +71,27 @@ public class GuiBattle extends GuiContainer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f);
-		drawCenteredString(fontRenderer, ClientBattleManager.getNextMessage(), width / 2, height - 35, 0xFFFFFF);
-		flashCount++;
-		if (flashCount > 30) {
-			drawImageQuad(guiIndex, width / 2 + 130, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f);
-			if (flashCount > 60)
+		if (mode != BattleMode.Waiting || ClientBattleManager.hasMoreMessages()) {
+			drawCenteredString(fontRenderer, ClientBattleManager.getNextMessage(), width / 2, height - 35, 0xFFFFFF);
+			flashCount++;
+			if (flashCount > 30) {
+				drawImageQuad(guiIndex, width / 2 + 130, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f);
+				if (flashCount > 60)
+					flashCount = 0;
+			}
+		} else {
+			flashCount++;
+			if (flashCount >= 160)
 				flashCount = 0;
+			if (flashCount < 40)
+				drawCenteredString(fontRenderer, "Waiting", width / 2, height - 35, 0xFFFFFF);
+			else if (flashCount < 80)
+				drawCenteredString(fontRenderer, "Waiting.", width / 2, height - 35, 0xFFFFFF);
+			else if (flashCount < 120)
+				drawCenteredString(fontRenderer, "Waiting..", width / 2, height - 35, 0xFFFFFF);
+			else if (flashCount < 160)
+				drawCenteredString(fontRenderer, "Waiting...", width / 2, height - 35, 0xFFFFFF);
+
 		}
 	}
 
@@ -83,11 +107,38 @@ public class GuiBattle extends GuiContainer {
 			return;
 		}
 		if (mode == BattleMode.MainMenu) {
-			int x = width / 2 + 31;
-			int y = height - guiHeight + 9;
+			int x1 = width / 2 + 31;
+			int y1 = height - guiHeight + 9;
+			int x2 = width / 2 + 90;
+			int y2 = height - guiHeight + 35;
 			int w = 48, h = 16;
-			if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+			if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h)
 				mode = BattleMode.ChooseAttack;
+			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h)
+				mode = BattleMode.ChoosePokemon;
+
+		} else if (mode == BattleMode.ChooseAttack) {
+			int x1 = width / 2 - 141;
+			int x2 = width / 2 - 50;
+			int y1 = height - guiHeight + 9;
+			int y2 = height - guiHeight + 33;
+			int w = 87, h = 20;
+			if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex,
+						ClientBattleManager.getUserPokemon().pokemonID));
+				mode = BattleMode.Waiting;
+			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex,
+						ClientBattleManager.getUserPokemon().pokemonID));
+				mode = BattleMode.Waiting;
+			} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex,
+						ClientBattleManager.getUserPokemon().pokemonID));
+				mode = BattleMode.Waiting;
+			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex,
+						ClientBattleManager.getUserPokemon().pokemonID));
+				mode = BattleMode.Waiting;
 			}
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -104,6 +155,51 @@ public class GuiBattle extends GuiContainer {
 		drawButton(width / 2 + 90, height - guiHeight + 9, 48, 16, "POKEMON", mouseX, mouseY, guiIndex, 2);
 		drawButton(width / 2 + 90, height - guiHeight + 35, 48, 16, "RUN", mouseX, mouseY, guiIndex, 3);
 		drawString(fontRenderer, "What will " + ClientBattleManager.getUserPokemon().name + " do?", width / 2 - 130, height - 35, 0xFFFFFF);
+	}
+
+	private void drawChoosePokemon(int mouseX, int mouseY) {
+		int guiIndex = -1;
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/choosePokemon.png");
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width / 2 - 128, height - 203, 256, 203, 0, 0, 1, 203f / 256f);
+
+		PixelmonDataPacket p = ClientBattleManager.getUserPokemon();
+		String numString = "";
+		if (p.nationalPokedexNumber < 10)
+			numString = "00" + p.nationalPokedexNumber;
+		else if (p.nationalPokedexNumber < 100)
+			numString = "0" + p.nationalPokedexNumber;
+		else
+			numString = "" + p.nationalPokedexNumber;
+		int var9;
+		if (p.isShiny)
+			var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+		else
+			var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+		drawImageQuad(var9, width / 2 - 121, height - 176, 24f, 24f, 0f, 0f, 1f, 1f);
+		int pos = -1;
+		for (int i = 0; i < 6; i++) {
+			if (i != p.order) {
+				pos++;
+				PixelmonDataPacket pdata = ServerStorageDisplay.pokemon[i];
+				if (pdata != null) {
+					numString = "";
+					if (pdata.nationalPokedexNumber < 10)
+						numString = "00" + pdata.nationalPokedexNumber;
+					else if (pdata.nationalPokedexNumber < 100)
+						numString = "0" + pdata.nationalPokedexNumber;
+					else
+						numString = "" + pdata.nationalPokedexNumber;
+					if (pdata.isShiny)
+						var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+					else
+						var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+					drawImageQuad(var9, width / 2 - 23, height - 192 + pos * 30, 24f, 24f, 0f, 0f, 1f, 1f);
+
+				}
+			}
+		}
 	}
 
 	private void drawChooseAttack(int mouseX, int mouseY) {
@@ -127,8 +223,8 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, "Type: ", width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2, height
 				- guiHeight + 33, 0xFFFFFF);
 		drawString(fontRenderer, moveset[mouseOverButton].type.toString(),
-				width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2 + fontRenderer.getStringWidth("Type: "), height - guiHeight + 33,
-				moveset[mouseOverButton].type.getColor());
+				width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2 + fontRenderer.getStringWidth("Type: "),
+				height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
 
 	}
 
