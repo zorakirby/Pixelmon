@@ -18,7 +18,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		ChoosePokemon, UseBag, ChooseAttack;
+		MainMenu, ChoosePokemon, UseBag, ChooseAttack;
 	}
 
 	private int battleControllerIndex;
@@ -31,7 +31,7 @@ public class GuiBattle extends GuiContainer {
 	public GuiBattle(int battleControllerIndex) {
 		super(new ContainerEmpty());
 		this.battleControllerIndex = battleControllerIndex;
-		mode = BattleMode.ChooseAttack;
+		mode = BattleMode.MainMenu;
 		ClientBattleManager.addMessage("Battle Started");
 	}
 
@@ -46,8 +46,8 @@ public class GuiBattle extends GuiContainer {
 		RenderHelper.disableStandardItemLighting();
 		if (ClientBattleManager.hasMoreMessages())
 			drawMessageScreen();
-		else if (mode == BattleMode.ChooseAttack)
-			drawChooseAttackScreen(mouseX, mouseY);
+		else if (mode == BattleMode.MainMenu)
+			drawMainMenu(mouseX, mouseY);
 
 	}
 
@@ -62,10 +62,15 @@ public class GuiBattle extends GuiContainer {
 		drawCenteredString(fontRenderer, ClientBattleManager.getNextMessage(), width/2, height-35, 0xFFFFFF);
 		flashCount++;
 		if (flashCount > 30) {
-			drawImageQuad(guiIndex, width / 2 + 286/2, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f);
+			drawImageQuad(guiIndex, width / 2 + 130, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f);
 			if (flashCount > 60)
 				flashCount = 0;
 		}
+	}
+	
+	@Override
+	public void handleKeyboardInput() {
+		return;
 	}
 	
 	@Override
@@ -74,10 +79,13 @@ public class GuiBattle extends GuiContainer {
 			ClientBattleManager.removeMessage();
 			return;
 		}
+		if (mode==BattleMode.MainMenu){
+			
+		}
 		super.mouseClicked(par1, par2, par3);
 	}
 
-	private void drawChooseAttackScreen(int mouseX, int mouseY) {
+	private void drawMainMenu(int mouseX, int mouseY) {
 		int guiIndex = -1;
 		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/battleGui1.png");
 
@@ -87,7 +95,7 @@ public class GuiBattle extends GuiContainer {
 		drawButton(width / 2 + 31, height - guiHeight + 35, 48, 16, "BAG", mouseX, mouseY, guiIndex);
 		drawButton(width / 2 + 90, height - guiHeight + 9, 48, 16, "POKEMON", mouseX, mouseY, guiIndex);
 		drawButton(width / 2 + 90, height - guiHeight + 35, 48, 16, "RUN", mouseX, mouseY, guiIndex);
-		drawString(fontRenderer, "What will " + ClientBattleManager.getUserPokemon().name + " do?", 10, 100, 0xFFFFFF);
+		drawString(fontRenderer, "What will " + ClientBattleManager.getUserPokemon().name + " do?", width/2-130, height-35, 0xFFFFFF);
 	}
 
 	private void drawButton(int x, int y, int buttonWidth, int buttonHeight, String string, int mouseX, int mouseY, int guiIndex) {

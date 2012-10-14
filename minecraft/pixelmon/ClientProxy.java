@@ -69,6 +69,8 @@ public class ClientProxy extends CommonProxy {
 		}
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class,
 				new RenderPokeball());
+		RenderingRegistry.registerEntityRenderingHandler(EntityCamera.class,
+				new RenderInvisible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class,
 				new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class,
