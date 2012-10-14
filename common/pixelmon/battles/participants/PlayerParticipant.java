@@ -143,4 +143,9 @@ public class PlayerParticipant implements IBattleParticipant {
 	public void update() {
 		cam.updatePosition();
 	}
+
+	@Override
+	public EntityLiving getEntity() {
+		return player;
+	}
 }

@@ -1,5 +1,6 @@
 package pixelmon.battles.participants;
 
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 
 import net.minecraft.src.NBTTagCompound;
@@ -115,5 +116,10 @@ public class TrainerParticipant implements IBattleParticipant {
 	public void update() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public EntityLiving getEntity() {
+		return trainer;
 	}
 }
