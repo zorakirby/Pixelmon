@@ -116,7 +116,7 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(new SleepHandler());
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
-		MinecraftForge.EVENT_BUS.register(new MigrationLoader());
+		//MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 

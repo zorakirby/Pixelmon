@@ -99,4 +99,10 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	@Override
 	public void updatePokemon() {
 	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

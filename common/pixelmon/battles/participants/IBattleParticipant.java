@@ -19,4 +19,5 @@ public interface IBattleParticipant {
 	boolean checkPokemon();
 	void setBattleController(BattleController bc);
 	void updatePokemon();
+	void update();
 }
