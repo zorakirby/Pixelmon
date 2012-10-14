@@ -7,9 +7,10 @@ import cpw.mods.fml.common.network.Player;
 
 import pixelmon.Pixelmon;
 import pixelmon.StarterList;
-import pixelmon.comm.BattleMessagePacket;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
+import pixelmon.gui.battles.ClientBattleManager;
 
 import net.minecraft.src.EntityPlayer;
 
@@ -40,10 +41,17 @@ public class ClientPacketHandler implements IPacketHandler {
 				PixelmonServerStore.clearList();
 			}else if (packetID == EnumPackets.BattleMessage.getIndex()){
 				ClientBattleManager.addMessage(Packet.readString(dataStream, 64));
-			}else if (packetID == EnumPackets.SetOpponentName.getIndex()){
-				dataStream.readInt();
-				ClientBattleManager.opponentName = Packet.readString(dataStream, 64);
-				ClientBattleManager.addMessage(ClientBattleManager.opponentName + " started a battle!");
+			}else if (packetID == EnumPackets.SetOpponent.getIndex()){
+				PixelmonDataPacket p = new PixelmonDataPacket();
+				try {
+					p.readPacketData(dataStream);
+					ClientBattleManager.opponentId = p.pokemonID;
+					PixelmonServerStore.addToList(p);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else if (packetID == EnumPackets.SetBattlingPokemon.getIndex()){
+				ClientBattleManager.pokemonId = dataStream.readInt();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

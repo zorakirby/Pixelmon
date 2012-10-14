@@ -114,12 +114,14 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public EntityLiving getEntity() {
 		return trainer;
+	}
+
+	@Override
+	public void updateOpponent(IBattleParticipant opponent) {
 	}
 }

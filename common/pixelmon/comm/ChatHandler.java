@@ -26,7 +26,7 @@ public class ChatHandler {
 
 	public static void sendBattleMessage(EntityLiving user, String string) {
 		if (user!=null){
-			((EntityPlayerMP)user).playerNetServerHandler.sendPacketToPlayer(new BattleMessagePacket(string));
+			((EntityPlayerMP)user).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createStringPacket(EnumPackets.BattleMessage, string));
 		}		
 	}
 
