@@ -11,6 +11,8 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.gui.battles.ClientBattleManager;
+import pixelmon.gui.battles.GuiBattle;
+import pixelmon.gui.battles.GuiBattle.BattleMode;
 
 import net.minecraft.src.EntityPlayer;
 
@@ -52,6 +54,8 @@ public class ClientPacketHandler implements IPacketHandler {
 				}
 			}else if (packetID == EnumPackets.SetBattlingPokemon.getIndex()){
 				ClientBattleManager.pokemonId = dataStream.readInt();
+			}else if (packetID == EnumPackets.BackToMainMenu.getIndex()){
+				GuiBattle.mode = BattleMode.MainMenu;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

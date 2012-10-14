@@ -3,6 +3,10 @@ package pixelmon.gui.battles;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonMovesetDataPacket;
 import pixelmon.entities.EntityCamera;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -19,7 +23,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		MainMenu, ChoosePokemon, UseBag, ChooseAttack;
+		Waiting, MainMenu, ChoosePokemon, UseBag, ChooseAttack;
 	}
 
 	private int battleControllerIndex;
@@ -32,8 +36,7 @@ public class GuiBattle extends GuiContainer {
 	public GuiBattle(int battleControllerIndex) {
 		super(new ContainerEmpty());
 		this.battleControllerIndex = battleControllerIndex;
-		mode = BattleMode.MainMenu;
-		ClientBattleManager.addMessage("Battle Started");
+		mode = BattleMode.Waiting;
 	}
 
 	@Override
@@ -45,7 +48,7 @@ public class GuiBattle extends GuiContainer {
 		int left = (width - xSize) / 2;
 		int top = (height - ySize) / 2;
 		RenderHelper.disableStandardItemLighting();
-		if (ClientBattleManager.hasMoreMessages())
+		if (ClientBattleManager.hasMoreMessages() || mode == BattleMode.Waiting)
 			drawMessageScreen();
 		else if (mode == BattleMode.MainMenu)
 			drawMainMenu(mouseX, mouseY);
@@ -62,12 +65,26 @@ public class GuiBattle extends GuiContainer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f);
-		drawCenteredString(fontRenderer, ClientBattleManager.getNextMessage(), width / 2, height - 35, 0xFFFFFF);
-		flashCount++;
-		if (flashCount > 30) {
-			drawImageQuad(guiIndex, width / 2 + 130, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f);
-			if (flashCount > 60)
+		if (mode != BattleMode.Waiting || ClientBattleManager.hasMoreMessages()) {
+			drawCenteredString(fontRenderer, ClientBattleManager.getNextMessage(), width / 2, height - 35, 0xFFFFFF);
+			flashCount++;
+			if (flashCount > 30) {
+				drawImageQuad(guiIndex, width / 2 + 130, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f);
+				if (flashCount > 60)
+					flashCount = 0;
+			}
+		} else {
+			flashCount++;
+			if (flashCount >= 150)
 				flashCount = 0;
+			if (flashCount < 30)
+				drawCenteredString(fontRenderer, "Waiting", width / 2, height - 35, 0xFFFFFF);
+			else if (flashCount < 60)
+				drawCenteredString(fontRenderer, "Waiting.", width / 2, height - 35, 0xFFFFFF);
+			else if (flashCount < 90)
+				drawCenteredString(fontRenderer, "Waiting..", width / 2, height - 35, 0xFFFFFF);
+			else if (flashCount < 120)
+				drawCenteredString(fontRenderer, "Waiting...", width / 2, height - 35, 0xFFFFFF);
 		}
 	}
 
@@ -88,6 +105,29 @@ public class GuiBattle extends GuiContainer {
 			int w = 48, h = 16;
 			if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
 				mode = BattleMode.ChooseAttack;
+			}
+		} else if (mode == BattleMode.ChooseAttack) {
+			int x1 = width / 2 - 141;
+			int x2 = width / 2 - 50;
+			int y1 = height - guiHeight + 9;
+			int y2 = height - guiHeight + 33;
+			int w = 87, h = 20;
+			if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex,
+						ClientBattleManager.getUserPokemon().pokemonID));
+				mode = BattleMode.Waiting;
+			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex,
+						ClientBattleManager.getUserPokemon().pokemonID));
+				mode = BattleMode.Waiting;
+			} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex,
+						ClientBattleManager.getUserPokemon().pokemonID));
+				mode = BattleMode.Waiting;
+			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex,
+						ClientBattleManager.getUserPokemon().pokemonID));
+				mode = BattleMode.Waiting;
 			}
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -127,8 +167,8 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, "Type: ", width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2, height
 				- guiHeight + 33, 0xFFFFFF);
 		drawString(fontRenderer, moveset[mouseOverButton].type.toString(),
-				width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2 + fontRenderer.getStringWidth("Type: "), height - guiHeight + 33,
-				moveset[mouseOverButton].type.getColor());
+				width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2 + fontRenderer.getStringWidth("Type: "),
+				height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
 
 	}
 

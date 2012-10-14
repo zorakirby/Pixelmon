@@ -88,16 +88,8 @@ public class PlayerParticipant implements IBattleParticipant {
 			bc.endBattle(false);
 			return null;
 		}
-		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
-		int x = 0, y = 0;
-		x = currentPokemon().getPokemonId();
-		PixelmonDataPacket p = new PixelmonDataPacket(participant2.currentPokemon(), EnumPackets.AddToTempStore);
-		y = 0;
-		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
-
+		((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, 0));
 		bc.waitForMove(this);
-		// player.openGui(Pixelmon.instance, EnumGui.ChooseAttack.getIndex(),
-		// player.worldObj, x, y, BattleRegistry.getIndex(bc));
 		return null;
 	}
 
