@@ -46,6 +46,7 @@ public enum EnumPokemon {
 	Kabuto("Kabuto", ClassType.WaterPixelmon),
 	Kabutops("Kabutops", ClassType.Pixelmon),
 	Kakuna("Kakuna", ClassType.Pixelmon),
+	Kingler("Kingler", ClassType.Pixelmon),
 	Koffing("Koffing", ClassType.Pixelmon),
 	Krabby("Krabby", ClassType.Pixelmon),
 	Krokorok("Krokorok", ClassType.Pixelmon),
