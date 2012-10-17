@@ -2,6 +2,7 @@ package pixelmon.gui.battles;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 
@@ -41,6 +42,7 @@ public class GuiBattle extends GuiContainer {
 		this.battleControllerIndex = battleControllerIndex;
 		mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
+		ClientBattleManager.clearMessages();
 	}
 
 	@Override
@@ -178,6 +180,9 @@ public class GuiBattle extends GuiContainer {
 		else
 			var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(var9, width / 2 - 121, height - 176, 24f, 24f, 0f, 0f, 1f, 1f);
+		drawHealthBar(width / 2 - 85, height - 163, 9, 56, p);
+		drawImageQuad(guiIndex, width / 2 - 95, height - 163, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f);
+		drawString(fontRenderer, p.name, width / 2 - 115, height - 145, 0xffffff);
 		int pos = -1;
 		for (int i = 0; i < 6; i++) {
 			if (i != p.order) {
@@ -196,10 +201,33 @@ public class GuiBattle extends GuiContainer {
 					else
 						var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 					drawImageQuad(var9, width / 2 - 23, height - 192 + pos * 30, 24f, 24f, 0f, 0f, 1f, 1f);
-
+					drawHealthBar(width / 2 + 65, height - 192 + pos * 30, 9, 56, pdata);
+					drawImageQuad(guiIndex, width / 2 + 55, height - 192 + pos * 30, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f);
+					drawString(fontRenderer, pdata.health + "/" + pdata.hp, width / 2 + 75, height - 180 + pos * 30, 0xffffff);
 				}
 			}
 		}
+	}
+
+	public void drawHealthBar(int x, int y, int height, int width, PixelmonDataPacket p) {
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+		GL11.glPushMatrix();
+		Tessellator tessellator = Tessellator.instance;
+		GL11.glDisable(3553 /* GL_TEXTURE_2D */);
+		tessellator.startDrawingQuads();
+
+		int barWidth = (int) (((float) p.health) / ((float) p.hp) * (((float) width) - 6f));
+		tessellator.setColorRGBA_F(1.0f - ((float) p.health / (float) p.hp) * 0.8F, 0.2F + ((float) p.health / (float) p.hp) * 0.8F, 0.2F, 1.0F);
+		tessellator.addVertex(x, y, 0.0);
+		tessellator.addVertex(x, y + height, 0.0);
+		tessellator.addVertex(x + barWidth, y + height, 0.0);
+		tessellator.addVertex(x + barWidth, y, 0.0);
+		tessellator.draw();
+		GL11.glPopMatrix();
+		GL11.glEnable(3553);
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
 
 	private void drawChooseAttack(int mouseX, int mouseY) {

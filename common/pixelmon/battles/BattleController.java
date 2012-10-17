@@ -63,10 +63,10 @@ public class BattleController {
 		BattleRegistry.registerBattle(this);
 		participant1.setBattleController(this);
 		participant2.setBattleController(this);
-		ChatHandler.sendBattleMessage(participant1.currentPokemon().getOwner(), "You initiated a battle with " + participant2.getName() + "!");
-		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), participant1.getName() + " initiated a battle with you!");
 		participant1.StartBattle(participant2);
 		participant2.StartBattle(participant1);
+		ChatHandler.sendBattleMessage(participant1.currentPokemon().getOwner(), "You initiated a battle with " + participant2.getName() + "!");
+		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), participant1.getName() + " initiated a battle with you!");
 		participant1.currentPokemon().battleController = this;
 		participant2.currentPokemon().battleController = this;
 		participant1.updateOpponent(participant2);

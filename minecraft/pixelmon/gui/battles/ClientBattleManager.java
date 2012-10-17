@@ -45,4 +45,8 @@ public class ClientBattleManager {
 		}
 		return null;
 	}
+
+	public static void clearMessages() {
+		messageList.clear();
+	}
 }
