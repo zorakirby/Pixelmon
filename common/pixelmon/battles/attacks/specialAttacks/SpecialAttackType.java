@@ -8,6 +8,7 @@ public enum SpecialAttackType {
 	Facade,
 	Frustration,
 	Guillotine,
+	GyroBall,
 	HiddenPower,
 	HornDrill,
 	JumpKick,
@@ -28,6 +29,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Facade")) return SpecialAttackType.Facade;
 		if (string.equalsIgnoreCase("Frustration")) return SpecialAttackType.Frustration;
 		if (string.equalsIgnoreCase("Guillotine")) return SpecialAttackType.Guillotine;
+		if (string.equalsIgnoreCase("GyroBall")) return SpecialAttackType.GyroBall;
 		if (string.equalsIgnoreCase("HiddenPower")) return SpecialAttackType.HiddenPower;
 		if (string.equalsIgnoreCase("HornDrill")) return SpecialAttackType.HornDrill;
 		if (string.equalsIgnoreCase("JumpKick")) return SpecialAttackType.JumpKick;
@@ -50,6 +52,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Facade")) return true;
 		if (string.equalsIgnoreCase("Frustration")) return true;
 		if (string.equalsIgnoreCase("Guillotine")) return true;
+		if (string.equalsIgnoreCase("GyroBall")) return true;
 		if (string.equalsIgnoreCase("HiddenPower")) return true;
 		if (string.equalsIgnoreCase("HornDrill")) return true;
 		if (string.equalsIgnoreCase("JumpKick")) return true;
