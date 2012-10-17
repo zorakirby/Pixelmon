@@ -70,13 +70,13 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
-
 	public static Migration migration;
 
 	@SidedProxy(clientSide = "pixelmon.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
 
 	public static boolean freeze = false;
+	public static SchematicImporter s;
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
@@ -125,7 +125,7 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
 		proxy.registerTickHandlers();
 		
-		SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
+		s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
 		s.readSchematic();
 	}
 
