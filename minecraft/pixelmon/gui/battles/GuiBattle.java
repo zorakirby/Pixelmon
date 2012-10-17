@@ -221,7 +221,7 @@ public class GuiBattle extends GuiContainer {
 
 					int xpos = width / 2 - 30;
 					int ypos = height - 195 + pos * 30;
-					if (mouseX > xpos && mouseX < xpos + 150 && mouseY >ypos && mouseY<ypos + 32)
+					if (mouseX > xpos && mouseX < xpos + 150 && mouseY >ypos+1 && mouseY<ypos + 31)
 						drawImageQuad(guiIndex, xpos, ypos, 150, 32, 43f / 256f, 205f / 256f, 194f / 256f, 237f / 256f);
 				}
 			}
