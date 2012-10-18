@@ -180,15 +180,23 @@ public class GuiBattle extends GuiContainer {
 		else
 			var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(var9, width / 2 - 121, height - 176, 24f, 24f, 0f, 0f, 1f, 1f);
-		drawHealthBar(width / 2 - 85, height - 163, 9, 56, p);
-		drawImageQuad(guiIndex, width / 2 - 95, height - 163, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f);
-		drawString(fontRenderer, p.name, width / 2 - 115, height - 145, 0xffffff);
+		drawHealthBar(width / 2 - 85, height - 135, 9, 56, p);
+		drawImageQuad(guiIndex, width / 2 - 95, height - 135, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f);
+		drawCenteredString(fontRenderer, p.health + "/" + p.hp, width / 2 - 59, height - 123, 0xffffff);
+		drawString(fontRenderer, p.nickname.equals("") ? p.name : p.nickname, width / 2 - 90, height - 161, 0xffffff);
+		drawString(fontRenderer, "Lv. " + p.lvl, width / 2 - 90, height - 148, 0xffffff);
+		if (p.isMale)
+			drawImageQuad(guiIndex, width / 2 - 60, height - 149, 6, 9, 32f / 256f, 208f / 256f, 38f / 256f, 217f / 256f);
+		else
+			drawImageQuad(guiIndex, width / 2 - 60, height - 149, 6, 9, 32f / 256f, 218f / 256f, 38f / 256f, 227f / 256f);
+
 		int pos = -1;
 		for (int i = 0; i < 6; i++) {
 			if (i != p.order) {
 				pos++;
 				PixelmonDataPacket pdata = ServerStorageDisplay.pokemon[i];
 				if (pdata != null) {
+
 					numString = "";
 					if (pdata.nationalPokedexNumber < 10)
 						numString = "00" + pdata.nationalPokedexNumber;
@@ -204,6 +212,17 @@ public class GuiBattle extends GuiContainer {
 					drawHealthBar(width / 2 + 65, height - 192 + pos * 30, 9, 56, pdata);
 					drawImageQuad(guiIndex, width / 2 + 55, height - 192 + pos * 30, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f);
 					drawString(fontRenderer, pdata.health + "/" + pdata.hp, width / 2 + 75, height - 180 + pos * 30, 0xffffff);
+					drawString(fontRenderer, pdata.nickname.equals("") ? pdata.name : pdata.nickname, width / 2 + 5, height - 190 + pos * 30, 0xffffff);
+					drawString(fontRenderer, "Lv. " + pdata.lvl, width / 2 + 5, height - 176 + pos * 30, 0xffffff);
+					if (pdata.isMale)
+						drawImageQuad(guiIndex, width / 2 + 40, height - 176 + pos * 30, 6, 9, 32f / 256f, 208f / 256f, 38f / 256f, 217f / 256f);
+					else
+						drawImageQuad(guiIndex, width / 2 + 40, height - 176 + pos * 30, 6, 9, 32f / 256f, 218f / 256f, 38f / 256f, 227f / 256f);
+
+					int xpos = width / 2 - 30;
+					int ypos = height - 195 + pos * 30;
+					if (mouseX > xpos && mouseX < xpos + 150 && mouseY >ypos && mouseY<ypos + 32)
+						drawImageQuad(guiIndex, xpos, ypos, 150, 32, 43f / 256f, 205f / 256f, 194f / 256f, 237f / 256f);
 				}
 			}
 		}
