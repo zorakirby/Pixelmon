@@ -20,7 +20,8 @@ import net.minecraft.src.NBTTagCompound;
 
 public class SchematicImporter {
 	private String filename;
-	private int [][][] blocks;
+	private int[][][] blocks;
+	public int width, height, length;
 
 	public SchematicImporter(String filename) {
 		this.filename = filename;
@@ -30,17 +31,17 @@ public class SchematicImporter {
 		NBTTagCompound n = getNBTTag();
 		if (n == null)
 			return;
-		
-		int width = n.getShort("Width");
-		int height = n.getShort("Height");
-		int length = n.getShort("Length");
-		
+
+		width = n.getShort("Width");
+		height = n.getShort("Height");
+		length = n.getShort("Length");
+
 		blocks = new int[width][height][length];
 		byte[] blockArray = n.getByteArray("Blocks");
-		int i=0;
-		for (int y =0; y < length; y++){
-			for (int z = 0; z < height; z++){
-				for (int x =0; x <width; x++){
+		int i = 0;
+		for (int y = 0; y < length; y++) {
+			for (int z = 0; z < height; z++) {
+				for (int x = 0; x < width; x++) {
 					blocks[x][z][y] = blockArray[i++];
 				}
 			}

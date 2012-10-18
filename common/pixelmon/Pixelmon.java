@@ -76,7 +76,6 @@ public class Pixelmon {
 	public static CommonProxy proxy;
 
 	public static boolean freeze = false;
-	public static SchematicImporter s;
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
@@ -125,7 +124,7 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
 		proxy.registerTickHandlers();
 		
-		s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
+		SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
 		s.readSchematic();
 	}
 

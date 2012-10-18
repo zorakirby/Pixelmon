@@ -27,7 +27,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		Waiting, MainMenu, ChoosePokemon, UseBag, ChooseAttack;
+		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack;
 	}
 
 	private int battleControllerIndex;
@@ -62,7 +62,13 @@ public class GuiBattle extends GuiContainer {
 			drawChooseAttack(mouseX, mouseY);
 		else if (mode == BattleMode.ChoosePokemon)
 			drawChoosePokemon(mouseX, mouseY);
+		else if (mode == BattleMode.ChooseBag)
+			drawChooseBag(mouseX, mouseY);
 
+	}
+
+	private void drawChooseBag(int mouseX, int mouseY) {
+		
 	}
 
 	int flashCount = 0;
@@ -118,6 +124,11 @@ public class GuiBattle extends GuiContainer {
 				mode = BattleMode.ChooseAttack;
 			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h)
 				mode = BattleMode.ChoosePokemon;
+			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h){
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
+				mode = BattleMode.Waiting;
+			}
+			return;
 
 		} else if (mode == BattleMode.ChooseAttack) {
 			int x1 = width / 2 - 141;
@@ -129,18 +140,39 @@ public class GuiBattle extends GuiContainer {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex,
 						ClientBattleManager.getUserPokemon().pokemonID));
 				mode = BattleMode.Waiting;
+				return;
 			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h) {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex,
 						ClientBattleManager.getUserPokemon().pokemonID));
 				mode = BattleMode.Waiting;
+				return;
 			} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex,
 						ClientBattleManager.getUserPokemon().pokemonID));
 				mode = BattleMode.Waiting;
+				return;
 			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex,
 						ClientBattleManager.getUserPokemon().pokemonID));
 				mode = BattleMode.Waiting;
+				return;
+			}
+		} else if (mode == BattleMode.ChoosePokemon) {
+			int pos = 0;
+			for (int i = 0; i < 6; i++) {
+				if (i != ClientBattleManager.getUserPokemon().order) {
+					PixelmonDataPacket pdata = ServerStorageDisplay.pokemon[i];
+					if (pdata != null) {
+						int xpos = width / 2 - 30;
+						int ypos = height - 195 + pos * 30;
+						if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31) {
+							PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwitchPokemon, pdata.order, battleControllerIndex, 0));
+							mode = BattleMode.Waiting;
+							return;
+						}
+					}
+					pos++;
+				}
 			}
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -165,6 +197,8 @@ public class GuiBattle extends GuiContainer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - 128, height - 203, 256, 203, 0, 0, 1, 203f / 256f);
+
+		drawString(fontRenderer, "Choose a Pokemon.", width / 2 - 120, height - 100, 0xFFFFFF);
 
 		PixelmonDataPacket p = ClientBattleManager.getUserPokemon();
 		String numString = "";
@@ -221,7 +255,7 @@ public class GuiBattle extends GuiContainer {
 
 					int xpos = width / 2 - 30;
 					int ypos = height - 195 + pos * 30;
-					if (mouseX > xpos && mouseX < xpos + 150 && mouseY >ypos+1 && mouseY<ypos + 31)
+					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31)
 						drawImageQuad(guiIndex, xpos, ypos, 150, 32, 43f / 256f, 205f / 256f, 194f / 256f, 237f / 256f);
 				}
 			}
