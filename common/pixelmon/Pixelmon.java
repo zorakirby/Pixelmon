@@ -70,7 +70,6 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 public class Pixelmon {
 	@Instance
 	public static Pixelmon instance;
-
 	public static Migration migration;
 
 	@SidedProxy(clientSide = "pixelmon.ClientProxy", serverSide = "pixelmon.CommonProxy")
