@@ -23,15 +23,15 @@ public class SchematicImporter {
 	/**
 	 * Blocks
 	 */
-	private int[][][] blocks;
+	int[][][] blocks;
 	/**
 	 * Blocks metadata
 	 */
-	private int[][][] blockData;
+	int[][][] blockData;
 	/**
 	 * Paintings, Containers, etc
 	 */
-	private int[][][] tileEntities;
+	int[][][] tileEntities;
 	/**
 	 * The Bounding Box of the Schematic
 	 */
