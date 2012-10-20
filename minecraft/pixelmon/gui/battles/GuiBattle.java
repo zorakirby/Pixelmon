@@ -73,10 +73,10 @@ public class GuiBattle extends GuiContainer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - 256 / 2, height / 2 - 76, 256, 153, 0, 0, 1, 153f / 256f);
-		drawCenteredString(fontRenderer, "Pokeballs", width / 2 + 53, height / 2 - 36, 0xFFFFFF);
-		drawCenteredString(fontRenderer, "Medicine", width / 2 + 53, height / 2 + 31, 0xFFFFFF);
-		drawCenteredString(fontRenderer, "Exclamation Mark", width / 2 - 53, height / 2 - 36, 0xFFFFFF);
-		drawCenteredString(fontRenderer, "Star", width / 2 - 53, height / 2 + 31, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "Poke Balls", width / 2 + 53, height / 2 - 36, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "HP/PP Restore", width / 2 + 53, height / 2 + 31, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "Status Restore", width / 2 - 53, height / 2 - 36, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "Battle Items", width / 2 - 53, height / 2 + 31, 0xFFFFFF);
 		int x1, x2, y1, y2;
 		x1 = width / 2 - 103;
 		x2 = width / 2 + 3;
