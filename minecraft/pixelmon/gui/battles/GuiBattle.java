@@ -68,7 +68,32 @@ public class GuiBattle extends GuiContainer {
 	}
 
 	private void drawChooseBag(int mouseX, int mouseY) {
-		
+		int guiIndex = -1;
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/itemGui1_Test.png");
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width / 2 - 256 / 2, height / 2 - 76, 256, 153, 0, 0, 1, 153f / 256f);
+		drawCenteredString(fontRenderer, "Poke Balls", width / 2 + 53, height / 2 - 36, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "HP/PP Restore", width / 2 + 53, height / 2 + 31, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "Status Restore", width / 2 - 53, height / 2 - 36, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "Battle Items", width / 2 - 53, height / 2 + 31, 0xFFFFFF);
+		int x1, x2, y1, y2;
+		x1 = width / 2 - 103;
+		x2 = width / 2 + 3;
+		y1 = height / 2 - 63;
+		y2 = height / 2 + 4;
+		int buttonWidth = 100, buttonHeight = 62;
+		if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
+			drawImageQuad(guiIndex, x1, y1, buttonWidth, buttonHeight, 28f / 256f, 176f / 256f, 128f / 256f, 238f / 256f);
+		if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
+			drawImageQuad(guiIndex, x1, y2, buttonWidth, buttonHeight, 28f / 256f, 176f / 256f, 128f / 256f, 238f / 256f);
+		if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
+			drawImageQuad(guiIndex, x2, y1, buttonWidth, buttonHeight, 28f / 256f, 176f / 256f, 128f / 256f, 238f / 256f);
+		if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
+			drawImageQuad(guiIndex, x2, y2, buttonWidth, buttonHeight, 28f / 256f, 176f / 256f, 128f / 256f, 238f / 256f);
+
+		if (mouseX > width / 2 + 106 && mouseX < width / 2 + 126 && mouseY > height / 2 + 55 && mouseY < height / 2 + 77)
+			drawImageQuad(guiIndex, width / 2 + 106, height / 2 + 55, 20, 22, 234f / 256f, 154f / 256f, 254f / 256f, 176f / 256f);
 	}
 
 	int flashCount = 0;
@@ -124,13 +149,19 @@ public class GuiBattle extends GuiContainer {
 				mode = BattleMode.ChooseAttack;
 			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h)
 				mode = BattleMode.ChoosePokemon;
-			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h){
+			else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
+				mode = BattleMode.ChooseBag;
+			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 				mode = BattleMode.Waiting;
 			}
 			return;
 
 		} else if (mode == BattleMode.ChooseAttack) {
+			if (mouseX > width / 2 + 137 && mouseX < width / 2 + 148 && mouseY > height - 11 && mouseY < height - 1) {
+				mode = BattleMode.MainMenu;
+				return;
+			}
 			int x1 = width / 2 - 141;
 			int x2 = width / 2 - 50;
 			int y1 = height - guiHeight + 9;
@@ -158,6 +189,10 @@ public class GuiBattle extends GuiContainer {
 				return;
 			}
 		} else if (mode == BattleMode.ChoosePokemon) {
+			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
+				mode = BattleMode.MainMenu;
+				return;
+			}
 			int pos = 0;
 			for (int i = 0; i < 6; i++) {
 				if (i != ClientBattleManager.getUserPokemon().order) {
@@ -198,7 +233,12 @@ public class GuiBattle extends GuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - 128, height - 203, 256, 203, 0, 0, 1, 203f / 256f);
 
-		drawString(fontRenderer, "Choose a Pokemon.", width / 2 - 120, height - 100, 0xFFFFFF);
+		drawString(fontRenderer, "Choose a Pokemon", width / 2 - 90, height - 23, 0xFFFFFF);
+
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
+			drawImageQuad(guiIndex, width / 2 + 63, height - 27, 48, 17, 198f / 256f, 210f / 256f, 246f / 256, 227f / 256f);
+		}
+		drawString(fontRenderer, "Back", width / 2 + 75, height - 22, 0xFFFFFF);
 
 		PixelmonDataPacket p = ClientBattleManager.getUserPokemon();
 		String numString = "";
@@ -306,6 +346,9 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, moveset[mouseOverButton].type.toString(),
 				width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2 + fontRenderer.getStringWidth("Type: "),
 				height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
+
+		if (mouseX > width / 2 + 137 && mouseX < width / 2 + 148 && mouseY > height - 11 && mouseY < height - 1)
+			drawImageQuad(guiIndex, width / 2 + 137, height - 11, 11, 10, 613f / 640f, 151f / 480f, 635f / 640f, 171f / 480f);
 
 	}
 

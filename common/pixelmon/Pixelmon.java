@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Random;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.logging.Level;
@@ -26,6 +27,7 @@ import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.spawning.PixelmonWaterSpawner;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.structure.GeneralScattered;
 import pixelmon.structure.SchematicImporter;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
@@ -95,6 +97,8 @@ public class Pixelmon {
 
 	@Init
 	public void load(FMLInitializationEvent event) {
+		Random rand = new Random();
+		
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
@@ -126,6 +130,7 @@ public class Pixelmon {
 		
 		SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
 		s.readSchematic();
+		GameRegistry.registerWorldGenerator(new GeneralScattered(rand, s.width, s.width, s));
 	}
 
 	@PostInit
