@@ -68,7 +68,11 @@ public class GuiBattle extends GuiContainer {
 	}
 
 	private void drawChooseBag(int mouseX, int mouseY) {
+		int guiIndex = -1;
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/itemGui1_Test.png");
 
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f);
 	}
 
 	int flashCount = 0;

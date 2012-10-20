@@ -59,8 +59,8 @@ public class SchematicImporter {
 		for (int y = 0; y < length; y++) {
 			for (int z = 0; z < height; z++) {
 				for (int x = 0; x < width; x++) {
-					blocks[x][z][y] = blockArray[i++];
-					blockData[x][z][y] = blockDataArray[i++];
+					blocks[x][z][y] = blockArray[i];
+					blockData[x][z][y] = blockDataArray[i];
 					tileEntities[x][z][y] = tileEntitiesArray[i++];
 				}
 			}
