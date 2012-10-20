@@ -12,6 +12,7 @@ public enum SpecialAttackType {
 	HiddenPower,
 	HornDrill,
 	JumpKick,
+	Magnitude,
 	NightShade,
 	Payday,
 	PetalDance,
@@ -33,6 +34,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("HiddenPower")) return SpecialAttackType.HiddenPower;
 		if (string.equalsIgnoreCase("HornDrill")) return SpecialAttackType.HornDrill;
 		if (string.equalsIgnoreCase("JumpKick")) return SpecialAttackType.JumpKick;
+		if (string.equalsIgnoreCase("Magnitude")) return SpecialAttackType.Magnitude;
 		if (string.equalsIgnoreCase("NightShade")) return SpecialAttackType.NightShade;
 		if (string.equalsIgnoreCase("Payday")) return SpecialAttackType.Payday;
 		if (string.equalsIgnoreCase("PetalDance")) return SpecialAttackType.PetalDance;

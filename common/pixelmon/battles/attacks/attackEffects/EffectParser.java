@@ -3,9 +3,56 @@ package pixelmon.battles.attacks.attackEffects;
 import java.util.ArrayList;
 
 import pixelmon.battles.attacks.EffectType;
-import pixelmon.battles.attacks.attackModifiers.*;
-import pixelmon.battles.attacks.specialAttacks.*;
-import pixelmon.battles.attacks.statusEffects.*;
+import pixelmon.battles.attacks.attackModifiers.AlwaysHitAttackModifier;
+import pixelmon.battles.attacks.attackModifiers.AttackModifierType;
+import pixelmon.battles.attacks.attackModifiers.ChanceModifier;
+import pixelmon.battles.attacks.attackModifiers.CriticalHitAttackModifier;
+import pixelmon.battles.attacks.attackModifiers.DamageAttackModifier;
+import pixelmon.battles.attacks.attackModifiers.FlinchAttackModifier;
+import pixelmon.battles.attacks.attackModifiers.ModifierType;
+import pixelmon.battles.attacks.attackModifiers.MultipleHitAttackModifier;
+import pixelmon.battles.attacks.attackModifiers.PriorityAttackModifier;
+import pixelmon.battles.attacks.attackModifiers.RecoilAttackModifier;
+import pixelmon.battles.attacks.specialAttacks.Acupressure;
+import pixelmon.battles.attacks.specialAttacks.Bide;
+import pixelmon.battles.attacks.specialAttacks.Curse;
+import pixelmon.battles.attacks.specialAttacks.EchoedVoice;
+import pixelmon.battles.attacks.specialAttacks.Facade;
+import pixelmon.battles.attacks.specialAttacks.Frustration;
+import pixelmon.battles.attacks.specialAttacks.Guillotine;
+import pixelmon.battles.attacks.specialAttacks.GyroBall;
+import pixelmon.battles.attacks.specialAttacks.HiddenPower;
+import pixelmon.battles.attacks.specialAttacks.JumpKick;
+import pixelmon.battles.attacks.specialAttacks.Magnitude;
+import pixelmon.battles.attacks.specialAttacks.MultiTurnSpecialAttackType;
+import pixelmon.battles.attacks.specialAttacks.NightShade;
+import pixelmon.battles.attacks.specialAttacks.PetalDance;
+import pixelmon.battles.attacks.specialAttacks.RazorWind;
+import pixelmon.battles.attacks.specialAttacks.Return;
+import pixelmon.battles.attacks.specialAttacks.SolarBeam;
+import pixelmon.battles.attacks.specialAttacks.SpecialAttackType;
+import pixelmon.battles.attacks.specialAttacks.Venoshock;
+import pixelmon.battles.attacks.statusEffects.Burn;
+import pixelmon.battles.attacks.statusEffects.Confusion;
+import pixelmon.battles.attacks.statusEffects.Cursed;
+import pixelmon.battles.attacks.statusEffects.FireSpin;
+import pixelmon.battles.attacks.statusEffects.Flee;
+import pixelmon.battles.attacks.statusEffects.Freeze;
+import pixelmon.battles.attacks.statusEffects.Infatuated;
+import pixelmon.battles.attacks.statusEffects.Leech;
+import pixelmon.battles.attacks.statusEffects.LightScreen;
+import pixelmon.battles.attacks.statusEffects.Mist;
+import pixelmon.battles.attacks.statusEffects.Paralysis;
+import pixelmon.battles.attacks.statusEffects.Perish;
+import pixelmon.battles.attacks.statusEffects.Poison;
+import pixelmon.battles.attacks.statusEffects.PoisonBadly;
+import pixelmon.battles.attacks.statusEffects.Protect;
+import pixelmon.battles.attacks.statusEffects.SafeGuard;
+import pixelmon.battles.attacks.statusEffects.Sleep;
+import pixelmon.battles.attacks.statusEffects.StatusEffectType;
+import pixelmon.battles.attacks.statusEffects.Sunny;
+import pixelmon.battles.attacks.statusEffects.TrickRoom;
+import pixelmon.battles.attacks.statusEffects.WaitAfter;
 
 
 public class EffectParser {
@@ -148,10 +195,14 @@ public class EffectParser {
 				effect = new Facade();
 			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Guillotine)
 				effect = new Guillotine();
+			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.GyroBall)
+				effect = new GyroBall();
 			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Frustration)
 				effect = new Frustration();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.HiddenPower)
 				effect = new HiddenPower();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.HiddenPower)
+				effect = new Magnitude();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.NightShade)
 				effect = new NightShade();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.JumpKick)
