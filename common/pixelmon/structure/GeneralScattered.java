@@ -8,7 +8,7 @@ import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.StructureBoundingBox;
 import net.minecraft.src.World;
 
-public class GeneralScattered extends StructureScattered{
+public class GeneralScattered extends StructureScattered implements IWorldGenerator{
 
 	private static SchematicImporter s;
 	
@@ -28,5 +28,10 @@ public class GeneralScattered extends StructureScattered{
     				// 									id, metadata
 		return true;
     }
+
+	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+		addComponentParts(world, random, boundingBox);
+		System.out.println("A structure has Generated at " + chunkX + ", " + chunkZ);
+	}
 
 }
