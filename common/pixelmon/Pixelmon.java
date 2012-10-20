@@ -130,7 +130,7 @@ public class Pixelmon {
 		
 		SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
 		s.readSchematic();
-		GameRegistry.registerWorldGenerator(new GeneralScattered(rand, s.width, s.width, s));
+		//GameRegistry.registerWorldGenerator(new GeneralScattered(rand, s.width, s.width, s));
 	}
 
 	@PostInit

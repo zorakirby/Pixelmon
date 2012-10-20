@@ -23,6 +23,23 @@ public class PacketCreator {
 		packet.length = packet.data.length;
 		return packet;
 	}
+	
+	public static Packet createPacket(EnumPackets epacket, int i1, int i2) {
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		DataOutputStream data = new DataOutputStream(bytes);
+		Packet250CustomPayload packet = new Packet250CustomPayload();
+		try{
+			data.writeInt(epacket.getIndex());
+			data.writeInt(i1);
+			data.writeInt(i2);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		packet.channel="Pixelmon";
+		packet.data = bytes.toByteArray();
+		packet.length = packet.data.length;
+		return packet;
+	}
 
 	public static Packet250CustomPayload createPacket(EnumPackets epacket, int i1, int i2, int i3) {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();

@@ -6,6 +6,7 @@ import pixelmon.PixelmonServerStore;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.EntityCamera;
+import pixelmon.items.ItemData;
 
 public class ClientBattleManager {
 	private static ArrayList<String> messageList = new ArrayList<String>();
@@ -18,11 +19,14 @@ public class ClientBattleManager {
 
 	public static int opponentId = -1;
 
-	public static String getOpponentName(){
-		if (opponentId==-1) return null;
+	public static ArrayList<ItemData> bagStore = new ArrayList<ItemData>();
+
+	public static String getOpponentName() {
+		if (opponentId == -1)
+			return null;
 		return PixelmonServerStore.getPixelmonDataFromID(opponentId).name;
 	}
-	
+
 	public static void addMessage(String s) {
 		messageList.add(s);
 	}

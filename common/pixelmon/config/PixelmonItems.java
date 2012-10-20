@@ -278,7 +278,7 @@ public class PixelmonItems {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Item getHeldItem(int id) {
 		try {
 			for (Field field : PixelmonItems.class.getFields()) {
@@ -287,6 +287,21 @@ public class PixelmonItems {
 					if (item instanceof ItemHeld)
 						if (item.shiftedIndex == id)
 							return item;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Item getItem(int id) {
+		try {
+			for (Field field : PixelmonItems.class.getFields()) {
+				if (field.isAnnotationPresent(Mod.Item.class)) {
+					Item item = (Item) field.get(null);
+					if (item.shiftedIndex == id)
+						return item;
 				}
 			}
 		} catch (Exception e) {

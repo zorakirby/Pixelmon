@@ -1,5 +1,7 @@
 package pixelmon.gui.battles;
 
+import java.util.ArrayList;
+
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -11,14 +13,26 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonMovesetDataPacket;
+import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.entities.EntityCamera;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.BagSection;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiPixelmonOverlay;
+import pixelmon.items.ItemData;
+import pixelmon.items.ItemEther;
+import pixelmon.items.ItemPokeBall;
+import pixelmon.items.ItemPotion;
+import pixelmon.items.heldItems.ItemBerryLeppa;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.GuiContainer;
+import net.minecraft.src.InventoryPlayer;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.RenderHelper;
 import net.minecraft.src.RenderManager;
 import net.minecraft.src.Slot;
@@ -32,6 +46,7 @@ public class GuiBattle extends GuiContainer {
 
 	private int battleControllerIndex;
 	public static BattleMode mode;
+	public static BagSection bagSection;
 	private int guiWidth = 300;
 	private int guiHeight = 60;
 
@@ -64,6 +79,43 @@ public class GuiBattle extends GuiContainer {
 			drawChoosePokemon(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseBag)
 			drawChooseBag(mouseX, mouseY);
+		else if (mode == BattleMode.UseBag)
+			drawUseBag(mouseX, mouseY);
+
+	}
+
+	private int startIndex = 0;
+
+	private void drawUseBag(int mouseX, int mouseY) {
+		int guiIndex = -1;
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/itemGui2.png");
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width / 2 - 256 / 2, height / 2 - 102, 256, 205, 0, 0, 1, 205f / 256f);
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74)
+			drawImageQuad(guiIndex, width / 2 + 63, height / 2 - 91, 48, 17, 198f / 256f, 234 / 256f, 246f / 256f, 251f / 256f);
+		drawString(fontRenderer, "Back", width / 2 + 76, height / 2 - 85, 0xFFFFFF);
+		for (int i = startIndex; i < 6 + startIndex; i++) {
+			if (i < ClientBattleManager.bagStore.size()) {
+				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + i * 21 && mouseY < height / 2 - 20 + i * 21)
+					drawImageQuad(guiIndex, width / 2 - 98, height / 2 - 44 + i * 21, 187, 20, 3f / 256f, 206 / 256f, 194f / 256f, 225f / 256f);
+				else
+					drawImageQuad(guiIndex, width / 2 - 98, height / 2 - 44 + i * 21, 187, 20, 3f / 256f, 227 / 256f, 194f / 256f, 246f / 256f);
+				Item item = PixelmonItems.getItem(ClientBattleManager.bagStore.get(i).id);
+				if (item == null)
+					item = PixelmonItemsPokeballs.getItemFromID(ClientBattleManager.bagStore.get(i).id);
+				drawString(fontRenderer, item.getItemDisplayName(null), width / 2 - 55, height / 2 - 38 + i * 21, 0xFFFFFF);
+				drawString(fontRenderer, "x" + ClientBattleManager.bagStore.get(i).count, width / 2 + 55, height / 2 - 38 + i * 21, 0xFFFFFF);
+			}
+		}
+		for (int i = startIndex; i < 6 + startIndex; i++) {
+			if (i < ClientBattleManager.bagStore.size()) {
+				Item item = PixelmonItems.getItem(ClientBattleManager.bagStore.get(i).id);
+				if (item == null)
+					item = PixelmonItemsPokeballs.getItemFromID(ClientBattleManager.bagStore.get(i).id);
+				itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, new ItemStack(item), width / 2 - 85, height / 2 - 42 + i * 21);
+			}
+		}
 
 	}
 
@@ -209,6 +261,38 @@ public class GuiBattle extends GuiContainer {
 					pos++;
 				}
 			}
+		} else if (mode == BattleMode.ChooseBag) {
+			if (mouseX > width / 2 + 106 && mouseX < width / 2 + 126 && mouseY > height / 2 + 55 && mouseY < height / 2 + 77)
+				mode = BattleMode.MainMenu;
+
+			int x1, x2, y1, y2;
+			x1 = width / 2 - 103;
+			x2 = width / 2 + 3;
+			y1 = height / 2 - 63;
+			y2 = height / 2 + 4;
+			int buttonWidth = 100, buttonHeight = 62;
+			bagSection = null;
+			if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
+				bagSection = BagSection.StatusRestore;
+
+			else if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
+				bagSection = BagSection.BattleItems;
+
+			else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
+				bagSection = BagSection.Pokeballs;
+
+			else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
+				bagSection = BagSection.HP;
+
+			if (bagSection != null) {
+				mode = BattleMode.UseBag;
+				ClientBattleManager.bagStore.clear();
+				getInventory();
+				startIndex = 0;
+			}
+		}else if (mode == BattleMode.UseBag){
+			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74)
+				mode = BattleMode.ChooseBag;
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
@@ -391,5 +475,33 @@ public class GuiBattle extends GuiContainer {
 		var9.addVertexWithUV((double) (x + w), (double) (y + 0), (double) this.zLevel, (double) ((float) ue), (double) ((float) vs));
 		var9.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) this.zLevel, (double) ((float) us), (double) ((float) vs));
 		var9.draw();
+	}
+
+	private void getInventory() {
+		InventoryPlayer inventory = Minecraft.getMinecraft().thePlayer.inventory;
+		for (int i = 0; i < inventory.mainInventory.length; i++) {
+			if (bagSection == BagSection.Pokeballs) {
+				if (inventory.mainInventory[i] != null && inventory.mainInventory[i].getItem() instanceof ItemPokeBall)
+					checkExists(inventory.mainInventory[i].itemID, inventory.mainInventory[i].stackSize);
+			} else if (bagSection == BagSection.HP) {
+				if (inventory.mainInventory[i] != null && inventory.mainInventory[i].getItem() instanceof ItemPotion)
+					checkExists(inventory.mainInventory[i].itemID, inventory.mainInventory[i].stackSize);
+				else if (inventory.mainInventory[i] != null && inventory.mainInventory[i].getItem() instanceof ItemEther)
+					checkExists(inventory.mainInventory[i].itemID, inventory.mainInventory[i].stackSize);
+			}
+		}
+	}
+
+	private void checkExists(int itemID, int count) {
+		boolean hasItem = false;
+		for (ItemData d : ClientBattleManager.bagStore) {
+			if (d.id == itemID) {
+				hasItem = true;
+				d.count += count;
+			}
+		}
+		if (!hasItem)
+			ClientBattleManager.bagStore.add(new ItemData(itemID, count));
+
 	}
 }

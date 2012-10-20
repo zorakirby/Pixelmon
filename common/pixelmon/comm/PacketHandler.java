@@ -28,10 +28,10 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new PCClick());
 		handlers.add(new RegisterPlayer());
 		handlers.add(new RenamePokemon());
-		handlers.add(new SendPixelmon());
-		handlers.add(new SwitchPokemon());
 		handlers.add(new ReplaceMove());
+		handlers.add(new SendPixelmon());
 		handlers.add(new StopStartLevelling());
+		handlers.add(new SwitchPokemon());
 	}
 
 	@Override

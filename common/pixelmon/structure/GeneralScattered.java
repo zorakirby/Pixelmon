@@ -8,7 +8,7 @@ import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.StructureBoundingBox;
 import net.minecraft.src.World;
 
-public class GeneralScattered extends StructureScattered implements IWorldGenerator{
+public class GeneralScattered extends StructureScattered {
 
 	private static SchematicImporter s;
 	
