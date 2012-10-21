@@ -13,6 +13,7 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.gui.battles.ClientBattleManager;
 import pixelmon.gui.battles.GuiBattle;
 import pixelmon.gui.battles.GuiBattle.BattleMode;
+import pixelmon.items.ItemData;
 
 import net.minecraft.src.EntityPlayer;
 
