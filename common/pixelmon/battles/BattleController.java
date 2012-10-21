@@ -528,4 +528,5 @@ public class BattleController {
 		else
 			return participant1;
 	}
+
 }
