@@ -101,29 +101,36 @@ public class GuiBattle extends GuiContainer {
 
 		for (int i = startIndex; i < 6 + startIndex; i++) {
 			if (i < ClientBattleManager.bagStore.size()) {
-				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + i * 21 && mouseY < height / 2 - 24 + i * 21)
-					drawImageQuad(guiIndex, width / 2 - 98, height / 2 - 44 + i * 21, 187, 20, 3f / 256f, 206 / 256f, 194f / 256f, 225f / 256f);
+				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
+						&& mouseY < height / 2 - 24 + (i - startIndex) * 21)
+					drawImageQuad(guiIndex, width / 2 - 98, height / 2 - 44 + (i - startIndex) * 21, 187, 20, 3f / 256f, 206 / 256f, 194f / 256f, 225f / 256f);
 				else
-					drawImageQuad(guiIndex, width / 2 - 98, height / 2 - 44 + i * 21, 187, 20, 3f / 256f, 227 / 256f, 194f / 256f, 246f / 256f);
+					drawImageQuad(guiIndex, width / 2 - 98, height / 2 - 44 + (i - startIndex) * 21, 187, 20, 3f / 256f, 227 / 256f, 194f / 256f, 246f / 256f);
 				Item item = PixelmonItems.getItem(ClientBattleManager.bagStore.get(i).id);
 				if (item == null)
 					item = PixelmonItemsPokeballs.getItemFromID(ClientBattleManager.bagStore.get(i).id);
-				drawString(fontRenderer, item.getItemDisplayName(null), width / 2 - 55, height / 2 - 38 + i * 21, 0xFFFFFF);
-				drawString(fontRenderer, "x" + ClientBattleManager.bagStore.get(i).count, width / 2 + 55, height / 2 - 38 + i * 21, 0xFFFFFF);
+				drawString(fontRenderer, item.getItemDisplayName(null), width / 2 - 55, height / 2 - 38 + (i - startIndex) * 21, 0xFFFFFF);
+				drawString(fontRenderer, "x" + ClientBattleManager.bagStore.get(i).count, width / 2 + 55, height / 2 - 38 + (i - startIndex) * 21, 0xFFFFFF);
 			}
 		}
 
-		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45)
-			drawImageQuad(guiIndex, width / 2 - 11, height / 2 - 55, 17, 10, 211f / 256f, 220 / 256f, 228f / 256f, 230f / 256f);
-		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 + 82 && mouseY < height / 2 + 92)
-			drawImageQuad(guiIndex, width / 2 - 11, height / 2 + 82, 17, 10, 236f / 256f, 220 / 256f, 253f / 256f, 230f / 256f);
-
+		if (startIndex > 0) {
+			if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45)
+				drawImageQuad(guiIndex, width / 2 - 11, height / 2 - 55, 17, 10, 211f / 256f, 220 / 256f, 228f / 256f, 230f / 256f);
+		} else
+			drawImageQuad(guiIndex, width / 2 - 11, height / 2 - 55, 17, 10, 10f / 256f, 10 / 256f, 27f / 256f, 20f / 256f);
+		if (startIndex + 6 < ClientBattleManager.bagStore.size() - 1) {
+			if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 + 82 && mouseY < height / 2 + 92)
+				drawImageQuad(guiIndex, width / 2 - 11, height / 2 + 82, 17, 10, 236f / 256f, 220 / 256f, 253f / 256f, 230f / 256f);
+		} else
+			drawImageQuad(guiIndex, width / 2 - 11, height / 2 + 82, 17, 10, 10f / 256f, 10 / 256f, 27f / 256f, 20f / 256f);
 		for (int i = startIndex; i < 6 + startIndex; i++) {
 			if (i < ClientBattleManager.bagStore.size()) {
 				Item item = PixelmonItems.getItem(ClientBattleManager.bagStore.get(i).id);
 				if (item == null)
 					item = PixelmonItemsPokeballs.getItemFromID(ClientBattleManager.bagStore.get(i).id);
-				itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, new ItemStack(item), width / 2 - 85, height / 2 - 42 + i * 21);
+				itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, new ItemStack(item), width / 2 - 85, height / 2 - 42 + (i - startIndex)
+						* 21);
 			}
 		}
 
@@ -301,8 +308,34 @@ public class GuiBattle extends GuiContainer {
 				startIndex = 0;
 			}
 		} else if (mode == BattleMode.UseBag) {
-			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74)
+			if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45) {
+				if (startIndex > 0) {
+					startIndex--;
+					return;
+				}
+			}
+			if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 + 82 && mouseY < height / 2 + 92) {
+				if (startIndex + 6 < ClientBattleManager.bagStore.size() - 1) {
+					startIndex++;
+					return;
+				}
+			}
+
+			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74) {
 				mode = BattleMode.ChooseBag;
+				return;
+			}
+
+			for (int i = startIndex; i < 6 + startIndex; i++) {
+				if (i < ClientBattleManager.bagStore.size()) {
+					if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
+							&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id,
+								battleControllerIndex, 0));
+						mode = BattleMode.Waiting;
+					}
+				}
+			}
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
