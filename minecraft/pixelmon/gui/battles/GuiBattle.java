@@ -1,6 +1,7 @@
 package pixelmon.gui.battles;
 
 import java.util.ArrayList;
+import java.util.prefs.BackingStoreException;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -95,9 +96,12 @@ public class GuiBattle extends GuiContainer {
 		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74)
 			drawImageQuad(guiIndex, width / 2 + 63, height / 2 - 91, 48, 17, 198f / 256f, 234 / 256f, 246f / 256f, 251f / 256f);
 		drawString(fontRenderer, "Back", width / 2 + 76, height / 2 - 85, 0xFFFFFF);
+
+		drawCenteredString(fontRenderer, bagSection.displayString, width / 2 - 40, height / 2 - 80, 0xFFFFFF);
+
 		for (int i = startIndex; i < 6 + startIndex; i++) {
 			if (i < ClientBattleManager.bagStore.size()) {
-				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + i * 21 && mouseY < height / 2 - 20 + i * 21)
+				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + i * 21 && mouseY < height / 2 - 24 + i * 21)
 					drawImageQuad(guiIndex, width / 2 - 98, height / 2 - 44 + i * 21, 187, 20, 3f / 256f, 206 / 256f, 194f / 256f, 225f / 256f);
 				else
 					drawImageQuad(guiIndex, width / 2 - 98, height / 2 - 44 + i * 21, 187, 20, 3f / 256f, 227 / 256f, 194f / 256f, 246f / 256f);
@@ -108,6 +112,12 @@ public class GuiBattle extends GuiContainer {
 				drawString(fontRenderer, "x" + ClientBattleManager.bagStore.get(i).count, width / 2 + 55, height / 2 - 38 + i * 21, 0xFFFFFF);
 			}
 		}
+
+		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45)
+			drawImageQuad(guiIndex, width / 2 - 11, height / 2 - 55, 17, 10, 211f / 256f, 220 / 256f, 228f / 256f, 230f / 256f);
+		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 + 82 && mouseY < height / 2 + 92)
+			drawImageQuad(guiIndex, width / 2 - 11, height / 2 + 82, 17, 10, 236f / 256f, 220 / 256f, 253f / 256f, 230f / 256f);
+
 		for (int i = startIndex; i < 6 + startIndex; i++) {
 			if (i < ClientBattleManager.bagStore.size()) {
 				Item item = PixelmonItems.getItem(ClientBattleManager.bagStore.get(i).id);
@@ -290,7 +300,7 @@ public class GuiBattle extends GuiContainer {
 				getInventory();
 				startIndex = 0;
 			}
-		}else if (mode == BattleMode.UseBag){
+		} else if (mode == BattleMode.UseBag) {
 			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74)
 				mode = BattleMode.ChooseBag;
 		}
