@@ -4,8 +4,12 @@
 *.jar
 *.war
 *.ear
-minecraftforge
-minecraftforge
-cpw
-/common\cpw\mods\fml\server/FMLServerHandler.java
-/common\net\minecraftforge\classloading/FMLForgePlugin.java
+
+# Directories #
+minecraftforge/
+cpw/
+minecraft_server/
+ibxm/
+net/
+org/
+paulscode/
