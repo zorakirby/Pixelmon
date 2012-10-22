@@ -135,7 +135,7 @@ public class EntityPokeBall extends EntityThrowable {
 		isBattleThrown = true;
 		this.battleController = battleController;
 		worldObj = thrower.worldObj;
-		battleController.waitForCapture();
+		battleController.pauseBattle();
 		this.setLocationAndAngles(thrower.posX, thrower.posY + (double) thrower.getEyeHeight(), thrower.posZ, thrower.rotationYaw, thrower.rotationPitch);
 		this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
 		this.posY -= 0.10000000149011612D;
@@ -478,7 +478,7 @@ public class EntityPokeBall extends EntityThrowable {
 			p.setPosition(posX, posY, posZ);
 			p.isDead = false;
 			if (mode == Mode.battle)
-				battleController.endWaitForCapture();
+				battleController.endPause();
 			setDead();
 		}
 	}

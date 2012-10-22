@@ -157,7 +157,7 @@ public class ClientProxy extends CommonProxy {
 		if (ID == EnumGui.ChooseStarter.getIndex())
 			return new GuiChooseStarter();
 		else if (ID == EnumGui.LearnMove.getIndex())
-			return new GuiLearnMove(x, player, DatabaseMoves.getAttack(y));
+			return new GuiBattle();
 		else if (ID == EnumGui.Battle.getIndex())
 			return new GuiBattle(x);
 

@@ -107,7 +107,7 @@ public class BattleController {
 	public void update() {
 		participant1.update();
 		participant2.update();
-		if (isWaiting() || isCapturing)
+		if (isWaiting() || paused)
 			return;
 		int tickTop;
 		if (moveStage == MoveStage.PickAttacks)
@@ -501,10 +501,10 @@ public class BattleController {
 
 	boolean participant1Wait;
 	boolean participant2Wait;
-	boolean isCapturing = false;
+	boolean paused = false;
 
-	public void waitForCapture() {
-		isCapturing = true;
+	public void pauseBattle() {
+		paused = true;
 	}
 
 	public void waitForMove(PlayerParticipant playerParticipant) {
@@ -518,8 +518,8 @@ public class BattleController {
 		return participant1Wait || participant2Wait;
 	}
 
-	public void endWaitForCapture() {
-		isCapturing = false;
+	public void endPause() {
+		paused = false;
 	}
 
 	public IBattleParticipant getOpponent(EntityPlayer player) {
