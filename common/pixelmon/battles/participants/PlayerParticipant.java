@@ -60,6 +60,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		currentPixelmon.battleStats.clearBattleStats();
 		currentPixelmon.EndBattle();
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ExitBattle, 0));
 		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 	}
 

@@ -57,6 +57,8 @@ public class ClientPacketHandler implements IPacketHandler {
 				ClientBattleManager.pokemonId = dataStream.readInt();
 			}else if (packetID == EnumPackets.BackToMainMenu.getIndex()){
 				GuiBattle.mode = BattleMode.MainMenu;
+			}else if (packetID == EnumPackets.ExitBattle.getIndex()){
+				GuiBattle.battleEnded = true;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
