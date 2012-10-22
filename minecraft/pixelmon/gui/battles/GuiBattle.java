@@ -1,6 +1,8 @@
 package pixelmon.gui.battles;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.prefs.BackingStoreException;
 
 import org.lwjgl.input.Mouse;
@@ -42,7 +44,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack;
+		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon;
 	}
 
 	private int battleControllerIndex;
@@ -76,7 +78,7 @@ public class GuiBattle extends GuiContainer {
 			drawMainMenu(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseAttack)
 			drawChooseAttack(mouseX, mouseY);
-		else if (mode == BattleMode.ChoosePokemon)
+		else if (mode == BattleMode.ChoosePokemon || mode == BattleMode.ApplyToPokemon)
 			drawChoosePokemon(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseBag)
 			drawChooseBag(mouseX, mouseY);
@@ -278,66 +280,125 @@ public class GuiBattle extends GuiContainer {
 					pos++;
 				}
 			}
+		} else if (mode == BattleMode.ApplyToPokemon) {
+			ApplyToPokemonClick(mouseX, mouseY);
 		} else if (mode == BattleMode.ChooseBag) {
-			if (mouseX > width / 2 + 106 && mouseX < width / 2 + 126 && mouseY > height / 2 + 55 && mouseY < height / 2 + 77)
-				mode = BattleMode.MainMenu;
-
-			int x1, x2, y1, y2;
-			x1 = width / 2 - 103;
-			x2 = width / 2 + 3;
-			y1 = height / 2 - 63;
-			y2 = height / 2 + 4;
-			int buttonWidth = 100, buttonHeight = 62;
-			bagSection = null;
-			if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
-				bagSection = BagSection.StatusRestore;
-
-			else if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
-				bagSection = BagSection.BattleItems;
-
-			else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
-				bagSection = BagSection.Pokeballs;
-
-			else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
-				bagSection = BagSection.HP;
-
-			if (bagSection != null) {
-				mode = BattleMode.UseBag;
-				ClientBattleManager.bagStore.clear();
-				getInventory();
-				startIndex = 0;
-			}
+			ChooseBagClick(mouseX, mouseY);
 		} else if (mode == BattleMode.UseBag) {
-			if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45) {
-				if (startIndex > 0) {
-					startIndex--;
-					return;
-				}
-			}
-			if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 + 82 && mouseY < height / 2 + 92) {
-				if (startIndex + 6 < ClientBattleManager.bagStore.size() - 1) {
-					startIndex++;
-					return;
-				}
-			}
+			UseBagClick(mouseX, mouseY);
+		}
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
 
-			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74) {
-				mode = BattleMode.ChooseBag;
+	private void ApplyToPokemonClick(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
+			mode = BattleMode.UseBag;
+			return;
+		}
+		int pokemonToApplyTo = -1;
+		if (mouseX > width / 2 - 120 && mouseX < width / 2 - 21 && mouseY > height - 165 && mouseY < height - 113) {
+			pokemonToApplyTo = ClientBattleManager.getUserPokemon().order;
+		}
+		int pos = 0;
+		for (int i = 0; i < 6; i++) {
+			if (i != ClientBattleManager.getUserPokemon().order) {
+				PixelmonDataPacket pdata = ServerStorageDisplay.pokemon[i];
+				if (pdata != null) {
+					int xpos = width / 2 - 30;
+					int ypos = height - 195 + pos * 30;
+					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31) {
+						pokemonToApplyTo = i;
+					}
+				}
+				pos++;
+			}
+		}
+		if (pokemonToApplyTo != -1) {
+			if (PixelmonItems.getItem(itemToUse.id) instanceof ItemPotion) {
+				pixelmonToHeal = ServerStorageDisplay.pokemon[pokemonToApplyTo];
+				Timer timer = new Timer();
+				timer.scheduleAtFixedRate(new HealerTask(), 100, 100);
+			}
+		}
+	}
+
+	private ItemData itemToUse = null;
+
+	private void UseBagClick(int mouseX, int mouseY) {
+		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45) {
+			if (startIndex > 0) {
+				startIndex--;
 				return;
 			}
+		}
+		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 + 82 && mouseY < height / 2 + 92) {
+			if (startIndex + 6 < ClientBattleManager.bagStore.size() - 1) {
+				startIndex++;
+				return;
+			}
+		}
 
-			for (int i = startIndex; i < 6 + startIndex; i++) {
-				if (i < ClientBattleManager.bagStore.size()) {
-					if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
-							&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74) {
+			mode = BattleMode.ChooseBag;
+			return;
+		}
+
+		for (int i = startIndex; i < 6 + startIndex; i++) {
+			if (i < ClientBattleManager.bagStore.size()) {
+				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
+						&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
+					if (bagSection == bagSection.Pokeballs) {
 						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id,
 								battleControllerIndex, 0));
 						mode = BattleMode.Waiting;
+					} else {
+						itemToUse = ClientBattleManager.bagStore.get(i);
+						mode = BattleMode.ApplyToPokemon;
 					}
 				}
 			}
 		}
-		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+
+	private void ChooseBagClick(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 106 && mouseX < width / 2 + 126 && mouseY > height / 2 + 55 && mouseY < height / 2 + 77)
+			mode = BattleMode.MainMenu;
+
+		int x1, x2, y1, y2;
+		x1 = width / 2 - 103;
+		x2 = width / 2 + 3;
+		y1 = height / 2 - 63;
+		y2 = height / 2 + 4;
+		int buttonWidth = 100, buttonHeight = 62;
+		bagSection = null;
+		if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
+			bagSection = BagSection.StatusRestore;
+
+		else if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
+			bagSection = BagSection.BattleItems;
+
+		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
+			bagSection = BagSection.Pokeballs;
+
+		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
+			bagSection = BagSection.HP;
+
+		if (bagSection != null) {
+			mode = BattleMode.UseBag;
+			ClientBattleManager.bagStore.clear();
+			getInventory();
+			startIndex = 0;
+		}
+	}
+
+	private PixelmonDataPacket pixelmonToHeal = null;
+
+	class HealerTask extends TimerTask {
+		public void run() {
+			pixelmonToHeal.health++;
+			if (pixelmonToHeal.health >= pixelmonToHeal.hp)
+				this.cancel();
+		}
 	}
 
 	private void drawMainMenu(int mouseX, int mouseY) {
@@ -353,16 +414,33 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, "What will " + ClientBattleManager.getUserPokemon().name + " do?", width / 2 - 130, height - 35, 0xFFFFFF);
 	}
 
+	boolean isHealing = false;
+
 	private void drawChoosePokemon(int mouseX, int mouseY) {
+		isHealing = false;
+		if (mode == BattleMode.ApplyToPokemon && pixelmonToHeal != null) {
+			if (pixelmonToHeal.health >= pixelmonToHeal.hp) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, itemToUse.id, battleControllerIndex, 0));
+				removeItem(itemToUse);
+				mode = BattleMode.Waiting;
+				return;
+			} else {
+				isHealing = true;
+			}
+		}
+
 		int guiIndex = -1;
 		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/choosePokemon.png");
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - 128, height - 203, 256, 203, 0, 0, 1, 203f / 256f);
 
-		drawString(fontRenderer, "Choose a Pokemon", width / 2 - 90, height - 23, 0xFFFFFF);
+		if (mode == BattleMode.ApplyToPokemon)
+			drawString(fontRenderer, "Select a Pokemon to use on", width / 2 - 110, height - 23, 0xFFFFFF);
+		else
+			drawString(fontRenderer, "Choose a Pokemon", width / 2 - 90, height - 23, 0xFFFFFF);
 
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17 && !isHealing) {
 			drawImageQuad(guiIndex, width / 2 + 63, height - 27, 48, 17, 198f / 256f, 210f / 256f, 246f / 256, 227f / 256f);
 		}
 		drawString(fontRenderer, "Back", width / 2 + 75, height - 22, 0xFFFFFF);
@@ -390,6 +468,11 @@ public class GuiBattle extends GuiContainer {
 			drawImageQuad(guiIndex, width / 2 - 60, height - 149, 6, 9, 32f / 256f, 208f / 256f, 38f / 256f, 217f / 256f);
 		else
 			drawImageQuad(guiIndex, width / 2 - 60, height - 149, 6, 9, 32f / 256f, 218f / 256f, 38f / 256f, 227f / 256f);
+
+		if (mode == BattleMode.ApplyToPokemon && !isHealing) {
+			if (mouseX > width / 2 - 120 && mouseX < width / 2 - 21 && mouseY > height - 165 && mouseY < height - 113)
+				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/gui/selectCurrentPokemon.png"), width / 2 - 120, height - 165, 89, 52, 0, 0, 1, 1);
+		}
 
 		int pos = -1;
 		for (int i = 0; i < 6; i++) {
@@ -422,7 +505,7 @@ public class GuiBattle extends GuiContainer {
 
 					int xpos = width / 2 - 30;
 					int ypos = height - 195 + pos * 30;
-					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31)
+					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31 && !isHealing)
 						drawImageQuad(guiIndex, xpos, ypos, 150, 32, 43f / 256f, 205f / 256f, 194f / 256f, 237f / 256f);
 				}
 			}
@@ -531,6 +614,16 @@ public class GuiBattle extends GuiContainer {
 					checkExists(inventory.mainInventory[i].itemID, inventory.mainInventory[i].stackSize);
 				else if (inventory.mainInventory[i] != null && inventory.mainInventory[i].getItem() instanceof ItemEther)
 					checkExists(inventory.mainInventory[i].itemID, inventory.mainInventory[i].stackSize);
+			}
+		}
+	}
+
+	private void removeItem(ItemData itemToUse) {
+		InventoryPlayer inventory = Minecraft.getMinecraft().thePlayer.inventory;
+		for (int i = 0; i < inventory.mainInventory.length; i++) {
+			if (inventory.mainInventory[i] != null && inventory.mainInventory[i].itemID == itemToUse.id) {
+				inventory.mainInventory[i].stackSize--;
+				return;
 			}
 		}
 	}
