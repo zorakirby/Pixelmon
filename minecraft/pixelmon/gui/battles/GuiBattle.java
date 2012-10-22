@@ -50,6 +50,7 @@ public class GuiBattle extends GuiContainer {
 	private int battleControllerIndex;
 	public static BattleMode mode;
 	public static BagSection bagSection;
+	public static boolean battleEnded = false;
 	private int guiWidth = 300;
 	private int guiHeight = 60;
 
@@ -69,6 +70,11 @@ public class GuiBattle extends GuiContainer {
 			if (Minecraft.getMinecraft().renderViewEntity != ClientBattleManager.camera)
 				Minecraft.getMinecraft().renderViewEntity = ClientBattleManager.camera;
 
+		if (!ClientBattleManager.hasMoreMessages() && battleEnded){
+			mc.thePlayer.closeScreen();
+			mc.setIngameFocus();
+			return;
+		}
 		int left = (width - xSize) / 2;
 		int top = (height - ySize) / 2;
 		RenderHelper.disableStandardItemLighting();
