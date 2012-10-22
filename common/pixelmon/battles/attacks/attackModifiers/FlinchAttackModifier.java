@@ -1,5 +1,7 @@
 package pixelmon.battles.attacks.attackModifiers;
 
+
+import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;

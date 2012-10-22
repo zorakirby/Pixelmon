@@ -18,9 +18,9 @@ public class Frustration extends SpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Friendship not fully implemented yet, using basePower of 50");
-		a.basePower = 50;
+		a.basePower = (int) ((255 - user.friendship.friendship) / 2.5);
 		return false;
+	
 	}
 
 }
