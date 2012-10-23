@@ -27,12 +27,16 @@ public class ReplaceMove extends PacketHandlerBase {
 		int pokemonID = dataStream.readInt();
 		int moveToLearnIndex = dataStream.readInt();
 		int replaceIndex = dataStream.readInt();
-		
-		EntityPlayerMP player =(EntityPlayerMP)pl;
+
+		EntityPlayerMP player = (EntityPlayerMP) pl;
 		Attack a = DatabaseMoves.getAttack(moveToLearnIndex);
-		
+
 		EntityPixelmon p = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(pokemonID, player.worldObj);
 		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(replaceIndex).attackName + ", and learned " + a.attackName);
 		p.moveset.set(replaceIndex, a);
+		if (p.getLvl().isLearningMoves) {
+			p.getLvl().learnNextMove();
+		} else if (p.battleController != null)
+			p.battleController.endPause();
 	}
 }

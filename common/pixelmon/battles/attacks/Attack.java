@@ -38,7 +38,7 @@ public class Attack {
 	public int pp;
 	public int ppBase;
 	public int ppmax;
-	String description;
+	public String description;
 	public int accuracy;
 	public ArrayList<EffectBase> effects;
 	boolean makesContact;

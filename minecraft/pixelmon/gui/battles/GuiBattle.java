@@ -12,15 +12,18 @@ import org.lwjgl.opengl.GL12;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.ServerStorageDisplay;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonMovesetDataPacket;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsPokeballs;
+import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.EntityCamera;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.BagSection;
+import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.items.ItemData;
@@ -44,7 +47,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon;
+		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, ReplaceAttack;
 	}
 
 	private int battleControllerIndex;
@@ -53,6 +56,9 @@ public class GuiBattle extends GuiContainer {
 	public static boolean battleEnded = false;
 	private int guiWidth = 300;
 	private int guiHeight = 60;
+
+	public static Attack newAttack;
+	public static PixelmonDataPacket pokemonToLearnAttack;
 
 	boolean cameraEnabled = false;
 
@@ -64,15 +70,23 @@ public class GuiBattle extends GuiContainer {
 		ClientBattleManager.clearMessages();
 	}
 
+	public GuiBattle() {
+		super(new ContainerEmpty());
+		mode = BattleMode.ReplaceAttack;
+		GuiPixelmonOverlay.isVisible = false;
+		ClientBattleManager.clearMessages();
+	}
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float mfloat, int mouseX, int mouseY) {
 		if (cameraEnabled && ClientBattleManager.camera != null)
 			if (Minecraft.getMinecraft().renderViewEntity != ClientBattleManager.camera)
 				Minecraft.getMinecraft().renderViewEntity = ClientBattleManager.camera;
 
-		if (!ClientBattleManager.hasMoreMessages() && battleEnded){
+		if (!ClientBattleManager.hasMoreMessages() && battleEnded) {
 			mc.thePlayer.closeScreen();
 			mc.setIngameFocus();
+			GuiPixelmonOverlay.isVisible = true;
 			return;
 		}
 		int left = (width - xSize) / 2;
@@ -90,7 +104,81 @@ public class GuiBattle extends GuiContainer {
 			drawChooseBag(mouseX, mouseY);
 		else if (mode == BattleMode.UseBag)
 			drawUseBag(mouseX, mouseY);
+		else if (mode == BattleMode.ReplaceAttack)
+			drawReplaceAttack(mouseX, mouseY);
+	}
 
+	private Attack[] attacks = new Attack[4];
+
+	private void drawReplaceAttack(int mouseX, int mouseY) {
+		int guiIndex = -1, typesIndex = -1;
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/chooseMove.png");
+		typesIndex = mc.renderEngine.getTexture("/pixelmon/gui/types.png");
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width / 2 - 256 / 2, height / 2 - 102, 256, 205, 0, 0, 1, 205f / 256f);
+		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
+			PixelmonMovesetDataPacket move = pokemonToLearnAttack.moveset[i];
+			drawString(fontRenderer, move.attackName, width / 2 + 11, height / 2 - 85 + 22 * i, 0xFFFFFF);
+			drawString(fontRenderer, move.pp + "/" + move.ppBase, width / 2 + 90, height / 2 - 83 + 22 * i, 0xFFFFFF);
+			float x = move.type.textureX;
+			float y = move.type.textureY;
+			drawImageQuad(typesIndex, width / 2 - 30, height / 2 - 92 + 22 * i, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
+		}
+		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
+			if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 - 94 + 22 * i && mouseY < height / 2 - 94 + 22 * (i + 1)) {
+				drawImageQuad(guiIndex, width / 2 - 30, height / 2 - 94 + 22 * i, 152, 24, 97f / 256f, 209f / 256f, 249f / 256f, 234f / 256f);
+				if (attacks[i] == null || !attacks[i].attackName.equals(pokemonToLearnAttack.moveset[i].attackName))
+					attacks[i] = DatabaseMoves.getAttack(pokemonToLearnAttack.moveset[i].attackName);
+				drawMoveInfo(attacks[i]);
+			}
+		}
+
+		drawString(fontRenderer, newAttack.attackName, width / 2 + 11, height / 2 - 78 + 22 * 4, 0xFFFFFF);
+		drawString(fontRenderer, newAttack.pp + "/" + newAttack.ppBase, width / 2 + 90, height / 2 - 76 + 22 * 4, 0xFFFFFF);
+		float x = newAttack.attackType.textureX;
+		float y = newAttack.attackType.textureY;
+		drawImageQuad(typesIndex, width / 2 - 30, height / 2 +3, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
+		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 +3 && mouseY < height / 2 +25) {
+			drawImageQuad(guiIndex, width / 2 - 30, height / 2 + 1, 152, 24, 97f / 256f, 209f / 256f, 249f / 256f, 234f / 256f);
+			drawMoveInfo(newAttack);
+		}
+		String numString = "";
+		if (pokemonToLearnAttack.nationalPokedexNumber < 10)
+			numString = "00" + pokemonToLearnAttack.nationalPokedexNumber;
+		else if (pokemonToLearnAttack.nationalPokedexNumber < 100)
+			numString = "0" + pokemonToLearnAttack.nationalPokedexNumber;
+		else
+			numString = "" + pokemonToLearnAttack.nationalPokedexNumber;
+		int var9;
+		if (pokemonToLearnAttack.isShiny)
+			var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+		else
+			var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+		drawImageQuad(var9, width / 2 - 114, height / 2 - 76, 64f, 64f, 0f, 0f, 1f, 1f);
+		drawCenteredString(fontRenderer, pokemonToLearnAttack.nickname.equals("") ? pokemonToLearnAttack.name : pokemonToLearnAttack.nickname, width / 2 - 82,
+				height / 2 + 8, 0xFFFFFF);
+
+		drawString(fontRenderer, "Effect", width / 2 - 96, height / 2 + 38, 0xFFFFFF);
+		drawString(fontRenderer, "Description", width / 2 - 20, height / 2 + 38, 0xFFFFFF);
+	}
+
+	private void drawMoveInfo(Attack attack) {
+		drawString(fontRenderer, "Power", width / 2 - 120, height / 2 + 58, 0xFFFFFF);
+		drawString(fontRenderer, "Accuracy", width / 2 - 120, height / 2 + 78, 0xFFFFFF);
+		int bpextra = 0, acextra = 0;
+		;
+		if (attack.basePower >= 100)
+			bpextra = fontRenderer.getCharWidth('0');
+		if (attack.accuracy >= 100)
+			acextra = fontRenderer.getCharWidth('0');
+		if (attack.basePower != -1)
+			drawString(fontRenderer, "" + attack.basePower, width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
+		else
+			drawString(fontRenderer, "--", width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
+		drawString(fontRenderer, "" + attack.accuracy, width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
+
+		fontRenderer.drawSplitString(attack.description, width / 2 - 25, height / 2 + 55, 141, 0xFFFFFF);
 	}
 
 	private int startIndex = 0;
