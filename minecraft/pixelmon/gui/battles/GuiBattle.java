@@ -15,6 +15,7 @@ import pixelmon.ServerStorageDisplay;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
+import pixelmon.comm.PacketHandler;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonMovesetDataPacket;
 import pixelmon.config.PixelmonItems;
@@ -39,6 +40,7 @@ import net.minecraft.src.GuiContainer;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.RenderHelper;
 import net.minecraft.src.RenderManager;
 import net.minecraft.src.Slot;
@@ -47,7 +49,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, ReplaceAttack;
+		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, ReplaceAttack, YesNo;
 	}
 
 	private int battleControllerIndex;
@@ -106,8 +108,42 @@ public class GuiBattle extends GuiContainer {
 			drawUseBag(mouseX, mouseY);
 		else if (mode == BattleMode.ReplaceAttack)
 			drawReplaceAttack(mouseX, mouseY);
+		else if (mode == BattleMode.YesNo)
+			drawYesNoDialog(mouseX, mouseY);
 	}
 
+	private void drawYesNoDialog(int mouseX, int mouseY) {
+		int guiIndex = -1;
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/yesNo.png");
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width / 2 - 256 / 2, height / 2 - 50, 256, 100, 0, 0, 1, 100f / 128f);
+
+		float textAreaWidth = 170;
+		if (selectedAttack == -1) {
+			float textWidth = fontRenderer.getStringWidth("Do you want to give up learning " + newAttack.attackName + "?");
+			int numLines = (int) (textWidth / textAreaWidth) + 1;
+			fontRenderer.drawSplitString("Do you want to give up learning " + newAttack.attackName + "?", width / 2 - 109, height / 2 + 1 - numLines * 10 / 2,
+					(int) textAreaWidth, 0x000000);
+			fontRenderer.drawSplitString("Do you want to give up learning " + newAttack.attackName + "?", width / 2 - 110, height / 2 - numLines * 10 / 2,
+					(int) textAreaWidth, 0xFFFFFF);
+		} else {
+			String text = "Do you want to replace " + attacks[selectedAttack].attackName + " with " + newAttack.attackName + "?";
+			float textWidth = fontRenderer.getStringWidth(text);
+			int numLines = (int) (textWidth / textAreaWidth) + 1;
+			fontRenderer.drawSplitString(text, width / 2 - 109, height / 2 + 1 - numLines * 10 / 2, (int) textAreaWidth, 0x000000);
+			fontRenderer.drawSplitString(text, width / 2 - 110, height / 2 - numLines * 10 / 2, (int) textAreaWidth, 0xFFFFFF);
+		}
+
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7)
+			drawImageQuad(guiIndex, width / 2 + 63, height / 2 - 33, 45, 26, 154f / 256f, 101f / 128f, 199f / 256f, 127f / 128f);
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31)
+			drawImageQuad(guiIndex, width / 2 + 63, height / 2 + 5, 45, 26, 154f / 256f, 101f / 128f, 199f / 256f, 127f / 128f);
+		drawString(fontRenderer, "Yes", width / 2 + 76, height / 2 - 23, 0xFFFFFF);
+		drawString(fontRenderer, "No", width / 2 + 80, height / 2 + 15, 0xFFFFFF);
+	}
+
+	private int selectedAttack = -1;
 	private Attack[] attacks = new Attack[4];
 
 	private void drawReplaceAttack(int mouseX, int mouseY) {
@@ -138,8 +174,8 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, newAttack.pp + "/" + newAttack.ppBase, width / 2 + 90, height / 2 - 76 + 22 * 4, 0xFFFFFF);
 		float x = newAttack.attackType.textureX;
 		float y = newAttack.attackType.textureY;
-		drawImageQuad(typesIndex, width / 2 - 30, height / 2 +3, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
-		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 +3 && mouseY < height / 2 +25) {
+		drawImageQuad(typesIndex, width / 2 - 30, height / 2 + 3, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
+		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 + 3 && mouseY < height / 2 + 25) {
 			drawImageQuad(guiIndex, width / 2 - 30, height / 2 + 1, 152, 24, 97f / 256f, 209f / 256f, 249f / 256f, 234f / 256f);
 			drawMoveInfo(newAttack);
 		}
@@ -380,8 +416,38 @@ public class GuiBattle extends GuiContainer {
 			ChooseBagClick(mouseX, mouseY);
 		} else if (mode == BattleMode.UseBag) {
 			UseBagClick(mouseX, mouseY);
+		} else if (mode == BattleMode.ReplaceAttack) {
+			ReplaceAttackClicked(mouseX, mouseY);
+		} else if (mode == BattleMode.YesNo){
+			YesNoDialogClicked(mouseX, mouseY);
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+
+	private void YesNoDialogClicked(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7){
+			if (selectedAttack !=-1) PacketDispatcher.sendPacketToServer(sendPacket);
+			mode = BattleMode.Waiting;
+		}
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31)
+			mode = BattleMode.ReplaceAttack;
+	}
+
+	private Packet250CustomPayload sendPacket;
+
+	private void ReplaceAttackClicked(int mouseX, int mouseY) {
+		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
+			if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 - 94 + 22 * i && mouseY < height / 2 - 94 + 22 * (i + 1)) {
+				sendPacket = PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonToLearnAttack.pokemonID, newAttack.attackIndex, i);
+				selectedAttack = i;
+				mode = BattleMode.YesNo;
+			}
+		}
+
+		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 + 3 && mouseY < height / 2 + 25) {
+			mode = BattleMode.YesNo;
+			selectedAttack = -1;
+		}
 	}
 
 	private void ApplyToPokemonClick(int mouseX, int mouseY) {
