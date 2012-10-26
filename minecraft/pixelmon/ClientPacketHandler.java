@@ -10,6 +10,7 @@ import pixelmon.Pixelmon;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
@@ -71,7 +72,12 @@ public class ClientPacketHandler implements IPacketHandler {
 					GuiBattle.mode = BattleMode.ReplaceAttack;
 				else
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
-
+			} else if (packetID == EnumPackets.LevelUp.getIndex()){
+				PixelmonLevelUpPacket p = new PixelmonLevelUpPacket();
+				p.readPacketData(dataStream);
+				ClientBattleManager.levelUpList.add(p);
+				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
+					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LevelUp.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

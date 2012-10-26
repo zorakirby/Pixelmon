@@ -7,6 +7,8 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
+import pixelmon.comm.PixelmonLevelUpPacket;
+import pixelmon.comm.PixelmonStatsPacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
@@ -130,18 +132,18 @@ public class Level {
 		return getLevel() != 100;
 	}
 
-	protected void onLevelUp() {
+	protected void onLevelUp(PixelmonStatsPacket stats) {
 		float oldHp = pixelmon.stats.HP;
 		updateStats();
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
 		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
 		pixelmon.setEntityHealth((int) Math.ceil(newHealth));
 		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP) {
+			PixelmonStatsPacket stats2 = PixelmonStatsPacket.createPacket(pixelmon);
+			PixelmonLevelUpPacket p = new PixelmonLevelUpPacket(pixelmon, getLevel(), stats, stats2, EnumPackets.LevelUp);
+			ChatHandler.sendBattleMessage(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + getLevel() + "!");
+			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
-			if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).contains(pixelmon.getPokemonId())) {
-				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + getLevel() + "!");
-				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
-			}
 		}
 		String name = pixelmon.getName();
 
@@ -165,9 +167,11 @@ public class Level {
 		if (pixelmon.moveset.size() >= 4) {
 			if (pixelmon.battleController != null)
 				pixelmon.battleController.pauseBattle();
-			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.attackIndex));
-//			((EntityPlayer) pixelmon.getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj,
-//					pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
+			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace,
+					pixelmon.getPokemonId(), a.attackIndex));
+			// ((EntityPlayer) pixelmon.getOwner()).openGui(Pixelmon.instance,
+			// EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj,
+			// pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
 		} else {
 			pixelmon.moveset.add(a);
 			ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
@@ -190,8 +194,11 @@ public class Level {
 		}
 		while (getExp() >= getExpToNextLevel()) {
 			int newExp = getExp() - getExpToNextLevel();
+			PixelmonStatsPacket stats = null;
+			if (pixelmon.getOwner() != null)
+				stats = PixelmonStatsPacket.createPacket(pixelmon);
 			setLevel(getLevel() + 1);
-			onLevelUp();
+			onLevelUp(stats);
 			if (getLevel() >= pixelmon.baseStats.EvolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.EvolveInto);
 			}
