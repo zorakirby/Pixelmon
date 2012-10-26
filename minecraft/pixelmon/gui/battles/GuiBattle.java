@@ -15,6 +15,7 @@ import pixelmon.ServerStorageDisplay;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
+import pixelmon.comm.PacketHandler;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonMovesetDataPacket;
 import pixelmon.config.PixelmonItems;
@@ -417,8 +418,19 @@ public class GuiBattle extends GuiContainer {
 			UseBagClick(mouseX, mouseY);
 		} else if (mode == BattleMode.ReplaceAttack) {
 			ReplaceAttackClicked(mouseX, mouseY);
+		} else if (mode == BattleMode.YesNo){
+			YesNoDialogClicked(mouseX, mouseY);
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+
+	private void YesNoDialogClicked(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7){
+			if (selectedAttack !=-1) PacketDispatcher.sendPacketToServer(sendPacket);
+			mode = BattleMode.Waiting;
+		}
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31)
+			mode = BattleMode.ReplaceAttack;
 	}
 
 	private Packet250CustomPayload sendPacket;
