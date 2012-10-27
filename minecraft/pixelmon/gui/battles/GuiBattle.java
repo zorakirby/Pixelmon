@@ -71,6 +71,7 @@ public class GuiBattle extends GuiContainer {
 		mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
+		battleEnded = false;
 	}
 
 	public GuiBattle(BattleMode mode) {
@@ -78,6 +79,7 @@ public class GuiBattle extends GuiContainer {
 		this.mode = mode;
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
+		battleEnded = false;
 	}
 
 	@Override
