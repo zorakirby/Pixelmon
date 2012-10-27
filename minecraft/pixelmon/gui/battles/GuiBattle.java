@@ -18,6 +18,7 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PacketHandler;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonMovesetDataPacket;
+import pixelmon.comm.PixelmonStatsPacket;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.database.DatabaseMoves;
@@ -125,31 +126,57 @@ public class GuiBattle extends GuiContainer {
 		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/levelUpPopUp.png");
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawImageQuad(guiIndex, width / 2 - 105, height / 2 - 60, 210, 90, 0, 0, 1f, 112f / 256f);
-		drawString(fontRenderer, "HP", width / 2 - 90, height / 2 - 45, 0xFFFFFF);
-		drawString(fontRenderer, "Attack", width / 2 - 90, height / 2 - 19, 0xFFFFFF);
-		drawString(fontRenderer, "Defence", width / 2 - 90, height / 2 + 8, 0xFFFFFF);
-		drawString(fontRenderer, "Sp. Attack", width / 2 - 0, height / 2 - 45, 0xFFFFFF);
-		drawString(fontRenderer, "Sp. Defence", width / 2 - 0, height / 2 - 19, 0xFFFFFF);
-		drawString(fontRenderer, "Speed", width / 2 - 0, height / 2 + 8, 0xFFFFFF);
+		drawImageQuad(guiIndex, width / 2 - 52, height / 2 - 66, 104, 113, 0, 0, 104f / 256f, 113f / 256f);
+		drawString(fontRenderer, "HP", width / 2 - 43, height / 2 - 54, 0xFFFFFF);
+		drawString(fontRenderer, "Attack", width / 2 - 43, height / 2 - 38, 0xFFFFFF);
+		drawString(fontRenderer, "Defence", width / 2 - 43, height / 2 - 22, 0xFFFFFF);
+		drawString(fontRenderer, "Sp. Attack", width / 2 - 43, height / 2 - 6, 0xFFFFFF);
+		drawString(fontRenderer, "Sp. Defence", width / 2 - 43, height / 2 + 10, 0xFFFFFF);
+		drawString(fontRenderer, "Speed", width / 2 - 43, height / 2 + 26, 0xFFFFFF);
 		if (drawLevelStage == LevelStage.First) {
 			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.HP - ClientBattleManager.levelUpList.get(0).statsLevel1.HP),
-					width / 2 - 43, height / 2 - 45, 0xFFFFFF);
+					width / 2 + 25, height / 2 - 54, 0xFFFFFF);
 			drawString(fontRenderer, "+"
-					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Attack - ClientBattleManager.levelUpList.get(0).statsLevel1.Attack), width / 2 - 43,
-					height / 2 - 19, 0xFFFFFF);
+					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Attack - ClientBattleManager.levelUpList.get(0).statsLevel1.Attack), width / 2 + 25,
+					height / 2 - 38, 0xFFFFFF);
 			drawString(fontRenderer, "+"
 					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Defence - ClientBattleManager.levelUpList.get(0).statsLevel1.Defence),
-					width / 2 - 43, height / 2 + 8, 0xFFFFFF);
+					width / 2 + 25, height / 2 - 22, 0xFFFFFF);
 			drawString(fontRenderer, "+"
 					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.SpecialAttack - ClientBattleManager.levelUpList.get(0).statsLevel1.SpecialAttack),
-					width / 2 + 73, height / 2 - 45, 0xFFFFFF);
+					width / 2 + 25, height / 2 - 6, 0xFFFFFF);
 			drawString(fontRenderer, "+"
 					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.SpecialDefence - ClientBattleManager.levelUpList.get(0).statsLevel1.SpecialDefence),
-					width / 2 + 73, height / 2 - 19, 0xFFFFFF);
+					width / 2 + 25, height / 2 + 10, 0xFFFFFF);
 			drawString(fontRenderer, "+"
-					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Speed - ClientBattleManager.levelUpList.get(0).statsLevel1.Speed), width / 2 + 73,
-					height / 2 + 8, 0xFFFFFF);
+					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Speed - ClientBattleManager.levelUpList.get(0).statsLevel1.Speed), width / 2 + 25,
+					height / 2 + 26, 0xFFFFFF);
+		} else if (drawLevelStage == LevelStage.Second) {
+			PixelmonStatsPacket stats = ClientBattleManager.levelUpList.get(0).statsLevel2;
+			drawString(fontRenderer, "" + stats.HP, stats.HP < 100 ? width / 2 + 28 : width / 2 + 22, height / 2 - 54, 0xFFFFFF);
+			drawString(fontRenderer, "" + stats.Attack, stats.Attack < 100 ? width / 2 + 28 : width / 2 + 22, height / 2 - 38, 0xFFFFFF);
+			drawString(fontRenderer, "" + stats.Defence, stats.Defence < 100 ? width / 2 + 28 : width / 2 + 22, height / 2 - 22, 0xFFFFFF);
+			drawString(fontRenderer, "" + stats.SpecialAttack, stats.SpecialAttack < 100 ? width / 2 + 28 : width / 2 + 22, height / 2 - 6, 0xFFFFFF);
+			drawString(fontRenderer, "" + stats.SpecialDefence, stats.SpecialDefence < 100 ? width / 2 + 28 : width / 2 + 22, height / 2 + 10, 0xFFFFFF);
+			drawString(fontRenderer, "" + stats.Speed, stats.Speed < 100 ? width / 2 + 28 : width / 2 + 22, height / 2 + 26, 0xFFFFFF);
+		}
+
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/battleGui3.png");
+
+		String name = "";
+		if (ServerStorageDisplay.get(ClientBattleManager.levelUpList.get(0).pokemonID).nickname.equals(""))
+			name = ServerStorageDisplay.get(ClientBattleManager.levelUpList.get(0).pokemonID).name;
+		else
+			name = ServerStorageDisplay.get(ClientBattleManager.levelUpList.get(0).pokemonID).nickname;
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f);
+		drawCenteredString(fontRenderer, "Your " + name + " has grown to level " + ClientBattleManager.levelUpList.get(0).level + "!", width / 2, height - 35,
+				0xFFFFFF);
+		flashCount++;
+		if (flashCount > 30) {
+			drawImageQuad(guiIndex, width / 2 + 130, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f);
+			if (flashCount > 60)
+				flashCount = 0;
 		}
 	}
 
@@ -370,248 +397,6 @@ public class GuiBattle extends GuiContainer {
 		}
 	}
 
-	@Override
-	public void handleKeyboardInput() {
-		return;
-	}
-
-	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		if (ClientBattleManager.hasMoreMessages()) {
-			ClientBattleManager.removeMessage();
-			return;
-		}
-		if (mode == BattleMode.MainMenu) {
-			int x1 = width / 2 + 31;
-			int y1 = height - guiHeight + 9;
-			int x2 = width / 2 + 90;
-			int y2 = height - guiHeight + 35;
-			int w = 48, h = 16;
-			if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h)
-				mode = BattleMode.ChooseAttack;
-			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h)
-				mode = BattleMode.ChoosePokemon;
-			else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
-				mode = BattleMode.ChooseBag;
-			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
-				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
-				mode = BattleMode.Waiting;
-			}
-			return;
-
-		} else if (mode == BattleMode.ChooseAttack) {
-			if (mouseX > width / 2 + 137 && mouseX < width / 2 + 148 && mouseY > height - 11 && mouseY < height - 1) {
-				mode = BattleMode.MainMenu;
-				return;
-			}
-			int x1 = width / 2 - 141;
-			int x2 = width / 2 - 50;
-			int y1 = height - guiHeight + 9;
-			int y2 = height - guiHeight + 33;
-			int w = 87, h = 20;
-			if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h) {
-				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex,
-						ClientBattleManager.getUserPokemon().pokemonID));
-				mode = BattleMode.Waiting;
-				return;
-			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h) {
-				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex,
-						ClientBattleManager.getUserPokemon().pokemonID));
-				mode = BattleMode.Waiting;
-				return;
-			} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
-				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex,
-						ClientBattleManager.getUserPokemon().pokemonID));
-				mode = BattleMode.Waiting;
-				return;
-			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
-				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex,
-						ClientBattleManager.getUserPokemon().pokemonID));
-				mode = BattleMode.Waiting;
-				return;
-			}
-		} else if (mode == BattleMode.ChoosePokemon) {
-			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
-				mode = BattleMode.MainMenu;
-				return;
-			}
-			int pos = 0;
-			for (int i = 0; i < 6; i++) {
-				if (i != ClientBattleManager.getUserPokemon().order) {
-					PixelmonDataPacket pdata = ServerStorageDisplay.pokemon[i];
-					if (pdata != null) {
-						int xpos = width / 2 - 30;
-						int ypos = height - 195 + pos * 30;
-						if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31) {
-							PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwitchPokemon, pdata.order, battleControllerIndex, 0));
-							mode = BattleMode.Waiting;
-							return;
-						}
-					}
-					pos++;
-				}
-			}
-		} else if (mode == BattleMode.ApplyToPokemon) {
-			ApplyToPokemonClick(mouseX, mouseY);
-		} else if (mode == BattleMode.ChooseBag) {
-			ChooseBagClick(mouseX, mouseY);
-		} else if (mode == BattleMode.UseBag) {
-			UseBagClick(mouseX, mouseY);
-		} else if (mode == BattleMode.ReplaceAttack) {
-			ReplaceAttackClicked(mouseX, mouseY);
-		} else if (mode == BattleMode.YesNo) {
-			YesNoDialogClicked(mouseX, mouseY);
-		} else if (mode == BattleMode.LevelUp) {
-
-		}
-		super.mouseClicked(mouseX, mouseY, mouseButton);
-	}
-
-	private void YesNoDialogClicked(int mouseX, int mouseY) {
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7) {
-			if (selectedAttack != -1)
-				PacketDispatcher.sendPacketToServer(sendPacket);
-			if (battleControllerIndex != -1)
-				mode = BattleMode.Waiting;
-			else {
-				mc.thePlayer.closeScreen();
-				mc.setIngameFocus();
-				GuiPixelmonOverlay.isVisible = true;
-				return;
-			}
-		}
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31)
-			mode = BattleMode.ReplaceAttack;
-	}
-
-	private Packet250CustomPayload sendPacket;
-
-	private void ReplaceAttackClicked(int mouseX, int mouseY) {
-		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
-			if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 - 94 + 22 * i && mouseY < height / 2 - 94 + 22 * (i + 1)) {
-				sendPacket = PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonToLearnAttack.pokemonID, newAttack.attackIndex, i);
-				selectedAttack = i;
-				mode = BattleMode.YesNo;
-			}
-		}
-
-		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 + 3 && mouseY < height / 2 + 25) {
-			mode = BattleMode.YesNo;
-			selectedAttack = -1;
-		}
-	}
-
-	private void ApplyToPokemonClick(int mouseX, int mouseY) {
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
-			mode = BattleMode.UseBag;
-			return;
-		}
-		int pokemonToApplyTo = -1;
-		if (mouseX > width / 2 - 120 && mouseX < width / 2 - 21 && mouseY > height - 165 && mouseY < height - 113) {
-			pokemonToApplyTo = ClientBattleManager.getUserPokemon().order;
-		}
-		int pos = 0;
-		for (int i = 0; i < 6; i++) {
-			if (i != ClientBattleManager.getUserPokemon().order) {
-				PixelmonDataPacket pdata = ServerStorageDisplay.pokemon[i];
-				if (pdata != null) {
-					int xpos = width / 2 - 30;
-					int ypos = height - 195 + pos * 30;
-					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31) {
-						pokemonToApplyTo = i;
-					}
-				}
-				pos++;
-			}
-		}
-		if (pokemonToApplyTo != -1) {
-			if (PixelmonItems.getItem(itemToUse.id) instanceof ItemPotion) {
-				pixelmonToHeal = ServerStorageDisplay.pokemon[pokemonToApplyTo];
-				Timer timer = new Timer();
-				timer.scheduleAtFixedRate(new HealerTask(), 100, 100);
-			}
-		}
-	}
-
-	private ItemData itemToUse = null;
-
-	private void UseBagClick(int mouseX, int mouseY) {
-		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45) {
-			if (startIndex > 0) {
-				startIndex--;
-				return;
-			}
-		}
-		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 + 82 && mouseY < height / 2 + 92) {
-			if (startIndex + 6 < ClientBattleManager.bagStore.size() - 1) {
-				startIndex++;
-				return;
-			}
-		}
-
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74) {
-			mode = BattleMode.ChooseBag;
-			return;
-		}
-
-		for (int i = startIndex; i < 6 + startIndex; i++) {
-			if (i < ClientBattleManager.bagStore.size()) {
-				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
-						&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
-					if (bagSection == bagSection.Pokeballs) {
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id,
-								battleControllerIndex, 0));
-						mode = BattleMode.Waiting;
-					} else {
-						itemToUse = ClientBattleManager.bagStore.get(i);
-						mode = BattleMode.ApplyToPokemon;
-					}
-				}
-			}
-		}
-	}
-
-	private void ChooseBagClick(int mouseX, int mouseY) {
-		if (mouseX > width / 2 + 106 && mouseX < width / 2 + 126 && mouseY > height / 2 + 55 && mouseY < height / 2 + 77)
-			mode = BattleMode.MainMenu;
-
-		int x1, x2, y1, y2;
-		x1 = width / 2 - 103;
-		x2 = width / 2 + 3;
-		y1 = height / 2 - 63;
-		y2 = height / 2 + 4;
-		int buttonWidth = 100, buttonHeight = 62;
-		bagSection = null;
-		if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
-			bagSection = BagSection.StatusRestore;
-
-		else if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
-			bagSection = BagSection.BattleItems;
-
-		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
-			bagSection = BagSection.Pokeballs;
-
-		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
-			bagSection = BagSection.HP;
-
-		if (bagSection != null) {
-			mode = BattleMode.UseBag;
-			ClientBattleManager.bagStore.clear();
-			getInventory();
-			startIndex = 0;
-		}
-	}
-
-	private PixelmonDataPacket pixelmonToHeal = null;
-
-	class HealerTask extends TimerTask {
-		public void run() {
-			pixelmonToHeal.health++;
-			if (pixelmonToHeal.health >= pixelmonToHeal.hp)
-				this.cancel();
-		}
-	}
-
 	private void drawMainMenu(int mouseX, int mouseY) {
 		int guiIndex = -1;
 		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/battleGui1.png");
@@ -788,6 +573,275 @@ public class GuiBattle extends GuiContainer {
 				mouseOverButton = ind;
 			}
 			drawCenteredString(fontRenderer, string, x + buttonWidth / 2, y + buttonHeight / 2 - 3, 0xFFFFFF);
+		}
+	}
+
+	@Override
+	public void handleKeyboardInput() {
+		return;
+	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+		if (ClientBattleManager.hasMoreMessages()) {
+			ClientBattleManager.removeMessage();
+			return;
+		}
+		if (ClientBattleManager.hasLevelUps())
+			LevelUpClick(mouseX, mouseY);
+		if (mode == BattleMode.MainMenu) {
+			int x1 = width / 2 + 31;
+			int y1 = height - guiHeight + 9;
+			int x2 = width / 2 + 90;
+			int y2 = height - guiHeight + 35;
+			int w = 48, h = 16;
+			if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h)
+				mode = BattleMode.ChooseAttack;
+			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h)
+				mode = BattleMode.ChoosePokemon;
+			else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
+				mode = BattleMode.ChooseBag;
+			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
+				mode = BattleMode.Waiting;
+			}
+			return;
+
+		} else if (mode == BattleMode.ChooseAttack) {
+			ChooseAttackClick(mouseX, mouseY);
+		} else if (mode == BattleMode.ChoosePokemon) {
+			ChoosePokemonClick(mouseX, mouseY);
+		} else if (mode == BattleMode.ApplyToPokemon) {
+			ApplyToPokemonClick(mouseX, mouseY);
+		} else if (mode == BattleMode.ChooseBag) {
+			ChooseBagClick(mouseX, mouseY);
+		} else if (mode == BattleMode.UseBag) {
+			UseBagClick(mouseX, mouseY);
+		} else if (mode == BattleMode.ReplaceAttack) {
+			ReplaceAttackClicked(mouseX, mouseY);
+		} else if (mode == BattleMode.YesNo) {
+			YesNoDialogClicked(mouseX, mouseY);
+		}
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+
+	private void LevelUpClick(int mouseX, int mouseY) {
+		if (drawLevelStage == LevelStage.First)
+			drawLevelStage = LevelStage.Second;
+		else {
+			ClientBattleManager.levelUpList.remove(0);
+			if (ClientBattleManager.hasLevelUps())
+				drawLevelStage = LevelStage.First;
+			else {
+				if (battleControllerIndex == -1) {
+					mc.thePlayer.closeScreen();
+					mc.setIngameFocus();
+					GuiPixelmonOverlay.isVisible = true;
+					return;
+				} else
+					mode = BattleMode.Waiting;
+			}
+		}
+	}
+
+	private void ChooseAttackClick(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 137 && mouseX < width / 2 + 148 && mouseY > height - 11 && mouseY < height - 1) {
+			mode = BattleMode.MainMenu;
+			return;
+		}
+		int x1 = width / 2 - 141;
+		int x2 = width / 2 - 50;
+		int y1 = height - guiHeight + 9;
+		int y2 = height - guiHeight + 33;
+		int w = 87, h = 20;
+		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h) {
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex,
+					ClientBattleManager.getUserPokemon().pokemonID));
+			mode = BattleMode.Waiting;
+			return;
+		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h) {
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex,
+					ClientBattleManager.getUserPokemon().pokemonID));
+			mode = BattleMode.Waiting;
+			return;
+		} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex,
+					ClientBattleManager.getUserPokemon().pokemonID));
+			mode = BattleMode.Waiting;
+			return;
+		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex,
+					ClientBattleManager.getUserPokemon().pokemonID));
+			mode = BattleMode.Waiting;
+			return;
+		}
+	}
+
+	private void ChoosePokemonClick(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
+			mode = BattleMode.MainMenu;
+			return;
+		}
+		int pos = 0;
+		for (int i = 0; i < 6; i++) {
+			if (i != ClientBattleManager.getUserPokemon().order) {
+				PixelmonDataPacket pdata = ServerStorageDisplay.pokemon[i];
+				if (pdata != null) {
+					int xpos = width / 2 - 30;
+					int ypos = height - 195 + pos * 30;
+					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31) {
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwitchPokemon, pdata.order, battleControllerIndex, 0));
+						mode = BattleMode.Waiting;
+						return;
+					}
+				}
+				pos++;
+			}
+		}
+	}
+
+	private void YesNoDialogClicked(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7) {
+			if (selectedAttack != -1)
+				PacketDispatcher.sendPacketToServer(sendPacket);
+			if (battleControllerIndex != -1)
+				mode = BattleMode.Waiting;
+			else {
+				mc.thePlayer.closeScreen();
+				mc.setIngameFocus();
+				GuiPixelmonOverlay.isVisible = true;
+				return;
+			}
+		}
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31)
+			mode = BattleMode.ReplaceAttack;
+	}
+
+	private Packet250CustomPayload sendPacket;
+
+	private void ReplaceAttackClicked(int mouseX, int mouseY) {
+		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
+			if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 - 94 + 22 * i && mouseY < height / 2 - 94 + 22 * (i + 1)) {
+				sendPacket = PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonToLearnAttack.pokemonID, newAttack.attackIndex, i);
+				selectedAttack = i;
+				mode = BattleMode.YesNo;
+			}
+		}
+
+		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 + 3 && mouseY < height / 2 + 25) {
+			mode = BattleMode.YesNo;
+			selectedAttack = -1;
+		}
+	}
+
+	private void ApplyToPokemonClick(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
+			mode = BattleMode.UseBag;
+			return;
+		}
+		int pokemonToApplyTo = -1;
+		if (mouseX > width / 2 - 120 && mouseX < width / 2 - 21 && mouseY > height - 165 && mouseY < height - 113) {
+			pokemonToApplyTo = ClientBattleManager.getUserPokemon().order;
+		}
+		int pos = 0;
+		for (int i = 0; i < 6; i++) {
+			if (i != ClientBattleManager.getUserPokemon().order) {
+				PixelmonDataPacket pdata = ServerStorageDisplay.pokemon[i];
+				if (pdata != null) {
+					int xpos = width / 2 - 30;
+					int ypos = height - 195 + pos * 30;
+					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31) {
+						pokemonToApplyTo = i;
+					}
+				}
+				pos++;
+			}
+		}
+		if (pokemonToApplyTo != -1) {
+			if (PixelmonItems.getItem(itemToUse.id) instanceof ItemPotion) {
+				pixelmonToHeal = ServerStorageDisplay.pokemon[pokemonToApplyTo];
+				Timer timer = new Timer();
+				timer.scheduleAtFixedRate(new HealerTask(), 100, 100);
+			}
+		}
+	}
+
+	private ItemData itemToUse = null;
+
+	private void UseBagClick(int mouseX, int mouseY) {
+		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45) {
+			if (startIndex > 0) {
+				startIndex--;
+				return;
+			}
+		}
+		if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 + 82 && mouseY < height / 2 + 92) {
+			if (startIndex + 6 < ClientBattleManager.bagStore.size() - 1) {
+				startIndex++;
+				return;
+			}
+		}
+
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 111 && mouseY > height / 2 - 91 && mouseY < height / 2 - 74) {
+			mode = BattleMode.ChooseBag;
+			return;
+		}
+
+		for (int i = startIndex; i < 6 + startIndex; i++) {
+			if (i < ClientBattleManager.bagStore.size()) {
+				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
+						&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
+					if (bagSection == bagSection.Pokeballs) {
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id,
+								battleControllerIndex, 0));
+						mode = BattleMode.Waiting;
+					} else {
+						itemToUse = ClientBattleManager.bagStore.get(i);
+						mode = BattleMode.ApplyToPokemon;
+					}
+				}
+			}
+		}
+	}
+
+	private void ChooseBagClick(int mouseX, int mouseY) {
+		if (mouseX > width / 2 + 106 && mouseX < width / 2 + 126 && mouseY > height / 2 + 55 && mouseY < height / 2 + 77)
+			mode = BattleMode.MainMenu;
+
+		int x1, x2, y1, y2;
+		x1 = width / 2 - 103;
+		x2 = width / 2 + 3;
+		y1 = height / 2 - 63;
+		y2 = height / 2 + 4;
+		int buttonWidth = 100, buttonHeight = 62;
+		bagSection = null;
+		if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
+			bagSection = BagSection.StatusRestore;
+
+		else if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
+			bagSection = BagSection.BattleItems;
+
+		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
+			bagSection = BagSection.Pokeballs;
+
+		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
+			bagSection = BagSection.HP;
+
+		if (bagSection != null) {
+			mode = BattleMode.UseBag;
+			ClientBattleManager.bagStore.clear();
+			getInventory();
+			startIndex = 0;
+		}
+	}
+
+	private PixelmonDataPacket pixelmonToHeal = null;
+
+	class HealerTask extends TimerTask {
+		public void run() {
+			pixelmonToHeal.health++;
+			if (pixelmonToHeal.health >= pixelmonToHeal.hp)
+				this.cancel();
 		}
 	}
 
