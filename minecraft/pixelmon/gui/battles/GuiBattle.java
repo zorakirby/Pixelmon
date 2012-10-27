@@ -94,6 +94,11 @@ public class GuiBattle extends GuiContainer {
 		int left = (width - xSize) / 2;
 		int top = (height - ySize) / 2;
 		RenderHelper.disableStandardItemLighting();
+
+		if (!ClientBattleManager.hasLevelUps() || !ClientBattleManager.hasNewAttacks()
+				&& (mode == BattleMode.Waiting || mode == BattleMode.MainMenu || mode == BattleMode.ChooseAttack)) {
+			drawPokemonOverlays();
+		}
 		if (ClientBattleManager.hasMoreMessages())
 			drawMessageScreen();
 		else if (mode == BattleMode.YesNo)
@@ -116,6 +121,15 @@ public class GuiBattle extends GuiContainer {
 			drawUseBag(mouseX, mouseY);
 		else if (mode == BattleMode.Waiting)
 			drawMessageScreen();
+	}
+
+	private void drawPokemonOverlays() {
+		int guiIndex = -1;
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pokemonInfoP1.png");
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width - 120, height - (guiHeight + 41), 120, 41, 0, 0, 120f / 128f, 41f / 64f);
+		
 	}
 
 	private enum LevelStage {
@@ -642,7 +656,7 @@ public class GuiBattle extends GuiContainer {
 			if (ClientBattleManager.hasLevelUps())
 				drawLevelStage = LevelStage.First;
 			else {
-				if (battleControllerIndex == -1) {
+				if (battleControllerIndex == -1 && !ClientBattleManager.hasNewAttacks()) {
 					mc.thePlayer.closeScreen();
 					mc.setIngameFocus();
 					GuiPixelmonOverlay.isVisible = true;
@@ -711,11 +725,11 @@ public class GuiBattle extends GuiContainer {
 
 	private void YesNoDialogClicked(int mouseX, int mouseY) {
 		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7) {
-			if (selectedAttack != -1){
+			if (selectedAttack != -1) {
 				PacketDispatcher.sendPacketToServer(sendPacket);
 			}
 			ClientBattleManager.newAttackList.remove(0);
-			if (battleControllerIndex != -1)
+			if (battleControllerIndex != -1 || ClientBattleManager.hasNewAttacks() || ClientBattleManager.hasLevelUps())
 				mode = BattleMode.Waiting;
 			else {
 				mc.thePlayer.closeScreen();
@@ -724,9 +738,9 @@ public class GuiBattle extends GuiContainer {
 				return;
 			}
 		}
-		 if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31){
-			 mode = BattleMode.Waiting;
-		 }
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31) {
+			mode = BattleMode.Waiting;
+		}
 	}
 
 	private Packet250CustomPayload sendPacket;
