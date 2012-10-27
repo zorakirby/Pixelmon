@@ -13,7 +13,7 @@ public enum EnumGui {
 	RenamePokemon(7), 
 	LearnMove(8), 
 	PC(9), 
-	Battle(10);
+	Battle(10), LevelUp(11);
 	
 	private int index;
 	

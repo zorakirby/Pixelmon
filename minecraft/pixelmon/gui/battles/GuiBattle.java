@@ -49,10 +49,10 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, ReplaceAttack, YesNo;
+		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, ReplaceAttack, YesNo, LevelUp;
 	}
 
-	private int battleControllerIndex;
+	private int battleControllerIndex = -1;
 	public static BattleMode mode;
 	public static BagSection bagSection;
 	public static boolean battleEnded = false;
@@ -72,9 +72,9 @@ public class GuiBattle extends GuiContainer {
 		ClientBattleManager.clearMessages();
 	}
 
-	public GuiBattle() {
+	public GuiBattle(BattleMode mode) {
 		super(new ContainerEmpty());
-		mode = BattleMode.ReplaceAttack;
+		this.mode = mode;
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
 	}
@@ -96,6 +96,8 @@ public class GuiBattle extends GuiContainer {
 		RenderHelper.disableStandardItemLighting();
 		if (ClientBattleManager.hasMoreMessages() || mode == BattleMode.Waiting)
 			drawMessageScreen();
+		else if (ClientBattleManager.hasLevelUps())
+			drawLevelUp(mouseX, mouseY);
 		else if (mode == BattleMode.MainMenu)
 			drawMainMenu(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseAttack)
@@ -110,6 +112,45 @@ public class GuiBattle extends GuiContainer {
 			drawReplaceAttack(mouseX, mouseY);
 		else if (mode == BattleMode.YesNo)
 			drawYesNoDialog(mouseX, mouseY);
+	}
+
+	private enum LevelStage {
+		First, Second, Third
+	}
+
+	private LevelStage drawLevelStage = LevelStage.First;
+
+	private void drawLevelUp(int mouseX, int mouseY) {
+		int guiIndex = -1;
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/levelUpPopUp.png");
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		drawImageQuad(guiIndex, width / 2 - 105, height / 2 - 60, 210, 90, 0, 0, 1f, 112f / 256f);
+		drawString(fontRenderer, "HP", width / 2 - 90, height / 2 - 45, 0xFFFFFF);
+		drawString(fontRenderer, "Attack", width / 2 - 90, height / 2 - 19, 0xFFFFFF);
+		drawString(fontRenderer, "Defence", width / 2 - 90, height / 2 + 8, 0xFFFFFF);
+		drawString(fontRenderer, "Sp. Attack", width / 2 - 0, height / 2 - 45, 0xFFFFFF);
+		drawString(fontRenderer, "Sp. Defence", width / 2 - 0, height / 2 - 19, 0xFFFFFF);
+		drawString(fontRenderer, "Speed", width / 2 - 0, height / 2 + 8, 0xFFFFFF);
+		if (drawLevelStage == LevelStage.First) {
+			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.HP - ClientBattleManager.levelUpList.get(0).statsLevel1.HP),
+					width / 2 - 43, height / 2 - 45, 0xFFFFFF);
+			drawString(fontRenderer, "+"
+					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Attack - ClientBattleManager.levelUpList.get(0).statsLevel1.Attack), width / 2 - 43,
+					height / 2 - 19, 0xFFFFFF);
+			drawString(fontRenderer, "+"
+					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Defence - ClientBattleManager.levelUpList.get(0).statsLevel1.Defence),
+					width / 2 - 43, height / 2 + 8, 0xFFFFFF);
+			drawString(fontRenderer, "+"
+					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.SpecialAttack - ClientBattleManager.levelUpList.get(0).statsLevel1.SpecialAttack),
+					width / 2 + 73, height / 2 - 45, 0xFFFFFF);
+			drawString(fontRenderer, "+"
+					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.SpecialDefence - ClientBattleManager.levelUpList.get(0).statsLevel1.SpecialDefence),
+					width / 2 + 73, height / 2 - 19, 0xFFFFFF);
+			drawString(fontRenderer, "+"
+					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Speed - ClientBattleManager.levelUpList.get(0).statsLevel1.Speed), width / 2 + 73,
+					height / 2 + 8, 0xFFFFFF);
+		}
 	}
 
 	private void drawYesNoDialog(int mouseX, int mouseY) {
@@ -418,16 +459,26 @@ public class GuiBattle extends GuiContainer {
 			UseBagClick(mouseX, mouseY);
 		} else if (mode == BattleMode.ReplaceAttack) {
 			ReplaceAttackClicked(mouseX, mouseY);
-		} else if (mode == BattleMode.YesNo){
+		} else if (mode == BattleMode.YesNo) {
 			YesNoDialogClicked(mouseX, mouseY);
+		} else if (mode == BattleMode.LevelUp) {
+
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
 	private void YesNoDialogClicked(int mouseX, int mouseY) {
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7){
-			if (selectedAttack !=-1) PacketDispatcher.sendPacketToServer(sendPacket);
-			mode = BattleMode.Waiting;
+		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7) {
+			if (selectedAttack != -1)
+				PacketDispatcher.sendPacketToServer(sendPacket);
+			if (battleControllerIndex != -1)
+				mode = BattleMode.Waiting;
+			else {
+				mc.thePlayer.closeScreen();
+				mc.setIngameFocus();
+				GuiPixelmonOverlay.isVisible = true;
+				return;
+			}
 		}
 		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31)
 			mode = BattleMode.ReplaceAttack;

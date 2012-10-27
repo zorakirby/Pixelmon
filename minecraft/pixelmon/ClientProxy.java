@@ -35,6 +35,7 @@ import pixelmon.gui.GuiPixelmonOverlay;
 import pixelmon.gui.GuiScreenPokeChecker;
 import pixelmon.gui.battles.ClientBattleManager;
 import pixelmon.gui.battles.GuiBattle;
+import pixelmon.gui.battles.GuiBattle.BattleMode;
 import pixelmon.gui.inventoryExtended.InventoryDetectionTickHandler;
 import pixelmon.gui.pc.GuiPC;
 import pixelmon.gui.pokedex.GuiPokedex;
@@ -157,10 +158,11 @@ public class ClientProxy extends CommonProxy {
 		if (ID == EnumGui.ChooseStarter.getIndex())
 			return new GuiChooseStarter();
 		else if (ID == EnumGui.LearnMove.getIndex())
-			return new GuiBattle();
+			return new GuiBattle(BattleMode.ReplaceAttack);
+		else if (ID == EnumGui.LevelUp.getIndex())
+			return new GuiBattle(BattleMode.LevelUp);
 		else if (ID == EnumGui.Battle.getIndex())
 			return new GuiBattle(x);
-
 		else if (ID == EnumGui.ChooseAttack.getIndex())
 			return new GuiAttacking(x, y, z);
 		else if (ID == EnumGui.ChoosePokemon.getIndex()) {

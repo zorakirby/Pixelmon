@@ -423,10 +423,10 @@ public class EntityPokeBall extends EntityThrowable {
 				p.setOwner(((EntityPlayer) thrower).username);
 				p.caughtBall = getType();
 				p.clearAttackTarget();
+				PokeballTypeHelper.doAfterEffect(getType(), p);
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).addToParty(p);
 				p.catchInPokeball();
 				p.friendship.initFromCapture();
-				PokeballTypeHelper.doAfterEffect(getType(), p);
 				if (mode == Mode.battle) {
 					battleController.endBattleWithoutXP();
 				}
