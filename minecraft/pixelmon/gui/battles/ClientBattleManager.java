@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.PixelmonServerStore;
 import pixelmon.ServerStorageDisplay;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonStatsPacket;
@@ -11,6 +12,17 @@ import pixelmon.entities.EntityCamera;
 import pixelmon.items.ItemData;
 
 public class ClientBattleManager {
+	public static class AttackData {
+		public int pokemonID;
+		public Attack attack;
+		public int level;
+		public AttackData(int pokemonId, Attack attack, int level){
+			this.pokemonID = pokemonId;
+			this.attack = attack;
+			this.level = level;
+		}
+	}
+
 	private static ArrayList<String> messageList = new ArrayList<String>();
 
 	public static PixelmonDataPacket targetPokemon;
@@ -24,6 +36,8 @@ public class ClientBattleManager {
 	public static ArrayList<ItemData> bagStore = new ArrayList<ItemData>();
 
 	public static ArrayList<PixelmonLevelUpPacket> levelUpList = new ArrayList<PixelmonLevelUpPacket>();
+
+	public static ArrayList<AttackData> newAttackList = new ArrayList<ClientBattleManager.AttackData>();
 
 	public static String getOpponentName() {
 		if (opponentId == -1)
@@ -60,5 +74,9 @@ public class ClientBattleManager {
 
 	public static boolean hasLevelUps() {
 		return levelUpList.size() > 0;
+	}
+
+	public static boolean hasNewAttacks() {
+		return newAttackList.size() > 0;
 	}
 }

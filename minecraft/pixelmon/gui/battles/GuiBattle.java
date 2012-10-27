@@ -50,7 +50,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, ReplaceAttack, YesNo, LevelUp;
+		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, YesNo;
 	}
 
 	private int battleControllerIndex = -1;
@@ -59,9 +59,6 @@ public class GuiBattle extends GuiContainer {
 	public static boolean battleEnded = false;
 	private int guiWidth = 300;
 	private int guiHeight = 60;
-
-	public static Attack newAttack;
-	public static PixelmonDataPacket pokemonToLearnAttack;
 
 	boolean cameraEnabled = false;
 
@@ -74,9 +71,9 @@ public class GuiBattle extends GuiContainer {
 		battleEnded = false;
 	}
 
-	public GuiBattle(BattleMode mode) {
+	public GuiBattle() {
 		super(new ContainerEmpty());
-		this.mode = mode;
+		this.mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
 		battleEnded = false;
@@ -88,7 +85,7 @@ public class GuiBattle extends GuiContainer {
 			if (Minecraft.getMinecraft().renderViewEntity != ClientBattleManager.camera)
 				Minecraft.getMinecraft().renderViewEntity = ClientBattleManager.camera;
 
-		if (!ClientBattleManager.hasMoreMessages() && battleEnded) {
+		if (!ClientBattleManager.hasMoreMessages() && battleEnded && !ClientBattleManager.hasLevelUps() && !ClientBattleManager.hasNewAttacks()) {
 			mc.thePlayer.closeScreen();
 			mc.setIngameFocus();
 			GuiPixelmonOverlay.isVisible = true;
@@ -97,11 +94,17 @@ public class GuiBattle extends GuiContainer {
 		int left = (width - xSize) / 2;
 		int top = (height - ySize) / 2;
 		RenderHelper.disableStandardItemLighting();
-		if (ClientBattleManager.hasMoreMessages() || mode == BattleMode.Waiting)
+		if (ClientBattleManager.hasMoreMessages())
 			drawMessageScreen();
-		else if (ClientBattleManager.hasLevelUps())
-			drawLevelUp(mouseX, mouseY);
-		else if (mode == BattleMode.MainMenu)
+		else if (mode == BattleMode.YesNo)
+			drawYesNoDialog(mouseX, mouseY);
+		else if (ClientBattleManager.hasLevelUps() || ClientBattleManager.hasNewAttacks()) {
+			if (!ClientBattleManager.hasNewAttacks()
+					|| (ClientBattleManager.hasLevelUps() && ClientBattleManager.levelUpList.get(0).level <= ClientBattleManager.newAttackList.get(0).level))
+				drawLevelUp(mouseX, mouseY);
+			else
+				drawReplaceAttack(mouseX, mouseY);
+		} else if (mode == BattleMode.MainMenu)
 			drawMainMenu(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseAttack)
 			drawChooseAttack(mouseX, mouseY);
@@ -111,10 +114,8 @@ public class GuiBattle extends GuiContainer {
 			drawChooseBag(mouseX, mouseY);
 		else if (mode == BattleMode.UseBag)
 			drawUseBag(mouseX, mouseY);
-		else if (mode == BattleMode.ReplaceAttack)
-			drawReplaceAttack(mouseX, mouseY);
-		else if (mode == BattleMode.YesNo)
-			drawYesNoDialog(mouseX, mouseY);
+		else if (mode == BattleMode.Waiting)
+			drawMessageScreen();
 	}
 
 	private enum LevelStage {
@@ -189,6 +190,7 @@ public class GuiBattle extends GuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - 256 / 2, height / 2 - 50, 256, 100, 0, 0, 1, 100f / 128f);
 
+		Attack newAttack = ClientBattleManager.newAttackList.get(0).attack;
 		float textAreaWidth = 170;
 		if (selectedAttack == -1) {
 			float textWidth = fontRenderer.getStringWidth("Do you want to give up learning " + newAttack.attackName + "?");
@@ -223,6 +225,7 @@ public class GuiBattle extends GuiContainer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - 256 / 2, height / 2 - 102, 256, 205, 0, 0, 1, 205f / 256f);
+		PixelmonDataPacket pokemonToLearnAttack = ServerStorageDisplay.get(ClientBattleManager.newAttackList.get(0).pokemonID);
 		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
 			PixelmonMovesetDataPacket move = pokemonToLearnAttack.moveset[i];
 			drawString(fontRenderer, move.attackName, width / 2 + 11, height / 2 - 85 + 22 * i, 0xFFFFFF);
@@ -239,6 +242,8 @@ public class GuiBattle extends GuiContainer {
 				drawMoveInfo(attacks[i]);
 			}
 		}
+
+		Attack newAttack = ClientBattleManager.newAttackList.get(0).attack;
 
 		drawString(fontRenderer, newAttack.attackName, width / 2 + 11, height / 2 - 78 + 22 * 4, 0xFFFFFF);
 		drawString(fontRenderer, newAttack.pp + "/" + newAttack.ppBase, width / 2 + 90, height / 2 - 76 + 22 * 4, 0xFFFFFF);
@@ -588,9 +593,15 @@ public class GuiBattle extends GuiContainer {
 		if (ClientBattleManager.hasMoreMessages()) {
 			ClientBattleManager.removeMessage();
 			return;
+		} else if (mode == BattleMode.YesNo)
+			YesNoDialogClicked(mouseX, mouseY);
+		else if (ClientBattleManager.hasLevelUps() || ClientBattleManager.hasNewAttacks()) {
+			if (!ClientBattleManager.hasNewAttacks()
+					|| (ClientBattleManager.hasLevelUps() && ClientBattleManager.levelUpList.get(0).level <= ClientBattleManager.newAttackList.get(0).level))
+				LevelUpClick(mouseX, mouseY);
+			else
+				ReplaceAttackClicked(mouseX, mouseY);
 		}
-		if (ClientBattleManager.hasLevelUps())
-			LevelUpClick(mouseX, mouseY);
 		if (mode == BattleMode.MainMenu) {
 			int x1 = width / 2 + 31;
 			int y1 = height - guiHeight + 9;
@@ -619,10 +630,6 @@ public class GuiBattle extends GuiContainer {
 			ChooseBagClick(mouseX, mouseY);
 		} else if (mode == BattleMode.UseBag) {
 			UseBagClick(mouseX, mouseY);
-		} else if (mode == BattleMode.ReplaceAttack) {
-			ReplaceAttackClicked(mouseX, mouseY);
-		} else if (mode == BattleMode.YesNo) {
-			YesNoDialogClicked(mouseX, mouseY);
 		}
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
@@ -704,8 +711,10 @@ public class GuiBattle extends GuiContainer {
 
 	private void YesNoDialogClicked(int mouseX, int mouseY) {
 		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7) {
-			if (selectedAttack != -1)
+			if (selectedAttack != -1){
 				PacketDispatcher.sendPacketToServer(sendPacket);
+			}
+			ClientBattleManager.newAttackList.remove(0);
 			if (battleControllerIndex != -1)
 				mode = BattleMode.Waiting;
 			else {
@@ -715,13 +724,17 @@ public class GuiBattle extends GuiContainer {
 				return;
 			}
 		}
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31)
-			mode = BattleMode.ReplaceAttack;
+		 if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31){
+			 mode = BattleMode.Waiting;
+		 }
 	}
 
 	private Packet250CustomPayload sendPacket;
 
 	private void ReplaceAttackClicked(int mouseX, int mouseY) {
+		Attack newAttack = ClientBattleManager.newAttackList.get(0).attack;
+		PixelmonDataPacket pokemonToLearnAttack = ServerStorageDisplay.get(ClientBattleManager.newAttackList.get(0).pokemonID);
+
 		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
 			if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 - 94 + 22 * i && mouseY < height / 2 - 94 + 22 * (i + 1)) {
 				sendPacket = PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonToLearnAttack.pokemonID, newAttack.attackIndex, i);

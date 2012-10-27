@@ -141,7 +141,6 @@ public class Level {
 		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP) {
 			PixelmonStatsPacket stats2 = PixelmonStatsPacket.createPacket(pixelmon);
 			PixelmonLevelUpPacket p = new PixelmonLevelUpPacket(pixelmon, getLevel(), stats, stats2, EnumPackets.LevelUp);
-			ChatHandler.sendBattleMessage(pixelmon.getOwner(), "Your " + pixelmon.getName() + " leveled up to level " + getLevel() + "!");
 			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
 		}
@@ -151,34 +150,21 @@ public class Level {
 			pixelmon.friendship.onLevelUp();
 
 		if (DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
-			newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
-			isLearningMoves = true;
-			learnNextMove();
-
+			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
+			for (Attack a : newAttacks) {
+				if (pixelmon.moveset.size() >= 4) {
+					((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
+							EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.attackIndex, getLevel()));
+				} else {
+					pixelmon.moveset.add(a);
+					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
+				}
+			}
 		}
 		setScale();
 	}
 
-	public ArrayList<Attack> newAttacks;
-	public boolean isLearningMoves = false;
-
 	public void learnNextMove() {
-		Attack a = newAttacks.get(0);
-		if (pixelmon.moveset.size() >= 4) {
-			if (pixelmon.battleController != null)
-				pixelmon.battleController.pauseBattle();
-			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace,
-					pixelmon.getPokemonId(), a.attackIndex));
-			// ((EntityPlayer) pixelmon.getOwner()).openGui(Pixelmon.instance,
-			// EnumGui.LearnMove.getIndex(), pixelmon.getOwner().worldObj,
-			// pixelmon.getPokemonId(), a.attackIndex, 0); // guiLearnMove
-		} else {
-			pixelmon.moveset.add(a);
-			ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
-		}
-		newAttacks.remove(0);
-		if (newAttacks.size() == 0)
-			isLearningMoves = false;
 	}
 
 	public void awardEXP(int i) {

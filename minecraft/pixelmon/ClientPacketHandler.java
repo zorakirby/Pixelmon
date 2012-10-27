@@ -15,6 +15,7 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
 import pixelmon.gui.battles.ClientBattleManager;
+import pixelmon.gui.battles.ClientBattleManager.AttackData;
 import pixelmon.gui.battles.GuiBattle;
 import pixelmon.gui.battles.GuiBattle.BattleMode;
 import pixelmon.items.ItemData;
@@ -66,13 +67,11 @@ public class ClientPacketHandler implements IPacketHandler {
 			} else if (packetID == EnumPackets.ChooseMoveToReplace.getIndex()) {
 				int pokemonID = dataStream.readInt();
 				int newAttackId = dataStream.readInt();
-				GuiBattle.newAttack = DatabaseMoves.getAttack(newAttackId);
-				GuiBattle.pokemonToLearnAttack = ServerStorageDisplay.get(pokemonID);
-				if (Minecraft.getMinecraft().currentScreen instanceof GuiBattle)
-					GuiBattle.mode = BattleMode.ReplaceAttack;
-				else
+				int level = dataStream.readInt();
+				ClientBattleManager.newAttackList.add(new AttackData(pokemonID, DatabaseMoves.getAttack(newAttackId), level));
+				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
-			} else if (packetID == EnumPackets.LevelUp.getIndex()){
+			} else if (packetID == EnumPackets.LevelUp.getIndex()) {
 				PixelmonLevelUpPacket p = new PixelmonLevelUpPacket();
 				p.readPacketData(dataStream);
 				ClientBattleManager.levelUpList.add(p);

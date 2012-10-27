@@ -34,9 +34,5 @@ public class ReplaceMove extends PacketHandlerBase {
 		EntityPixelmon p = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(pokemonID, player.worldObj);
 		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(replaceIndex).attackName + ", and learned " + a.attackName);
 		p.moveset.set(replaceIndex, a);
-		if (p.getLvl().isLearningMoves) {
-			p.getLvl().learnNextMove();
-		} else if (p.battleController != null)
-			p.battleController.endPause();
 	}
 }
