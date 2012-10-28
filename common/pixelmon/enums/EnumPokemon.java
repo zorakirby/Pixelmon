@@ -4,6 +4,7 @@ import pixelmon.config.PixelmonEntityList.ClassType;
 
 public enum EnumPokemon {
 	Abra("Abra", ClassType.Pixelmon),
+	Alakazam("Alakazam", ClassType.Pixelmon),
 	Arcanine("Arcanine", ClassType.Pixelmon),
 	Arbok("Arbok", ClassType.Pixelmon),
 	Beedrill("Beedrill", ClassType.Pixelmon),
@@ -90,6 +91,7 @@ public enum EnumPokemon {
 	Staryu("Staryu", ClassType.WaterPixelmon),
 	Starmie("Starmie", ClassType.WaterPixelmon),
 	Swinub("Swinub", ClassType.Pixelmon),
+	Tangela("Tangela", ClassType.Pixelmon),
 	Tentacool("Tentacool", ClassType.WaterPixelmon),
 	Trapinch("Trapinch", ClassType.Pixelmon),
 	Umbreon("Umbreon", ClassType.Pixelmon),
