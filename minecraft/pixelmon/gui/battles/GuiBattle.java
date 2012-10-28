@@ -95,7 +95,7 @@ public class GuiBattle extends GuiContainer {
 		int top = (height - ySize) / 2;
 		RenderHelper.disableStandardItemLighting();
 
-		if (!ClientBattleManager.hasLevelUps() || !ClientBattleManager.hasNewAttacks()
+		if (!ClientBattleManager.hasLevelUps() && !ClientBattleManager.hasNewAttacks()
 				&& (mode == BattleMode.Waiting || mode == BattleMode.MainMenu || mode == BattleMode.ChooseAttack)) {
 			drawPokemonOverlays();
 		}
