@@ -129,7 +129,46 @@ public class GuiBattle extends GuiContainer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width - 120, height - (guiHeight + 41), 120, 41, 0, 0, 120f / 128f, 41f / 64f);
-		
+		PixelmonDataPacket userPokemon = ClientBattleManager.getUserPokemon();
+		String name = userPokemon.nickname.equals("") ? userPokemon.name : userPokemon.nickname;
+		drawString(fontRenderer, name, width - 113, height - (guiHeight + 34), 0xFFFFFF);
+		drawExpBar(width - 113, height - (guiHeight + 8), 105, 4, userPokemon);
+		drawImageQuad(guiIndex, width - 116, height - (guiHeight + 11), 110, 7, 4f / 128f, 55f / 64f, 114f / 128f, 61f / 64f);
+		//drawImageQuad(-1, width - 113, height - (guiHeight + 7), 105, 2, 0,0,1,1);
+
+		drawHealthBar(width - 60, height - (guiHeight + 24), 50, 6, userPokemon);
+		drawImageQuad(guiIndex, width - 70, height - (guiHeight + 26), 62, 9, 1f / 128f, 43f / 64f, 63f / 128f, 52f / 64f);
+		drawString(fontRenderer, "" + userPokemon.health + "/" + userPokemon.hp,
+				width - 10 - fontRenderer.getStringWidth("" + userPokemon.health + "/" + userPokemon.hp), height - (guiHeight + 17), 0xFFFFFF);
+		if (userPokemon.isMale)
+			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 34), 7, 10, 64f / 128f, 42f / 64f, 71f / 128f,
+					52f / 64f);
+		else
+			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 34), 7, 10, 72f / 128f, 42f / 64f, 79f / 128f,
+					52f / 64f);
+		drawString(fontRenderer, "Lv. " + userPokemon.lvl, width - 10 - fontRenderer.getStringWidth("Lv. " + userPokemon.lvl), height - (guiHeight + 34),
+				0xFFFFFF);
+	}
+
+	private void drawExpBar(int x, int y, int width, int height, PixelmonDataPacket p) {
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+		GL11.glPushMatrix();
+		Tessellator tessellator = Tessellator.instance;
+		GL11.glDisable(3553 /* GL_TEXTURE_2D */);
+		tessellator.startDrawingQuads();
+
+		int barWidth = (int) (((float) p.xp) / ((float) p.nextLvlXP) * (((float) width) - 6f));
+		tessellator.setColorRGBA_F(0.3f,0.6f,1.0f, 1.0F);
+		tessellator.addVertex(x, y, 0.0);
+		tessellator.addVertex(x, y + height, 0.0);
+		tessellator.addVertex(x + barWidth, y + height, 0.0);
+		tessellator.addVertex(x + barWidth, y, 0.0);
+		tessellator.draw();
+		GL11.glPopMatrix();
+		GL11.glEnable(3553);
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
 
 	private enum LevelStage {
@@ -476,7 +515,7 @@ public class GuiBattle extends GuiContainer {
 		else
 			var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(var9, width / 2 - 121, height - 176, 24f, 24f, 0f, 0f, 1f, 1f);
-		drawHealthBar(width / 2 - 85, height - 135, 9, 56, p);
+		drawHealthBar(width / 2 - 85, height - 135, 56, 9, p);
 		drawImageQuad(guiIndex, width / 2 - 95, height - 135, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f);
 		drawCenteredString(fontRenderer, p.health + "/" + p.hp, width / 2 - 59, height - 123, 0xffffff);
 		drawString(fontRenderer, p.nickname.equals("") ? p.name : p.nickname, width / 2 - 90, height - 161, 0xffffff);
@@ -510,7 +549,7 @@ public class GuiBattle extends GuiContainer {
 					else
 						var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 					drawImageQuad(var9, width / 2 - 23, height - 192 + pos * 30, 24f, 24f, 0f, 0f, 1f, 1f);
-					drawHealthBar(width / 2 + 65, height - 192 + pos * 30, 9, 56, pdata);
+					drawHealthBar(width / 2 + 65, height - 192 + pos * 30, 56, 9, pdata);
 					drawImageQuad(guiIndex, width / 2 + 55, height - 192 + pos * 30, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f);
 					drawString(fontRenderer, pdata.health + "/" + pdata.hp, width / 2 + 75, height - 180 + pos * 30, 0xffffff);
 					drawString(fontRenderer, pdata.nickname.equals("") ? pdata.name : pdata.nickname, width / 2 + 5, height - 190 + pos * 30, 0xffffff);
@@ -529,7 +568,7 @@ public class GuiBattle extends GuiContainer {
 		}
 	}
 
-	public void drawHealthBar(int x, int y, int height, int width, PixelmonDataPacket p) {
+	public void drawHealthBar(int x, int y, int width, int height, PixelmonDataPacket p) {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glPushMatrix();

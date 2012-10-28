@@ -46,6 +46,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public boolean hasOwner;
 	public boolean doesLevel;
 	public int heldItemId = -1;
+	public int xp;
 
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
 
@@ -62,6 +63,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nickname = p.getString("Nickname");
 		lvl = p.getInteger("Level");
 		nextLvlXP = p.getInteger("EXPToNextLevel");
+		xp = p.getInteger("EXP");
 		hp = p.getInteger("StatsHP");
 		health = p.getShort("Health");
 		isMale = p.getBoolean("IsMale");
@@ -97,6 +99,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nickname = p.getNickname();
 		lvl = p.getLvl().getLevel();
 		nextLvlXP = p.getLvl().getExpToNextLevel();
+		xp = p.getLvl().getExp();
 		hp = p.stats.HP;
 		health = p.getHealth();
 		isMale = p.isMale;
@@ -139,6 +142,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		Packet.writeString(nickname, data);
 		data.writeShort(lvl);
 		data.writeShort(nextLvlXP);
+		data.writeShort(xp);
 		data.writeShort(hp);
 		data.writeShort(health);
 		data.writeBoolean(isMale);
@@ -171,6 +175,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nickname = Packet.readString(data, 64);
 		lvl = data.readShort();
 		nextLvlXP = data.readShort();
+		xp = data.readShort();
 		hp = data.readShort();
 		health = data.readShort();
 		isMale = data.readBoolean();
