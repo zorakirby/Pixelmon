@@ -16,7 +16,8 @@ public class ClientBattleManager {
 		public int pokemonID;
 		public Attack attack;
 		public int level;
-		public AttackData(int pokemonId, Attack attack, int level){
+
+		public AttackData(int pokemonId, Attack attack, int level) {
 			this.pokemonID = pokemonId;
 			this.attack = attack;
 			this.level = level;
@@ -25,13 +26,11 @@ public class ClientBattleManager {
 
 	private static ArrayList<String> messageList = new ArrayList<String>();
 
-	public static PixelmonDataPacket targetPokemon;
-
 	public static int pokemonId = -1;
 
 	public static EntityCamera camera;
-
-	public static int opponentId = -1;
+	
+	public static PixelmonDataPacket opponent;
 
 	public static ArrayList<ItemData> bagStore = new ArrayList<ItemData>();
 
@@ -39,10 +38,8 @@ public class ClientBattleManager {
 
 	public static ArrayList<AttackData> newAttackList = new ArrayList<ClientBattleManager.AttackData>();
 
-	public static String getOpponentName() {
-		if (opponentId == -1)
-			return null;
-		return PixelmonServerStore.getPixelmonDataFromID(opponentId).name;
+	public static PixelmonDataPacket getOpponent() {
+		return opponent;
 	}
 
 	public static void addMessage(String s) {

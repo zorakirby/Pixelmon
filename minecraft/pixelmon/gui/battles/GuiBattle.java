@@ -128,26 +128,47 @@ public class GuiBattle extends GuiContainer {
 		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pokemonInfoP1.png");
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawImageQuad(guiIndex, width - 120, height - (guiHeight + 41), 120, 41, 0, 0, 120f / 128f, 41f / 64f);
+		drawImageQuad(guiIndex, width - 120, height - (guiHeight + 45), 120, 45, 0, 0, 120f / 128f, 45f / 64f);
 		PixelmonDataPacket userPokemon = ClientBattleManager.getUserPokemon();
 		String name = userPokemon.nickname.equals("") ? userPokemon.name : userPokemon.nickname;
-		drawString(fontRenderer, name, width - 113, height - (guiHeight + 34), 0xFFFFFF);
-		drawExpBar(width - 113, height - (guiHeight + 8), 105, 4, userPokemon);
-		drawImageQuad(guiIndex, width - 116, height - (guiHeight + 11), 110, 7, 4f / 128f, 55f / 64f, 114f / 128f, 61f / 64f);
-		//drawImageQuad(-1, width - 113, height - (guiHeight + 7), 105, 2, 0,0,1,1);
+		drawString(fontRenderer, name, width - 113, height - (guiHeight + 37), 0xFFFFFF);
+		drawExpBar(width - 114, height - (guiHeight + 8), 105, 4, userPokemon);
+		drawImageQuad(guiIndex, width - 115, height - (guiHeight + 11), 109, 7, 1f / 128f, 56f / 64f, 110f / 128f, 62f / 64f);
+		// drawImageQuad(-1, width - 113, height - (guiHeight + 7), 105, 2,
+		// 0,0,1,1);
 
-		drawHealthBar(width - 60, height - (guiHeight + 24), 50, 6, userPokemon);
-		drawImageQuad(guiIndex, width - 70, height - (guiHeight + 26), 62, 9, 1f / 128f, 43f / 64f, 63f / 128f, 52f / 64f);
+		drawHealthBar(width - 101, height - (guiHeight + 26), 97, 6, userPokemon);
+		drawImageQuad(guiIndex, width - 111, height - (guiHeight + 28), 103, 9, 1f / 128f, 45f / 64f, 104f / 128f, 55f / 64f);
 		drawString(fontRenderer, "" + userPokemon.health + "/" + userPokemon.hp,
-				width - 10 - fontRenderer.getStringWidth("" + userPokemon.health + "/" + userPokemon.hp), height - (guiHeight + 17), 0xFFFFFF);
+				width - 10 - fontRenderer.getStringWidth("" + userPokemon.health + "/" + userPokemon.hp), height - (guiHeight + 18), 0xFFFFFF);
 		if (userPokemon.isMale)
-			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 34), 7, 10, 64f / 128f, 42f / 64f, 71f / 128f,
-					52f / 64f);
+			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 39), 7, 10, 119f / 128f, 52f / 64f, 126f / 128f,
+					62f / 64f);
 		else
-			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 34), 7, 10, 72f / 128f, 42f / 64f, 79f / 128f,
-					52f / 64f);
-		drawString(fontRenderer, "Lv. " + userPokemon.lvl, width - 10 - fontRenderer.getStringWidth("Lv. " + userPokemon.lvl), height - (guiHeight + 34),
+			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 39), 7, 10, 111f / 128f, 52f / 64f, 118f / 128f,
+					62f / 64f);
+		drawString(fontRenderer, "Lv. " + userPokemon.lvl, width - 10 - fontRenderer.getStringWidth("Lv. " + userPokemon.lvl), height - (guiHeight + 37),
 				0xFFFFFF);
+
+		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pokemonInforP2.png");
+		PixelmonDataPacket targetPokemon = ClientBattleManager.getOpponent();
+		if (targetPokemon != null) {
+			String targetName = targetPokemon.nickname.equals("") ? targetPokemon.name : targetPokemon.nickname;
+			drawImageQuad(guiIndex, 0, 0, 119, 34, 0, 0, 119f / 128f, 34f / 64f);
+			drawString(fontRenderer, targetName, 8, 8, 0xFFFFFF);
+			drawHealthBar(18, 19, 56, 6, targetPokemon);
+			drawImageQuad(guiIndex, 8, 18, 62, 9, 1f / 128f, 43f / 64f, 63f / 128f, 53f / 64f);
+			drawString(fontRenderer, "" + targetPokemon.health + "/" + targetPokemon.hp,
+					111 - fontRenderer.getStringWidth("" + userPokemon.health + "/" + userPokemon.hp), 18, 0xFFFFFF);
+			if (targetPokemon.isMale)
+				drawImageQuad(guiIndex, 8 + fontRenderer.getStringWidth(targetName), 6, 7, 10, 72f / 128f, 42f / 64f, 79f / 128f,
+						52f / 64f);
+			else
+				drawImageQuad(guiIndex, 8 + fontRenderer.getStringWidth(targetName), 6, 7, 10, 64f / 128f, 42f / 64f, 71f / 128f,
+						52f / 64f);
+			drawString(fontRenderer, "Lv. " + targetPokemon.lvl, 111 - fontRenderer.getStringWidth("Lv. " + targetPokemon.lvl), 8,
+					0xFFFFFF);
+		}
 	}
 
 	private void drawExpBar(int x, int y, int width, int height, PixelmonDataPacket p) {
@@ -159,7 +180,7 @@ public class GuiBattle extends GuiContainer {
 		tessellator.startDrawingQuads();
 
 		int barWidth = (int) (((float) p.xp) / ((float) p.nextLvlXP) * (((float) width) - 6f));
-		tessellator.setColorRGBA_F(0.3f,0.6f,1.0f, 1.0F);
+		tessellator.setColorRGBA_F(0.3f, 0.6f, 1.0f, 1.0F);
 		tessellator.addVertex(x, y, 0.0);
 		tessellator.addVertex(x, y + height, 0.0);
 		tessellator.addVertex(x + barWidth, y + height, 0.0);

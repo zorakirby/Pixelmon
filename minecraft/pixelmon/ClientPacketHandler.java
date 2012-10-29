@@ -53,8 +53,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				PixelmonDataPacket p = new PixelmonDataPacket();
 				try {
 					p.readPacketData(dataStream);
-					ClientBattleManager.opponentId = p.pokemonID;
-					PixelmonServerStore.addToList(p);
+					ClientBattleManager.opponent = p;
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
