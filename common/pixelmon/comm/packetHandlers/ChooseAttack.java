@@ -18,7 +18,6 @@ import pixelmon.enums.EnumPokeballs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NetServerHandler;
-import net.minecraft.src.NetworkManager;
 
 public class ChooseAttack extends PacketHandlerBase {
 

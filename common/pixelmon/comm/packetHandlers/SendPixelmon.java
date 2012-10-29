@@ -11,7 +11,6 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NetServerHandler;
-import net.minecraft.src.NetworkManager;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;

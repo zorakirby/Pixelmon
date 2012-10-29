@@ -6,7 +6,7 @@ import pixelmon.items.ItemPokeballDisc;
 import pixelmon.items.PixelmonItem;
 import net.minecraft.src.Item;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NetworkManager;
+import net.minecraft.src.INetworkManager;
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet132TileEntityData;
 import net.minecraft.src.TileEntity;
@@ -41,7 +41,7 @@ public class TileEntityAnvil extends TileEntity {
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, Packet132TileEntityData pkt) {
+	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
 		readFromNBT(pkt.customParam1);
 	}
 

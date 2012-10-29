@@ -38,7 +38,6 @@ import net.minecraft.src.ModLoader;
 
 import net.minecraft.src.NBTBase;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;
 import net.minecraft.src.SaveHandler;
 import net.minecraft.src.World;
@@ -107,7 +106,7 @@ public class PokeballManager {
 				s.close();
 				f.close();
 				if (!playerConnected) {
-					getPlayerStorage((EntityPlayerMP)player).recallAllPokemon();
+					getPlayerStorage((EntityPlayerMP) player).recallAllPokemon();
 					playerPokemonList.remove(i);
 					i--;
 				}

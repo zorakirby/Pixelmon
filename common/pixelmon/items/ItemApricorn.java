@@ -75,9 +75,7 @@ public class ItemApricorn extends PixelmonItem {
 			++par4;
 		}
 
-		if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6)) {
-			return false;
-		} else if (par1ItemStack.stackSize == 0) {
+		if (par1ItemStack.stackSize == 0) {
 			return false;
 		} else {
 			if (par3World.canPlaceEntityOnSide(this.spawnID, par4, par5, par6, false, par7, (Entity) null)) {

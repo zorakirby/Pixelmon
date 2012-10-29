@@ -298,7 +298,7 @@ public class Structure
 				var4.setInteger("X", ((EntityPainting) var3).xPosition - startingX);
 				var4.setInteger("Y", ((EntityPainting) var3).yPosition - startingY);
 				var4.setInteger("Z", ((EntityPainting) var3).zPosition - startingZ);
-				var4.setByte("DIRECTION", (byte)((EntityPainting) var3).direction);
+				//var4.setByte("DIRECTION", (byte)((EntityPainting) var3).direction);
 				var4.setByte("IMAGE", (byte)((EntityPainting) var3).art.ordinal());
 			}
 			entitys.setCompoundTag("ENTITY" + var2++, var4);

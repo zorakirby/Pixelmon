@@ -15,7 +15,6 @@ import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.NetServerHandler;
-import net.minecraft.src.NetworkManager;
 
 public class ChooseStarter extends PacketHandlerBase {
 

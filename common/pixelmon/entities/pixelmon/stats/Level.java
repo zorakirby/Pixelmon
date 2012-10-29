@@ -35,7 +35,7 @@ public class Level {
 
 	public Level(EntityPixelmon p) {
 		this.pixelmon = p;
-		pixelmon.getDataWatcher().addObject(9, (short) -1); // Level
+		pixelmon.getDataWatcher().addObject(19, (short) -1); // Level
 		pixelmon.getDataWatcher().addObject(11, (short) 0); // Experience
 		pixelmon.getDataWatcher().addObject(13, (short) 0); // Experience to
 															// next level
@@ -60,11 +60,11 @@ public class Level {
 	}
 
 	public int getLevel() {
-		return pixelmon.getDataWatcher().getWatchableObjectShort(9);
+		return pixelmon.getDataWatcher().getWatchableObjectShort(19);
 	}
 
 	public void setLevel(int i) {
-		pixelmon.getDataWatcher().updateObject(9, (short) i);
+		pixelmon.getDataWatcher().updateObject(19, (short) i);
 		setScale();
 		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
 		if (pixelmon.getHealth() == pixelmon.stats.HP) {

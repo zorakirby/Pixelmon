@@ -63,11 +63,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(){
-		this.fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency()+""), -29, 154, 0xFFFFFF);
-	}
-	
-	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		super.drawScreen(par1, par2, par3);
 		this.xSize_lo = (float) par1;
@@ -157,6 +152,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				ind++;
 			}
 		}
+		this.fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency()+""), -29, 154, 0xFFFFFF);
 
 		fontRenderer.setUnicodeFlag(false);
 		RenderHelper.disableStandardItemLighting();

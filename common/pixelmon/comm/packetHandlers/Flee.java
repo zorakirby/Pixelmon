@@ -12,7 +12,6 @@ import pixelmon.comm.EnumPackets;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NetServerHandler;
-import net.minecraft.src.NetworkManager;
 
 public class Flee extends PacketHandlerBase {
 

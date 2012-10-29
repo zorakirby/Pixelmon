@@ -37,7 +37,7 @@ public class AIMoveTowardsTarget extends EntityAIBase {
 		} else if (targetEntity.getDistanceSqToEntity(theEntity) > (double) (field_75426_g * field_75426_g)) {
 			return false;
 		} else {
-			Vec3 var1 = RandomPositionGenerator.findRandomTargetBlockTowards(theEntity, 16, 7, Vec3.getVec3Pool().getVecFromPool(targetEntity.posX, targetEntity.posY, targetEntity.posZ));
+			Vec3 var1 = RandomPositionGenerator.findRandomTargetBlockTowards(theEntity, 16, 7, this.theEntity.worldObj.func_82732_R().getVecFromPool(targetEntity.posX, targetEntity.posY, targetEntity.posZ));
 
 			if (var1 == null) {
 				return false;

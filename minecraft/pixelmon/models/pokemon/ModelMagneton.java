@@ -365,7 +365,7 @@ public class ModelMagneton extends ModelBase {
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		LowerLeftBody.render(f5);
 		LowerRightBody.render(f5);
 		TopBody.render(f5);
@@ -378,23 +378,19 @@ public class ModelMagneton extends ModelBase {
 	}
 
 	Random randomGenerator = new Random();
-	int[] count = {0,0,0,0,0,0,0};
-	
+	int[] count = { 0, 0, 0, 0, 0, 0, 0 };
+	boolean[] Headisrotating = { false, false, false, false, false, false, false };
 
-	boolean[] Headisrotating = {false,false,false,false,false,false,false};
-
-
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-		super.setRotationAngles(f, f1, f2, f3, f4, f5);
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		LowerLeftBody.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F;
 		LowerRightBody.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F;
 		TopBody.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F - 5F;
 
 		int randomInt = randomGenerator.nextInt(200);
 
-		if (randomInt == 4) {					//topright magnet
+		if (randomInt == 4) { // topright magnet
 			Headisrotating[1] = true;
-		}else if (Headisrotating[1] == true) {
+		} else if (Headisrotating[1] == true) {
 			TopRightMagnet.rotateAngleX += .1F;
 			count[1]++;
 		}
@@ -402,11 +398,11 @@ public class ModelMagneton extends ModelBase {
 		if (count[1] >= 31) {
 			Headisrotating[1] = false;
 			count[1] = 0;
-			}
-		
-		if (randomInt == 5) {					//topleft magnet
+		}
+
+		if (randomInt == 5) { // topleft magnet
 			Headisrotating[2] = true;
-		}else if (Headisrotating[2] == true) {
+		} else if (Headisrotating[2] == true) {
 			TopLeftMagnet.rotateAngleX -= .1F;
 			count[2]++;
 		}
@@ -414,11 +410,11 @@ public class ModelMagneton extends ModelBase {
 		if (count[2] >= 31) {
 			Headisrotating[2] = false;
 			count[2] = 0;
-			}
-		
-		if (randomInt == 6) {					//LowerLeft magnet
+		}
+
+		if (randomInt == 6) { // LowerLeft magnet
 			Headisrotating[3] = true;
-		}else if (Headisrotating[3] == true) {
+		} else if (Headisrotating[3] == true) {
 			LowerLeftMagnet.rotateAngleX += .1F;
 			count[3]++;
 		}
@@ -426,11 +422,11 @@ public class ModelMagneton extends ModelBase {
 		if (count[3] >= 31) {
 			Headisrotating[3] = false;
 			count[3] = 0;
-			}
-		
-		if (randomInt == 7) {					//LowerRight magnet
+		}
+
+		if (randomInt == 7) { // LowerRight magnet
 			Headisrotating[4] = true;
-		}else if (Headisrotating[4] == true) {
+		} else if (Headisrotating[4] == true) {
 			LowerRightMagnet.rotateAngleX -= .1F;
 			count[4]++;
 		}
@@ -438,11 +434,11 @@ public class ModelMagneton extends ModelBase {
 		if (count[4] >= 31) {
 			Headisrotating[4] = false;
 			count[4] = 0;
-			}
-		
-		if (randomInt == 8) {					//BottomRight magnet
+		}
+
+		if (randomInt == 8) { // BottomRight magnet
 			Headisrotating[5] = true;
-		}else if (Headisrotating[5] == true) {
+		} else if (Headisrotating[5] == true) {
 			BottomRightMagnet.rotateAngleY += .1F;
 			count[5]++;
 		}
@@ -450,11 +446,11 @@ public class ModelMagneton extends ModelBase {
 		if (count[5] >= 31) {
 			Headisrotating[5] = false;
 			count[5] = 0;
-			}
-		
-		if (randomInt == 9) {					//BottomLeft magnet
+		}
+
+		if (randomInt == 9) { // BottomLeft magnet
 			Headisrotating[6] = true;
-		}else if (Headisrotating[6] == true) {
+		} else if (Headisrotating[6] == true) {
 			BottomLeftMagnet.rotateAngleY -= .1F;
 			count[6]++;
 		}
@@ -462,8 +458,7 @@ public class ModelMagneton extends ModelBase {
 		if (count[6] >= 31) {
 			Headisrotating[6] = false;
 			count[6] = 0;
-			}
-		
+		}
 
 	}
 

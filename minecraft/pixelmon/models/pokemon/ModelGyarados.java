@@ -567,7 +567,7 @@ public class ModelGyarados extends ModelBase {
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		Segment1.render(f5);
 		NeckBottom.render(f5);
 		NeckTopLeft.render(f5);
@@ -586,8 +586,8 @@ public class ModelGyarados extends ModelBase {
 	}
 
 	float timer = 0;
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-		super.setRotationAngles(f, f1, f2, f3, f4, f5);
+
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		float PI = (float) Math.PI;
 		float TopAngle = 1 * PI / 4;
 		float initialOffset = PI / 2;

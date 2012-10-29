@@ -23,8 +23,8 @@ import pixelmon.items.ItemData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 
+import net.minecraft.src.INetworkManager;
 import net.minecraft.src.NetClientHandler;
-import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet1Login;
 import net.minecraft.src.Packet250CustomPayload;
@@ -32,7 +32,7 @@ import net.minecraft.src.Packet250CustomPayload;
 public class ClientPacketHandler implements IPacketHandler {
 
 	@Override
-	public void onPacketData(NetworkManager manager, Packet250CustomPayload packet, Player player) {
+	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 		DataInputStream dataStream = new DataInputStream(new ByteArrayInputStream(packet.data));
 
 		try {

@@ -154,7 +154,8 @@ public class PixelmonWaterSpawner implements ITickHandler {
 														return var3;
 													}
 
-													var38.setLocationAndAngles((double) var23, (double) var24, (double) var25, par0WorldServer.rand.nextFloat() * 360.0F, 0.0F);
+													var38.setLocationAndAngles((double) var23, (double) var24, (double) var25,
+															par0WorldServer.rand.nextFloat() * 360.0F, 0.0F);
 
 													if (var38.getCanSpawnHere()) {
 														++var15;
@@ -229,8 +230,7 @@ public class PixelmonWaterSpawner implements ITickHandler {
 	 */
 	private static void creatureSpecificInit(EntityLiving par0EntityLiving, World par1World, float par2, float par3, float par4) {
 		LivingSpecialSpawnEvent event = new LivingSpecialSpawnEvent(par0EntityLiving, par1World, par2, par3, par4);
-		MinecraftForge.EVENT_BUS.post(event);
-		if (event.isHandeled()) {
+		if (MinecraftForge.EVENT_BUS.post(event)) {
 			return;
 		}
 

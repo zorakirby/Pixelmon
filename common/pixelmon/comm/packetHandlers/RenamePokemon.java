@@ -12,7 +12,6 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NetServerHandler;
-import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet;
 
 public class RenamePokemon extends PacketHandlerBase {
