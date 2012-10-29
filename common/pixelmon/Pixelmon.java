@@ -88,7 +88,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "Pixelmon 1.7.6b for 1.3.1";
+		event.getModMetadata().version = "Pixelmon 1.8.0.0b for 1.4.2";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 		

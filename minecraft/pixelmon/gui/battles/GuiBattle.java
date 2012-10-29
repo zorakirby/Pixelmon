@@ -161,13 +161,10 @@ public class GuiBattle extends GuiContainer {
 			drawString(fontRenderer, "" + targetPokemon.health + "/" + targetPokemon.hp,
 					111 - fontRenderer.getStringWidth("" + userPokemon.health + "/" + userPokemon.hp), 18, 0xFFFFFF);
 			if (targetPokemon.isMale)
-				drawImageQuad(guiIndex, 8 + fontRenderer.getStringWidth(targetName), 6, 7, 10, 72f / 128f, 42f / 64f, 79f / 128f,
-						52f / 64f);
+				drawImageQuad(guiIndex, 8 + fontRenderer.getStringWidth(targetName), 6, 7, 10, 72f / 128f, 42f / 64f, 79f / 128f, 52f / 64f);
 			else
-				drawImageQuad(guiIndex, 8 + fontRenderer.getStringWidth(targetName), 6, 7, 10, 64f / 128f, 42f / 64f, 71f / 128f,
-						52f / 64f);
-			drawString(fontRenderer, "Lv. " + targetPokemon.lvl, 111 - fontRenderer.getStringWidth("Lv. " + targetPokemon.lvl), 8,
-					0xFFFFFF);
+				drawImageQuad(guiIndex, 8 + fontRenderer.getStringWidth(targetName), 6, 7, 10, 64f / 128f, 42f / 64f, 71f / 128f, 52f / 64f);
+			drawString(fontRenderer, "Lv. " + targetPokemon.lvl, 111 - fontRenderer.getStringWidth("Lv. " + targetPokemon.lvl), 8, 0xFFFFFF);
 		}
 	}
 
