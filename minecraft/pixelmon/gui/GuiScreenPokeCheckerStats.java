@@ -1,5 +1,7 @@
 package pixelmon.gui;
 
+import java.awt.Color;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -17,10 +19,10 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
 
-public class GuiScreenPokeChecker extends GuiContainer {
+public class GuiScreenPokeCheckerStats extends GuiContainer {
 	protected PixelmonDataPacket targetPacket;
 
-	public GuiScreenPokeChecker(PixelmonDataPacket pixelmonDataPacket) {
+	public GuiScreenPokeCheckerStats(PixelmonDataPacket pixelmonDataPacket) {
 		super(new ContainerEmpty());
 		targetPacket = pixelmonDataPacket;
 	}
@@ -34,8 +36,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		controlList.clear();
 		
 		controlList.add(new GuiPokeCheckerTabs(3, 0, width / 2 + 107, (int) height / 2 + 80, 17, 15, ""));
-		controlList.add(new GuiPokeCheckerTabs(2, 2, width / 2 + 36, (int) height / 2 + 80, 69, 15, "Stats"));
-		controlList.add(new GuiPokeCheckerTabs(1, 1, width / 2 - 34, (int) height / 2 + 80, 69, 15, "Moves"));
+		controlList.add(new GuiPokeCheckerTabs(0, 1, width / 2 - 127, (int) height / 2 + 80, 90, 15, "Summary"));
+		controlList.add(new GuiPokeCheckerTabs(1, 2, width / 2 - 34, (int) height / 2 + 80, 69, 15, "Moves"));
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -44,28 +46,35 @@ public class GuiScreenPokeChecker extends GuiContainer {
 			mc.thePlayer.closeScreen();
 			break;
 		case 1:
-			mc.displayGuiScreen(new GuiScreenPokeCheckerMoves(targetPacket));
+			mc.displayGuiScreen(new GuiScreenPokeChecker(targetPacket));
 			break;
 		case 2:
-			mc.displayGuiScreen(new GuiScreenPokeCheckerStats(targetPacket));
+			mc.displayGuiScreen(new GuiScreenPokeCheckerMoves(targetPacket));
 			break;
 		}
 
 	}
 	
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
+//			targetPacket.moveset[i2].type.getColor());
 		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
 		drawCenteredString(fontRenderer, String.valueOf(targetPacket.name), 7, 75, 0xcccccc);
-		drawCenteredString(fontRenderer, targetPacket.health + "/" + targetPacket.hp, 185, 10, 0xdddddd);
-		drawString(fontRenderer, "Status", -10, 100, 0xcccccc);
-		drawString(fontRenderer, "Total Experience", 95, 40, 0xcccccc);
-		drawString(fontRenderer, "Level Up", 82, 94, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.nextLvlXP), 152, 98, 0xcccccc);
-		drawString(fontRenderer, "Lvl: " + (targetPacket.lvl + 1), 152, 124, 0xcccccc);
-		drawString(fontRenderer, "TO", 127, 119, 0xcccccc);
-		drawString(fontRenderer, "Summary", -15, 166, -6250336);
+		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xcccccc);
+		
+		drawString(fontRenderer, "HP: " + targetPacket.HP, 60, -10, 0xcccccc);
+		drawString(fontRenderer, "Attack: " + targetPacket.Attack, 60, 13, 0xcccccc);
+		drawString(fontRenderer, "Defence: " + targetPacket.Defence, 60, 32, 0xcccccc);
+		drawString(fontRenderer, "SP.Attack: " + targetPacket.SpecialAttack, 60, 53, 0xcccccc);
+		drawString(fontRenderer, "SP.Defense: " + targetPacket.SpecialDefence, 60, 73, 0xcccccc);
+		drawString(fontRenderer, "Speed: " + targetPacket.Speed, 60, 93, 0xcccccc);
+		
+		drawString(fontRenderer, "Happiness", 72, 115, 0xcccccc);
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.happiness), 95, 130, 0xcccccc);
+		drawString(fontRenderer, "Nature", 158, 115, 0xcccccc);
+		drawString(fontRenderer, "Coming Soon", 145, 135, -5111808);
+		drawString(fontRenderer, "Stats", 145, 166, -6250336);
 	}
 
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
@@ -80,17 +89,10 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		else
 			numString = "" + targetPacket.nationalPokedexNumber;
 		
-		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summarySummary.png");
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryStats.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
-		drawTexturedModalRect((width - xSize) / 2 - 15, (height - ySize) / 2 + 120, 23, 225, 44, 28);
-		drawColoredBar((width - xSize) / 2 + 59, (height - ySize) / 2 - 15, 150, 14, 0.0f, 0.0f, 0.0f);
-		drawHealthBar((width - xSize) / 2 + 59, (height - ySize) / 2 - 15, 154, 14, targetPacket);
-		drawTexturedModalRect((width - xSize) / 2 + 59, (height - ySize) / 2 - 15, 103, 222, 150, 16);
-		drawColoredBar((width - xSize) / 2 + 86, (height - ySize) / 2 + 145, 122, 14, 0.0f, 0.0f, 0.4f);
-		drawExpBar((width - xSize) / 2 + 86, (height - ySize) / 2 + 145, 122, 14, targetPacket);
-		drawTexturedModalRect((width - xSize) / 2 + 59, (height - ySize) / 2 + 145, 104, 239, 150, 16);
 
 		int pimg;
 		if(targetPacket.isShiny)
@@ -119,6 +121,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
+	
 	private void drawExpBar(int x, int y, int width, int height, PixelmonDataPacket p) {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
@@ -128,7 +131,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		tessellator.startDrawingQuads();
 
 		int barWidth = (int) (((float) p.xp) / ((float) p.nextLvlXP) * (((float) width) - 6f));
-		tessellator.setColorRGBA_F(0.3f, 1.0f, 1.0f, 1.0F);
+		tessellator.setColorRGBA_F(0.3f, 0.6f, 1.0f, 1.0F);
 		tessellator.addVertex(x, y, 0.0);
 		tessellator.addVertex(x, y + height, 0.0);
 		tessellator.addVertex(x + barWidth, y + height, 0.0);
