@@ -158,8 +158,6 @@ public class GuiBattle extends GuiContainer {
 			drawString(fontRenderer, targetName, 8, 8, 0xFFFFFF);
 			drawHealthBar(18, 19, 56, 6, targetPokemon);
 			drawImageQuad(guiIndex, 8, 18, 62, 9, 1f / 128f, 43f / 64f, 63f / 128f, 53f / 64f);
-			drawString(fontRenderer, "" + targetPokemon.health + "/" + targetPokemon.hp,
-					111 - fontRenderer.getStringWidth("" + userPokemon.health + "/" + userPokemon.hp), 18, 0xFFFFFF);
 			if (targetPokemon.isMale)
 				drawImageQuad(guiIndex, 8 + fontRenderer.getStringWidth(targetName), 6, 7, 10, 72f / 128f, 42f / 64f, 79f / 128f, 52f / 64f);
 			else
