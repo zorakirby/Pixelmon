@@ -520,8 +520,6 @@ public class EntityPokeBall extends EntityThrowable {
 		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * ballBonus) / (3 * hpMax)) * bonusStatus;
 		System.out.println("a = " + a);
 		b = Math.round(Math.pow((255.0 / a), 0.25) * 4096) / 4096;
-		System.out.println("c = " + b);
-		b = Math.floor(65536 / b);
 		System.out.println("b = " + b);
 		int passedShakes = 0;
 		for (int i = 0; i < 4; i++) {
