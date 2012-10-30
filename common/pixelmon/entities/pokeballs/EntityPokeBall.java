@@ -300,7 +300,7 @@ public class EntityPokeBall extends EntityThrowable {
 		}
 	}
 
-	public Item breakBall(){
+	public Item breakBall() {
 		return PixelmonItemsPokeballs.getLidFromEnum(getType());
 	}
 
@@ -376,8 +376,8 @@ public class EntityPokeBall extends EntityThrowable {
 	int flashTime = 10;
 	int flashCounter = 0;
 
-	public void flash(){
-		if(EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10)) == EnumPokeballs.PremierBall){
+	public void flash() {
+		if (EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10)) == EnumPokeballs.PremierBall) {
 			worldObj.spawnParticle("reddust", this.posX + 0.1, this.posY + 0.2, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
 			worldObj.spawnParticle("reddust", this.posX, this.posY + 0.2, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
 			worldObj.spawnParticle("reddust", this.posX, this.posY + 0.2, this.posZ, 0.0D, 0.0D, 0.0D);
@@ -390,7 +390,7 @@ public class EntityPokeBall extends EntityThrowable {
 			worldObj.spawnParticle("reddust", this.posX + 0.1, this.posY + 0.4, this.posZ + 0.1, 0.0D, 0.0D, 0.0D);
 		}
 	}
-	
+
 	@Override
 	public void onUpdate() {
 		if (getIsOpen() && openAngle > (float) (-Math.PI / 2)) {
@@ -518,10 +518,8 @@ public class EntityPokeBall extends EntityThrowable {
 		double ballBonus = PokeballTypeHelper.getBallBonus(getType(), thrower, p2, mode);
 		double a, b, p;
 		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * ballBonus) / (3 * hpMax)) * bonusStatus;
-		b = (Math.pow(2, 16) - 1) * Math.sqrt(Math.sqrt((a / (Math.pow(2, 8) - 1))));
-		p = Math.pow(((b + 1) / Math.pow(2, 16)), 4);
-		p = (p * 10000) / 100;
-		b = (int) Math.floor(65536 / Math.pow((255 / p), 1f / 4f));
+		b = Math.round(Math.pow((255.0 / a), 0.25) * 4096) / 4096;
+		b = Math.floor(65536 / b);
 		int passedShakes = 0;
 		for (int i = 0; i < 4; i++) {
 			int roll = new Random().nextInt(65536);
