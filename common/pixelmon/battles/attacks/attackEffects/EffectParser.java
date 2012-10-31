@@ -29,6 +29,7 @@ import pixelmon.battles.attacks.specialAttacks.NightShade;
 import pixelmon.battles.attacks.specialAttacks.PetalDance;
 import pixelmon.battles.attacks.specialAttacks.PsychUp;
 import pixelmon.battles.attacks.specialAttacks.Psywave;
+import pixelmon.battles.attacks.specialAttacks.Punishment;
 import pixelmon.battles.attacks.specialAttacks.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.Return;
 import pixelmon.battles.attacks.specialAttacks.Reversal;
@@ -210,6 +211,8 @@ public class EffectParser {
 				effect = new NightShade();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.HiddenPower)
 				effect = new HiddenPower();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Punishment)
+				effect = new Punishment();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Psywave)
 				effect = new Psywave();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.PsychUp)

@@ -16,6 +16,7 @@ public enum SpecialAttackType {
 	NightShade,
 	Payday,
 	PetalDance,
+	Punishment,
 	PsychUp,
 	Psywave,
 	Return,
@@ -40,6 +41,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("NightShade")) return SpecialAttackType.NightShade;
 		if (string.equalsIgnoreCase("Payday")) return SpecialAttackType.Payday;
 		if (string.equalsIgnoreCase("PetalDance")) return SpecialAttackType.PetalDance;
+		if (string.equalsIgnoreCase("Punishment")) return SpecialAttackType.Punishment;
 		if (string.equalsIgnoreCase("PsychUp")) return SpecialAttackType.PsychUp;
 		if (string.equalsIgnoreCase("Psywave")) return SpecialAttackType.Psywave;
 		if (string.equalsIgnoreCase("Return")) return SpecialAttackType.Return;
@@ -65,6 +67,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("NightShade")) return true;
 		if (string.equalsIgnoreCase("Payday")) return true;
 		if (string.equalsIgnoreCase("PetalDance")) return true;
+		if (string.equalsIgnoreCase("Punishment")) return true;
 		if (string.equalsIgnoreCase("PsychUp")) return true;
 		if (string.equalsIgnoreCase("Psywave")) return true;
 		if (string.equalsIgnoreCase("Return")) return true;
