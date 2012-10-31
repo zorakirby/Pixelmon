@@ -41,7 +41,7 @@ public class Poison extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean ClearsOnBattleEnd() {
+	public boolean clearsOnBattleEnd() {
 		return false;
 	}
 }

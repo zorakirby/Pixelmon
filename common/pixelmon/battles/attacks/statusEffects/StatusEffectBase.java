@@ -9,10 +9,9 @@ import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
-
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
-
+import net.minecraft.src.NBTTagCompound;
 
 public abstract class StatusEffectBase extends EffectBase {
 
@@ -49,23 +48,43 @@ public abstract class StatusEffectBase extends EffectBase {
 		return false;
 	}
 
-	public boolean ClearsOnBattleEnd(){return true;}
+	public boolean clearsOnBattleEnd() {
+		return true;
+	}
 
-	public void applyRepeatedEffect(EntityPixelmon entityPixelmon, EntityPixelmon entityPixelmon2){}
+	public void applyRepeatedEffect(EntityPixelmon entityPixelmon, EntityPixelmon entityPixelmon2) {
+	}
 
-	public boolean canAttackThisTurn(EntityPixelmon pixelmon1, EntityPixelmon pixelmon2){return true;}
+	public boolean canAttackThisTurn(EntityPixelmon pixelmon1, EntityPixelmon pixelmon2) {
+		return true;
+	}
 
-	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a){return false;}
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
+		return false;
+	}
 
-	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit){return damage;}
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
+		return damage;
+	}
 
-	public boolean stopsStatusChange(){return false;}
+	public boolean stopsStatusChange() {
+		return false;
+	}
 
-	public void turnTick(EntityPixelmon pixelmon1, EntityPixelmon target){}
+	public void turnTick(EntityPixelmon pixelmon1, EntityPixelmon target) {
+	}
 
 	public boolean cantMiss() {
 		return false;
 	}
-	
-	public boolean pokemon1MovesFirst(EntityPixelmon user, EntityPixelmon target){ return false; }
+
+	public boolean pokemon1MovesFirst(EntityPixelmon user, EntityPixelmon target) {
+		return false;
+	}
+
+	public void writeToNBT(int i, NBTTagCompound nbt) {
+		if (!clearsOnBattleEnd()) {
+			nbt.setInteger("Status" + i, type.index);
+		}
+	}
 }

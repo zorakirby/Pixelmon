@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import pixelmon.Pixelmon;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.attacks.attackEffects.EffectBase;
+import pixelmon.battles.attacks.attackEffects.EffectParser;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.participants.IBattleParticipant;
@@ -42,9 +44,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (moveset.size() == 0)
 			loadMoveset();
 
-		try{
+		try {
 			battleController = new BattleController(p1, p2);
-		}catch(Exception e){
+		} catch (Exception e) {
 			battleController = null;
 			return;
 		}
@@ -60,17 +62,17 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		// pixelmon.isSwimming = true;
 		battleController = null;
 	}
-	
-	public void setTrainer(EntityTrainer trainer){
+
+	public void setTrainer(EntityTrainer trainer) {
 		this.trainer = trainer;
 		dataWatcher.updateObject(15, trainer.info.name);
 	}
-	
-	public EntityTrainer getTrainer(){
+
+	public EntityTrainer getTrainer() {
 		return trainer;
 	}
-	
-	public String getTrainerName(){
+
+	public String getTrainerName() {
 		return dataWatcher.getWatchableObjectString(15);
 	}
 
@@ -122,10 +124,10 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	}
 
 	public boolean removeStatus(StatusEffectType s) {
-		for (int i = 0; i < this.status.size(); i++) {
-			StatusEffectBase base = this.status.get(i);
+		for (int i = 0; i < status.size(); i++) {
+			StatusEffectBase base = status.get(i);
 			if (base.type == s) {
-				this.status.remove(i);
+				status.remove(i);
 				return true;
 			}
 		}
@@ -136,11 +138,25 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		moveset.writeToNBT(nbt);
+		for (int i = 0; i < status.size(); i++) {
+			status.get(i).writeToNBT(i, nbt);
+		}
+		nbt.setShort("EffectCount", (short) status.size());
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		moveset.readFromNBT(nbt);
+		int statusCount = 0;
+		if (nbt.hasKey("EffectCount"))
+			statusCount = nbt.getShort("EffectCount");
+		EffectParser e = new EffectParser();
+		for (int i = 0; i < statusCount; i++) {
+			StatusEffectType t = StatusEffectType.getEffect(nbt.getInteger("Effect" + i));
+			EffectBase effect = e.ParseEffect(t.toString());
+			if (effect instanceof StatusEffectBase)
+				status.add((StatusEffectBase) effect);
+		}
 	}
 }

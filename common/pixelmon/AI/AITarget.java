@@ -87,30 +87,34 @@ public abstract class AITarget extends EntityAIBase {
 	 * A method used to see if an entity is a suitable target through a number
 	 * of checks.
 	 */
-	protected boolean isSuitableTarget(EntityLiving par1EntityLiving, boolean par2) {
-		if (par1EntityLiving == null) {
+	protected boolean isSuitableTarget(EntityLiving entity, boolean par2) {
+		if (entity == null) {
 			return false;
-		} else if (par1EntityLiving == this.taskOwner) {
+		} else if (!(entity instanceof EntityPixelmon) && !(entity instanceof EntityPlayer))
 			return false;
-		} else if (!par1EntityLiving.isEntityAlive()) {
+		else if (entity == this.taskOwner) {
 			return false;
-		} else if (par1EntityLiving.boundingBox.maxY > this.taskOwner.boundingBox.minY && par1EntityLiving.boundingBox.minY < this.taskOwner.boundingBox.maxY) {
+		} else if (!entity.isEntityAlive()) {
+			return false;
+		} else if (entity.boundingBox.maxY > this.taskOwner.boundingBox.minY && entity.boundingBox.minY < this.taskOwner.boundingBox.maxY) {
 
-			if (this.taskOwner instanceof EntityPixelmon && ((EntityPixelmon) this.taskOwner).getOwner()!= null) {
-				if (par1EntityLiving instanceof EntityPixelmon && ((EntityPixelmon) par1EntityLiving).getOwner()== ((EntityPixelmon) this.taskOwner).getOwner()) {
+			if (this.taskOwner instanceof EntityPixelmon && ((EntityPixelmon) this.taskOwner).getOwner() != null) {
+				if (entity instanceof EntityPixelmon
+						&& ((EntityPixelmon) entity).getOwner() == ((EntityPixelmon) this.taskOwner).getOwner()) {
 					return false;
 				}
 
-				if (par1EntityLiving == ((EntityTameable) this.taskOwner).getOwner()) {
+				if (entity == ((EntityTameable) this.taskOwner).getOwner()) {
 					return false;
 				}
-			} else if (par1EntityLiving instanceof EntityPlayer && !par2 && ((EntityPlayer) par1EntityLiving).capabilities.disableDamage) {
+			} else if (entity instanceof EntityPlayer && !par2 && ((EntityPlayer) entity).capabilities.disableDamage) {
 				return false;
 			}
 
-			if (!this.taskOwner.isWithinHomeDistance(MathHelper.floor_double(par1EntityLiving.posX), MathHelper.floor_double(par1EntityLiving.posY), MathHelper.floor_double(par1EntityLiving.posZ))) {
+			if (!this.taskOwner.isWithinHomeDistance(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posY),
+					MathHelper.floor_double(entity.posZ))) {
 				return false;
-			} else if (this.shouldCheckSight && !this.taskOwner.getEntitySenses().canSee(par1EntityLiving)) {
+			} else if (this.shouldCheckSight && !this.taskOwner.getEntitySenses().canSee(entity)) {
 				return false;
 			} else {
 				if (this.field_75303_a) {
@@ -119,7 +123,7 @@ public abstract class AITarget extends EntityAIBase {
 					}
 
 					if (this.field_75301_b == 0) {
-						this.field_75301_b = this.func_75295_a(par1EntityLiving) ? 1 : 2;
+						this.field_75301_b = this.func_75295_a(entity) ? 1 : 2;
 					}
 
 					if (this.field_75301_b == 2) {

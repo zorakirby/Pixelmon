@@ -32,7 +32,7 @@ public class AIStartBattle extends EntityAIBase {
 		if (((EntityLiving) theEntity).getAttackTarget().getDistanceSqToEntity((Entity) this.theEntity) < 40) {
 			if (theEntity.getAttackTarget() instanceof EntityPlayer) {
 				EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
-				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).isIn((EntityPixelmon)theEntity))
+				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).isIn((EntityPixelmon) theEntity))
 					return false;
 				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).countAblePokemon() == 0)
 					return false;
@@ -44,6 +44,8 @@ public class AIStartBattle extends EntityAIBase {
 				theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon) theEntity), new PlayerParticipant(player, firstPokemon));
 				return true;
 			}
+			if (!(theEntity.getAttackTarget() instanceof EntityPixelmon))
+				return false;
 			EntityPixelmon target = (EntityPixelmon) theEntity.getAttackTarget();
 			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon) theEntity), new WildPixelmonParticipant(target));
 			return true;

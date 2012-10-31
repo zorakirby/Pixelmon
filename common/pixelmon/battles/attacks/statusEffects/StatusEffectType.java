@@ -1,90 +1,40 @@
 package pixelmon.battles.attacks.statusEffects;
 
 public enum StatusEffectType {
-	Burn(true),
-	Confusion,
-	Cursed,
-	Infatuated,
-	Flee,
-	Flying,
-	Freeze(true),
-	FireSpin,
-	Leech,
-	LightScreen,
-	Mist,
-	Paralysis(true),
-	Poison(true),
-	PoisonBadly(true),
-	Protect,
-	SafeGuard,
-	Sleep(true),
-	SmackedDown,
-	Substitute,
-	Sunny,
-	WaitAfter,
-	TrickRoom,
-	Perish;
-	
-	public boolean canStack=false;
-	
-	private StatusEffectType(){}
-		
-	private StatusEffectType(boolean canStack){
+	Burn(0, true), Confusion(1), Cursed(2), Infatuated(3), Flee(4), Flying(5), Freeze(6, true), FireSpin(7), Leech(8), LightScreen(9), Mist(10), Paralysis(11,
+			true), Poison(12, true), PoisonBadly(13, true), Protect(14), SafeGuard(15), Sleep(16, true), SmackedDown(17), Substitute(18), Sunny(19), WaitAfter(
+			20), TrickRoom(21), Perish(22);
+
+	public boolean canStack = false;
+	public int index;
+
+	private StatusEffectType(int index) {
+		this.index = index;
+	}
+
+	private StatusEffectType(int index, boolean canStack) {
+		this.index = index;
 		this.canStack = canStack;
 	}
-	
-	public static StatusEffectType getStatusEffect(String string){
-		if (string.equalsIgnoreCase("Burn")) return StatusEffectType.Burn;
-		if (string.equalsIgnoreCase("Confusion")) return StatusEffectType.Confusion;
-		if (string.equalsIgnoreCase("Cursed")) return StatusEffectType.Cursed;
-		if (string.equalsIgnoreCase("FireSpin")) return StatusEffectType.FireSpin;
-		if (string.equalsIgnoreCase("Flee")) return StatusEffectType.Flee;
-		if (string.equalsIgnoreCase("Flying")) return StatusEffectType.Flying;
-		if (string.equalsIgnoreCase("Freeze")) return StatusEffectType.Freeze;
-		if (string.equalsIgnoreCase("Infatuated")) return StatusEffectType.Infatuated;
-		if (string.equalsIgnoreCase("Leech")) return StatusEffectType.Leech;
-		if (string.equalsIgnoreCase("LightScreen")) return StatusEffectType.LightScreen;
-		if (string.equalsIgnoreCase("Mist")) return StatusEffectType.Mist;
-		if (string.equalsIgnoreCase("Paralysis")) return StatusEffectType.Paralysis;
-		if (string.equalsIgnoreCase("Perish")) return StatusEffectType.Perish;
-		if (string.equalsIgnoreCase("Poison")) return StatusEffectType.Poison;
-		if (string.equalsIgnoreCase("PoisonBadly")) return StatusEffectType.PoisonBadly;
-		if (string.equalsIgnoreCase("Protect")) return StatusEffectType.Protect;
-		if (string.equalsIgnoreCase("SafeGuard")) return StatusEffectType.SafeGuard;
-		if (string.equalsIgnoreCase("Sleep")) return StatusEffectType.Sleep;
-		if (string.equalsIgnoreCase("SmackedDown")) return StatusEffectType.SmackedDown;
-		if (string.equalsIgnoreCase("Substitute")) return StatusEffectType.Substitute;
-		if (string.equalsIgnoreCase("Sunny")) return StatusEffectType.Sunny;
-		if (string.equalsIgnoreCase("TrickRoom")) return StatusEffectType.TrickRoom;
-		if (string.equalsIgnoreCase("WaitAfter")) return StatusEffectType.WaitAfter;
+
+	public static StatusEffectType getStatusEffect(String string) {
+		for (StatusEffectType t : values())
+			if (t.toString().equalsIgnoreCase(string))
+				return t;
 		return null;
 	}
-	
-	public static boolean isStatusEffect(String string){
-		if (string.equalsIgnoreCase("Burn")) return true;
-		if (string.equalsIgnoreCase("Confusion")) return true;
-		if (string.equalsIgnoreCase("Cursed")) return true;
-		if (string.equalsIgnoreCase("FireSpin")) return true;
-		if (string.equalsIgnoreCase("Flee")) return true;
-		if (string.equalsIgnoreCase("Flying")) return true;
-		if (string.equalsIgnoreCase("Freeze")) return true;
-		if (string.equalsIgnoreCase("Infatuated")) return true;
-		if (string.equalsIgnoreCase("Leech")) return true;
-		if (string.equalsIgnoreCase("LightScreen")) return true;
-		if (string.equalsIgnoreCase("Mist")) return true;
-		if (string.equalsIgnoreCase("Paralysis")) return true;
-		if (string.equalsIgnoreCase("Perish")) return true;
-		if (string.equalsIgnoreCase("Poison")) return true;
-		if (string.equalsIgnoreCase("PoisonBadly")) return true;
-		if (string.equalsIgnoreCase("Protect")) return true;
-		if (string.equalsIgnoreCase("SafeGuard")) return true;
-		if (string.equalsIgnoreCase("Sleep")) return true;
-		if (string.equalsIgnoreCase("SmackedDown")) return true;
-		if (string.equalsIgnoreCase("Substitute")) return true;
-		if (string.equalsIgnoreCase("Sunny")) return true;
-		if (string.equalsIgnoreCase("TrickRoom")) return true;
-		if (string.equalsIgnoreCase("WaitAfter")) return true;
-		
+
+	public static boolean isStatusEffect(String string) {
+		for (StatusEffectType t : values())
+			if (t.toString().equalsIgnoreCase(string))
+				return true;
 		return false;
+	}
+
+	public static StatusEffectType getEffect(int integer) {
+		for (StatusEffectType t : values())
+			if (t.index == integer)
+				return t;
+		return null;
 	}
 }

@@ -40,7 +40,7 @@ public class Burn extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean ClearsOnBattleEnd() {
+	public boolean clearsOnBattleEnd() {
 		return false;
 	}
 }

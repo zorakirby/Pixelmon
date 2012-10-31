@@ -44,7 +44,7 @@ public class PoisonBadly extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean ClearsOnBattleEnd() {
+	public boolean clearsOnBattleEnd() {
 		return false;
 	}
 }

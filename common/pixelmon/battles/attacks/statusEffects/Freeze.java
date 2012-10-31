@@ -50,7 +50,7 @@ public class Freeze extends StatusEffectBase {
 		return false;
 	}
 
-	public boolean ClearsOnBattleEnd() {
+	public boolean clearsOnBattleEnd() {
 		return false;
 	}
 }
