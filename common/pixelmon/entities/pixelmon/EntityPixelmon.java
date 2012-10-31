@@ -56,6 +56,8 @@ import net.minecraft.src.World;
 
 public class EntityPixelmon extends Entity9HasSounds {
 
+	public boolean playerOwned = false;
+
 	public EntityPixelmon(World par1World) {
 		super(par1World);
 
@@ -86,7 +88,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
-			
+
 			if (itemstack != null) {
 				if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
 					if (getOwner() == player)
@@ -102,15 +104,15 @@ public class EntityPixelmon extends Entity9HasSounds {
 						return true;
 					}
 					if (itemstack.getItem() instanceof ItemPotion) {
-						if (getHealth() < stats.HP){
-							((ItemPotion)itemstack.getItem()).healPokemon(this);
+						if (getHealth() < stats.HP) {
+							((ItemPotion) itemstack.getItem()).healPokemon(this);
 							if (!player.capabilities.isCreativeMode)
 								player.inventory.consumeInventoryItem(itemstack.itemID);
 							return true;
 						}
 					}
 					if (itemstack.getItem() instanceof ItemStatusAilmentHealer) {
-						if (((ItemStatusAilmentHealer)itemstack.getItem()).healPokemon(this)){
+						if (((ItemStatusAilmentHealer) itemstack.getItem()).healPokemon(this)) {
 							if (!player.capabilities.isCreativeMode)
 								player.inventory.consumeInventoryItem(itemstack.itemID);
 							return true;
@@ -118,22 +120,22 @@ public class EntityPixelmon extends Entity9HasSounds {
 					}
 					if (itemstack.getItem() instanceof ItemEther) {
 						boolean canUseEther = false;
-						for (int i=0; i < moveset.size(); i++){
+						for (int i = 0; i < moveset.size(); i++) {
 							Attack a = moveset.get(i);
 							if (a.pp < a.ppBase) {
 								canUseEther = true;
 								break;
 							}
 						}
-						if (canUseEther){
+						if (canUseEther) {
 							ItemEther ether = (ItemEther) itemstack.getItem();
-							if (ether.type.restoresAllMoves()){
+							if (ether.type.restoresAllMoves()) {
 								ether.restoreAllMoves(this);
 								if (!player.capabilities.isCreativeMode)
 									player.inventory.consumeInventoryItem(itemstack.itemID);
 								return true;
 							} else {
-								
+
 							}
 						}
 					}
@@ -156,13 +158,13 @@ public class EntityPixelmon extends Entity9HasSounds {
 						return true;
 					}
 				}
-				
+
 			}
 		}
 
 		return super.interact(player);
 	}
-	
+
 	public void catchInPokeball() {
 		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 		isInBall = true;
@@ -192,7 +194,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 			if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 				return true;
 			else {
-				double y = posY - (baseStats.swimmingParameters.depthRangeStart + rand.nextInt(baseStats.swimmingParameters.depthRangeEnd - baseStats.swimmingParameters.depthRangeStart));
+				double y = posY
+						- (baseStats.swimmingParameters.depthRangeStart + rand.nextInt(baseStats.swimmingParameters.depthRangeEnd
+								- baseStats.swimmingParameters.depthRangeStart));
 				wdepth = WorldHelper.getWaterDepth((int) posX, (int) y, (int) posZ, worldObj);
 				if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 					return false;
@@ -228,13 +232,16 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	@Override
 	public void onUpdate() {
-		if (Pixelmon.freeze) return;
+		if (Pixelmon.freeze)
+			return;
 		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness && worldObj.isDaytime())
 				setDead();
 			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight && !worldObj.isDaytime())
 				setDead();
 		}
+		if (playerOwned && getOwner() == null)
+			setDead();
 		super.onUpdate();
 	}
 

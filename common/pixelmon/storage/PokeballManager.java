@@ -106,7 +106,6 @@ public class PokeballManager {
 				s.close();
 				f.close();
 				if (!playerConnected) {
-					getPlayerStorage((EntityPlayerMP) player).recallAllPokemon();
 					playerPokemonList.remove(i);
 					i--;
 				}

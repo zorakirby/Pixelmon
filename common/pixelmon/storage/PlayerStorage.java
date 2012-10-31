@@ -49,20 +49,20 @@ public class PlayerStorage {
 		this.trainer = trainer;
 	}
 
-	public static int getCurrency(){
+	public static int getCurrency() {
 		return pokeDollars;
 	}
-	
-	public static void setCurrency(int par1){
+
+	public static void setCurrency(int par1) {
 		pokeDollars = par1;
-		if(pokeDollars >= 999999){
+		if (pokeDollars >= 999999) {
 			pokeDollars = 999999;
 		}
-		if(pokeDollars <= 0){
+		if (pokeDollars <= 0) {
 			pokeDollars = 0;
 		}
 	}
-	
+
 	public boolean hasSpace() {
 		for (int i = 0; i < partyPokemon.length; i++) {
 			NBTTagCompound nbt = partyPokemon[i];
@@ -173,9 +173,10 @@ public class PlayerStorage {
 				if (n.getInteger("pixelmonID") == id) {
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
-					if (mode == PokeballManagerMode.Player)
+					if (mode == PokeballManagerMode.Player) {
 						e.setOwner(player.username);
-					else
+						e.playerOwned = true;
+					} else
 						e.setTrainer(trainer);
 					e.motionX = e.motionY = e.motionZ = 0;
 					e.isDead = false;

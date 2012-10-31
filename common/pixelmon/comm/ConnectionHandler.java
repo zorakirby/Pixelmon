@@ -42,7 +42,6 @@ public class ConnectionHandler implements IConnectionHandler {
 
 	@Override
 	public void connectionClosed(INetworkManager manager) {
-		PixelmonStorage.PokeballManager.unloadDCPlayers();
 	}
 
 	@Override
