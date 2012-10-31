@@ -59,6 +59,12 @@ public class PlayerParticipant implements IBattleParticipant {
 	@Override
 	public void EndBattle(boolean didWin, IBattleParticipant foe) {
 		currentPixelmon.battleStats.clearBattleStats();
+		for (int i = 0; i < currentPixelmon.status.size(); i++) {
+			if (currentPixelmon.status.get(i).clearsOnBattleEnd()) {
+				currentPixelmon.status.remove(i);
+				i--;
+			}
+		}
 		currentPixelmon.EndBattle();
 		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ExitBattle, 0));
 		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
@@ -89,7 +95,7 @@ public class PlayerParticipant implements IBattleParticipant {
 			bc.endBattle(false);
 			return null;
 		}
-		((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, 0));
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, 0));
 		bc.waitForMove(this);
 		return null;
 	}
