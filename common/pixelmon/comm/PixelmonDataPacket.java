@@ -28,6 +28,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public int lvl;
 	public int hp;
 	public int health;
+	public int friendship;
 	public boolean isMale;
 	public boolean isFainted;
 	public int order;
@@ -65,6 +66,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nextLvlXP = p.getInteger("EXPToNextLevel");
 		xp = p.getInteger("EXP");
 		hp = p.getInteger("StatsHP");
+		friendship = p.getShort("Friendship");
 		health = p.getShort("Health");
 		isMale = p.getBoolean("IsMale");
 		isFainted = p.getBoolean("IsFainted");
@@ -101,6 +103,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nextLvlXP = p.getLvl().getExpToNextLevel();
 		xp = p.getLvl().getExp();
 		hp = p.stats.HP;
+		friendship = p.friendship.friendship;
 		health = p.getHealth();
 		isMale = p.isMale;
 		isFainted = p.isFainted;
@@ -123,7 +126,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		Defence = p.stats.Defence;
 		SpecialAttack = p.stats.SpecialAttack;
 		SpecialDefence = p.stats.SpecialDefence;
-		if (p.heldItem!=null)
+		if (p.heldItem != null)
 			heldItemId = p.heldItem.itemID;
 		hasOwner = p.getOwner() != null || p.getTrainer() != null;
 		doesLevel = p.doesLevel;
@@ -144,6 +147,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeShort(nextLvlXP);
 		data.writeShort(xp);
 		data.writeShort(hp);
+		data.writeShort(friendship);
 		data.writeShort(health);
 		data.writeBoolean(isMale);
 		data.writeBoolean(isFainted);
@@ -177,6 +181,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nextLvlXP = data.readShort();
 		xp = data.readShort();
 		hp = data.readShort();
+		friendship = data.readShort();
 		health = data.readShort();
 		isMale = data.readBoolean();
 		isFainted = data.readBoolean();
