@@ -9,7 +9,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Psywave extends SpecialAttackBase {
 
-	public Psywave(SpecialAttackType type, ApplyStage a, boolean persists) {
+	public Psywave() {
 		super(SpecialAttackType.Psywave, ApplyStage.During, false);
 
 	}

@@ -27,8 +27,11 @@ import pixelmon.battles.attacks.specialAttacks.Magnitude;
 import pixelmon.battles.attacks.specialAttacks.MultiTurnSpecialAttackType;
 import pixelmon.battles.attacks.specialAttacks.NightShade;
 import pixelmon.battles.attacks.specialAttacks.PetalDance;
+import pixelmon.battles.attacks.specialAttacks.PsychUp;
+import pixelmon.battles.attacks.specialAttacks.Psywave;
 import pixelmon.battles.attacks.specialAttacks.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.Return;
+import pixelmon.battles.attacks.specialAttacks.Reversal;
 import pixelmon.battles.attacks.specialAttacks.SolarBeam;
 import pixelmon.battles.attacks.specialAttacks.SpecialAttackType;
 import pixelmon.battles.attacks.specialAttacks.Venoshock;
@@ -187,17 +190,17 @@ public class EffectParser {
 		}else if (effectType == EffectType.SpecialAttack){
 			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acupressure)
 				effect = new Acupressure();
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Curse)
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Curse)
 				effect = new Curse();
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.EchoedVoice)
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.EchoedVoice)
 				effect = new EchoedVoice();
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Facade)
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Facade)
 				effect = new Facade();
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Guillotine)
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Guillotine)
 				effect = new Guillotine();
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.GyroBall)
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.GyroBall)
 				effect = new GyroBall();
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Frustration)
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Frustration)
 				effect = new Frustration();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.HiddenPower)
 				effect = new HiddenPower();
@@ -205,10 +208,18 @@ public class EffectParser {
 				effect = new Magnitude();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.NightShade)
 				effect = new NightShade();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.HiddenPower)
+				effect = new HiddenPower();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Psywave)
+				effect = new Psywave();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.PsychUp)
+				effect = new PsychUp();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.JumpKick)
 				effect = new JumpKick();
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Return)
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Return)
 				effect = new Return();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Reversal)
+				effect = new Reversal();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Venoshock)
 				effect = new Venoshock();
 			
