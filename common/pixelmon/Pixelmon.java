@@ -116,7 +116,6 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
 
-		MinecraftForge.EVENT_BUS.register(new SleepHandler());
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
 		//MinecraftForge.EVENT_BUS.register(new MigrationLoader());
@@ -124,6 +123,7 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
+		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
 		proxy.registerTickHandlers();

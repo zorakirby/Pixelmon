@@ -122,17 +122,18 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 				if (p.heldItemId != -1) {
 					ItemHeld heldItem = (ItemHeld) PixelmonItems.getHeldItem(p.heldItemId);
-					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
-					int iconIndex = heldItem.getIconIndex(new ItemStack(heldItem));
-					int yindex = (int) Math.floor(((double) iconIndex) / 16.0);
-					int xindex = iconIndex - yindex * 16;
-					drawImageQuad(spriteIndex, width / 2 - 99, height / 2 + i * 18 - 62, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f,
-							(16f * (xindex + 1)) / 256f, 16f * (yindex + 1) / 256f);
+					if (heldItem != null) {
+						spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
+						int iconIndex = heldItem.getIconIndex(new ItemStack(heldItem));
+						int yindex = (int) Math.floor(((double) iconIndex) / 16.0);
+						int xindex = iconIndex - yindex * 16;
+						drawImageQuad(spriteIndex, width / 2 - 99, height / 2 + i * 18 - 62, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f,
+								(16f * (xindex + 1)) / 256f, 16f * (yindex + 1) / 256f);
+					}
 				} else {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
 					drawImageQuad(spriteIndex, width / 2 - 99, height / 2 + i * 18 - 62, 10f, 10f, 0f, 0f, 1f, 1f);
 				}
-
 			}
 			i++;
 		}
@@ -152,7 +153,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				ind++;
 			}
 		}
-		this.fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency()+""), -29, 154, 0xFFFFFF);
+		this.fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency() + ""), -29, 154, 0xFFFFFF);
 
 		fontRenderer.setUnicodeFlag(false);
 		RenderHelper.disableStandardItemLighting();
