@@ -52,7 +52,7 @@ public class EntityTrainer extends EntityCreature {
 		info = DatabaseTrainers.GetTrainerInfo(name);
 		health = 100;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
@@ -62,7 +62,7 @@ public class EntityTrainer extends EntityCreature {
 	public int getAge() {
 		return 0;
 	};
-	
+
 	@Override
 	protected boolean canDespawn() {
 		return false;
@@ -90,8 +90,8 @@ public class EntityTrainer extends EntityCreature {
 	public void releasePokemon() {
 		if (pokemonStorage.count() == 0)
 			loadPokemon();
-		else{
-			
+		else {
+
 		}
 		EntityPixelmon p = pokemonStorage.getFirstAblePokemon(worldObj);
 		if (p != null) {
@@ -147,6 +147,11 @@ public class EntityTrainer extends EntityCreature {
 				for (int i = 0; i < numMoves; i++) {
 					nbt.setInteger("PixelmonMovePP" + i, nbt.getInteger("PixelmonMovePPBase" + i));
 				}
+				int numStatus = nbt.getInteger("EffectCount");
+				for (int i = 0; i < numStatus; i++) {
+					nbt.func_82580_o("Effect" + i);
+				}
+				nbt.setInteger("EffectCount", 0);
 			}
 		}
 	}

@@ -26,8 +26,6 @@ import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumPokemon;
-import pixelmon.gui.GuiAttacking;
-import pixelmon.gui.GuiChoosePokemon;
 import pixelmon.gui.GuiChooseStarter;
 import pixelmon.gui.GuiHealer;
 import pixelmon.gui.GuiLearnMove;
@@ -61,26 +59,16 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers() {
 		for (EnumPokeballs p : EnumPokeballs.values()) {
-			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/"
-					+ p.getTexture());
-			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/"
-					+ p.getFlashRedTexture());
-			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/"
-					+ p.getCaptureTexture());
+			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getTexture());
+			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getFlashRedTexture());
+			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getCaptureTexture());
 		}
-		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class,
-				new RenderPokeball());
-		RenderingRegistry.registerEntityRenderingHandler(EntityCamera.class,
-				new RenderInvisible());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class,
-				new RenderTileEntityHealer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class,
-				new RenderTileEntityPC());
-		ClientRegistry.bindTileEntitySpecialRenderer(
-				TileEntityApricornTree.class,
-				new RenderTileEntityApricornTrees());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvil.class,
-				new RenderTileEntityAnvil());
+		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
+		RenderingRegistry.registerEntityRenderingHandler(EntityCamera.class, new RenderInvisible());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityApricornTree.class, new RenderTileEntityApricornTrees());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvil.class, new RenderTileEntityAnvil());
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems2.png");
 		addPokemonRenderers();
@@ -95,8 +83,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preloadTextures() {
 		for (EnumPokemon pokemon : EnumPokemon.values())
-			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/"
-					+ pokemon.name.toLowerCase() + ".png");
+			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + pokemon.name.toLowerCase() + ".png");
 	}
 
 	@Override
@@ -110,20 +97,16 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	private void addPokemonRenderers() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class,
-				new RenderTrainer(0.5f));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class,
-				new RenderPixelmon(0.5f));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
+		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
 	}
 
 	public ModelBase loadModel(String name) {
 		ModelBase model = null;
 		try {
-			Class<?> var3 = (Class<?>) Class
-					.forName("pixelmon.models.pokemon.Model" + name);
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + name);
 			if (var3 != null) {
-				model = (ModelBase) var3.getConstructor(new Class[] {})
-						.newInstance(new Object[] {});
+				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
 
 		} catch (Exception e) {
@@ -137,11 +120,9 @@ public class ClientProxy extends CommonProxy {
 	public ModelBase getTrainerModel(String name) {
 		ModelBase model = null;
 		try {
-			Class<?> var3 = (Class<?>) Class
-					.forName("pixelmon.models.trainers.Model" + name);
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.trainers.Model" + name);
 			if (var3 != null) {
-				model = (ModelBase) var3.getConstructor(new Class[] {})
-						.newInstance(new Object[] {});
+				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
 
 		} catch (Exception e) {
@@ -153,8 +134,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
-			int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == EnumGui.ChooseStarter.getIndex())
 			return new GuiChooseStarter();
 		else if (ID == EnumGui.LearnMove.getIndex())
@@ -163,12 +143,7 @@ public class ClientProxy extends CommonProxy {
 			return new GuiBattle();
 		else if (ID == EnumGui.Battle.getIndex())
 			return new GuiBattle(x);
-		else if (ID == EnumGui.ChooseAttack.getIndex())
-			return new GuiAttacking(x, y, z);
-		else if (ID == EnumGui.ChoosePokemon.getIndex()) {
-			PixelmonDataPacket p = ServerStorageDisplay.get(y);
-			return new GuiChoosePokemon(p, x, null);
-		} else if (ID == EnumGui.Pokedex.getIndex())
+		else if (ID == EnumGui.Pokedex.getIndex())
 			return new GuiPokedex();
 		else if (ID == EnumGui.PC.getIndex())
 			return new GuiPC();
@@ -190,19 +165,14 @@ public class ClientProxy extends CommonProxy {
 		PixelmonServerStore.clearList();
 	}
 
-	public static void spawnParticle(EnumPixelmonParticles particle,
-			World worldObj, double posX, double posY, double posZ,
-			boolean isShiny) {
+	public static void spawnParticle(EnumPixelmonParticles particle, World worldObj, double posX, double posY, double posZ, boolean isShiny) {
 		try {
 			EntityFX fx;
 			if (particle.particleClass == EntityGastlyParticle.class)
-				fx = new EntityGastlyParticle(worldObj, posX, posY, posZ, 0, 0,
-						0, isShiny);
+				fx = new EntityGastlyParticle(worldObj, posX, posY, posZ, 0, 0, 0, isShiny);
 			else
-				fx = (EntityFX) particle.particleClass.getConstructor(
-						World.class, double.class, double.class, double.class,
-						double.class, double.class, double.class).newInstance(
-						worldObj, posX, posY, posZ, 0d, 0d, 0d);
+				fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class,
+						double.class).newInstance(worldObj, posX, posY, posZ, 0d, 0d, 0d);
 			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -221,10 +191,9 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerTickHandlers() {
-		TickRegistry.registerTickHandler(new InventoryDetectionTickHandler(),
-				Side.CLIENT);
+		TickRegistry.registerTickHandler(new InventoryDetectionTickHandler(), Side.CLIENT);
 	}
-	
+
 	@Override
 	public void registerCameraEntity(EntityCamera entityCamera) {
 		ClientBattleManager.camera = entityCamera;

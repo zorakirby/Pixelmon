@@ -72,7 +72,6 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void getNextPokemon() {
-		player.openGui(Pixelmon.instance, EnumGui.ChoosePokemon.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), currentPokemon().getPokemonId(), 0);
 		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon,
 				currentPixelmon.getPokemonId()));
 	}
@@ -103,7 +102,8 @@ public class PlayerParticipant implements IBattleParticipant {
 	@Override
 	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
 		currentPixelmon.battleStats.clearBattleStats();
-		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "That's enough " + currentPixelmon.getNickname() + "!");
+		ChatHandler.sendBattleMessage(player, "That's enough " + currentPixelmon.getNickname() + "!");
+		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), player.username + " withdrew " + currentPixelmon.getNickname() + "!");
 		currentPixelmon.catchInPokeball();
 		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).retrieve(currentPixelmon);
 
@@ -117,8 +117,10 @@ public class PlayerParticipant implements IBattleParticipant {
 		newPixelmon.setLocationAndAngles(currentPixelmon.posX, currentPixelmon.posY, currentPixelmon.posZ, currentPixelmon.rotationYaw, 0.0F);
 		newPixelmon.motionX = newPixelmon.motionY = newPixelmon.motionZ = 0;
 		newPixelmon.releaseFromPokeball();
-
-		ChatHandler.sendChat(player, participant2.currentPokemon().getOwner(), "Go " + newPixelmon.getNickname() + "!");
+		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon,
+				newPixelmon.getPokemonId()));
+		ChatHandler.sendBattleMessage(player, "Go " + newPixelmon.getNickname() + "!");
+		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), player.username + " sent out " + newPixelmon.getNickname() + "!");
 		currentPixelmon = newPixelmon;
 	}
 
