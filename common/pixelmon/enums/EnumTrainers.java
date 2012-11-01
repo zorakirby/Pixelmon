@@ -1,7 +1,9 @@
 package pixelmon.enums;
 
 public enum EnumTrainers {
-	Youngster, BugCatcher;
+	Youngster, 
+	Youngster02,
+	BugCatcher;
 
 	public static boolean has(String creatureName) {
 		for (EnumTrainers trainer : values())
