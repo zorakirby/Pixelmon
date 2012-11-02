@@ -1,5 +1,7 @@
 package pixelmon.gui;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -16,10 +18,13 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
+import pixelmon.gui.inventoryExtended.SlotInventoryPixelmon;
 
 public class GuiScreenPokeChecker extends GuiContainer {
 	protected PixelmonDataPacket targetPacket;
-
+	GuiButton nameButton;
+	boolean renameButton;
+	
 	public GuiScreenPokeChecker(PixelmonDataPacket pixelmonDataPacket) {
 		super(new ContainerEmpty());
 		targetPacket = pixelmonDataPacket;
@@ -49,25 +54,64 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		case 2:
 			mc.displayGuiScreen(new GuiScreenPokeCheckerStats(targetPacket));
 			break;
+		case 3:
+			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			break;
 		}
 
 	}
+	
+	protected void mouseClicked(int x, int y, int par3) {
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+		int var6 = var5.getScaledWidth();
+		int var7 = var5.getScaledHeight();
+		super.mouseClicked(x, y, par3);
+		if(x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 4 + 65 && y < var7 / 4 + 85){
+			if(par3 == 1 && !renameButton){
+				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
+				controlList.add(nameButton);
+				renameButton = true;
+			}	
+			else if(par3 != 1 && renameButton){
+				controlList.remove(nameButton);
+				renameButton = false;
+			}
+			else if(par3 == 1 && renameButton){
+				controlList.remove(nameButton);
+				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
+				controlList.add(nameButton);
+			}
+		}
+	}
+
 	
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
 		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.name), 7, 75, 0xcccccc);
 		drawCenteredString(fontRenderer, targetPacket.health + "/" + targetPacket.hp, 185, 10, 0xdddddd);
 		drawString(fontRenderer, "Status", -10, 100, 0xcccccc);
 		drawString(fontRenderer, "Total Experience", 95, 40, 0xcccccc);
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.xp), 135, 55, 0xcccccc);
 		drawString(fontRenderer, "Level Up", 82, 94, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nextLvlXP), 152, 98, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + (targetPacket.lvl + 1), 152, 124, 0xcccccc);
 		drawString(fontRenderer, "TO", 127, 119, 0xcccccc);
 		drawString(fontRenderer, "Summary", -15, 166, -6250336);
+		
+		int typeImg;
+		float x = targetPacket.type1.textureX;
+		float y = targetPacket.type1.textureY;
+		float x1 = targetPacket.type2.textureX;
+		float y1 = targetPacket.type2.textureY;
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		typeImg = mc.renderEngine.getTexture("/pixelmon/gui/types.png");
+		drawImageQuad(typeImg, 60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
+		if((targetPacket.type2.getIndex() > 18))
+		drawImageQuad(typeImg, 100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
+		
 	}
-
+	
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
@@ -98,6 +142,13 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		else
 			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
+		if(targetPacket.nickname.length() < 1)
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.type1.getColor());
+		else{
+			drawCenteredString(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
+			drawCenteredString(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
+			
+		}
 	}
 	
 	private void drawColoredBar(int x, int y, int width, int height, float r, float g, float b) {

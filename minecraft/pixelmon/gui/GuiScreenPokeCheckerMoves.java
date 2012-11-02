@@ -1,5 +1,7 @@
 package pixelmon.gui;
 
+import java.sql.Types;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -11,17 +13,26 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StatCollector;
 import net.minecraft.src.Tessellator;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
 
-public class GuiScreenPokeCheckerMoves extends GuiContainer {
+public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	protected PixelmonDataPacket targetPacket;
+	GuiButton nameButton;
+	boolean renameButton;
+	static int selectednumber = -1;
+	static boolean move1 = true;
+	static boolean move2 = false;
+	static boolean move3 = false;
+	static boolean move4 = false;
 
 	public GuiScreenPokeCheckerMoves(PixelmonDataPacket pixelmonDataPacket) {
-		super(new ContainerEmpty());
+		super(pixelmonDataPacket);
 		targetPacket = pixelmonDataPacket;
 	}
 
@@ -49,22 +60,159 @@ public class GuiScreenPokeCheckerMoves extends GuiContainer {
 		case 2:
 			mc.displayGuiScreen(new GuiScreenPokeCheckerStats(targetPacket));
 			break;
+		case 3:
+			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			break;
 		}
-
 	}
 	
-	public void drawGuiContainerForegroundLayer(int par1, int par2){
+	public void resetAll(){
+		move1 = false;
+		move2 = false;
+		move3 = false;
+		move4 = false;
+	}
+	
+	public void drawGuiContainerForegroundLayer(int i, int i1){
 		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
 		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
 			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, 135, -6 + (i2 * 21), 0xcccccc);
 			drawCenteredString(fontRenderer, String.valueOf((targetPacket.moveset[i2]).pp)+"/"+String.valueOf((targetPacket.moveset[i2]).ppBase), 193, -4 + (i2 * 21), 0xcccccc);
+			int timg = mc.renderEngine.getTexture("/pixelmon/gui/types.png");
+			float x = targetPacket.moveset[i2].type.textureX;
+			float y = targetPacket.moveset[i2].type.textureY;
+			drawImageQuad(timg, 58, 22 * i2 - 15 , 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
 		}
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.name), 7, 75, 0xcccccc);
 		drawString(fontRenderer, "Effects", -10, 100, 0xcccccc);
 		drawString(fontRenderer, "Description", 107, 100, 0xcccccc);
 		drawString(fontRenderer, "Moves", 73, 166, -6250336);
+		drawSelection(i, i1);
+		drawMoveDescription();
+	}
+	
+	private Attack[] attacks = new Attack[4];
+	
+	public void drawMoveDescription(){
+		if(move1 && targetPacket.numMoves > 0){
+			if (attacks[0] == null || !attacks[0].attackName.equals(targetPacket.moveset[0].attackName))
+				attacks[0] = DatabaseMoves.getAttack(targetPacket.moveset[0].attackName);
+				drawMoveInfo(attacks[0]);
+		}
+		if(move2 && targetPacket.numMoves > 1){
+			if (attacks[1] == null || !attacks[1].attackName.equals(targetPacket.moveset[1].attackName))
+				attacks[1] = DatabaseMoves.getAttack(targetPacket.moveset[1].attackName);
+			drawMoveInfo(attacks[1]);
+		}
+		if(move3 && targetPacket.numMoves > 2){
+			if (attacks[2] == null || !attacks[2].attackName.equals(targetPacket.moveset[2].attackName))
+				attacks[2] = DatabaseMoves.getAttack(targetPacket.moveset[2].attackName);
+			drawMoveInfo(attacks[2]);
+		}
+		if(move4 && targetPacket.numMoves > 3){
+			if (attacks[3] == null || !attacks[3].attackName.equals(targetPacket.moveset[3].attackName))
+				attacks[3] = DatabaseMoves.getAttack(targetPacket.moveset[3].attackName);
+			drawMoveInfo(attacks[3]);
+		}
+	}
+	
+	private void drawMoveInfo(Attack attack) {
+		drawString(fontRenderer, "Power:", -30, 118, 0xFFFFFF);
+		drawString(fontRenderer, "Accuracy:", -30, 148, 0xFFFFFF);
+		int bpextra = 0, acextra = 0;
+		;
+		if (attack.basePower >= 100)
+			bpextra = fontRenderer.getCharWidth('0');
+		if (attack.accuracy >= 100)
+			acextra = fontRenderer.getCharWidth('0');
+		if (attack.basePower != -1)
+			drawString(fontRenderer, "" + attack.basePower, 30 - bpextra, 118, 0xFFFFFF);
+		else
+			drawString(fontRenderer, "--", 30 - bpextra, 118, 0xFFFFFF);
+		drawString(fontRenderer, "" + attack.accuracy, 30 - acextra, 148, 0xFFFFFF);
+		
+		fontRenderer.drawSplitString(attack.description, 63, 115, 141, 0xFFFFFF);
+	}
+	
+	public void drawSelection(int i, int i1){
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		mc.renderEngine.bindTexture(bg);
+		if(i > 248 && i < 406 && i1 > 63 && i1 < 90 || move1){
+			drawTexturedModalRect(58, -17, 1, 231, 153, 24);
+			resetAll();
+			move1 = true;
+		}
+		if(i > 248 && i < 406 && i1 > 90 && i1 < 112 || move2){
+			drawTexturedModalRect(58, 6, 1, 231, 153, 24);
+			resetAll();
+			move2 = true;
+		}
+		if(i > 248 && i < 406 && i1 > 112 && i1 < 134 || move3){
+			drawTexturedModalRect(58, 28, 1, 231, 153, 24);
+			resetAll();
+			move3 = true;
+		}
+		if(i > 248 && i < 406 && i1 > 134 && i1 < 156 || move4){
+			drawTexturedModalRect(58, 50, 1, 231, 153, 24);
+			resetAll();
+			move4 = true;
+		}
+	}
+	
+	protected void mouseClicked(int x, int y, int par3) {
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+		int var6 = var5.getScaledWidth();
+		int var7 = var5.getScaledHeight();
+		super.mouseClicked(x, y, par3);
+//		if(!(x > 248 && x < 406 && y > 63 && y < 156) && selectednumber != -1){
+//			selectednumber = -1;
+//		}
+//		if(selectednumber == -1){
+//			if(x > 248 && x < 406 && y > 63 && y < 90 && targetPacket.numMoves > 0){
+//				selectednumber = 0;
+//			}
+//			if(x > 248 && x < 406 && y > 90 && y < 112 && targetPacket.numMoves > 1){
+//				selectednumber = 1;
+//			}
+//			if(x > 248 && x < 406 && y > 112 && y < 134 && targetPacket.numMoves > 2){
+//				selectednumber = 2;
+//			}
+//			if(x > 248 && x < 406 && y > 134 && y < 156 && targetPacket.numMoves > 3){
+//				selectednumber = 3;
+//			}
+//		}
+//		else if(selectednumber != -1){
+//			if(x > 248 && x < 406 && y > 63 && y < 90 && targetPacket.numMoves > 0){
+//				selectednumber = -1;
+//			}
+//			if(x > 248 && x < 406 && y > 90 && y < 112 && targetPacket.numMoves > 1){
+//				selectednumber = -1;
+//			}
+//			if(x > 248 && x < 406 && y > 112 && y < 134 && targetPacket.numMoves > 2){
+//				selectednumber = -1;
+//			}
+//			if(x > 248 && x < 406 && y > 134 && y < 156 && targetPacket.numMoves > 3){
+//				selectednumber = -1;
+//			}
+//		}
+		if(x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 4 + 65 && y < var7 / 4 + 85){
+			if(par3 == 1 && !renameButton){
+				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
+				controlList.add(nameButton);
+				renameButton = true;
+			}	
+			else if(par3 != 1 && renameButton){
+				controlList.remove(nameButton);
+				renameButton = false;
+			}
+			else if(par3 == 1 && renameButton){
+				controlList.remove(nameButton);
+				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
+				controlList.add(nameButton);
+			}
+		}
 	}
 
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
@@ -83,35 +231,19 @@ public class GuiScreenPokeCheckerMoves extends GuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
-
+		
 		int pimg;
 		if(targetPacket.isShiny)
 			pimg = mc.renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 		else
 			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
-//		drawTexturedModalRect(40, 40, 5, 2, 256, 256);
-//		drawCenteredString(fontRenderer, "Lv: " + targetPacket.lvl + " " + targetPacket.nickname + " (" + targetPacket.name + ")", width / 2, height / 7 + 15, 0xcccccc);
-//		this.drawHorizontalLine(width / 5, height / 7 + 20, width * 4 / 5, 0xffffff);
-//		// STATS
-//		String s = (targetPacket.type2 == EnumType.Mystery ? "Type:" : "Types:");
-//		drawCenteredString(fontRenderer, s, width / 3, height / 7 + 40, 0xdddddd);
-//		if (targetPacket.type2 == EnumType.Mystery) {
-//			drawCenteredString(fontRenderer, targetPacket.type1.getName(), width / 3, height / 7 + 50, targetPacket.type1.getColor());
-//		} else {
-//			int swidth = fontRenderer.splitStringWidth(targetPacket.type1.getName(), 10);
-//			drawCenteredString(fontRenderer, targetPacket.type1.getName(), width / 3 - (swidth / 2), height / 7 + 50, targetPacket.type1.getColor());
-//			drawString(fontRenderer, targetPacket.type2.getName(), width / 3 + 3, height / 7 + 50, targetPacket.type2.getColor());
-//		}
-//		drawCenteredString(fontRenderer, "Health: " + targetPacket.health + "/" + targetPacket.hp, width / 3, height / 7 + 60, 0xdddddd);
-//		drawCenteredString(fontRenderer, "Exp: " + targetPacket.lvl + "/" + targetPacket.nextLvlXP, width / 3, height / 7 + 70, 0xdddddd);
-//		drawCenteredString(fontRenderer, "Attack: " + targetPacket.Attack, width / 3, height / 7 + 80, 0xdddddd);
-//		drawCenteredString(fontRenderer, "Defence: " + targetPacket.Defence, width / 3, height / 7 + 90, 0xdddddd);
-//		drawCenteredString(fontRenderer, "Special Attack: " + targetPacket.SpecialAttack, width / 3, height / 7 + 100, 0xdddddd);
-//		drawCenteredString(fontRenderer, "Special Defence: " + targetPacket.SpecialDefence, width / 3, height / 7 + 110, 0xdddddd);
-//		drawCenteredString(fontRenderer, "Speed: " + targetPacket.Speed, width / 3, height / 7 + 120, 0xdddddd);
-//		// MOVES
-//		drawCenteredString(fontRenderer, "Moves", width * 2 / 3, height / 7 + 25, 0xdddddd);
+		if(targetPacket.nickname.length() < 1)
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.type1.getColor());
+		else{
+			drawCenteredString(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
+			drawCenteredString(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
+		}
 	}
 	
 	private void drawColoredBar(int x, int y, int width, int height, float r, float g, float b) {
