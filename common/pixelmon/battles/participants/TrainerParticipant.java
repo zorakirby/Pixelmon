@@ -22,6 +22,11 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
+	public ParticipantType getType() {
+		return ParticipantType.Trainer;
+	}
+
+	@Override
 	public void setBattleController(BattleController bc) {
 		this.bc = bc;
 	}

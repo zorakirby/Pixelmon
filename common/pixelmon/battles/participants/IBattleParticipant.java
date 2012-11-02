@@ -23,4 +23,5 @@ public interface IBattleParticipant {
 	void update();
 	EntityLiving getEntity();
 	void updateOpponent(IBattleParticipant opponent);
+	ParticipantType getType();
 }
