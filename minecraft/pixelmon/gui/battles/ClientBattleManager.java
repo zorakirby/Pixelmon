@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import pixelmon.PixelmonServerStore;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.participants.ParticipantType;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonStatsPacket;
@@ -37,6 +38,8 @@ public class ClientBattleManager {
 	public static ArrayList<PixelmonLevelUpPacket> levelUpList = new ArrayList<PixelmonLevelUpPacket>();
 
 	public static ArrayList<AttackData> newAttackList = new ArrayList<ClientBattleManager.AttackData>();
+
+	public static ParticipantType opponentType;
 
 	public static PixelmonDataPacket getOpponent() {
 		return opponent;

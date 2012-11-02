@@ -30,6 +30,11 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
+	public ParticipantType getType() {
+		return ParticipantType.Player;
+	}
+
+	@Override
 	public boolean canGainXP() {
 		return true;
 	}
@@ -51,6 +56,7 @@ public class PlayerParticipant implements IBattleParticipant {
 		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 		cam = new EntityCamera(player.worldObj, player, bc);
 		player.worldObj.spawnEntityInWorld(cam);
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetOpponentType, opponent.getType().index));
 		player.openGui(Pixelmon.instance, EnumGui.Battle.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), 0, 0);
 		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon,
 				currentPixelmon.getPokemonId()));
