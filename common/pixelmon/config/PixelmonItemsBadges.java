@@ -37,6 +37,11 @@ public class PixelmonItemsBadges {
 	public static int relicBadgeID;
 	public static int risingBadgeID;
 	public static int soulBadgeID;
+	public static int stoneBadgeID;
+	public static int stormBadgeID;
+	public static int thunderBadgeID;
+	public static int volcanoBadgeID;
+	public static int zephyrBadgeID;
 
 	@Mod.Item(name = "Balance Badge", typeClass = "pixelmon.items.ItemBadge")
 	public static Item balanceBadge;
@@ -92,6 +97,16 @@ public class PixelmonItemsBadges {
 	public static Item risingBadge;
 	@Mod.Item(name = "Soul Badge", typeClass = "pixelmon.items.ItemBadge")
 	public static Item soulBadge;
+	@Mod.Item(name = "Stone Badge", typeClass = "pixelmon.items.ItemBadge")
+	public static Item stoneBadge;
+	@Mod.Item(name = "Storm Badge", typeClass = "pixelmon.items.ItemBadge")
+	public static Item stormBadge;
+	@Mod.Item(name = "Thunder Badge", typeClass = "pixelmon.items.ItemBadge")
+	public static Item thunderBadge;
+	@Mod.Item(name = "Volcano Badge", typeClass = "pixelmon.items.ItemBadge")
+	public static Item volcanoBadge;
+	@Mod.Item(name = "Zephyr Badge", typeClass = "pixelmon.items.ItemBadge")
+	public static Item zephyrBadge;
 
 	public static void load(Configuration cfg) {
 		balanceBadgeID = cfg.get("Balance Badge", "item", 10200).getInt();
@@ -121,6 +136,11 @@ public class PixelmonItemsBadges {
 		relicBadgeID = cfg.get("Relic Badge", "item", 10224).getInt();
 		risingBadgeID = cfg.get("Rising Badge", "item", 10225).getInt();
 		soulBadgeID = cfg.get("Soul Badge", "item", 10226).getInt();
+		stoneBadgeID = cfg.get("Stone Badge", "item", 10227).getInt();
+		stormBadgeID = cfg.get("Storm Badge", "item", 10228).getInt();
+		thunderBadgeID = cfg.get("Thunder Badge", "item", 10229).getInt();
+		volcanoBadgeID = cfg.get("Volcano Badge", "item", 10230).getInt();
+		zephyrBadgeID = cfg.get("Zephyr Badge", "item", 10231).getInt();
 
 		balanceBadge = new ItemBadge(balanceBadgeID, EnumBadges.Balancebadge).setItemName("Balance Badge");
 		beaconBadge = new ItemBadge(beaconBadgeID, EnumBadges.Beaconbadge).setItemName("Beacon Badge");
@@ -147,7 +167,13 @@ public class PixelmonItemsBadges {
 		rainbowBadge = new ItemBadge(rainbowBadgeID, EnumBadges.Rainbowbadge).setItemName("Rainbow Badge");
 		rainBadge = new ItemBadge(rainBadgeID, EnumBadges.Rainbadge).setItemName("Rain Badge");
 		relicBadge = new ItemBadge(relicBadgeID, EnumBadges.Relicbadge).setItemName("Relic Badge");
+		risingBadge = new ItemBadge(risingBadgeID, EnumBadges.Risingbadge).setItemName("Rising Badge");
 		soulBadge = new ItemBadge(soulBadgeID, EnumBadges.Soulbadge).setItemName("Soul Badge");
+		stoneBadge = new ItemBadge(stoneBadgeID, EnumBadges.Stonebadge).setItemName("Stone Badge");
+		stormBadge = new ItemBadge(stormBadgeID, EnumBadges.Stormbadge).setItemName("Storm Badge");
+		thunderBadge = new ItemBadge(thunderBadgeID, EnumBadges.Thunderbadge).setItemName("Thunder Badge");
+		volcanoBadge = new ItemBadge(volcanoBadgeID, EnumBadges.Volcanobadge).setItemName("Volcano Badge");
+		zephyrBadge = new ItemBadge(zephyrBadgeID, EnumBadges.Zephyrbadge).setItemName("Zephyr Badge");
 	}
 
 	public static void addNames() {
