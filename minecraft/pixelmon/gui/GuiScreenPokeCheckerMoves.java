@@ -139,22 +139,22 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(bg);
-		if(i > 248 && i < 406 && i1 > 63 && i1 < 90 || move1){
+		if(i > width / 2 - 32 && i < width / 2 + 124 && i1 > height / 4 - 17 && i1 < height / 4 + 5 || move1){
 			drawTexturedModalRect(58, -17, 1, 231, 153, 24);
 			resetAll();
 			move1 = true;
 		}
-		if(i > 248 && i < 406 && i1 > 90 && i1 < 112 || move2){
+		if(i > width / 2 - 32 && i < width / 2 + 124 && i1 > height / 4 + 5 && i1 < height / 4 + 27 || move2){
 			drawTexturedModalRect(58, 6, 1, 231, 153, 24);
 			resetAll();
 			move2 = true;
 		}
-		if(i > 248 && i < 406 && i1 > 112 && i1 < 134 || move3){
+		if(i > width / 2 - 32 && i < width / 2 + 124 && i1 > height / 4 + 27 && i1 < height / 4 + 50 || move3){
 			drawTexturedModalRect(58, 28, 1, 231, 153, 24);
 			resetAll();
 			move3 = true;
 		}
-		if(i > 248 && i < 406 && i1 > 134 && i1 < 156 || move4){
+		if(i > width / 2 - 32 && i < width / 2 + 124 && i1 > height / 4 + 50 && i1 < height / 4 + 77 || move4){
 			drawTexturedModalRect(58, 50, 1, 231, 153, 24);
 			resetAll();
 			move4 = true;
