@@ -36,12 +36,16 @@ public class PlayerStorage {
 	private static final int carryLimit = 6;
 	public EntityPlayerMP player;
 	public EntityTrainer trainer;
-	private PokeballManagerMode mode;
+	public String userName;
+	public String saveFile;
+	public PokeballManagerMode mode;
 	public boolean guiOpened = false;
 
 	public PlayerStorage(EntityPlayerMP player) {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
+		this.userName = player.username;
+		this.saveFile = "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/" + player.username + ".pk";
 	}
 
 	public PlayerStorage(EntityTrainer trainer) {
