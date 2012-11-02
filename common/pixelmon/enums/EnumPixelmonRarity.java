@@ -3,7 +3,7 @@ package pixelmon.enums;
 public enum EnumPixelmonRarity {
 
 	Common,
-	Uncomon,
+	Uncommon,
 	Rare,
 	SRare,
 	Legend,
@@ -20,7 +20,7 @@ public enum EnumPixelmonRarity {
 			return Rare;
 		} else if(Rarity >= 100 && Rarity <= 149)
 		{
-			return Uncomon;
+			return Uncommon;
 		} else if(Rarity >= 150)
 		{
 			return Common;

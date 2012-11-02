@@ -8,6 +8,7 @@ import cpw.mods.fml.common.network.Player;
 
 import pixelmon.Pixelmon;
 import pixelmon.StarterList;
+import pixelmon.battles.participants.ParticipantType;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
@@ -49,6 +50,8 @@ public class ClientPacketHandler implements IPacketHandler {
 				PixelmonServerStore.clearList();
 			} else if (packetID == EnumPackets.BattleMessage.getIndex()) {
 				ClientBattleManager.addMessage(Packet.readString(dataStream, 64));
+			} else if (packetID == EnumPackets.SetOpponentType.getIndex()) {
+				ClientBattleManager.opponentType = ParticipantType.get(dataStream.readInt());
 			} else if (packetID == EnumPackets.SetOpponent.getIndex()) {
 				PixelmonDataPacket p = new PixelmonDataPacket();
 				try {

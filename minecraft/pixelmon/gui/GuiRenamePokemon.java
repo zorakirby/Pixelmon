@@ -7,6 +7,7 @@ import net.minecraft.src.GuiTextField;
 import net.minecraft.src.StringTranslate;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -16,7 +17,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class GuiRenamePokemon extends GuiContainer {
 
 	private GuiScreen parentGuiScreen;
-	private GuiTextField theGuiTextField;
+	private GuiTextFieldTransparent theGuiTextField;
 	private PixelmonDataPacket targetPacket;
 
 	public GuiRenamePokemon(PixelmonDataPacket targetPacket, GuiScreenPokeChecker parent) {
@@ -31,9 +32,10 @@ public class GuiRenamePokemon extends GuiContainer {
 		StringTranslate stringtranslate = StringTranslate.getInstance();
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
-		controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 12, stringtranslate.translateKey("selectWorld.renameButton")));
-		controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, stringtranslate.translateKey("gui.cancel")));
-		theGuiTextField = new GuiTextField(fontRenderer, width / 2 - 100, 60, 200, 20);
+		controlList.add(new GuiRenameButtons(0, width / 2 - 98, height / 4 + 80, stringtranslate.translateKey("selectWorld.renameButton")));
+		controlList.add(new GuiRenameButtons(1, width / 2 + 48, height / 4 + 80, stringtranslate.translateKey("gui.cancel")));
+		controlList.add(new GuiRenameButtons(2, width / 2 - 25, height / 4 + 80, stringtranslate.translateKey("Reset")));
+		theGuiTextField = new GuiTextFieldTransparent(fontRenderer, width / 2 - 68, height / 4 + 37, 140, 30);
 		theGuiTextField.setFocused(true);
 		theGuiTextField.setText(targetPacket.nickname);
 	}
@@ -52,6 +54,11 @@ public class GuiRenamePokemon extends GuiContainer {
 		}
 
 		switch (par1GuiButton.id) {
+		case 2:
+			PacketDispatcher.sendPacketToServer(PacketCreator.createStringPacket(EnumPackets.RenamePokemon, targetPacket.pokemonID, ""));
+			targetPacket.nickname = "";
+			mc.displayGuiScreen(parentGuiScreen);
+			break;
 		case 1:
 			mc.displayGuiScreen(parentGuiScreen);
 		case 0:
@@ -77,10 +84,12 @@ public class GuiRenamePokemon extends GuiContainer {
 	}
 
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/rename.png");
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		mc.renderEngine.bindTexture(bg);
+		drawTexturedModalRect((width - xSize) / 2 - 40, height / 4, 0, 0, 256, 114);
 		StringTranslate stringtranslate = StringTranslate.getInstance();
-		drawDefaultBackground();
-		drawCenteredString(fontRenderer, stringtranslate.translateKey("Rename Pokemon"), width / 2, (height / 4 - 60) + 20, 0xffffff);
-		drawString(fontRenderer, stringtranslate.translateKey("Nickname"), width / 2 - 100, 47, 0xa0a0a0);
+		drawCenteredString(fontRenderer, stringtranslate.translateKey("Rename Pokemon"), width / 2, (height / 4 - 60) + 80, 0xffffff);
 		theGuiTextField.drawTextBox();
 	}
 }

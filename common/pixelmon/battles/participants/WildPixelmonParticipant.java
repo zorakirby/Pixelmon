@@ -16,6 +16,11 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	}
 
 	@Override
+	public ParticipantType getType() {
+		return ParticipantType.WildPokemon;
+	}
+
+	@Override
 	public EntityPixelmon currentPokemon() {
 		return pixelmon;
 	}

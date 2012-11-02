@@ -13,6 +13,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.ServerStorageDisplay;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.participants.ParticipantType;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PacketHandler;
@@ -684,8 +685,12 @@ public class GuiBattle extends GuiContainer {
 			else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
 				mode = BattleMode.ChooseBag;
 			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
-				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
-				mode = BattleMode.Waiting;
+				if (ClientBattleManager.opponentType == ParticipantType.WildPokemon) {
+					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
+					mode = BattleMode.Waiting;
+				} else {
+					ClientBattleManager.addMessage("You can't run from a trainer battle!");
+				}
 			}
 			return;
 
@@ -905,8 +910,13 @@ public class GuiBattle extends GuiContainer {
 		else if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
 			bagSection = BagSection.BattleItems;
 
-		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
-			bagSection = BagSection.Pokeballs;
+		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight) {
+			if (ClientBattleManager.opponentType == ParticipantType.WildPokemon)
+				bagSection = BagSection.Pokeballs;
+			else {
+				ClientBattleManager.addMessage("You can't use Poke Balls in this battle!");
+			}
+		}
 
 		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y2 && mouseY < y2 + buttonHeight)
 			bagSection = BagSection.HP;
