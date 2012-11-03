@@ -91,38 +91,24 @@ public class PokeballManager {
 	public void save() {
 		try {
 			for (int i = 0; i < playerPokemonList.size(); i++) {
-				EntityPlayer player = playerPokemonList.get(i).player;
-				boolean playerConnected = false;
-				for (String playerName : MinecraftServer.getServer().getAllUsernames())
-					if (player.username.equals(playerName)) {
-						playerConnected = true;
-						break;
-					}
-
-				File playerSaveFile = new File(getSaveFolder(player) + player.username + ".pk");
+				String userName = playerPokemonList.get(i).userName;
+				File playerSaveFile = new File(playerPokemonList.get(i).saveFile);
 				FileOutputStream f = new FileOutputStream(playerSaveFile);
 				DataOutputStream s = new DataOutputStream(f);
-				CompressedStreamTools.write(getData(player), s);
+				NBTTagCompound nbt = new NBTTagCompound();
+				playerPokemonList.get(i).writeToNBT(nbt);
+				CompressedStreamTools.write(nbt, s);
 				s.close();
 				f.close();
-				if (!playerConnected) {
+				if (playerPokemonList.get(i).player == null || playerPokemonList.get(i).player.playerNetServerHandler.connectionClosed) {
 					playerPokemonList.remove(i);
+					System.out.println("Saved dc'd player's data - " + userName);
 					i--;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	private NBTTagCompound getData(EntityPlayer player) {
-		for (PlayerStorage p : playerPokemonList)
-			if (p.player == player) {
-				NBTTagCompound n = new NBTTagCompound();
-				p.writeToNBT(n);
-				return n;
-			}
-		return null;
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
