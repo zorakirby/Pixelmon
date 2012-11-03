@@ -1,4 +1,4 @@
-package pixelmon.gui;
+package pixelmon.gui.pokechecker;
 
 import java.util.ArrayList;
 
@@ -13,11 +13,13 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StatCollector;
 import net.minecraft.src.Tessellator;
+import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
+import pixelmon.gui.battles.ClientBattleManager;
 import pixelmon.gui.inventoryExtended.SlotInventoryPixelmon;
 
 public class GuiScreenPokeChecker extends GuiContainer {
@@ -39,8 +41,9 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		controlList.clear();
 		
 		controlList.add(new GuiPokeCheckerTabs(3, 0, width / 2 + 107, (int) height / 2 + 80, 17, 15, ""));
-		controlList.add(new GuiPokeCheckerTabs(2, 2, width / 2 + 36, (int) height / 2 + 80, 69, 15, "Stats"));
 		controlList.add(new GuiPokeCheckerTabs(1, 1, width / 2 - 34, (int) height / 2 + 80, 69, 15, "Moves"));
+		controlList.add(new GuiPokeCheckerTabs(2, 2, width / 2 + 36, (int) height / 2 + 80, 69, 15, "Stats"));
+		controlList.add(new GuiPokeCheckerTabs(4, 4, width / 2 - 44, (int) height / 2 - 107, 9, 9, "", targetPacket));
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -56,6 +59,9 @@ public class GuiScreenPokeChecker extends GuiContainer {
 			break;
 		case 3:
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			break;
+		case 4:
+			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket));
 			break;
 		}
 

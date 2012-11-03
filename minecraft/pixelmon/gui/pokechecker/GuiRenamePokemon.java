@@ -1,4 +1,4 @@
-package pixelmon.gui;
+package pixelmon.gui.pokechecker;
 
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.gui.ContainerEmpty;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiRenamePokemon extends GuiContainer {

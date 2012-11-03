@@ -1,4 +1,4 @@
-package pixelmon.gui;
+package pixelmon.gui.pokechecker;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
