@@ -6,6 +6,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 import pixelmon.Pixelmon;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.config.PixelmonItems;
 import pixelmon.enums.EnumEvolutionStone;
 
@@ -24,7 +25,7 @@ public class BlockEvolutionStoneOre extends Block {
 		setStepSound(Block.soundStoneFootstep);
 		if (id == PixelmonBlocks.waterStoneOreId)
 			setLightValue(0.5f);
-		setCreativeTab(CreativeTabs.tabMisc);
+		setCreativeTab(PixelmonCreativeTabs.natural);
 		blockIndexInTexture = Pixelmon.proxy.getTexture("/terrain.png", "/pixelmon/block/" + type.toString().toLowerCase() + ".png");
 	}
 

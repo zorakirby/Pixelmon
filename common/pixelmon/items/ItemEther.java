@@ -5,6 +5,7 @@ import net.minecraft.src.EntityPlayerMP;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumEthers;
@@ -19,6 +20,7 @@ public class ItemEther extends PixelmonItem {
 		this.type = type;
 		setMaxStackSize(16);
 		setIconIndex(type.getIconIndex());
+		setCreativeTab(PixelmonCreativeTabs.restoration);
 	}
 
 	private void restorePP(EntityPixelmon userPokemon, int moveIndex) {

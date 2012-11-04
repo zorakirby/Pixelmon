@@ -29,7 +29,10 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.enums.EnumGui;
 import pixelmon.gui.FontScaler;
 import pixelmon.gui.GuiPixelmonOverlay;
+import pixelmon.gui.pokechecker.GuiPokeCheckerTabs;
 import pixelmon.gui.pokechecker.GuiScreenPokeChecker;
+import pixelmon.gui.pokechecker.GuiScreenPokeCheckerMoves;
+import pixelmon.gui.pokechecker.GuiScreenPokeCheckerStats;
 import pixelmon.items.ItemHeld;
 import pixelmon.storage.PlayerStorage;
 
@@ -39,7 +42,11 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 	GuiPixelmonOverlay overlay = new GuiPixelmonOverlay();
 	boolean pixelmonMenuOpen;
-	GuiButton pMenuButton;
+	int menuX;
+	int menuY;
+	GuiButton pMenuButtonSumm;
+	GuiButton pMenuButtonMove;
+	GuiButton pMenuButtonStat;
 	PixelmonDataPacket selected;
 
 	private float xSize_lo, ySize_lo;
@@ -76,6 +83,16 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		super.drawScreen(par1, par2, par3);
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
+		if(pixelmonMenuOpen){
+			this.drawCenteredString(fontRenderer, selected.name, menuX - 40, menuY - 8, 0xffffff);
+		}
+	}
+	
+	public void drawButtonContainer(){
+		GL11.glColor3f(1.0f, 1.0f, 1.0f);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pokecheckerPopup.png"));
+		if(pixelmonMenuOpen)
+		this.drawTexturedModalRect(menuX - 73, menuY - 10, 0, 0, 67, 76);
 	}
 
 	@Override
@@ -138,6 +155,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 					drawImageQuad(spriteIndex, slot.heldItemX + 3, slot.heldItemY + 3, 10f, 10f, 0f, 0f, 1f, 1f);
 				}
 			}
+			drawButtonContainer();
 		}
 		int guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png");
 
@@ -224,6 +242,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	}
 
 	Rectangle buttonBounds;
+	Rectangle buttonBoundsMoves;
+	Rectangle buttonBoundsStat;
 
 	@Override
 	protected void mouseClicked(int x, int y, int par3) {
@@ -232,9 +252,21 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected);
 				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
 			}
+			if (pixelmonMenuOpen && buttonBoundsMoves.contains(x, y)) {
+				GuiScreenPokeChecker poke = new GuiScreenPokeCheckerMoves(selected);
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerMoves.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+			}
+			if (pixelmonMenuOpen && buttonBoundsStat.contains(x, y)) {
+				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected);
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerStats.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+			}
 			if (pixelmonMenuOpen) {
-				controlList.remove(pMenuButton);
-				pMenuButton = null;
+				controlList.remove(pMenuButtonSumm);
+				controlList.remove(pMenuButtonMove);
+				controlList.remove(pMenuButtonStat);
+				pMenuButtonSumm = null;
+				pMenuButtonMove = null;
+				pMenuButtonStat = null;
 				pixelmonMenuOpen = false;
 				selected = null;
 			}
@@ -244,14 +276,26 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				if (s.getBounds().contains(x, y)) { // click on a pokemon sprite
 					if (par3 == 1) {
 						if (pixelmonMenuOpen) {
-							controlList.remove(pMenuButton);
-							pMenuButton = null;
+							controlList.remove(pMenuButtonSumm);
+							controlList.remove(pMenuButtonMove);
+							controlList.remove(pMenuButtonStat);
+							pMenuButtonSumm = null;
+							pMenuButtonMove = null;
+							pMenuButtonStat = null;
 							pixelmonMenuOpen = false;
 							selected = null;
 						}
-						pMenuButton = new GuiButton(3, x - 50, y, 50, 20, "Summary");
-						buttonBounds = new Rectangle(x - 50, y, 50, 20);
-						controlList.add(pMenuButton);
+						pMenuButtonSumm = new GuiPokeCheckerTabs(6, 3, x - 63, y + 5, 47, 13, "Summary");
+						pMenuButtonMove = new GuiPokeCheckerTabs(6, 4, x - 63, y + 24, 47, 13, "Moves");
+						pMenuButtonStat = new GuiPokeCheckerTabs(6, 5, x - 63, y + 43, 47, 13, "Stats");
+						menuX = x;
+						menuY = y;
+						buttonBounds = new Rectangle(x - 63, y + 5, 47, 13);
+						buttonBoundsMoves = new Rectangle(x - 63, y + 24, 47, 13);
+						buttonBoundsStat = new Rectangle(x - 63, y + 43, 47, 13);
+						controlList.add(pMenuButtonSumm);
+						controlList.add(pMenuButtonMove);
+						controlList.add(pMenuButtonStat);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;
 						return;
