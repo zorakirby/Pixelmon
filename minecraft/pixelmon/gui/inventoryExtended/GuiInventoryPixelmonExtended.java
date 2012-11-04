@@ -104,9 +104,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			PixelmonDataPacket p = slot.pokemonData;
 			int offset = 0;
 			if (p != null) {
-
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png"));
-
 				String numString = "";
 				if (p.nationalPokedexNumber < 10)
 					numString = "00" + p.nationalPokedexNumber;
@@ -138,6 +135,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				}
 			}
 		}
+		int guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png");
 
 		int mouseX = Mouse.getX() * this.width / this.mc.displayWidth;
 		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
@@ -146,6 +144,9 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				if (s != null) {
 					if (s.getBounds().contains(mouseX, mouseY)) {
 						drawPokemonInfo(mouseX, mouseY, s);
+					}
+					if (s.getHeldItemBounds().contains(mouseX, mouseY) && heldItemQualifies(s)) {
+						drawImageQuad(guiIndex, s.heldItemX - 2, s.heldItemY - 2, 20, 20, 58f / 256f, 185f / 256f, 78f / 256f, 205f / 256f);
 					}
 				}
 			}
@@ -160,6 +161,17 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		func_74223_a(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - this.xSize_lo, (float) (guiTop + 75 - 50) - this.ySize_lo);
 
+	}
+
+	private boolean heldItemQualifies(SlotInventoryPixelmon s) {
+		InventoryPlayer inv = mc.thePlayer.inventory;
+		if (inv.getItemStack() == null && s.pokemonData.heldItemId != -1)
+			return true;
+		else if (inv.getItemStack() == null)
+			return false;
+		if (PixelmonItems.getHeldItem(inv.getItemStack().itemID) != null)
+			return true;
+		return false;
 	}
 
 	private void drawPokemonInfo(int x, int y, SlotInventoryPixelmon s) {
@@ -240,16 +252,35 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 					}
 				}
-				if (s.getHeldItemBounds().contains(x, y)) {
+				if (s.getHeldItemBounds().contains(x, y) && heldItemQualifies(s)) {
 					InventoryPlayer inventory = mc.thePlayer.inventory;
 					ItemStack itemStack = inventory.getItemStack();
-					if (itemStack!=null) {
+					if (itemStack != null)
 						itemStack.stackSize--;
-						if (itemStack.stackSize==0) inventory.setItemStack(null);
-						else inventory.setItemStack(itemStack);
+					if (s.pokemonData.heldItemId == -1) {
 						s.pokemonData.heldItemId = itemStack.itemID;
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, itemStack.itemID));
+						if (itemStack == null || itemStack.stackSize == 0)
+							inventory.setItemStack(null);
+						else
+							inventory.setItemStack(itemStack);
+					} else {
+
+						if (itemStack == null) {
+							inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(s.pokemonData.heldItemId)));
+							s.pokemonData.heldItemId = -1;
+						} else if (itemStack.itemID != s.pokemonData.heldItemId) {
+							s.pokemonData.heldItemId = itemStack.itemID;
+							inventory.setItemStack(itemStack);
+						} else {
+							s.pokemonData.heldItemId = itemStack.itemID;
+							itemStack.stackSize++;
+							inventory.setItemStack(itemStack);
+						}
 					}
+					if (itemStack != null)
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, itemStack.itemID));
+					else
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, -1));
 					return;
 				}
 			}
