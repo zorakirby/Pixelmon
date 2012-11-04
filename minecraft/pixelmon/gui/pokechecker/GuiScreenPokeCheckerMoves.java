@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.RenderHelper;
@@ -121,6 +122,9 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		}
 	}
 	
+	public void switchMoves(int moveToChange, int moveToChange2){
+	}
+	
 	private void drawMoveInfo(Attack attack) {
 		drawString(fontRenderer, "Power:", -30, 118, 0xFFFFFF);
 		drawString(fontRenderer, "Accuracy:", -30, 148, 0xFFFFFF);
@@ -143,22 +147,22 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(bg);
-		if(i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76 || move1){
+		if(targetPacket.numMoves > 0 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76 || move1){
 			drawTexturedModalRect(58, -17, 1, 231, 153, 24);
 			resetAll();
 			move1 = true;
 		}
-		if(i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 77 && i1 < height / 2 - 53 || move2){
+		if(targetPacket.numMoves > 1 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 77 && i1 < height / 2 - 53 || move2){
 			drawTexturedModalRect(58, 6, 1, 231, 153, 24);
 			resetAll();
 			move2 = true;
 		}
-		if(i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 54 && i1 < height / 2 - 31 || move3){
+		if(targetPacket.numMoves > 2 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 54 && i1 < height / 2 - 31 || move3){
 			drawTexturedModalRect(58, 28, 1, 231, 153, 24);
 			resetAll();
 			move3 = true;
 		}
-		if(i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 32 && i1 < height / 2 - 9 || move4){
+		if(targetPacket.numMoves > 3 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 32 && i1 < height / 2 - 9 || move4){
 			drawTexturedModalRect(58, 50, 1, 231, 153, 24);
 			resetAll();
 			move4 = true;
@@ -170,38 +174,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		super.mouseClicked(x, y, par3);
-//		if(!(x > 248 && x < 406 && y > 63 && y < 156) && selectednumber != -1){
-//			selectednumber = -1;
-//		}
-//		if(selectednumber == -1){
-//			if(x > 248 && x < 406 && y > 63 && y < 90 && targetPacket.numMoves > 0){
-//				selectednumber = 0;
-//			}
-//			if(x > 248 && x < 406 && y > 90 && y < 112 && targetPacket.numMoves > 1){
-//				selectednumber = 1;
-//			}
-//			if(x > 248 && x < 406 && y > 112 && y < 134 && targetPacket.numMoves > 2){
-//				selectednumber = 2;
-//			}
-//			if(x > 248 && x < 406 && y > 134 && y < 156 && targetPacket.numMoves > 3){
-//				selectednumber = 3;
-//			}
-//		}
-//		else if(selectednumber != -1){
-//			if(x > 248 && x < 406 && y > 63 && y < 90 && targetPacket.numMoves > 0){
-//				selectednumber = -1;
-//			}
-//			if(x > 248 && x < 406 && y > 90 && y < 112 && targetPacket.numMoves > 1){
-//				selectednumber = -1;
-//			}
-//			if(x > 248 && x < 406 && y > 112 && y < 134 && targetPacket.numMoves > 2){
-//				selectednumber = -1;
-//			}
-//			if(x > 248 && x < 406 && y > 134 && y < 156 && targetPacket.numMoves > 3){
-//				selectednumber = -1;
-//			}
-//		}
-		if(x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 4 + 65 && y < var7 / 4 + 85){
+		if(x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 2 - 15 && y < var7 / 2 + 5){
 			if(par3 == 1 && !renameButton){
 				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
 				controlList.add(nameButton);
@@ -243,10 +216,10 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if(targetPacket.nickname.length() < 1)
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.type1.getColor());
+		drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.type1.getColor());
 		else{
-			drawCenteredString(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
-			drawCenteredString(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
 		}
 	}
 	
@@ -311,6 +284,11 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
+	
+    public void drawCenteredStringWithoutShadow(FontRenderer par1FontRenderer, String par2Str, int par3, int par4, int par5)
+    {
+        par1FontRenderer.drawString(par2Str, par3 - par1FontRenderer.getStringWidth(par2Str) / 2, par4, par5);
+    }
 	
 	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
