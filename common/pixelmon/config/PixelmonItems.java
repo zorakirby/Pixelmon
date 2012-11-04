@@ -182,6 +182,7 @@ public class PixelmonItems {
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
 		PixelmonItemsApricorns.load(cfg);
+		PixelmonItemsBadges.load(cfg);
 
 		pokeCheckerID = cfg.get("PokeChecker", "item", 10004).getInt();
 		pokeDexID = cfg.get("PokeDex", "item", 10027).getInt();
@@ -273,6 +274,7 @@ public class PixelmonItems {
 	public static void addNames() {
 		PixelmonItemsPokeballs.addNames();
 		PixelmonItemsApricorns.addNames();
+		PixelmonItemsBadges.addNames();
 		try {
 			for (Field field : PixelmonItems.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {

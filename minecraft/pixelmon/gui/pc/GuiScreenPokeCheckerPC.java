@@ -5,7 +5,7 @@ import net.minecraft.src.GuiScreen;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.gui.GuiScreenPokeChecker;
+import pixelmon.gui.pokechecker.GuiScreenPokeChecker;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {

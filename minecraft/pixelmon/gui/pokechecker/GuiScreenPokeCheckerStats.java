@@ -1,4 +1,4 @@
-package pixelmon.gui;
+package pixelmon.gui.pokechecker;
 
 import java.awt.Color;
 
@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
 import net.minecraft.src.RenderHelper;
@@ -40,6 +41,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		controlList.add(new GuiPokeCheckerTabs(3, 0, width / 2 + 107, (int) height / 2 + 80, 17, 15, ""));
 		controlList.add(new GuiPokeCheckerTabs(0, 1, width / 2 - 127, (int) height / 2 + 80, 90, 15, "Summary"));
 		controlList.add(new GuiPokeCheckerTabs(1, 2, width / 2 - 34, (int) height / 2 + 80, 69, 15, "Moves"));
+		controlList.add(new GuiPokeCheckerTabs(4, 4, width / 2 - 44, (int) height / 2 - 107, 9, 9, "", targetPacket));
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -55,7 +57,9 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 			break;
 		case 3:
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
-			
+			break;
+		case 4:
+			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket));
 			break;
 		}
 
@@ -66,7 +70,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		super.mouseClicked(x, y, par3);
-		if(x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 4 + 65 && y < var7 / 4 + 85){
+		if(x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 2 - 15 && y < var7 / 2 + 5){
 			if(par3 == 1 && !renameButton){
 				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
 				controlList.add(nameButton);
@@ -92,12 +96,18 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xcccccc);
 //		drawString(fontRenderer, String.valueOf(targetPacket.), -20, 100, 0xcccccc);
 		
-		drawString(fontRenderer, "HP: " + targetPacket.HP, 60, -7, 0xcccccc);
-		drawString(fontRenderer, "Attack: " + targetPacket.Attack, 60, 13, 0xcccccc);
-		drawString(fontRenderer, "Defence: " + targetPacket.Defence, 60, 32, 0xcccccc);
-		drawString(fontRenderer, "SP.Attack: " + targetPacket.SpecialAttack, 60, 53, 0xcccccc);
-		drawString(fontRenderer, "SP.Defense: " + targetPacket.SpecialDefence, 60, 73, 0xcccccc);
-		drawString(fontRenderer, "Speed: " + targetPacket.Speed, 60, 93, 0xcccccc);
+		drawString(fontRenderer, "HP:", 60, -7, 0xcccccc);
+		drawString(fontRenderer, String.valueOf(targetPacket.HP), 200 - (String.valueOf(targetPacket.HP).length()*3), -7, 0xcccccc);
+		drawString(fontRenderer, "Attack:", 60, 13, 0xcccccc);
+		drawString(fontRenderer, String.valueOf(targetPacket.Attack), 200 - (String.valueOf(targetPacket.Attack).length()*3), 13, 0xcccccc);
+		drawString(fontRenderer, "Defence:", 60, 32, 0xcccccc);
+		drawString(fontRenderer, String.valueOf(targetPacket.Defence), 200 - (String.valueOf(targetPacket.Defence).length()*3), 32, 0xcccccc);
+		drawString(fontRenderer, "SP.Attack:", 60, 53, 0xcccccc);
+		drawString(fontRenderer, String.valueOf(targetPacket.SpecialAttack), 200 - (String.valueOf(targetPacket.SpecialAttack).length()*3), 53, 0xcccccc);
+		drawString(fontRenderer, "SP.Defense:", 60, 73, 0xcccccc);
+		drawString(fontRenderer, String.valueOf(targetPacket.SpecialDefence), 200 - (String.valueOf(targetPacket.SpecialDefence).length()*3), 73, 0xcccccc);
+		drawString(fontRenderer, "Speed:", 60, 93, 0xcccccc);
+		drawString(fontRenderer, String.valueOf(targetPacket.Speed), 200 - (String.valueOf(targetPacket.Speed).length()*3), 93, 0xcccccc);
 		
 		drawString(fontRenderer, "Happiness", 72, 115, 0xcccccc);
 		drawCenteredString(fontRenderer, String.valueOf(targetPacket.happiness), 95, 130, 0xcccccc);
@@ -130,11 +140,10 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if(targetPacket.nickname.length() < 1)
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.type1.getColor());
+		drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.type1.getColor());
 		else{
-			drawCenteredString(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
-			drawCenteredString(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
-			
+			drawCenteredStringWithoutShadow(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
 		}
 	}
 	
@@ -199,6 +208,11 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
+	
+    public void drawCenteredStringWithoutShadow(FontRenderer par1FontRenderer, String par2Str, int par3, int par4, int par5)
+    {
+        par1FontRenderer.drawString(par2Str, par3 - par1FontRenderer.getStringWidth(par2Str) / 2, par4, par5);
+    }
 	
 	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture

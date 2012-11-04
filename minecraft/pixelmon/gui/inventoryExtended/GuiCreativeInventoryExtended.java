@@ -1,12 +1,21 @@
 package pixelmon.gui.inventoryExtended;
 
-import java.awt.Color;
-import java.awt.Rectangle;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+import pixelmon.ServerStorageDisplay;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
+import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonItems;
+import pixelmon.items.ItemHeld;
+import pixelmon.storage.PlayerStorage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiInventory;
+import net.minecraft.src.GuiContainerCreative;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.RenderHelper;
@@ -14,37 +23,16 @@ import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StatCollector;
 import net.minecraft.src.Tessellator;
 
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
-
-import pixelmon.Pixelmon;
-import pixelmon.ServerStorageDisplay;
-import pixelmon.comm.EnumPackets;
-import pixelmon.comm.PacketCreator;
-import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.config.PixelmonItems;
-import pixelmon.enums.EnumGui;
-import pixelmon.gui.FontScaler;
-import pixelmon.gui.GuiPixelmonOverlay;
-import pixelmon.gui.pokechecker.GuiScreenPokeChecker;
-import pixelmon.items.ItemHeld;
-import pixelmon.storage.PlayerStorage;
-
-public class GuiInventoryPixelmonExtended extends GuiInventory {
-
+public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 	public SlotInventoryPixelmon[] pixelmonSlots;
-
-	GuiPixelmonOverlay overlay = new GuiPixelmonOverlay();
+	
 	boolean pixelmonMenuOpen;
 	GuiButton pMenuButton;
 	PixelmonDataPacket selected;
 
-	private float xSize_lo, ySize_lo;
+	float xSize_lo, ySize_lo;
 
-	public GuiInventoryPixelmonExtended(EntityPlayer par1EntityPlayer) {
+	public GuiCreativeInventoryExtended(EntityPlayer par1EntityPlayer) {
 		super(par1EntityPlayer);
 		pixelmonMenuOpen = false;
 		pixelmonSlots = new SlotInventoryPixelmon[6];
@@ -163,7 +151,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		func_74223_a(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - this.xSize_lo, (float) (guiTop + 75 - 50) - this.ySize_lo);
 
 	}
 
@@ -221,17 +208,15 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	@Override
 	protected void actionPerformed(GuiButton par1GuiButton) {
 		super.actionPerformed(par1GuiButton);
+		if (par1GuiButton.id == 3) {
+			GuiScreenPokeCheckerInv poke = new GuiScreenPokeCheckerInv(selected, this);
+			mc.displayGuiScreen(poke);
+		}
 	}
-
-	Rectangle buttonBounds;
 
 	@Override
 	protected void mouseClicked(int x, int y, int par3) {
 		if (par3 == 0) {
-			if (pixelmonMenuOpen && buttonBounds.contains(x, y)) {
-				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected);
-				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
-			}
 			if (pixelmonMenuOpen) {
 				controlList.remove(pMenuButton);
 				pMenuButton = null;
@@ -250,7 +235,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 							selected = null;
 						}
 						pMenuButton = new GuiButton(3, x - 50, y, 50, 20, "Summary");
-						buttonBounds = new Rectangle(x - 50, y, 50, 20);
 						controlList.add(pMenuButton);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;
@@ -261,34 +245,31 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				}
 				if (s.getHeldItemBounds().contains(x, y) && heldItemQualifies(s)) {
 					InventoryPlayer inventory = mc.thePlayer.inventory;
-					ItemStack currentItem = inventory.getItemStack();
-					int oldItemId = s.pokemonData.heldItemId;
-					int itemId = currentItem == null ? -1 : currentItem.itemID;
-
-					s.pokemonData.heldItemId = itemId;
-
-					if (currentItem != null)
-						currentItem.stackSize--;
-					if (oldItemId == -1) {
-						if (currentItem == null || currentItem.stackSize <= 0)
+					ItemStack itemStack = inventory.getItemStack();
+					if (itemStack != null)
+						itemStack.stackSize--;
+					if (s.pokemonData.heldItemId == -1) {
+						s.pokemonData.heldItemId = itemStack.itemID;
+						if (itemStack == null || itemStack.stackSize == 0)
 							inventory.setItemStack(null);
 						else
-							inventory.setItemStack(currentItem);
+							inventory.setItemStack(itemStack);
 					} else {
-						if (itemId == -1) {
-							inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
-						} else if (itemId != oldItemId) {
-							if (currentItem.stackSize <= 0)
-								inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
-							else
-								inventory.setItemStack(currentItem);
+
+						if (itemStack == null) {
+							inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(s.pokemonData.heldItemId)));
+							s.pokemonData.heldItemId = -1;
+						} else if (itemStack.itemID != s.pokemonData.heldItemId) {
+							s.pokemonData.heldItemId = itemStack.itemID;
+							inventory.setItemStack(itemStack);
 						} else {
-							currentItem.stackSize++;
-							inventory.setItemStack(currentItem);
+							s.pokemonData.heldItemId = itemStack.itemID;
+							itemStack.stackSize++;
+							inventory.setItemStack(itemStack);
 						}
 					}
-					if (currentItem != null)
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, currentItem.itemID));
+					if (itemStack != null)
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, itemStack.itemID));
 					else
 						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, -1));
 					return;

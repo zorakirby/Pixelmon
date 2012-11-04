@@ -29,7 +29,6 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		super.init(name);
 		if (!alreadyInitialised) {
 			if ((new Random()).nextFloat() < 1 / 8192f) {
-				System.out.println("Shiny " + getName() + " spawned");
 				dataWatcher.updateObject(5, (short) 1);
 			}
 		}

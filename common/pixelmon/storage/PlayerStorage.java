@@ -36,12 +36,16 @@ public class PlayerStorage {
 	private static final int carryLimit = 6;
 	public EntityPlayerMP player;
 	public EntityTrainer trainer;
-	private PokeballManagerMode mode;
+	public String userName;
+	public String saveFile;
+	public PokeballManagerMode mode;
 	public boolean guiOpened = false;
 
 	public PlayerStorage(EntityPlayerMP player) {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
+		this.userName = player.username;
+		this.saveFile = "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/" + player.username + ".pk";
 	}
 
 	public PlayerStorage(EntityTrainer trainer) {
@@ -171,6 +175,7 @@ public class PlayerStorage {
 			NBTTagCompound n = partyPokemon[i];
 			if (n != null) {
 				if (n.getInteger("pixelmonID") == id) {
+					n.setFloat("FallDistance", 0);
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
 					if (mode == PokeballManagerMode.Player) {
@@ -419,11 +424,11 @@ public class PlayerStorage {
 		for (int i = 0; i < numMoves; i++) {
 			nbt.setInteger("PixelmonMovePP" + i, nbt.getInteger("PixelmonMovePPBase" + i));
 		}
-		int numStatus = nbt.getInteger("EffectCount");
+		int numStatus = nbt.getShort("EffectCount");
 		for (int i = 0; i < numStatus; i++) {
 			nbt.func_82580_o("Effect" + i);
 		}
-		nbt.setInteger("EffectCount", 0);
+		nbt.setShort("EffectCount", (short) 0);
 		if (mode == PokeballManagerMode.Player)
 			player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 	}

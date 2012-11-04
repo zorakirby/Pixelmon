@@ -167,4 +167,9 @@ public class PlayerParticipant implements IBattleParticipant {
 		PixelmonDataPacket p = new PixelmonDataPacket(opponent.currentPokemon(), EnumPackets.SetOpponent);
 		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 	}
+
+	public void updateOpponentHealth(EntityPixelmon pixelmon) {
+		PixelmonDataPacket p = new PixelmonDataPacket(pixelmon, EnumPackets.SetOpponent);
+		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
+	}
 }

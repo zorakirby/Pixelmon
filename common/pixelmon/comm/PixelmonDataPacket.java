@@ -84,8 +84,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		Defence = p.getInteger("StatsDefence");
 		SpecialAttack = p.getInteger("StatsSpecialAttack");
 		SpecialDefence = p.getInteger("StatsSpecialDefence");
-		if (p.hasKey("Held Item")) {
-			heldItemId = p.getInteger("HeldItemId");
+		if (p.hasKey("HeldItem")) {
+			heldItemId = p.getInteger("HeldItem");
 		}
 		if (p.hasKey("BoxNumber"))
 			boxNumber = p.getInteger("BoxNumber");
@@ -126,7 +126,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		Defence = p.stats.Defence;
 		SpecialAttack = p.stats.SpecialAttack;
 		SpecialDefence = p.stats.SpecialDefence;
-		if (p.heldItem!=null)
+		if (p.heldItem != null)
 			heldItemId = p.heldItem.itemID;
 		hasOwner = p.getOwner() != null || p.getTrainer() != null;
 		doesLevel = p.doesLevel;

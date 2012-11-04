@@ -59,6 +59,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 					if (riddenByEntity != null) {
 						player.mountEntity(this);
 						((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
+						player.setPosition(posX, posY, posZ);
 					} else {
 						player.mountEntity(this);
 						tasks.taskEntries.clear();
@@ -133,8 +134,9 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	public void updateRidden() {
 		if (ridingHelper != null)
 			ridingHelper.updateRidden();
-		else
+		else {
 			super.updateRidden();
+		}
 	}
 
 	@Override
