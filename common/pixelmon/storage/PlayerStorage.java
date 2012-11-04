@@ -423,11 +423,11 @@ public class PlayerStorage {
 		for (int i = 0; i < numMoves; i++) {
 			nbt.setInteger("PixelmonMovePP" + i, nbt.getInteger("PixelmonMovePPBase" + i));
 		}
-		int numStatus = nbt.getInteger("EffectCount");
+		int numStatus = nbt.getShort("EffectCount");
 		for (int i = 0; i < numStatus; i++) {
 			nbt.func_82580_o("Effect" + i);
 		}
-		nbt.setInteger("EffectCount", 0);
+		nbt.setShort("EffectCount", (short)0);
 		if (mode == PokeballManagerMode.Player)
 			player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 	}
