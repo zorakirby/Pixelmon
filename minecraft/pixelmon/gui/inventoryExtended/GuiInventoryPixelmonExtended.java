@@ -247,6 +247,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 						itemStack.stackSize--;
 						if (itemStack.stackSize==0) inventory.setItemStack(null);
 						else inventory.setItemStack(itemStack);
+						s.pokemonData.heldItemId = itemStack.itemID;
 						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, itemStack.itemID));
 					}
 					return;
