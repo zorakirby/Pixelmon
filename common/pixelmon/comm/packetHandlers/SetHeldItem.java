@@ -48,13 +48,15 @@ public class SetHeldItem extends PacketHandlerBase {
 			else
 				((EntityPlayerMP) player).inventory.setItemStack(currentItem);
 		} else {
-			if (itemId==-1){
+			if (itemId == -1) {
 				((EntityPlayerMP) player).inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
-			}
-			else if (itemId != oldItemId) {
+			} else if (itemId != oldItemId) {
 				((EntityPlayerMP) player).inventory.setItemStack(currentItem);
-				if (currentItem != null && currentItem.stackSize > 0)
-					((EntityPlayerMP) player).dropPlayerItem(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+				if (currentItem != null && currentItem.stackSize > 0) {
+					Item item = PixelmonItems.getHeldItem(oldItemId);
+					if (item != null)
+						((EntityPlayerMP) player).dropPlayerItem(new ItemStack(item));
+				}
 			} else {
 				currentItem.stackSize++;
 				((EntityPlayerMP) player).inventory.setItemStack(currentItem);
