@@ -6,6 +6,7 @@ import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ItemStack;
 
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPotions;
@@ -20,6 +21,7 @@ public class ItemPotion extends PixelmonItem {
 		this.type = type;
 		setMaxStackSize(16);
 		setIconIndex(type.getIconIndex());
+		setCreativeTab(PixelmonCreativeTabs.restoration);
 	}
 
 	private int healAmount(EntityPixelmon userPokemon) {

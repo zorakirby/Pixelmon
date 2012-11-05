@@ -175,6 +175,7 @@ public class BattleController {
 	}
 
 	private void checkAndReplaceFaintedPokemon(IBattleParticipant participant, IBattleParticipant foe) {
+		participant.updatePokemon();
 		if (participant.getIsFaintedOrDead()) {
 			String name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon()
 					.getNickname();
@@ -197,6 +198,8 @@ public class BattleController {
 			}
 			participant.currentPokemon().setEntityHealth(0);
 			participant.currentPokemon().setDead();
+			participant.currentPokemon().isFainted = true;
+			participant.updatePokemon();
 
 			if (participant.hasMorePokemon()) {
 				participant.getNextPokemon();
