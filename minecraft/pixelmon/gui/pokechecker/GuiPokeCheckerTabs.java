@@ -104,8 +104,10 @@ public class GuiPokeCheckerTabs extends GuiButton
             FontRenderer var4 = par1Minecraft.fontRenderer;
             if(this.tabType <= 4)
             	GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1Minecraft.renderEngine.getTexture("/pixelmon/gui/summarySummary.png"));
-            if(this.tabType >= 5)
+            else if(this.tabType == 5)
             	GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1Minecraft.renderEngine.getTexture("/pixelmon/gui/yesNo.png"));
+            else if(this.tabType == 6)
+            	GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1Minecraft.renderEngine.getTexture("/pixelmon/gui/pokecheckerPopup.png"));
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
             int var5 = this.getHoverState(this.field_82253_i);
@@ -122,8 +124,10 @@ public class GuiPokeCheckerTabs extends GuiButton
             		this.drawTexturedModalRect(this.xPosition, this.yPosition, 2, 205, this.width, this.height);
             	else if(this.tabType == 5)
             		this.drawTexturedModalRect(this.xPosition, this.yPosition, 154, 102, this.width, this.height);
+            	else if(this.tabType == 6)
+            		this.drawTexturedModalRect(this.xPosition, this.yPosition, 1, 76, this.width, this.height);
             }
-        	if(getHoverState(field_82253_i) != 2 && this.tabType == 4 && targetPacket.doesLevel){
+        	if(getHoverState(field_82253_i) != 2 && this.tabType == 4 && !targetPacket.doesLevel){
         		this.drawTexturedModalRect(this.xPosition, this.yPosition, 88, 239, this.width, this.height);
         	}
             

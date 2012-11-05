@@ -6,6 +6,7 @@ import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pixelmon.Entity7HasAI.Aggression;
 
 public class Flee extends StatusEffectBase {
 
@@ -19,6 +20,9 @@ public class Flee extends StatusEffectBase {
 		BattleRegistry.deRegisterBattle(target.battleController);
 		target.EndBattle();
 		user.EndBattle();
+	
+		//target.aggression = Aggression.passive;
+		//user.aggression = Aggression.passive;
 	}
 
 	@Override

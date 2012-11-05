@@ -12,6 +12,7 @@
 package pixelmon.models.trainers;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -38,7 +39,7 @@ public class ModelFisherman extends ModelBase
   {
     textureWidth = 64;
     textureHeight = 64;
-    setTextureOffset("HeadBase.Folder1", 0, 0);
+    //setTextureOffset("HeadBase.Folder1", 0, 0);
     
       body = new ModelRenderer(this, 16, 16);
       body.addBox(-4F, -3F, -2F, 7, 12, 3);
@@ -67,7 +68,6 @@ public class ModelFisherman extends ModelBase
       leftleg.setTextureSize(64, 64);
       leftleg.mirror = true;
       setRotation(leftleg, 0F, 0F, 0F);
-      leftleg.mirror = false;
       mouth1 = new ModelRenderer(this, 20, 0);
       mouth1.addBox(-2F, 0F, 0F, 1, 1, 0);
       mouth1.setRotationPoint(1.05F, -3F, -3.01F);
@@ -126,7 +126,7 @@ public class ModelFisherman extends ModelBase
       setRotation(fishingline, -0.2602503F, 0F, 0F);
       
       
-      ARMWITHRODPIECE.addChild(fishingline);
+     /* ARMWITHRODPIECE.addChild(fishingline);
       ARMWITHRODPIECE.addChild(fishingrod);
       ARMWITHRODPIECE.addChild(rightarm);
       
@@ -135,7 +135,7 @@ public class ModelFisherman extends ModelBase
       HeadBase.addChild(head);
       HeadBase.addChild(Hat);
       HeadBase.addChild(HatTop);
-      
+      */
       
      
       
@@ -152,7 +152,6 @@ public class ModelFisherman extends ModelBase
     leftarm.render(f5);
     rightleg.render(f5);
     leftleg.render(f5);
-    mouth1.render(f5);
     HeadBase.render(f5);
     ARMWITHRODPIECE.render(f5);
   }
@@ -166,6 +165,12 @@ public class ModelFisherman extends ModelBase
   
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
+	   rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
+	      leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.4F * f1;
+	      rightleg.rotateAngleY = 0.0F;
+	      leftleg.rotateAngleY = 0.0F;
+	      ARMWITHRODPIECE.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * .5F * f1;
+	      leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .5F * f1;
    
   }
 

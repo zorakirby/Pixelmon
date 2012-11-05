@@ -148,8 +148,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).getNBT(currentPixelmon.getPokemonId())
-				.setBoolean("IsFainted", true);
+		PixelmonStorage.PokeballManager.getPlayerStorage(player).updateNBT(currentPixelmon);
 	}
 
 	@Override

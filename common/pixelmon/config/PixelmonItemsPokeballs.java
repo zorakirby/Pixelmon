@@ -330,8 +330,8 @@ public class PixelmonItemsPokeballs {
 		duskBallDisc = new ItemPokeballDisc(duskBallDiscID, EnumPokeballs.DuskBall).setItemName("Dusk Ball Disc");
 		premierBallDisc = new ItemPokeballDisc(premierBallDiscID, EnumPokeballs.PremierBall).setItemName("Premier Ball Disc");
 
-		ironBase = new PixelmonItem(ironBaseID).setIconIndex(3 + 6 * 16).setItemName("Iron Base").setCreativeTab(CreativeTabs.tabMaterials);
-		ironDisc = new PixelmonItem(ironDiscID).setIconIndex(3 + 7 * 16).setItemName("Iron Disc").setCreativeTab(CreativeTabs.tabMaterials);
+		ironBase = new PixelmonItem(ironBaseID).setIconIndex(3 + 6 * 16).setItemName("Iron Base").setCreativeTab(PixelmonCreativeTabs.pokeball);
+		ironDisc = new PixelmonItem(ironDiscID).setIconIndex(3 + 7 * 16).setItemName("Iron Disc").setCreativeTab(PixelmonCreativeTabs.pokeball);
 		ironBase.setTextureFile("/pixelmon/image/pitems2.png");
 		ironDisc.setTextureFile("/pixelmon/image/pitems2.png");
 	}
