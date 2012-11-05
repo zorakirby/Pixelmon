@@ -165,6 +165,7 @@ public class ModelFisherman2 extends ModelBase
       Piece1.addChild(Box);
       Piece1.addChild(Lid);
       Piece1.addChild(Fishing_Box_Handle_Top);
+      Piece1.addChild(leftarm);
       
   }
   
