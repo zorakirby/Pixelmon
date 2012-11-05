@@ -41,6 +41,7 @@ public class EntityTrainer extends EntityCreature {
 	public EntityTrainer(World par1World) {
 		super(par1World);
 		dataWatcher.addObject(3, ""); // Name
+		dataWatcher.addObject(4, "");// Model
 		tasks.addTask(0, new EntityAISwimming(this));
 		tasks.addTask(1, new AITrainerInBattle(this));
 		tasks.addTask(2, new EntityAIWander(this, moveSpeed));
@@ -50,13 +51,15 @@ public class EntityTrainer extends EntityCreature {
 		setName(name);
 		pokemonStorage = new PlayerStorage(this);
 		info = DatabaseTrainers.GetTrainerInfo(name);
+		if (dataWatcher.getWatchableObjectString(4) == "")
+			dataWatcher.updateObject(4, info.model);
 		health = 100;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
-		return "/pixelmon/texture/trainers/" + getName().toLowerCase() + ".png";
+		return "/pixelmon/texture/trainers/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
 	}
 
 	public int getAge() {
@@ -70,7 +73,7 @@ public class EntityTrainer extends EntityCreature {
 
 	public ModelBase getModel() {
 		if (model == null)
-			model = Pixelmon.proxy.getTrainerModel(getName());
+			model = Pixelmon.proxy.getTrainerModel(dataWatcher.getWatchableObjectString(4));
 		return model;
 	}
 
@@ -173,12 +176,16 @@ public class EntityTrainer extends EntityCreature {
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		nbt.setString("Name", getName());
+		nbt.setString("Model", dataWatcher.getWatchableObjectString(4));
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		setName(nbt.getString("Name"));
+		if (nbt.hasKey("Model")) {
+			dataWatcher.updateObject(4, nbt.getString("Model"));
+		}
 		init(getName());
 	}
 }
