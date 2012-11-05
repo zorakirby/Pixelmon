@@ -81,6 +81,11 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (!worldObj.isRemote) {
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 			updateHealth();
+			if (battleController != null) {
+				if (battleController.getOpponent((EntityPixelmon) this) instanceof PlayerParticipant) {
+					((PlayerParticipant) battleController.getOpponent((EntityPixelmon) this)).updateOpponentHealth((EntityPixelmon) this);
+				}
+			}
 			if (health - par2 < 0) {
 				this.onDeath(par1DamageSource);
 			}
@@ -88,11 +93,6 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 			Entity entity = par1DamageSource.getEntity();
 			if (getOwner() != null)
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
-			if (battleController != null) {
-				if (battleController.getOpponent((EntityPixelmon) this) instanceof PlayerParticipant) {
-					((PlayerParticipant) battleController.getOpponent((EntityPixelmon) this)).updateOpponentHealth((EntityPixelmon) this);
-				}
-			}
 			if (isValidTarget(entity)) {
 				setAttackTarget((EntityLiving) entity);
 				setTarget(entity);

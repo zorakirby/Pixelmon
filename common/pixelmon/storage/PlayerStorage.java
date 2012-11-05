@@ -428,7 +428,7 @@ public class PlayerStorage {
 		for (int i = 0; i < numStatus; i++) {
 			nbt.func_82580_o("Effect" + i);
 		}
-		nbt.setShort("EffectCount", (short)0);
+		nbt.setShort("EffectCount", (short) 0);
 		if (mode == PokeballManagerMode.Player)
 			player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 	}

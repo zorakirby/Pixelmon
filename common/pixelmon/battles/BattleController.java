@@ -531,9 +531,9 @@ public class BattleController {
 
 	public IBattleParticipant getOpponent(EntityPixelmon entity) {
 		if (participant1.currentPokemon() == entity)
-			return participant1;
-		else
 			return participant2;
+		else
+			return participant1;
 	}
 
 }
