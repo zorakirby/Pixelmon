@@ -4,6 +4,8 @@ public enum EnumTrainers {
 	Youngster, 
 	Youngster02,
 	Fisherman,
+	Fisherman2,
+	FemaleRocketGrunt,
 	BugCatcher;
 
 	public static boolean has(String creatureName) {
