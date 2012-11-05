@@ -254,31 +254,34 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				}
 				if (s.getHeldItemBounds().contains(x, y) && heldItemQualifies(s)) {
 					InventoryPlayer inventory = mc.thePlayer.inventory;
-					ItemStack itemStack = inventory.getItemStack();
-					if (itemStack != null)
-						itemStack.stackSize--;
-					if (s.pokemonData.heldItemId == -1) {
-						s.pokemonData.heldItemId = itemStack.itemID;
-						if (itemStack == null || itemStack.stackSize == 0)
+					ItemStack currentItem = inventory.getItemStack();
+					int oldItemId = s.pokemonData.heldItemId;
+					int itemId = currentItem == null ? -1 : currentItem.itemID;
+
+					s.pokemonData.heldItemId = itemId;
+
+					if (currentItem != null)
+						currentItem.stackSize--;
+					if (oldItemId == -1) {
+						if (currentItem == null || currentItem.stackSize <= 0)
 							inventory.setItemStack(null);
 						else
-							inventory.setItemStack(itemStack);
+							inventory.setItemStack(currentItem);
 					} else {
-
-						if (itemStack == null) {
-							inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(s.pokemonData.heldItemId)));
-							s.pokemonData.heldItemId = -1;
-						} else if (itemStack.itemID != s.pokemonData.heldItemId) {
-							s.pokemonData.heldItemId = itemStack.itemID;
-							inventory.setItemStack(itemStack);
+						if (itemId == -1) {
+							inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+						} else if (itemId != oldItemId) {
+							if (currentItem.stackSize <= 0)
+								inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+							else
+								inventory.setItemStack(currentItem);
 						} else {
-							s.pokemonData.heldItemId = itemStack.itemID;
-							itemStack.stackSize++;
-							inventory.setItemStack(itemStack);
+							currentItem.stackSize++;
+							inventory.setItemStack(currentItem);
 						}
 					}
-					if (itemStack != null)
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, itemStack.itemID));
+					if (currentItem != null)
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, currentItem.itemID));
 					else
 						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, -1));
 					return;
