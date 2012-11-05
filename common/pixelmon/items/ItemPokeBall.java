@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import pixelmon.battles.BattleRegistry;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.enums.EnumPokeballs;
@@ -27,7 +28,7 @@ public class ItemPokeBall extends PixelmonItem {
 		playerTimers = new HashMap<EntityPlayer, Integer>();
 		setIconIndex(type.getIconIndex());
 		setTextureFile("/pixelmon/image/pitems2.png");
-		setCreativeTab(CreativeTabs.tabMisc);
+		setCreativeTab(PixelmonCreativeTabs.pokeball);
 	}
 
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {

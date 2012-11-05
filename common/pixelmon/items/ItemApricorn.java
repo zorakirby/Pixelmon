@@ -10,6 +10,7 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.config.PixelmonBlocksApricornTrees;
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.enums.EnumApricorns;
 
 public class ItemApricorn extends PixelmonItem {
@@ -24,7 +25,7 @@ public class ItemApricorn extends PixelmonItem {
 		setMaxDamage(0xf4240);
 		setIconIndex(apricorn.iconIndex);
 		setTextureFile("/pixelmon/image/pitems2.png");
-		setCreativeTab(CreativeTabs.tabMaterials);
+		setCreativeTab(PixelmonCreativeTabs.natural);
 		if (apricorn == EnumApricorns.Black)
 			spawnID = PixelmonBlocksApricornTrees.apricornTreeBlack.blockID;
 		else if (apricorn == EnumApricorns.White)
@@ -44,8 +45,7 @@ public class ItemApricorn extends PixelmonItem {
 	/** The ID of the block the reed will spawn when used from inventory bar. */
 	private int spawnID;
 
-	public boolean tryPlaceIntoWorld(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7,
-			float par8, float par9, float par10) {
+	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
 		int var11 = par3World.getBlockId(par4, par5, par6);
 
 		if (var11 != Block.grass.blockID && var11 != Block.dirt.blockID)

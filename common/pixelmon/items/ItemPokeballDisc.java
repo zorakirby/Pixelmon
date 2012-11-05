@@ -1,5 +1,6 @@
 package pixelmon.items;
 
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.enums.EnumPokeballs;
 import net.minecraft.src.CreativeTabs;
 
@@ -15,7 +16,7 @@ public class ItemPokeballDisc extends PixelmonItem {
 		setMaxDamage(0xf4240);
 		setIconIndex(pokeball.discIconIndex);
 		setTextureFile("/pixelmon/image/pitems2.png");
-		setCreativeTab(CreativeTabs.tabMaterials);
+		setCreativeTab(PixelmonCreativeTabs.pokeball);
 	}
 
 }
