@@ -175,6 +175,7 @@ public class PlayerStorage {
 			NBTTagCompound n = partyPokemon[i];
 			if (n != null) {
 				if (n.getInteger("pixelmonID") == id) {
+					n.setFloat("FallDistance", 0);
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
 					if (mode == PokeballManagerMode.Player) {

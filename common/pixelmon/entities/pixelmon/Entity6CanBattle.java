@@ -10,6 +10,7 @@ import pixelmon.battles.attacks.attackEffects.EffectParser;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.participants.IBattleParticipant;
+import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.stats.BattleStats;
 import pixelmon.entities.pixelmon.stats.Moveset;
@@ -87,6 +88,11 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 			Entity entity = par1DamageSource.getEntity();
 			if (getOwner() != null)
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
+			if (battleController != null) {
+				if (battleController.getOpponent((EntityPixelmon) this) instanceof PlayerParticipant) {
+					((PlayerParticipant) battleController.getOpponent((EntityPixelmon) this)).updateOpponentHealth((EntityPixelmon) this);
+				}
+			}
 			if (isValidTarget(entity)) {
 				setAttackTarget((EntityLiving) entity);
 				setTarget(entity);
