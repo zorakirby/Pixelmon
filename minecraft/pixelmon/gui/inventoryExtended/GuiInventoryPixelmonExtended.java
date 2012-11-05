@@ -1,6 +1,7 @@
 package pixelmon.gui.inventoryExtended;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
@@ -19,13 +20,16 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 
+import pixelmon.Pixelmon;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
+import pixelmon.enums.EnumGui;
 import pixelmon.gui.FontScaler;
 import pixelmon.gui.GuiPixelmonOverlay;
+import pixelmon.gui.pokechecker.GuiScreenPokeChecker;
 import pixelmon.items.ItemHeld;
 import pixelmon.storage.PlayerStorage;
 
@@ -217,15 +221,17 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	@Override
 	protected void actionPerformed(GuiButton par1GuiButton) {
 		super.actionPerformed(par1GuiButton);
-		if (par1GuiButton.id == 3) {
-			GuiScreenPokeCheckerInv poke = new GuiScreenPokeCheckerInv(selected, this);
-			mc.displayGuiScreen(poke);
-		}
 	}
+
+	Rectangle buttonBounds;
 
 	@Override
 	protected void mouseClicked(int x, int y, int par3) {
 		if (par3 == 0) {
+			if (pixelmonMenuOpen && buttonBounds.contains(x, y)) {
+				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected);
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+			}
 			if (pixelmonMenuOpen) {
 				controlList.remove(pMenuButton);
 				pMenuButton = null;
@@ -244,6 +250,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 							selected = null;
 						}
 						pMenuButton = new GuiButton(3, x - 50, y, 50, 20, "Summary");
+						buttonBounds = new Rectangle(x - 50, y, 50, 20);
 						controlList.add(pMenuButton);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;
