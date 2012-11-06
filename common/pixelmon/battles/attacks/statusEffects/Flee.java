@@ -16,9 +16,7 @@ public class Flee extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName()+ " runs away!");
-		BattleRegistry.deRegisterBattle(target.battleController);
-		target.EndBattle();
-		user.EndBattle();
+		target.battleController.endBattleWithoutXP();
 	}
 
 	@Override
