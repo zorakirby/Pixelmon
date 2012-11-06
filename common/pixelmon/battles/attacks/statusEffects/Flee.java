@@ -6,6 +6,7 @@ import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pixelmon.Entity7HasAI.Aggression;
 
 public class Flee extends StatusEffectBase {
 
@@ -16,7 +17,13 @@ public class Flee extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName()+ " runs away!");
+
+		target.aggression = Aggression.passive;
+		user.aggression = Aggression.passive;
+
 		target.battleController.endBattleWithoutXP();
+		
+
 	}
 
 	@Override
