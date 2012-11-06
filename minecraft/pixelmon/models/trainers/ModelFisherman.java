@@ -7,10 +7,10 @@
 
 
 
-
-
+//Model is working.
+//Model is working.
 package pixelmon.models.trainers;
-
+//Model is working.
 import net.minecraft.src.Entity;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
@@ -39,7 +39,7 @@ public class ModelFisherman extends ModelBase
   {
     textureWidth = 64;
     textureHeight = 64;
-    //setTextureOffset("HeadBase.Folder1", 0, 0);
+
     
       body = new ModelRenderer(this, 16, 16);
       body.addBox(-4F, -3F, -2F, 7, 12, 3);
