@@ -126,7 +126,7 @@ public class ModelFisherman extends ModelBase
       setRotation(fishingline, -0.2602503F, 0F, 0F);
       
       
-     /* ARMWITHRODPIECE.addChild(fishingline);
+      ARMWITHRODPIECE.addChild(fishingline);
       ARMWITHRODPIECE.addChild(fishingrod);
       ARMWITHRODPIECE.addChild(rightarm);
       
@@ -135,7 +135,7 @@ public class ModelFisherman extends ModelBase
       HeadBase.addChild(head);
       HeadBase.addChild(Hat);
       HeadBase.addChild(HatTop);
-      */
+      
       
      
       
