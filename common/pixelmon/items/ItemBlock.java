@@ -4,6 +4,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonCreativeTabs;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockBed;
 import net.minecraft.src.CreativeTabs;
@@ -22,6 +23,7 @@ public class ItemBlock extends Item {
 		setCreativeTab(CreativeTabs.tabMisc);
 		setIconIndex(iconIndex);
 		setTextureFile("/pixelmon/image/pitems.png");
+		setCreativeTab(CreativeTabs.tabDecorations);
 	}
 
 	/**

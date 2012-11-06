@@ -1,6 +1,7 @@
 package pixelmon.items;
 
 import net.minecraft.src.CreativeTabs;
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.enums.EnumApricorns;
 
 public class ItemApricornCooked extends PixelmonItem {
@@ -13,7 +14,7 @@ public class ItemApricornCooked extends PixelmonItem {
 		setMaxDamage(0xf4240);
 		setIconIndex(apricorn.meltedIconIndex);
 		setTextureFile("/pixelmon/image/pitems2.png");
-		setCreativeTab(CreativeTabs.tabMaterials);
+		setCreativeTab(PixelmonCreativeTabs.natural);
 	}
 
 }

@@ -33,7 +33,7 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 	}
 
 	public boolean doesGuiPauseGame() {
-		return true;
+		return false;
 	}
 
 	public void initGui() {
@@ -54,9 +54,9 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 	
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		String text = "";
-		if(targetPacket.doesLevel)
-			text = "enable";
 		if(!targetPacket.doesLevel)
+			text = "enable";
+		if(targetPacket.doesLevel)
 			text = "disable";
 		drawCenteredString(fontRenderer, "Are you sure you'd like", 60, 75, 0xcccccc);
 		drawCenteredString(fontRenderer, "to " + text + " leveling?", 60, 85, 0xcccccc);
