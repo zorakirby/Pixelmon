@@ -88,6 +88,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			float y = targetPacket.moveset[i2].type.textureY;
 			drawImageQuad(timg, 58, 22 * i2 - 15 , 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
 		}
+		drawString(fontRenderer, String.valueOf(selectednumber), 15, -24, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
 		drawString(fontRenderer, "Effects", -10, 100, 0xcccccc);
@@ -123,6 +124,8 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 	
 	public void switchMoves(int moveToChange, int moveToChange2){
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ReplaceMove, targetPacket.pokemonID, moveToChange2, moveToChange));
+		System.out.println(moveToChange + " has switched with " + moveToChange2);
 	}
 	
 	private void drawMoveInfo(Attack attack) {
@@ -167,6 +170,58 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			resetAll();
 			move4 = true;
 		}
+		drawSelectedRect();
+	}
+	
+	protected void drawSelectedRect(){
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
+		GL11.glColor3f(0.0F, 1.0F, 0.0F);//Gives the selection a light green color. 
+		mc.renderEngine.bindTexture(bg);
+		if(selectednumber == 0)
+			drawTexturedModalRect(58, -17, 1, 231, 153, 24);
+		else if(selectednumber == 1)
+			drawTexturedModalRect(58, 6, 1, 231, 153, 24);
+		else if(selectednumber == 2)
+			drawTexturedModalRect(58, 28, 1, 231, 153, 24);
+		else if(selectednumber == 3)
+			drawTexturedModalRect(58, 50, 1, 231, 153, 24);
+		GL11.glColor3f(1.0F, 1.0F, 1.0F);
+	}
+	
+	protected int moveClicked(int i, int i1){
+		if(targetPacket.numMoves > 0 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76)
+			return 0;
+		else if(targetPacket.numMoves > 1 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 77 && i1 < height / 2 - 53)
+			return 1;
+		else if(targetPacket.numMoves > 2 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 54 && i1 < height / 2 - 31)
+			return 2;
+		else if(targetPacket.numMoves > 3 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 32 && i1 < height / 2 - 9)
+			return 3;
+		else return -1;
+	}
+	
+	protected void selectMove(int i, int i1){
+		if(i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 9 && selectednumber != moveClicked(i, i1)){
+			if(selectednumber == -1){
+				if(moveClicked(i, i1) == 0)
+					selectednumber = 0;
+				if(moveClicked(i, i1) == 1)
+					selectednumber = 1;
+				if(moveClicked(i, i1) == 2)
+					selectednumber = 2;
+				if(moveClicked(i, i1) == 3)
+					selectednumber = 3;
+			}
+			else if(moveClicked(i, i1) == 0)
+				switchMoves(0, moveClicked(i, i1));
+			if(moveClicked(i, i1) == 1)
+				switchMoves(1, moveClicked(i, i1));
+			if(moveClicked(i, i1) == 2)
+				switchMoves(2, moveClicked(i, i1));
+			if(moveClicked(i, i1) == 3)
+				switchMoves(3, moveClicked(i, i1));
+		}
+		else selectednumber = -1;
 	}
 	
 	protected void mouseClicked(int x, int y, int par3) {
@@ -174,6 +229,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		super.mouseClicked(x, y, par3);
+		selectMove(x, y);
 		if(x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 2 - 15 && y < var7 / 2 + 5){
 			if(par3 == 1 && !renameButton){
 				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
