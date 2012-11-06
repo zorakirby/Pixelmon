@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.GuiContainerCreative;
 import net.minecraft.src.GuiInventory;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ScaledResolution;
@@ -19,6 +20,14 @@ public class InventoryDetectionTickHandler implements ITickHandler {
 		if (gui != null) {
 			if (gui instanceof GuiInventory && !(gui instanceof GuiInventoryPixelmonExtended)) {
 				GuiInventoryPixelmonExtended newGui = new GuiInventoryPixelmonExtended(Minecraft.getMinecraft().thePlayer);
+				ScaledResolution var2 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+                int var3 = var2.getScaledWidth();
+                int var4 = var2.getScaledHeight();
+                ((GuiScreen)newGui).setWorldAndResolution(Minecraft.getMinecraft(), var3, var4);
+				Minecraft.getMinecraft().currentScreen = newGui;
+			}
+			else if (gui instanceof GuiContainerCreative && !(gui instanceof GuiCreativeInventoryExtended)) {
+				GuiCreativeInventoryExtended newGui = new GuiCreativeInventoryExtended(Minecraft.getMinecraft().thePlayer);
 				ScaledResolution var2 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
                 int var3 = var2.getScaledWidth();
                 int var4 = var2.getScaledHeight();

@@ -247,11 +247,16 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
-		if (trainer != null && !isStorage)
+		if ((trainer != null) && !isStorage)
 			return;
 		super.writeEntityToNBT(nbt);
 		if (getOwner() != null)
 			nbt.setString("pixelmonOwner", getOwnerName());
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
+		super.writeToNBT(par1nbtTagCompound);
 	}
 
 	boolean isStorage = false;

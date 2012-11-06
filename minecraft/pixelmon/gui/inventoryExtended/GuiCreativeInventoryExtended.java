@@ -1,15 +1,22 @@
 package pixelmon.gui.inventoryExtended;
 
+import java.awt.Rectangle;
+
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
+import pixelmon.Pixelmon;
 import pixelmon.ServerStorageDisplay;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
+import pixelmon.enums.EnumGui;
+import pixelmon.gui.pokechecker.GuiPokeCheckerTabs;
+import pixelmon.gui.pokechecker.GuiScreenPokeChecker;
+import pixelmon.gui.pokechecker.GuiScreenPokeCheckerMoves;
 import pixelmon.items.ItemHeld;
 import pixelmon.storage.PlayerStorage;
 import net.minecraft.client.Minecraft;
@@ -27,7 +34,11 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 	public SlotInventoryPixelmon[] pixelmonSlots;
 	
 	boolean pixelmonMenuOpen;
-	GuiButton pMenuButton;
+	int menuX;
+	int menuY;
+	GuiButton pMenuButtonSumm;
+	GuiButton pMenuButtonMove;
+	GuiButton pMenuButtonStat;
 	PixelmonDataPacket selected;
 
 	float xSize_lo, ySize_lo;
@@ -52,7 +63,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 			int offset = 0;
 			if (p != null) {
 				int i = p.order;
-				int x = width / 2 - 121;
+				int x = width / 2 - 141;
 				int y = height / 2 + i * 18 - 65;
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
@@ -68,13 +79,10 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
-		int var4 = this.mc.renderEngine.getTexture("/gui/inventory.png");
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.mc.renderEngine.bindTexture(var4);
-		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(par1, par2, par3);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png"));
-		this.drawTexturedModalRect(width / 2 - 130, height / 2 - 83, 0, 0, 46, 167);
+		this.drawTexturedModalRect(width / 2 - 150, height / 2 - 83, 0, 0, 46, 167);
 
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);
@@ -214,12 +222,33 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		}
 	}
 
+
+	Rectangle buttonBounds;
+	Rectangle buttonBoundsMoves;
+	Rectangle buttonBoundsStat;
+
 	@Override
 	protected void mouseClicked(int x, int y, int par3) {
 		if (par3 == 0) {
+			if (pixelmonMenuOpen && buttonBounds.contains(x, y)) {
+				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected);
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+			}
+			if (pixelmonMenuOpen && buttonBoundsMoves.contains(x, y)) {
+				GuiScreenPokeChecker poke = new GuiScreenPokeCheckerMoves(selected);
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerMoves.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+			}
+			if (pixelmonMenuOpen && buttonBoundsStat.contains(x, y)) {
+				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected);
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerStats.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+			}
 			if (pixelmonMenuOpen) {
-				controlList.remove(pMenuButton);
-				pMenuButton = null;
+				controlList.remove(pMenuButtonSumm);
+				controlList.remove(pMenuButtonMove);
+				controlList.remove(pMenuButtonStat);
+				pMenuButtonSumm = null;
+				pMenuButtonMove = null;
+				pMenuButtonStat = null;
 				pixelmonMenuOpen = false;
 				selected = null;
 			}
@@ -229,13 +258,26 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 				if (s.getBounds().contains(x, y)) { // click on a pokemon sprite
 					if (par3 == 1) {
 						if (pixelmonMenuOpen) {
-							controlList.remove(pMenuButton);
-							pMenuButton = null;
+							controlList.remove(pMenuButtonSumm);
+							controlList.remove(pMenuButtonMove);
+							controlList.remove(pMenuButtonStat);
+							pMenuButtonSumm = null;
+							pMenuButtonMove = null;
+							pMenuButtonStat = null;
 							pixelmonMenuOpen = false;
 							selected = null;
 						}
-						pMenuButton = new GuiButton(3, x - 50, y, 50, 20, "Summary");
-						controlList.add(pMenuButton);
+						pMenuButtonSumm = new GuiPokeCheckerTabs(6, 3, x - 63, y + 5, 47, 13, "Summary");
+						pMenuButtonMove = new GuiPokeCheckerTabs(6, 4, x - 63, y + 24, 47, 13, "Moves");
+						pMenuButtonStat = new GuiPokeCheckerTabs(6, 5, x - 63, y + 43, 47, 13, "Stats");
+						menuX = x;
+						menuY = y;
+						buttonBounds = new Rectangle(x - 63, y + 5, 47, 13);
+						buttonBoundsMoves = new Rectangle(x - 63, y + 24, 47, 13);
+						buttonBoundsStat = new Rectangle(x - 63, y + 43, 47, 13);
+						controlList.add(pMenuButtonSumm);
+						controlList.add(pMenuButtonMove);
+						controlList.add(pMenuButtonStat);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;
 						return;
@@ -245,31 +287,34 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 				}
 				if (s.getHeldItemBounds().contains(x, y) && heldItemQualifies(s)) {
 					InventoryPlayer inventory = mc.thePlayer.inventory;
-					ItemStack itemStack = inventory.getItemStack();
-					if (itemStack != null)
-						itemStack.stackSize--;
-					if (s.pokemonData.heldItemId == -1) {
-						s.pokemonData.heldItemId = itemStack.itemID;
-						if (itemStack == null || itemStack.stackSize == 0)
+					ItemStack currentItem = inventory.getItemStack();
+					int oldItemId = s.pokemonData.heldItemId;
+					int itemId = currentItem == null ? -1 : currentItem.itemID;
+
+					s.pokemonData.heldItemId = itemId;
+
+					if (currentItem != null)
+						currentItem.stackSize--;
+					if (oldItemId == -1) {
+						if (currentItem == null || currentItem.stackSize <= 0)
 							inventory.setItemStack(null);
 						else
-							inventory.setItemStack(itemStack);
+							inventory.setItemStack(currentItem);
 					} else {
-
-						if (itemStack == null) {
-							inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(s.pokemonData.heldItemId)));
-							s.pokemonData.heldItemId = -1;
-						} else if (itemStack.itemID != s.pokemonData.heldItemId) {
-							s.pokemonData.heldItemId = itemStack.itemID;
-							inventory.setItemStack(itemStack);
+						if (itemId == -1) {
+							inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+						} else if (itemId != oldItemId) {
+							if (currentItem.stackSize <= 0)
+								inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+							else
+								inventory.setItemStack(currentItem);
 						} else {
-							s.pokemonData.heldItemId = itemStack.itemID;
-							itemStack.stackSize++;
-							inventory.setItemStack(itemStack);
+							currentItem.stackSize++;
+							inventory.setItemStack(currentItem);
 						}
 					}
-					if (itemStack != null)
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, itemStack.itemID));
+					if (currentItem != null)
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, currentItem.itemID));
 					else
 						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetHeldItem, s.pokemonData.pokemonID, -1));
 					return;

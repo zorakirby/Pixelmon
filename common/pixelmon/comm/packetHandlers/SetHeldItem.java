@@ -51,7 +51,7 @@ public class SetHeldItem extends PacketHandlerBase {
 			if (itemId == -1) {
 				((EntityPlayerMP) player).inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
 			} else if (itemId != oldItemId) {
-				if (currentItem.stackSize <= 0)
+				if (currentItem == null || currentItem.stackSize <= 0)
 					((EntityPlayerMP) player).inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
 				else {
 					((EntityPlayerMP) player).inventory.setItemStack(currentItem);
