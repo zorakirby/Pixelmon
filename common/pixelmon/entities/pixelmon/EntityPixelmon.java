@@ -90,12 +90,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 
 			if (itemstack != null) {
-				if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
-					if (getOwner() == player)
-						((EntityPlayer) getOwner()).openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
-					return true;
-				}
-
 				if (getOwner() == player) {
 					if (itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex) {
 						getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
