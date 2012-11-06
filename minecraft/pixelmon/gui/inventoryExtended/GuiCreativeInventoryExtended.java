@@ -49,6 +49,13 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		pixelmonSlots = new SlotInventoryPixelmon[6];
 	}
 
+	public void drawButtonContainer(){
+		GL11.glColor3f(1.0f, 1.0f, 1.0f);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pokecheckerPopup.png"));
+		if(pixelmonMenuOpen)
+		this.drawTexturedModalRect(menuX - 73, menuY - 10, 0, 0, 67, 76);
+	}
+	
 	@Override
 	public void initGui() {
 		super.initGui();
@@ -63,8 +70,8 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 			int offset = 0;
 			if (p != null) {
 				int i = p.order;
-				int x = width / 2 - 141;
-				int y = height / 2 + i * 18 - 65;
+				int x = width / 2 - 130;
+				int y = height / 2 + i * 18 - 55;
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
 		}
@@ -75,14 +82,17 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		super.drawScreen(par1, par2, par3);
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
+		if(pixelmonMenuOpen){
+			this.drawCenteredString(fontRenderer, selected.name, menuX - 40, menuY - 8, 0xffffff);
+		}
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 		super.drawGuiContainerBackgroundLayer(par1, par2, par3);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png"));
-		this.drawTexturedModalRect(width / 2 - 150, height / 2 - 83, 0, 0, 46, 167);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtendedCreative2.png"));
+		this.drawTexturedModalRect(width / 2 - 140, height / 2 - 68, 0, 0, 46, 167);
 
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);
@@ -134,8 +144,9 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 					drawImageQuad(spriteIndex, slot.heldItemX + 3, slot.heldItemY + 3, 10f, 10f, 0f, 0f, 1f, 1f);
 				}
 			}
+			drawButtonContainer();
 		}
-		int guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png");
+		int guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtendedCreative2.png");
 
 		int mouseX = Mouse.getX() * this.width / this.mc.displayWidth;
 		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
@@ -172,7 +183,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 			return true;
 		return false;
 	}
-
+	
 	private void drawPokemonInfo(int x, int y, SlotInventoryPixelmon s) {
 		if (s == null)
 			return;
