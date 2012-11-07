@@ -38,5 +38,6 @@ public class ReplaceMove extends PacketHandlerBase {
 			p = storage.sendOut(pokemonID, player.worldObj);
 		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(replaceIndex).attackName + ", and learned " + a.attackName);
 		p.moveset.set(replaceIndex, a);
+		storage.updateNBT(p);
 	}
 }
