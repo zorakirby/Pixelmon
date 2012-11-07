@@ -202,12 +202,9 @@ public class BattleController {
 			participant.updatePokemon();
 
 			if (participant.hasMorePokemon()) {
-				participant.getNextPokemon();
+				participant.getNextPokemon(foe);
 				participant.currentPokemon().battleController = this;
-				name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon()
-						.getNickname();
-				ChatHandler.sendBattleMessage(participant.currentPokemon().getOwner(), foe.currentPokemon().getOwner(), participant.getName() + " sent out "
-						+ name + "!");
+
 				attackersList1.clear();
 				attackersList2.clear();
 				if (participant == participant1) {
