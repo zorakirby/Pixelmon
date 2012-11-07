@@ -70,8 +70,8 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 			int offset = 0;
 			if (p != null) {
 				int i = p.order;
-				int x = width / 2 - 130;
-				int y = height / 2 + i * 18 - 55;
+				int x = width / 2 - 141;
+				int y = height / 2 + i * 18 - 65;
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
 		}
@@ -83,7 +83,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
 		if(pixelmonMenuOpen){
-			this.drawCenteredString(fontRenderer, selected.name, menuX - 40, menuY - 8, 0xffffff);
+			this.drawCenteredString(fontRenderer, selected.name, menuX - 50, menuY - 8, 0xffffff);
 		}
 	}
 
@@ -91,8 +91,8 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 		super.drawGuiContainerBackgroundLayer(par1, par2, par3);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtendedCreative2.png"));
-		this.drawTexturedModalRect(width / 2 - 140, height / 2 - 68, 0, 0, 46, 167);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/PixelmonCreativeInventory.png"));
+		this.drawTexturedModalRect(width / 2 - 150, height / 2 - 83, 0, 0, 54, 167);
 
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);

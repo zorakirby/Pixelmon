@@ -393,6 +393,15 @@ public class PlayerStorage {
 		return null;
 	}
 
+	public int getFirstAblePokemonID(World worldObj) {
+		for (int i = 0; i < carryLimit; i++) {
+			int id = getIDFromPosition(i);
+			if (id != -1 && !isFainted(id))
+				return id;
+		}
+		return -1;
+	}
+
 	public void healAllPokemon() {
 		for (int i = 0; i < partyPokemon.length; i++) {
 			NBTTagCompound nbt = partyPokemon[i];
