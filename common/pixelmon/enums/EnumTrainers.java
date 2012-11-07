@@ -2,9 +2,7 @@ package pixelmon.enums;
 
 public enum EnumTrainers {
 	Youngster, 
-	Youngster02,
 	Fisherman,
-	Fisherman2,
 	FemaleRocketGrunt,
 	BugCatcher;
 

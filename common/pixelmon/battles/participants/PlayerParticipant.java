@@ -17,9 +17,11 @@ import pixelmon.entities.EntityCamera;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerStorage;
 
 public class PlayerParticipant implements IBattleParticipant {
 	public EntityPlayerMP player;
+	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
 	BattleController bc;
 	EntityCamera cam;
@@ -27,6 +29,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) {
 		player = p;
 		currentPixelmon = firstPixelmon;
+		storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
 	}
 
 	@Override
@@ -46,20 +49,19 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean hasMorePokemon() {
-		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).countAblePokemon() > 0)
+		if (storage.countAblePokemon() > 0)
 			return true;
 		return false;
 	}
 
 	@Override
 	public void StartBattle(IBattleParticipant opponent) {
-		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 		cam = new EntityCamera(player.worldObj, player, bc);
 		player.worldObj.spawnEntityInWorld(cam);
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetOpponentType, opponent.getType().index));
 		player.openGui(Pixelmon.instance, EnumGui.Battle.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), 0, 0);
-		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon,
-				currentPixelmon.getPokemonId()));
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon, currentPixelmon.getPokemonId()));
 	}
 
 	@Override
@@ -72,14 +74,14 @@ public class PlayerParticipant implements IBattleParticipant {
 			}
 		}
 		currentPixelmon.EndBattle();
-		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ExitBattle, 0));
-		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ExitBattle, 0));
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 	}
 
 	@Override
-	public void getNextPokemon() {
-		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon,
-				currentPixelmon.getPokemonId()));
+	public void getNextPokemon(IBattleParticipant opponent) {
+		switchPokemon(opponent, storage.getFirstAblePokemonID(player.worldObj));
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon, currentPixelmon.getPokemonId()));
 	}
 
 	@Override
@@ -100,7 +102,7 @@ public class PlayerParticipant implements IBattleParticipant {
 			bc.endBattle(false);
 			return null;
 		}
-		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, 0));
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, 0));
 		bc.waitForMove(this);
 		return null;
 	}
@@ -108,23 +110,24 @@ public class PlayerParticipant implements IBattleParticipant {
 	@Override
 	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
 		currentPixelmon.battleStats.clearBattleStats();
-		ChatHandler.sendBattleMessage(player, "That's enough " + currentPixelmon.getNickname() + "!");
-		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), player.username + " withdrew " + currentPixelmon.getNickname() + "!");
+		if (!currentPixelmon.isFainted) {
+			ChatHandler.sendBattleMessage(player, "That's enough " + currentPixelmon.getNickname() + "!");
+			ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), player.username + " withdrew " + currentPixelmon.getNickname() + "!");
+		}
 		currentPixelmon.catchInPokeball();
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPixelmon.getOwner()).retrieve(currentPixelmon);
+		storage.retrieve(currentPixelmon);
 
-		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(newPixelmonId, player.worldObj)) {
-			EntityPixelmon oldPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(newPixelmonId, player.worldObj);
+		if (storage.EntityAlreadyExists(newPixelmonId, player.worldObj)) {
+			EntityPixelmon oldPokemon = storage.getAlreadyExists(newPixelmonId, player.worldObj);
 			oldPokemon.catchInPokeball();
-			PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve(oldPokemon);
+			storage.retrieve(oldPokemon);
 		}
 
-		EntityPixelmon newPixelmon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
+		EntityPixelmon newPixelmon = storage.sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
 		newPixelmon.setLocationAndAngles(currentPixelmon.posX, currentPixelmon.posY, currentPixelmon.posZ, currentPixelmon.rotationYaw, 0.0F);
 		newPixelmon.motionX = newPixelmon.motionY = newPixelmon.motionZ = 0;
 		newPixelmon.releaseFromPokeball();
-		((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon,
-				newPixelmon.getPokemonId()));
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon, newPixelmon.getPokemonId()));
 		ChatHandler.sendBattleMessage(player, "Go " + newPixelmon.getNickname() + "!");
 		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), player.username + " sent out " + newPixelmon.getNickname() + "!");
 		currentPixelmon = newPixelmon;
@@ -132,7 +135,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean checkPokemon() {
-		for (NBTTagCompound n : PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) currentPokemon().getOwner()).partyPokemon) {
+		for (NBTTagCompound n : storage.partyPokemon) {
 			if (n != null && n.getInteger("PixelmonNumberMoves") == 0) {
 				ChatHandler.sendChat(currentPixelmon.getOwner(), "Couldn't load pokemon's moves");
 				return false;
@@ -148,7 +151,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		PixelmonStorage.PokeballManager.getPlayerStorage(player).updateNBT(currentPixelmon);
+		storage.updateNBT(currentPixelmon);
 	}
 
 	@Override

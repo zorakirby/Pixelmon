@@ -90,12 +90,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 
 			if (itemstack != null) {
-				if (itemstack.itemID == PixelmonItems.pokeChecker.shiftedIndex && getOwner() != null) {
-					if (getOwner() == player)
-						((EntityPlayer) getOwner()).openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), getOwner().worldObj, getPokemonId(), 0, 0); // Pokechecker
-					return true;
-				}
-
 				if (getOwner() == player) {
 					if (itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex) {
 						getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
@@ -247,11 +241,16 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
-		if (trainer != null && !isStorage)
+		if ((trainer != null) && !isStorage)
 			return;
 		super.writeEntityToNBT(nbt);
 		if (getOwner() != null)
 			nbt.setString("pixelmonOwner", getOwnerName());
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
+		super.writeToNBT(par1nbtTagCompound);
 	}
 
 	boolean isStorage = false;

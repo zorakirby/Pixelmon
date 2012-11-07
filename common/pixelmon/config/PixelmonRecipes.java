@@ -18,8 +18,6 @@ public class PixelmonRecipes {
 		// Block.obsidian,
 		// Character.valueOf('B'), Block.button, Character.valueOf('D'),
 		// Item.diamond });
-		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pokeChecker),
-				new Object[] { " GG", "IIG", "II ", Character.valueOf('G'), Block.glass, Character.valueOf('I'), Item.ingotIron });
 		GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.rareCandy), new Object[] { Item.lightStoneDust, Item.appleGold, Item.sugar });
 		GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.potion, 4), new Object[] { Item.glassBottle, Item.bucketMilk, Item.wheat });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pokeDex, 1),

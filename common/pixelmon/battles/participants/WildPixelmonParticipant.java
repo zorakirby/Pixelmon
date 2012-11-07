@@ -51,7 +51,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void getNextPokemon() {
+	public void getNextPokemon(IBattleParticipant opponent) {
 		return;
 	}
 

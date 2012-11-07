@@ -7,10 +7,10 @@
 
 
 
-
-
+//Model is working.
+//Model is working.
 package pixelmon.models.trainers;
-
+//Model is working.
 import net.minecraft.src.Entity;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
@@ -39,7 +39,7 @@ public class ModelFisherman extends ModelBase
   {
     textureWidth = 64;
     textureHeight = 64;
-    //setTextureOffset("HeadBase.Folder1", 0, 0);
+
     
       body = new ModelRenderer(this, 16, 16);
       body.addBox(-4F, -3F, -2F, 7, 12, 3);
@@ -47,21 +47,18 @@ public class ModelFisherman extends ModelBase
       body.setTextureSize(64, 64);
       body.mirror = true;
       setRotation(body, 0F, 0F, 0F);
-      leftarm.mirror = true;
       leftarm = new ModelRenderer(this, 40, 16);
       leftarm.addBox(0F, -2F, -1F, 2, 11, 2);
       leftarm.setRotationPoint(3F, 2F, -1F);
       leftarm.setTextureSize(64, 64);
       leftarm.mirror = true;
       setRotation(leftarm, 0F, 0F, -0.0743572F);
-      leftarm.mirror = false;
       rightleg = new ModelRenderer(this, 0, 16);
       rightleg.addBox(-2F, 0F, -2F, 3, 12, 3);
       rightleg.setRotationPoint(-2F, 12F, 0F);
       rightleg.setTextureSize(64, 64);
       rightleg.mirror = true;
       setRotation(rightleg, 0F, 0F, 0F);
-      leftleg.mirror = true;
       leftleg = new ModelRenderer(this, 0, 16);
       leftleg.addBox(-2F, 0F, -2F, 3, 12, 3);
       leftleg.setRotationPoint(2F, 12F, 0F);
@@ -126,7 +123,7 @@ public class ModelFisherman extends ModelBase
       setRotation(fishingline, -0.2602503F, 0F, 0F);
       
       
-     /* ARMWITHRODPIECE.addChild(fishingline);
+      ARMWITHRODPIECE.addChild(fishingline);
       ARMWITHRODPIECE.addChild(fishingrod);
       ARMWITHRODPIECE.addChild(rightarm);
       
@@ -135,12 +132,8 @@ public class ModelFisherman extends ModelBase
       HeadBase.addChild(head);
       HeadBase.addChild(Hat);
       HeadBase.addChild(HatTop);
-      */
       
      
-      
-      
-      
       
   }
   
