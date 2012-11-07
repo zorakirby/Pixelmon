@@ -40,7 +40,6 @@ import pixelmon.items.heldItems.ItemExpShare;
 import pixelmon.items.heldItems.ItemLuckyEgg;
 
 public class PixelmonItems {
-	public static int pokeCheckerID;
 	public static int pokeDexID;
 
 	public static int rareCandyID;
@@ -90,8 +89,6 @@ public class PixelmonItems {
 	public static int hammerGoldID;
 	public static int hammerDiamondID;
 
-	@Mod.Item(name = "PokeChecker", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item pokeChecker;
 	@Mod.Item(name = "Pokedex", typeClass = "pixelmon.items.ItemPokedex")
 	public static Item pokeDex;
 
@@ -188,7 +185,6 @@ public class PixelmonItems {
 		PixelmonItemsApricorns.load(cfg);
 		PixelmonItemsBadges.load(cfg);
 
-		pokeCheckerID = cfg.get("PokeChecker", "item", 10004).getInt();
 		pokeDexID = cfg.get("PokeDex", "item", 10027).getInt();
 		rareCandyID = cfg.get("RareCandy", "item", 10005).getInt();
 		potionID = cfg.get("Potion", "item", 10006).getInt();
@@ -233,7 +229,6 @@ public class PixelmonItems {
 		hammerGoldID = cfg.get("Gold Hammer", "item", 10110).getInt();
 		hammerDiamondID = cfg.get("Diamond Hammer", "item", 10111).getInt();
 
-		pokeChecker = new PixelmonItem(pokeCheckerID).setItemName("PokeChecker").setIconIndex(2).setMaxStackSize(1).setCreativeTab(CreativeTabs.tabTools);
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(18).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(6);
 		potion = new ItemPotion(potionID, EnumPotions.Potion).setItemName("Potion");
