@@ -87,6 +87,8 @@ public enum EnumPokemon {
 	Scyther("Scyther", ClassType.Pixelmon),
 	Seaking("Seaking", ClassType.WaterPixelmon),
 	Shellder("Shellder", ClassType.Pixelmon),
+	Slowbro("Slowbro", ClassType.Pixelmon),
+	Slowpoke("Slowpoke", ClassType.Pixelmon),
 	Snorlax("Snorlax", ClassType.Pixelmon),
 	Solrock("Solrock", ClassType.Pixelmon),
 	Spearow("Spearow", ClassType.Pixelmon),
