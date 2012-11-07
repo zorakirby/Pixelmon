@@ -127,7 +127,6 @@ public class PlayerStorage {
 
 		p.setPokemonId(id);
 		p.writeEntityToStorageNBT(n);
-		p.writeToNBT(n);
 		n.setString("id", "Pixelmon");
 		n.setName(p.getName());
 		n.setBoolean("IsInBall", true);
@@ -148,9 +147,7 @@ public class PlayerStorage {
 			NBTTagCompound n = partyPokemon[i];
 			if (n != null) {
 				if (n.getInteger("pixelmonID") == currentPixelmon.getPokemonId()) {
-					currentPixelmon.writeEntityToNBT(n);
-					Entity entity1 = (Entity) currentPixelmon;
-					entity1.writeToNBT(n);
+					currentPixelmon.writeEntityToStorageNBT(n);
 					n.setName(currentPixelmon.getName());
 					n.setBoolean("IsInBall", true);
 					currentPixelmon.unloadEntity();
@@ -213,8 +210,7 @@ public class PlayerStorage {
 			if (nbt != null) {
 				if (nbt.getInteger("pixelmonID") == entityPixelmon.getPokemonId()) {
 					entityCapturedPixelmon.setPokemonId(entityPixelmon.getPokemonId());
-					entityCapturedPixelmon.writeEntityToNBT(nbt);
-					entityCapturedPixelmon.writeToNBT(nbt);
+					entityCapturedPixelmon.writeEntityToStorageNBT(nbt);
 					nbt.setString("id", entityCapturedPixelmon.getName());
 					nbt.setName(entityCapturedPixelmon.getName());
 					if (mode == PokeballManagerMode.Player)
@@ -294,8 +290,7 @@ public class PlayerStorage {
 			NBTTagCompound nbt = partyPokemon[i];
 			if (nbt != null) {
 				if (nbt.getInteger("pixelmonID") == pixelmon.getPokemonId()) {
-					pixelmon.writeEntityToNBT(nbt);
-					pixelmon.writeToNBT(nbt);
+					pixelmon.writeEntityToStorageNBT(nbt);
 					nbt.setString("id", pixelmon.getName());
 					nbt.setName(pixelmon.getName());
 					if (pixelmon.getHealth() <= 0)
