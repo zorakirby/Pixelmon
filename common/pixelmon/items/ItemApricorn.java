@@ -45,7 +45,7 @@ public class ItemApricorn extends PixelmonItem {
 	/** The ID of the block the reed will spawn when used from inventory bar. */
 	private int spawnID;
 
-	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
+	public boolean onItemUseFirst(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
 		int var11 = par3World.getBlockId(par4, par5, par6);
 
 		if (var11 != Block.grass.blockID && var11 != Block.dirt.blockID)

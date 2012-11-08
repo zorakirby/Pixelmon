@@ -13,7 +13,6 @@ public interface IBattleParticipant {
 	void StartBattle(IBattleParticipant opponent);
 	void EndBattle(boolean didWin, IBattleParticipant participant2);
 	boolean getIsFaintedOrDead();
-	void getNextPokemon();
 	String getName();
 	Attack getMove(IBattleParticipant participant2);
 	void switchPokemon(IBattleParticipant participant2, int newPixelmonId);
@@ -24,4 +23,5 @@ public interface IBattleParticipant {
 	EntityLiving getEntity();
 	void updateOpponent(IBattleParticipant opponent);
 	ParticipantType getType();
+	void getNextPokemon(IBattleParticipant opponent);
 }

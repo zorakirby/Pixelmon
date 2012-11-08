@@ -35,7 +35,7 @@ import pixelmon.items.PixelmonItem;
 import pixelmon.items.heldItems.ItemBerryLeppa;
 import pixelmon.items.heldItems.ItemBerryOran;
 import pixelmon.items.heldItems.ItemBerryRawst;
-import pixelmon.items.heldItems.ItemEverstone;
+//import pixelmon.items.heldItems.ItemEverstone;
 import pixelmon.items.heldItems.ItemExpShare;
 import pixelmon.items.heldItems.ItemLuckyEgg;
 

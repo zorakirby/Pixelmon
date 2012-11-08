@@ -69,7 +69,7 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void getNextPokemon() {
+	public void getNextPokemon(IBattleParticipant opponent) {
 		trainer.pokemonStorage.updateNBT(currentPokemon());
 		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId())
 				.setBoolean("IsFainted", true);
