@@ -77,6 +77,7 @@ public enum EnumPokemon {
 	Pidgeotto("Pidgeotto", ClassType.Pixelmon),
 	Pidgeot("Pidgeot", ClassType.Pixelmon),
 	Piloswine("Piloswine", ClassType.Pixelmon),
+	Poliwag("Poliwag", ClassType.Pixelmon),
 	Ponyta("Ponyta", ClassType.Pixelmon),
 	Primeape("Primeape", ClassType.Pixelmon),
 	Psyduck("Psyduck", ClassType.Pixelmon),
