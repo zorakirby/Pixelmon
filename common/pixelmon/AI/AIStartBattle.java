@@ -1,5 +1,6 @@
 package pixelmon.AI;
 
+import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.entities.pixelmon.Entity7HasAI;
@@ -31,6 +32,8 @@ public class AIStartBattle extends EntityAIBase {
 			return false;
 		if (((EntityLiving) theEntity).getAttackTarget().getDistanceSqToEntity((Entity) this.theEntity) < 40) {
 			if (theEntity.getAttackTarget() instanceof EntityPlayer) {
+				if (BattleRegistry.getBattle((EntityPlayer) theEntity.getAttackTarget()) != null)
+					return false;
 				EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
 				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).isIn((EntityPixelmon) theEntity))
 					return false;
@@ -47,6 +50,8 @@ public class AIStartBattle extends EntityAIBase {
 			if (!(theEntity.getAttackTarget() instanceof EntityPixelmon))
 				return false;
 			EntityPixelmon target = (EntityPixelmon) theEntity.getAttackTarget();
+			if (target.battleController != null)
+				return false;
 			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon) theEntity), new WildPixelmonParticipant(target));
 			return true;
 		}

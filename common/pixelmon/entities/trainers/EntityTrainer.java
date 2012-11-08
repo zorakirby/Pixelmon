@@ -151,11 +151,11 @@ public class EntityTrainer extends EntityCreature {
 					nbt.setInteger("PixelmonMovePP" + i, nbt.getInteger("PixelmonMovePPBase" + i));
 				}
 				if (nbt.hasKey("EffectCount")) {
-					int numStatus = nbt.getInteger("EffectCount");
+					int numStatus = nbt.getShort("EffectCount");
 					for (int i = 0; i < numStatus; i++) {
 						nbt.func_82580_o("Effect" + i);
 					}
-					nbt.setInteger("EffectCount", 0);
+					nbt.setShort("EffectCount", (short)0);
 				}
 			}
 		}
