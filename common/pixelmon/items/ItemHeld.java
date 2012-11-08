@@ -1,5 +1,6 @@
 package pixelmon.items;
 
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumHeldItems;
 import net.minecraft.src.Item;
@@ -22,6 +23,7 @@ public abstract class ItemHeld extends PixelmonItem {
 		isEquippable = true;
 		this.heldItemType = heldItemType;
 		effectsBattles = heldItemType.getBattleModifier();
+		setCreativeTab(PixelmonCreativeTabs.held);
 	}
 
 	public EnumHeldItems getHeldItemType() {
