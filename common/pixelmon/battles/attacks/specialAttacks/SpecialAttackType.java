@@ -5,6 +5,7 @@ public enum SpecialAttackType {
 	Acupressure,
 	Curse,
 	EchoedVoice,
+	Eruption,
 	Facade,
 	Frustration,
 	Guillotine,
@@ -30,6 +31,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Acupressure")) return SpecialAttackType.Acupressure;
 		if (string.equalsIgnoreCase("Curse")) return SpecialAttackType.Curse;
 		if (string.equalsIgnoreCase("EchoedVoice")) return SpecialAttackType.EchoedVoice;
+		if (string.equalsIgnoreCase("Eruption")) return SpecialAttackType.Eruption;
 		if (string.equalsIgnoreCase("Facade")) return SpecialAttackType.Facade;
 		if (string.equalsIgnoreCase("Frustration")) return SpecialAttackType.Frustration;
 		if (string.equalsIgnoreCase("Guillotine")) return SpecialAttackType.Guillotine;
@@ -57,6 +59,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Acupressure")) return true;
 		if (string.equalsIgnoreCase("Curse")) return true;
 		if (string.equalsIgnoreCase("EchoedVoice")) return true;
+		if (string.equalsIgnoreCase("Eruption")) return true;
 		if (string.equalsIgnoreCase("Facade")) return true;
 		if (string.equalsIgnoreCase("Frustration")) return true;
 		if (string.equalsIgnoreCase("Guillotine")) return true;

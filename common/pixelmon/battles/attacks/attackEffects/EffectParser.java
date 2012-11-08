@@ -17,6 +17,7 @@ import pixelmon.battles.attacks.specialAttacks.Acupressure;
 import pixelmon.battles.attacks.specialAttacks.Bide;
 import pixelmon.battles.attacks.specialAttacks.Curse;
 import pixelmon.battles.attacks.specialAttacks.EchoedVoice;
+import pixelmon.battles.attacks.specialAttacks.Eruption;
 import pixelmon.battles.attacks.specialAttacks.Facade;
 import pixelmon.battles.attacks.specialAttacks.Frustration;
 import pixelmon.battles.attacks.specialAttacks.Guillotine;
@@ -195,6 +196,8 @@ public class EffectParser {
 				effect = new Curse();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.EchoedVoice)
 				effect = new EchoedVoice();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Eruption)
+				effect = new Eruption();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Facade)
 				effect = new Facade();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Guillotine)
