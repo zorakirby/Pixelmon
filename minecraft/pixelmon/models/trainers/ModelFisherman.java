@@ -133,11 +133,7 @@ public class ModelFisherman extends ModelBase
       HeadBase.addChild(Hat);
       HeadBase.addChild(HatTop);
       
-      
      
-      
-      
-      
       
   }
   
