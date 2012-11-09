@@ -31,7 +31,7 @@ public class Sleep extends StatusEffectBase {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has fallen asleep!");
 
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " did not fall asleep!");
 	}
 
 	@Override
