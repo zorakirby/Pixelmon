@@ -13,6 +13,7 @@ import pixelmon.battles.attacks.attackModifiers.ModifierType;
 import pixelmon.battles.attacks.attackModifiers.MultipleHitAttackModifier;
 import pixelmon.battles.attacks.attackModifiers.PriorityAttackModifier;
 import pixelmon.battles.attacks.attackModifiers.RecoilAttackModifier;
+import pixelmon.battles.attacks.specialAttacks.Acrobatics;
 import pixelmon.battles.attacks.specialAttacks.Acupressure;
 import pixelmon.battles.attacks.specialAttacks.Bide;
 import pixelmon.battles.attacks.specialAttacks.Curse;
@@ -34,6 +35,7 @@ import pixelmon.battles.attacks.specialAttacks.Punishment;
 import pixelmon.battles.attacks.specialAttacks.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.Return;
 import pixelmon.battles.attacks.specialAttacks.Reversal;
+import pixelmon.battles.attacks.specialAttacks.SeismicToss;
 import pixelmon.battles.attacks.specialAttacks.SolarBeam;
 import pixelmon.battles.attacks.specialAttacks.SpecialAttackType;
 import pixelmon.battles.attacks.specialAttacks.Venoshock;
@@ -190,7 +192,9 @@ public class EffectParser {
 
 			
 		}else if (effectType == EffectType.SpecialAttack){
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acupressure)
+			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acrobatics)
+				effect = new Acrobatics();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acupressure)
 				effect = new Acupressure();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Curse)
 				effect = new Curse();
@@ -226,6 +230,8 @@ public class EffectParser {
 				effect = new Return();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Reversal)
 				effect = new Reversal();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.SeismicToss)
+				effect = new SeismicToss();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Venoshock)
 				effect = new Venoshock();
 			

@@ -23,6 +23,7 @@ public enum SpecialAttackType {
 	Psywave,
 	Return,
 	Reversal,
+	SeismicToss,
 	SmackDown,
 	Substitute,
 	Venoshock;
@@ -49,6 +50,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Psywave")) return SpecialAttackType.Psywave;
 		if (string.equalsIgnoreCase("Return")) return SpecialAttackType.Return;
 		if (string.equalsIgnoreCase("Reversal")) return SpecialAttackType.Reversal;
+		if (string.equalsIgnoreCase("SeismicToss")) return SpecialAttackType.SeismicToss;
 		if (string.equalsIgnoreCase("SmackDown")) return SpecialAttackType.SmackDown;
 		if (string.equalsIgnoreCase("Substitute")) return SpecialAttackType.Substitute;
 		if (string.equalsIgnoreCase("Venoshock")) return SpecialAttackType.Venoshock;
@@ -76,6 +78,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Psywave")) return true;
 		if (string.equalsIgnoreCase("Return")) return true;
 		if (string.equalsIgnoreCase("Reversal")) return true;
+		if (string.equalsIgnoreCase("SeismicToss")) return true;
 		if (string.equalsIgnoreCase("SmackDown")) return true;
 		if (string.equalsIgnoreCase("Substitute")) return true;
 		if (string.equalsIgnoreCase("Venoshock")) return true;
