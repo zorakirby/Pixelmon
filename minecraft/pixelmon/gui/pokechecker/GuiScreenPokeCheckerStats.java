@@ -59,7 +59,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
 			break;
 		case 4:
-			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket));
+			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 0));
 			break;
 		}
 
@@ -89,13 +89,10 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 	}
 	
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
-		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
-//			targetPacket.moveset[i2].type.getColor());
-		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
 		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xcccccc);
-//		drawString(fontRenderer, String.valueOf(targetPacket.), -20, 100, 0xcccccc);
+		drawCenteredString(fontRenderer, String.valueOf(mc.thePlayer.username), 8, 120, 0xcccccc);
 		
 		drawString(fontRenderer, "HP:", 60, -7, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.HP), 200 - (String.valueOf(targetPacket.HP).length()*3), -7, 0xcccccc);
@@ -113,7 +110,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		drawString(fontRenderer, "Happiness", 72, 115, 0xcccccc);
 		drawCenteredString(fontRenderer, String.valueOf(targetPacket.happiness), 95, 130, 0xcccccc);
 		drawString(fontRenderer, "Nature", 158, 115, 0xcccccc);
-		fontRenderer.drawString("Coming Soon", 145, 135, -5111808);
+		drawString(fontRenderer, "Coming Soon", 145, 135, -5111808);
 		drawString(fontRenderer, "Stats", 145, 166, -6250336);
 	}
 
