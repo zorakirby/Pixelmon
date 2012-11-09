@@ -31,13 +31,11 @@ public class SwapMove extends PacketHandlerBase {
 		EntityPlayerMP player = (EntityPlayerMP) pl;
 		PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
 		EntityPixelmon p;
-		Attack a = DatabaseMoves.getAttack(selected);
-		Attack a1 = DatabaseMoves.getAttack(clicked);
 		if (storage.EntityAlreadyExists(pokemonID, player.worldObj))
 			p = storage.getAlreadyExists(pokemonID, player.worldObj);
 		else
 			p = storage.sendOut(pokemonID, player.worldObj);
-		p.moveset.swap(selected, clicked, a, a1);
+		p.moveset.swap(selected, clicked);
 		storage.updateNBT(p);
 	}
 }
