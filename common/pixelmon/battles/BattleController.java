@@ -449,6 +449,7 @@ public class BattleController {
 			attackersList2.add(participant2.currentPokemon().getPokemonId());
 			pixelmon1IsSwitching = true;
 			participant1Wait = false;
+			participant2.updateOpponent(participant1);
 		} else {
 			if (participant2.currentPokemon().wasBattleInitiator)
 				wasInitiator = true;
@@ -460,6 +461,7 @@ public class BattleController {
 			attackersList1.add(participant1.currentPokemon().getPokemonId());
 			pixelmon2IsSwitching = true;
 			participant2Wait = false;
+			participant1.updateOpponent(participant2);
 		}
 	}
 

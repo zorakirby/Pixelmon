@@ -131,6 +131,7 @@ public class PlayerParticipant implements IBattleParticipant {
 		ChatHandler.sendBattleMessage(player, "Go " + newPixelmon.getNickname() + "!");
 		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), player.username + " sent out " + newPixelmon.getNickname() + "!");
 		currentPixelmon = newPixelmon;
+		participant2.updateOpponent(this);
 	}
 
 	@Override
