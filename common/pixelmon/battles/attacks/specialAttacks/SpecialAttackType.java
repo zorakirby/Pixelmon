@@ -43,6 +43,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("JumpKick")) return SpecialAttackType.JumpKick;
 		if (string.equalsIgnoreCase("Magnitude")) return SpecialAttackType.Magnitude;
 		if (string.equalsIgnoreCase("NightShade")) return SpecialAttackType.NightShade;
+		if (string.equalsIgnoreCase("PainSplit")) return SpecialAttackType.PainSplit;
 		if (string.equalsIgnoreCase("Payday")) return SpecialAttackType.Payday;
 		if (string.equalsIgnoreCase("PetalDance")) return SpecialAttackType.PetalDance;
 		if (string.equalsIgnoreCase("Punishment")) return SpecialAttackType.Punishment;
@@ -71,6 +72,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("HornDrill")) return true;
 		if (string.equalsIgnoreCase("JumpKick")) return true;
 		if (string.equalsIgnoreCase("NightShade")) return true;
+		if (string.equalsIgnoreCase("PainSplit")) return true;
 		if (string.equalsIgnoreCase("Payday")) return true;
 		if (string.equalsIgnoreCase("PetalDance")) return true;
 		if (string.equalsIgnoreCase("Punishment")) return true;
