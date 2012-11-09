@@ -15,6 +15,7 @@ public enum SpecialAttackType {
 	JumpKick,
 	Magnitude,
 	NightShade,
+	PainSplit,
 	Payday,
 	PetalDance,
 	Punishment,

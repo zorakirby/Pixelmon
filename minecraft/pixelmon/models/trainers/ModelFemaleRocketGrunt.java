@@ -167,14 +167,12 @@ public class ModelFemaleRocketGrunt extends ModelBase
     LEFTLEGPIECE.setRotationPoint(1F, 15F, 0F);
     setRotation(LEFTLEGPIECE, 0F, 0F, 0F);
     LEFTLEGPIECE.mirror = true;
-      leftleg.mirror = true;
       leftleg = new ModelRenderer(this, 0, 17);
       leftleg.addBox(-2F, 0F, -2F, 3, 10, 3);
       leftleg.setRotationPoint(1F, -1F, 0F);
       leftleg.setTextureSize(64, 32);
       leftleg.mirror = true;
       setRotation(leftleg, 0F, 0F, 0F);
-      leftleg.mirror = false;
       Foot2 = new ModelRenderer(this, 0, 26);
       Foot2.addBox(-2F, 0F, -2F, 3, 2, 2);
       Foot2.setRotationPoint(1F, 7F, -1F);
