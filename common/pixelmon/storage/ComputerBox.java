@@ -48,7 +48,8 @@ public class ComputerBox {
 		int pos = getNextSpace();
 		n.setInteger("PixelmonOrder", pos);
 		n.setInteger("BoxNumber", position);
-		if (n.getShort("Health")>0)n.setBoolean("IsFainted",false);
+		if (n.getShort("Health") > 0)
+			n.setBoolean("IsFainted", false);
 		storedPokemon[pos] = n;
 		hasChanged = true;
 	}
@@ -62,7 +63,7 @@ public class ComputerBox {
 
 	public NBTTagCompound get(int id) {
 		for (NBTTagCompound n : storedPokemon) {
-			if(n != null){
+			if (n != null) {
 				if (n.getInteger("pixelmonID") == id)
 					return n;
 			}
@@ -71,14 +72,21 @@ public class ComputerBox {
 	}
 
 	public NBTTagCompound[] getStoredPokemon() {
+		for (int i = 0; i < storedPokemon.length; i++) {
+			NBTTagCompound n = storedPokemon[i];
+			if (n != null) {
+				if (n.getString("Name").equals(""))
+					storedPokemon[i] = null;
+			}
+		}
 		return storedPokemon;
 	}
-	
-	public void setStoredPokemon(NBTTagCompound[] pokemon){
+
+	public void setStoredPokemon(NBTTagCompound[] pokemon) {
 		storedPokemon = pokemon;
 	}
-	
-	public NBTTagCompound getNBTByPosition(int pos){
+
+	public NBTTagCompound getNBTByPosition(int pos) {
 		return storedPokemon[pos];
 	}
 

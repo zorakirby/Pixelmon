@@ -101,7 +101,7 @@ public class GuiPixelmonOverlay extends Gui {
 					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItemId != -1) {
-					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/heldItem.png");
+					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
 					drawImageQuad(var9, 18, var7 / 6 + i * 30 + 19 + offset, 6, 6, 0f, 0f, 1f, 1f);
 				}
 				if (!isGuiMinimized) {

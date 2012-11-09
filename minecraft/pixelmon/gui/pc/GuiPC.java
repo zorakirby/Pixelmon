@@ -58,9 +58,9 @@ public class GuiPC extends GuiContainer {
 				y += height / 6 - 5;
 				pcSlots[i][j] = new SlotPCPC(x, y, i, j);
 				PixelmonDataPacket p = null;
-				
+
 				p = PixelmonServerStore.getFromBox(i, j);
-				
+
 				if (p != null) {
 					pcSlots[i][j].setPokemon(p);
 				}
@@ -71,7 +71,7 @@ public class GuiPC extends GuiContainer {
 			int x = i;
 			x *= 30;
 			x += width / 2 - 90;
-			int y = height / 6 + 145;
+			int y = height / 6 + 147;
 			partySlots[i] = new SlotPCParty(x, y, i);
 			PixelmonDataPacket p = ServerStorageDisplay.pokemon[i];
 			if (p != null) {
@@ -236,7 +236,7 @@ public class GuiPC extends GuiContainer {
 				boxNumber++;
 			}
 		}
-		
+
 	}
 
 	public boolean doesGuiPauseGame() {
@@ -261,10 +261,10 @@ public class GuiPC extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
 		int w = width;
 		int h = height;
-		
+
 		RenderHelper.disableStandardItemLighting();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		
+
 		int partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcPartyBox.png");
 		Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
 		drawTexturedModalRect(width / 2 - 91, height / 6 + 151, 0, 0, 182, 29);
@@ -294,7 +294,7 @@ public class GuiPC extends GuiContainer {
 				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 			drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
-				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
+				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/helditem.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 1f, 1f);
 			}
 		}
 		for (int a = 0; a < partySlots.length; a++) {
@@ -317,7 +317,7 @@ public class GuiPC extends GuiContainer {
 				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 			drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
-				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
+				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/helditem.png"), slot.x + 18, slot.y + 22, 8, 8, 0, 0, 1f, 1f);
 			}
 		}
 		image = 0;
@@ -352,7 +352,8 @@ public class GuiPC extends GuiContainer {
 			if (p.isFainted) {
 				fontRenderer.drawString("Fainted", mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
 			} else {
-				fontRenderer.drawString("HP " + p.health + "/" + p.hp, mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
+				fontRenderer.drawString("HP " + p.health + "/" + p.hp, mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20,
+						0xFFFFFF);
 			}
 
 		}
