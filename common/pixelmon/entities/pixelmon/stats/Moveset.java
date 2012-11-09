@@ -73,6 +73,12 @@ implements List<Attack>, RandomAccess, Cloneable
 		return a1;
 	}
 	
+	public void swap(int index, int index2, Attack a, Attack a1)
+	{
+		set(index, a);
+		set(index2, a1);
+	}
+	
 	public Attack remove(int index)
 	{
 		Attack a = get(index);
