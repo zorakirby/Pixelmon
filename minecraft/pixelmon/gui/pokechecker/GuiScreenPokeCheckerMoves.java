@@ -197,7 +197,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		GL11.glColor3f(1.0F, 0.0F, 0.0F);// Gives the selection a light red
 		// color.
 		mc.renderEngine.bindTexture(bg);
-		if (selectednumber >= targetPacket.numMoves - 1 && i > width / 2 + 130 && i < width / 2 + 158 && i1 > height / 2 - 25 && i1 < height / 2 + 9) {
+		if (selectednumber >= targetPacket.numMoves && i > width / 2 + 130 && i < width / 2 + 158 && i1 > height / 2 - 25 && i1 < height / 2 + 9) {
 			drawTexturedModalRect(220, 60, 230, 225, 26, 31);
 		}
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
@@ -245,7 +245,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		super.mouseClicked(x, y, par3);
-		if (selectednumber >= targetPacket.numMoves - 1 && x > var6 / 2 + 130 && x < var6 / 2 + 158 && y > var7 / 2 - 25 && y < var7 / 2 + 9) {
+		if (selectednumber >= targetPacket.numMoves && x > var6 / 2 + 130 && x < var6 / 2 + 158 && y > var7 / 2 - 25 && y < var7 / 2 + 9) {
 			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 1, selectednumber));
 		}
 		attackClicked(x, y);

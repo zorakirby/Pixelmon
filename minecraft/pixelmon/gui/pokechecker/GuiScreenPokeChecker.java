@@ -98,6 +98,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
 		drawCenteredString(fontRenderer, targetPacket.health + "/" + targetPacket.hp, 185, 10, 0xdddddd);
 		drawString(fontRenderer, "Status", -10, 100, 0xcccccc);
+		if(targetPacket.isFainted)
+		drawString(fontRenderer, "*FAINTED*", 117, -11, 0xcccccc);
 		drawString(fontRenderer, "Total Experience", 95, 40, 0xcccccc);
 		drawCenteredString(fontRenderer, String.valueOf(targetPacket.xp), 135, 55, 0xcccccc);
 		drawString(fontRenderer, "Level Up", 82, 94, 0xcccccc);

@@ -108,7 +108,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		drawString(fontRenderer, String.valueOf(targetPacket.Speed), 200 - (String.valueOf(targetPacket.Speed).length()*3), 93, 0xcccccc);
 		
 		drawString(fontRenderer, "Happiness", 72, 115, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.happiness), 95, 130, 0xcccccc);
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.friendship), 95, 130, 0xcccccc);
 		drawString(fontRenderer, "Nature", 158, 115, 0xcccccc);
 		drawString(fontRenderer, "Coming Soon", 145, 135, -5111808);
 		drawString(fontRenderer, "Stats", 145, 166, -6250336);
