@@ -81,7 +81,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	public void drawGuiContainerForegroundLayer(int i, int i1) {
-		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
+		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
 			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, 135, -6 + (i2 * 21), 0xcccccc);
 			drawCenteredString(fontRenderer, String.valueOf((targetPacket.moveset[i2]).pp) + "/" + String.valueOf((targetPacket.moveset[i2]).ppBase), 193, -4

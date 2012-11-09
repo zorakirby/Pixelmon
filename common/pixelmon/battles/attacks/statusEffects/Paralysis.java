@@ -19,16 +19,13 @@ public class Paralysis extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Paralysis) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already paralyzed!");
 					return;
 				}
 
 			target.status.add(this);
 			target.battleStats.setIsParalyzed();
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is paralyzed!");
-
-		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+		}
 
 	}
 

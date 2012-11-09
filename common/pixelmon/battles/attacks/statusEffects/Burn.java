@@ -19,13 +19,8 @@ public class Burn extends StatusEffectBase {
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 
 		if (checkChance()) {
-			if (target.type.contains(EnumType.Fire)){
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "no effect!");
-				return;
-			}
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Burn) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already burnt!");
 					return;
 				}
 			target.status.add(this);

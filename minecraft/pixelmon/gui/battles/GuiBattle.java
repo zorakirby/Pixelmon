@@ -51,7 +51,7 @@ import net.minecraft.src.Tessellator;
 public class GuiBattle extends GuiContainer {
 
 	public enum BattleMode {
-		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, YesNo;
+		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, YesNo, EnforcedSwitch;
 	}
 
 	private int battleControllerIndex = -1;
@@ -114,7 +114,7 @@ public class GuiBattle extends GuiContainer {
 			drawMainMenu(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseAttack)
 			drawChooseAttack(mouseX, mouseY);
-		else if (mode == BattleMode.ChoosePokemon || mode == BattleMode.ApplyToPokemon)
+		else if (mode == BattleMode.ChoosePokemon || mode == BattleMode.ApplyToPokemon || mode == BattleMode.EnforcedSwitch)
 			drawChoosePokemon(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseBag)
 			drawChooseBag(mouseX, mouseY);
@@ -509,14 +509,16 @@ public class GuiBattle extends GuiContainer {
 		drawImageQuad(guiIndex, width / 2 - 128, height - 203, 256, 203, 0, 0, 1, 203f / 256f);
 
 		if (mode == BattleMode.ApplyToPokemon)
-			drawString(fontRenderer, "Select a Pokemon to use on", width / 2 - 110, height - 23, 0xFFFFFF);
+			drawCenteredString(fontRenderer, "Select a Pokemon to use on", width / 2 - 40, height - 23, 0xFFFFFF);
 		else
-			drawString(fontRenderer, "Choose a Pokemon", width / 2 - 90, height - 23, 0xFFFFFF);
+			drawCenteredString(fontRenderer, "Choose a Pokemon to send out", width / 2 - 40, height - 23, 0xFFFFFF);
 
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17 && !isHealing) {
-			drawImageQuad(guiIndex, width / 2 + 63, height - 27, 48, 17, 198f / 256f, 210f / 256f, 246f / 256, 227f / 256f);
+		if (mode != BattleMode.EnforcedSwitch) {
+			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17 && !isHealing) {
+				drawImageQuad(guiIndex, width / 2 + 63, height - 27, 48, 17, 198f / 256f, 210f / 256f, 246f / 256, 227f / 256f);
+			}
+			drawString(fontRenderer, "Back", width / 2 + 75, height - 22, 0xFFFFFF);
 		}
-		drawString(fontRenderer, "Back", width / 2 + 75, height - 22, 0xFFFFFF);
 
 		PixelmonDataPacket p = ClientBattleManager.getUserPokemon();
 		String numString = "";
@@ -696,7 +698,7 @@ public class GuiBattle extends GuiContainer {
 
 		} else if (mode == BattleMode.ChooseAttack) {
 			ChooseAttackClick(mouseX, mouseY);
-		} else if (mode == BattleMode.ChoosePokemon) {
+		} else if (mode == BattleMode.ChoosePokemon || mode == BattleMode.EnforcedSwitch) {
 			ChoosePokemonClick(mouseX, mouseY);
 		} else if (mode == BattleMode.ApplyToPokemon) {
 			ApplyToPokemonClick(mouseX, mouseY);
@@ -761,7 +763,7 @@ public class GuiBattle extends GuiContainer {
 	}
 
 	private void ChoosePokemonClick(int mouseX, int mouseY) {
-		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
+		if (mode != BattleMode.EnforcedSwitch && mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
 			mode = BattleMode.MainMenu;
 			return;
 		}
