@@ -62,6 +62,9 @@ public class ClientPacketHandler implements IPacketHandler {
 				}
 			} else if (packetID == EnumPackets.SetBattlingPokemon.getIndex()) {
 				ClientBattleManager.pokemonId = dataStream.readInt();
+			} else if (packetID == EnumPackets.EnforcedSwitch.getIndex()) {
+				ClientBattleManager.addMessage("Choose a new pokemon to send out!");
+				GuiBattle.mode = BattleMode.EnforcedSwitch;
 			} else if (packetID == EnumPackets.BackToMainMenu.getIndex()) {
 				GuiBattle.mode = BattleMode.MainMenu;
 			} else if (packetID == EnumPackets.ExitBattle.getIndex()) {

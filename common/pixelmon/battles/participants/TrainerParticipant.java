@@ -70,14 +70,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void getNextPokemon(IBattleParticipant opponent) {
-		trainer.pokemonStorage.updateNBT(currentPokemon());
-		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
-		trainer.releasePokemon();
-		if (opponent instanceof PlayerParticipant) {
-			ChatHandler.sendBattleMessage(((PlayerParticipant) opponent).player, trainer.getName() + " sent out " + currentPokemon().getName());
-		}
-
-		opponent.updateOpponent(this);
+		switchPokemon(opponent, trainer.getNextPokemonID());
 	}
 
 	@Override
@@ -98,7 +91,13 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
+	public void switchPokemon(IBattleParticipant opponent, int newPixelmonId) {
+		trainer.pokemonStorage.updateNBT(currentPokemon());
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
+		trainer.releasePokemon();
+		if (opponent instanceof PlayerParticipant) {
+			ChatHandler.sendBattleMessage(((PlayerParticipant) opponent).player, trainer.getName() + " sent out " + currentPokemon().getName());
+		}
 	}
 
 	@Override

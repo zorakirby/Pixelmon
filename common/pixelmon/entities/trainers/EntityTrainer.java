@@ -188,4 +188,9 @@ public class EntityTrainer extends EntityCreature {
 		}
 		init(getName());
 	}
+
+	public int getNextPokemonID() {
+		EntityPixelmon p = pokemonStorage.getFirstAblePokemon(worldObj);
+		return p.getPokemonId();
+	}
 }

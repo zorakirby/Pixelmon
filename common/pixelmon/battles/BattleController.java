@@ -202,24 +202,11 @@ public class BattleController {
 			participant.updatePokemon();
 
 			if (participant.hasMorePokemon()) {
+				if (participant == participant1)
+					participant1Wait = true;
+				else
+					participant2Wait = true;
 				participant.getNextPokemon(foe);
-				participant.currentPokemon().battleController = this;
-
-				attackersList1.clear();
-				attackersList2.clear();
-				if (participant == participant1) {
-					if (participant.canGainXP())
-						attackersList1.add(participant.currentPokemon().getPokemonId());
-					if (foe.canGainXP())
-						attackersList2.add(foe.currentPokemon().getPokemonId());
-					pixelmon1CanAttack = false;
-				} else if (participant == participant2) {
-					if (participant.canGainXP())
-						attackersList2.add(participant.currentPokemon().getPokemonId());
-					if (foe.canGainXP())
-						attackersList1.add(foe.currentPokemon().getPokemonId());
-					pixelmon2CanAttack = false;
-				}
 			} else {
 				endBattle(foe == participant1);
 			}

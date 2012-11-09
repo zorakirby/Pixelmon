@@ -80,8 +80,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void getNextPokemon(IBattleParticipant opponent) {
-		switchPokemon(opponent, storage.getFirstAblePokemonID(player.worldObj));
-		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon, currentPixelmon.getPokemonId()));
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.EnforcedSwitch, 0));
 	}
 
 	@Override
