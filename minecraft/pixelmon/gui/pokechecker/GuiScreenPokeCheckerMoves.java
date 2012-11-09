@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
+import net.minecraft.src.GuiScreen;
 import net.minecraft.src.RenderHelper;
 import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.StatCollector;
@@ -27,6 +28,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	GuiButton nameButton;
 	boolean renameButton;
 	static int selectednumber = -1;
+	static int attackClicked = -1;
 	static boolean move1 = true;
 	static boolean move2 = false;
 	static boolean move3 = false;
@@ -123,9 +125,10 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		}
 	}
 	
-	public void switchMoves(int moveToChange, int moveToChange2){
-		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ReplaceMove, targetPacket.pokemonID, moveToChange2, moveToChange));
-		System.out.println(moveToChange + " has switched with " + moveToChange2);
+	public void switchMoves(int moveToChange2){
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwapMove, targetPacket.pokemonID, selectednumber, moveToChange2));
+		selectednumber = -1;
+		mc.thePlayer.closeScreen();
 	}
 	
 	private void drawMoveInfo(Attack attack) {
@@ -147,7 +150,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 	
 	public void drawSelection(int i, int i1){
-		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryStats.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(bg);
 		if(targetPacket.numMoves > 0 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76 || move1){
@@ -174,7 +177,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 	
 	protected void drawSelectedRect(){
-		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryStats.png");
 		GL11.glColor3f(0.0F, 1.0F, 0.0F);//Gives the selection a light green color. 
 		mc.renderEngine.bindTexture(bg);
 		if(selectednumber == 0)
@@ -200,6 +203,17 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		else return -1;
 	}
 	
+	protected void attackClicked(int i, int i1){
+		if(targetPacket.numMoves > 0 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76)
+			attackClicked = attacks[0].attackIndex;
+		else if(targetPacket.numMoves > 1 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 77 && i1 < height / 2 - 53)
+			attackClicked = attacks[1].attackIndex;
+		else if(targetPacket.numMoves > 2 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 54 && i1 < height / 2 - 31)
+			attackClicked = attacks[2].attackIndex;
+		else if(targetPacket.numMoves > 3 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 32 && i1 < height / 2 - 9)
+			attackClicked = attacks[3].attackIndex;
+	}
+
 	protected void selectMove(int i, int i1){
 		if(i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 9 && selectednumber != moveClicked(i, i1)){
 			if(selectednumber == -1){
@@ -212,14 +226,16 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 				if(moveClicked(i, i1) == 3)
 					selectednumber = 3;
 			}
-			else if(moveClicked(i, i1) == 0)
-				switchMoves(0, moveClicked(i, i1));
+			else if(selectednumber != -1){
+			if(moveClicked(i, i1) == 0)
+				switchMoves(attackClicked);
 			if(moveClicked(i, i1) == 1)
-				switchMoves(1, moveClicked(i, i1));
+				switchMoves(attackClicked);
 			if(moveClicked(i, i1) == 2)
-				switchMoves(2, moveClicked(i, i1));
+				switchMoves(attackClicked);
 			if(moveClicked(i, i1) == 3)
-				switchMoves(3, moveClicked(i, i1));
+				switchMoves(attackClicked);
+			}
 		}
 		else selectednumber = -1;
 	}
@@ -230,6 +246,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int var7 = var5.getScaledHeight();
 		super.mouseClicked(x, y, par3);
 		selectMove(x, y);
+		attackClicked(x, y);
 		if(x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 2 - 15 && y < var7 / 2 + 5){
 			if(par3 == 1 && !renameButton){
 				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
@@ -277,68 +294,6 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawCenteredStringWithoutShadow(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
 		}
-	}
-	
-	private void drawColoredBar(int x, int y, int width, int height, float r, float g, float b) {
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-		GL11.glPushMatrix();
-		Tessellator tessellator = Tessellator.instance;
-		GL11.glDisable(3553 /* GL_TEXTURE_2D */);
-		tessellator.startDrawingQuads();
-		
-		tessellator.setColorRGBA_F(r, g, b, 1.0F);
-		tessellator.addVertex(x, y, 0.0);
-		tessellator.addVertex(x, y + height, 0.0);
-		tessellator.addVertex(x + width, y + height, 0.0);
-		tessellator.addVertex(x + width, y, 0.0);
-		tessellator.draw();
-		GL11.glPopMatrix();
-		GL11.glEnable(3553);
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
-	}
-	
-	private void drawExpBar(int x, int y, int width, int height, PixelmonDataPacket p) {
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-		GL11.glPushMatrix();
-		Tessellator tessellator = Tessellator.instance;
-		GL11.glDisable(3553 /* GL_TEXTURE_2D */);
-		tessellator.startDrawingQuads();
-
-		int barWidth = (int) (((float) p.xp) / ((float) p.nextLvlXP) * (((float) width) - 6f));
-		tessellator.setColorRGBA_F(0.3f, 0.6f, 1.0f, 1.0F);
-		tessellator.addVertex(x, y, 0.0);
-		tessellator.addVertex(x, y + height, 0.0);
-		tessellator.addVertex(x + barWidth, y + height, 0.0);
-		tessellator.addVertex(x + barWidth, y, 0.0);
-		tessellator.draw();
-		GL11.glPopMatrix();
-		GL11.glEnable(3553);
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
-	}
-	
-	public void drawHealthBar(int x, int y, int width, int height, PixelmonDataPacket p) {
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-		GL11.glPushMatrix();
-		Tessellator tessellator = Tessellator.instance;
-		GL11.glDisable(3553 /* GL_TEXTURE_2D */);
-		tessellator.startDrawingQuads();
-
-		int barWidth = (int) (((float) p.health) / ((float) p.hp) * (((float) width) - 6f));
-		tessellator.setColorRGBA_F(1.0f - ((float) p.health / (float) p.hp) * 0.8F, 0.2F + ((float) p.health / (float) p.hp) * 0.8F, 0.2F, 1.0F);
-		tessellator.addVertex(x, y, 0.0);
-		tessellator.addVertex(x, y + height, 0.0);
-		tessellator.addVertex(x + barWidth, y + height, 0.0);
-		tessellator.addVertex(x + barWidth, y, 0.0);
-		tessellator.draw();
-		GL11.glPopMatrix();
-		GL11.glEnable(3553);
-		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
 	
     public void drawCenteredStringWithoutShadow(FontRenderer par1FontRenderer, String par2Str, int par3, int par4, int par5)
