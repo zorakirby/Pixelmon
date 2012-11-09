@@ -194,8 +194,14 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 		tessellator.startDrawingQuads();
 
-		int barWidth = (int) (((float) p.health) / ((float) p.hp) * (((float) width) - 6f));
-		tessellator.setColorRGBA_F(1.0f - ((float) p.health / (float) p.hp) * 0.8F, 0.2F + ((float) p.health / (float) p.hp) * 0.8F, 0.2F, 1.0F);
+		int barWidth = width - 6;
+		tessellator.setColorRGBA_F(1.0F, 0.2F, 0.2F, 1.0F);
+		tessellator.addVertex(x, y, 0.0);
+		tessellator.addVertex(x, y + height, 0.0);
+		tessellator.addVertex(x + barWidth, y + height, 0.0);
+		tessellator.addVertex(x + barWidth, y, 0.0);
+		barWidth = (int) (((float) p.health) / ((float) p.hp) * (((float) width) - 6f));
+		tessellator.setColorRGBA_F(0.2F, 1F, 0.2F, 1.0F);
 		tessellator.addVertex(x, y, 0.0);
 		tessellator.addVertex(x, y + height, 0.0);
 		tessellator.addVertex(x + barWidth, y + height, 0.0);
