@@ -68,7 +68,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
 			break;
 		case 4:
-			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket));
+			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 0));
 			break;
 		}
 	}
@@ -91,13 +91,13 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			float y = targetPacket.moveset[i2].type.textureY;
 			drawImageQuad(timg, 58, 22 * i2 - 15, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
 		}
-		drawString(fontRenderer, String.valueOf(selectednumber), 15, -24, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
 		drawString(fontRenderer, "Effects", -10, 100, 0xcccccc);
 		drawString(fontRenderer, "Description", 107, 100, 0xcccccc);
 		drawString(fontRenderer, "Moves", 73, 166, -6250336);
 		drawSelection(i, i1);
+		drawSelectedRectBin(i, i1);
 		drawMoveDescription();
 	}
 
@@ -136,7 +136,6 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		drawString(fontRenderer, "Power:", -30, 118, 0xFFFFFF);
 		drawString(fontRenderer, "Accuracy:", -30, 148, 0xFFFFFF);
 		int bpextra = 0, acextra = 0;
-		;
 		if (attack.basePower >= 100)
 			bpextra = fontRenderer.getCharWidth('0');
 		if (attack.accuracy >= 100)
@@ -151,7 +150,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	public void drawSelection(int i, int i1) {
-		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryStats.png");
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(bg);
 		if (targetPacket.numMoves > 0 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76 || move1) {
@@ -178,7 +177,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	protected void drawSelectedRect() {
-		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryStats.png");
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor3f(0.0F, 1.0F, 0.0F);// Gives the selection a light green
 											// color.
 		mc.renderEngine.bindTexture(bg);
@@ -190,6 +189,17 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawTexturedModalRect(58, 28, 1, 231, 153, 24);
 		else if (selectednumber == 3)
 			drawTexturedModalRect(58, 50, 1, 231, 153, 24);
+		GL11.glColor3f(1.0F, 1.0F, 1.0F);
+	}
+	
+	protected void drawSelectedRectBin(int i, int i1) {
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
+		GL11.glColor3f(1.0F, 0.0F, 0.0F);// Gives the selection a light red
+		// color.
+		mc.renderEngine.bindTexture(bg);
+		if (selectednumber >= targetPacket.numMoves - 1 && i > width / 2 + 130 && i < width / 2 + 158 && i1 > height / 2 - 25 && i1 < height / 2 + 9) {
+			drawTexturedModalRect(220, 60, 230, 225, 26, 31);
+		}
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
 	}
 
@@ -235,6 +245,9 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		super.mouseClicked(x, y, par3);
+		if (selectednumber >= targetPacket.numMoves - 1 && x > var6 / 2 + 130 && x < var6 / 2 + 158 && y > var7 / 2 - 25 && y < var7 / 2 + 9) {
+			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 1, selectednumber));
+		}
 		attackClicked(x, y);
 		selectMove(x, y);
 		if (x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 2 - 15 && y < var7 / 2 + 5) {
@@ -270,6 +283,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
+		drawTexturedModalRect((width - xSize) / 2 + 220, (height - ySize) / 2 + 60, 203, 225, 26, 31);
 
 		int pimg;
 		if (targetPacket.isShiny)

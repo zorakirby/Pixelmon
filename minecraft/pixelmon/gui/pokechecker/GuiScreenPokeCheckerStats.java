@@ -59,7 +59,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
 			break;
 		case 4:
-			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket));
+			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 0));
 			break;
 		}
 
@@ -89,12 +89,10 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 	}
 	
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
-//			targetPacket.moveset[i2].type.getColor());
-		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
 		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xcccccc);
-//		drawString(fontRenderer, String.valueOf(targetPacket.), -20, 100, 0xcccccc);
+		drawCenteredString(fontRenderer, String.valueOf(mc.thePlayer.username), 8, 120, 0xcccccc);
 		
 		drawString(fontRenderer, "HP:", 60, -7, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.HP), 200 - (String.valueOf(targetPacket.HP).length()*3), -7, 0xcccccc);
