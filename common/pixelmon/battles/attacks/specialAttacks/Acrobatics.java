@@ -7,7 +7,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Acrobatics extends SpecialAttackBase {
 
-	public Acrobatics(SpecialAttackType type, ApplyStage a, boolean persists) {
+	public Acrobatics() {
 		super(SpecialAttackType.Acrobatics, ApplyStage.During, false);
 		
 	}
