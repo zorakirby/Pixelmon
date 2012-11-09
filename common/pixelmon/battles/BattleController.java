@@ -481,7 +481,6 @@ public class BattleController {
 
 		ItemStack[] inv = user.inventory.mainInventory;
 		item.removeFromInventory(inv);
-		ChatHandler.sendBattleMessage(user, item.getItemName() + " used!");
 	}
 
 	public boolean isTrainerVsTrainer() {
