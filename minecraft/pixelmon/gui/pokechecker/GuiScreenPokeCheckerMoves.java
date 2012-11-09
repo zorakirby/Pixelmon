@@ -81,7 +81,8 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	public void drawGuiContainerForegroundLayer(int i, int i1) {
-		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
+		//drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
+		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
 			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, 135, -6 + (i2 * 21), 0xcccccc);
 			drawCenteredString(fontRenderer, String.valueOf((targetPacket.moveset[i2]).pp) + "/" + String.valueOf((targetPacket.moveset[i2]).ppBase), 193, -4
@@ -91,7 +92,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			float y = targetPacket.moveset[i2].type.textureY;
 			drawImageQuad(timg, 58, 22 * i2 - 15, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
 		}
-		drawString(fontRenderer, String.valueOf(selectednumber), 15, -24, 0xcccccc);
+		//drawString(fontRenderer, String.valueOf(selectednumber), 15, -24, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
 		drawString(fontRenderer, "Effects", -10, 100, 0xcccccc);

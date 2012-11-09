@@ -93,6 +93,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 
 	
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
+		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		//drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);

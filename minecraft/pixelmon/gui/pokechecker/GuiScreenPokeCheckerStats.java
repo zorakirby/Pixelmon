@@ -89,6 +89,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 	}
 	
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
+		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 //			targetPacket.moveset[i2].type.getColor());
 		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
@@ -112,7 +113,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		drawString(fontRenderer, "Happiness", 72, 115, 0xcccccc);
 		drawCenteredString(fontRenderer, String.valueOf(targetPacket.happiness), 95, 130, 0xcccccc);
 		drawString(fontRenderer, "Nature", 158, 115, 0xcccccc);
-		drawString(fontRenderer, "Coming Soon", 145, 135, -5111808);
+		fontRenderer.drawString("Coming Soon", 145, 135, -5111808);
 		drawString(fontRenderer, "Stats", 145, 166, -6250336);
 	}
 
