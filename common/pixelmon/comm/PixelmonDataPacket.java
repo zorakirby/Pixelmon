@@ -3,9 +3,11 @@ package pixelmon.comm;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import cpw.mods.fml.common.network.NetworkMod;
 
+import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.stats.BaseStats;
@@ -28,7 +30,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public int lvl;
 	public int hp;
 	public int health;
-	public int happiness;
+	public int friendship;
 	public boolean isMale;
 	public boolean isFainted;
 	public int order;
@@ -48,6 +50,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public boolean doesLevel;
 	public int heldItemId = -1;
 	public int xp;
+	private int effectCount = 0;
+	public ArrayList<StatusEffectType> status = new ArrayList<StatusEffectType>();
 
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
 
@@ -66,7 +70,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nextLvlXP = p.getInteger("EXPToNextLevel");
 		xp = p.getInteger("EXP");
 		hp = p.getInteger("StatsHP");
-		happiness = p.getInteger("Happiness");
+		friendship = p.getInteger("Friendship");
 		health = p.getShort("Health");
 		isMale = p.getBoolean("IsMale");
 		isFainted = p.getBoolean("IsFainted");
@@ -91,6 +95,10 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			boxNumber = p.getInteger("BoxNumber");
 		hasOwner = true;
 		doesLevel = p.getBoolean("DoesLevel");
+		effectCount = p.getShort("EffectCount");
+		for (int i = 0; i < effectCount; i++) {
+			status.add(StatusEffectType.getEffect(p.getInteger("Effect" + i)));
+		}
 	}
 
 	public PixelmonDataPacket(EntityPixelmon p, EnumPackets packetType) {
@@ -103,7 +111,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nextLvlXP = p.getLvl().getExpToNextLevel();
 		xp = p.getLvl().getExp();
 		hp = p.stats.HP;
-		happiness = p.friendship.friendship;
+		friendship = p.friendship.friendship;
 		health = p.getHealth();
 		isMale = p.isMale;
 		isFainted = p.isFainted;
@@ -130,6 +138,10 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			heldItemId = p.heldItem.itemID;
 		hasOwner = p.getOwner() != null || p.getTrainer() != null;
 		doesLevel = p.doesLevel;
+		effectCount = p.status.size();
+		for (int i = 0; i < effectCount; i++) {
+			status.add(p.status.get(i).type);
+		}
 	}
 
 	@Override
@@ -147,7 +159,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeShort(nextLvlXP);
 		data.writeShort(xp);
 		data.writeShort(hp);
-		data.writeShort(happiness);
+		data.writeShort(friendship);
 		data.writeShort(health);
 		data.writeBoolean(isMale);
 		data.writeBoolean(isFainted);
@@ -169,6 +181,9 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeBoolean(isShiny);
 		data.writeBoolean(doesLevel);
 		data.writeInt(heldItemId);
+		data.writeShort(effectCount);
+		for (int i = 0; i < effectCount; i++)
+			data.writeShort(status.get(i).index);
 	}
 
 	@Override
@@ -181,7 +196,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		nextLvlXP = data.readShort();
 		xp = data.readShort();
 		hp = data.readShort();
-		happiness = data.readShort();
+		friendship = data.readShort();
 		health = data.readShort();
 		isMale = data.readBoolean();
 		isFainted = data.readBoolean();
@@ -204,5 +219,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = data.readBoolean();
 		doesLevel = data.readBoolean();
 		heldItemId = data.readInt();
+		effectCount = data.readShort();
+		for (int i = 0; i < effectCount; i++)
+			status.add(StatusEffectType.getEffect(data.readShort()));
 	}
 }
