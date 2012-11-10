@@ -7,6 +7,8 @@ import net.minecraft.src.NBTTagCompound;
 import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.trainers.EntityTrainer;
 
@@ -70,7 +72,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void getNextPokemon(IBattleParticipant opponent) {
-		switchPokemon(opponent, trainer.getNextPokemonID());
+		bc.SwitchPokemon(currentPokemon(), trainer.getNextPokemonID());
 	}
 
 	@Override
@@ -92,12 +94,21 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void switchPokemon(IBattleParticipant opponent, int newPixelmonId) {
-		trainer.pokemonStorage.updateNBT(currentPokemon());
+		currentPokemon().battleStats.clearBattleStats();
+		if (!currentPokemon().isFainted) {
+			ChatHandler.sendBattleMessage(opponent.currentPokemon().getOwner(), trainer.info.name + " withdrew " + currentPokemon().getNickname() + "!");
+		}
+		currentPokemon().catchInPokeball();
 		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
+
 		trainer.releasePokemon();
+
+		ChatHandler.sendBattleMessage(opponent.currentPokemon().getOwner(), trainer.info.name + " sent out " + currentPokemon().getNickname() + "!");
+		
 		if (opponent instanceof PlayerParticipant) {
 			ChatHandler.sendBattleMessage(((PlayerParticipant) opponent).player, trainer.getName() + " sent out " + currentPokemon().getName());
 		}
+		opponent.updateOpponent(this);
 	}
 
 	@Override

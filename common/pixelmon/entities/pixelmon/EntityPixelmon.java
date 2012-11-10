@@ -160,7 +160,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 	}
 
 	public void catchInPokeball() {
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
+		if (getOwner()!=null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 		isInBall = true;
 		unloadEntity();
 	}

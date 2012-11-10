@@ -126,15 +126,15 @@ public class EntityTrainer extends EntityCreature {
 	}
 
 	public void startBattle(EntityPlayer player) {
-		ChatHandler.sendChat(player, info.greeting);
+		ChatHandler.sendBattleMessage(player, info.greeting);
 	}
 
 	public void loseBattle(EntityLiving entityLiving) {
-		ChatHandler.sendChat(entityLiving, info.loseMessage);
+		ChatHandler.sendBattleMessage(entityLiving, info.loseMessage);
 	}
 
 	public void winBattle(EntityLiving entityLiving) {
-		ChatHandler.sendChat(entityLiving, info.winMessage);
+		ChatHandler.sendBattleMessage(entityLiving, info.winMessage);
 	}
 
 	public void retrievePokemon() {
