@@ -5,6 +5,7 @@ public enum SpecialAttackType {
 	Acupressure,
 	Curse,
 	EchoedVoice,
+	Eruption,
 	Facade,
 	Frustration,
 	Guillotine,
@@ -14,6 +15,7 @@ public enum SpecialAttackType {
 	JumpKick,
 	Magnitude,
 	NightShade,
+	PainSplit,
 	Payday,
 	PetalDance,
 	Punishment,
@@ -21,6 +23,7 @@ public enum SpecialAttackType {
 	Psywave,
 	Return,
 	Reversal,
+	SeismicToss,
 	SmackDown,
 	Substitute,
 	Venoshock;
@@ -30,6 +33,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Acupressure")) return SpecialAttackType.Acupressure;
 		if (string.equalsIgnoreCase("Curse")) return SpecialAttackType.Curse;
 		if (string.equalsIgnoreCase("EchoedVoice")) return SpecialAttackType.EchoedVoice;
+		if (string.equalsIgnoreCase("Eruption")) return SpecialAttackType.Eruption;
 		if (string.equalsIgnoreCase("Facade")) return SpecialAttackType.Facade;
 		if (string.equalsIgnoreCase("Frustration")) return SpecialAttackType.Frustration;
 		if (string.equalsIgnoreCase("Guillotine")) return SpecialAttackType.Guillotine;
@@ -39,6 +43,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("JumpKick")) return SpecialAttackType.JumpKick;
 		if (string.equalsIgnoreCase("Magnitude")) return SpecialAttackType.Magnitude;
 		if (string.equalsIgnoreCase("NightShade")) return SpecialAttackType.NightShade;
+		if (string.equalsIgnoreCase("PainSplit")) return SpecialAttackType.PainSplit;
 		if (string.equalsIgnoreCase("Payday")) return SpecialAttackType.Payday;
 		if (string.equalsIgnoreCase("PetalDance")) return SpecialAttackType.PetalDance;
 		if (string.equalsIgnoreCase("Punishment")) return SpecialAttackType.Punishment;
@@ -46,6 +51,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Psywave")) return SpecialAttackType.Psywave;
 		if (string.equalsIgnoreCase("Return")) return SpecialAttackType.Return;
 		if (string.equalsIgnoreCase("Reversal")) return SpecialAttackType.Reversal;
+		if (string.equalsIgnoreCase("SeismicToss")) return SpecialAttackType.SeismicToss;
 		if (string.equalsIgnoreCase("SmackDown")) return SpecialAttackType.SmackDown;
 		if (string.equalsIgnoreCase("Substitute")) return SpecialAttackType.Substitute;
 		if (string.equalsIgnoreCase("Venoshock")) return SpecialAttackType.Venoshock;
@@ -57,6 +63,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Acupressure")) return true;
 		if (string.equalsIgnoreCase("Curse")) return true;
 		if (string.equalsIgnoreCase("EchoedVoice")) return true;
+		if (string.equalsIgnoreCase("Eruption")) return true;
 		if (string.equalsIgnoreCase("Facade")) return true;
 		if (string.equalsIgnoreCase("Frustration")) return true;
 		if (string.equalsIgnoreCase("Guillotine")) return true;
@@ -65,6 +72,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("HornDrill")) return true;
 		if (string.equalsIgnoreCase("JumpKick")) return true;
 		if (string.equalsIgnoreCase("NightShade")) return true;
+		if (string.equalsIgnoreCase("PainSplit")) return true;
 		if (string.equalsIgnoreCase("Payday")) return true;
 		if (string.equalsIgnoreCase("PetalDance")) return true;
 		if (string.equalsIgnoreCase("Punishment")) return true;
@@ -72,6 +80,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Psywave")) return true;
 		if (string.equalsIgnoreCase("Return")) return true;
 		if (string.equalsIgnoreCase("Reversal")) return true;
+		if (string.equalsIgnoreCase("SeismicToss")) return true;
 		if (string.equalsIgnoreCase("SmackDown")) return true;
 		if (string.equalsIgnoreCase("Substitute")) return true;
 		if (string.equalsIgnoreCase("Venoshock")) return true;

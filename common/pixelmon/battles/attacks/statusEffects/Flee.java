@@ -16,7 +16,7 @@ public class Flee extends StatusEffectBase {
 
 	@Override
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName()+ " runs away!");
+		
 
 		target.aggression = Aggression.passive;
 		user.aggression = Aggression.passive;

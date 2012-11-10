@@ -13,10 +13,12 @@ import pixelmon.battles.attacks.attackModifiers.ModifierType;
 import pixelmon.battles.attacks.attackModifiers.MultipleHitAttackModifier;
 import pixelmon.battles.attacks.attackModifiers.PriorityAttackModifier;
 import pixelmon.battles.attacks.attackModifiers.RecoilAttackModifier;
+import pixelmon.battles.attacks.specialAttacks.Acrobatics;
 import pixelmon.battles.attacks.specialAttacks.Acupressure;
 import pixelmon.battles.attacks.specialAttacks.Bide;
 import pixelmon.battles.attacks.specialAttacks.Curse;
 import pixelmon.battles.attacks.specialAttacks.EchoedVoice;
+import pixelmon.battles.attacks.specialAttacks.Eruption;
 import pixelmon.battles.attacks.specialAttacks.Facade;
 import pixelmon.battles.attacks.specialAttacks.Frustration;
 import pixelmon.battles.attacks.specialAttacks.Guillotine;
@@ -26,6 +28,7 @@ import pixelmon.battles.attacks.specialAttacks.JumpKick;
 import pixelmon.battles.attacks.specialAttacks.Magnitude;
 import pixelmon.battles.attacks.specialAttacks.MultiTurnSpecialAttackType;
 import pixelmon.battles.attacks.specialAttacks.NightShade;
+import pixelmon.battles.attacks.specialAttacks.PainSplit;
 import pixelmon.battles.attacks.specialAttacks.PetalDance;
 import pixelmon.battles.attacks.specialAttacks.PsychUp;
 import pixelmon.battles.attacks.specialAttacks.Psywave;
@@ -33,6 +36,7 @@ import pixelmon.battles.attacks.specialAttacks.Punishment;
 import pixelmon.battles.attacks.specialAttacks.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.Return;
 import pixelmon.battles.attacks.specialAttacks.Reversal;
+import pixelmon.battles.attacks.specialAttacks.SeismicToss;
 import pixelmon.battles.attacks.specialAttacks.SolarBeam;
 import pixelmon.battles.attacks.specialAttacks.SpecialAttackType;
 import pixelmon.battles.attacks.specialAttacks.Venoshock;
@@ -57,6 +61,7 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.attacks.statusEffects.Sunny;
 import pixelmon.battles.attacks.statusEffects.TrickRoom;
 import pixelmon.battles.attacks.statusEffects.WaitAfter;
+import pixelmon.battles.attacks.statusEffects.Yawn;
 
 
 public class EffectParser {
@@ -154,6 +159,8 @@ public class EffectParser {
 				effect = new TrickRoom();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.WaitAfter)
 				effect = new WaitAfter(Value);
+			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Yawn)
+				effect = new Yawn();
 		}
 		if (effectType == EffectType.Stats)
 			effect = new StatsEffect(
@@ -189,12 +196,16 @@ public class EffectParser {
 
 			
 		}else if (effectType == EffectType.SpecialAttack){
-			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acupressure)
+			if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acrobatics)
+				effect = new Acrobatics();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Acupressure)
 				effect = new Acupressure();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Curse)
 				effect = new Curse();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.EchoedVoice)
 				effect = new EchoedVoice();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Eruption)
+				effect = new Eruption();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Facade)
 				effect = new Facade();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Guillotine)
@@ -211,6 +222,8 @@ public class EffectParser {
 				effect = new NightShade();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.HiddenPower)
 				effect = new HiddenPower();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.PainSplit)
+				effect = new PainSplit();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Punishment)
 				effect = new Punishment();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Psywave)
@@ -223,6 +236,8 @@ public class EffectParser {
 				effect = new Return();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Reversal)
 				effect = new Reversal();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.SeismicToss)
+				effect = new SeismicToss();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Venoshock)
 				effect = new Venoshock();
 			
