@@ -355,6 +355,8 @@ public class EntityPokeBall extends EntityThrowable {
 				this.motionZ = 0;
 				setIsOnGround(true);
 			}
+			if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY-1), (int) this.posZ) && this.posY % 1 <= this.height)
+				posY++;
 
 			waitTime++;
 		}

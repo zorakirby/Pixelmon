@@ -50,6 +50,8 @@ public class AIStartBattle extends EntityAIBase {
 			if (!(theEntity.getAttackTarget() instanceof EntityPixelmon))
 				return false;
 			EntityPixelmon target = (EntityPixelmon) theEntity.getAttackTarget();
+			if (target.hitByPokeball)
+				return false;
 			if (target.battleController != null)
 				return false;
 			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon) theEntity), new WildPixelmonParticipant(target));

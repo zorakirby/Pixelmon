@@ -3,7 +3,7 @@ package pixelmon.enums;
 public enum EnumTrainers {
 	Youngster, 
 	Fisherman,
-	FemaleRocketGrunt,
+	//FemaleRocketGrunt, This model needs to be pieced correctly.
 	BugCatcher;
 
 	public static boolean has(String creatureName) {

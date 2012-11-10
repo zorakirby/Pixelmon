@@ -49,11 +49,13 @@ public class GuiPixelmonOverlay extends Gui {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthMask(false);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if (event != null) {
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glEnable(GL11.GL_LIGHTING);
 		}
+		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		int var4;
 		if (isGuiMinimized)
 			var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlaySimple.png");
@@ -69,7 +71,7 @@ public class GuiPixelmonOverlay extends Gui {
 
 		fontRenderer.setUnicodeFlag(true);
 		int i = 0;
-
+		 
 		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
 			int offset = 0;
 			if (p != null) {
@@ -101,7 +103,7 @@ public class GuiPixelmonOverlay extends Gui {
 					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 				drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItemId != -1) {
-					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/heldItem.png");
+					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
 					drawImageQuad(var9, 18, var7 / 6 + i * 30 + 19 + offset, 6, 6, 0f, 0f, 1f, 1f);
 				}
 				if (!isGuiMinimized) {

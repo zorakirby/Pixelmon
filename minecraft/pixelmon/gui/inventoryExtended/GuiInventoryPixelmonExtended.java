@@ -81,6 +81,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		super.drawScreen(par1, par2, par3);
+		GL11.glDisable(GL11.GL_LIGHTING);
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
 		if(pixelmonMenuOpen){

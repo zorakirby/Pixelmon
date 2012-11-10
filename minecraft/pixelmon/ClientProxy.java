@@ -84,8 +84,8 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preloadTextures() {
-		for (EnumPokemon pokemon : EnumPokemon.values())
-			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + pokemon.name.toLowerCase() + ".png");
+//		for (EnumPokemon pokemon : EnumPokemon.values())
+//			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + pokemon.name.toLowerCase() + ".png");
 	}
 
 	@Override
@@ -128,7 +128,9 @@ public class ClientProxy extends CommonProxy {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Can't find Model for " + name);
+			System.out.println("Error in Model for " + name);
+			System.out.println(e.getMessage());
+			return null;
 		}
 		if (model == null)
 			System.out.println("Can't find Model for " + name);

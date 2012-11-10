@@ -70,17 +70,12 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void getNextPokemon(IBattleParticipant opponent) {
-		trainer.pokemonStorage.updateNBT(currentPokemon());
-		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId())
-				.setBoolean("IsFainted", true);
-		trainer.releasePokemon();
+		switchPokemon(opponent, trainer.getNextPokemonID());
 	}
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return trainer.releasedPokemon == null
-				|| trainer.releasedPokemon.isDead
-				|| trainer.releasedPokemon.isFainted
+		return trainer.releasedPokemon == null || trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted
 				|| trainer.releasedPokemon.getHealth() <= 0;
 	}
 
@@ -91,13 +86,18 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset,
-				participant2.currentPokemon().type, trainer.releasedPokemon,
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, participant2.currentPokemon().type, trainer.releasedPokemon,
 				participant2.currentPokemon());
 	}
 
 	@Override
-	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
+	public void switchPokemon(IBattleParticipant opponent, int newPixelmonId) {
+		trainer.pokemonStorage.updateNBT(currentPokemon());
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
+		trainer.releasePokemon();
+		if (opponent instanceof PlayerParticipant) {
+			ChatHandler.sendBattleMessage(((PlayerParticipant) opponent).player, trainer.getName() + " sent out " + currentPokemon().getName());
+		}
 	}
 
 	@Override
@@ -113,8 +113,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId())
-				.setBoolean("IsFainted", true);
+		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
 	}
 
 	@Override

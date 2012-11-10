@@ -59,7 +59,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
 			break;
 		case 4:
-			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket));
+			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 0));
 			break;
 		}
 
@@ -89,12 +89,10 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 	}
 	
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
-//			targetPacket.moveset[i2].type.getColor());
-		drawString(fontRenderer, "PokeChecker", 65, -35, 0xcccccc);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
 		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xcccccc);
-//		drawString(fontRenderer, String.valueOf(targetPacket.), -20, 100, 0xcccccc);
+		drawCenteredString(fontRenderer, String.valueOf(mc.thePlayer.username), 8, 120, 0xcccccc);
 		
 		drawString(fontRenderer, "HP:", 60, -7, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.HP), 200 - (String.valueOf(targetPacket.HP).length()*3), -7, 0xcccccc);
@@ -110,7 +108,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		drawString(fontRenderer, String.valueOf(targetPacket.Speed), 200 - (String.valueOf(targetPacket.Speed).length()*3), 93, 0xcccccc);
 		
 		drawString(fontRenderer, "Happiness", 72, 115, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.happiness), 95, 130, 0xcccccc);
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.friendship), 95, 130, 0xcccccc);
 		drawString(fontRenderer, "Nature", 158, 115, 0xcccccc);
 		drawString(fontRenderer, "Coming Soon", 145, 135, -5111808);
 		drawString(fontRenderer, "Stats", 145, 166, -6250336);
@@ -196,8 +194,14 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 		tessellator.startDrawingQuads();
 
-		int barWidth = (int) (((float) p.health) / ((float) p.hp) * (((float) width) - 6f));
-		tessellator.setColorRGBA_F(1.0f - ((float) p.health / (float) p.hp) * 0.8F, 0.2F + ((float) p.health / (float) p.hp) * 0.8F, 0.2F, 1.0F);
+		int barWidth = width - 6;
+		tessellator.setColorRGBA_F(1.0F, 0.2F, 0.2F, 1.0F);
+		tessellator.addVertex(x, y, 0.0);
+		tessellator.addVertex(x, y + height, 0.0);
+		tessellator.addVertex(x + barWidth, y + height, 0.0);
+		tessellator.addVertex(x + barWidth, y, 0.0);
+		barWidth = (int) (((float) p.health) / ((float) p.hp) * (((float) width) - 6f));
+		tessellator.setColorRGBA_F(0.2F, 1F, 0.2F, 1.0F);
 		tessellator.addVertex(x, y, 0.0);
 		tessellator.addVertex(x, y + height, 0.0);
 		tessellator.addVertex(x + barWidth, y + height, 0.0);

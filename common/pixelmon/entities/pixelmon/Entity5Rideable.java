@@ -33,6 +33,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	private double velocityZ;
 	private boolean isMounted;
 
+	private final boolean ridingEnabled = false;
+
 	public Entity5Rideable(World par1World) {
 		super(par1World);
 
@@ -53,20 +55,22 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	@Override
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
-			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
-			if (itemstack == null) {
-				if (baseStats.IsRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
-					if (riddenByEntity != null) {
-						player.mountEntity(this);
-						((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
-						player.setPosition(posX, posY, posZ);
-					} else {
-						player.mountEntity(this);
-						tasks.taskEntries.clear();
+			if (ridingEnabled) {
+				ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
+				if (itemstack == null) {
+					if (baseStats.IsRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
+						if (riddenByEntity != null) {
+							player.mountEntity(this);
+							((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
+							player.setPosition(posX, posY, posZ);
+						} else {
+							player.mountEntity(this);
+							tasks.taskEntries.clear();
+						}
+						return true;
 					}
-					return true;
+					return false;
 				}
-				return false;
 			}
 		}
 		return super.interact(player);

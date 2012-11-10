@@ -83,7 +83,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
 		if(pixelmonMenuOpen){
-			this.drawCenteredString(fontRenderer, selected.name, menuX - 50, menuY - 8, 0xffffff);
+			this.drawCenteredString(fontRenderer, selected.name, menuX - 40, menuY - 8, 0xffffff);
 		}
 	}
 

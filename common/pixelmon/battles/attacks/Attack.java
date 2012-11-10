@@ -122,9 +122,9 @@ public class Attack {
 							attackHandled = ((AttackModifierBase) e).ApplyEffect(user, target, this);
 					}
 					else if (e.effectType== EffectType.SpecialAttack)
-						((SpecialAttackBase)e).ApplyEffect(user, target, this, attackList, targetAttackList);
+						attackHandled = ((SpecialAttackBase)e).ApplyEffect(user, target, this, attackList, targetAttackList);
 					else if (e.effectType== EffectType.MultiTurnSpecialAttack)
-						((MultiTurnSpecialAttackBase)e).ApplyEffect(user, target, this, attackList, targetAttackList);
+						attackHandled = ((MultiTurnSpecialAttackBase)e).ApplyEffect(user, target, this, attackList, targetAttackList);
 				}
 			}
 

@@ -60,7 +60,7 @@ public class SetHeldItem extends PacketHandlerBase {
 						((EntityPlayerMP) player).dropPlayerItem(new ItemStack(item));
 				}
 			} else {
-				currentItem.stackSize++;
+				if (currentItem!=null) currentItem.stackSize++;
 				((EntityPlayerMP) player).inventory.setItemStack(currentItem);
 			}
 		}

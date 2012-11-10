@@ -23,14 +23,12 @@ public class Confusion extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Confusion) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already confused!");
 					return;
 				}
 			target.status.add(this);
 			effectTurns = (new Random()).nextInt(4) + 1;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has become confused!");
-		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+		}
 	}
 
 	@Override

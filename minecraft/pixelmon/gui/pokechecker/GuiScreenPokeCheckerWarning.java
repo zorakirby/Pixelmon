@@ -26,10 +26,20 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 	protected PixelmonDataPacket targetPacket;
 	boolean overY = false;
 	boolean overN = false;
+	int warningIndex;
+	int moveToDelete;
 	
-	public GuiScreenPokeCheckerWarning(PixelmonDataPacket pixelmonDataPacket) {
+	public GuiScreenPokeCheckerWarning(PixelmonDataPacket pixelmonDataPacket, int i) {
 		super(new ContainerEmpty());
 		targetPacket = pixelmonDataPacket;
+		warningIndex = i;
+	}
+	
+	public GuiScreenPokeCheckerWarning(PixelmonDataPacket pixelmonDataPacket, int i, int j) {
+		super(new ContainerEmpty());
+		targetPacket = pixelmonDataPacket;
+		warningIndex = i;
+		moveToDelete = j;
 	}
 
 	public boolean doesGuiPauseGame() {
@@ -43,8 +53,12 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 
 	protected void mouseClicked(int mouseX, int mouseY, int par3) {
 		super.mouseClicked(mouseX, mouseY, par3);
-		if(overY){
+		if(overY && warningIndex == 0){
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.StopStartLevelling, targetPacket.pokemonID));
+			mc.thePlayer.closeScreen();
+		}
+		if(overY && warningIndex == 1){
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.DeleteMove, targetPacket.pokemonID, moveToDelete));
 			mc.thePlayer.closeScreen();
 		}
 		else if(overN)
@@ -54,12 +68,19 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 	
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		String text = "";
-		if(!targetPacket.doesLevel)
-			text = "enable";
-		if(targetPacket.doesLevel)
-			text = "disable";
-		drawCenteredString(fontRenderer, "Are you sure you'd like", 60, 75, 0xcccccc);
-		drawCenteredString(fontRenderer, "to " + text + " leveling?", 60, 85, 0xcccccc);
+		if(warningIndex == 0){
+			if(!targetPacket.doesLevel)
+				text = "enable";
+			if(targetPacket.doesLevel)
+				text = "disable";
+			drawCenteredString(fontRenderer, "Are you sure you'd like", 60, 75, 0xcccccc);
+			drawCenteredString(fontRenderer, "to " + text + " leveling?", 60, 85, 0xcccccc);
+		}
+		if(warningIndex == 1){
+			drawCenteredString(fontRenderer, "Are you sure you'd like", 60, 75, 0xcccccc);
+			drawCenteredString(fontRenderer, targetPacket.name + " to forget ", 60, 85, 0xcccccc);
+			drawCenteredString(fontRenderer, targetPacket.moveset[moveToDelete].attackName + "?", 60, 95, 0xcccccc);
+		}
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {

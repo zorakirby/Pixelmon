@@ -19,18 +19,14 @@ public class Freeze extends StatusEffectBase {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Freeze) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already frozen!");
 					return;
 				}
 			if (target.type.contains(EnumType.Ice)){
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
 			target.status.add(this);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has been frozen solid");
-		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
-
+		}
 	}
 
 	@Override
