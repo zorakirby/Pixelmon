@@ -61,6 +61,7 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.attacks.statusEffects.Sunny;
 import pixelmon.battles.attacks.statusEffects.TrickRoom;
 import pixelmon.battles.attacks.statusEffects.WaitAfter;
+import pixelmon.battles.attacks.statusEffects.Yawn;
 
 
 public class EffectParser {
@@ -158,6 +159,8 @@ public class EffectParser {
 				effect = new TrickRoom();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.WaitAfter)
 				effect = new WaitAfter(Value);
+			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Yawn)
+				effect = new Yawn();
 		}
 		if (effectType == EffectType.Stats)
 			effect = new StatsEffect(
