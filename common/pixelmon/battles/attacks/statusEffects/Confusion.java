@@ -52,7 +52,8 @@ public class Confusion extends StatusEffectBase {
 		double defence = ((double) user.stats.Defence) * ((double) user.battleStats.DefenceModifier) / 100;
 		double Damage = ((2 * user.getLvl().getLevel() + 10) / 250 * (attack / defence) * 40 + 2) * modifier;
 
-		return (int) Math.round(Damage);
+		return (int) Math.floor(Damage);
+				//(int) Math.round(Damage);
 	}
 
 	@Override

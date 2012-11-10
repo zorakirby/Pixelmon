@@ -34,6 +34,9 @@ public class Rest extends StatusEffectBase {
 		if(effectTurns == 1)
 			effectTurns++;
 		
+		else if(effectTurns == 2)
+			effectTurns++;
+		
 		else if(effectTurns == 3)
 		user.status.remove(StatusEffectType.Sleep);
 		user.status.remove(this);
