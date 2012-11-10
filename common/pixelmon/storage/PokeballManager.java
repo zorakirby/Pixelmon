@@ -59,7 +59,7 @@ public class PokeballManager {
 	public PlayerStorage getPlayerStorage(EntityPlayerMP owner) {
 
 		for (PlayerStorage p : playerPokemonList) {
-			if (p.player.username.equals(owner.username))
+			if (p.player != null && owner != null && p.player.username.equals(owner.username))
 				return p;
 		}
 		loadPlayer(owner);

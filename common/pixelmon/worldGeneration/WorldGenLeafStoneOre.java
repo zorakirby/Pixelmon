@@ -25,10 +25,10 @@ public class WorldGenLeafStoneOre extends WorldGenerator implements IWorldGenera
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 20; i++) {
 			int xPos = random.nextInt(16) + chunkX*16;
 			int zPos = random.nextInt(16) + chunkZ*16;
-			int yPos = world.getHeightValue(xPos, zPos);
+			int yPos = random.nextInt(100) + 28;
 			generate(world, random, xPos, yPos, zPos);
 		}		
 	}

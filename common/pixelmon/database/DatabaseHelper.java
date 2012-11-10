@@ -111,8 +111,8 @@ public class DatabaseHelper {
 		}
 	}
 	
-	public static String databaseURL = "https://dl.dropbox.com/u/78327099/Pixelmon.db";
-	public static String sqliteURL = "https://dl.dropbox.com/u/78327099/sqlite-jdbc-3.7.2.jar";
+	public static String databaseURL = "http://www.pixelmon-mod.com/4downloads/files/Pixelmon.db";
+	public static String sqliteURL = "http://www.pixelmon-mod.com/4downloads/files/sqlite-jdbc-3.7.2.jar";
 	
 
 	/**
