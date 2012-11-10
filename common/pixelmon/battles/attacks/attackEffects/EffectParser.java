@@ -23,6 +23,7 @@ import pixelmon.battles.attacks.specialAttacks.Facade;
 import pixelmon.battles.attacks.specialAttacks.Frustration;
 import pixelmon.battles.attacks.specialAttacks.Guillotine;
 import pixelmon.battles.attacks.specialAttacks.GyroBall;
+import pixelmon.battles.attacks.specialAttacks.HeavySlam;
 import pixelmon.battles.attacks.specialAttacks.HiddenPower;
 import pixelmon.battles.attacks.specialAttacks.JumpKick;
 import pixelmon.battles.attacks.specialAttacks.Magnitude;
@@ -212,6 +213,8 @@ public class EffectParser {
 				effect = new Guillotine();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.GyroBall)
 				effect = new GyroBall();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.HeavySlam)
+				effect = new HeavySlam();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Frustration)
 				effect = new Frustration();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.HiddenPower)
