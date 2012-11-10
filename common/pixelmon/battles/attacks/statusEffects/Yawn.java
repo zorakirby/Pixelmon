@@ -15,6 +15,7 @@ public class Yawn extends StatusEffectBase {
 	@Override
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			ArrayList<String> attackList) {
+		
 		if(turnCount == 0){
 			target.status.add(this);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " became drowsy!");
@@ -27,14 +28,16 @@ public class Yawn extends StatusEffectBase {
 	@Override
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
 
-		turnCount++;
-		if(turnCount == 1)
+		if(turnCount == 0)
 			turnCount++;
 		
-		else if (turnCount == 2)
+		
+		else if (turnCount == 1){
 			user.status.add(new Sleep());
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), 
+					target.getName() + " fell asleep!");
 			user.status.remove(this);
-			
+		}
 	}
 
 
