@@ -106,10 +106,12 @@ public class GuiBattle extends GuiContainer {
 			drawYesNoDialog(mouseX, mouseY);
 		else if (ClientBattleManager.hasLevelUps() || ClientBattleManager.hasNewAttacks()) {
 			if (!ClientBattleManager.hasNewAttacks()
-					|| (ClientBattleManager.hasLevelUps() && ClientBattleManager.levelUpList.get(0).level <= ClientBattleManager.newAttackList.get(0).level))
+					|| (ClientBattleManager.hasLevelUps() && ClientBattleManager.levelUpList.get(0).level <= ClientBattleManager.newAttackList.get(0).level)) {
+				mode = oldMode;
 				drawLevelUp(mouseX, mouseY);
-			else
+			} else
 				drawReplaceAttack(mouseX, mouseY);
+
 		} else if (mode == BattleMode.MainMenu)
 			drawMainMenu(mouseX, mouseY);
 		else if (mode == BattleMode.ChooseAttack)
@@ -736,8 +738,11 @@ public class GuiBattle extends GuiContainer {
 					mc.setIngameFocus();
 					GuiPixelmonOverlay.isVisible = true;
 					return;
-				} else
+				} else {
 					mode = BattleMode.Waiting;
+					mode = oldMode;
+				}
+
 			}
 		}
 	}
@@ -820,7 +825,7 @@ public class GuiBattle extends GuiContainer {
 
 	private Packet250CustomPayload sendPacket;
 
-	BattleMode oldMode;
+	public static BattleMode oldMode;
 
 	private void ReplaceAttackClicked(int mouseX, int mouseY) {
 		Attack newAttack = ClientBattleManager.newAttackList.get(0).attack;
