@@ -41,6 +41,8 @@ public class ClientBattleManager {
 
 	public static ParticipantType opponentType;
 
+	public static boolean goBackToMainMenu;
+
 	public static PixelmonDataPacket getOpponent() {
 		return opponent;
 	}

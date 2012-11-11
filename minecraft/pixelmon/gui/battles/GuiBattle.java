@@ -640,8 +640,7 @@ public class GuiBattle extends GuiContainer {
 					+ 18, 0xFFFFFF);
 			drawString(fontRenderer, "Type: ", width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2, height
 					- guiHeight + 33, 0xFFFFFF);
-			drawString(
-					fontRenderer,
+			fontRenderer.drawString(
 					moveset[mouseOverButton].type.toString(),
 					width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2
 							+ fontRenderer.getStringWidth("Type: "), height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
@@ -806,7 +805,7 @@ public class GuiBattle extends GuiContainer {
 			}
 			ClientBattleManager.newAttackList.remove(0);
 			if (battleControllerIndex != -1 || ClientBattleManager.hasNewAttacks() || ClientBattleManager.hasLevelUps())
-				mode = BattleMode.Waiting;
+				mode = oldMode;
 			else {
 				mc.thePlayer.closeScreen();
 				mc.setIngameFocus();
@@ -815,11 +814,13 @@ public class GuiBattle extends GuiContainer {
 			}
 		}
 		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31) {
-			mode = BattleMode.Waiting;
+			mode = oldMode;
 		}
 	}
 
 	private Packet250CustomPayload sendPacket;
+
+	BattleMode oldMode;
 
 	private void ReplaceAttackClicked(int mouseX, int mouseY) {
 		Attack newAttack = ClientBattleManager.newAttackList.get(0).attack;
@@ -829,11 +830,13 @@ public class GuiBattle extends GuiContainer {
 			if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 - 94 + 22 * i && mouseY < height / 2 - 94 + 22 * (i + 1)) {
 				sendPacket = PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonToLearnAttack.pokemonID, newAttack.attackIndex, i);
 				selectedAttack = i;
+				oldMode = mode;
 				mode = BattleMode.YesNo;
 			}
 		}
 
 		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 + 3 && mouseY < height / 2 + 25) {
+			oldMode = mode;
 			mode = BattleMode.YesNo;
 			selectedAttack = -1;
 		}

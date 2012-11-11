@@ -42,6 +42,8 @@ public class EntityTrainer extends EntityCreature {
 		super(par1World);
 		dataWatcher.addObject(3, ""); // Name
 		dataWatcher.addObject(4, "");// Model
+		dataWatcher.addObject(5, (int) 0);
+		dataWatcher.addObject(6, ""); // Nickname
 		tasks.addTask(0, new EntityAISwimming(this));
 		tasks.addTask(1, new AITrainerInBattle(this));
 		tasks.addTask(2, new EntityAIWander(this, moveSpeed));
@@ -51,8 +53,10 @@ public class EntityTrainer extends EntityCreature {
 		setName(name);
 		pokemonStorage = new PlayerStorage(this);
 		info = DatabaseTrainers.GetTrainerInfo(name);
+		dataWatcher.updateObject(5, info.level);
 		if (dataWatcher.getWatchableObjectString(4) == "")
 			dataWatcher.updateObject(4, info.model);
+		dataWatcher.updateObject(6, info.name);
 		health = 100;
 	}
 
@@ -79,6 +83,10 @@ public class EntityTrainer extends EntityCreature {
 
 	public String getName() {
 		return dataWatcher.getWatchableObjectString(3);
+	}
+
+	public String getNickName() {
+		return dataWatcher.getWatchableObjectString(6);
 	}
 
 	public void setName(String name) {
@@ -155,7 +163,7 @@ public class EntityTrainer extends EntityCreature {
 					for (int i = 0; i < numStatus; i++) {
 						nbt.func_82580_o("Effect" + i);
 					}
-					nbt.setShort("EffectCount", (short)0);
+					nbt.setShort("EffectCount", (short) 0);
 				}
 			}
 		}
@@ -192,5 +200,9 @@ public class EntityTrainer extends EntityCreature {
 	public int getNextPokemonID() {
 		EntityPixelmon p = pokemonStorage.getFirstAblePokemon(worldObj);
 		return p.getPokemonId();
+	}
+
+	public int getLvl() {
+		return dataWatcher.getWatchableObjectInt(5);
 	}
 }

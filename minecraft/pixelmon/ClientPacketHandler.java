@@ -66,6 +66,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				ClientBattleManager.addMessage("Choose a new pokemon to send out!");
 				GuiBattle.mode = BattleMode.EnforcedSwitch;
 			} else if (packetID == EnumPackets.BackToMainMenu.getIndex()) {
+				ClientBattleManager.goBackToMainMenu = true;
 				GuiBattle.mode = BattleMode.MainMenu;
 			} else if (packetID == EnumPackets.ExitBattle.getIndex()) {
 				GuiBattle.battleEnded = true;
