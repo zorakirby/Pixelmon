@@ -1,11 +1,8 @@
 package pixelmon.gui.pc;
 
-import java.awt.Rectangle;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
-import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.RenderHelper;
 import net.minecraft.src.Tessellator;
 
@@ -23,13 +20,11 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.grethen.TradeHandler;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.gui.GuiPixelmonOverlay;
-import pixelmon.storage.ComputerBox;
-import pixelmon.storage.PlayerComputerStorage;
+import pixelmon.render.GraphicsHelper;
 import pixelmon.storage.PlayerStorage;
 
 public class GuiTrading extends GuiContainer {
 
-	private int boxNumber, trashX, trashY, checkX, checkY;
 	private SlotPC mouseSlot;
 	private SlotPCParty[] partySlots = new SlotPCParty[6];
 	private TradeHandler tradeHandler;
@@ -38,20 +33,12 @@ public class GuiTrading extends GuiContainer {
 	{
 		super(new ContainerEmpty());
 		tradeHandler = new TradeHandler(p1, p2);
-		boxNumber = 0;
+		//boxNumber = 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void initGui() {
 		super.initGui();
 		controlList.clear();
-		controlList.add(new GuiButton(0, width / 2 - 131, height / 6 + 60, 20, 20, "<-"));
-		controlList.add(new GuiButton(1, width / 2 - 91 + 205, height / 6 + 60, 20, 20, "->"));
-		trashX = width / 2 - 91 + 202;
-		trashY = height / 6 + 150;
-		checkY = trashY;
-		checkX = width / 2 - 140;
-
 		mouseSlot = new SlotPC(0, 0, (PixelmonDataPacket) null);
 		for (int i = 0; i < 6; i++) {
 			int x = i;
@@ -145,23 +132,9 @@ public class GuiTrading extends GuiContainer {
 
 	}
 
-	public void actionPerformed(GuiButton button) {
-		int b = button.id;
-		if (b == 0) {
-			if (boxNumber == 0) {
-				boxNumber = 7;
-			} else {
-				boxNumber--;
-			}
-		}
-		if (b == 1) {
-			if (boxNumber == 7) {
-				boxNumber = 0;
-			} else {
-				boxNumber++;
-			}
-		}
-		
+	
+	public void actionPerformed(GuiButton button) 
+	{	
 	}
 
 	public boolean doesGuiPauseGame() {
@@ -197,8 +170,6 @@ public class GuiTrading extends GuiContainer {
 		partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcBox.png");
 		Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
 		drawTexturedModalRect(width / 2 - 91, height / 6, 0, 0, 182, 141);
-		drawTexturedModalRect(trashX, trashY, 0, 256 - 32, 32, 32);
-		drawImageQuad(Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pokechecker.png"), checkX, checkY, 32f, 32f, 0f, 0f, 1f, 1f);
 		int image = 0;
 		for (int a = 0; a < partySlots.length; a++) {
 			image = 0;
@@ -257,9 +228,11 @@ public class GuiTrading extends GuiContainer {
 			} else {
 				fontRenderer.drawString("HP " + p.health + "/" + p.hp, mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
 			}
-
+			if(tradeHandler.getCurrentOffer(0) != null)
+				GraphicsHelper.drawModelToScreen(1, 10, 10, width / 2, height / 2, tradeHandler.getCurrentOffer(0), this, true);
+			if(tradeHandler.getCurrentOffer(0) != null)
+				GraphicsHelper.drawModelToScreen(1, 10, 10, width / 2, height / 2, tradeHandler.getCurrentOffer(1), this, true);
 		}
-		fontRenderer.drawString("Box: " + (boxNumber + 1), width / 2 - 18, height / 6 - 20, 0xffffff);
 
 	}
 

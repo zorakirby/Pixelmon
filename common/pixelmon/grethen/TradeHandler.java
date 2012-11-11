@@ -1,10 +1,7 @@
 package pixelmon.grethen;
 
-import net.minecraft.src.*;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.storage.PlayerStorage;
-import pixelmon.storage.PokeballManager;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
 public class TradeHandler
