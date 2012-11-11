@@ -36,7 +36,7 @@ public class PlayerStorage {
 	private static final int carryLimit = 6;
 	public EntityPlayerMP player;
 	public EntityTrainer trainer;
-	private PokeballManagerMode mode;
+	public final PokeballManagerMode mode;
 	public boolean guiOpened = false;
 
 	public PlayerStorage(EntityPlayerMP player) {
