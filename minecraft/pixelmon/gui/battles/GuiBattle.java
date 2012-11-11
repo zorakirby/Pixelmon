@@ -635,14 +635,17 @@ public class GuiBattle extends GuiContainer {
 			drawButton(width / 2 - 141, height - guiHeight + 33, 87, 20, moveset[2].attackName, mouseX, mouseY, guiIndex, 2);
 		if (numMoves > 3)
 			drawButton(width / 2 - 50, height - guiHeight + 33, 87, 20, moveset[3].attackName, mouseX, mouseY, guiIndex, 3);
-		drawCenteredString(fontRenderer, "PP: " + moveset[mouseOverButton].pp + "/" + moveset[mouseOverButton].ppBase, width / 2 + 99, height - guiHeight + 18,
-				0xFFFFFF);
-		drawString(fontRenderer, "Type: ", width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2, height
-				- guiHeight + 33, 0xFFFFFF);
-		drawString(fontRenderer, moveset[mouseOverButton].type.toString(),
-				width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2 + fontRenderer.getStringWidth("Type: "),
-				height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
-
+		if (moveset[mouseOverButton] != null) {
+			drawCenteredString(fontRenderer, "PP: " + moveset[mouseOverButton].pp + "/" + moveset[mouseOverButton].ppBase, width / 2 + 99, height - guiHeight
+					+ 18, 0xFFFFFF);
+			drawString(fontRenderer, "Type: ", width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2, height
+					- guiHeight + 33, 0xFFFFFF);
+			drawString(
+					fontRenderer,
+					moveset[mouseOverButton].type.toString(),
+					width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2
+							+ fontRenderer.getStringWidth("Type: "), height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
+		}
 		if (mouseX > width / 2 + 137 && mouseX < width / 2 + 148 && mouseY > height - 11 && mouseY < height - 1)
 			drawImageQuad(guiIndex, width / 2 + 137, height - 11, 11, 10, 613f / 640f, 151f / 480f, 635f / 640f, 171f / 480f);
 
