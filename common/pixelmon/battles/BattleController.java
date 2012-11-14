@@ -105,8 +105,6 @@ public class BattleController {
 	}
 
 	public void update() {
-		if(participant1.currentPokemon().isDead || participant2.currentPokemon().isDead)
-			this.endBattleWithoutXP();
 		participant1.update();
 		participant2.update();
 		if (isWaiting() || paused)
