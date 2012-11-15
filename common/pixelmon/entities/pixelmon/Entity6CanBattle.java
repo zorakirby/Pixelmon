@@ -140,6 +140,16 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		return false;
 	}
 
+	public boolean hasStatus(StatusEffectType s) {
+		for (int i = 0; i < status.size(); i++) {
+			StatusEffectBase base = status.get(i);
+			if (base.type == s) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
