@@ -167,7 +167,7 @@ public class ClientProxy extends CommonProxy {
 			PixelmonDataPacket p = ServerStorageDisplay.get(y);
 			return new GuiChoosePokemon(p, x, null);
 		} else if (ID == EnumGui.Pokedex.getIndex())
-			return new GuiPokedex();
+			return new GuiPokedex(player.username);
 		else if (ID == EnumGui.PC.getIndex())
 			return new GuiPC();
 		else if (ID == EnumGui.Healer.getIndex())

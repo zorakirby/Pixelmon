@@ -23,6 +23,7 @@ import pixelmon.entities.EntityCamera;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
 import pixelmon.migration.MigrationLoader;
+import pixelmon.pokedex.Pokedex;
 import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.spawning.PixelmonWaterSpawner;
@@ -93,6 +94,7 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 		
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
+		Pokedex.init();
 	}
 
 	@Init

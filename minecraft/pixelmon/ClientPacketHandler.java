@@ -10,6 +10,7 @@ import pixelmon.Pixelmon;
 import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.comm.PixelmonPokedexPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
@@ -17,6 +18,7 @@ import pixelmon.gui.battles.ClientBattleManager;
 import pixelmon.gui.battles.GuiBattle;
 import pixelmon.gui.battles.GuiBattle.BattleMode;
 import pixelmon.items.ItemData;
+import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
@@ -72,6 +74,18 @@ public class ClientPacketHandler implements IPacketHandler {
 				else
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 
+			} else if(packetID == EnumPackets.Pokedex.getIndex())
+			{
+				PixelmonPokedexPacket p = new PixelmonPokedexPacket();
+				try
+				{
+					p.readPacketData(dataStream);
+					EntityPlayer ep = (EntityPlayer) player;
+					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(ep.username)).pokedex = p.getPokedex(ep.username);
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

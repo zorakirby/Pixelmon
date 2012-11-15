@@ -17,6 +17,8 @@ import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.pokedex.Pokedex;
+import pixelmon.pokedex.Pokedex.DexRegisterStatus;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
 import net.minecraft.server.MinecraftServer;
@@ -37,11 +39,13 @@ public class PlayerStorage {
 	public EntityPlayerMP player;
 	public EntityTrainer trainer;
 	public final PokeballManagerMode mode;
+	public Pokedex pokedex;
 	public boolean guiOpened = false;
 
 	public PlayerStorage(EntityPlayerMP player) {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
+		pokedex = new Pokedex(player);
 	}
 
 	public PlayerStorage(EntityTrainer trainer) {
@@ -87,6 +91,8 @@ public class PlayerStorage {
 	}
 
 	public void addToParty(EntityPixelmon p) {
+		pokedex.set(Pokedex.nameToID(p.getName()), DexRegisterStatus.caught);
+		pokedex.sendToPlayer(pokedex.owner);
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
 		if (!hasSpace()) {
@@ -95,7 +101,7 @@ public class PlayerStorage {
 			return;
 		}
 		if (p.caughtBall == null)
-			p.caughtBall = EnumPokeballs.MasterBall;
+			p.caughtBall = EnumPokeballs.PokeBall;
 		if (mode == PokeballManagerMode.Player)
 			p.setOwner(player.username);
 		else if (mode == PokeballManagerMode.Trainer)
@@ -357,6 +363,8 @@ public class PlayerStorage {
 				var1.setCompoundTag("" + e.getInteger("pixelmonID"), e);
 			}
 		}
+		if(pokedex != null)
+			pokedex.writeToNBT(var1);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -377,6 +385,8 @@ public class PlayerStorage {
 					player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(pokemonData, EnumPackets.AddToStorage).getPacket());
 			}
 		} while (true);
+		if(pokedex != null)
+			pokedex.readFromNBT(var1);
 	}
 
 	public EntityPixelmon getFirstAblePokemon(World world) {
