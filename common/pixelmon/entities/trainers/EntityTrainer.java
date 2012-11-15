@@ -161,7 +161,7 @@ public class EntityTrainer extends EntityCreature {
 				if (nbt.hasKey("EffectCount")) {
 					int numStatus = nbt.getShort("EffectCount");
 					for (int i = 0; i < numStatus; i++) {
-						nbt.func_82580_o("Effect" + i);
+						nbt.removeTag("Effect" + i);
 					}
 					nbt.setShort("EffectCount", (short) 0);
 				}

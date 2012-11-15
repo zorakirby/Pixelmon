@@ -43,52 +43,47 @@ public class DatabaseHelper {
 	 * @return True if they do, otherwise false
 	 */
 	public static boolean has() {
-		try
-		{
+		try {
 			File databaseDir = new File(DownloadHelper.getDir(), "database");
-			if(!databaseDir.exists())
-			{
-				databaseDir.mkdir();
-				DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
-				DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
-			}
-			else
-			{
-				File databaseFile = new File(databaseDir, "Pixelmon.db");
-				if(!databaseFile.exists())
-				{
-					DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
-				}
-				else
-				{
-					checkVersion();
-				}
-				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
-				if (!sqlitejar.exists())
-					DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
-				((ModClassLoader)Loader.instance().getModClassLoader()).addFile(sqlitejar);
-			}
-			
-			
+			// if(!databaseDir.exists())
+			// {
+			// databaseDir.mkdir();
+			// DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+			// DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar",
+			// sqliteURL);
+			// }
+			// else
+			// {
+			File databaseFile = new File(databaseDir, "Pixelmon.db");
+			// if(!databaseFile.exists())
+			// {
+			// DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+			// }
+			// else
+			// {
+			// checkVersion();
+			// }
+			File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
+			// if (!sqlitejar.exists())
+			// DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar",
+			// sqliteURL);
+			((ModClassLoader) Loader.instance().getModClassLoader()).addFile(sqlitejar);
+			// }
+
 			Class.forName("org.sqlite.JDBC");
 			Connection c = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
-			if(c == null)
-			{
+			if (c == null) {
 				return false;
 			}
 			return true;
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
-	public static void checkVersion()
-	{
-		if(!DownloadHelper.compareVersion("database/Pixelmon.db", databaseURL))
-		{
+
+	public static void checkVersion() {
+		if (!DownloadHelper.compareVersion("database/Pixelmon.db", databaseURL)) {
 			DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
 		}
 	}
@@ -110,10 +105,9 @@ public class DatabaseHelper {
 			return null;
 		}
 	}
-	
+
 	public static String databaseURL = "http://www.pixelmon-mod.com/4downloads/files/Pixelmon.db";
 	public static String sqliteURL = "http://www.pixelmon-mod.com/4downloads/files/sqlite-jdbc-3.7.2.jar";
-	
 
 	/**
 	 * Gets a <code>Statement</code> from the given <code>Connection</code>

@@ -62,7 +62,7 @@ public class PixelmonRecipes {
 								PixelmonItemsApricorns.getCookedApricorn(p.recipe[1]), Character.valueOf('Z'),
 								PixelmonItemsApricorns.getCookedApricorn(p.recipe[2]) });
 
-				GameRegistry.addShapelessRecipe(new ItemStack(p.getItem(), 1), new Object[] { Block.button, PixelmonItemsPokeballs.ironBase, p.getLid() });
+				GameRegistry.addShapelessRecipe(new ItemStack(p.getItem(), 1), new Object[] { Block.stoneButton, PixelmonItemsPokeballs.ironBase, p.getLid() });
 			}
 		}
 	}

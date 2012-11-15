@@ -41,7 +41,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		stats = new Stats();
 		level = new Level((EntityPixelmon) this);
 		friendship = new FriendShip((EntityPixelmon) this);
-		dataWatcher.addObject(10, (short) 10); // MaxHP
+		dataWatcher.addObject(20, (short) 10); // MaxHP
 		dataWatcher.addObject(7, (short) health);
 	}
 
@@ -142,7 +142,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public int getMaxHealth() {
 		if (isInitialised)
-			return dataWatcher.getWatchableObjectShort(10);
+			return dataWatcher.getWatchableObjectShort(20);
 		else
 			return 10;
 	}
@@ -204,7 +204,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public void updateStats() {
 		stats.setLevelStats(baseStats, level.getLevel());
-		dataWatcher.updateObject(10, (short) stats.HP);
+		dataWatcher.updateObject(20, (short) stats.HP);
 		updateHealth();
 	}
 

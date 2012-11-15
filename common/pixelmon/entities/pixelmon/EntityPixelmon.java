@@ -41,6 +41,7 @@ import net.minecraft.src.EntityAIHurtByTarget;
 import net.minecraft.src.EntityAIOwnerHurtByTarget;
 import net.minecraft.src.EntityAIOwnerHurtTarget;
 import net.minecraft.src.EntityAITasks;
+import net.minecraft.src.EntityAgeable;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
@@ -284,5 +285,11 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void setTrainer(EntityTrainer entityTrainer) {
 		trainer = entityTrainer;
+	}
+
+	@Override
+	public EntityAgeable func_90011_a(EntityAgeable var1) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

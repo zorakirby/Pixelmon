@@ -180,7 +180,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 		if (dropItem && breakChance == 1 && EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10)) != EnumPokeballs.MasterBall) {
 			worldObj.playSoundAtEntity(this, "random.break", 0.8F, 0.8F + this.worldObj.rand.nextFloat() * 0.4F);
-			entityDropItem(new ItemStack(Block.button), 0.0F);
+			entityDropItem(new ItemStack(Block.stoneButton), 0.0F);
 			entityDropItem(new ItemStack(PixelmonItemsPokeballs.ironBase), 0.0F);
 			entityDropItem(new ItemStack(breakBall()), 0.0F);
 			setDead();
@@ -200,32 +200,24 @@ public class EntityPokeBall extends EntityThrowable {
 				if (pixelmon != null) {
 					if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
 						if (movingobjectposition.sideHit == 0)// Bottom
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY - 1,
-									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY - 1, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 1)// Top
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY + 1,
-									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY + 1, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 2)// East
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY,
-									movingobjectposition.blockZ + 0.5 - 1, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5 - 1, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 3)// West
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY,
-									movingobjectposition.blockZ + 0.5 + 1, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5 + 1, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 4)// North
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 - 1, movingobjectposition.blockY,
-									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 - 1, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 5)// South
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 + 1, movingobjectposition.blockY,
-									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 + 1, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
 					} else {
 						pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
 					}
 					pixelmon.motionX = pixelmon.motionY = pixelmon.motionZ = 0;
 					pixelmon.releaseFromPokeball();
-					if (movingobjectposition.entityHit != null
-							&& (movingobjectposition.entityHit instanceof EntityPixelmon)
-							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn(
-									(EntityPixelmon) movingobjectposition.entityHit)) {
+					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)
+							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn((EntityPixelmon) movingobjectposition.entityHit)) {
 						IBattleParticipant part;
 						if (((EntityPixelmon) movingobjectposition.entityHit).getOwner() != null)
 							part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
@@ -355,7 +347,7 @@ public class EntityPokeBall extends EntityThrowable {
 				this.motionZ = 0;
 				setIsOnGround(true);
 			}
-			if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY-1), (int) this.posZ) && this.posY % 1 <= this.height)
+			if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY - 1), (int) this.posZ) && this.posY % 1 <= this.height)
 				posY++;
 
 			waitTime++;

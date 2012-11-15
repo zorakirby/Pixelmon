@@ -128,8 +128,8 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
 		proxy.registerTickHandlers();
 		
-		SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
-		s.readSchematic();
+//		SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
+//		s.readSchematic();
 		//GameRegistry.registerWorldGenerator(new GeneralScattered(rand, s.width, s.width, s));
 	}
 

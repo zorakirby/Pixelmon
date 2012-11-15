@@ -39,7 +39,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
-		if (par1DamageSource.fireDamage())
+		if (par1DamageSource.isFireDamage())
 			dataWatcher.updateObject(6, (short) 1);
 		return super.attackEntityFrom(par1DamageSource, par2);
 	}
