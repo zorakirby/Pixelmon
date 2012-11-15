@@ -95,7 +95,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
+		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xcccccc);
 		drawCenteredString(fontRenderer, targetPacket.health + "/" + targetPacket.hp, 185, 10, 0xdddddd);
 		drawString(fontRenderer, "Status", -10, 100, 0xcccccc);
 		if(targetPacket.isFainted)
@@ -109,14 +109,14 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		drawString(fontRenderer, "Summary", -15, 166, -6250336);
 		
 		int typeImg;
-		float x = targetPacket.type1.textureX;
-		float y = targetPacket.type1.textureY;
-		float x1 = targetPacket.type2.textureX;
-		float y1 = targetPacket.type2.textureY;
+		float x = targetPacket.getType1().textureX;
+		float y = targetPacket.getType1().textureY;
+		float x1 = targetPacket.getType2().textureX;
+		float y1 = targetPacket.getType2().textureY;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		typeImg = mc.renderEngine.getTexture("/pixelmon/gui/types.png");
 		drawImageQuad(typeImg, 60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
-		if((targetPacket.type2 != EnumType.Mystery))
+		if((targetPacket.getType2() != EnumType.Mystery))
 		drawImageQuad(typeImg, 100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
 		
 	}
@@ -126,12 +126,12 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		String numString = "";
-		if (targetPacket.nationalPokedexNumber < 10)
-			numString = "00" + targetPacket.nationalPokedexNumber;
-		else if (targetPacket.nationalPokedexNumber < 100)
-			numString = "0" + targetPacket.nationalPokedexNumber;
+		if (targetPacket.getNationalPokedexNumber() < 10)
+			numString = "00" + targetPacket.getNationalPokedexNumber();
+		else if (targetPacket.getNationalPokedexNumber() < 100)
+			numString = "0" + targetPacket.getNationalPokedexNumber();
 		else
-			numString = "" + targetPacket.nationalPokedexNumber;
+			numString = "" + targetPacket.getNationalPokedexNumber();
 		
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summarySummary.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -150,10 +150,10 @@ public class GuiScreenPokeChecker extends GuiContainer {
 			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if(targetPacket.nickname.length() < 1)
-		drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.type1.getColor());
+		drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.getType1().getColor());
 		else{
-			drawCenteredStringWithoutShadow(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
-			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.getType1().getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.getType1().getColor());
 		}
 	}
 

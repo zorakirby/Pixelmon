@@ -24,12 +24,12 @@ public class SlotPC {
 		if (pokemonData == null)
 			return 0;
 		String pokeNum = "";
-		if (pokemonData.nationalPokedexNumber < 10)
-			pokeNum = "00" + pokemonData.nationalPokedexNumber;
-		else if (pokemonData.nationalPokedexNumber < 100)
-			pokeNum = "0" + pokemonData.nationalPokedexNumber;
+		if (pokemonData.getNationalPokedexNumber() < 10)
+			pokeNum = "00" + pokemonData.getNationalPokedexNumber();
+		else if (pokemonData.getNationalPokedexNumber() < 100)
+			pokeNum = "0" + pokemonData.getNationalPokedexNumber();
 		else
-			pokeNum = "" + pokemonData.nationalPokedexNumber;
+			pokeNum = "" + pokemonData.getNationalPokedexNumber();
 		return Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + pokeNum);
 	}
 

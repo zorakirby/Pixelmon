@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pixelmon.database.EvolutionInfo.InfoMode;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.stats.BaseStats;
 import pixelmon.entities.pixelmon.stats.BaseStats.Aggression;
 import pixelmon.entities.pixelmon.stats.BaseStats.SwimmingParameters;
@@ -21,120 +22,40 @@ import net.minecraft.src.EnumCreatureType;
 
 public class DatabaseStats {
 
-	public static BaseStats GetBaseStats(String pixelmonName) {
+	public static BaseStats GetBaseStats(Entity3HasStats entity) {
 		Connection conn = null;
+		String pixelmonName = entity.getName();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + pixelmonName + "'");
 
-			BaseStats stats = new BaseStats();
+			BaseStats stats = new BaseStats(entity);
 			String error = "";
 			boolean hasError = false;
 			while (rs.next()) {
-				stats.HP = rs.getInt("BaseHP");
-				if (rs.wasNull()) {
-					error += "[HP]";
-					hasError = true;
-				}
-				stats.Attack = rs.getInt("BaseAttack");
-				if (rs.wasNull()) {
-					error += "[ATTACK]";
-					hasError = true;
-				}
-				stats.Defence = rs.getInt("BaseDefence");
-				if (rs.wasNull()) {
-					error += "[DEFENSE]";
-					hasError = true;
-				}
-				stats.Speed = rs.getInt("BaseSpeed");
-				if (rs.wasNull()) {
-					error += "[SPEED]";
-					hasError = true;
-				}
-				stats.SpAtt = rs.getInt("BaseSpAttack");
-				if (rs.wasNull()) {
-					error += "[SPATTACK]";
-					hasError = true;
-				}
-				stats.SpDef = rs.getInt("BaseSpDefence");
-				if (rs.wasNull()) {
-					error += "[SPDEFENSE]";
-					hasError = true;
-				}
-				if (hasError) {
-					System.out.println("Error in BaseStats " + "[" + error + "]" + " For Pokemon : " + pixelmonName);
-				}
-				stats.CatchRate = rs.getInt("CatchRate");
-				if (rs.wasNull())
-					System.out.println("Error in CatchRate" + " For Pokemon : " + pixelmonName);
-
-				stats.MalePercent = rs.getInt("MalePercent");
-				if (rs.wasNull())
-					System.out.println("Error in MalePercent" + " For Pokemon : " + pixelmonName);
-
-				stats.EvolveLevel = rs.getInt("EvolveLevel");
-				if (rs.wasNull())
-					System.out.println("Error in EvolveLevel" + " For Pokemon : " + pixelmonName);
-				stats.EvolveInto = rs.getString("EvolveInto");
-				stats.CanFly = rs.getInt("CanFly") == 1;
-				if (rs.wasNull())
-					System.out.println("Error in CanFly" + " For Pokemon : " + pixelmonName);
-				stats.Height = rs.getFloat("Height");
+				stats.height = rs.getFloat("Height");
 				if (rs.wasNull())
 					System.out.println("Error in Height" + " For Pokemon : " + pixelmonName);
-				stats.Width = rs.getFloat("Width");
+				stats.width = rs.getFloat("Width");
 				if (rs.wasNull())
 					System.out.println("Error in Width" + " For Pokemon : " + pixelmonName);
-				stats.Length = rs.getFloat("Length");
+				stats.length = rs.getFloat("Length");
 				if (rs.wasNull())
 					System.out.println("Error in Length" + " For Pokemon : " + pixelmonName);
-				stats.Type1 = EnumType.parseType(rs.getString("Type1"));
-				if (rs.wasNull())
-					System.out.println("Error in Type" + " For Pokemon : " + pixelmonName);
-				stats.BaseExp = rs.getInt("BaseExp");
-				if (rs.wasNull())
-					System.out.println("Error in BaseExp" + " For Pokemon : " + pixelmonName);
-				stats.ExperienceGroup = ExperienceGroup.getExperienceGroup(rs.getString("ExperienceGroup"));
-				if (rs.wasNull() || stats.ExperienceGroup == null)
-					System.out.println("Error in ExperienceGroup" + " For Pokemon : " + pixelmonName);
-				stats.nationalPokedexNumber = rs.getInt("NationalPokedexNumber");
-				if (rs.wasNull())
-					System.out.println("Error in NationalPokedexNumber" + " For Pokemon : " + pixelmonName);
-				stats.SpawnLevel = rs.getInt("SpawnLevel");
-				if (rs.wasNull())
-					System.out.println("Error in SpawnLevel" + " For Pokemon : " + pixelmonName);
-				stats.SpawnLevelRange = rs.getInt("SpawnLevelRange");
-				if (rs.wasNull())
-					System.out.println("Error in SpawnLevelRange" + " For Pokemon : " + pixelmonName);
-				stats.IsRideable = rs.getBoolean("IsRideable");
-				stats.giScale = rs.getFloat("GIScale");
-				rs.getString("Type2");
-				if (!rs.wasNull())
-					stats.Type2 = EnumType.parseType(rs.getString("Type2"));
-				stats.aggression = stats.new Aggression(rs.getString("Aggression"), pixelmonName);
-				if (rs.wasNull())
-					System.out.println("Error in Aggression" + " For Pokemon : " + pixelmonName);
+				stats.canFly = rs.getInt("CanFly") == 1;
 				String type = rs.getString("CreatureType");
 				if (type.equalsIgnoreCase("Land"))
 					stats.creatureType = EnumCreatureType.creature;
 				else
 					stats.creatureType = EnumCreatureType.waterCreature;
-				stats.droppedItem = rs.getString("DroppedItem");
+				
+				stats.giScale = rs.getFloat("GIScale");
 				stats.spawnConditions = SpawnConditions.ParseSpawnConditions(rs.getString("SpawnConditions"));
-				stats.friendshipBase = rs.getInt("BaseFriendship");
-
 				String sp = rs.getString("SwimmingParameters");
 				if (!rs.wasNull())
 					stats.swimmingParameters = stats.new SwimmingParameters(sp, pixelmonName);
-
-				stats.evGain[0] = rs.getInt("EvGainHP");
-				stats.evGain[1] = rs.getInt("EvGainAtk");
-				stats.evGain[2] = rs.getInt("EvGainDef");
-				stats.evGain[3] = rs.getInt("EvGainSpAtk");
-				stats.evGain[4] = rs.getInt("EvGainSpDef");
-				stats.evGain[5] = rs.getInt("EvGainSpeed");
 			}
 			conn.close();
 			return stats;
@@ -360,6 +281,28 @@ public class DatabaseStats {
 					e1.printStackTrace();
 				}
 		}
+		return null;
+	}
+
+	public static Object getStat(String pixelmonName, String string) {
+		Connection conn = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DatabaseHelper.getConnection();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select " + string + " from Pixelmon where Name='" + pixelmonName + "'");
+			while (rs.next()) {
+				return rs.getObject(string);
+			}
+		} catch (Exception e) {
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		}
+		System.out.println("Error in " + string + " For Pokemon : " + pixelmonName);
 		return null;
 	}
 }

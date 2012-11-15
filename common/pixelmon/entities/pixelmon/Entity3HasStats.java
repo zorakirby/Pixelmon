@@ -48,23 +48,25 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	protected void init(String name) {
 		super.init(name);
-		baseStats = DatabaseStats.GetBaseStats(name);
+		baseStats = DatabaseStats.GetBaseStats(this);
 		stats.IVs = IVStore.CreateNewIVs();
-		setSize(baseStats.Width, baseStats.Height + hoverHeight);
+		setSize(baseStats.width, baseStats.height + hoverHeight);
 		setType();
-		length = baseStats.Length;
+		length = baseStats.length;
 
-		if (rand.nextInt(100) < baseStats.MalePercent)
+		if (rand.nextInt(100) < baseStats.getMalePercent())
 			isMale = true;
 		else
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
 
 		if (level.getLevel() == -1) {
-			if (baseStats.SpawnLevelRange <= 0)
-				level.setLevel(baseStats.SpawnLevel);
+			int spawnLevelRange = baseStats.getSpawnLevelRange();
+			int spawnLevel = baseStats.getSpawnLevel();
+			if (spawnLevelRange <= 0)
+				level.setLevel(spawnLevel);
 			else
-				level.setLevel(baseStats.SpawnLevel + rand.nextInt(baseStats.SpawnLevelRange));
+				level.setLevel(spawnLevel + rand.nextInt(spawnLevelRange));
 			setEntityHealth(stats.HP);
 		}
 	}
@@ -84,9 +86,9 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	private void setType() {
-		type.add(baseStats.Type1);
-		if (baseStats.Type2 != EnumType.Mystery)
-			type.add(baseStats.Type2);
+		type.add(baseStats.getType1());
+		if (baseStats.getType2() != EnumType.Mystery)
+			type.add(baseStats.getType2());
 	}
 
 	@Override
@@ -103,7 +105,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void evolve(String evolveTo) {
 		super.evolve(evolveTo);
-		baseStats = DatabaseStats.GetBaseStats(getName());
+		baseStats = DatabaseStats.GetBaseStats(this);
 		type.clear();
 		setType();
 		if (getOwner() != null)
@@ -123,7 +125,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		if (baseStats != null) {
 			if (baseStats.creatureType == EnumCreatureType.waterCreature)
 				return;
-			if (baseStats.CanFly)
+			if (baseStats.canFly)
 				return;
 		}
 		super.fall(f);
@@ -194,12 +196,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		float halfWidth = this.width * scale / 2.0F;
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
-					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5
-					+ (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
+					- (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5 + (double) halfLength);
 		else
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
-					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
+					- (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
 	}
 
 	public void updateStats() {

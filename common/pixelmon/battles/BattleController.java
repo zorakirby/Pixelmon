@@ -375,7 +375,7 @@ public class BattleController {
 				else
 					return;
 				t = 1;// traded
-				b = target.baseStats.BaseExp;
+				b = target.baseStats.getBaseExp();
 				e = ItemHeld.isItemOfType(entityPixelmon.getHeldItem(), EnumHeldItems.luckyEgg) ? 1.5 : 1;
 				L = target.getLvl().getLevel();
 				Lp = user.getInteger("Level");
@@ -386,12 +386,12 @@ public class BattleController {
 				if (userIndex == entityPixelmon.getPokemonId()) {
 					entityPixelmon.getLvl().awardEXP((int) exp);
 					if (entityPixelmon.getLvl().canLevelUp())
-						entityPixelmon.stats.EVs.gainEV(target.baseStats.evGain);
+						entityPixelmon.stats.EVs.gainEV(target.baseStats.getEvGain());
 				} else {
 					EntityPixelmon pix = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).sendOut(userIndex,
 							entityPixelmon.getOwner().worldObj);
 					pix.getLvl().awardEXP((int) exp);
-					pix.stats.EVs.gainEV(target.baseStats.evGain);
+					pix.stats.EVs.gainEV(target.baseStats.getEvGain());
 					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).retrieve(pix);
 				}
 				doneUsers.add(userIndex);

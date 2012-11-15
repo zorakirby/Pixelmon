@@ -90,12 +90,12 @@ public class GuiPixelmonOverlay extends Gui {
 
 				}
 				String numString = "";
-				if (p.nationalPokedexNumber < 10)
-					numString = "00" + p.nationalPokedexNumber;
-				else if (p.nationalPokedexNumber < 100)
-					numString = "0" + p.nationalPokedexNumber;
+				if (p.getNationalPokedexNumber() < 10)
+					numString = "00" + p.getNationalPokedexNumber();
+				else if (p.getNationalPokedexNumber() < 100)
+					numString = "0" + p.getNationalPokedexNumber();
 				else
-					numString = "" + p.nationalPokedexNumber;
+					numString = "" + p.getNationalPokedexNumber();
 				int var9;
 				if (p.isShiny)
 					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");

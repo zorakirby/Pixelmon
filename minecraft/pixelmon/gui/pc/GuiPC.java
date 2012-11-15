@@ -282,12 +282,12 @@ public class GuiPC extends GuiContainer {
 				continue;
 			}
 			String numString = "";
-			if (slot.pokemonData.nationalPokedexNumber < 10)
-				numString = "00" + slot.pokemonData.nationalPokedexNumber;
-			else if (slot.pokemonData.nationalPokedexNumber < 100)
-				numString = "0" + slot.pokemonData.nationalPokedexNumber;
+			if (slot.pokemonData.getNationalPokedexNumber() < 10)
+				numString = "00" + slot.pokemonData.getNationalPokedexNumber();
+			else if (slot.pokemonData.getNationalPokedexNumber() < 100)
+				numString = "0" + slot.pokemonData.getNationalPokedexNumber();
 			else
-				numString = "" + slot.pokemonData.nationalPokedexNumber;
+				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
 				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 			else
@@ -305,12 +305,12 @@ public class GuiPC extends GuiContainer {
 				continue;
 			}
 			String numString = "";
-			if (slot.pokemonData.nationalPokedexNumber < 10)
-				numString = "00" + slot.pokemonData.nationalPokedexNumber;
-			else if (slot.pokemonData.nationalPokedexNumber < 100)
-				numString = "0" + slot.pokemonData.nationalPokedexNumber;
+			if (slot.pokemonData.getNationalPokedexNumber() < 10)
+				numString = "00" + slot.pokemonData.getNationalPokedexNumber();
+			else if (slot.pokemonData.getNationalPokedexNumber() < 100)
+				numString = "0" + slot.pokemonData.getNationalPokedexNumber();
 			else
-				numString = "" + slot.pokemonData.nationalPokedexNumber;
+				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
 				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 			else
@@ -324,12 +324,12 @@ public class GuiPC extends GuiContainer {
 		if (mouseSlot.pokemonData != null) {
 			PixelmonDataPacket p = mouseSlot.pokemonData;
 			String numString = "";
-			if (p.nationalPokedexNumber < 10)
-				numString = "00" + p.nationalPokedexNumber;
-			else if (p.nationalPokedexNumber < 100)
-				numString = "0" + p.nationalPokedexNumber;
+			if (p.getNationalPokedexNumber() < 10)
+				numString = "00" + p.getNationalPokedexNumber();
+			else if (p.getNationalPokedexNumber() < 100)
+				numString = "0" + p.getNationalPokedexNumber();
 			else
-				numString = "" + p.nationalPokedexNumber;
+				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
 				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 			else

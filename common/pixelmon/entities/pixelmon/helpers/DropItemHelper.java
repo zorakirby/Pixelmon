@@ -15,53 +15,54 @@ public class DropItemHelper {
 	}
 
 	public int getDropItemID() {
+		String droppedItem = pixelmon.baseStats.getDroppedItem();
 		if (pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
 			return 0;
-		if (pixelmon.baseStats.droppedItem == null)
+		if (droppedItem == null)
 			return 0;
 
-		if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Apple"))
+		if (droppedItem.equalsIgnoreCase("Apple"))
 			return Item.appleRed.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Blaze Powder"))
+		else if (droppedItem.equalsIgnoreCase("Blaze Powder"))
 			return Item.blazePowder.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Bones"))
+		else if (droppedItem.equalsIgnoreCase("Bones"))
 			return Item.bone.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Diamond"))
+		else if (droppedItem.equalsIgnoreCase("Diamond"))
 			return Item.diamond.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Egg"))
+		else if (droppedItem.equalsIgnoreCase("Egg"))
 			return Item.egg.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Ender Pearl"))
+		else if (droppedItem.equalsIgnoreCase("Ender Pearl"))
 			return Item.enderPearl.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Feather"))
+		else if (droppedItem.equalsIgnoreCase("Feather"))
 			return Item.feather.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Glowstone"))
+		else if (droppedItem.equalsIgnoreCase("Glowstone"))
 			return Item.lightStoneDust.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Gold Nugget"))
+		else if (droppedItem.equalsIgnoreCase("Gold Nugget"))
 			return Item.goldNugget.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Gunpowder"))
+		else if (droppedItem.equalsIgnoreCase("Gunpowder"))
 			return Item.gunpowder.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Ink sac")) {
+		else if (droppedItem.equalsIgnoreCase("Ink sac")) {
 			pixelmon.entityDropItem(new ItemStack(Item.dyePowder, 1, 0), 0.0F);
 			return 0;
-		} else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Iron Ingot"))
+		} else if (droppedItem.equalsIgnoreCase("Iron Ingot"))
 			return Item.ingotIron.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Leather"))
+		else if (droppedItem.equalsIgnoreCase("Leather"))
 			return Item.leather.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Raw Beef"))
+		else if (droppedItem.equalsIgnoreCase("Raw Beef"))
 			return Item.beefRaw.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Raw Fish"))
+		else if (droppedItem.equalsIgnoreCase("Raw Fish"))
 			return Item.fishRaw.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Rotten Flesh"))
+		else if (droppedItem.equalsIgnoreCase("Rotten Flesh"))
 			return Item.rottenFlesh.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Seeds"))
+		else if (droppedItem.equalsIgnoreCase("Seeds"))
 			return Item.seeds.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Slimeball"))
+		else if (droppedItem.equalsIgnoreCase("Slimeball"))
 			return Item.slimeBall.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("String"))
+		else if (droppedItem.equalsIgnoreCase("String"))
 			return Item.silk.shiftedIndex;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Thunderstone Shard"))
+		else if (droppedItem.equalsIgnoreCase("Thunderstone Shard"))
 			return PixelmonItems.thunderStoneShardID;
-		else if (pixelmon.baseStats.droppedItem.equalsIgnoreCase("Wool"))
+		else if (droppedItem.equalsIgnoreCase("Wool"))
 			return Block.cloth.blockID;
 		;
 

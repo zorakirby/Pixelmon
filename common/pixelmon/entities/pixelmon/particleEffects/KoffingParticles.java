@@ -18,7 +18,7 @@ public class KoffingParticles extends ParticleEffects {
 
 	@Override
 	public void onUpdate() {
-		float var2 = pixelmon.baseStats.Width * pixelmon.baseStats.giScale * pixelmon.getScale();
+		float var2 = pixelmon.baseStats.width * pixelmon.baseStats.giScale * pixelmon.getScale();
 		float var4 = this.rand.nextFloat() * (float) Math.PI * 2.0F;
 		float var5 = this.rand.nextFloat() * 4F + .5F;
 		float var6 = MathHelper.sin(var4) * var2 * .5F * var5;
@@ -33,7 +33,8 @@ public class KoffingParticles extends ParticleEffects {
 		}
 		count--;
 		if (particlesOn)
-			ClientProxy.spawnParticle(EnumPixelmonParticles.koffing, pixelmon.worldObj, pixelmon.posX + (double) var6, pixelmon.posY + pixelmon.hoverTimer + 1.5F, pixelmon.posZ + (double) var7, pixelmon.getIsShiny());
+			ClientProxy.spawnParticle(EnumPixelmonParticles.koffing, pixelmon.worldObj, pixelmon.posX + (double) var6, pixelmon.posY + pixelmon.hoverTimer + 1.5F, pixelmon.posZ
+					+ (double) var7, pixelmon.getIsShiny());
 
 	}
 

@@ -30,9 +30,9 @@ public class AIHelper {
 		if (tasks.taskEntries.size() != 0)
 			tasks.taskEntries.clear();
 		initBaseAI(entity, tasks);
-		if (entity.baseStats.creatureType == EnumCreatureType.creature && !entity.baseStats.CanFly) {
+		if (entity.baseStats.creatureType == EnumCreatureType.creature && !entity.baseStats.canFly) {
 			initGroundAI(Name, entity, tasks);
-		} else if (entity.baseStats.CanFly) {
+		} else if (entity.baseStats.canFly) {
 			initFlyingAI(Name, entity, tasks);
 		} else if (entity.baseStats.creatureType == EnumCreatureType.waterCreature) {
 			initSwimmingAI(Name, entity, tasks);

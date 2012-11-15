@@ -127,12 +127,12 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			int offset = 0;
 			if (p != null) {
 				String numString = "";
-				if (p.nationalPokedexNumber < 10)
-					numString = "00" + p.nationalPokedexNumber;
-				else if (p.nationalPokedexNumber < 100)
-					numString = "0" + p.nationalPokedexNumber;
+				if (p.getNationalPokedexNumber() < 10)
+					numString = "00" + p.getNationalPokedexNumber();
+				else if (p.getNationalPokedexNumber() < 100)
+					numString = "0" + p.getNationalPokedexNumber();
 				else
-					numString = "" + p.nationalPokedexNumber;
+					numString = "" + p.getNationalPokedexNumber();
 				int spriteIndex;
 
 				if (p.isShiny)

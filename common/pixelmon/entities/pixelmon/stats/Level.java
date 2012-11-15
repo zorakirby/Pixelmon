@@ -84,7 +84,8 @@ public class Level {
 
 	private int getExpForLevel(int level2) {
 		double l = level2;
-		if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.Erratic) {
+		ExperienceGroup ex = pixelmon.baseStats.getExperienceGroup();
+		if (ex == ExperienceGroup.Erratic) {
 			if (l <= 50)
 				return (int) (l * l * l * (100 - l)) / 50;
 			if (l <= 68)
@@ -93,15 +94,15 @@ public class Level {
 				return (int) (l * l * l * (1911 - 10 * l)) / 3;
 			if (l <= 100)
 				return (int) (l * l * l * (160 - l)) / 100;
-		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.Fast) {
+		} else if (ex == ExperienceGroup.Fast) {
 			return (int) (4 * l * l * l / 5);
-		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.MediumFast) {
+		} else if (ex == ExperienceGroup.MediumFast) {
 			return (int) (l * l * l);
-		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.MediumSlow) {
+		} else if (ex == ExperienceGroup.MediumSlow) {
 			return (int) ((6 / 5) * l * l * l - 15 * l * l + 100 * l - 140);
-		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.Slow) {
+		} else if (ex == ExperienceGroup.Slow) {
 			return (int) (5 * l * l * l / 4);
-		} else if (pixelmon.baseStats.ExperienceGroup == ExperienceGroup.Fluctuating) {
+		} else if (ex == ExperienceGroup.Fluctuating) {
 			if (l <= 15)
 				return (int) (l * l * l * ((l + 1) / 3 + 24) / 50);
 			if (l <= 36)
@@ -186,8 +187,8 @@ public class Level {
 				stats = PixelmonStatsPacket.createPacket(pixelmon);
 			setLevel(getLevel() + 1);
 			onLevelUp(stats);
-			if (getLevel() >= pixelmon.baseStats.EvolveLevel) {
-				pixelmon.evolve(pixelmon.baseStats.EvolveInto);
+			if (getLevel() >= pixelmon.baseStats.getEvolveLevel()) {
+				pixelmon.evolve(pixelmon.baseStats.getEvolveInto());
 			}
 			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
 				if (e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {

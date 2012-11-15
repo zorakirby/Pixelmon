@@ -90,7 +90,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 	
 	public void drawGuiContainerForegroundLayer(int par1, int par2){
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.nationalPokedexNumber), -30, -14, 0xcccccc);
+		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xcccccc);
 		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xcccccc);
 		drawCenteredString(fontRenderer, String.valueOf(mc.thePlayer.username), 8, 120, 0xcccccc);
 		
@@ -119,12 +119,12 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		String numString = "";
-		if (targetPacket.nationalPokedexNumber < 10)
-			numString = "00" + targetPacket.nationalPokedexNumber;
-		else if (targetPacket.nationalPokedexNumber < 100)
-			numString = "0" + targetPacket.nationalPokedexNumber;
+		if (targetPacket.getNationalPokedexNumber() < 10)
+			numString = "00" + targetPacket.getNationalPokedexNumber();
+		else if (targetPacket.getNationalPokedexNumber() < 100)
+			numString = "0" + targetPacket.getNationalPokedexNumber();
 		else
-			numString = "" + targetPacket.nationalPokedexNumber;
+			numString = "" + targetPacket.getNationalPokedexNumber();
 		
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryStats.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -138,10 +138,10 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if(targetPacket.nickname.length() < 1)
-		drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.type1.getColor());
+		drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name),(width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.getType1().getColor());
 		else{
-			drawCenteredStringWithoutShadow(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.type1.getColor());
-			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.type1.getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, "("+String.valueOf(targetPacket.name)+")",(width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket.getType1().getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname),(width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.getType1().getColor());
 		}
 	}
 	

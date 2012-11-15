@@ -24,7 +24,6 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class PixelmonDataPacket extends PixelmonPacket {
 	public int pokemonID;
-	public int nationalPokedexNumber;
 	public String name;
 	public String nickname;
 	public int lvl;
@@ -33,10 +32,34 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public int friendship;
 	public boolean isMale;
 	public boolean isFainted;
+	private int nationalPokedexNumber = -1;
+
+	public int getNationalPokedexNumber() {
+		if (nationalPokedexNumber == -1)
+			nationalPokedexNumber = DatabaseStats.getNationalPokedexNumber(name);
+		return nationalPokedexNumber;
+	}
+
+	private EnumType type1 = null, type2 = null;
+
+	public EnumType getType1() {
+		if (type1 == null) {
+			Object ret = DatabaseStats.getStat(name, "Type1");
+			type1 = EnumType.parseType((String) ret);
+		}
+		return type1;
+	}
+
+	public EnumType getType2() {
+		if (type2 == null) {
+			Object ret = DatabaseStats.getStat(name, "Type2");
+			type2 = EnumType.parseType((String) ret);
+		}
+		return type2;
+	}
+
 	public int order;
 	public int numMoves;
-	public EnumType type1;
-	public EnumType type2;
 	public int HP;
 	public int Speed;
 	public int Attack;
@@ -62,8 +85,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public PixelmonDataPacket(NBTTagCompound p, EnumPackets packetType) {
 		this.packetType = packetType;
 		pokemonID = p.getInteger("pixelmonID");
-		BaseStats b = DatabaseStats.GetBaseStats(p.getString("Name"));
-		nationalPokedexNumber = b.nationalPokedexNumber;
 		name = p.getString("Name");
 		nickname = p.getString("Nickname");
 		lvl = p.getInteger("Level");
@@ -80,8 +101,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i = 0; i < numMoves; i++) {
 			moveset[i] = PixelmonMovesetDataPacket.createPacket(p, i);
 		}
-		type1 = b.Type1;
-		type2 = b.Type2;
 		HP = p.getInteger("StatsHP");
 		Speed = p.getInteger("StatsSpeed");
 		Attack = p.getInteger("StatsAttack");
@@ -104,7 +123,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public PixelmonDataPacket(EntityPixelmon p, EnumPackets packetType) {
 		this.packetType = packetType;
 		pokemonID = p.getPokemonId();
-		nationalPokedexNumber = p.baseStats.nationalPokedexNumber;
 		name = p.getName();
 		nickname = p.getNickname();
 		lvl = p.getLvl().getLevel();
@@ -123,11 +141,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i = 0; i < numMoves; i++) {
 			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.moveset, i);
 		}
-		type1 = p.type.get(0);
-		if (p.type.size() == 1)
-			type2 = EnumType.Mystery;
-		else
-			type2 = p.type.get(1);
 		HP = p.stats.HP;
 		Speed = p.stats.Speed;
 		Attack = p.stats.Attack;
@@ -152,7 +165,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	@Override
 	public void writePacketData(DataOutputStream data) throws IOException {
 		data.writeInt(pokemonID);
-		data.writeShort(nationalPokedexNumber);
 		Packet.writeString(name, data);
 		Packet.writeString(nickname, data);
 		data.writeShort(lvl);
@@ -169,8 +181,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i = 0; i < numMoves; i++) {
 			moveset[i].writeData(data);
 		}
-		data.writeShort(type1.getIndex());
-		data.writeShort(type2.getIndex());
 		data.writeShort(HP);
 		data.writeShort(Speed);
 		data.writeShort(Attack);
@@ -189,7 +199,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	@Override
 	public void readPacketData(DataInputStream data) throws IOException {
 		pokemonID = data.readInt();
-		nationalPokedexNumber = data.readShort();
 		name = Packet.readString(data, 64);
 		nickname = Packet.readString(data, 64);
 		lvl = data.readShort();
@@ -207,8 +216,6 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			moveset[i] = new PixelmonMovesetDataPacket();
 			moveset[i].readData(data);
 		}
-		type1 = EnumType.parseType(data.readShort());
-		type2 = EnumType.parseType(data.readShort());
 		HP = data.readShort();
 		Speed = data.readShort();
 		Attack = data.readShort();

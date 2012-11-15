@@ -11,13 +11,13 @@ public class FriendShip {
 	private EntityPixelmon pixelmon;
 	private Random rand = new Random();
 	boolean luxuryBall = false;
-	
+
 	public FriendShip(EntityPixelmon pixelmon) {
 		this.pixelmon = pixelmon;
 	}
 
 	public void initFromCapture() {
-		friendship = pixelmon.baseStats.friendshipBase;
+		friendship = pixelmon.baseStats.getBaseFriendship();
 	}
 
 	public void initFromEgg() {
@@ -41,11 +41,11 @@ public class FriendShip {
 		friendship = nbt.getInteger("Friendship");
 		luxuryBall = nbt.getBoolean("LuxuryBall");
 	}
-	
-	private int luxuryBonus(){
-		
-		if(luxuryBall)
-		return 1 + rand.nextInt(2);
+
+	private int luxuryBonus() {
+
+		if (luxuryBall)
+			return 1 + rand.nextInt(2);
 		else
 			return 0;
 	}
@@ -56,7 +56,7 @@ public class FriendShip {
 		tickCounter++;
 		if (tickCounter == 1000) {
 			friendship++;
-			friendship+= luxuryBonus();
+			friendship += luxuryBonus();
 			tickCounter = 0;
 		}
 	}
