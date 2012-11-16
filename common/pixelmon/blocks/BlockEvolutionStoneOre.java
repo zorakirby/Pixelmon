@@ -18,19 +18,25 @@ public class BlockEvolutionStoneOre extends Block {
 
 	private EnumEvolutionStone type;
 
-	public BlockEvolutionStoneOre(int id, EnumEvolutionStone thunderstone, float hardness) {
+	public BlockEvolutionStoneOre(int id, EnumEvolutionStone type, float hardness) {
 		super(id, Material.rock);
-		this.type = thunderstone;
+		this.type = type;
 		setHardness(hardness);
 		setStepSound(Block.soundStoneFootstep);
 		if (id == PixelmonBlocks.waterStoneOreId)
 			setLightValue(0.5f);
 		setCreativeTab(PixelmonCreativeTabs.natural);
-		blockIndexInTexture = Pixelmon.proxy.getTexture("/terrain.png", "/pixelmon/block/" + type.toString().toLowerCase() + ".png");
+		setTextureFile("/pixelmon/block/blocks.png");
+		blockIndexInTexture = type.textureIndex;
 	}
 
 	public boolean isOpaqueCube() {
 		return !(type == EnumEvolutionStone.Leafstone);
+	}
+	
+	@Override
+	public int getRenderType() {
+		return 0;
 	}
 
 	@SuppressWarnings("incomplete-switch")
