@@ -85,6 +85,7 @@ public class GuiRenamePokemon extends GuiContainer {
 	}
 
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
+		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/rename.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(bg);

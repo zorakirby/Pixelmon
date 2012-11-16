@@ -73,6 +73,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnvil.class, new RenderTileEntityAnvil());
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
 		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems2.png");
+		MinecraftForgeClient.preloadTexture("/pixelmon/block/blocks.png");
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 	}
