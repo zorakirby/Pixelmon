@@ -84,8 +84,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		for (int i2 = 0; i2 < targetPacket.numMoves; i2++) {
 			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, 135, -6 + (i2 * 21), 0xcccccc);
-			drawCenteredString(fontRenderer, String.valueOf((targetPacket.moveset[i2]).pp) + "/" + String.valueOf((targetPacket.moveset[i2]).ppBase), 193, -4
-					+ (i2 * 21), 0xcccccc);
+			drawCenteredString(fontRenderer, String.valueOf((targetPacket.moveset[i2]).pp) + "/" + String.valueOf((targetPacket.moveset[i2]).ppBase), 193, -4 + (i2 * 21), 0xcccccc);
 			int timg = mc.renderEngine.getTexture("/pixelmon/gui/types.png");
 			float x = targetPacket.moveset[i2].type.textureX;
 			float y = targetPacket.moveset[i2].type.textureY;
@@ -146,7 +145,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawString(fontRenderer, "--", 30 - bpextra, 118, 0xFFFFFF);
 		drawString(fontRenderer, "" + attack.accuracy, 30 - acextra, 148, 0xFFFFFF);
 
-		fontRenderer.drawSplitString(attack.description, 63, 115, 141, 0xFFFFFF);
+		fontRenderer.drawSplitString(attack.description, 60, 112, 110, 0xFFFFFF);
 	}
 
 	public void drawSelection(int i, int i1) {
@@ -191,7 +190,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawTexturedModalRect(58, 50, 1, 231, 153, 24);
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
 	}
-	
+
 	protected void drawSelectedRectBin(int i, int i1) {
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor3f(1.0F, 0.0F, 0.0F);// Gives the selection a light red
@@ -240,8 +239,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	protected void mouseClicked(int x, int y, int par3) {
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		super.mouseClicked(x, y, par3);
@@ -267,8 +265,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		String numString = "";
@@ -292,13 +289,12 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
-			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75,
-					targetPacket.getType1().getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.getType1().getColor());
 		else {
-			drawCenteredStringWithoutShadow(fontRenderer, "(" + String.valueOf(targetPacket.name) + ")", (width - xSize) / 2 + 7, (height - ySize) / 2 + 78,
-					targetPacket.getType1().getColor());
-			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname), (width - xSize) / 2 + 7, (height - ySize) / 2 + 70,
-					targetPacket.getType1().getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, "(" + String.valueOf(targetPacket.name) + ")", (width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket
+					.getType1().getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname), (width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.getType1()
+					.getColor());
 		}
 	}
 

@@ -67,6 +67,7 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 
 	
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
+		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		String text = "";
 		if(warningIndex == 0){
 			if(!targetPacket.doesLevel)
