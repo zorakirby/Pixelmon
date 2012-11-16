@@ -26,7 +26,7 @@ public class GuiPokedexSlot extends GuiPokedexSlotBase {
      */
     protected void elementClicked(int par1, boolean par2)
     {
-    	guiPokedex.currentEntry = par1;
+    	guiPokedex.currentEntry = par1 + 1;
     }
 
     /**
@@ -35,7 +35,7 @@ public class GuiPokedexSlot extends GuiPokedexSlotBase {
 
     protected boolean isSelected(int par1)
     {
-        return par1 == guiPokedex.currentEntry;
+        return par1 + 1 == guiPokedex.currentEntry;
     }
 
     /**
@@ -54,9 +54,9 @@ public class GuiPokedexSlot extends GuiPokedexSlotBase {
 
 	protected void drawSlot(int var1, int var2, int var3, int var4, Tessellator var5) 
 	{	
-		PokedexEntry p = guiPokedex.pokedex.getEntry(var1);
+		PokedexEntry p = guiPokedex.pokedex.getEntry(var1 + 1);
 		//this.guiPokedex.drawString(Minecraft.getMinecraft().fontRenderer, guiPokedex.pokedex.getEntry(var1).getDisplayNumber(true) + " " + (String)this.guiPokedex.pokedexList.get(var1), var2+2, var3-1, 16777215);
-		guiPokedex.drawString(ModLoader.getMinecraftInstance().fontRenderer, p.getPokedexDisplayNumber() + " " + (/*guiPokedex.pokedex.hasSeen(var1 + 1)*/true?p.name:"???"), var2 + 2, var3 - 1, 16777215);
+		guiPokedex.drawString(ModLoader.getMinecraftInstance().fontRenderer, p.getPokedexDisplayNumber() + " " + (guiPokedex.pokedex.hasSeen(var1 + 1)?p.name:"???"), var2 + 2, var3 - 1, 16777215);
 	}
 
 }
