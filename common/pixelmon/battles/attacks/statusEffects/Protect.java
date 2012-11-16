@@ -15,14 +15,19 @@ public class Protect extends StatusEffectBase {
 
 	@Override
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+		if (user.hasStatus(type))
+			return;
 		float chance = 1f;
-		for(int i=attackList.size()-2; i >=0; i--){
-			if (attackList.get(i) == "Protect") chance *=0.5f;
-			else break;
+		for (int i = attackList.size() - 2; i >= 0; i--) {
+			if (attackList.get(i) == "Protect")
+				chance *= 0.5f;
+			else
+				break;
 		}
-		if (chance < 0.125f) chance = 0.125f;
-		
-		if ((new Random()).nextInt(100)<= chance*100) {
+		if (chance < 0.125f)
+			chance = 0.125f;
+
+		if ((new Random()).nextInt(100) <= chance * 100) {
 			user.status.add(this);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is readying itself!");
 

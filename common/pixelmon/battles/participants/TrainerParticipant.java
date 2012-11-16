@@ -59,6 +59,7 @@ public class TrainerParticipant implements IBattleParticipant {
 			trainer.releasedPokemon.EndBattle();
 			trainer.healAllPokemon();
 			this.trainer.setAttackTarget(null);
+			trainer.releasedPokemon.status.clear();
 			trainer.releasedPokemon.setDead();
 			trainer.winBattle(foe.currentPokemon().getOwner());
 		} else {
@@ -77,8 +78,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return trainer.releasedPokemon == null || trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted
-				|| trainer.releasedPokemon.getHealth() <= 0;
+		return trainer.releasedPokemon == null || trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted || trainer.releasedPokemon.getHealth() <= 0;
 	}
 
 	@Override
@@ -88,8 +88,7 @@ public class TrainerParticipant implements IBattleParticipant {
 
 	@Override
 	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, participant2.currentPokemon().type, trainer.releasedPokemon,
-				participant2.currentPokemon());
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, participant2.currentPokemon().type, trainer.releasedPokemon, participant2.currentPokemon());
 	}
 
 	@Override
@@ -104,7 +103,7 @@ public class TrainerParticipant implements IBattleParticipant {
 		trainer.releasePokemon();
 
 		ChatHandler.sendBattleMessage(opponent.currentPokemon().getOwner(), trainer.info.name + " sent out " + currentPokemon().getNickname() + "!");
-		
+
 		if (opponent instanceof PlayerParticipant) {
 			ChatHandler.sendBattleMessage(((PlayerParticipant) opponent).player, trainer.getName() + " sent out " + currentPokemon().getName());
 		}
