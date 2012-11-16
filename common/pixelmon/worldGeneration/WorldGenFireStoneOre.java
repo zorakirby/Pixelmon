@@ -27,9 +27,9 @@ public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenera
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		for (int i = 0; i < 50; i++) {
-			int xPos = random.nextInt(16) + chunkX*16;
-			int zPos = random.nextInt(16) + chunkZ*16;
-			int yPos = random.nextInt(20);
+			int xPos = random.nextInt(16) + chunkX * 16;
+			int zPos = random.nextInt(16) + chunkZ * 16;
+			int yPos = random.nextInt(30);
 			generate(world, random, xPos, yPos, zPos);
 		}
 	}
