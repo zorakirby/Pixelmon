@@ -17,6 +17,8 @@ import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.pokedex.Pokedex;
+import pixelmon.pokedex.Pokedex.DexRegisterStatus;
 import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
 import net.minecraft.server.MinecraftServer;
@@ -36,16 +38,25 @@ public class PlayerStorage {
 	private static final int carryLimit = 6;
 	public EntityPlayerMP player;
 	public EntityTrainer trainer;
+<<<<<<< HEAD
 	public String userName;
 	public String saveFile;
 	public PokeballManagerMode mode;
+=======
+	public final PokeballManagerMode mode;
+	public Pokedex pokedex;
+>>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 	public boolean guiOpened = false;
 
 	public PlayerStorage(EntityPlayerMP player) {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
+<<<<<<< HEAD
 		this.userName = player.username;
 		this.saveFile = "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/" + player.username + ".pk";
+=======
+		pokedex = new Pokedex(player);
+>>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 	}
 
 	public PlayerStorage(EntityTrainer trainer) {
@@ -91,6 +102,8 @@ public class PlayerStorage {
 	}
 
 	public void addToParty(EntityPixelmon p) {
+		pokedex.set(Pokedex.nameToID(p.getName()), DexRegisterStatus.caught);
+		pokedex.sendToPlayer(pokedex.owner);
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
 		if (!hasSpace()) {
@@ -99,7 +112,7 @@ public class PlayerStorage {
 			return;
 		}
 		if (p.caughtBall == null)
-			p.caughtBall = EnumPokeballs.MasterBall;
+			p.caughtBall = EnumPokeballs.PokeBall;
 		if (mode == PokeballManagerMode.Player)
 			p.setOwner(player.username);
 		else if (mode == PokeballManagerMode.Trainer)
@@ -361,6 +374,8 @@ public class PlayerStorage {
 				var1.setCompoundTag("" + e.getInteger("pixelmonID"), e);
 			}
 		}
+		if(pokedex != null)
+			pokedex.writeToNBT(var1);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -381,6 +396,8 @@ public class PlayerStorage {
 					player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(pokemonData, EnumPackets.AddToStorage).getPacket());
 			}
 		} while (true);
+		if(pokedex != null)
+			pokedex.readFromNBT(var1);
 	}
 
 	public EntityPixelmon getFirstAblePokemon(World world) {

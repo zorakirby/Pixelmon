@@ -33,7 +33,11 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new StopStartLevelling());
 		handlers.add(new SwapMove());
 		handlers.add(new SwitchPokemon());
+<<<<<<< HEAD
 		handlers.add(new DeleteMove());
+=======
+		handlers.add(new PokedexHandler());
+>>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 	}
 
 	@Override

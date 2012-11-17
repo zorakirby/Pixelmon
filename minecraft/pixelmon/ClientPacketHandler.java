@@ -11,7 +11,11 @@ import pixelmon.StarterList;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
+<<<<<<< HEAD
 import pixelmon.comm.PixelmonLevelUpPacket;
+=======
+import pixelmon.comm.PixelmonPokedexPacket;
+>>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
@@ -20,6 +24,7 @@ import pixelmon.gui.battles.ClientBattleManager.AttackData;
 import pixelmon.gui.battles.GuiBattle;
 import pixelmon.gui.battles.GuiBattle.BattleMode;
 import pixelmon.items.ItemData;
+import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
@@ -78,12 +83,28 @@ public class ClientPacketHandler implements IPacketHandler {
 				ClientBattleManager.newAttackList.add(new AttackData(pokemonID, DatabaseMoves.getAttack(newAttackId), level));
 				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+<<<<<<< HEAD
 			} else if (packetID == EnumPackets.LevelUp.getIndex()) {
 				PixelmonLevelUpPacket p = new PixelmonLevelUpPacket();
 				p.readPacketData(dataStream);
 				ClientBattleManager.levelUpList.add(p);
 				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LevelUp.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+=======
+
+			} else if(packetID == EnumPackets.Pokedex.getIndex())
+			{
+				PixelmonPokedexPacket p = new PixelmonPokedexPacket();
+				try
+				{
+					p.readPacketData(dataStream);
+					EntityPlayer ep = (EntityPlayer) player;
+					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(ep.username)).pokedex = p.getPokedex(ep.username);
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+>>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
