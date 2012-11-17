@@ -148,19 +148,8 @@ public class ClientProxy extends CommonProxy {
 			return new GuiBattle();
 		else if (ID == EnumGui.Battle.getIndex())
 			return new GuiBattle(x);
-<<<<<<< HEAD
 		else if (ID == EnumGui.Pokedex.getIndex())
-			return new GuiPokedex();
-=======
-
-		else if (ID == EnumGui.ChooseAttack.getIndex())
-			return new GuiAttacking(x, y, z);
-		else if (ID == EnumGui.ChoosePokemon.getIndex()) {
-			PixelmonDataPacket p = ServerStorageDisplay.get(y);
-			return new GuiChoosePokemon(p, x, null);
-		} else if (ID == EnumGui.Pokedex.getIndex())
 			return new GuiPokedex(player.username);
->>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 		else if (ID == EnumGui.PC.getIndex())
 			return new GuiPC();
 		else if (ID == EnumGui.Healer.getIndex())

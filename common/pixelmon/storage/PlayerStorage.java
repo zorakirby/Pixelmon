@@ -38,25 +38,18 @@ public class PlayerStorage {
 	private static final int carryLimit = 6;
 	public EntityPlayerMP player;
 	public EntityTrainer trainer;
-<<<<<<< HEAD
 	public String userName;
 	public String saveFile;
 	public PokeballManagerMode mode;
-=======
-	public final PokeballManagerMode mode;
 	public Pokedex pokedex;
->>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 	public boolean guiOpened = false;
 
 	public PlayerStorage(EntityPlayerMP player) {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
-<<<<<<< HEAD
 		this.userName = player.username;
 		this.saveFile = "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/" + player.username + ".pk";
-=======
 		pokedex = new Pokedex(player);
->>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 	}
 
 	public PlayerStorage(EntityTrainer trainer) {

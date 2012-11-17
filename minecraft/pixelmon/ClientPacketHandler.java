@@ -11,11 +11,8 @@ import pixelmon.StarterList;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
-<<<<<<< HEAD
 import pixelmon.comm.PixelmonLevelUpPacket;
-=======
 import pixelmon.comm.PixelmonPokedexPacket;
->>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
@@ -83,15 +80,12 @@ public class ClientPacketHandler implements IPacketHandler {
 				ClientBattleManager.newAttackList.add(new AttackData(pokemonID, DatabaseMoves.getAttack(newAttackId), level));
 				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
-<<<<<<< HEAD
 			} else if (packetID == EnumPackets.LevelUp.getIndex()) {
 				PixelmonLevelUpPacket p = new PixelmonLevelUpPacket();
 				p.readPacketData(dataStream);
 				ClientBattleManager.levelUpList.add(p);
 				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LevelUp.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
-=======
-
 			} else if(packetID == EnumPackets.Pokedex.getIndex())
 			{
 				PixelmonPokedexPacket p = new PixelmonPokedexPacket();
@@ -104,7 +98,6 @@ public class ClientPacketHandler implements IPacketHandler {
 				{
 					e.printStackTrace();
 				}
->>>>>>> branch 'master' of https://github.com/Grethen77/Pixelmon.git
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
