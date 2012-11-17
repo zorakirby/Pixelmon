@@ -196,6 +196,7 @@ public abstract class GuiPokedexSlotBase
 				Minecraft.getMinecraft().displayHeight);
         this.mouseX = mousePosX;
         this.mouseY = mousePosY;
+        //System.out.println(mouseX + ", " + mouseY);
         //this.drawBackground();
         int length = this.getSize();
         int posScrollBar = left + this.width;
@@ -226,11 +227,10 @@ public abstract class GuiPokedexSlotBase
                 if (mousePosY >= this.top && mousePosY <= this.bottom)
                 {
                     int var8 = this.left;
-                    var9 = this.left + this.width;
+                    var9 = this.right;
                     var10 = mousePosY - this.top - this.field_27261_r + (int)this.amountScrolled - 4;
                     index = var10 / this.slotHeight;
-
-                    if (mousePosX >= var8 && mousePosX <= var9 && index >= 0 && var10 >= 0 && index < length)
+                    if (mousePosX >= left && mousePosX <= right && index >= 0 && var10 >= 0 && index < length)
                     {
                         boolean var12 = index == this.selectedElement && System.currentTimeMillis() - this.lastClicked < 250L;
                         this.elementClicked(index, var12);

@@ -79,6 +79,13 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		if (!worldObj.isRemote) {
+			if(battleController != null)
+			{
+				if(par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.explosion
+						|| par1DamageSource == DamageSource.fall || par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall
+						|| par1DamageSource == DamageSource.lava || par1DamageSource == DamageSource.onFire)
+						return false;
+			}
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 			updateHealth();
 			if (battleController != null) {
