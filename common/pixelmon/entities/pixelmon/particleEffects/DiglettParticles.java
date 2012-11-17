@@ -17,9 +17,9 @@ public class DiglettParticles extends ParticleEffects {
 			int k = MathHelper.floor_double(pixelmon.posZ);
 			int j1 = pixelmon.worldObj.getBlockId(i, j, k);
 			if (j1 > 0) {
-				pixelmon.worldObj.spawnParticle((new StringBuilder()).append("tilecrack_").append(j1).toString(), pixelmon.posX + ((double) rand.nextFloat() - 0.5D) * (double) pixelmon.width,
-						pixelmon.boundingBox.minY + 0.10000000000000001D, pixelmon.posZ + ((double) rand.nextFloat() - 0.5D) * (double) pixelmon.width, -pixelmon.motionX * 4D, 1.5D,
-						-pixelmon.motionZ * 4D);
+				pixelmon.worldObj.spawnParticle("tilecrack_" + j1 + "_0", pixelmon.posX + ((double) rand.nextFloat() - 0.5D) * (double) pixelmon.width,
+						pixelmon.boundingBox.minY + 0.10000000000000001D, pixelmon.posZ + ((double) rand.nextFloat() - 0.5D) * (double) pixelmon.width, -pixelmon.motionX * 4D,
+						1.5D, -pixelmon.motionZ * 4D);
 			}
 		}
 
