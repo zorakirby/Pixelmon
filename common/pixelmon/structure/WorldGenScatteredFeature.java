@@ -9,10 +9,14 @@ import net.minecraft.src.World;
 
 public class WorldGenScatteredFeature extends MapGenScatteredFeature implements IWorldGenerator {
 
-	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		//generate(chunkProvider, world, chunkX, chunkZ, par5ArrayOfByte)		
+		int xPos = random.nextInt(16) + chunkX * 16;
+		int zPos = random.nextInt(16) + chunkZ * 16;
+		SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
+		s.readSchematic();
+		GeneralScattered g = new GeneralScattered(random, xPos, zPos, s);
+		g.generate(world, random);
+		System.out.println("A structure has Generated at " + xPos + ", " + zPos);
 	}
 
-	
 }
