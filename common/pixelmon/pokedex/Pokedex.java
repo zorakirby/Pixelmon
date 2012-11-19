@@ -61,6 +61,15 @@ public class Pokedex
 		return nameToID.get(name);
 	}
 	
+	public static boolean isEntryEmpty(int i)
+	{
+		if(!fullPokedex.containsKey(i))
+			return true;
+		if(fullPokedex.get(i).name == "???")
+			return true;
+		return false;
+	}
+	
 	public EntityPlayerMP owner;
 	private final HashMap<Integer, DexRegisterStatus> seenMap;
 	

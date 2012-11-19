@@ -129,13 +129,18 @@ public abstract class GuiPokedexSlotBase
 
     public int func_27256_c(int par1, int par2)
     {
-        int var3 = this.width / 2 - 110;
-        int var4 = this.width / 2 + 110;
+        int var3 = left;
+        int var4 = left + width;
         int var5 = par2 - this.top - this.field_27261_r + (int)this.amountScrolled - 4;
         int var6 = var5 / this.slotHeight;
         return par1 >= var3 && par1 <= var4 && var6 >= 0 && var5 >= 0 && var6 < this.getSize() ? var6 : -1;
     }
 
+    public boolean isMouseOver(int element, int par1, int par2)
+    {
+    	return func_27256_c(par1, par2) == element;
+    }
+    
     /**
      * Registers the IDs that can be used for the scrollbar's buttons.
      */
@@ -192,6 +197,7 @@ public abstract class GuiPokedexSlotBase
      */
     public void drawScreen(int mousePosX, int mousePosY, float par3)
     {
+    	GL11.glPushMatrix();
     	ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
 				Minecraft.getMinecraft().displayHeight);
         this.mouseX = mousePosX;
@@ -340,7 +346,7 @@ public abstract class GuiPokedexSlotBase
 
             if (topLeftOfSelect+6 <= this.bottom && topLeftOfSelect + middleOfSelect-8 >= this.top)
             {
-                if (this.field_25123_p && this.isSelected(index))//draws the selected entry thing
+                if (this.field_25123_p && (this.isSelected(index) || isMouseOver(index, mousePosX, mousePosY)))//draws the selected entry thing
                 {
                     leftish = left;
                     int rightish = left + this.width;
@@ -438,9 +444,11 @@ public abstract class GuiPokedexSlotBase
 
         this.func_27257_b(mousePosX, mousePosY);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glShadeModel(GL11.GL_FLAT);
         GL11.glEnable(GL11.GL_ALPHA_TEST);
         GL11.glDisable(GL11.GL_BLEND);
+        GL11.glPopMatrix();
     }
 
     /**
