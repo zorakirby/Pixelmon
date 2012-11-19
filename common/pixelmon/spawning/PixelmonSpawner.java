@@ -118,8 +118,8 @@ public class PixelmonSpawner {
 					if (((EntityLiving) pixelmon).getCanSpawnHere())
 						world.spawnEntityInWorld(pixelmon);
 				}
-				spawnList.remove(0);
 			}
+			spawnList.remove(0);
 		}
 	}
 

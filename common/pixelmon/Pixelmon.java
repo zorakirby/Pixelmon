@@ -119,7 +119,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
 		
-		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
