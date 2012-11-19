@@ -18,7 +18,7 @@ public class GuiPokedex extends GuiContainer
 	public Pokedex pokedex;
 	public GuiPokedexSlot scrollPane;
 	
-	public GuiPokedex(String username) 
+	private GuiPokedex(String username) 
 	{
 		super(new ContainerEmpty());
 		currentEntry = 1;
@@ -27,6 +27,12 @@ public class GuiPokedex extends GuiContainer
 		ySize = 226;
 	}
 
+	public GuiPokedex(String username, int id)
+	{
+		this(username);
+		currentEntry = id;
+	}
+	
 	/*
 	public GuiPokedex(String lookup)
 	{
@@ -52,6 +58,8 @@ public class GuiPokedex extends GuiContainer
 	
 	protected void drawGuiContainerBackgroundLayer(float par3, int par2, int par1)
 	{
+		pokedex = PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(pokedex.owner.username)).pokedex;
+		drawDefaultBackground();
 		left = (width - xSize) / 2;
 		top = (height - ySize) / 2;
 		mouseX = par2;
@@ -64,7 +72,7 @@ public class GuiPokedex extends GuiContainer
 		mc.renderEngine.bindTexture(i);
 		drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
 		fontRenderer.drawString("Pokedex", left + 6, top + 5, 0xFFFFFF);
-		String s = selectedEntry.getPokedexDisplayNumber() + " " + selectedEntry.name;
+		String s = selectedEntry.getPokedexDisplayNumber() + " " + (pokedex.hasSeen(currentEntry)?selectedEntry.name:"???");
 		drawCenteredString(fontRenderer, s, left + 174, top + 38 - 3, 0x575757);
 		s = "Description";
 		drawCenteredString(fontRenderer, s, left + 141, top + 125, 0x575757);
@@ -72,8 +80,10 @@ public class GuiPokedex extends GuiContainer
 		//b = true;
 		s = "";
 		if(b)
+		{
 			s = selectedEntry.description;
-		fontRenderer.drawSplitString(s, left + 104, top + 141 - 3, 141, 0x575757);
+			fontRenderer.drawSplitString(s, left + 104, top + 141 - 3, 97, 0x575757);
+		}
 		s = "Height: ";
 		if(b)
 			s += PixelmonConfig.isInMetric?selectedEntry.heightM:selectedEntry.heightC;
@@ -86,9 +96,9 @@ public class GuiPokedex extends GuiContainer
 		else
 			s += "??? " + (PixelmonConfig.isInMetric?"kg":"lbs");
 		b = pokedex.hasSeen(currentEntry);
-		b = !pokedex.isUnknown(currentEntry);
+		//b = !pokedex.isUnknown(currentEntry);
 		if(b)
-			GraphicsHelper.drawModelToScreen(100, 100, 100, 130, 83, selectedEntry.getRenderTarget(mc.theWorld), this, true);
+			GraphicsHelper.drawModelToScreen(40, 40, 40, left + 131, top + 107, selectedEntry.getRenderTarget(mc.theWorld), this, true);
 		fontRenderer.drawString(s, left + 164, top + 69 + 0, 0x575757);
 		scrollPane.drawScreen(mouseX, mouseY, mfloat);
 	}
@@ -97,4 +107,10 @@ public class GuiPokedex extends GuiContainer
 	{
 		f.drawString(s, x - f.getStringWidth(s) / 2, y, c);
 	}
+	
+	public boolean doesGuiPauseGame()
+	{
+		return true;
+	}
+	
 }

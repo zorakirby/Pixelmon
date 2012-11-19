@@ -81,8 +81,15 @@ public class Pokedex
 		NBTTagList nbtl = nbt.getTagList("Pokedex");
 		for(int i = 0; i < nbtl.tagCount(); i++)
 		{
-			String[] s = nbtl.tagAt(i).getName().split(":");
-			seenMap.put(Integer.parseInt(s[0]), DexRegisterStatus.get(Integer.parseInt(s[1])));
+			try
+			{
+				String[] s = ((NBTTagString) nbtl.tagAt(i)).data.split(":");
+				seenMap.put(Integer.parseInt(s[0]), DexRegisterStatus.get(Integer.parseInt(s[1])));
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				continue;
+			}
 		}
 		return nbt;
 	}
@@ -91,7 +98,8 @@ public class Pokedex
 	{
 		NBTTagList nbtl = new NBTTagList("Pokedex");
 		for(Entry<Integer, DexRegisterStatus> e : seenMap.entrySet())
-			nbtl.appendTag(new NBTTagString(e.getKey() + ":" + e.getValue().ordinal()));
+			nbtl.appendTag(new NBTTagString("", e.getKey() + ":" + e.getValue().ordinal()));
+		nbt.setTag("Pokedex", nbtl);
 		return nbt;
 	}
 	
@@ -103,6 +111,9 @@ public class Pokedex
 	
 	public void set(int id, DexRegisterStatus drs)
 	{
+		if(seenMap.containsKey(id))
+			if(seenMap.get(id).ordinal() > drs.ordinal())
+				return;
 		if(id > 0 && id <= Pokedex.pokedexSize)
 			seenMap.put(id, drs);
 	}

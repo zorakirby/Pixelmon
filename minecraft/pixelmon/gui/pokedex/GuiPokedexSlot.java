@@ -43,8 +43,8 @@ public class GuiPokedexSlot extends GuiPokedexSlotBase {
      */
     protected int getContentHeight()
     {
-        //return getSize() * 10;
-    	return super.getContentHeight();
+        return getSize() * slotHeight;
+    	//return super.getContentHeight();
     }
 
     protected void drawBackground()

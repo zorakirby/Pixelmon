@@ -27,9 +27,12 @@ import pixelmon.enums.EnumType;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemHeld;
+import pixelmon.items.ItemPokedex;
 import pixelmon.items.ItemPotion;
 import pixelmon.items.ItemStatusAilmentHealer;
 import pixelmon.items.PixelmonItem;
+import pixelmon.pokedex.Pokedex;
+import pixelmon.pokedex.Pokedex.DexRegisterStatus;
 import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.client.Minecraft;
@@ -152,6 +155,12 @@ public class EntityPixelmon extends Entity9HasSounds {
 						PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 						return true;
 					}
+				}
+				if(itemstack.getItem() instanceof ItemPokedex)
+				{
+					ItemPokedex pokedex = (ItemPokedex) itemstack.getItem();
+					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(Pokedex.nameToID(getName()), DexRegisterStatus.seen);
+					pokedex.openPokedexGui(Pokedex.nameToID(getName()), player, worldObj);
 				}
 
 			}
