@@ -43,7 +43,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	@Override
 	protected void init(String name) {
 		super.init(name);
-		if (baseStats.getIsRideable() && worldObj.isRemote)
+		if (baseStats.isRideable && worldObj.isRemote)
 			ridingHelper = new RidingHelper((EntityPixelmon) this, worldObj);
 	}
 
@@ -58,7 +58,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			if (ridingEnabled) {
 				ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 				if (itemstack == null) {
-					if (baseStats.getIsRideable() && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
+					if (baseStats.isRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
 						if (riddenByEntity != null) {
 							player.mountEntity(this);
 							((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);

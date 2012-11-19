@@ -84,7 +84,7 @@ public class Level {
 
 	private int getExpForLevel(int level2) {
 		double l = level2;
-		ExperienceGroup ex = pixelmon.baseStats.getExperienceGroup();
+		ExperienceGroup ex = pixelmon.baseStats.experienceGroup;
 		if (ex == ExperienceGroup.Erratic) {
 			if (l <= 50)
 				return (int) (l * l * l * (100 - l)) / 50;
@@ -155,8 +155,8 @@ public class Level {
 			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
 			for (Attack a : newAttacks) {
 				if (pixelmon.moveset.size() >= 4) {
-					((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
-							EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.attackIndex, getLevel()));
+					((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace,
+							pixelmon.getPokemonId(), a.attackIndex, getLevel()));
 				} else {
 					pixelmon.moveset.add(a);
 					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
@@ -187,8 +187,8 @@ public class Level {
 				stats = PixelmonStatsPacket.createPacket(pixelmon);
 			setLevel(getLevel() + 1);
 			onLevelUp(stats);
-			if (getLevel() >= pixelmon.baseStats.getEvolveLevel()) {
-				pixelmon.evolve(pixelmon.baseStats.getEvolveInto());
+			if (getLevel() >= pixelmon.baseStats.evolveLevel) {
+				pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
 			}
 			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
 				if (e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {

@@ -33,7 +33,7 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 	protected void init(String name) {
 		super.init(name);
 		int r = rand.nextInt(100) + 1;
-		pixelmon.entities.pixelmon.stats.BaseStats.Aggression a = baseStats.getAggression();
+		pixelmon.entities.pixelmon.stats.Aggression a = baseStats.aggression;
 		if (a == null) {
 			aggression = Aggression.passive;
 			return;

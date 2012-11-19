@@ -17,7 +17,7 @@ public class FriendShip {
 	}
 
 	public void initFromCapture() {
-		friendship = pixelmon.baseStats.getBaseFriendship();
+		friendship = pixelmon.baseStats.baseFriendship;
 	}
 
 	public void initFromEgg() {

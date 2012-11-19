@@ -15,7 +15,7 @@ public class DropItemHelper {
 	}
 
 	public int getDropItemID() {
-		String droppedItem = pixelmon.baseStats.getDroppedItem();
+		String droppedItem = pixelmon.baseStats.droppedItem;
 		if (pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
 			return 0;
 		if (droppedItem == null)

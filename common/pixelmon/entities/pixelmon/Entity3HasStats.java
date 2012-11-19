@@ -10,6 +10,7 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.helpers.*;
 import pixelmon.entities.pixelmon.stats.BaseStats;
+import pixelmon.entities.pixelmon.stats.BaseStatsStore;
 import pixelmon.entities.pixelmon.stats.FriendShip;
 import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.pixelmon.stats.IVStore;
@@ -27,13 +28,14 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	protected Level level;
 	public Stats stats;
-	public BaseStats baseStats;
+	public BaseStatsStore baseStats;
 	public FriendShip friendship;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public boolean doesHover = false;
 	public float hoverHeight = 0f;
 	public float length;
 	public boolean doesLevel = true;
+	private static ArrayList<BaseStatsStore> baseStatsStore = new ArrayList<BaseStatsStore>();
 
 	public Entity3HasStats(World par1World) {
 		super(par1World);
@@ -48,27 +50,47 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	protected void init(String name) {
 		super.init(name);
-		baseStats = DatabaseStats.GetBaseStats(this);
+		getBaseStats(name);
+
 		stats.IVs = IVStore.CreateNewIVs();
 		setSize(baseStats.width, baseStats.height + hoverHeight);
 		setType();
 		length = baseStats.length;
 
-		if (rand.nextInt(100) < baseStats.getMalePercent())
+		if (rand.nextInt(100) < baseStats.malePercent)
 			isMale = true;
 		else
 			isMale = false;
 		isImmuneToFire = type.contains(EnumType.Fire);
 
 		if (level.getLevel() == -1) {
-			int spawnLevelRange = baseStats.getSpawnLevelRange();
-			int spawnLevel = baseStats.getSpawnLevel();
+			int spawnLevelRange = baseStats.spawnLevelRange;
+			int spawnLevel = baseStats.spawnLevel;
 			if (spawnLevelRange <= 0)
 				level.setLevel(spawnLevel);
 			else
 				level.setLevel(spawnLevel + rand.nextInt(spawnLevelRange));
 			setEntityHealth(stats.HP);
 		}
+	}
+
+	private void getBaseStats(String name) {
+		boolean has = false;
+		for (int i = 0; i < baseStatsStore.size(); i++) {
+			if (baseStatsStore.get(i).pixelmonName == name) {
+				has = true;
+				baseStats = baseStatsStore.get(i);
+			}
+		}
+		if (!has) {
+			baseStats = loadBaseStats(getName());
+			baseStatsStore.add(baseStats);
+		}
+	}
+
+	private BaseStatsStore loadBaseStats(String name) {
+		BaseStatsStore store = DatabaseStats.GetBaseStats(name);
+		return store;
 	}
 
 	@Override
@@ -86,9 +108,9 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	private void setType() {
-		type.add(baseStats.getType1());
-		if (baseStats.getType2() != EnumType.Mystery)
-			type.add(baseStats.getType2());
+		type.add(baseStats.type1);
+		if (baseStats.type2 != EnumType.Mystery)
+			type.add(baseStats.type2);
 	}
 
 	@Override
@@ -105,7 +127,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void evolve(String evolveTo) {
 		super.evolve(evolveTo);
-		baseStats = DatabaseStats.GetBaseStats(this);
+		getBaseStats(evolveTo);
 		type.clear();
 		setType();
 		if (getOwner() != null)
