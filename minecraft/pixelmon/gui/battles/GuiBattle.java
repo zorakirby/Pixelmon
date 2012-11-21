@@ -366,7 +366,7 @@ public class GuiBattle extends GuiContainer {
 			drawString(fontRenderer, "--", width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
 		drawString(fontRenderer, "" + attack.accuracy, width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
 
-		fontRenderer.drawSplitString(attack.description, width / 2 - 25, height / 2 + 55, 141, 0xFFFFFF);
+		fontRenderer.drawSplitString(attack.description, width / 2 - 25, height / 2 + 55, 100, 0xFFFFFF);
 	}
 
 	private int startIndex = 0;
