@@ -33,7 +33,9 @@ public class GuiSearchResults
 	
 	public void elementClicked(int index)
 	{
-		guiPokedexMore.parentScreen.currentEntry = results[index];
+		int i = results[index];
+		guiPokedexMore.parentScreen.currentEntry = i;
+		guiPokedexMore.parentScreen.scrollPane.scrollTo(i);
 		guiPokedexMore.returnToParent();
 	}
 	

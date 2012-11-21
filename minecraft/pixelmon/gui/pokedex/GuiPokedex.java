@@ -54,7 +54,8 @@ public class GuiPokedex extends GuiContainer
 		left = (width - xSize) / 2;
 		top = (height - ySize) / 2;
 		controlList.clear();
-		scrollPane = new GuiPokedexSlot(this);
+		if(scrollPane == null)
+			scrollPane = new GuiPokedexSlot(this);
 		//scrollPane.elementClicked(0, false);
 	}
 	
@@ -147,9 +148,9 @@ public class GuiPokedex extends GuiContainer
 		if(i == Keyboard.KEY_ESCAPE)
 		{
 			mc.displayGuiScreen(null);
-			return;
 		}
-		mc.displayGuiScreen(new GuiPokedexMore(this, "" + c));	
+		if(Character.isLetter(c))
+			mc.displayGuiScreen(new GuiPokedexMore(this, "" + c));
 	}
 	
 	public boolean doesGuiPauseGame()

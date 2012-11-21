@@ -2,11 +2,7 @@ package pixelmon.gui.pokedex;
 
 import java.util.List;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.GuiButton;
-
-import net.minecraft.src.RenderHelper;
-import net.minecraft.src.ScaledResolution;
-import net.minecraft.src.Tessellator;
+import net.minecraft.src.*;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -56,7 +52,7 @@ public abstract class GuiPokedexSlotBase
     private float scrollMultiplier;
 
     /** how far down this slot has been scrolled */
-    private float amountScrolled;
+    public float amountScrolled;
 
     /** the element in the list that was selected */
     private int selectedElement = -1;
@@ -141,10 +137,47 @@ public abstract class GuiPokedexSlotBase
     	return func_27256_c(par1, par2) == element;
     }
     
+    public boolean isElementVisible(int i)
+    {
+    	return getElementPosition(i) == 0;
+    }
+    
+    //1 if its below the , -1 if its above the center, 0 if its on the center
+    //NOTE use the index of the element + 1 to get a real result
+    public int getElementPosition(int i)
+    {
+    	int top = (int) amountScrolled;
+    	int ti = top / slotHeight + 1;
+    	int bi = ti + 16;
+    	if(ti > i)
+    		return -1;
+    	if(bi < i)
+    		return 1;
+    	return 0;
+    }
+    
+    public void scrollTo(int i)
+    {
+    	int pos = getElementPosition(i);
+    	while(pos > 0)
+    	{
+    		amountScrolled += slotHeight;
+    		bindAmountScrolled();
+    		pos = getElementPosition(i);
+    	}
+    	while(pos < 0)
+    	{
+    		amountScrolled -= slotHeight;
+    		bindAmountScrolled();
+    		pos = getElementPosition(i);
+    	}
+    }
+    
     /**
      * Registers the IDs that can be used for the scrollbar's buttons.
      */
-    public void registerScrollButtons(List par1List, int par2, int par3)
+    @SuppressWarnings("rawtypes")
+	public void registerScrollButtons(List par1List, int par2, int par3)
     {
         this.scrollUpButtonID = par2;
         this.scrollDownButtonID = par3;
@@ -153,7 +186,7 @@ public abstract class GuiPokedexSlotBase
     /**
      * stop the thing from scrolling out of bounds
      */
-    private void bindAmountScrolled()
+    public void bindAmountScrolled()
     {
         int var1 = this.getContentHeight() - (this.bottom - this.top - 4);
 
@@ -198,8 +231,7 @@ public abstract class GuiPokedexSlotBase
     public void drawScreen(int mousePosX, int mousePosY, float par3)
     {
     	GL11.glPushMatrix();
-    	ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+    	//ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
         this.mouseX = mousePosX;
         this.mouseY = mousePosY;
         //System.out.println(mouseX + ", " + mouseY);
@@ -212,8 +244,8 @@ public abstract class GuiPokedexSlotBase
         int index;
         int middleOfSelect;
         int topLeftOfSelect;
-        int var6 = var5.getScaledWidth();
-		int var7 = var5.getScaledHeight();
+        //int var6 = var5.getScaledWidth();
+		//int var7 = var5.getScaledHeight();
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthMask(false);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -327,7 +359,7 @@ public abstract class GuiPokedexSlotBase
         GL11.glDisable(GL11.GL_FOG);
         Tessellator tessellator = Tessellator.instance;
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        float var17 = 32.0F;
+        //float var17 = 32.0F;
 
         var9 = this.left;//posX of scroll
         var10 = this.top + 4 - (int)this.amountScrolled;//posY of scroll
@@ -458,6 +490,7 @@ public abstract class GuiPokedexSlotBase
     {
     	return;
     }
+    /*
     private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureHandle);
@@ -472,4 +505,5 @@ public abstract class GuiPokedexSlotBase
 		var9.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) 0, (double) ((float) us), (double) ((float) vs));
 		var9.draw();
 	}
+	*/
 }
