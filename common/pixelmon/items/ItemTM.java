@@ -29,7 +29,7 @@ public class ItemTM extends PixelmonItem {
 		else
 			setIconIndex(8);
 
-		setCreativeTab(PixelmonCreativeTabs.natural);
+		setCreativeTab(PixelmonCreativeTabs.tms);
 		setItemName(getItemName());
 	}
 
