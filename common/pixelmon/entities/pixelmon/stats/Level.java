@@ -187,7 +187,7 @@ public class Level {
 				stats = PixelmonStatsPacket.createPacket(pixelmon);
 			setLevel(getLevel() + 1);
 			onLevelUp(stats);
-			if (getLevel() >= pixelmon.baseStats.evolveLevel) {
+			if (pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
 			}
 			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {

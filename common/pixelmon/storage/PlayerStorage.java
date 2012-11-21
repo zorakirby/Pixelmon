@@ -95,8 +95,10 @@ public class PlayerStorage {
 	}
 
 	public void addToParty(EntityPixelmon p) {
-		pokedex.set(Pokedex.nameToID(p.getName()), DexRegisterStatus.caught);
-		pokedex.sendToPlayer(pokedex.owner);
+		if (mode == PokeballManagerMode.Player) {
+			pokedex.set(Pokedex.nameToID(p.getName()), DexRegisterStatus.caught);
+			pokedex.sendToPlayer(pokedex.owner);
+		}
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
 		if (!hasSpace()) {
@@ -367,7 +369,7 @@ public class PlayerStorage {
 				var1.setCompoundTag("" + e.getInteger("pixelmonID"), e);
 			}
 		}
-		if(pokedex != null)
+		if (pokedex != null)
 			pokedex.writeToNBT(var1);
 	}
 
@@ -389,7 +391,7 @@ public class PlayerStorage {
 					player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(pokemonData, EnumPackets.AddToStorage).getPacket());
 			}
 		} while (true);
-		if(pokedex != null)
+		if (pokedex != null)
 			pokedex.readFromNBT(var1);
 	}
 

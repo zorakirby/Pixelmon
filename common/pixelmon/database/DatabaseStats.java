@@ -12,7 +12,6 @@ import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.stats.Aggression;
 import pixelmon.entities.pixelmon.stats.BaseStats;
-import pixelmon.entities.pixelmon.stats.BaseStatsStore;
 import pixelmon.entities.pixelmon.stats.EVsStore;
 import pixelmon.entities.pixelmon.stats.SwimmingParameters;
 import pixelmon.enums.EnumBiomes;
@@ -25,9 +24,9 @@ import net.minecraft.src.EnumCreatureType;
 
 public class DatabaseStats {
 
-	public static BaseStatsStore GetBaseStats(String name) {
+	public static BaseStats GetBaseStats(String name) {
 		Connection conn = null;
-		BaseStatsStore store = new BaseStatsStore(name);
+		BaseStats store = new BaseStats(name);
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DatabaseHelper.getConnection();

@@ -12,7 +12,7 @@ public class Stats {
 	public IVStore IVs;
 	public EVsStore EVs = new EVsStore();
 
-	public void setLevelStats(BaseStatsStore baseStats, int level) {
+	public void setLevelStats(BaseStats baseStats, int level) {
 		HP = (int) ((((float) IVs.HP + 2 * (float) baseStats.hp + ((float) EVs.HP) / 4f + 100f) * (float) level) / 100f + 10f);
 		Attack = (int) ((((float) IVs.Attack + 2 * (float) baseStats.attack + ((float) EVs.Attack) / 4f) * (float) level) / 100f + 5f);
 		Defence = (int) ((((float) IVs.Defence + 2 * (float) baseStats.defence + ((float) EVs.Defence) / 4f) * (float) level) / 100f + 5f);

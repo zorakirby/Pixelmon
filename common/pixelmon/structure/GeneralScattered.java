@@ -23,8 +23,13 @@ public class GeneralScattered extends StructureScattered {
 	public boolean addComponentParts(World world, Random par2Random, StructureBoundingBox bb) {
 		for (int x = 0; x < s.width; x++)
 			for (int z = 0; z < s.length; z++)
-				for (int y = 0; y < s.height; y++)
-					this.placeBlockAtCurrentPosition(world, s.blocks[x][y][z], s.blockData[x][y][z], x, y, z, bb);
+				for (int y = 0; y < s.height; y++) {
+					try {
+						this.placeBlockAtCurrentPosition(world, s.blocks[x][y][z], s.blockData[x][y][z], x, y, z, bb);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+				}
 		// id, metadata
 		return true;
 	}

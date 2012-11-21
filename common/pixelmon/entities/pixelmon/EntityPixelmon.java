@@ -16,8 +16,11 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.TrainerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsTMs;
 import pixelmon.database.*;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
 import pixelmon.entities.pixelmon.stats.Level;
@@ -29,6 +32,7 @@ import pixelmon.items.ItemEther;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPotion;
 import pixelmon.items.ItemStatusAilmentHealer;
+import pixelmon.items.ItemTM;
 import pixelmon.items.PixelmonItem;
 import pixelmon.storage.PixelmonStorage;
 
@@ -98,6 +102,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 							player.inventory.consumeInventoryItem(itemstack.itemID);
 						return true;
 					}
+
 					if (itemstack.getItem() instanceof ItemPotion) {
 						if (getHealth() < stats.HP) {
 							((ItemPotion) itemstack.getItem()).healPokemon(this);
@@ -152,6 +157,26 @@ public class EntityPixelmon extends Entity9HasSounds {
 						PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 						return true;
 					}
+
+					if (itemstack.getItem() instanceof ItemTM) {
+						if (DatabaseMoves.CanLearnAttack(getName(), ((ItemTM) itemstack.getItem()).attackName)) {
+							Attack a = DatabaseMoves.getAttack(((ItemTM) itemstack.getItem()).attackName);
+							a.STAB = DatabaseMoves.hasSTAB(getName(), ((ItemTM) itemstack.getItem()).attackName);
+							if (moveset.size() >= 4) {
+								((EntityPlayerMP) getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace, getPokemonId(),
+										a.attackIndex, level.getLevel()));
+							} else {
+								moveset.add(a);
+								ChatHandler.sendChat(getOwner(), getName() + " just learnt " + a.attackName + "!");
+							}
+							PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).updateNBT(this);
+							if (!player.capabilities.isCreativeMode)
+								player.inventory.consumeInventoryItem(itemstack.itemID);
+						} else {
+							ChatHandler.sendChat(getOwner(), getName() + " can't learn " + ((ItemTM) itemstack.getItem()).attackName + "!");
+						}
+						return true;
+					}
 				}
 
 			}
@@ -161,7 +186,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	}
 
 	public void catchInPokeball() {
-		if (getOwner()!=null)
+		if (getOwner() != null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 		isInBall = true;
 		unloadEntity();
@@ -191,8 +216,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 				return true;
 			else {
 				double y = posY
-						- (baseStats.swimmingParameters.depthRangeStart + rand.nextInt(baseStats.swimmingParameters.depthRangeEnd
-								- baseStats.swimmingParameters.depthRangeStart));
+						- (baseStats.swimmingParameters.depthRangeStart + rand.nextInt(baseStats.swimmingParameters.depthRangeEnd - baseStats.swimmingParameters.depthRangeStart));
 				wdepth = WorldHelper.getWaterDepth((int) posX, (int) y, (int) posZ, worldObj);
 				if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 					return false;

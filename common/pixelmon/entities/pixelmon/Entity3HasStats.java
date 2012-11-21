@@ -10,7 +10,6 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.helpers.*;
 import pixelmon.entities.pixelmon.stats.BaseStats;
-import pixelmon.entities.pixelmon.stats.BaseStatsStore;
 import pixelmon.entities.pixelmon.stats.FriendShip;
 import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.pixelmon.stats.IVStore;
@@ -28,14 +27,14 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	protected Level level;
 	public Stats stats;
-	public BaseStatsStore baseStats;
+	public BaseStats baseStats;
 	public FriendShip friendship;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
 	public boolean doesHover = false;
 	public float hoverHeight = 0f;
 	public float length;
 	public boolean doesLevel = true;
-	private static ArrayList<BaseStatsStore> baseStatsStore = new ArrayList<BaseStatsStore>();
+	private static ArrayList<BaseStats> baseStatsStore = new ArrayList<BaseStats>();
 
 	public Entity3HasStats(World par1World) {
 		super(par1World);
@@ -88,8 +87,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		}
 	}
 
-	private BaseStatsStore loadBaseStats(String name) {
-		BaseStatsStore store = DatabaseStats.GetBaseStats(name);
+	private BaseStats loadBaseStats(String name) {
+		BaseStats store = DatabaseStats.GetBaseStats(name);
 		return store;
 	}
 
