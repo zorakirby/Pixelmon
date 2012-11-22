@@ -314,6 +314,10 @@ public class ModelFarfetchd extends ModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
+		HeadBase.rotateAngleX = f4 / 57.29578F;
+        HeadBase.rotateAngleY = f3 / 57.29578F;
+        LegL.rotateAngleX = MathHelper.cos(f * 0.8F) * 1F * f1;
+        LegR.rotateAngleX = MathHelper.cos(f * 0.8F + 3.141593F) * 1F * f1;
 	}
 
 }
