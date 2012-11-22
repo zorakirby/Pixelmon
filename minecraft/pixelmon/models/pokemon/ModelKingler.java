@@ -1,5 +1,7 @@
 package pixelmon.models.pokemon;
 
+import java.util.Random;
+
 import net.minecraft.src.Entity;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
@@ -368,12 +370,30 @@ public class ModelKingler extends ModelBase {
 		model.rotateAngleZ = z;
 	}
 
+	Random randomGenerator = new Random();
+	int count = 0;
+	boolean clawispinching = false;
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		Kingler.rotateAngleY = 1.57079633F;
 		RightLeg1.rotateAngleZ = MathHelper.cos(f * 1.6F) * 1F * f1;
 		LeftLeg1.rotateAngleZ = MathHelper.cos(f * 1.6F + 3.141593F) * 1F * f1;
 		RightLeg2.rotateAngleZ = MathHelper.cos(f * 1.6F + 3.141593F) * 1F * f1;
 		LeftLeg2.rotateAngleZ = MathHelper.cos(f * 1.6F) * 1F * f1;
+		
+		int randomInt = randomGenerator.nextInt(151);
+
+		if (randomInt == 1) {
+			clawispinching = true;
+		} else if (clawispinching == true) {
+			LeftClawBottom.rotateAngleX = MathHelper.cos(f2 * 1F) * .4F;
+			RightClawBottom.rotateAngleX = MathHelper.cos(f2 * 1F + (float)Math.PI) * .4F + 1F;
+			count++;
+		}
+
+		if (count >= 35) {
+			clawispinching = false;
+			count = 0;
+		}
 	}
 
 }

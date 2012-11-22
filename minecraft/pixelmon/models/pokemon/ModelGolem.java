@@ -1,6 +1,7 @@
 package pixelmon.models.pokemon;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
 
@@ -1024,6 +1025,10 @@ public class ModelGolem extends ModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
+		HEADPIECE.rotateAngleX = f4 / 57.29578F;
+        HEADPIECE.rotateAngleY = f3 / 57.29578F;
+        RIGHTLEGPIECE.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
+        LEFTLEGPIECE.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * 1.4F * f1;
 	}
 
 }
