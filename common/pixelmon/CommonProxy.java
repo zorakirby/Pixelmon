@@ -21,14 +21,12 @@ public class CommonProxy implements IGuiHandler {
 	public GuiHandler guiHandler = new GuiHandler();
 
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world,
-			int x, int y, int z) {
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return guiHandler.getServerGuiElement(ID, player, world, x, y, z);
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
-			int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return null;
 	}
 
@@ -63,5 +61,11 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void registerCameraEntity(EntityCamera entityCamera) {
+	}
+
+	private ModelBase[] models = new ModelBase[0];
+
+	public ModelBase[] getModels() {
+		return models;
 	}
 }
