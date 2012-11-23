@@ -74,5 +74,4 @@ public class PixelmonPokedexPacket extends PixelmonPacket
 	{
 		return EnumPackets.Pokedex.getIndex();
 	}
-	
-}
+}	

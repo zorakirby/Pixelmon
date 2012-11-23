@@ -177,8 +177,7 @@ public class BattleController {
 	private void checkAndReplaceFaintedPokemon(IBattleParticipant participant, IBattleParticipant foe) {
 		participant.updatePokemon();
 		if (participant.getIsFaintedOrDead()) {
-			String name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon()
-					.getNickname();
+			String name = participant.currentPokemon().getNickname().equals("") ? participant.currentPokemon().getName() : participant.currentPokemon().getNickname();
 			if (participant == participant1) {
 				if (participant1.isWild)
 					ChatHandler.sendChat(participant2.currentPokemon().getOwner(), "The wild " + participant1.currentPokemon().getName() + " fainted!");
@@ -375,7 +374,7 @@ public class BattleController {
 				else
 					return;
 				t = 1;// traded
-				b = target.baseStats.getBaseExp();
+				b = target.baseStats.baseExp;
 				e = ItemHeld.isItemOfType(entityPixelmon.getHeldItem(), EnumHeldItems.luckyEgg) ? 1.5 : 1;
 				L = target.getLvl().getLevel();
 				Lp = user.getInteger("Level");
@@ -386,12 +385,12 @@ public class BattleController {
 				if (userIndex == entityPixelmon.getPokemonId()) {
 					entityPixelmon.getLvl().awardEXP((int) exp);
 					if (entityPixelmon.getLvl().canLevelUp())
-						entityPixelmon.stats.EVs.gainEV(target.baseStats.getEvGain());
+						entityPixelmon.stats.EVs.gainEV(target.baseStats.evGain);
 				} else {
 					EntityPixelmon pix = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).sendOut(userIndex,
 							entityPixelmon.getOwner().worldObj);
 					pix.getLvl().awardEXP((int) exp);
-					pix.stats.EVs.gainEV(target.baseStats.getEvGain());
+					pix.stats.EVs.gainEV(target.baseStats.evGain);
 					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).retrieve(pix);
 				}
 				doneUsers.add(userIndex);

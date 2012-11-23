@@ -14,5 +14,6 @@ public class PixelmonCreativeTabs {
 	public static final CreativeTabs restoration = new CreativeTabRestoration(14, "Restoration");
 	public static final CreativeTabs natural = new CreativeTabNatural(15, "Natural");
 	public static final CreativeTabs held = new CreativeTabHeldItems(16, "Held Items");
-	
+	public static final CreativeTabs tms = new CreativeTabTM(17, "TMs/HMs");
+
 }

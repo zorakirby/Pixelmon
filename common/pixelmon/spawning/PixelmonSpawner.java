@@ -110,11 +110,14 @@ public class PixelmonSpawner {
 				trainer.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
 				if (((EntityLiving) trainer).getCanSpawnHere())
 					world.spawnEntityInWorld(trainer);
-			} else if (SpawnerAnimals.canCreatureTypeSpawnAtLocation(DatabaseStats.GetCreatureType(spawnList.get(0).name), world, spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z)) {
-				Entity pixelmon = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
-				pixelmon.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
-				if (((EntityLiving) pixelmon).getCanSpawnHere())
-					world.spawnEntityInWorld(pixelmon);
+			} else {
+				EnumCreatureType type = DatabaseStats.GetCreatureType(spawnList.get(0).name);
+				if (type != null && SpawnerAnimals.canCreatureTypeSpawnAtLocation(type, world, spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z)) {
+					Entity pixelmon = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
+					pixelmon.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
+					if (((EntityLiving) pixelmon).getCanSpawnHere())
+						world.spawnEntityInWorld(pixelmon);
+				}
 			}
 			spawnList.remove(0);
 		}

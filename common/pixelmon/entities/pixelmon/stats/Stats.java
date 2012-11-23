@@ -13,12 +13,12 @@ public class Stats {
 	public EVsStore EVs = new EVsStore();
 
 	public void setLevelStats(BaseStats baseStats, int level) {
-		HP = (int) ((((float) IVs.HP + 2 * (float) baseStats.getHP() + ((float) EVs.HP) / 4f + 100f) * (float) level) / 100f + 10f);
-		Attack = (int) ((((float) IVs.Attack + 2 * (float) baseStats.getAttack() + ((float) EVs.Attack) / 4f) * (float) level) / 100f + 5f);
-		Defence = (int) ((((float) IVs.Defence + 2 * (float) baseStats.getDefence() + ((float) EVs.Defence) / 4f) * (float) level) / 100f + 5f);
-		SpecialAttack = (int) ((((float) IVs.SpAtt + 2 * (float) baseStats.getSpAtt() + ((float) EVs.SpecialAttack) / 4f) * (float) level) / 100f + 5f);
-		SpecialDefence = (int) ((((float) IVs.SpDef + 2 * (float) baseStats.getSpDef() + ((float) EVs.SpecialDefence) / 4f) * (float) level) / 100f + 5f);
-		Speed = (int) ((((float) IVs.Speed + 2 * (float) baseStats.getSpeed() + ((float) EVs.Speed) / 4f) * (float) level) / 100f + 5f);
+		HP = (int) ((((float) IVs.HP + 2 * (float) baseStats.hp + ((float) EVs.HP) / 4f + 100f) * (float) level) / 100f + 10f);
+		Attack = (int) ((((float) IVs.Attack + 2 * (float) baseStats.attack + ((float) EVs.Attack) / 4f) * (float) level) / 100f + 5f);
+		Defence = (int) ((((float) IVs.Defence + 2 * (float) baseStats.defence + ((float) EVs.Defence) / 4f) * (float) level) / 100f + 5f);
+		SpecialAttack = (int) ((((float) IVs.SpAtt + 2 * (float) baseStats.spAtt + ((float) EVs.SpecialAttack) / 4f) * (float) level) / 100f + 5f);
+		SpecialDefence = (int) ((((float) IVs.SpDef + 2 * (float) baseStats.spDef + ((float) EVs.SpecialDefence) / 4f) * (float) level) / 100f + 5f);
+		Speed = (int) ((((float) IVs.Speed + 2 * (float) baseStats.speed + ((float) EVs.Speed) / 4f) * (float) level) / 100f + 5f);
 	}
 
 	public void writeToNBT(NBTTagCompound var1) {

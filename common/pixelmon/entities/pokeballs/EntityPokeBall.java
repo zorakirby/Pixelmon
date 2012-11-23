@@ -504,7 +504,7 @@ public class EntityPokeBall extends EntityThrowable {
 			numShakes = 4;
 			return;
 		}
-		int pokemonRate = p2.baseStats.getCatchRate();
+		int pokemonRate = p2.baseStats.catchRate;
 		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), p2.getName(), pokemonRate);
 		int hpMax = p2.getMaxHealth();
 		int hpCurrent = p2.getHealth();

@@ -126,4 +126,10 @@ public enum EnumPokemon {
 		}
 		return false;
 	}
+	public static EnumPokemon get(String name) {
+		for (EnumPokemon e: values()){
+			if (e.name.equalsIgnoreCase(name)) return e;
+		}
+		return null;
+	}
 }

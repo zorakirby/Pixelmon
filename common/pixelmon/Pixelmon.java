@@ -30,6 +30,7 @@ import pixelmon.spawning.PixelmonWaterSpawner;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.structure.GeneralScattered;
 import pixelmon.structure.SchematicImporter;
+import pixelmon.structure.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
 import pixelmon.worldGeneration.WorldGenLeafStoneOre;
@@ -68,7 +69,7 @@ import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.8.1")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.8.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 	@Instance
@@ -89,7 +90,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "Pixelmon 1.8.1 beta for 1.4.4";
+		event.getModMetadata().version = "Pixelmon 1.8.3 for 1.4.4";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 		
@@ -117,6 +118,8 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
+		
+		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());

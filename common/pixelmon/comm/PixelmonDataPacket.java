@@ -10,7 +10,6 @@ import cpw.mods.fml.common.network.NetworkMod;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.pixelmon.stats.BaseStats;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.Entity;

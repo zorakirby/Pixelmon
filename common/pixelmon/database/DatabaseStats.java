@@ -10,11 +10,13 @@ import java.util.List;
 
 import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.entities.pixelmon.Entity3HasStats;
+import pixelmon.entities.pixelmon.stats.Aggression;
 import pixelmon.entities.pixelmon.stats.BaseStats;
-import pixelmon.entities.pixelmon.stats.BaseStats.Aggression;
-import pixelmon.entities.pixelmon.stats.BaseStats.SwimmingParameters;
+import pixelmon.entities.pixelmon.stats.EVsStore;
+import pixelmon.entities.pixelmon.stats.SwimmingParameters;
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumEvolutionStone;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumType;
 
 import net.minecraft.src.BiomeGenBase;
@@ -22,43 +24,124 @@ import net.minecraft.src.EnumCreatureType;
 
 public class DatabaseStats {
 
-	public static BaseStats GetBaseStats(Entity3HasStats entity) {
+	public static BaseStats GetBaseStats(String name) {
 		Connection conn = null;
-		String pixelmonName = entity.getName();
+		BaseStats store = new BaseStats(name);
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + pixelmonName + "'");
+			ResultSet rs = stat.executeQuery("select * from Pixelmon where Name='" + name + "'");
 
-			BaseStats stats = new BaseStats(entity);
 			String error = "";
 			boolean hasError = false;
 			while (rs.next()) {
-				stats.height = rs.getFloat("Height");
+				store.hp = rs.getInt("BaseHP");
+				if (rs.wasNull()) {
+					error += "[HP]";
+					hasError = true;
+				}
+				store.attack = rs.getInt("BaseAttack");
+				if (rs.wasNull()) {
+					error += "[ATTACK]";
+					hasError = true;
+				}
+				store.defence = rs.getInt("BaseDefence");
+				if (rs.wasNull()) {
+					error += "[DEFENSE]";
+					hasError = true;
+				}
+				store.speed = rs.getInt("BaseSpeed");
+				if (rs.wasNull()) {
+					error += "[SPEED]";
+					hasError = true;
+				}
+				store.spAtt = rs.getInt("BaseSpAttack");
+				if (rs.wasNull()) {
+					error += "[SPATTACK]";
+					hasError = true;
+				}
+				store.spDef = rs.getInt("BaseSpDefence");
+				if (rs.wasNull()) {
+					error += "[SPDEFENSE]";
+					hasError = true;
+				}
+				if (hasError) {
+					System.out.println("Error in BaseStats " + "[" + error + "]" + " For Pokemon : " + name);
+				}
+				store.catchRate = rs.getInt("CatchRate");
 				if (rs.wasNull())
-					System.out.println("Error in Height" + " For Pokemon : " + pixelmonName);
-				stats.width = rs.getFloat("Width");
+					System.out.println("Error in CatchRate" + " For Pokemon : " + name);
+
+				store.malePercent = rs.getInt("MalePercent");
 				if (rs.wasNull())
-					System.out.println("Error in Width" + " For Pokemon : " + pixelmonName);
-				stats.length = rs.getFloat("Length");
+					System.out.println("Error in MalePercent" + " For Pokemon : " + name);
+
+				store.evolveLevel = rs.getInt("EvolveLevel");
 				if (rs.wasNull())
-					System.out.println("Error in Length" + " For Pokemon : " + pixelmonName);
-				stats.canFly = rs.getInt("CanFly") == 1;
+					System.out.println("Error in EvolveLevel" + " For Pokemon : " + name);
+				store.evolveInto = EnumPokemon.get(rs.getString("EvolveInto"));
+				store.canFly = rs.getInt("CanFly") == 1;
+				if (rs.wasNull())
+					System.out.println("Error in CanFly" + " For Pokemon : " + name);
+				store.height = rs.getFloat("Height");
+				if (rs.wasNull())
+					System.out.println("Error in Height" + " For Pokemon : " + name);
+				store.width = rs.getFloat("Width");
+				if (rs.wasNull())
+					System.out.println("Error in Width" + " For Pokemon : " + name);
+				store.length = rs.getFloat("Length");
+				if (rs.wasNull())
+					System.out.println("Error in Length" + " For Pokemon : " + name);
+				store.type1 = EnumType.parseType(rs.getString("Type1"));
+				if (rs.wasNull())
+					System.out.println("Error in Type" + " For Pokemon : " + name);
+				store.baseExp = rs.getInt("BaseExp");
+				if (rs.wasNull())
+					System.out.println("Error in BaseExp" + " For Pokemon : " + name);
+				store.experienceGroup = ExperienceGroup.getExperienceGroup(rs.getString("ExperienceGroup"));
+				if (rs.wasNull() || store.experienceGroup == null)
+					System.out.println("Error in ExperienceGroup" + " For Pokemon : " + name);
+				store.nationalPokedexNumber = rs.getInt("NationalPokedexNumber");
+				if (rs.wasNull())
+					System.out.println("Error in NationalPokedexNumber" + " For Pokemon : " + name);
+				store.spawnLevel = rs.getInt("SpawnLevel");
+				if (rs.wasNull())
+					System.out.println("Error in SpawnLevel" + " For Pokemon : " + name);
+				store.spawnLevelRange = rs.getInt("SpawnLevelRange");
+				if (rs.wasNull())
+					System.out.println("Error in SpawnLevelRange" + " For Pokemon : " + name);
+				store.isRideable = rs.getBoolean("IsRideable");
+				store.giScale = rs.getFloat("GIScale");
+				rs.getString("Type2");
+				if (!rs.wasNull())
+					store.type2 = EnumType.parseType(rs.getString("Type2"));
+				store.aggression = new Aggression(rs.getString("Aggression"), name);
+				if (rs.wasNull())
+					System.out.println("Error in Aggression" + " For Pokemon : " + name);
 				String type = rs.getString("CreatureType");
 				if (type.equalsIgnoreCase("Land"))
-					stats.creatureType = EnumCreatureType.creature;
+					store.creatureType = EnumCreatureType.creature;
 				else
-					stats.creatureType = EnumCreatureType.waterCreature;
-				
-				stats.giScale = rs.getFloat("GIScale");
-				stats.spawnConditions = SpawnConditions.ParseSpawnConditions(rs.getString("SpawnConditions"));
+					store.creatureType = EnumCreatureType.waterCreature;
+				store.droppedItem = rs.getString("DroppedItem");
+				store.spawnConditions = SpawnConditions.ParseSpawnConditions(rs.getString("SpawnConditions"));
+				store.baseFriendship = rs.getInt("BaseFriendship");
+
 				String sp = rs.getString("SwimmingParameters");
 				if (!rs.wasNull())
-					stats.swimmingParameters = stats.new SwimmingParameters(sp, pixelmonName);
+					store.swimmingParameters = new SwimmingParameters(sp, name);
+
+				store.evGain = new EVsStore();
+				store.evGain.HP = rs.getInt("EvGainHP");
+				store.evGain.Attack = rs.getInt("EvGainAtk");
+				store.evGain.Defence = rs.getInt("EvGainDef");
+				store.evGain.SpecialAttack = rs.getInt("EvGainSpAtk");
+				store.evGain.SpecialDefence = rs.getInt("EvGainSpDef");
+				store.evGain.Speed = rs.getInt("EvGainSpeed");
 			}
 			conn.close();
-			return stats;
+			return store;
 		} catch (Exception e) {
 			if (conn != null)
 				try {
