@@ -6,6 +6,7 @@
 
 package pixelmon.models.pokemon;
 
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.Entity;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.ModelRenderer;
@@ -175,9 +176,10 @@ public class ModelElectrode extends ModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-		Piece1.rotateAngleX += .5F * f1;
-		if (Piece1.rotateAngleX > 2 * 3.14159F)
-			Piece1.rotateAngleX = 0;
+		((EntityPixelmon) entity).animationNum1 += .5F * f1;
+		if (((EntityPixelmon) entity).animationNum1 > 2 * 3.14159F)
+			((EntityPixelmon) entity).animationNum1 = 0;
+		Piece1.rotateAngleX = ((EntityPixelmon) entity).animationNum1;
 	}
 
 }

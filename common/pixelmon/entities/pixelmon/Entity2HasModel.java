@@ -18,6 +18,7 @@ import net.minecraft.src.World;
 public abstract class Entity2HasModel extends Entity1Base {
 
 	public ModelBase model;
+	public float animationNum1 = 0f;
 
 	public Entity2HasModel(World par1World) {
 		super(par1World);
