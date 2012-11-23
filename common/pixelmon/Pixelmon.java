@@ -33,6 +33,7 @@ import pixelmon.structure.SchematicImporter;
 import pixelmon.structure.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
+import pixelmon.worldGeneration.WorldGenFossils;
 import pixelmon.worldGeneration.WorldGenLeafStoneOre;
 import pixelmon.worldGeneration.WorldGenThunderStoneOre;
 import pixelmon.worldGeneration.WorldGenWaterStoneOre;
@@ -118,6 +119,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
+		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 		
 		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 

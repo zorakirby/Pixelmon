@@ -11,6 +11,8 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.TrainerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.gui.battles.ClientBattleManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
@@ -75,7 +77,14 @@ public class EntityCamera extends EntityLiving {
 		super.onEntityUpdate();
 		if (battleController == null && !clientSided)
 			setDead();
-		
+		if(battleController != null){
+			if (battleController.battleEnded == false){
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+			}else
+				if(battleController.battleEnded){
+					Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+				}
+		}
 	}
 
 	@Override
@@ -92,12 +101,23 @@ public class EntityCamera extends EntityLiving {
 		super.onUpdate();
 	}
 
-	float newRotationPitch = 0;
-	float newRotationYaw = 0;
 
 	public void updatePosition() {
 		setAttackTarget(battleController.getOpponent(player).getEntity());
 		setPositionAndUpdate(player.posX + 2, player.posY + 2.5,
 				player.posZ + 2);
+		if(battleController != null){
+			EntityLiving part1 = battleController.participant1.currentPokemon();
+			EntityLiving part2 = battleController.participant2.currentPokemon();
+
+			if(battleController.turnCount % 2 == 0){
+				setPositionAndUpdate(part1.posX, part1.posY, part1.posZ);
+				rotationYaw = part1.rotationYawHead;
+			}
+			else{
+				setPositionAndUpdate(part2.posX, part2.posY, part2.posZ);
+				rotationYaw = part2.rotationYawHead;
+			}
+		}
 	}
 }

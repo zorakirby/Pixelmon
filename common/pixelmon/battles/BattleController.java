@@ -49,7 +49,7 @@ public class BattleController {
 	private ArrayList<Integer> attackersList2 = new ArrayList<Integer>();
 
 	public ArrayList<StatusEffectBase> battleStatusList = new ArrayList<StatusEffectBase>();
-	private boolean battleEnded = false;
+	public boolean battleEnded = false;
 	public int turnCount = 0;
 	public BattlePerspective battlePerspective;
 
