@@ -76,11 +76,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	private void getBaseStats(String name) {
 		boolean has = false;
 		for (int i = 0; i < baseStatsStore.length; i++) {
+			if (baseStatsStore[i] == null)
+				break;
 			if (baseStatsStore[i].pixelmonName == name) {
 				has = true;
 				baseStats = baseStatsStore[i];
-				break;
-			} else if (baseStatsStore[i] == null) {
 				break;
 			}
 		}
@@ -88,7 +88,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			baseStats = loadBaseStats(getName());
 			for (int i = 0; i < baseStatsStore.length; i++)
 				if (baseStatsStore[i] == null)
-					baseStatsStore[i] = baseStats;
+					baseStatsStore[i] = (baseStats);
 		}
 	}
 

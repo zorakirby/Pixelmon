@@ -2,6 +2,7 @@ package pixelmon.entities.pixelmon;
 
 import java.lang.reflect.InvocationTargetException;
 
+import pixelmon.ClientProxy;
 import pixelmon.Pixelmon;
 import pixelmon.database.DatabaseStats;
 import pixelmon.enums.EnumPokemon;
@@ -28,13 +29,23 @@ public abstract class Entity2HasModel extends Entity1Base {
 	}
 
 	public void evolve(String evolveTo) {
-		if (!EnumPokemon.hasPokemon(evolveTo)) return;
+		if (!EnumPokemon.hasPokemon(evolveTo))
+			return;
 		setName(evolveTo);
 		oldName = evolveTo;
 	}
-	
-	public void loadModel(){
-		model = Pixelmon.proxy.loadModel(getName());
+
+	public void loadModel() {
+		if (Pixelmon.proxy.getModels().length == 0)
+			return;
+		int n = ((Entity3HasStats) this).baseStats.nationalPokedexNumber;
+		if (Pixelmon.proxy.getModels()[n] != null) {
+			model = Pixelmon.proxy.getModels()[n];
+		} else {
+			ModelBase m = Pixelmon.proxy.loadModel(getName());
+			Pixelmon.proxy.getModels()[n] = m;
+			model = m;
+		}
 	}
 
 	String oldName;
@@ -42,11 +53,10 @@ public abstract class Entity2HasModel extends Entity1Base {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (!oldName.equals(getName())) {
-			isInitialised=false;
+		if (worldObj.isRemote && !oldName.equals(getName())) {
+			isInitialised = false;
 			loadModel();
 			oldName = getName();
 		}
 	}
-
 }
