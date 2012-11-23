@@ -34,7 +34,6 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new SwapMove());
 		handlers.add(new SwitchPokemon());
 		handlers.add(new DeleteMove());
-		handlers.add(new PokedexHandler());
 	}
 
 	@Override

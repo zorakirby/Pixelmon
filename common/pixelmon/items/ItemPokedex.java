@@ -19,15 +19,20 @@ public class ItemPokedex extends Item
 	
 	public ItemStack onItemRightClick(ItemStack i, World world, EntityPlayer player)
 	{
-		PokeballManager pm = PixelmonStorage.PokeballManager;
-		EntityPlayerMP e = pm.getPlayerFromName(player.username);
-		pm.getPlayerStorage(e).pokedex.sendToPlayer(e);
-		player.openGui(Pixelmon.instance, EnumGui.Pokedex.getIndex(), world, 0, 0, 0);
+		//openPokedexGui(1, player, world);
 		return i;
 	}
 	
 	public EnumRarity getRarity(ItemStack i)
 	{
 		return EnumRarity.rare;
+	}
+	
+	public void openPokedexGui(int i, EntityPlayer player, World world)
+	{
+		PokeballManager pm = PixelmonStorage.PokeballManager;
+		EntityPlayerMP e = pm.getPlayerFromName(player.username);
+		pm.getPlayerStorage(e).pokedex.sendToPlayer(e);
+		player.openGui(Pixelmon.instance, EnumGui.Pokedex.getIndex(), world, i, 0, 0);
 	}
 }
