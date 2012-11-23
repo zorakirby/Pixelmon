@@ -26,6 +26,8 @@ public class ItemTM extends PixelmonItem {
 			setIconIndex(40);
 		else if (moveType == EnumType.Fighting)
 			setIconIndex(56);
+		else if (moveType == EnumType.Fire)
+			setIconIndex(72);
 		else
 			setIconIndex(8);
 

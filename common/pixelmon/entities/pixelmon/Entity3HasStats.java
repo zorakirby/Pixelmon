@@ -34,7 +34,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public float hoverHeight = 0f;
 	public float length;
 	public boolean doesLevel = true;
-	private static ArrayList<BaseStats> baseStatsStore = new ArrayList<BaseStats>();
+	private static BaseStats[] baseStatsStore = new BaseStats[650];
 
 	public Entity3HasStats(World par1World) {
 		super(par1World);
@@ -75,15 +75,20 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	private void getBaseStats(String name) {
 		boolean has = false;
-		for (int i = 0; i < baseStatsStore.size(); i++) {
-			if (baseStatsStore.get(i).pixelmonName == name) {
+		for (int i = 0; i < baseStatsStore.length; i++) {
+			if (baseStatsStore[i].pixelmonName == name) {
 				has = true;
-				baseStats = baseStatsStore.get(i);
+				baseStats = baseStatsStore[i];
+				break;
+			} else if (baseStatsStore[i] == null) {
+				break;
 			}
 		}
 		if (!has) {
 			baseStats = loadBaseStats(getName());
-			baseStatsStore.add(baseStats);
+			for (int i = 0; i < baseStatsStore.length; i++)
+				if (baseStatsStore[i] == null)
+					baseStatsStore[i] = baseStats;
 		}
 	}
 
