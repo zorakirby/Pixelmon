@@ -339,6 +339,7 @@ public class ModelSlowpoke extends ModelBase
         TAIL.rotateAngleX = 0.885398163F;
         TAIL2.rotateAngleX = 1.485398163F;
         TAIL3.rotateAngleX = 0.885398163F;
+        TAIL.rotateAngleZ = MathHelper.cos(f * 0.6662F) * .4F * f1;
   }
 
 }

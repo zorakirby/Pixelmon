@@ -85,8 +85,9 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void preloadTextures() {
-//		for (EnumPokemon pokemon : EnumPokemon.values())
-//			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" + pokemon.name.toLowerCase() + ".png");
+		// for (EnumPokemon pokemon : EnumPokemon.values())
+		// MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" +
+		// pokemon.name.toLowerCase() + ".png");
 	}
 
 	@Override
@@ -180,8 +181,8 @@ public class ClientProxy extends CommonProxy {
 			if (particle.particleClass == EntityGastlyParticle.class)
 				fx = new EntityGastlyParticle(worldObj, posX, posY, posZ, 0, 0, 0, isShiny);
 			else
-				fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class,
-						double.class).newInstance(worldObj, posX, posY, posZ, 0d, 0d, 0d);
+				fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class).newInstance(
+						worldObj, posX, posY, posZ, 0d, 0d, 0d);
 			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -206,5 +207,12 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerCameraEntity(EntityCamera entityCamera) {
 		ClientBattleManager.camera = entityCamera;
+	}
+
+	public ModelBase[] models = new ModelBase[650];
+
+	@Override
+	public ModelBase[] getModels() {
+		return models;
 	}
 }

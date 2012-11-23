@@ -4,6 +4,7 @@ import java.util.Random;
 
 import cpw.mods.fml.common.IWorldGenerator;
 
+import net.minecraft.src.Chunk;
 import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.StructureBoundingBox;
 import net.minecraft.src.World;

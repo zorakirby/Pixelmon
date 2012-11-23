@@ -226,9 +226,12 @@ public class ModelChansey extends ModelBase {
 		model.rotateAngleZ = z;
 	}
 
-	public void setRotationAngles(float f, float f1, float f2, float f3,
-			float f4, float f5, Entity entity) {
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		RightLeg.rotateAngleX = MathHelper.cos(f * 0.9F) * 1F * f1;
+		 LeftLeg.rotateAngleX = MathHelper.cos(f * 0.9F + (float)Math.PI) * 1F * f1;
+		
+		
 	}
 
 }
