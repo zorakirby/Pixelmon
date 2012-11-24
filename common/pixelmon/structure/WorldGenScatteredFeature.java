@@ -19,7 +19,7 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 			SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/house.schematic");
 			s.readSchematic();
 			GeneralScattered g = new GeneralScattered(random, xPos, zPos, s);
-			g.generate(world, random);
+			hasGenerated = g.generate(world, random);
 			System.out.println("A structure has Generated at " + xPos + ", " + zPos);
 		}
 	}
