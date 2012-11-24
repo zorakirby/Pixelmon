@@ -29,10 +29,11 @@ public class PokedexEntry
 			int i1 = s.indexOf('.');
 			String feet = s.substring(0, i1);
 			float inches = Float.parseFloat(0 + s.substring(i1)) * 12;
-			heightC = feet + "\'" + (inches) + "\"";
+			int in = Math.round(inches);
+			heightC = feet + "\'" + in + "\"";
 		}
 		float wc = w * 2.20462262F;
-		weightC = (wc == 0?"???":wc) + " lbs";
+		weightC = (wc == 0?"???":(Math.round(wc))) + " lbs";
 	}
 	
 	public String getPokedexDisplayNumber()
@@ -43,14 +44,21 @@ public class PokedexEntry
 		return s;
 	}
 	
-	public EntityLiving getRenderTarget(World w)
+	private EntityPixelmon renderTarget;
+	public EntityPixelmon getRenderTarget(World w)
 	{
-		EntityPixelmon ep = new EntityPixelmon(w);
+		if(renderTarget != null && w == renderTarget.worldObj)
+			return renderTarget;
+		renderTarget = new EntityPixelmon(w);
 		if(name != null && !name.equals("???"))
-			ep.init(name);
+			renderTarget.init(name);
 		else
-			return new EntityQuestionMarks(w);
-		return ep;
+			return null;
+		return renderTarget;
 	}
 	
+	public String toString()
+	{
+		return getPokedexDisplayNumber() + " " + name;
+	}
 }

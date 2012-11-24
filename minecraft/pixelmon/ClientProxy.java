@@ -150,7 +150,7 @@ public class ClientProxy extends CommonProxy {
 		else if (ID == EnumGui.Battle.getIndex())
 			return new GuiBattle(x);
 		else if (ID == EnumGui.Pokedex.getIndex())
-			return new GuiPokedex(player.username);
+			return new GuiPokedex(player.username, x);
 		else if (ID == EnumGui.PC.getIndex())
 			return new GuiPC();
 		else if (ID == EnumGui.Healer.getIndex())
