@@ -47,7 +47,6 @@ public class TileEntityAnvil extends TileEntity {
 
 	@Override
 	public void receiveClientEvent(int par1, int par2) {
-		// TODO Auto-generated method stub
 		super.receiveClientEvent(par1, par2);
 	}
 	

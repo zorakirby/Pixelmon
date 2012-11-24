@@ -221,7 +221,8 @@ public class ModelPokeball extends ModelBase {
 
 	public void render(EntityPokeBall pokeball, float f) {
 		Rocking.render(f);
-		Hinge.rotateAngleX=pokeball.openAngle;
+		if (pokeball != null)
+			Hinge.rotateAngleX = pokeball.openAngle;
 	}
 
 	protected void setRotation(ModelRenderer model, float x, float y, float z) {
@@ -231,8 +232,8 @@ public class ModelPokeball extends ModelBase {
 	}
 
 	public void setRotationAngles(float f, float f2) {
-		Rocking.rotateAngleZ = f/180f*((float)Math.PI);
-		Rocking.rotateAngleY =f2/180f*((float)Math.PI);
+		Rocking.rotateAngleZ = f / 180f * ((float) Math.PI);
+		Rocking.rotateAngleY = f2 / 180f * ((float) Math.PI);
 	}
 
 }

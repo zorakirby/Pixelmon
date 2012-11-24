@@ -3,14 +3,17 @@ package pixelmon.blocks;
 import java.util.Random;
 
 import pixelmon.Pixelmon;
+import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonItems;
 import pixelmon.enums.EnumGui;
+import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
@@ -59,12 +62,14 @@ public class BlockHealer extends BlockContainer {
 	 * three integers represent x,y,z of the block.
 	 */
 	@Override
-	public boolean onBlockActivated(World par1World, int par2, int par3,
-			int par4, EntityPlayer par5EntityPlayer, int par6, float par7,
-			float par8, float par9) {
-		if(!par1World.isRemote)
-		{
-			par5EntityPlayer.openGui(Pixelmon.instance, EnumGui.Healer.getIndex(), par1World, 0, 0, 0);
+	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer player, int par6, float par7, float par8, float par9) {
+		if (!par1World.isRemote) {
+			TileEntityHealer te = (TileEntityHealer) par1World.getBlockTileEntity(par2, par3, par4);
+			if (!te.beingUsed) {
+				te.use(player);
+			} else {
+				ChatHandler.sendChat(player, "Healer is busy!");
+			}
 		}
 		return true;
 	}
