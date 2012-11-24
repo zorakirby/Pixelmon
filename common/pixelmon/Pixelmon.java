@@ -70,7 +70,7 @@ import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.8.3")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.8.4")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 	@Instance
@@ -91,7 +91,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "Pixelmon 1.8.3 for 1.4.4";
+		event.getModMetadata().version = "Pixelmon 1.8.4 for 1.4.4";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 		
