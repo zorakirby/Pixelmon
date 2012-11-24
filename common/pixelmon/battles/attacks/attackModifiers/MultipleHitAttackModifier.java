@@ -6,6 +6,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
+
 public class MultipleHitAttackModifier extends AttackModifierBase {
 
 	private int count = 0;
@@ -34,22 +35,19 @@ public class MultipleHitAttackModifier extends AttackModifierBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		while (RepeatsAttack()) {
 			double crit = a.calcCriticalHit(null);
-			for (EffectBase e : a.effects)
+			for (EffectBase e : a.baseAttack.effects)
 				crit = a.calcCriticalHit(e);
 
 			int power = a.doDamageCalc(user, target, crit);
-			if (a.attackCategory == Attack.ATTACK_STATUS)
+			if (a.baseAttack.attackCategory == Attack.ATTACK_STATUS)
 				power = 0;
-			target.attackEntityFrom(
-					DamageSource.causeMobDamage(user), power);
+			target.attackEntityFrom(DamageSource.causeMobDamage(user), power);
 			a.doMove(user, target);
 			if (crit > 1)
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Critical Hit!");
 		}
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user
-				.getName() + " attacked " + count + " times!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " attacked " + count + " times!");
 		return true;
 	}
-
 
 }

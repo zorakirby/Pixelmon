@@ -9,6 +9,7 @@ import pixelmon.enums.EnumType;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
+
 public class HiddenPower extends SpecialAttackBase {
 
 	public HiddenPower() {
@@ -30,41 +31,41 @@ public class HiddenPower extends SpecialAttackBase {
 		int type = (int) Math.floor((fedbca) * 15f / 63f);
 
 		if (type == 0)
-			attack.attackType = EnumType.Fighting;
+			attack.baseAttack.attackType = EnumType.Fighting;
 		else if (type == 1)
-			attack.attackType = EnumType.Flying;
+			attack.baseAttack.attackType = EnumType.Flying;
 		else if (type == 2)
-			attack.attackType = EnumType.Poison;
+			attack.baseAttack.attackType = EnumType.Poison;
 		else if (type == 3)
-			attack.attackType = EnumType.Ground;
+			attack.baseAttack.attackType = EnumType.Ground;
 		else if (type == 4)
-			attack.attackType = EnumType.Rock;
+			attack.baseAttack.attackType = EnumType.Rock;
 		else if (type == 5)
-			attack.attackType = EnumType.Bug;
+			attack.baseAttack.attackType = EnumType.Bug;
 		else if (type == 6)
-			attack.attackType = EnumType.Ghost;
+			attack.baseAttack.attackType = EnumType.Ghost;
 		else if (type == 7)
-			attack.attackType = EnumType.Steel;
+			attack.baseAttack.attackType = EnumType.Steel;
 		else if (type == 8)
-			attack.attackType = EnumType.Fire;
+			attack.baseAttack.attackType = EnumType.Fire;
 		else if (type == 9)
-			attack.attackType = EnumType.Water;
+			attack.baseAttack.attackType = EnumType.Water;
 		else if (type == 10)
-			attack.attackType = EnumType.Grass;
+			attack.baseAttack.attackType = EnumType.Grass;
 		else if (type == 11)
-			attack.attackType = EnumType.Electric;
+			attack.baseAttack.attackType = EnumType.Electric;
 		else if (type == 12)
-			attack.attackType = EnumType.Psychic;
+			attack.baseAttack.attackType = EnumType.Psychic;
 		else if (type == 13)
-			attack.attackType = EnumType.Ice;
+			attack.baseAttack.attackType = EnumType.Ice;
 		else if (type == 14)
-			attack.attackType = EnumType.Dragon;
+			attack.baseAttack.attackType = EnumType.Dragon;
 		else if (type == 15)
-			attack.attackType = EnumType.Dark;
+			attack.baseAttack.attackType = EnumType.Dark;
 
 		boolean stab = false;
 		for (EnumType t : user.type) {
-			if (t == attack.attackType) {
+			if (t == attack.baseAttack.attackType) {
 				stab = true;
 				break;
 			}
@@ -91,7 +92,7 @@ public class HiddenPower extends SpecialAttackBase {
 		if (tmp == 2 || tmp == 3)
 			z = 1;
 
-		attack.basePower = (int) Math.floor(((double) (u + 2 * v + 4 * w + 8 * x + 16 * y + 32 * z)) * 40 / 63 + 30);
+		attack.baseAttack.basePower = (int) Math.floor(((double) (u + 2 * v + 4 * w + 8 * x + 16 * y + 32 * z)) * 40 / 63 + 30);
 		return false;
 	}
 }

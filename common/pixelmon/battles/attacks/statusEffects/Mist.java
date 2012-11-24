@@ -37,8 +37,8 @@ public class Mist extends StatusEffectBase {
 
 	@Override
 	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
-		if (a.attackCategory ==  Attack.ATTACK_STATUS){
-			for (EffectBase e:a.effects){
+		if (a.baseAttack.attackCategory ==  Attack.ATTACK_STATUS){
+			for (EffectBase e:a.baseAttack.effects){
 				if (e.effectType == EffectType.Stats){
 					for (ModifierBase m: (((StatsEffect)e).modifiers)){
 						if (m.type == ModifierType.User) return false;

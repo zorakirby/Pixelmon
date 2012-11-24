@@ -167,10 +167,10 @@ public class EntityPixelmon extends Entity9HasSounds {
 							a.STAB = DatabaseMoves.hasSTAB(getName(), ((ItemTM) itemstack.getItem()).attackName);
 							if (moveset.size() >= 4) {
 								((EntityPlayerMP) getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace, getPokemonId(),
-										a.attackIndex, level.getLevel()));
+										a.baseAttack.attackIndex, level.getLevel()));
 							} else {
 								moveset.add(a);
-								ChatHandler.sendChat(getOwner(), getName() + " just learnt " + a.attackName + "!");
+								ChatHandler.sendChat(getOwner(), getName() + " just learnt " + a.baseAttack.attackName + "!");
 							}
 							PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).updateNBT(this);
 							if (!player.capabilities.isCreativeMode)

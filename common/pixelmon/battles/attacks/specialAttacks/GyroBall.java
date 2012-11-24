@@ -12,14 +12,10 @@ public class GyroBall extends SpecialAttackBase {
 
 	}
 
-	
-
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-	a.basePower = (25*(target.stats.Speed / user.stats.Speed));
-	return true;
+		a.baseAttack.basePower = (25 * (target.stats.Speed / user.stats.Speed));
+		return true;
 	}
 
-	
-	
 }

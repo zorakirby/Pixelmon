@@ -150,23 +150,7 @@ public class DatabaseMoves {
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select * from Moves where Name='" + moveName + "'");
 			while (rs.next()) {
-				ArrayList<EffectBase> effects = new ArrayList<EffectBase>();
-				String[] splits = rs.getString("Effect").split(";");
-				for (String e : splits) {
-					EffectBase etmp = EffectBase.getEffect(e);
-					if (etmp != null)
-						effects.add(etmp);
-				}
-				String animationString = rs.getString("AttackAnimations");
-				ArrayList<IAttackAnimation> animations;
-				if (animationString == null) {
-					animations = new ArrayList<IAttackAnimation>();
-					animations.add(new AttackAnimationLeapForward());
-				} else
-					animations = AttackAnimationParser.GetAnimation(animationString);
-				return new Attack(rs.getInt("MoveIndex"), rs.getString("Name"), EnumType.parseType(rs.getString("Type")), Attack.getAttackCategory(rs.getString("Category")),
-						rs.getInt("Power"), rs.getInt("Accuracy"), rs.getInt("PP"), rs.getInt("PPMax"), false, rs.getInt("HMIndex") != -1, effects, rs.getInt("MakesContact") == 1,
-						rs.getString("Description"), animations);
+				return new Attack(rs.getInt("MoveIndex"), moveName, rs);
 			}
 			conn.close();
 		} catch (Exception e) {
@@ -183,23 +167,7 @@ public class DatabaseMoves {
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select * from Moves where MoveIndex='" + moveIndex + "'");
 			while (rs.next()) {
-				ArrayList<EffectBase> effects = new ArrayList<EffectBase>();
-				String[] splits = rs.getString("Effect").split(";");
-				for (String e : splits) {
-					EffectBase etmp = EffectBase.getEffect(e);
-					if (etmp != null)
-						effects.add(etmp);
-				}
-				String animationString = rs.getString("AttackAnimations");
-				ArrayList<IAttackAnimation> animations;
-				if (animationString == null) {
-					animations = new ArrayList<IAttackAnimation>();
-					animations.add(new AttackAnimationLeapForward());
-				} else
-					animations = AttackAnimationParser.GetAnimation(animationString);
-				return new Attack(rs.getInt("MoveIndex"), rs.getString("Name"), EnumType.parseType(rs.getString("Type")), Attack.getAttackCategory(rs.getString("Category")),
-						rs.getInt("Power"), rs.getInt("Accuracy"), rs.getInt("PP"), rs.getInt("PPMax"), false, rs.getInt("HMIndex") != -1, effects, rs.getInt("MakesContact") == 1,
-						rs.getString("Description"), animations);
+				return new Attack(moveIndex, rs.getString("Name"), rs);
 			}
 			conn.close();
 		} catch (Exception e) {

@@ -113,7 +113,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (moveset.size() >= 4) {
 			ArrayList<Attack> attacks = getAttacksAtLevel(getLvl().getLevel());
 			for (int i = 0; i < attacks.size(); i++)
-				((EntityPlayerMP) getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, getPokemonId(), attacks.get(i).attackIndex, 0);
+				((EntityPlayerMP) getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, getPokemonId(), attacks.get(i).baseAttack.attackIndex, 0);
 		}
 	}
 

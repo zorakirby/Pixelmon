@@ -36,7 +36,7 @@ public class ReplaceMove extends PacketHandlerBase {
 			p = storage.getAlreadyExists(pokemonID, player.worldObj);
 		else
 			p = storage.sendOut(pokemonID, player.worldObj);
-		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(replaceIndex).attackName + ", and learned " + a.attackName);
+		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(replaceIndex).baseAttack.attackName + ", and learned " + a.baseAttack.attackName);
 		p.moveset.set(replaceIndex, a);
 		storage.updateNBT(p);
 	}

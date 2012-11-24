@@ -39,9 +39,9 @@ public class Sunny extends StatusEffectBase {
 
 	@Override
 	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
-		if (a.attackType == EnumType.Fire)
+		if (a.baseAttack.attackType == EnumType.Fire)
 			return damage *= 1.5;
-		else if (a.attackType == EnumType.Water)
+		else if (a.baseAttack.attackType == EnumType.Water)
 			return damage*=0.5;
 		else
 			return damage;

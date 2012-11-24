@@ -157,12 +157,12 @@ implements List<Attack>, RandomAccess, Cloneable
 	public void writeToNBT(NBTTagCompound var1) {
 		var1.setInteger("PixelmonNumberMoves", size());
 		for (int i =0; i < size(); i++){
-			var1.setString("PixelmonMoveName" + i,get(i).attackName);
-			var1.setInteger("PixelmonMoveType" + i,get(i).attackType.getIndex());
+			var1.setString("PixelmonMoveName" + i,get(i).baseAttack.attackName);
+			var1.setInteger("PixelmonMoveType" + i,get(i).baseAttack.attackType.getIndex());
 			var1.setBoolean("PixelmonMoveSTAB" + i,get(i).STAB);
 			var1.setInteger("PixelmonMovePP" + i,get(i).pp);
 			var1.setInteger("PixelmonMovePPBase" + i,get(i).ppBase);
-			var1.setInteger("PixelmonMovePPMax" + i,get(i).ppmax);
+			var1.setInteger("PixelmonMovePPMax" + i,get(i).baseAttack.ppMax);
 		}
 	}
 
@@ -174,7 +174,6 @@ implements List<Attack>, RandomAccess, Cloneable
 			a.STAB = var1.getBoolean("PixelmonMoveSTAB" + i);
 			a.pp = var1.getInteger("PixelmonMovePP" + i);
 			a.ppBase = var1.getInteger("PixelmonMovePPBase" + i);
-			a.ppmax = var1.getInteger("PixelmonMovePPMax" + i);
 			add(a);
 		}
 	}

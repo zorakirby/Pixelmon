@@ -16,9 +16,9 @@ public class Acrobatics extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
 	
 		if(user.getHeldItem() == null)
-			a.basePower = 110;
+			a.baseAttack.basePower = 110;
 		
-		a.basePower = 55;
+		a.baseAttack.basePower = 55;
 		
 		
 		

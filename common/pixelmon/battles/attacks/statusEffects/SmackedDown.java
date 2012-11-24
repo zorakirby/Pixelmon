@@ -21,19 +21,19 @@ public class SmackedDown extends StatusEffectBase {
 		double stab = 1;
 		if (a.STAB)
 			stab = 1.5;
-		double type = EnumType.getTotalEffectiveness(user.type, a.attackType);
-		if (a.attackType == EnumType.Ground && user.type.contains(EnumType.Flying))
+		double type = EnumType.getTotalEffectiveness(user.type, a.baseAttack.attackType);
+		if (a.baseAttack.attackType == EnumType.Ground && user.type.contains(EnumType.Flying))
 			type = 1;
 		double critical = crit;
 		double rand = ((double) RandomHelper.getRandomNumberBetween(85, 100)) / 100;
 		double modifier = stab * type * critical * rand;
 		double attack = 0, defence = 0;
-		if (a.attackCategory == Attack.ATTACK_PHYSICAL) {
+		if (a.baseAttack.attackCategory == Attack.ATTACK_PHYSICAL) {
 			attack = ((double) target.stats.Attack)
 					* ((double) target.battleStats.AttackModifier) / 100;
 			defence = ((double) user.stats.Defence)
 					* ((double) user.battleStats.DefenceModifier) / 100;
-		} else if (a.attackCategory == Attack.ATTACK_SPECIAL) {
+		} else if (a.baseAttack.attackCategory == Attack.ATTACK_SPECIAL) {
 			attack = ((double) target.stats.SpecialAttack)
 					* ((double) target.battleStats.SpecialAttackModifier)
 					/ 100;
@@ -42,7 +42,7 @@ public class SmackedDown extends StatusEffectBase {
 					/ 100;
 		}
 		double Damage = ((2 * ((float)target.getLvl().getLevel()) + 10) / 250
-				* (attack / defence) * a.basePower + 2)
+				* (attack / defence) * a.baseAttack.basePower + 2)
 				* modifier;
 
 		return Damage;

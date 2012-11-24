@@ -13,15 +13,14 @@ public class Punishment extends SpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-		int DamageMultiplier = user.battleStats.AttackModifier + user.battleStats.DefenceModifier +
-				 user.battleStats.SpecialAttackModifier + user.battleStats.SpecialDefenceModifier +
-				 user.battleStats.SpeedModifier;
-		
-		a.basePower = 60 + (20*DamageMultiplier);
-		if(a.basePower>=200){
-		   a.basePower = 200;
+		int DamageMultiplier = user.battleStats.AttackModifier + user.battleStats.DefenceModifier + user.battleStats.SpecialAttackModifier
+				+ user.battleStats.SpecialDefenceModifier + user.battleStats.SpeedModifier;
+
+		a.baseAttack.basePower = 60 + (20 * DamageMultiplier);
+		if (a.baseAttack.basePower >= 200) {
+			a.baseAttack.basePower = 200;
 		}
-		
+
 		return false;
 	}
 

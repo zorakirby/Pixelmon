@@ -10,6 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.EntityLiving;
+
 public class Venoshock extends SpecialAttackBase {
 
 	public Venoshock() {
@@ -18,12 +19,14 @@ public class Venoshock extends SpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-		a.basePower = 65;
-		boolean isPoisoned=false;
-		for(StatusEffectBase e:target.status)
-			if (e.type == StatusEffectType.Poison || e.type == StatusEffectType.PoisonBadly) isPoisoned = true;
+		a.baseAttack.basePower = 65;
+		boolean isPoisoned = false;
+		for (StatusEffectBase e : target.status)
+			if (e.type == StatusEffectType.Poison || e.type == StatusEffectType.PoisonBadly)
+				isPoisoned = true;
 
-		if (isPoisoned) a.basePower=130;
+		if (isPoisoned)
+			a.baseAttack.basePower = 130;
 		return false;
 	}
 

@@ -156,10 +156,10 @@ public class Level {
 			for (Attack a : newAttacks) {
 				if (pixelmon.moveset.size() >= 4) {
 					((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace,
-							pixelmon.getPokemonId(), a.attackIndex, getLevel()));
+							pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
 				} else {
 					pixelmon.moveset.add(a);
-					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.attackName + "!");
+					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
 				}
 			}
 		}
