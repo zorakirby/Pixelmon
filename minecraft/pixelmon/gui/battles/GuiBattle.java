@@ -142,16 +142,13 @@ public class GuiBattle extends GuiContainer {
 
 		drawHealthBar(width - 101, height - (guiHeight + 26), 97, 6, userPokemon);
 		drawImageQuad(guiIndex, width - 111, height - (guiHeight + 28), 103, 9, 1f / 128f, 45f / 64f, 104f / 128f, 55f / 64f);
-		drawString(fontRenderer, "" + userPokemon.health + "/" + userPokemon.hp,
-				width - 10 - fontRenderer.getStringWidth("" + userPokemon.health + "/" + userPokemon.hp), height - (guiHeight + 18), 0xFFFFFF);
+		drawString(fontRenderer, "" + userPokemon.health + "/" + userPokemon.hp, width - 10 - fontRenderer.getStringWidth("" + userPokemon.health + "/" + userPokemon.hp), height
+				- (guiHeight + 18), 0xFFFFFF);
 		if (userPokemon.isMale)
-			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 39), 7, 10, 119f / 128f, 52f / 64f, 126f / 128f,
-					62f / 64f);
+			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 39), 7, 10, 119f / 128f, 52f / 64f, 126f / 128f, 62f / 64f);
 		else
-			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 39), 7, 10, 111f / 128f, 52f / 64f, 118f / 128f,
-					62f / 64f);
-		drawString(fontRenderer, "Lv. " + userPokemon.lvl, width - 10 - fontRenderer.getStringWidth("Lv. " + userPokemon.lvl), height - (guiHeight + 37),
-				0xFFFFFF);
+			drawImageQuad(guiIndex, width - 113 + fontRenderer.getStringWidth(name), height - (guiHeight + 39), 7, 10, 111f / 128f, 52f / 64f, 118f / 128f, 62f / 64f);
+		drawString(fontRenderer, "Lv. " + userPokemon.lvl, width - 10 - fontRenderer.getStringWidth("Lv. " + userPokemon.lvl), height - (guiHeight + 37), 0xFFFFFF);
 
 		guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pokemonInforP2.png");
 		PixelmonDataPacket targetPokemon = ClientBattleManager.getOpponent();
@@ -214,22 +211,17 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, "Sp. Defence", width / 2 - 43, height / 2 + 10, 0xFFFFFF);
 		drawString(fontRenderer, "Speed", width / 2 - 43, height / 2 + 26, 0xFFFFFF);
 		if (drawLevelStage == LevelStage.First) {
-			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.HP - ClientBattleManager.levelUpList.get(0).statsLevel1.HP),
-					width / 2 + 25, height / 2 - 54, 0xFFFFFF);
-			drawString(fontRenderer, "+"
-					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Attack - ClientBattleManager.levelUpList.get(0).statsLevel1.Attack), width / 2 + 25,
+			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.HP - ClientBattleManager.levelUpList.get(0).statsLevel1.HP), width / 2 + 25,
+					height / 2 - 54, 0xFFFFFF);
+			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.Attack - ClientBattleManager.levelUpList.get(0).statsLevel1.Attack), width / 2 + 25,
 					height / 2 - 38, 0xFFFFFF);
-			drawString(fontRenderer, "+"
-					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Defence - ClientBattleManager.levelUpList.get(0).statsLevel1.Defence),
+			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.Defence - ClientBattleManager.levelUpList.get(0).statsLevel1.Defence),
 					width / 2 + 25, height / 2 - 22, 0xFFFFFF);
-			drawString(fontRenderer, "+"
-					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.SpecialAttack - ClientBattleManager.levelUpList.get(0).statsLevel1.SpecialAttack),
+			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.SpecialAttack - ClientBattleManager.levelUpList.get(0).statsLevel1.SpecialAttack),
 					width / 2 + 25, height / 2 - 6, 0xFFFFFF);
-			drawString(fontRenderer, "+"
-					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.SpecialDefence - ClientBattleManager.levelUpList.get(0).statsLevel1.SpecialDefence),
+			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.SpecialDefence - ClientBattleManager.levelUpList.get(0).statsLevel1.SpecialDefence),
 					width / 2 + 25, height / 2 + 10, 0xFFFFFF);
-			drawString(fontRenderer, "+"
-					+ (ClientBattleManager.levelUpList.get(0).statsLevel2.Speed - ClientBattleManager.levelUpList.get(0).statsLevel1.Speed), width / 2 + 25,
+			drawString(fontRenderer, "+" + (ClientBattleManager.levelUpList.get(0).statsLevel2.Speed - ClientBattleManager.levelUpList.get(0).statsLevel1.Speed), width / 2 + 25,
 					height / 2 + 26, 0xFFFFFF);
 		} else if (drawLevelStage == LevelStage.Second) {
 			PixelmonStatsPacket stats = ClientBattleManager.levelUpList.get(0).statsLevel2;
@@ -250,8 +242,7 @@ public class GuiBattle extends GuiContainer {
 			name = ServerStorageDisplay.get(ClientBattleManager.levelUpList.get(0).pokemonID).nickname;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(guiIndex, width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f);
-		drawCenteredString(fontRenderer, "Your " + name + " has grown to level " + ClientBattleManager.levelUpList.get(0).level + "!", width / 2, height - 35,
-				0xFFFFFF);
+		drawCenteredString(fontRenderer, "Your " + name + " has grown to level " + ClientBattleManager.levelUpList.get(0).level + "!", width / 2, height - 35, 0xFFFFFF);
 		flashCount++;
 		if (flashCount > 30) {
 			drawImageQuad(guiIndex, width / 2 + 130, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f);
@@ -270,14 +261,14 @@ public class GuiBattle extends GuiContainer {
 		Attack newAttack = ClientBattleManager.newAttackList.get(0).attack;
 		float textAreaWidth = 170;
 		if (selectedAttack == -1) {
-			float textWidth = fontRenderer.getStringWidth("Do you want to give up learning " + newAttack.attackName + "?");
+			float textWidth = fontRenderer.getStringWidth("Do you want to give up learning " + newAttack.baseAttack.attackName + "?");
 			int numLines = (int) (textWidth / textAreaWidth) + 1;
-			fontRenderer.drawSplitString("Do you want to give up learning " + newAttack.attackName + "?", width / 2 - 109, height / 2 + 1 - numLines * 10 / 2,
+			fontRenderer.drawSplitString("Do you want to give up learning " + newAttack.baseAttack.attackName + "?", width / 2 - 109, height / 2 + 1 - numLines * 10 / 2,
 					(int) textAreaWidth, 0x000000);
-			fontRenderer.drawSplitString("Do you want to give up learning " + newAttack.attackName + "?", width / 2 - 110, height / 2 - numLines * 10 / 2,
+			fontRenderer.drawSplitString("Do you want to give up learning " + newAttack.baseAttack.attackName + "?", width / 2 - 110, height / 2 - numLines * 10 / 2,
 					(int) textAreaWidth, 0xFFFFFF);
 		} else {
-			String text = "Do you want to replace " + attacks[selectedAttack].attackName + " with " + newAttack.attackName + "?";
+			String text = "Do you want to replace " + attacks[selectedAttack].baseAttack.attackName + " with " + newAttack.baseAttack.attackName + "?";
 			float textWidth = fontRenderer.getStringWidth(text);
 			int numLines = (int) (textWidth / textAreaWidth) + 1;
 			fontRenderer.drawSplitString(text, width / 2 - 109, height / 2 + 1 - numLines * 10 / 2, (int) textAreaWidth, 0x000000);
@@ -314,7 +305,7 @@ public class GuiBattle extends GuiContainer {
 		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
 			if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 - 94 + 22 * i && mouseY < height / 2 - 94 + 22 * (i + 1)) {
 				drawImageQuad(guiIndex, width / 2 - 30, height / 2 - 94 + 22 * i, 152, 24, 97f / 256f, 209f / 256f, 249f / 256f, 234f / 256f);
-				if (attacks[i] == null || !attacks[i].attackName.equals(pokemonToLearnAttack.moveset[i].attackName))
+				if (attacks[i] == null || !attacks[i].baseAttack.attackName.equals(pokemonToLearnAttack.moveset[i].attackName))
 					attacks[i] = DatabaseMoves.getAttack(pokemonToLearnAttack.moveset[i].attackName);
 				drawMoveInfo(attacks[i]);
 			}
@@ -322,10 +313,10 @@ public class GuiBattle extends GuiContainer {
 
 		Attack newAttack = ClientBattleManager.newAttackList.get(0).attack;
 
-		drawString(fontRenderer, newAttack.attackName, width / 2 + 11, height / 2 - 78 + 22 * 4, 0xFFFFFF);
+		drawString(fontRenderer, newAttack.baseAttack.attackName, width / 2 + 11, height / 2 - 78 + 22 * 4, 0xFFFFFF);
 		drawString(fontRenderer, newAttack.pp + "/" + newAttack.ppBase, width / 2 + 90, height / 2 - 76 + 22 * 4, 0xFFFFFF);
-		float x = newAttack.attackType.textureX;
-		float y = newAttack.attackType.textureY;
+		float x = newAttack.baseAttack.attackType.textureX;
+		float y = newAttack.baseAttack.attackType.textureY;
 		drawImageQuad(typesIndex, width / 2 - 30, height / 2 + 3, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
 		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 + 3 && mouseY < height / 2 + 25) {
 			drawImageQuad(guiIndex, width / 2 - 30, height / 2 + 1, 152, 24, 97f / 256f, 209f / 256f, 249f / 256f, 234f / 256f);
@@ -344,8 +335,8 @@ public class GuiBattle extends GuiContainer {
 		else
 			var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
 		drawImageQuad(var9, width / 2 - 114, height / 2 - 76, 64f, 64f, 0f, 0f, 1f, 1f);
-		drawCenteredString(fontRenderer, pokemonToLearnAttack.nickname.equals("") ? pokemonToLearnAttack.name : pokemonToLearnAttack.nickname, width / 2 - 82,
-				height / 2 + 8, 0xFFFFFF);
+		drawCenteredString(fontRenderer, pokemonToLearnAttack.nickname.equals("") ? pokemonToLearnAttack.name : pokemonToLearnAttack.nickname, width / 2 - 82, height / 2 + 8,
+				0xFFFFFF);
 
 		drawString(fontRenderer, "Effect", width / 2 - 96, height / 2 + 38, 0xFFFFFF);
 		drawString(fontRenderer, "Description", width / 2 - 20, height / 2 + 38, 0xFFFFFF);
@@ -356,17 +347,17 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, "Accuracy", width / 2 - 120, height / 2 + 78, 0xFFFFFF);
 		int bpextra = 0, acextra = 0;
 		;
-		if (attack.basePower >= 100)
+		if (attack.baseAttack.basePower >= 100)
 			bpextra = fontRenderer.getCharWidth('0');
-		if (attack.accuracy >= 100)
+		if (attack.baseAttack.accuracy >= 100)
 			acextra = fontRenderer.getCharWidth('0');
-		if (attack.basePower != -1)
-			drawString(fontRenderer, "" + attack.basePower, width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
+		if (attack.baseAttack.basePower != -1)
+			drawString(fontRenderer, "" + attack.baseAttack.basePower, width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "--", width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
-		drawString(fontRenderer, "" + attack.accuracy, width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
+		drawString(fontRenderer, "" + attack.baseAttack.accuracy, width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
 
-		fontRenderer.drawSplitString(attack.description, width / 2 - 25, height / 2 + 55, 100, 0xFFFFFF);
+		fontRenderer.drawSplitString(attack.baseAttack.description, width / 2 - 25, height / 2 + 55, 100, 0xFFFFFF);
 	}
 
 	private int startIndex = 0;
@@ -413,8 +404,7 @@ public class GuiBattle extends GuiContainer {
 				Item item = PixelmonItems.getItem(ClientBattleManager.bagStore.get(i).id);
 				if (item == null)
 					item = PixelmonItemsPokeballs.getItemFromID(ClientBattleManager.bagStore.get(i).id);
-				itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, new ItemStack(item), width / 2 - 85, height / 2 - 42 + (i - startIndex)
-						* 21);
+				itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, new ItemStack(item), width / 2 - 85, height / 2 - 42 + (i - startIndex) * 21);
 			}
 		}
 
@@ -638,14 +628,11 @@ public class GuiBattle extends GuiContainer {
 		if (numMoves > 3)
 			drawButton(width / 2 - 50, height - guiHeight + 33, 87, 20, moveset[3].attackName, mouseX, mouseY, guiIndex, 3);
 		if (moveset[mouseOverButton] != null) {
-			drawCenteredString(fontRenderer, "PP: " + moveset[mouseOverButton].pp + "/" + moveset[mouseOverButton].ppBase, width / 2 + 99, height - guiHeight
-					+ 18, 0xFFFFFF);
-			drawString(fontRenderer, "Type: ", width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2, height
-					- guiHeight + 33, 0xFFFFFF);
-			fontRenderer.drawString(
-					moveset[mouseOverButton].type.toString(),
-					width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2
-							+ fontRenderer.getStringWidth("Type: "), height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
+			drawCenteredString(fontRenderer, "PP: " + moveset[mouseOverButton].pp + "/" + moveset[mouseOverButton].ppBase, width / 2 + 99, height - guiHeight + 18, 0xFFFFFF);
+			drawString(fontRenderer, "Type: ", width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2, height - guiHeight + 33,
+					0xFFFFFF);
+			fontRenderer.drawString(moveset[mouseOverButton].type.toString(), width / 2 + 99 - fontRenderer.getStringWidth("Type: " + moveset[mouseOverButton].type.toString()) / 2
+					+ fontRenderer.getStringWidth("Type: "), height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
 		}
 		if (mouseX > width / 2 + 137 && mouseX < width / 2 + 148 && mouseY > height - 11 && mouseY < height - 1)
 			drawImageQuad(guiIndex, width / 2 + 137, height - 11, 11, 10, 613f / 640f, 151f / 480f, 635f / 640f, 171f / 480f);
@@ -758,23 +745,19 @@ public class GuiBattle extends GuiContainer {
 		int y2 = height - guiHeight + 33;
 		int w = 87, h = 20;
 		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h) {
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex,
-					ClientBattleManager.getUserPokemon().pokemonID));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex, ClientBattleManager.getUserPokemon().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
 		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h) {
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex,
-					ClientBattleManager.getUserPokemon().pokemonID));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex, ClientBattleManager.getUserPokemon().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
 		} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex,
-					ClientBattleManager.getUserPokemon().pokemonID));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex, ClientBattleManager.getUserPokemon().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
 		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex,
-					ClientBattleManager.getUserPokemon().pokemonID));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex, ClientBattleManager.getUserPokemon().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
 		}
@@ -833,7 +816,7 @@ public class GuiBattle extends GuiContainer {
 
 		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
 			if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 - 94 + 22 * i && mouseY < height / 2 - 94 + 22 * (i + 1)) {
-				sendPacket = PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonToLearnAttack.pokemonID, newAttack.attackIndex, i);
+				sendPacket = PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonToLearnAttack.pokemonID, newAttack.baseAttack.attackIndex, i);
 				selectedAttack = i;
 				oldMode = mode;
 				mode = BattleMode.YesNo;
@@ -905,8 +888,7 @@ public class GuiBattle extends GuiContainer {
 				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
 						&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
 					if (bagSection == bagSection.Pokeballs) {
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id,
-								battleControllerIndex, 0));
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id, battleControllerIndex, 0));
 						mode = BattleMode.Waiting;
 					} else {
 						itemToUse = ClientBattleManager.bagStore.get(i);

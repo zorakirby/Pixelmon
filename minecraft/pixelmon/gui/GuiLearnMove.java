@@ -42,12 +42,12 @@ public class GuiLearnMove extends GuiContainer {
 
 	private void teachMove(int index, Attack a) {
 		if (index == 10) {
-			ChatHandler.sendChat(player, "Decided not to teach " + dataPacket.name + " " + a.attackName + ".");
+			ChatHandler.sendChat(player, "Decided not to teach " + dataPacket.name + " " + a.baseAttack.attackName + ".");
 			return;
 		}
 
 		PixelmonDataPacket p = ServerStorageDisplay.get(pokemonId);
-		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonId, moveToLearn.attackIndex, index));
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ReplaceMove, pokemonId, moveToLearn.baseAttack.attackIndex, index));
 	}
 
 	public void actionPerformed(GuiButton b) {
@@ -58,7 +58,7 @@ public class GuiLearnMove extends GuiContainer {
 
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		drawDefaultBackground();
-		drawCenteredString(fontRenderer, "Your " + dataPacket.name + " wants to learn the move " + moveToLearn.attackName + ",", width / 2, 10, 0xFFFFFF);
+		drawCenteredString(fontRenderer, "Your " + dataPacket.name + " wants to learn the move " + moveToLearn.baseAttack.attackName + ",", width / 2, 10, 0xFFFFFF);
 		drawCenteredString(fontRenderer, "but " + dataPacket.name + " already knows four moves. Which move should be forgotten?", width / 2, 20, 0xFFFFFF);
 	}
 

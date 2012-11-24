@@ -19,10 +19,10 @@ public class PixelmonMovesetDataPacket {
 		if (moveset.size() <= i)
 			return null;
 		PixelmonMovesetDataPacket p = new PixelmonMovesetDataPacket();
-		p.attackName = moveset.get(i).attackName;
+		p.attackName = moveset.get(i).baseAttack.attackName;
 		p.pp = moveset.get(i).pp;
 		p.ppBase = moveset.get(i).ppBase;
-		p.type = moveset.get(i).attackType;
+		p.type = moveset.get(i).baseAttack.attackType;
 		return p;
 	}
 

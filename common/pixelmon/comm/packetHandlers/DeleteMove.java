@@ -34,7 +34,7 @@ public class DeleteMove extends PacketHandlerBase {
 			p = storage.getAlreadyExists(pokemonID, player.worldObj);
 		else
 			p = storage.sendOut(pokemonID, player.worldObj);
-		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(removeIndex).attackName + "!");
+		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(removeIndex).baseAttack.attackName + "!");
 		p.moveset.remove(removeIndex);
 		storage.updateNBT(p);
 	}

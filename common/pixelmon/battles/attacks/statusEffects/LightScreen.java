@@ -30,7 +30,7 @@ public class LightScreen extends StatusEffectBase {
 
 	@Override
 	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
-		if (a.attackCategory == Attack.ATTACK_SPECIAL)
+		if (a.baseAttack.attackCategory == Attack.ATTACK_SPECIAL)
 			return damage / 2;
 		return damage;
 	}

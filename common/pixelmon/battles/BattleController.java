@@ -222,12 +222,12 @@ public class BattleController {
 		}
 		int priority1 = 0, priority2 = 0;
 		if (attacks[0] != null) {
-			for (EffectBase e : attacks[0].effects)
+			for (EffectBase e : attacks[0].baseAttack.effects)
 				if (e.applyStage == ApplyStage.Priority)
 					priority1 = ((PriorityAttackModifier) e).value;
 		}
 		if (attacks[1] != null) {
-			for (EffectBase e : attacks[1].effects)
+			for (EffectBase e : attacks[1].baseAttack.effects)
 				if (e.applyStage == ApplyStage.Priority)
 					priority2 = ((PriorityAttackModifier) e).value;
 		}
@@ -297,23 +297,23 @@ public class BattleController {
 		if (pixelmon1CanAttack && (attacks[0] == null || !attacks[0].doesPersist(participant1.currentPokemon()))) {
 			attacks[0] = participant1.getMove(participant2);
 			if (attacks[0] != null)
-				attackList1.add(attacks[0].attackName);
+				attackList1.add(attacks[0].baseAttack.attackName);
 		}
 		if (pixelmon2CanAttack && (attacks[1] == null || !attacks[1].doesPersist(participant2.currentPokemon()))) {
 			attacks[1] = participant2.getMove(participant1);
 			if (attacks[1] != null)
-				attackList2.add(attacks[1].attackName);
+				attackList2.add(attacks[1].baseAttack.attackName);
 		}
 	}
 
 	public void setAttack(EntityPixelmon mypixelmon, Attack a) {
 		if (mypixelmon == participant1.currentPokemon()) {
 			attacks[0] = a;
-			attackList1.add(a.attackName);
+			attackList1.add(a.baseAttack.attackName);
 			participant1Wait = false;
 		} else {
 			attacks[1] = a;
-			attackList2.add(a.attackName);
+			attackList2.add(a.baseAttack.attackName);
 			participant2Wait = false;
 		}
 	}

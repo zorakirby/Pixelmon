@@ -19,7 +19,7 @@ public class Eruption extends SpecialAttackBase {
 							   {
 		
 		
-		a.basePower = 150 * (user.getHealth()/user.getMaxHealth());
+		a.baseAttack.basePower = 150 * (user.getHealth()/user.getMaxHealth());
 		
 
 		return false;

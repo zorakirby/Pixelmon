@@ -104,22 +104,22 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 
 	public void drawMoveDescription() {
 		if (move1 && targetPacket.numMoves > 0) {
-			if (attacks[0] == null || !attacks[0].attackName.equals(targetPacket.moveset[0].attackName))
+			if (attacks[0] == null || !attacks[0].baseAttack.attackName.equals(targetPacket.moveset[0].attackName))
 				attacks[0] = DatabaseMoves.getAttack(targetPacket.moveset[0].attackName);
 			drawMoveInfo(attacks[0]);
 		}
 		if (move2 && targetPacket.numMoves > 1) {
-			if (attacks[1] == null || !attacks[1].attackName.equals(targetPacket.moveset[1].attackName))
+			if (attacks[1] == null || !attacks[1].baseAttack.attackName.equals(targetPacket.moveset[1].attackName))
 				attacks[1] = DatabaseMoves.getAttack(targetPacket.moveset[1].attackName);
 			drawMoveInfo(attacks[1]);
 		}
 		if (move3 && targetPacket.numMoves > 2) {
-			if (attacks[2] == null || !attacks[2].attackName.equals(targetPacket.moveset[2].attackName))
+			if (attacks[2] == null || !attacks[2].baseAttack.attackName.equals(targetPacket.moveset[2].attackName))
 				attacks[2] = DatabaseMoves.getAttack(targetPacket.moveset[2].attackName);
 			drawMoveInfo(attacks[2]);
 		}
 		if (move4 && targetPacket.numMoves > 3) {
-			if (attacks[3] == null || !attacks[3].attackName.equals(targetPacket.moveset[3].attackName))
+			if (attacks[3] == null || !attacks[3].baseAttack.attackName.equals(targetPacket.moveset[3].attackName))
 				attacks[3] = DatabaseMoves.getAttack(targetPacket.moveset[3].attackName);
 			drawMoveInfo(attacks[3]);
 		}
@@ -135,17 +135,17 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		drawString(fontRenderer, "Power:", -30, 118, 0xFFFFFF);
 		drawString(fontRenderer, "Accuracy:", -30, 148, 0xFFFFFF);
 		int bpextra = 0, acextra = 0;
-		if (attack.basePower >= 100)
+		if (attack.baseAttack.basePower >= 100)
 			bpextra = fontRenderer.getCharWidth('0');
-		if (attack.accuracy >= 100)
+		if (attack.baseAttack.accuracy >= 100)
 			acextra = fontRenderer.getCharWidth('0');
-		if (attack.basePower != -1)
-			drawString(fontRenderer, "" + attack.basePower, 30 - bpextra, 118, 0xFFFFFF);
+		if (attack.baseAttack.basePower != -1)
+			drawString(fontRenderer, "" + attack.baseAttack.basePower, 30 - bpextra, 118, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "--", 30 - bpextra, 118, 0xFFFFFF);
-		drawString(fontRenderer, "" + attack.accuracy, 30 - acextra, 148, 0xFFFFFF);
+		drawString(fontRenderer, "" + attack.baseAttack.accuracy, 30 - acextra, 148, 0xFFFFFF);
 
-		fontRenderer.drawSplitString(attack.description, 60, 112, 110, 0xFFFFFF);
+		fontRenderer.drawSplitString(attack.baseAttack.description, 60, 112, 110, 0xFFFFFF);
 	}
 
 	public void drawSelection(int i, int i1) {
@@ -217,13 +217,13 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 
 	protected void attackClicked(int i, int i1) {
 		if (targetPacket.numMoves > 0 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76)
-			attackClicked = attacks[0].attackIndex;
+			attackClicked = attacks[0].baseAttack.attackIndex;
 		else if (targetPacket.numMoves > 1 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 77 && i1 < height / 2 - 53)
-			attackClicked = attacks[1].attackIndex;
+			attackClicked = attacks[1].baseAttack.attackIndex;
 		else if (targetPacket.numMoves > 2 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 54 && i1 < height / 2 - 31)
-			attackClicked = attacks[2].attackIndex;
+			attackClicked = attacks[2].baseAttack.attackIndex;
 		else if (targetPacket.numMoves > 3 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 32 && i1 < height / 2 - 9)
-			attackClicked = attacks[3].attackIndex;
+			attackClicked = attacks[3].baseAttack.attackIndex;
 	}
 
 	protected void selectMove(int i, int i1) {

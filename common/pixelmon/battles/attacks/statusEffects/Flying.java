@@ -24,7 +24,7 @@ public class Flying extends StatusEffectBase {
 
 	@Override
 	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
-		if (!a.attackName.equalsIgnoreCase("Smack Down"))
+		if (!a.baseAttack.attackName.equalsIgnoreCase("Smack Down"))
 			return true;
 		return false;
 	}
