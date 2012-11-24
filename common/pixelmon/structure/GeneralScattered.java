@@ -43,7 +43,7 @@ public class GeneralScattered extends StructureScattered {
 	protected int getMetadataWithOffset(int par1, int par2) {
 		if (par1 == Block.stairCompactCobblestone.blockID || par1 == Block.stairCompactPlanks.blockID || par1 == Block.stairsNetherBrick.blockID
 				|| par1 == Block.stairsStoneBrickSmooth.blockID || par1 == Block.stairsSandStone.blockID) {
-			if (this.coordBaseMode == 0)
+			if (this.coordBaseMode == 2)
             {
                 if (par2 == 2)
                 {
@@ -69,12 +69,12 @@ public class GeneralScattered extends StructureScattered {
 
                 if (par2 == 2)
                 {
-                    return 0;
+                    return 1;
                 }
 
                 if (par2 == 3)
                 {
-                    return 1;
+                    return 0;
                 }
             }
             else if (this.coordBaseMode == 3)    //---FIXED

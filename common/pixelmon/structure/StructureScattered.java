@@ -22,7 +22,7 @@ abstract class StructureScattered extends StructureComponent {
 		this.scatteredFeatureSizeX = par5;
 		this.scatteredFeatureSizeY = par6;
 		this.scatteredFeatureSizeZ = par7;
-		this.coordBaseMode = 3;//par1Random.nextInt(4);
+		this.coordBaseMode = 2;//par1Random.nextInt(4);
 
 		switch (this.coordBaseMode) {
 		case 0:
