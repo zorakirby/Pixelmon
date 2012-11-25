@@ -18,7 +18,7 @@ import net.minecraft.src.WorldServer;
 public class TileEntityHealer extends TileEntity {
 
 	private static final int ticksToPlace = 10;
-	private static final int ticksToHeal = 80;
+	private static final int ticksToHeal = 100;
 
 	public boolean beingUsed = false;
 	public EnumPokeballs pokeballType[] = new EnumPokeballs[6];
@@ -37,13 +37,16 @@ public class TileEntityHealer extends TileEntity {
 		pokemonLastPlaced = -1;
 		for (int i = 0; i < pokeballType.length; i++)
 			pokeballType[i] = null;
+		stayDark = false;
 	}
 
 	private int tickCount = 0;
 
 	public int rotation = 0;
+	public int flashTimer = 0;
 
-	private boolean allPlaced = false;
+	public boolean allPlaced = false;
+	public boolean stayDark = false;
 
 	@Override
 	public void updateEntity() {
@@ -65,6 +68,10 @@ public class TileEntityHealer extends TileEntity {
 					allPlaced = true;
 				}
 				tickCount = 0;
+				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(getDescriptionPacket());
+			}
+			if (tickCount == ticksToHeal - 30) {
+				stayDark = true;
 				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(getDescriptionPacket());
 			}
 			if (tickCount == ticksToHeal) {
@@ -93,8 +100,11 @@ public class TileEntityHealer extends TileEntity {
 			if (nbt.hasKey("PokeballType" + i))
 				pokeballType[i] = EnumPokeballs.getFromIndex(nbt.getShort("PokeballType" + i));
 		}
-		if (nbt.hasKey("BeingUsed"))
+		if (nbt.hasKey("BeingUsed")) {
 			beingUsed = nbt.getBoolean("BeingUsed");
+			allPlaced = nbt.getBoolean("AllPlaced");
+			stayDark = nbt.getBoolean("StayDark");
+		}
 	}
 
 	@Override
@@ -102,6 +112,8 @@ public class TileEntityHealer extends TileEntity {
 		NBTTagCompound nbt = new NBTTagCompound();
 		this.writeToNBT(nbt);
 		nbt.setBoolean("BeingUsed", beingUsed);
+		nbt.setBoolean("AllPlaced", allPlaced);
+		nbt.setBoolean("StayDark", stayDark);
 		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
 	}
 

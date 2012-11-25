@@ -53,7 +53,10 @@ public class RenderTileEntityHealer extends TileEntitySpecialRenderer {
 		model.renderModel(tile, 0.0625F); // renders and yes 0.0625 is a random
 											// number
 
-		tile.rotation += 4;
+		if (!tile.stayDark)
+			tile.rotation += 4;
+		else
+			tile.rotation = 0;
 		if (tile.beingUsed) {
 			for (int k = 0; k < tile.pokeballType.length; k++) {
 				if (tile.pokeballType[k] != null)
@@ -89,7 +92,17 @@ public class RenderTileEntityHealer extends TileEntitySpecialRenderer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(tile.rotation, 0, 1, 0);
-		ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture(), 0);
+		if (tile.allPlaced) {
+			tile.flashTimer++;
+			if (tile.flashTimer < 40 || tile.stayDark)
+				ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getCaptureTexture(), 0);
+			else
+				ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture(), 0);
+			if (tile.flashTimer >= 80)
+				tile.flashTimer = 0;
+		} else {
+			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture(), 0);
+		}
 		RenderHelper.enableStandardItemLighting();
 		GL11.glScalef(0.8F, 0.8F, 0.8F);
 		float factor = (float) (1.0 / 16.0);
