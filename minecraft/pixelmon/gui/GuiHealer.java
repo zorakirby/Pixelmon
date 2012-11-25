@@ -30,9 +30,20 @@ public class GuiHealer extends GuiContainer {
 
 	}
 
-	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
+	@Override
+	public void drawBackground(int par1) {
+	}
 
-		drawCenteredString(fontRenderer, "Heal your pokemon?", width / 2, 10, 0xFFFFFF);
+	@Override
+	public void drawDefaultBackground() {
+	}
+
+	@Override
+	public void handleKeyboardInput() {
+		return;
+	}
+
+	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 
 		// int j = 0;
 		// for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
