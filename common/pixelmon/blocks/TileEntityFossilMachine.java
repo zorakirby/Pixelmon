@@ -1,5 +1,7 @@
 package pixelmon.blocks;
 
+import java.util.Random;
+
 import pixelmon.config.PixelmonItems;
 import pixelmon.items.ItemPokemonFossil;
 import net.minecraft.src.INetworkManager;
@@ -26,6 +28,8 @@ public class TileEntityFossilMachine extends TileEntity {
 	public int completionRate = ((int)(((fossilProgress + pokemonProgress) * 2) / 96));
     public float y;
     public boolean staticFlicker = false;
+    public boolean isShiny = false;
+    public int shinyChance = new Random().nextInt(8192);
     public float displayFlicker;
     public float displayFlicker2;
     public int dotTicks = 0;
@@ -91,6 +95,9 @@ public class TileEntityFossilMachine extends TileEntity {
     		displayFlicker = 0;
     		displayFlicker2 = 0;
     	}
+    	
+    	if(shinyChance == 1)
+    		this.isShiny = true;
     	super.updateEntity();
     }
     

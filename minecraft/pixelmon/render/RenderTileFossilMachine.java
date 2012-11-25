@@ -172,6 +172,8 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
             float var10 = 0.6375F;
             GL11.glRotatef(j, 0.0F, 1.0F, 0.0F);
             GL11.glScalef(0.0f + tile.pokemonProgress/1000/4, 0.0f + tile.pokemonProgress/1000/4, 0.0f + tile.pokemonProgress/1000/4);
+            if(tile.isShiny)
+            	pokemon.setIsShiny(true);
             pokemon.setLocationAndAngles(d, d1, d2, 0.0F, 0.0F);
             RenderManager.instance.renderEntityWithPosYaw(pokemon, 0.0D, 0.0D, 0.0D, 0.0F, f);
         }

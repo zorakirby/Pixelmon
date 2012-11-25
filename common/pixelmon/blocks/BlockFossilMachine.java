@@ -94,6 +94,8 @@ public class BlockFossilMachine extends BlockContainer {
 		p.setOwner(((EntityPlayer) player).username);
 		p.caughtBall = (((ItemPokeBall)PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type);
 		p.clearAttackTarget();
+		if(tile.isShiny)
+			p.setIsShiny(true);
 		PokeballTypeHelper.doAfterEffect((((ItemPokeBall)PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type), p);
 		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).addToParty(p);
 		world.spawnEntityInWorld(p);

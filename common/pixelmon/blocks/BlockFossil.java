@@ -33,31 +33,31 @@ public class BlockFossil extends Block {
 		int result = 0;
 		switch (rand.nextInt(9)) {
 		case 8:
-			result = PixelmonItems.helixFossil.shiftedIndex;
+			result = PixelmonItems.helixFossilUncovered.shiftedIndex;
 			break;
 		case 7:
-			result = PixelmonItems.domeFossil.shiftedIndex;
+			result = PixelmonItems.domeFossilUncovered.shiftedIndex;
 			break;
 		case 6:
-			result = PixelmonItems.clawFossil.shiftedIndex;
+			result = PixelmonItems.clawFossilUncovered.shiftedIndex;
 			break;
 		case 5:
-			result = PixelmonItems.rootFossil.shiftedIndex;
+			result = PixelmonItems.rootFossilUncovered.shiftedIndex;
 			break;
 		case 4:
-			result = PixelmonItems.oldAmber.shiftedIndex;
+			result = PixelmonItems.oldAmberUncovered.shiftedIndex;
 			break;
 		case 3:
-			result = PixelmonItems.coverFossil.shiftedIndex;
+			result = PixelmonItems.coverFossilUncovered.shiftedIndex;
 			break;
 		case 2:
-			result = PixelmonItems.plumeFossil.shiftedIndex;
+			result = PixelmonItems.plumeFossilUncovered.shiftedIndex;
 			break;
 		case 1:
-			result = PixelmonItems.skullFossil.shiftedIndex;
+			result = PixelmonItems.skullFossilUncovered.shiftedIndex;
 			break;
 		case 0:
-			result = PixelmonItems.armorFossil.shiftedIndex;
+			result = PixelmonItems.armorFossilUncovered.shiftedIndex;
 			break;
 		}
 
