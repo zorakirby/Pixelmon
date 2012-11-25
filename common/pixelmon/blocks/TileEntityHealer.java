@@ -17,8 +17,8 @@ import net.minecraft.src.WorldServer;
 
 public class TileEntityHealer extends TileEntity {
 
-	private static final int ticksToPlace = 10;
-	private static final int ticksToHeal = 100;
+	private static final int ticksToPlace = 15;
+	private static final int ticksToHeal = 130;
 
 	public boolean beingUsed = false;
 	public EnumPokeballs pokeballType[] = new EnumPokeballs[6];
@@ -42,7 +42,7 @@ public class TileEntityHealer extends TileEntity {
 
 	private int tickCount = 0;
 
-	public int rotation = 0;
+	public float rotation = 0;
 	public int flashTimer = 0;
 
 	public boolean allPlaced = false;
@@ -50,8 +50,11 @@ public class TileEntityHealer extends TileEntity {
 
 	@Override
 	public void updateEntity() {
-		if (worldObj.isRemote)
+		if (worldObj.isRemote) {
+			rotation += 1.5f;
+			flashTimer++;
 			return;
+		}
 		if (beingUsed) {
 			tickCount++;
 			if (!allPlaced && tickCount == ticksToPlace) {

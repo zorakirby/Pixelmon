@@ -33,8 +33,7 @@ public class EntityCamera extends EntityLiving {
 	public EntityLiving target;
 	private BattleController battleController;
 
-	public EntityCamera(World par1World, EntityPlayer player,
-			BattleController battleController) {
+	public EntityCamera(World par1World, EntityPlayer player, BattleController battleController) {
 		super(par1World);
 		this.player = player;
 		this.battleController = battleController;
@@ -52,7 +51,7 @@ public class EntityCamera extends EntityLiving {
 	public float getRenderSizeModifier() {
 		return 0;
 	}
-	
+
 	@Override
 	public boolean canBeCollidedWith() {
 		return false;
@@ -77,13 +76,12 @@ public class EntityCamera extends EntityLiving {
 		super.onEntityUpdate();
 		if (battleController == null && !clientSided)
 			setDead();
-		if(battleController != null){
-			if (battleController.battleEnded == false){
+		if (battleController != null) {
+			if (battleController.battleEnded == false) {
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
-			}else
-				if(battleController.battleEnded){
-					Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
-				}
+			} else if (battleController.battleEnded) {
+				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+			}
 		}
 	}
 
@@ -92,29 +90,22 @@ public class EntityCamera extends EntityLiving {
 		return true;
 	}
 
-	// problem was the rotation is being changed in the onUpdate method because
-	// it extends entity living
-	// I tried this in the onEntityUpdate but it still moved a bit so it must
-	// happen here, those numbers need to be
-	// replaced with whatever you want
 	public void onUpdate() {
 		super.onUpdate();
 	}
 
-
 	public void updatePosition() {
 		setAttackTarget(battleController.getOpponent(player).getEntity());
-		setPositionAndUpdate(player.posX + 2, player.posY + 2.5,
-				player.posZ + 2);
-		if(battleController != null){
+		if (battleController == null)
+			setPositionAndUpdate(player.posX + 2, player.posY + 2.5, player.posZ + 2);
+		if (battleController != null) {
 			EntityLiving part1 = battleController.participant1.currentPokemon();
 			EntityLiving part2 = battleController.participant2.currentPokemon();
 
-			if(battleController.turnCount % 2 == 0){
+			if (battleController.turnCount % 2 == 0) {
 				setPositionAndUpdate(part1.posX, part1.posY, part1.posZ);
 				rotationYaw = part1.rotationYawHead;
-			}
-			else{
+			} else {
 				setPositionAndUpdate(part2.posX, part2.posY, part2.posZ);
 				rotationYaw = part2.rotationYawHead;
 			}

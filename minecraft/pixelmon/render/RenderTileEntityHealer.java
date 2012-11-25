@@ -93,12 +93,11 @@ public class RenderTileEntityHealer extends TileEntitySpecialRenderer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(tile.rotation, 0, 1, 0);
 		if (tile.allPlaced) {
-			tile.flashTimer++;
-			if (tile.flashTimer < 40 || tile.stayDark)
+			if (tile.flashTimer < 10 || tile.stayDark)
 				ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getCaptureTexture(), 0);
 			else
 				ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture(), 0);
-			if (tile.flashTimer >= 80)
+			if (tile.flashTimer >= 20)
 				tile.flashTimer = 0;
 		} else {
 			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture(), 0);
