@@ -85,6 +85,15 @@ public class PixelmonItems {
 	public static int armorFossilID;
 	public static int coverFossilID;
 	public static int plumeFossilID;
+	public static int helixFossilUncoveredID;
+	public static int domeFossilUncoveredID;
+	public static int oldAmberUncoveredID;
+	public static int rootFossilUncoveredID;
+	public static int clawFossilUncoveredID;
+	public static int skullFossilUncoveredID;
+	public static int armorFossilUncoveredID;
+	public static int coverFossilUncoveredID;
+	public static int plumeFossilUncoveredID;
 	
 	public static int luckyEggID;
 	public static int expShareID;
@@ -190,6 +199,24 @@ public class PixelmonItems {
 	public static Item coverFossil;
 	@Mod.Item(name = "Plume Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
 	public static Item plumeFossil;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
+	public static Item helixFossilUncovered;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
+	public static Item domeFossilUncovered;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
+	public static Item oldAmberUncovered;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item rootFossilUncovered;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item clawFossilUncovered;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item skullFossilUncovered;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item armorFossilUncovered;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item coverFossilUncovered;
+	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item plumeFossilUncovered;
 	
 	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.heldItems.ItemLuckyEgg")
 	public static Item luckyEgg;
@@ -264,6 +291,16 @@ public class PixelmonItems {
 		coverFossilID = cfg.get("PlumeFossil", "item", 10087).getInt();
 		plumeFossilID = cfg.get("CoverFossil", "item", 10088).getInt();
 		
+		helixFossilUncoveredID = cfg.get("HelixFossilUncovered", "item", 10089).getInt();
+		domeFossilUncoveredID = cfg.get("DomeFossilUncovered", "item", 10090).getInt();
+		oldAmberUncoveredID = cfg.get("OldAmberUncovered", "item", 10091).getInt();
+		rootFossilUncoveredID = cfg.get("RootFossilUncovered", "item", 10092).getInt();
+		clawFossilUncoveredID = cfg.get("ClawFossilUncovered", "item", 10093).getInt();
+		skullFossilUncoveredID = cfg.get("SkullFossilUncovered", "item", 10094).getInt();
+		armorFossilUncoveredID = cfg.get("ArmorFossilUncovered", "item", 10095).getInt();
+		coverFossilUncoveredID = cfg.get("PlumeFossilUncovered", "item", 10096).getInt();
+		plumeFossilUncoveredID = cfg.get("CoverFossilUncovered", "item", 10097).getInt();
+		
 		luckyEggID = cfg.get("LuckyEgg", "item", 10035).getInt();
 		expShareID = cfg.get("EXPShare", "item", 10036).getInt();
 
@@ -335,6 +372,16 @@ public class PixelmonItems {
 		armorFossil = new ItemPokemonFossil(armorFossilID, "Shieldon").setItemName("armorFossil").setIconIndex(106);
 		coverFossil = new ItemPokemonFossil(coverFossilID, "Tirtouga").setItemName("coverFossil").setIconIndex(122);
 		plumeFossil = new ItemPokemonFossil(plumeFossilID, "Archen").setItemName("plumeFossil").setIconIndex(138);
+		
+		helixFossilUncovered = new PixelmonItem(helixFossilUncoveredID).setItemName("helixFossilUncovered").setIconIndex(11).setCreativeTab(PixelmonCreativeTabs.natural);
+		domeFossilUncovered = new PixelmonItem(domeFossilUncoveredID).setItemName("domeFossilUncovered").setIconIndex(27).setCreativeTab(PixelmonCreativeTabs.natural);
+		oldAmberUncovered = new PixelmonItem(oldAmberUncoveredID).setItemName("oldAmberUncovered").setIconIndex(43).setCreativeTab(PixelmonCreativeTabs.natural);
+		rootFossilUncovered = new PixelmonItem(rootFossilUncoveredID).setItemName("rootFossilUncovered").setIconIndex(59).setCreativeTab(PixelmonCreativeTabs.natural);
+		clawFossilUncovered = new PixelmonItem(clawFossilUncoveredID).setItemName("clawFossilUncovered").setIconIndex(75).setCreativeTab(PixelmonCreativeTabs.natural);
+		skullFossilUncovered = new PixelmonItem(skullFossilUncoveredID).setItemName("skullFossilUncovered").setIconIndex(91).setCreativeTab(PixelmonCreativeTabs.natural);
+		armorFossilUncovered = new PixelmonItem(armorFossilUncoveredID).setItemName("armorFossilUncovered").setIconIndex(107).setCreativeTab(PixelmonCreativeTabs.natural);
+		coverFossilUncovered = new PixelmonItem(coverFossilUncoveredID).setItemName("coverFossilUncovered").setIconIndex(123).setCreativeTab(PixelmonCreativeTabs.natural);
+		plumeFossilUncovered = new PixelmonItem(plumeFossilUncoveredID).setItemName("plumeFossilUncovered").setIconIndex(139).setCreativeTab(PixelmonCreativeTabs.natural);
 	}
 
 	public static void addNames() {
