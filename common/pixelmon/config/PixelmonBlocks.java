@@ -8,9 +8,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import pixelmon.blocks.BlockAnvil;
 import pixelmon.blocks.BlockEvolutionStoneOre;
+import pixelmon.blocks.BlockFossil;
+import pixelmon.blocks.BlockFossilMachine;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.TileEntityAnvil;
+import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.apricornTrees.BlockApricornTree;
@@ -28,9 +31,11 @@ public class PixelmonBlocks {
 	public static int thunderStoneOreId;
 	public static int leafStoneOreId;
 	public static int waterStoneOreId;
+	public static int fireStoneOreId;
 	public static int pcId;
 	public static int anvilId;
-	public static int fireStoneOreId;
+	public static int fossilMachineId;
+	public static int fossilId;
 
 	@Mod.Block(name = "Thunderstone Ore")
 	public static Block thunderStoneOre;
@@ -38,24 +43,30 @@ public class PixelmonBlocks {
 	public static Block leafStoneOre;
 	@Mod.Block(name = "WaterStone Ore")
 	public static Block waterStoneOre;
+	@Mod.Block(name = "FireStone Ore", itemTypeClass = ItemBlock.class)
+	public static Block fireStoneOre;
 	@Mod.Block(name = "Healer", itemTypeClass = ItemBlock.class)
 	public static Block healer;
 	@Mod.Block(name = "Pokemon PC", itemTypeClass = ItemBlock.class)
 	public static Block pc;
 	@Mod.Block(name = "Anvil", itemTypeClass = ItemBlock.class)
 	public static Block anvil;
-	@Mod.Block(name = "FireStone Ore", itemTypeClass = ItemBlock.class)
-	public static Block fireStoneOre;
+	@Mod.Block(name = "Fossil Machine", itemTypeClass = ItemBlock.class)
+	public static Block fossilMachine;
+	@Mod.Block(name = "Fossil")
+	public static Block fossil;
 
 	public static void load(Configuration configuration) {
 		pokemonHealerActiveId = Integer.parseInt(configuration.getBlock("PokemonHealerActive", 201).value);
 		pokemonHealerIdleId = Integer.parseInt(configuration.getBlock("PokemonHealerIdle", 202).value);
 		thunderStoneOreId = Integer.parseInt(configuration.getBlock("ThunderStoneOre", 203).value);
 		leafStoneOreId = Integer.parseInt(configuration.getBlock("LeafStoneOre", 204).value);
+		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 206).value);
 		fireStoneOreId = Integer.parseInt(configuration.getBlock("FireStoneOre", 207).value);
 		pcId = Integer.parseInt(configuration.getBlock("PC", 205).value);
 		anvilId = Integer.parseInt(configuration.getBlock("Anvil", 215).value);
-		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 206).value);
+		fossilMachineId = Integer.parseInt(configuration.getBlock("Fossil Machine", 216).value);
+		fossilId = Integer.parseInt(configuration.getBlock("Fossil", 217).value);
 		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f).setBlockName("LeafStoneOre");
@@ -63,6 +74,8 @@ public class PixelmonBlocks {
 		fireStoneOre = new BlockEvolutionStoneOre(fireStoneOreId, EnumEvolutionStone.Firestone, 3.0f).setBlockName("FireStoneOre");
 		pc = new BlockPC(pcId, 0).setBlockName("pc");
 		anvil = new BlockAnvil(anvilId).setBlockName("Anvil");
+		fossilMachine = new BlockFossilMachine(fossilMachineId).setBlockName("Fossil Machine");
+		fossil = new BlockFossil(fossilId).setBlockName("Fossil").setHardness(5f);
 		PixelmonBlocksApricornTrees.load(configuration);
 	}
 
@@ -74,10 +87,13 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(fireStoneOre);
 		GameRegistry.registerBlock(pc);
 		GameRegistry.registerBlock(anvil);
+		GameRegistry.registerBlock(fossilMachine);
+		GameRegistry.registerBlock(fossil);
 		
 		GameRegistry.registerTileEntity(TileEntityPC.class, "Pokemon PC");
 		GameRegistry.registerTileEntity(TileEntityHealer.class, "Healer");
 		GameRegistry.registerTileEntity(TileEntityAnvil.class, "Anvil");
+		GameRegistry.registerTileEntity(TileEntityFossilMachine.class, "Fossil Machine");
 		
 		PixelmonBlocksApricornTrees.registerBlocks();
 	}

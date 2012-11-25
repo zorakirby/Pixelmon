@@ -1,5 +1,6 @@
 package pixelmon.models;
 
+import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import net.minecraft.src.*;
 
@@ -225,6 +226,10 @@ public class ModelPokeball extends ModelBase {
 			Hinge.rotateAngleX = pokeball.openAngle;
 	}
 
+	public void renderModel(TileEntityFossilMachine entity, float f5) {
+		Rocking.render(f5);
+	}
+	
 	protected void setRotation(ModelRenderer model, float x, float y, float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
