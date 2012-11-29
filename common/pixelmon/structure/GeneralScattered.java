@@ -6,6 +6,7 @@ import cpw.mods.fml.common.IWorldGenerator;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.Chunk;
+import net.minecraft.src.Facing;
 import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.StructureBoundingBox;
 import net.minecraft.src.World;
@@ -100,6 +101,60 @@ public class GeneralScattered extends StructureScattered {
                 }
             }
 		}
+		 if (par1 == Block.pistonBase.blockID || par1 == Block.pistonStickyBase.blockID || par1 == Block.lever.blockID || par1 == Block.dispenser.blockID)
+         {
+             if (this.coordBaseMode == 1)
+             {
+                 if (par2 == 2 || par2 == 3)
+                 {
+                     return Facing.faceToSide[par2];
+                 }
+             }
+             else if (this.coordBaseMode == 3)
+             {
+                 if (par2 == 2)
+                 {
+                     return 4;
+                 }
+
+                 if (par2 == 3)
+                 {
+                     return 5;
+                 }
+
+                 if (par2 == 4)
+                 {
+                     return 2;
+                 }
+
+                 if (par2 == 5)
+                 {
+                     return 3;
+                 }
+             }
+             else if (this.coordBaseMode == 2)
+             {
+                 if (par2 == 2)
+                 {
+                     return 5;
+                 }
+
+                 if (par2 == 3)
+                 {
+                     return 4;
+                 }
+
+                 if (par2 == 5)
+                 {
+                     return 2;
+                 }
+
+                 if (par2 == 4)
+                 {
+                     return 3;
+                 }
+             }
+         }
 		return par2;
 	}
 
