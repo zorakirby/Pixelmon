@@ -3,7 +3,9 @@
  */
 package pixelmon.migration.worldRenderer;
 
+import pixelmon.migration.IO.MigrationSaveManager;
 import net.minecraft.src.BiomeGenBase;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.WorldProvider;
 
 /**
@@ -16,23 +18,40 @@ public class WorldRenderer {
 
 	private WorldProvider worldProvider;
 	public boolean worldRendered = false;
+	private static final int width = 100, height = 100;
 
 	/**
+	 * @param saveManager
 	 * 
 	 */
 	public WorldRenderer(WorldProvider worldProvider) {
 		this.worldProvider = worldProvider;
 	}
 
-	private BiomeGenBase[][] map;
+	private int[] map;
 
 	public void renderWorld() {
-		map = new BiomeGenBase[100][100];
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				map[i][j] = worldProvider.worldChunkMgr.getBiomeGenAt(i * 8, j * 8);
+		map = new int[width * height];
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				map[x + y * width] = worldProvider.worldChunkMgr.getBiomeGenAt(x * 8, y * 8).biomeID;
 			}
 		}
 		worldRendered = true;
+	}
+
+	public BiomeGenBase getBiome(int x, int y) {
+		for (BiomeGenBase b : BiomeGenBase.biomeList)
+			if (b.biomeID == map[x + y * width])
+				return b;
+
+		return null;
+	}
+
+	public NBTTagCompound getData() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setIntArray("map", map);
+
+		return nbt;
 	}
 }

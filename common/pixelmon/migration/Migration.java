@@ -8,6 +8,7 @@ import net.minecraft.src.WorldProvider;
 public class Migration extends Thread {
 	private WorldProvider worldProvider;
 	private WorldRenderer worldRenderer;
+
 	/**
 	 * Constructor for the Migration code base. It's a threaded class with the
 	 * normal sorts of functions, calls run on creation to create the thread and
@@ -35,9 +36,8 @@ public class Migration extends Thread {
 	 * setting up the file environment
 	 */
 	private void init() {
-		saveManager = new MigrationSaveManager(worldProvider);
 		worldRenderer = new WorldRenderer(worldProvider);
-		worldRenderer.renderWorld();
+		saveManager = new MigrationSaveManager(worldProvider, worldRenderer);
 	}
 
 	private void loop() {

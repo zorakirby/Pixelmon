@@ -64,7 +64,7 @@ public class EntityCamera extends EntityLiving {
 
 	@Override
 	protected boolean canDespawn() {
-		return false;
+		return true;
 	}
 
 	@Override

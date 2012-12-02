@@ -19,14 +19,18 @@ public class FileHandling {
 	 *            the world provider for the modelled world
 	 * @return the NBTTagCompound stored in the save
 	 */
-	public static NBTTagCompound loadMigration(WorldProvider provider) {
+	public static boolean loadMigration(WorldProvider provider, NBTTagCompound nbt) {
 		File migrationFile = getSaveFile(provider);
+		if (!migrationFile.exists()) {
+			nbt = new NBTTagCompound();
+			return true;
+		}
 		try {
-			return CompressedStreamTools.read(new DataInputStream(new FileInputStream(migrationFile)));
+			nbt = CompressedStreamTools.read(new DataInputStream(new FileInputStream(migrationFile)));
 		} catch (Exception e) {
 			ErrorHandling.handleError("Couldn't read from migration file");
 		}
-		return null;
+		return false;
 	}
 
 	/**
