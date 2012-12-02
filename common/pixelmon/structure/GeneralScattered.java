@@ -163,3 +163,4 @@ public class GeneralScattered extends StructureScattered {
 	}
 
 }
+

@@ -20,6 +20,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.EntityWaterPixelmon;
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.PixelmonStorage;
 
 import net.minecraft.src.DataWatcher;
@@ -187,11 +188,11 @@ public class Level {
 				stats = PixelmonStatsPacket.createPacket(pixelmon);
 			setLevel(getLevel() + 1);
 			onLevelUp(stats);
-			if (pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
+			if (pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
 			}
 			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
-				if (e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
+				if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
 					boolean evolves = true;
 					if (e.extraParam != null) {
 						if (e.extraParam.equalsIgnoreCase("day") && !pixelmon.worldObj.isDaytime())
@@ -201,7 +202,7 @@ public class Level {
 					}
 					if (evolves)
 						pixelmon.evolve(e.pokemonName);
-				} else if (e.mode == InfoMode.biome) {
+				} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.biome) {
 					if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome())
 						pixelmon.evolve(e.pokemonName);
 

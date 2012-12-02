@@ -3,6 +3,7 @@ package pixelmon.gui.pokedex;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 import org.lwjgl.util.Rectangle;
 
 import pixelmon.config.PixelmonConfig;
@@ -106,6 +107,7 @@ public class GuiPokedex extends GuiContainer
 		scrollPane.drawScreen(mouseX, mouseY, mfloat);
 		b = pokedex.hasSeen(currentEntry);
 		//b = !pokedex.isUnknown(currentEntry);
+		GL11.glDepthMask(true);
 		if(b)
 		{
 			EntityPixelmon ep = selectedEntry.getRenderTarget(mc.theWorld);
@@ -113,11 +115,42 @@ public class GuiPokedex extends GuiContainer
 			{
 				ep.loadModel();
 				if(ep.model != null)
-					GraphicsHelper.drawEntityToScreen(left + 130, top + 106, 51, 55, ep, par3, true);
+					drawEntityToScreen(left + 130, top + 106, 51, 55, ep, par3, true);
 			}
 		}
 		//fontRenderer.drawString(mouseX + ", " + mouseY + ": " + rect.contains(mouseX, mouseY), mouseX, mouseY, 0xFFFFFF);
 		hasDrawn = true;
+	}
+	
+	static float spinCount = 0;
+	public static void drawEntityToScreen(int x, int y, int w, int l, Entity e, float pt, boolean spin)
+	{
+		GL11.glPushMatrix();
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+		GL11.glEnable(GL11.GL_DEPTH_TEST); //<--This right here needs to be enabled for the model to have correct depth
+		RenderHelper.enableStandardItemLighting(); //If not it'll render all weirdly. -Jaryt
+		GL11.glTranslatef(x, y, 100);
+		float eheight = l / e.height / 4;
+		float ewidth = l / e.width / 4;
+		float scalar = eheight > ewidth?eheight:ewidth;
+		GL11.glScalef(scalar, scalar, scalar);
+		GL11.glRotatef(180, 0, 0, 1);
+		if(spin)
+			GL11.glRotatef(spinCount += 0.66F, 0, 1, 0);
+		RenderHelper.enableStandardItemLighting();
+		try
+		{
+			RenderManager.instance.renderEntityWithPosYaw(e, 0, e.yOffset, 0, 0, pt);
+			RenderManager.instance.playerViewY = 180.0F;
+		} catch (Exception ex)
+		{
+		}
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		RenderHelper.disableStandardItemLighting();
+		GL11.glPopMatrix();
 	}
 	
 	boolean hasDrawn;
