@@ -36,6 +36,8 @@ public class ItemPokemonFossil extends PixelmonItem {
 	}
 
 	public ModelFossil getModel() {
-		return model = Pixelmon.proxy.loadFossilModel(modelName);
+		if(model == null)
+			return Pixelmon.proxy.loadFossilModel(modelName);
+		return model;
 	}
 }

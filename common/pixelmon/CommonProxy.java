@@ -8,7 +8,6 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.entities.EntityCamera;
 import pixelmon.gui.GuiHandler;
-import pixelmon.models.fossils.FossilModelHelper;
 import pixelmon.models.fossils.ModelFossil;
 import pixelmon.sounds.Sounds;
 
@@ -72,7 +71,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public ModelFossil loadFossilModel(String modelName) {
-		return FossilModelHelper.getModel(modelName);
+		return null;
 	}
 
 }
