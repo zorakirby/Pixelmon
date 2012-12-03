@@ -27,7 +27,7 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 				System.out.println(structure.getStructureFromBiome(world.getBiomeGenForCoords(xPos, zPos)));
 				SchematicImporter s = new SchematicImporter(structure.getSchematicPath());
 				s.readSchematic();
-				GeneralScattered g = new GeneralScattered(random, xPos, yPos, zPos, s);
+				GeneralScattered g = new GeneralScattered(random, xPos, yPos, s);
 				hasGenerated = g.generate(world, random);
 				System.out.println("A structure has Generated at " + xPos + ", " + zPos);
 			}
