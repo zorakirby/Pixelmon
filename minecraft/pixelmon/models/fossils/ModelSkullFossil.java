@@ -21,6 +21,7 @@ public class ModelSkullFossil extends ModelFossil {
 	ModelRenderer Shape28;
 
 	public ModelSkullFossil() {
+		setFossilName("SkullFossil");
 		textureWidth = 32;
 		textureHeight = 32;
 

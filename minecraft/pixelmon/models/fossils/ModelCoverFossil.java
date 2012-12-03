@@ -17,6 +17,7 @@ public class ModelCoverFossil extends ModelFossil {
 	ModelRenderer base10;
 
 	public ModelCoverFossil() {
+		setFossilName("CoverFossil");
 		textureWidth = 32;
 		textureHeight = 32;
 

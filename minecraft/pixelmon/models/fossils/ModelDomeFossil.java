@@ -21,6 +21,7 @@ public class ModelDomeFossil extends ModelFossil {
 	ModelRenderer base4;
 
 	public ModelDomeFossil() {
+		setFossilName("DomeFossil");
 		textureWidth = 32;
 		textureHeight = 32;
 

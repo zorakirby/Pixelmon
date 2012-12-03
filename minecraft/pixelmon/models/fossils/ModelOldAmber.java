@@ -32,6 +32,7 @@ public class ModelOldAmber extends ModelFossil {
 	ModelRenderer Amber_26;
 
 	public ModelOldAmber() {
+		setFossilName("OldAmber");
 		textureWidth = 128;
 		textureHeight = 64;
 

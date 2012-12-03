@@ -23,6 +23,7 @@ public class ModelRootFossil extends ModelFossil {
 	ModelRenderer base6;
 
 	public ModelRootFossil() {
+		setFossilName("RootFossil");
 		textureWidth = 32;
 		textureHeight = 32;
 

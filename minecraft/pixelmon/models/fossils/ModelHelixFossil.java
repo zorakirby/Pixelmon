@@ -1,6 +1,7 @@
 package pixelmon.models.fossils;
 
 import pixelmon.blocks.TileEntityFossilMachine;
+import pixelmon.config.PixelmonItemsFossils;
 import net.minecraft.src.*;
 
 public class ModelHelixFossil extends ModelFossil {
@@ -22,6 +23,7 @@ public class ModelHelixFossil extends ModelFossil {
 	ModelRenderer base_6;
 
 	public ModelHelixFossil() {
+		setFossilName("HelixFossil");
 		textureWidth = 32;
 		textureHeight = 32;
 
@@ -116,7 +118,7 @@ public class ModelHelixFossil extends ModelFossil {
 		base_6.mirror = true;
 		setRotation(base_6, 0F, 0.296706F, 0F);
 	}
-
+	
 	public void render(Entity entity, float f, float f1, float f2, float f3,
 			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
