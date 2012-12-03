@@ -8,6 +8,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.entities.EntityCamera;
 import pixelmon.gui.GuiHandler;
+import pixelmon.models.fossils.ModelFossil;
 import pixelmon.sounds.Sounds;
 
 public class CommonProxy implements IGuiHandler {
@@ -67,5 +68,9 @@ public class CommonProxy implements IGuiHandler {
 
 	public ModelBase[] getModels() {
 		return models;
+	}
+
+	public ModelFossil loadFossilModel(String modelName) {
+		return null;
 	}
 }

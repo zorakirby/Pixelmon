@@ -3,6 +3,7 @@ package pixelmon.blocks;
 import java.util.Random;
 
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsFossils;
 import pixelmon.items.ItemPokemonFossil;
 import net.minecraft.src.INetworkManager;
 import net.minecraft.src.NBTTagCompound;
@@ -25,130 +26,88 @@ public class TileEntityFossilMachine extends TileEntity {
 	public int pokemonTicks = 0;
 	public float pokemonProgress = 0;
 	public int pokemonMaxProgress = 3200;
-	public int completionRate = ((int)(((fossilProgress + pokemonProgress) * 2) / 96));
-    public float y;
-    public boolean staticFlicker = false;
-    public boolean isShiny = false;
-    public int shinyChance = new Random().nextInt(8192);
-    public float displayFlicker;
-    public float displayFlicker2;
-    public int dotTicks = 0;
+	public int completionRate = ((int) (((fossilProgress + pokemonProgress) * 2) / 96));
+	public float y;
+	public boolean staticFlicker = false;
+	public boolean isShiny = false;
+	public int shinyChance = new Random().nextInt(8192);
+	public float displayFlicker;
+	public float displayFlicker2;
+	public int dotTicks = 0;
 	public String dots = "";
-	
+
 	public TileEntityFossilMachine() {
 	}
-	
-    public boolean anyPlayerInRange()
-    {
-        return this.worldObj.getClosestPlayer((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D, (double)16) != null;
-    }
-	
-    public void updateEntity()
-    {
-    	if(this.fossilProgress > 0 || this.pokemonProgress > 0){
-    		completionRate =((int)(((fossilProgress + pokemonProgress) * 2) / 96));
-    	}
-    	if(this.currentFossil != -1){
-    		if (this.fossilTicks < 0)
-    			++fossilTicks;
-	    	if (this.fossilTicks == 0 && fossilProgress != fossilMaxProgress){
-	    		fossilTicks = 0;
-	    		fossilProgress++;
-	    	}
-	    	else if (fossilProgress >= fossilMaxProgress){
-	    		swapFossilForPokemon();
-	    	}
-    	}
-    	if(pokemonOccupied){
-    		if (this.pokemonTicks < 0)
-    			++pokemonTicks;
-    		if (this.pokemonTicks == 0 && pokemonProgress != pokemonMaxProgress){
-    			pokemonTicks = 0;
-    			pokemonProgress++;
-    		}
-    	}
-    	
-    	if(this.dotTicks < 10){
-    		dotTicks++;
-    	}else if(dots.length() <= 6){
-    		this.dotTicks = 0;
-    		this.dots = dots + ".";
-    	}
-    	if(dots.length() >= 6){
-    		this.dotTicks = 0;
-    		this.dots = "";
-    	}
-    	
-    	if(y == 0)
-    		y += 0.01;
-    	else
-    		y = 0;
-    	if(displayFlicker <= 0.8f && displayFlicker2 == 0){
-    		this.staticFlicker = true;
-    		displayFlicker+=0.1f;
-    	}
-    	if(displayFlicker >= 0.8f){
-    		displayFlicker2 +=0.1f;
-    	}
-    	if(displayFlicker2 >= 0.5f){
-    		this.staticFlicker = false;
-    		displayFlicker = 0;
-    		displayFlicker2 = 0;
-    	}
-    	
-    	if(shinyChance == 1)
-    		this.isShiny = true;
-    	super.updateEntity();
-    }
-    
-    public void swapFossilForPokemon(){
-    	if(currentFossil == PixelmonItems.helixFossil.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.helixFossil).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    	else if(currentFossil == PixelmonItems.domeFossil.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.domeFossil).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    	else if(currentFossil == PixelmonItems.oldAmber.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.oldAmber).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    	else if(currentFossil == PixelmonItems.clawFossil.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.clawFossil).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    	else if(currentFossil == PixelmonItems.rootFossil.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.rootFossil).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    	else if(currentFossil == PixelmonItems.skullFossil.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.skullFossil).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    	else if(currentFossil == PixelmonItems.armorFossil.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.armorFossil).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    	else if(currentFossil == PixelmonItems.coverFossil.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.coverFossil).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    	else if(currentFossil == PixelmonItems.plumeFossil.shiftedIndex){
-    		this.currentPokemon = ((ItemPokemonFossil)PixelmonItems.plumeFossil).getPokemon();
-    		this.pokemonOccupied = true;
-    		this.currentFossil = -1;
-    	}
-    }
-	
+
+	public boolean anyPlayerInRange() {
+		return this.worldObj.getClosestPlayer((double) this.xCoord + 0.5D,
+				(double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D,
+				(double) 16) != null;
+	}
+
+	public void updateEntity() {
+		if (this.fossilProgress > 0 || this.pokemonProgress > 0) {
+			completionRate = ((int) (((fossilProgress + pokemonProgress) * 2) / 96));
+		}
+		if (this.currentFossil != -1) {
+			if (this.fossilTicks < 0)
+				++fossilTicks;
+			if (this.fossilTicks == 0 && fossilProgress != fossilMaxProgress) {
+				fossilTicks = 0;
+				fossilProgress++;
+			} else if (fossilProgress >= fossilMaxProgress) {
+				swapFossilForPokemon();
+			}
+		}
+		if (pokemonOccupied) {
+			if (this.pokemonTicks < 0)
+				++pokemonTicks;
+			if (this.pokemonTicks == 0 && pokemonProgress != pokemonMaxProgress) {
+				pokemonTicks = 0;
+				pokemonProgress++;
+			}
+		}
+
+		if (this.dotTicks < 10) {
+			dotTicks++;
+		} else if (dots.length() <= 6) {
+			this.dotTicks = 0;
+			this.dots = dots + ".";
+		}
+		if (dots.length() >= 6) {
+			this.dotTicks = 0;
+			this.dots = "";
+		}
+
+		if (y == 0)
+			y += 0.01;
+		else
+			y = 0;
+		if (displayFlicker <= 0.8f && displayFlicker2 == 0) {
+			this.staticFlicker = true;
+			displayFlicker += 0.1f;
+		}
+		if (displayFlicker >= 0.8f) {
+			displayFlicker2 += 0.1f;
+		}
+		if (displayFlicker2 >= 0.5f) {
+			this.staticFlicker = false;
+			displayFlicker = 0;
+			displayFlicker2 = 0;
+		}
+
+		if (shinyChance == 1)
+			this.isShiny = true;
+		super.updateEntity();
+	}
+
+	public void swapFossilForPokemon() {
+		currentPokemon = PixelmonItemsFossils.getFossilFromIndex(currentFossil)
+				.getPokemon();
+		this.pokemonOccupied = true;
+		this.currentFossil = -1;
+	}
+
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
@@ -161,7 +120,7 @@ public class TileEntityFossilMachine extends TileEntity {
 		nbt.setString("CurrentPokemon", currentPokemon);
 		nbt.setBoolean("PokemonOccupied", pokemonOccupied);
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
@@ -179,7 +138,8 @@ public class TileEntityFossilMachine extends TileEntity {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound var1 = new NBTTagCompound();
 		this.writeToNBT(var1);
-		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, var1);
+		return new Packet132TileEntityData(this.xCoord, this.yCoord,
+				this.zCoord, 1, var1);
 	}
 
 	@Override
@@ -191,10 +151,9 @@ public class TileEntityFossilMachine extends TileEntity {
 	public void receiveClientEvent(int par1, int par2) {
 		super.receiveClientEvent(par1, par2);
 	}
-	
-	public World getWorldObj()
-	{
+
+	public World getWorldObj() {
 		return this.worldObj;
 	}
-    
+
 }

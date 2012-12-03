@@ -63,7 +63,6 @@ public class PixelmonItems {
 	public static int pcItemID;
 	public static int healerItemID;
 	public static int anvilItemID;
-	public static int fossilMachineItemID;
 
 	public static int fireStoneID;
 	public static int waterStoneID;
@@ -76,25 +75,6 @@ public class PixelmonItems {
 	public static int fireStoneShardID;
 	public static int everStoneShardID;
 
-	public static int helixFossilID;
-	public static int domeFossilID;
-	public static int oldAmberID;
-	public static int rootFossilID;
-	public static int clawFossilID;
-	public static int skullFossilID;
-	public static int armorFossilID;
-	public static int coverFossilID;
-	public static int plumeFossilID;
-	public static int helixFossilUncoveredID;
-	public static int domeFossilUncoveredID;
-	public static int oldAmberUncoveredID;
-	public static int rootFossilUncoveredID;
-	public static int clawFossilUncoveredID;
-	public static int skullFossilUncoveredID;
-	public static int armorFossilUncoveredID;
-	public static int coverFossilUncoveredID;
-	public static int plumeFossilUncoveredID;
-	
 	public static int luckyEggID;
 	public static int expShareID;
 	public static int everStoneID;
@@ -166,8 +146,6 @@ public class PixelmonItems {
 	public static Item healerItem;
 	@Mod.Item(name = "Anvil", typeClass = "pixelmon.items.ItemBlock")
 	public static Item anvilItem;
-	@Mod.Item(name = "Fossil Machine", typeClass = "pixelmon.items.ItemBlock")
-	public static Item fossilMachineItem;
 
 	@Mod.Item(name = "Thunder Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item thunderStoneShard;
@@ -181,43 +159,6 @@ public class PixelmonItems {
 	// "pixelmon.items.PixelmonItem")
 	// public static Item everStoneShard;
 
-	@Mod.Item(name = "Helix Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item helixFossil;
-	@Mod.Item(name = "Dome Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item domeFossil;
-	@Mod.Item(name = "Old Amber", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item oldAmber;
-	@Mod.Item(name = "Root Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item rootFossil;
-	@Mod.Item(name = "Claw Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item clawFossil;
-	@Mod.Item(name = "Skull Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item skullFossil;
-	@Mod.Item(name = "Armor Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item armorFossil;
-	@Mod.Item(name = "Cover Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item coverFossil;
-	@Mod.Item(name = "Plume Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item plumeFossil;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item helixFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item domeFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item oldAmberUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item rootFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item clawFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item skullFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item armorFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item coverFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item plumeFossilUncovered;
-	
 	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.heldItems.ItemLuckyEgg")
 	public static Item luckyEgg;
 	@Mod.Item(name = "EXP Share", typeClass = "pixelmon.items.heldItems.ItemExpShare")
@@ -241,12 +182,12 @@ public class PixelmonItems {
 	@Mod.Item(name = "Diamond Hammer", typeClass = "pixelmon.items.ItemTool")
 	public static Item hammerDiamond;
 
-
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
 		PixelmonItemsApricorns.load(cfg);
 		PixelmonItemsBadges.load(cfg);
 		PixelmonItemsTMs.load(cfg);
+		PixelmonItemsFossils.load(cfg);
 
 		pokeDexID = cfg.get("PokeDex", "item", 10027).getInt();
 		rareCandyID = cfg.get("RareCandy", "item", 10005).getInt();
@@ -274,33 +215,12 @@ public class PixelmonItems {
 		pcItemID = cfg.get("PCItem", "item", 10013).getInt();
 		healerItemID = cfg.get("HealerItem", "item", 10014).getInt();
 		anvilItemID = cfg.get("AnvilItem", "item", 10015).getInt();
-		fossilMachineItemID = cfg.get("FossilMachineItem", "item", 10016).getInt();
 		thunderStoneShardID = cfg.get("ThunderStoneShard", "item", 10021).getInt();
 		leafStoneShardID = cfg.get("LeafStoneShard", "item", 10022).getInt();
 		waterStoneShardID = cfg.get("WaterStoneShard", "item", 10023).getInt();
 		fireStoneShardID = cfg.get("FireStoneShard", "item", 10024).getInt();
 		// everStoneShardID = cfg.get("EverStoneShard", "item", 10025).getInt();
-		
-		helixFossilID = cfg.get("HelixFossil", "item", 10080).getInt();
-		domeFossilID = cfg.get("DomeFossil", "item", 10081).getInt();
-		oldAmberID = cfg.get("OldAmber", "item", 10082).getInt();
-		rootFossilID = cfg.get("RootFossil", "item", 10083).getInt();
-		clawFossilID = cfg.get("ClawFossil", "item", 10084).getInt();
-		skullFossilID = cfg.get("SkullFossil", "item", 10085).getInt();
-		armorFossilID = cfg.get("ArmorFossil", "item", 10086).getInt();
-		coverFossilID = cfg.get("PlumeFossil", "item", 10087).getInt();
-		plumeFossilID = cfg.get("CoverFossil", "item", 10088).getInt();
-		
-		helixFossilUncoveredID = cfg.get("HelixFossilUncovered", "item", 10089).getInt();
-		domeFossilUncoveredID = cfg.get("DomeFossilUncovered", "item", 10090).getInt();
-		oldAmberUncoveredID = cfg.get("OldAmberUncovered", "item", 10091).getInt();
-		rootFossilUncoveredID = cfg.get("RootFossilUncovered", "item", 10092).getInt();
-		clawFossilUncoveredID = cfg.get("ClawFossilUncovered", "item", 10093).getInt();
-		skullFossilUncoveredID = cfg.get("SkullFossilUncovered", "item", 10094).getInt();
-		armorFossilUncoveredID = cfg.get("ArmorFossilUncovered", "item", 10095).getInt();
-		coverFossilUncoveredID = cfg.get("PlumeFossilUncovered", "item", 10096).getInt();
-		plumeFossilUncoveredID = cfg.get("CoverFossilUncovered", "item", 10097).getInt();
-		
+
 		luckyEggID = cfg.get("LuckyEgg", "item", 10035).getInt();
 		expShareID = cfg.get("EXPShare", "item", 10036).getInt();
 
@@ -341,7 +261,6 @@ public class PixelmonItems {
 		pcItem = new ItemBlock(pcItemID, PixelmonBlocks.pc, 34).setItemName("PC");
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 50).setItemName("Healer");
 		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, 66).setItemName("Anvil");
-		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, 82).setItemName("Fossil Machine");
 
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID).setItemName("ThunderStoneShard").setIconIndex(3).setCreativeTab(PixelmonCreativeTabs.natural);
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(35).setCreativeTab(PixelmonCreativeTabs.natural);
@@ -352,7 +271,6 @@ public class PixelmonItems {
 		// everStoneShard = new
 		// PixelmonItem(everStoneShardID).setItemName("EverstoneShard").setIconIndex(60);
 
-		
 		berryOran = new ItemBerryOran(berryOranID).setItemName("OranBerry").setIconIndex(5);
 		berryLeppa = new ItemBerryLeppa(berryLeppaID).setItemName("LeppaBerry").setIconIndex(21);
 		berryRawst = new ItemBerryRawst(berryRawstID).setItemName("RawstBerry").setIconIndex(37);
@@ -362,26 +280,7 @@ public class PixelmonItems {
 		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, 13 + 15 * 16).setItemName("Iron Hammer");
 		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, 15 + 15 * 16).setItemName("Gold Hammer");
 		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, 14 + 15 * 16).setItemName("Diamond Hammer");
-		
-		helixFossil = new ItemPokemonFossil(helixFossilID, "Omanyte").setItemName("helixFossil").setIconIndex(10);
-		domeFossil = new ItemPokemonFossil(domeFossilID, "Kabuto").setItemName("domeFossil").setIconIndex(26);
-		oldAmber = new ItemPokemonFossil(oldAmberID, "Aerodactyl").setItemName("oldAmber").setIconIndex(42);
-		rootFossil = new ItemPokemonFossil(rootFossilID, "Lileep").setItemName("rootFossil").setIconIndex(58);
-		clawFossil = new ItemPokemonFossil(clawFossilID, "Anorith").setItemName("clawFossil").setIconIndex(74);
-		skullFossil = new ItemPokemonFossil(skullFossilID, "Cranidos").setItemName("skullFossil").setIconIndex(90);
-		armorFossil = new ItemPokemonFossil(armorFossilID, "Shieldon").setItemName("armorFossil").setIconIndex(106);
-		coverFossil = new ItemPokemonFossil(coverFossilID, "Tirtouga").setItemName("coverFossil").setIconIndex(122);
-		plumeFossil = new ItemPokemonFossil(plumeFossilID, "Archen").setItemName("plumeFossil").setIconIndex(138);
-		
-		helixFossilUncovered = new PixelmonItem(helixFossilUncoveredID).setItemName("helixFossilUncovered").setIconIndex(11).setCreativeTab(PixelmonCreativeTabs.natural);
-		domeFossilUncovered = new PixelmonItem(domeFossilUncoveredID).setItemName("domeFossilUncovered").setIconIndex(27).setCreativeTab(PixelmonCreativeTabs.natural);
-		oldAmberUncovered = new PixelmonItem(oldAmberUncoveredID).setItemName("oldAmberUncovered").setIconIndex(43).setCreativeTab(PixelmonCreativeTabs.natural);
-		rootFossilUncovered = new PixelmonItem(rootFossilUncoveredID).setItemName("rootFossilUncovered").setIconIndex(59).setCreativeTab(PixelmonCreativeTabs.natural);
-		clawFossilUncovered = new PixelmonItem(clawFossilUncoveredID).setItemName("clawFossilUncovered").setIconIndex(75).setCreativeTab(PixelmonCreativeTabs.natural);
-		skullFossilUncovered = new PixelmonItem(skullFossilUncoveredID).setItemName("skullFossilUncovered").setIconIndex(91).setCreativeTab(PixelmonCreativeTabs.natural);
-		armorFossilUncovered = new PixelmonItem(armorFossilUncoveredID).setItemName("armorFossilUncovered").setIconIndex(107).setCreativeTab(PixelmonCreativeTabs.natural);
-		coverFossilUncovered = new PixelmonItem(coverFossilUncoveredID).setItemName("coverFossilUncovered").setIconIndex(123).setCreativeTab(PixelmonCreativeTabs.natural);
-		plumeFossilUncovered = new PixelmonItem(plumeFossilUncoveredID).setItemName("plumeFossilUncovered").setIconIndex(139).setCreativeTab(PixelmonCreativeTabs.natural);
+
 	}
 
 	public static void addNames() {
@@ -389,6 +288,7 @@ public class PixelmonItems {
 		PixelmonItemsApricorns.addNames();
 		PixelmonItemsBadges.addNames();
 		PixelmonItemsTMs.addNames();
+		PixelmonItemsFossils.addNames();
 		try {
 			for (Field field : PixelmonItems.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
@@ -416,7 +316,7 @@ public class PixelmonItems {
 		}
 		return null;
 	}
-	
+
 	public static Item getHeldItem(int id) {
 		try {
 			for (Field field : PixelmonItems.class.getFields()) {

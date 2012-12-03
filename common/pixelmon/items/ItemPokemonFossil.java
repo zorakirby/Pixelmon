@@ -4,25 +4,35 @@ import java.util.List;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.ModelBase;
+import pixelmon.Pixelmon;
 import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.config.PixelmonItems;
+import pixelmon.models.fossils.ModelFossil;
 
-public class ItemPokemonFossil extends PixelmonItem{
+public class ItemPokemonFossil extends PixelmonItem {
 
 	public String pokemon = "";
-	
-	public ItemPokemonFossil(int Id, String pokemon) {
+	public ModelFossil model;
+	private String modelName;
+
+	public ItemPokemonFossil(int Id, String pokemon, String modelName) {
 		super(Id);
 		this.setCreativeTab(PixelmonCreativeTabs.natural);
 		this.pokemon = pokemon;
 	}
-	
-    public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-    	par3List.add(pokemon);
-    }
-	
-	public String getPokemon(){
+
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+		par3List.add(pokemon);
+	}
+
+	public String getPokemon() {
 		return this.pokemon;
 	}
-	
+
+	public ModelFossil getModel() {
+		if (model == null)
+			model = Pixelmon.proxy.loadFossilModel(modelName);
+		return model;
+	}
 }
