@@ -25,19 +25,10 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	private RidingHelper ridingHelper;
 
-	@SideOnly(Side.CLIENT)
-	private double velocityX;
-	@SideOnly(Side.CLIENT)
-	private double velocityY;
-	@SideOnly(Side.CLIENT)
-	private double velocityZ;
-	private boolean isMounted;
-
-	private final boolean ridingEnabled = false;
+	private final boolean ridingEnabled = true;
 
 	public Entity5Rideable(World par1World) {
 		super(par1World);
-
 	}
 
 	@Override
@@ -59,6 +50,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 				if (itemstack == null) {
 					if (baseStats.isRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
+						if (ridingHelper == null)
+							ridingHelper = new RidingHelper((EntityPixelmon) this, worldObj);
 						if (riddenByEntity != null) {
 							player.mountEntity(this);
 							((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
@@ -86,72 +79,37 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	@Override
 	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		if (ridingHelper != null)
+		if (riddenByEntity!=null)
 			ridingHelper.onLivingUpdate();
-	}
-
-	@Override
-	public void moveEntity(double d, double d1, double d2) {
-		if (ridingHelper != null)
-			ridingHelper.moveEntity(d, d1, d2);
-		else
-			super.moveEntity(d, d1, d2);
-	}
-
-	@SideOnly(Side.CLIENT)
-	/**
-	 * Sets the velocity to the args. Args: x, y, z
-	 */
-	public void setVelocity(double par1, double par3, double par5) {
-		this.velocityX = this.motionX = par1;
-		this.velocityY = this.motionY = par3;
-		this.velocityZ = this.motionZ = par5;
+		super.onLivingUpdate();
 	}
 
 	@Override
 	public void onUpdate() {
-		super.onUpdate();
+//		if (riddenByEntity != null) {
+//			ridingHelper.onUpdate();
+//		} else {
+			super.onUpdate();
+//		}
+	}
 
-		if (this.worldObj.isRemote && this.riddenByEntity != null) {
-			double newPosX = this.posX + this.motionX;
-			double newPosY = this.posY;
-			double newPosZ = this.posZ + this.motionZ;
-			this.setPosition(newPosX, newPosY, newPosZ);
-		} else {
-			if (this.riddenByEntity != null) {
-				this.motionX += this.riddenByEntity.motionX * getMoveSpeed();
-				this.motionY += this.riddenByEntity.motionY * getMoveSpeed();
-				this.motionZ += this.riddenByEntity.motionZ * getMoveSpeed();
-				this.riddenByEntity.setPosition(posX, posY, posZ);
-			}
-
-			this.moveEntity(this.motionX, this.motionY, this.motionZ);
-
-		}
-		if (this.riddenByEntity != null && this.riddenByEntity.isDead) {
-			this.riddenByEntity = null;
-		}
+	@Override
+	public void moveEntity(double d, double d1, double d2) {
+		super.moveEntity(d, d1, d2);
 	}
 
 	@Override
 	public void updateRidden() {
-		if (ridingHelper != null)
-			ridingHelper.updateRidden();
-		else {
-			super.updateRidden();
-		}
+		super.updateRidden();
+		ridingHelper.updateRidden();
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9) {
-		if (this.riddenByEntity == null)
-			super.setPositionAndRotation2(par1, par3, par5, par7, par8, par9);
-		else {
-			this.motionX = this.velocityX;
-			this.motionY = this.velocityY;
-			this.motionZ = this.velocityZ;
+	public void updateRiderPosition() {
+		if (this.riddenByEntity != null) {
+			double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
+			double var3 = Math.sin((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
+			this.riddenByEntity.setPosition(this.posX + var1, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ + var3);
 		}
 	}
 

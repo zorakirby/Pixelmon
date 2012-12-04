@@ -1,199 +1,135 @@
 package pixelmon.entities.pixelmon.helpers;
 
+import java.util.Iterator;
+import java.util.List;
+
 import pixelmon.entities.pixelmon.EntityFlyingPixelmon;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.src.Block;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.EntityPlayerSP;
+import net.minecraft.src.ItemArmor;
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.ItemSword;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.MovementInput;
+import net.minecraft.src.Packet5PlayerInventory;
 import net.minecraft.src.World;
+import net.minecraft.src.WorldServer;
+import net.minecraftforge.common.ForgeHooks;
 
 public class RidingHelper {
 
-	MovementInput movementInput; // how we will receive input from the player to
-									// initialize sprinting.
-	int sprintToggleTimer; // also part of the sprinting code
-	int jumpTicks; // part of jumping code
-	double speedBonus; // multiplies the player movement input to make the mount
-						// move faster
-
 	EntityPixelmon parent;
 	World worldObj;
+	private Object field_70768_au;
+	private float field_70766_av;
+	private int jumpTicks;
 
 	public RidingHelper(EntityPixelmon parent, World worldObj) {
 		this.worldObj = worldObj;
 		this.parent = parent;
-		sprintToggleTimer = 0;
-		speedBonus = 10;
 	}
 
 	public double getMountedYOffset() {
 		return (double) parent.height * 0.9D;
 	}
 
-	public void onLivingUpdate() {
-		if (sprintToggleTimer > 0) { // used to determine if sprinting should be
-										// activated.
-			sprintToggleTimer--;
-		}
-		if (jumpTicks > 0 && !(parent instanceof EntityFlyingPixelmon)) // used to limit
-																		// how
-																		// long
-																		// the
-																		// mount
-																		// will
-																		// rise
-																		// while
-		// jumping
-		{
-			jumpTicks--;
+	public void onUpdate() {
+		this.onLivingUpdate();
+		double diffPosX = parent.posX - parent.prevPosX;
+		double diffPosZ = parent.posZ - parent.prevPosZ;
+		float sqDiff = (float) (diffPosX * diffPosX + diffPosZ * diffPosZ);
+		float var6 = parent.renderYawOffset;
+		float var7 = 0.0F;
+		this.field_70768_au = this.field_70766_av;
+		float var8 = 0.0F;
+
+		if (sqDiff > 0.0025000002F) {
+			var8 = 1.0F;
+			var7 = (float) Math.sqrt((double) sqDiff) * 3.0F;
+			var6 = (float) Math.atan2(diffPosZ, diffPosX) * 180.0F / (float) Math.PI - 90.0F;
 		}
 
-		if (parent.riddenByEntity != null) {
-			// stops up-and-down head movement
-			parent.rotationPitch = 0;
+		if (parent.swingProgress > 0.0F) {
+			var6 = parent.rotationYaw;
+		}
 
-			// Control where the horse is facing (doesn't work while standing
-			// still)
-			EntityPlayer entityRider = (EntityPlayer) parent.riddenByEntity;
-			parent.rotationYaw = parent.prevRotationYaw = entityRider.rotationYaw;
+		if (!parent.onGround) {
+			var8 = 0.0F;
+		}
+
+		this.field_70766_av += (var8 - this.field_70766_av) * 0.3F;
+
+		float var9 = MathHelper.wrapAngleTo180_float(var6 - parent.renderYawOffset);
+		parent.renderYawOffset += var9 * 0.3F;
+		float var10 = MathHelper.wrapAngleTo180_float(parent.rotationYaw - parent.renderYawOffset);
+		boolean var11 = var10 < -90.0F || var10 >= 90.0F;
+
+		if (var10 < -75.0F) {
+			var10 = -75.0F;
+		}
+
+		if (var10 >= 75.0F) {
+			var10 = 75.0F;
+		}
+
+		parent.renderYawOffset = parent.rotationYaw - var10;
+
+		if (var10 * var10 > 2500.0F) {
+			parent.renderYawOffset += var10 * 0.2F;
+		}
+
+		if (var11) {
+			var7 *= -1.0F;
+		}
+
+		while (parent.rotationYaw - parent.prevRotationYaw < -180.0F) {
+			parent.prevRotationYaw -= 360.0F;
+		}
+
+		while (parent.rotationYaw - parent.prevRotationYaw >= 180.0F) {
+			parent.prevRotationYaw += 360.0F;
+		}
+
+		while (parent.renderYawOffset - parent.prevRenderYawOffset < -180.0F) {
+			parent.prevRenderYawOffset -= 360.0F;
+		}
+
+		while (parent.renderYawOffset - parent.prevRenderYawOffset >= 180.0F) {
+			parent.prevRenderYawOffset += 360.0F;
+		}
+
+		while (parent.rotationPitch - parent.prevRotationPitch < -180.0F) {
+			parent.prevRotationPitch -= 360.0F;
+		}
+
+		while (parent.rotationPitch - parent.prevRotationPitch >= 180.0F) {
+			parent.prevRotationPitch += 360.0F;
+		}
+
+		while (parent.rotationYawHead - parent.prevRotationYawHead < -180.0F) {
+			parent.prevRotationYawHead -= 360.0F;
+		}
+
+		while (parent.rotationYawHead - parent.prevRotationYawHead >= 180.0F) {
+			parent.prevRotationYawHead += 360.0F;
 		}
 	}
 
-	public void moveEntity(double d, double d1, double d2) {
-		if (parent.riddenByEntity != null && worldObj.isRemote) {
-			/**
-			 * initiate sprinting while ridden via keybind. Basically, if the
-			 * player has tapped once, it begins the timer which counts down
-			 * from seven, slightly less than a quarter second in realtime. If
-			 * the player taps forward before the countdown, sprinting is
-			 * initiated
-			 */
-			boolean flag = ((EntityPlayerSP) parent.riddenByEntity).movementInput.moveForward >= 0.8F;
-			((EntityPlayerSP) parent.riddenByEntity).movementInput.updatePlayerMoveState();
-			boolean flag1 = ((EntityPlayerSP) parent.riddenByEntity).movementInput.moveForward >= 0.8F;
-
-			if (parent.onGround && !flag && flag1 && !parent.isSprinting()) // if
-																			// forward
-																			// is
-																			// tapped...
-			{
-				if (sprintToggleTimer == 0) // ... if it is tapped after the
-											// countdown reach zero...
-				{
-					sprintToggleTimer = 7; // ... reset...
-				} else // ... But if forward is hit before the end of the
-						// countdown...
-				{
-					parent.setSprinting(true); // ... sprint!
-					sprintToggleTimer = 0;
-				}
-			}
-
-			// Adjust for ice. Ice caused a rapid acceleration so I had to slow
-			// the mount while on it.
-			int j = worldObj.getBlockId(MathHelper.floor_double(parent.posX), MathHelper.floor_double(parent.boundingBox.minY) - 1, MathHelper.floor_double(parent.posZ));
-			float f = 1;
-			if (j == Block.ice.blockID) {
-				f = Block.blocksList[j].slipperiness * 0.3F;
-			}
-
-			// Initiate jumping while ridden via keybind
-			if (((EntityPlayerSP) parent.riddenByEntity).movementInput.jump) { // hijacking
-																				// the
-																				// preset
-																				// 'jump'
-																				// input.
-				jump(true); // this method is seen overridden in here
-			}
-
-			// Determine movement and speed
-			if (parent.isSprinting() && parent.onGround) { // if sprinting on
-															// the ground
-				parent.motionX += parent.riddenByEntity.motionX * speedBonus * f;
-				parent.motionZ += parent.riddenByEntity.motionZ * speedBonus * f;
-			} else if (parent.isSprinting()) { // if jumping while sprinting
-				if (parent instanceof EntityFlyingPixelmon) {
-					parent.motionX += parent.riddenByEntity.motionX * 4D;
-					parent.motionZ += parent.riddenByEntity.motionZ * 4D;
-
-				} else {
-					parent.motionX += parent.riddenByEntity.motionX * 3D;
-					parent.motionZ += parent.riddenByEntity.motionZ * 3D;
-				}
-			} else if (parent.onGround && !onIce()) {
-				parent.motionX += parent.riddenByEntity.motionX * 7D * f;
-				parent.motionZ += parent.riddenByEntity.motionZ * 7D * f;
-			} else { // jumping while walking normally
-				if (parent instanceof EntityFlyingPixelmon) {
-					parent.motionX += parent.riddenByEntity.motionX * 3D;
-					parent.motionZ += parent.riddenByEntity.motionZ * 3D;
-				} else {
-					parent.motionX += parent.riddenByEntity.motionX;
-					parent.motionZ += parent.riddenByEntity.motionZ;
-				}
-			}
-
-			// Cancel sprinting I don't -think- the check for being in water or
-			// web is necessary, but its logical.
-			if (parent.isSprinting() && (((EntityPlayerSP) parent.riddenByEntity).movementInput.moveForward < 0.8F) || parent.isInWater()) {
-				parent.setSprinting(false);
-			}
-
-			// Autojump
-			if (parent.isCollidedHorizontally) {
-				jump(false);
-			}
-
-			// Submit!
-			parent.doMoveEntity(parent.motionX, parent.motionY, parent.motionZ);
-		} else
-			parent.doMoveEntity(d, d1, d2);
+	public void onLivingUpdate() {
+		parent.isJumping = ((EntityLiving) parent.riddenByEntity).isJumping;
+		parent.motionX = parent.riddenByEntity.motionX;
+		parent.motionZ = parent.riddenByEntity.motionZ;
 	}
 
 	public void updateRidden() {
-		if (parent.ridingEntity.isDead) {
-			parent.ridingEntity = null;
-			return;
-		}
-		parent.motionX = 0.0D;
-		parent.motionY = 0.0D;
-		parent.motionZ = 0.0D;
-		parent.onUpdate();
-		if (parent.ridingEntity == null) {
-			return;
-		}
+		this.field_70768_au = this.field_70766_av;
+		this.field_70766_av = 0.0F;
+		parent.fallDistance = 0.0F;
 	}
 
-	public void jump(Boolean flag) { // boolean. true = 2.5-high jump. false =
-										// normal jump.
-		if (parent.onGround && jumpTicks == 0 && !(parent instanceof EntityFlyingPixelmon)) {
-			if (parent instanceof EntityPixelmon)
-				if (flag) {
-					parent.motionY += 0.2; // makes mount jump higher. Do not
-											// use big values!
-				}
-			jumpTicks = 10;
-		}
-		if (parent instanceof EntityFlyingPixelmon) {
-			if (parent.onGround) {
-				parent.motionY += 0.3;
-			} else
-				parent.motionY += 0.1;
-		}
-	}
-
-	protected boolean onIce() { // just a check.
-		int i = MathHelper.floor_double(parent.posX);
-		int j = MathHelper.floor_double(parent.posY);
-		int k = MathHelper.floor_double(parent.posZ);
-
-		if (worldObj.getBlockId(i, j, k) == Block.ice.blockID) {
-			return true;
-		}
-		return false;
-	}
 }
