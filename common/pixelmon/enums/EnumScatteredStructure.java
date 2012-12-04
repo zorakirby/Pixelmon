@@ -8,7 +8,7 @@ import net.minecraft.src.BiomeGenBase;
 public enum EnumScatteredStructure {
 	
 	mansion(0, 55, 4, BiomeGenBase.swampland, "mansion"),
-	gymRed(1, 10, 1, BiomeGenBase.plains, "gymRed"),
+	gymRed(1, 10, 2, BiomeGenBase.plains, "gymRed"),
 	moltresSpawn(2, 35, 1, BiomeGenBase.forest, "moltresSpawn", "Pikachu"/*Just a place holder.*/, 57, 38, 54),
 	zapdosSpawn(3, 30, 0, BiomeGenBase.extremeHills, "zapdosSpawn", "Pikachu"/*Just a place holder. again.*/, 5, 2, 5),
 	;
@@ -46,7 +46,7 @@ public enum EnumScatteredStructure {
 	}
 	
 	public int getRarity(){
-		return new Random().nextInt(this.rarity);
+		return new Random().nextInt(this.rarity*10);
 	}
 	
 	public int getY(int par1){
@@ -61,17 +61,11 @@ public enum EnumScatteredStructure {
 		return "resources/pixelmon/structures/standAlone/" + this.schematicName + ".schematic";
 	}
 	
-	public static EnumScatteredStructure getStructureFromBiome(BiomeGenBase biome) { // May need to work on this stuff,
-		try {
-			for (Field field : EnumScatteredStructure.class.getFields()) {
-				EnumScatteredStructure structure = (EnumScatteredStructure) gymRed;
-				if (structure.biomeToSpawnIn() == biome)
-					return structure;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static EnumScatteredStructure getStructureFromBiome(BiomeGenBase biome) {
+		for (EnumScatteredStructure e: values()){
+			if (e.biomeToSpawnIn() == biome) return e;
 		}
 		return null;
 	}
-
+	
 }

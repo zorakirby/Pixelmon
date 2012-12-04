@@ -44,29 +44,15 @@ public enum EnumTownType {
 	}
 	
 	public static EnumTownType getTownFromBiome(BiomeGenBase biome) {
-		try {
-		for (Field field : EnumTownType.class.getFields()) {
-			EnumTownType town;
-				town = (EnumTownType) field.get(1);// May need to work on this stuff,
-			if (town.getBiome() == biome)
-				return town;
-			}
-		}
-		catch (IllegalAccessException e) {
-			e.printStackTrace();
+		for (EnumTownType e: values()){
+			if (e.getBiome() == biome) return e;
 		}
 		return null;
 	}
 	
 	public static EnumTownType getTownFromId(int Id) {
-		try {
-			for (Field field : EnumTownType.class.getFields()) {
-				EnumTownType town = (EnumTownType) field.get(null);
-					if (town.getId() == Id)
-						return town;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		for (EnumTownType e: values()){
+			if (e.getId() == Id) return e;
 		}
 		return null;
 	}

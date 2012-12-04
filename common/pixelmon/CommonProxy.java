@@ -73,4 +73,5 @@ public class CommonProxy implements IGuiHandler {
 	public ModelFossil loadFossilModel(String modelName) {
 		return null;
 	}
+
 }

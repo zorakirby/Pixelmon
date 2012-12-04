@@ -18,8 +18,8 @@ public class GeneralScattered extends StructureScattered {
 	// TODO implement a system in which we can have special pokemon spawn at
 	// special coordinates.
 
-	public GeneralScattered(Random par1Random, int par2, int par3, SchematicImporter schematic) {
-		super(par1Random, par2, 64, par3, schematic.width, schematic.height, schematic.length);
+	public GeneralScattered(Random par1Random, int par2, int par3, int par4, SchematicImporter schematic) {
+		super(par1Random, par2, par3, par4, schematic.width, schematic.height, schematic.length);
 		s = schematic;
 	}
 

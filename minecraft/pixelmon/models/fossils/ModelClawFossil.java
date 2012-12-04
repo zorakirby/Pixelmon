@@ -22,6 +22,7 @@ public class ModelClawFossil extends ModelFossil {
 	ModelRenderer base;
 
 	public ModelClawFossil() {
+		setFossilName("ClawFossil");
 		textureWidth = 32;
 		textureHeight = 32;
 
