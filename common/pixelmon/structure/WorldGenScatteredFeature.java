@@ -2,9 +2,13 @@ package pixelmon.structure;
 
 import java.util.Random;
 
+import pixelmon.config.PixelmonEntityList;
+import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumScatteredStructure;
 
 import cpw.mods.fml.common.IWorldGenerator;
+import net.minecraft.src.Entity;
 import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.MapGenScatteredFeature;
 import net.minecraft.src.World;
@@ -21,15 +25,27 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 		int xPos = random.nextInt(16) + chunkX * 16;
 		int yPos = 64;
 		int zPos = random.nextInt(16) + chunkZ * 16;
+		structure = structure.getStructureFromBiome(world.getBiomeGenForCoords(xPos, zPos));
 		if(structure.getStructureFromBiome(world.getBiomeGenForCoords(xPos, zPos)) != null){// May need to work on this stuff,
-			structure = structure.getStructureFromBiome(world.getBiomeGenForCoords(xPos, zPos));
-			if(world.getBiomeGenForCoords(xPos, zPos) == structure.biomeToSpawnIn() && structure.rarity == 1){
-				System.out.println(structure.getStructureFromBiome(world.getBiomeGenForCoords(xPos, zPos)));
+//			System.out.println(structure.getStructureFromBiome(world.getBiomeGenForCoords(xPos, zPos)));
+//			System.out.println(structure.getSchematicPath());
+			if(world.getBiomeGenForCoords(xPos, zPos) == structure.biomeToSpawnIn() && structure.getRarity() == 1){
 				SchematicImporter s = new SchematicImporter(structure.getSchematicPath());
 				s.readSchematic();
-				GeneralScattered g = new GeneralScattered(random, xPos, yPos, s);
+				GeneralScattered g = new GeneralScattered(random, xPos, structure.getY(yPos), zPos, s);
 				hasGenerated = g.generate(world, random);
-				System.out.println("A structure has Generated at " + xPos + ", " + zPos);
+				if(structure.spawnPokemon){
+					if (EnumPokemon.hasPokemon(structure.pokemonSpawn)) {
+						Entity pokemon = PixelmonEntityList.createEntityByName(structure.pokemonSpawn, world);
+						pokemon.setPosition(xPos + structure.pokemonX, structure.getY(yPos) + structure.pokemonY /*+ Can't figure out what to put here to get the pokemon to spawn at the correct spot.*/ , zPos + structure.pokemonZ);
+						System.out.println("A Legendary " + structure.pokemonSpawn + " has Spawned at: " + pokemon.posX + ", " + pokemon.posY + ", " + pokemon.posZ);
+						((EntityPixelmon)pokemon).setNickname(structure.getSchematicPath());
+						if(new Random().nextInt(8059) == 1)
+							((EntityPixelmon)pokemon).setIsShiny(true);
+						world.spawnEntityInWorld(pokemon);
+					}
+				}
+				System.out.println("A structure has Generated at: " + xPos + ", " + structure.getY(yPos) + ", " + zPos);
 			}
 		}
 	}
