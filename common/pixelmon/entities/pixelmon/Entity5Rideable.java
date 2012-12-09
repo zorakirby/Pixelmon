@@ -44,6 +44,13 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	}
 
 	@Override
+	protected void fall(float f) {
+		if (baseStats != null && baseStats.canFly)
+			return;
+		super.fall(f);
+	}
+
+	@Override
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
 			if (ridingEnabled) {
@@ -79,18 +86,22 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	@Override
 	public void onLivingUpdate() {
-		if (riddenByEntity!=null)
+//		if (baseStats != null && baseStats.canFly)
+//			
+//		else
+			super.onLivingUpdate();
+		if (riddenByEntity != null)
 			ridingHelper.onLivingUpdate();
-		super.onLivingUpdate();
 	}
 
 	@Override
 	public void onUpdate() {
-//		if (riddenByEntity != null) {
-//			ridingHelper.onUpdate();
-//		} else {
+//		if (baseStats != null && baseStats.canFly)
+//			((Entity)this).onEntityUpdate();
+//		else
 			super.onUpdate();
-//		}
+		if (riddenByEntity != null)
+			ridingHelper.onUpdate();
 	}
 
 	@Override

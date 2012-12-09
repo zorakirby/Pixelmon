@@ -61,7 +61,7 @@ public class GuiBattle extends GuiContainer {
 	private int guiWidth = 300;
 	private int guiHeight = 60;
 
-	boolean cameraEnabled = true;
+	boolean cameraEnabled = false;
 
 	public GuiBattle(int battleControllerIndex) {
 		super(new ContainerEmpty());

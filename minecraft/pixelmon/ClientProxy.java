@@ -43,6 +43,7 @@ import pixelmon.gui.pokedex.GuiPokedex;
 import pixelmon.keybindings.MinimizeMaximizeOverlayKey;
 import pixelmon.keybindings.NextPokemonKey;
 import pixelmon.keybindings.PreviousPokemonKey;
+import pixelmon.keybindings.RidingBindings;
 import pixelmon.keybindings.SendPokemonKey;
 import pixelmon.models.fossils.ModelFossil;
 import pixelmon.render.RenderPixelmon;
@@ -113,6 +114,7 @@ public class ClientProxy extends CommonProxy {
 		KeyBindingRegistry.registerKeyBinding(new NextPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new PreviousPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new MinimizeMaximizeOverlayKey());
+		KeyBindingRegistry.registerKeyBinding(new RidingBindings());
 	}
 
 	private void addPokemonRenderers() {

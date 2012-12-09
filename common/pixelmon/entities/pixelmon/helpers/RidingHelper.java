@@ -38,92 +38,19 @@ public class RidingHelper {
 		return (double) parent.height * 0.9D;
 	}
 
-	public void onUpdate() {
-		this.onLivingUpdate();
-		double diffPosX = parent.posX - parent.prevPosX;
-		double diffPosZ = parent.posZ - parent.prevPosZ;
-		float sqDiff = (float) (diffPosX * diffPosX + diffPosZ * diffPosZ);
-		float var6 = parent.renderYawOffset;
-		float var7 = 0.0F;
-		this.field_70768_au = this.field_70766_av;
-		float var8 = 0.0F;
-
-		if (sqDiff > 0.0025000002F) {
-			var8 = 1.0F;
-			var7 = (float) Math.sqrt((double) sqDiff) * 3.0F;
-			var6 = (float) Math.atan2(diffPosZ, diffPosX) * 180.0F / (float) Math.PI - 90.0F;
-		}
-
-		if (parent.swingProgress > 0.0F) {
-			var6 = parent.rotationYaw;
-		}
-
-		if (!parent.onGround) {
-			var8 = 0.0F;
-		}
-
-		this.field_70766_av += (var8 - this.field_70766_av) * 0.3F;
-
-		float var9 = MathHelper.wrapAngleTo180_float(var6 - parent.renderYawOffset);
-		parent.renderYawOffset += var9 * 0.3F;
-		float var10 = MathHelper.wrapAngleTo180_float(parent.rotationYaw - parent.renderYawOffset);
-		boolean var11 = var10 < -90.0F || var10 >= 90.0F;
-
-		if (var10 < -75.0F) {
-			var10 = -75.0F;
-		}
-
-		if (var10 >= 75.0F) {
-			var10 = 75.0F;
-		}
-
-		parent.renderYawOffset = parent.rotationYaw - var10;
-
-		if (var10 * var10 > 2500.0F) {
-			parent.renderYawOffset += var10 * 0.2F;
-		}
-
-		if (var11) {
-			var7 *= -1.0F;
-		}
-
-		while (parent.rotationYaw - parent.prevRotationYaw < -180.0F) {
-			parent.prevRotationYaw -= 360.0F;
-		}
-
-		while (parent.rotationYaw - parent.prevRotationYaw >= 180.0F) {
-			parent.prevRotationYaw += 360.0F;
-		}
-
-		while (parent.renderYawOffset - parent.prevRenderYawOffset < -180.0F) {
-			parent.prevRenderYawOffset -= 360.0F;
-		}
-
-		while (parent.renderYawOffset - parent.prevRenderYawOffset >= 180.0F) {
-			parent.prevRenderYawOffset += 360.0F;
-		}
-
-		while (parent.rotationPitch - parent.prevRotationPitch < -180.0F) {
-			parent.prevRotationPitch -= 360.0F;
-		}
-
-		while (parent.rotationPitch - parent.prevRotationPitch >= 180.0F) {
-			parent.prevRotationPitch += 360.0F;
-		}
-
-		while (parent.rotationYawHead - parent.prevRotationYawHead < -180.0F) {
-			parent.prevRotationYawHead -= 360.0F;
-		}
-
-		while (parent.rotationYawHead - parent.prevRotationYawHead >= 180.0F) {
-			parent.prevRotationYawHead += 360.0F;
-		}
+	public void onUpdate(){
+		parent.rotationYaw = parent.riddenByEntity.rotationYaw;
 	}
-
+	
 	public void onLivingUpdate() {
 		parent.isJumping = ((EntityLiving) parent.riddenByEntity).isJumping;
-		parent.motionX = parent.riddenByEntity.motionX;
-		parent.motionZ = parent.riddenByEntity.motionZ;
+		parent.motionX = parent.riddenByEntity.motionX * 16;
+		parent.motionZ = parent.riddenByEntity.motionZ * 16;
+
+		if (parent.riddenByEntity.motionX > 0) {
+			System.out.println("motionX=" + parent.riddenByEntity.motionX);
+			System.out.println("motionZ=" + parent.riddenByEntity.motionZ);
+		}
 	}
 
 	public void updateRidden() {

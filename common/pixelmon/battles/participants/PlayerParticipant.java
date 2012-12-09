@@ -24,7 +24,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
 	BattleController bc;
-	EntityCamera cam;
+	//EntityCamera cam;
 
 	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) {
 		player = p;
@@ -57,8 +57,8 @@ public class PlayerParticipant implements IBattleParticipant {
 	@Override
 	public void StartBattle(IBattleParticipant opponent) {
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
-		cam = new EntityCamera(player.worldObj, player, bc);
-		player.worldObj.spawnEntityInWorld(cam);
+		//cam = new EntityCamera(player.worldObj, player, bc);
+		//player.worldObj.spawnEntityInWorld(cam);
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetOpponentType, opponent.getType().index));
 		player.openGui(Pixelmon.instance, EnumGui.Battle.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), 0, 0);
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon, currentPixelmon.getPokemonId()));
@@ -156,7 +156,7 @@ public class PlayerParticipant implements IBattleParticipant {
 
 	@Override
 	public void update() {
-		cam.updatePosition();
+		//cam.updatePosition();
 	}
 
 	@Override

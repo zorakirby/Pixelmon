@@ -70,7 +70,7 @@ import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.8.5")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.8.6")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 	@Instance
@@ -91,7 +91,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "Pixelmon 1.8.5 for 1.4.4";
+		event.getModMetadata().version = "Pixelmon 1.8.6 for 1.4.4";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 		
@@ -110,7 +110,7 @@ public class Pixelmon {
 		proxy.registerSounds();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityCamera.class, "Camera", PixelmonConfig.idCamera, Pixelmon.instance, 80, 1, true);
+		//EntityRegistry.registerModEntity(EntityCamera.class, "Camera", PixelmonConfig.idCamera, Pixelmon.instance, 80, 1, true);
 		
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
@@ -119,13 +119,13 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
-		GameRegistry.registerWorldGenerator(new WorldGenFossils());
+		//GameRegistry.registerWorldGenerator(new WorldGenFossils());
 		
-		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
-		MinecraftForge.EVENT_BUS.register(new MigrationLoader());
+		//MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 
