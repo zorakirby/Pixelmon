@@ -38,19 +38,12 @@ public class RidingHelper {
 		return (double) parent.height * 0.9D;
 	}
 
-	public void onUpdate(){
+	public void onUpdate() {
 		parent.rotationYaw = parent.riddenByEntity.rotationYaw;
 	}
-	
-	public void onLivingUpdate() {
-		parent.isJumping = ((EntityLiving) parent.riddenByEntity).isJumping;
-		parent.motionX = parent.riddenByEntity.motionX * 16;
-		parent.motionZ = parent.riddenByEntity.motionZ * 16;
 
-		if (parent.riddenByEntity.motionX > 0) {
-			System.out.println("motionX=" + parent.riddenByEntity.motionX);
-			System.out.println("motionZ=" + parent.riddenByEntity.motionZ);
-		}
+	public void onLivingUpdate() {
+		
 	}
 
 	public void updateRidden() {

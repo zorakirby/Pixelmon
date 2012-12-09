@@ -1,18 +1,22 @@
 package pixelmon.entities.pixelmon;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
+import pixelmon.entities.pixelmon.helpers.PlayerRiding;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAITasks;
+import net.minecraft.src.EntityAgeable;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityBoat;
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.Item;
@@ -22,6 +26,9 @@ import net.minecraft.src.ModelBase;
 import net.minecraft.src.World;
 
 public abstract class Entity5Rideable extends Entity4Textures {
+
+	public static ArrayList<PlayerRiding> PlayerRidingList = new ArrayList<PlayerRiding>();
+	private PlayerRiding playerRiding;
 
 	private RidingHelper ridingHelper;
 
@@ -86,20 +93,33 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	@Override
 	public void onLivingUpdate() {
-//		if (baseStats != null && baseStats.canFly)
-//			
-//		else
-			super.onLivingUpdate();
-		if (riddenByEntity != null)
+		// if (baseStats != null && baseStats.canFly)
+		//
+		// else
+		if (riddenByEntity != null) {
 			ridingHelper.onLivingUpdate();
+			if (playerRiding == null) {
+				for (int i = 0; i < PlayerRidingList.size(); i++) {
+					if (PlayerRidingList.get(i).player == riddenByEntity)
+						playerRiding = PlayerRidingList.get(i);
+				}
+			}
+			if (playerRiding != null) {
+				moveForward += playerRiding.acceleration;
+				moveForward -= playerRiding.deceleration;
+				moveStrafing += playerRiding.moveLeft;
+				moveStrafing -= playerRiding.moveRight;
+			}
+		}
+		super.onLivingUpdate();
 	}
 
 	@Override
 	public void onUpdate() {
-//		if (baseStats != null && baseStats.canFly)
-//			((Entity)this).onEntityUpdate();
-//		else
-			super.onUpdate();
+		// if (baseStats != null && baseStats.canFly)
+		// ((Entity)this).onEntityUpdate();
+		// else
+		super.onUpdate();
 		if (riddenByEntity != null)
 			ridingHelper.onUpdate();
 	}

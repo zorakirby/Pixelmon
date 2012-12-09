@@ -36,7 +36,7 @@ public class RidingBindings extends KeyHandler {
 		if (kb.keyCode == Keyboard.KEY_W)
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Accelerate.index));
 		if (kb.keyCode == Keyboard.KEY_S)
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Deccelerate.index));
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Decelerate.index));
 		if (kb.keyCode == Keyboard.KEY_A)
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Left.index));
 		if (kb.keyCode == Keyboard.KEY_D)
