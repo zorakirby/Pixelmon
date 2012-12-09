@@ -35,11 +35,11 @@ public class Movement extends PacketHandlerBase {
 						if (movement[j] == EnumMovement.Accelerate)
 							rl.get(i).acceleration++;
 						else if (movement[j] == EnumMovement.Decelerate)
-							rl.get(i).deceleration++;
+							rl.get(i).acceleration--;
 						else if (movement[j] == EnumMovement.Left)
-							rl.get(i).moveLeft++;
+							rl.get(i).strafe++;
 						else if (movement[j] == EnumMovement.Right)
-							rl.get(i).moveRight++;
+							rl.get(i).strafe--;
 						else if (movement[j] == EnumMovement.Jump)
 							rl.get(i).jump++;
 					}

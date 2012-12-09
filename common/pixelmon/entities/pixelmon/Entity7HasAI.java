@@ -62,8 +62,4 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 		super.readEntityFromNBT(nbt);
 		aggression = Aggression.getAggression(nbt.getInteger("Aggression"));
 	}
-	
-	public boolean isAIEnabled() {
-		return true;
-	}
 }

@@ -22,7 +22,7 @@ public class MovementHandler implements ITickHandler {
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		if (Minecraft.getMinecraft().thePlayer.ridingEntity == null)
+		if (Minecraft.getMinecraft().thePlayer == null || Minecraft.getMinecraft().thePlayer.ridingEntity == null)
 			return;
 		if (Minecraft.getMinecraft().gameSettings.keyBindForward.pressed)
 			acceleration++;

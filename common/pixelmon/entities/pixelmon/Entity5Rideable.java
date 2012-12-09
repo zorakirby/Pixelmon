@@ -58,6 +58,11 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	}
 
 	@Override
+	protected boolean isAIEnabled() {
+		return riddenByEntity == null;
+	}
+
+	@Override
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
 			if (ridingEnabled) {
@@ -106,9 +111,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			}
 			if (playerRiding != null) {
 				moveForward += playerRiding.acceleration;
-				moveForward -= playerRiding.deceleration;
-				moveStrafing += playerRiding.moveLeft;
-				moveStrafing -= playerRiding.moveRight;
+				moveStrafing += playerRiding.strafe;
 			}
 		}
 		super.onLivingUpdate();

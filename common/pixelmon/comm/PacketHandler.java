@@ -22,8 +22,10 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new BagPacket());
 		handlers.add(new ChooseAttack());
 		handlers.add(new ChooseStarter());
+		handlers.add(new DeleteMove());
 		handlers.add(new Flee());
 		handlers.add(new HealPokemon());
+		handlers.add(new Movement());
 		handlers.add(new PCClick());
 		handlers.add(new RegisterPlayer());
 		handlers.add(new RenamePokemon());
@@ -33,7 +35,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new StopStartLevelling());
 		handlers.add(new SwapMove());
 		handlers.add(new SwitchPokemon());
-		handlers.add(new DeleteMove());
+
 	}
 
 	@Override

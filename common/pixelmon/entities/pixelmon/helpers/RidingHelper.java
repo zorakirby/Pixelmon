@@ -39,7 +39,7 @@ public class RidingHelper {
 	}
 
 	public void onUpdate() {
-		parent.rotationYaw = parent.riddenByEntity.rotationYaw;
+		//parent.rotationYaw = parent.riddenByEntity.rotationYaw;
 	}
 
 	public void onLivingUpdate() {
