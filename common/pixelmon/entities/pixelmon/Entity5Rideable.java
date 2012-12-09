@@ -61,6 +61,10 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	protected boolean isAIEnabled() {
 		return riddenByEntity == null;
 	}
+	
+	@Override
+	protected void updateEntityActionState() {
+	}
 
 	@Override
 	public boolean interact(EntityPlayer player) {
