@@ -22,7 +22,7 @@ public class PixelmonItemsTMs {
 
 	public static void load(Configuration cfg) {
 		System.out.println("PIXELMON: Loading TM/HMs");
-		int startId = cfg.get("TM Index Start", "general", 11000).getInt();
+		int startId = cfg.get("IDs", "TM Index Start", 11000).getInt();
 		try {
 			Connection conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();

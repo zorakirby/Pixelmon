@@ -41,18 +41,14 @@ public class PixelmonConfig {
 		config.load();
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
-		allowNonPixelmonMobs = config.get("Allow vanilla mobs", "general",
-				false).getBoolean(false);
-		maxPokemonPerChunk = config.get("Max number of pokemon per chunk",
-				"general", 4).getInt(4);
-		chanceOfNoPokemon = config.get("Percent chance of no pokemon in chunk",
-				"general", 30).getInt(20);
-		scaleModelsUp = config.get("Scale Models Up", "general", true)
-				.getBoolean(true);
-		idTrainers = config.get("Trainer ID", "IDs", 199).getInt(199);
-		idPixelmon = config.get("Pixelmon ID", "IDs", 200).getInt(200);
-		idPokeball = config.get("Pokeball ID", "IDs", 201).getInt(201);
-		idCamera = config.get("Camera ID", "IDs", 202).getInt(202);
+		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs", false).getBoolean(false);
+		maxPokemonPerChunk = config.get("general", "Max number of pokemon per chunk", 4).getInt(4);
+		chanceOfNoPokemon = config.get("general", "Percent chance of no pokemon in chunk", 30).getInt(20);
+		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
+		idTrainers = config.get("IDs", "Trainer ID", 199).getInt(199);
+		idPixelmon = config.get("IDs", "Pixelmon ID", 200).getInt(200);
+		idPokeball = config.get("IDs", "Pokeball ID", 201).getInt(201);
+		idCamera = config.get("IDs", "Camera ID", 202).getInt(202);
 		config.save();
 
 		PixelmonItems.addNames();
@@ -69,12 +65,10 @@ public class PixelmonConfig {
 			while (it.hasNext()) {
 				Integer i = (Integer) it.next();
 				Class c1 = (Class) EntityList.IDtoClassMapping.get(i);
-				if (EntityPixelmon.class.isAssignableFrom(c1)
-						|| EntityTrainer.class.isAssignableFrom(c1)) {
+				if (EntityPixelmon.class.isAssignableFrom(c1) || EntityTrainer.class.isAssignableFrom(c1)) {
 					continue;
 				}
-				if (EntityLiving.class.isAssignableFrom(c1)
-						&& !Modifier.isAbstract(c1.getModifiers())) {
+				if (EntityLiving.class.isAssignableFrom(c1) && !Modifier.isAbstract(c1.getModifiers())) {
 					Class<? extends EntityLiving> c3 = c1;
 					int maxNonNullBiomes = 0;
 					for (BiomeGenBase biome : BiomeGenBase.biomeList) {

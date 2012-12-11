@@ -55,8 +55,10 @@ public class MovementHandler implements ITickHandler {
 		if (jump > 0)
 			movements[i++] = EnumMovement.Jump;
 
-		if (numMovements > 0)
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, movements));
+		if (numMovements > 0){
+			short rotation = (short)Minecraft.getMinecraft().thePlayer.rotationYawHead;
+			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, rotation, movements));
+		}
 		acceleration = 0;
 		strafe = 0;
 		jump = 0;

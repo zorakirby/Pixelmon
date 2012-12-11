@@ -21,6 +21,7 @@ public class Movement extends PacketHandlerBase {
 
 	@Override
 	public void handlePacket(int index, Player player, DataInputStream dataStream) throws IOException {
+		int rotation = dataStream.readShort();
 		int numMovements = dataStream.readShort();
 		EnumMovement[] movement = new EnumMovement[numMovements];
 		for (int i = 0; i < numMovements; i++) {
@@ -43,6 +44,7 @@ public class Movement extends PacketHandlerBase {
 						else if (movement[j] == EnumMovement.Jump)
 							rl.get(i).jump++;
 					}
+					rl.get(i).rotation = rotation;
 					prExists = true;
 					break;
 				}

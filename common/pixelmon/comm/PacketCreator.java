@@ -94,12 +94,13 @@ public class PacketCreator {
 		return packet;
 	}
 
-	public static Packet createPacket(EnumPackets epacket, EnumMovement[] movements) {
+	public static Packet createPacket(EnumPackets epacket, short rotation, EnumMovement[] movements) {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream data = new DataOutputStream(bytes);
 		Packet250CustomPayload packet = new Packet250CustomPayload();
 		try {
 			data.writeInt(epacket.getIndex());
+			data.writeShort(rotation);
 			data.writeShort(movements.length);
 			for (int i = 0; i < movements.length; i++) {
 				data.writeShort(movements[i].index);

@@ -79,27 +79,27 @@ public class PixelmonItemsFossils {
 	public static void load(Configuration cfg) {
 		if (!isEnabled)
 			return;
-		fossilMachineItemID = cfg.get("FossilMachineItem", "item", 10016).getInt();
+		fossilMachineItemID = cfg.get("fossils", "FossilMachineItem", 10016).getInt();
 
-		helixFossilID = cfg.get("HelixFossil", "item", 10080).getInt();
-		domeFossilID = cfg.get("DomeFossil", "item", 10081).getInt();
-		oldAmberID = cfg.get("OldAmber", "item", 10082).getInt();
-		rootFossilID = cfg.get("RootFossil", "item", 10083).getInt();
-		clawFossilID = cfg.get("ClawFossil", "item", 10084).getInt();
-		skullFossilID = cfg.get("SkullFossil", "item", 10085).getInt();
-		armorFossilID = cfg.get("ArmorFossil", "item", 10086).getInt();
-		coverFossilID = cfg.get("PlumeFossil", "item", 10087).getInt();
-		plumeFossilID = cfg.get("CoverFossil", "item", 10088).getInt();
+		helixFossilID = cfg.get("fossils", "HelixFossil", 10080).getInt();
+		domeFossilID = cfg.get("fossils", "DomeFossil", 10081).getInt();
+		oldAmberID = cfg.get("fossils", "OldAmber", 10082).getInt();
+		rootFossilID = cfg.get("fossils", "RootFossil", 10083).getInt();
+		clawFossilID = cfg.get("fossils", "ClawFossil", 10084).getInt();
+		skullFossilID = cfg.get("fossils", "SkullFossil", 10085).getInt();
+		armorFossilID = cfg.get("fossils", "ArmorFossil", 10086).getInt();
+		coverFossilID = cfg.get("fossils", "PlumeFossil", 10087).getInt();
+		plumeFossilID = cfg.get("fossils", "CoverFossil", 10088).getInt();
 
-		helixFossilUncoveredID = cfg.get("HelixFossilUncovered", "item", 10089).getInt();
-		domeFossilUncoveredID = cfg.get("DomeFossilUncovered", "item", 10090).getInt();
-		oldAmberUncoveredID = cfg.get("OldAmberUncovered", "item", 10091).getInt();
-		rootFossilUncoveredID = cfg.get("RootFossilUncovered", "item", 10092).getInt();
-		clawFossilUncoveredID = cfg.get("ClawFossilUncovered", "item", 10093).getInt();
-		skullFossilUncoveredID = cfg.get("SkullFossilUncovered", "item", 10094).getInt();
-		armorFossilUncoveredID = cfg.get("ArmorFossilUncovered", "item", 10095).getInt();
-		coverFossilUncoveredID = cfg.get("PlumeFossilUncovered", "item", 10096).getInt();
-		plumeFossilUncoveredID = cfg.get("CoverFossilUncovered", "item", 10097).getInt();
+		helixFossilUncoveredID = cfg.get("fossils", "HelixFossilUncovered", 10089).getInt();
+		domeFossilUncoveredID = cfg.get("fossils", "DomeFossilUncovered", 10090).getInt();
+		oldAmberUncoveredID = cfg.get("fossils", "OldAmberUncovered", 10091).getInt();
+		rootFossilUncoveredID = cfg.get("fossils", "RootFossilUncovered", 10092).getInt();
+		clawFossilUncoveredID = cfg.get("fossils", "ClawFossilUncovered", 10093).getInt();
+		skullFossilUncoveredID = cfg.get("fossils", "SkullFossilUncovered", 10094).getInt();
+		armorFossilUncoveredID = cfg.get("fossils", "ArmorFossilUncovered", 10095).getInt();
+		coverFossilUncoveredID = cfg.get("fossils", "PlumeFossilUncovered", 10096).getInt();
+		plumeFossilUncoveredID = cfg.get("fossils", "CoverFossilUncovered", 10097).getInt();
 
 		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, 82).setItemName("Fossil Machine");
 		helixFossil = new ItemPokemonFossil(helixFossilID, "Omanyte", "HelixFossil").setItemName("helixFossil").setIconIndex(10);

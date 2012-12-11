@@ -59,20 +59,20 @@ public class PixelmonItemsApricorns {
 	public static Item apricornRedCooked;
 
 	public static void load(Configuration cfg) {
-		apricornBlackID = cfg.get("Black Apricorn", "item", 10100).getInt();
-		apricornWhiteID = cfg.get("White Apricorn", "item", 10101).getInt();
-		apricornPinkID = cfg.get("Pink Apricorn", "item", 10102).getInt();
-		apricornGreenID = cfg.get("Green Apricorn", "item", 10103).getInt();
-		apricornBlueID = cfg.get("Blue Apricorn", "item", 10104).getInt();
-		apricornYellowID = cfg.get("Yellow Apricorn", "item", 10105).getInt();
-		apricornRedID = cfg.get("Red Apricorn", "item", 10106).getInt();
-		apricornBlackCookedID = cfg.get("Cooked Black Apricorn", "item", 10112).getInt();
-		apricornWhiteCookedID = cfg.get("Cooked White Apricorn", "item", 10113).getInt();
-		apricornPinkCookedID = cfg.get("Cooked Pink Apricorn", "item", 10114).getInt();
-		apricornGreenCookedID = cfg.get("Cooked Green Apricorn", "item", 10115).getInt();
-		apricornBlueCookedID = cfg.get("Cooked Blue Apricorn", "item", 10116).getInt();
-		apricornYellowCookedID = cfg.get("Cooked Yellow Apricorn", "item", 10117).getInt();
-		apricornRedCookedID = cfg.get("Cooked Red Apricorn", "item", 10118).getInt();
+		apricornBlackID = cfg.get("itemApricorn", "Black Apricorn", 10100).getInt();
+		apricornWhiteID = cfg.get("itemApricorn", "White Apricorn", 10101).getInt();
+		apricornPinkID = cfg.get("itemApricorn", "Pink Apricorn", 10102).getInt();
+		apricornGreenID = cfg.get("itemApricorn", "Green Apricorn", 10103).getInt();
+		apricornBlueID = cfg.get("itemApricorn", "Blue Apricorn", 10104).getInt();
+		apricornYellowID = cfg.get("itemApricorn", "Yellow Apricorn", 10105).getInt();
+		apricornRedID = cfg.get("itemApricorn", "Red Apricorn", 10106).getInt();
+		apricornBlackCookedID = cfg.get("itemApricorn", "Cooked Black Apricorn", 10112).getInt();
+		apricornWhiteCookedID = cfg.get("itemApricorn", "Cooked White Apricorn", 10113).getInt();
+		apricornPinkCookedID = cfg.get("itemApricorn", "Cooked Pink Apricorn", 10114).getInt();
+		apricornGreenCookedID = cfg.get("itemApricorn", "Cooked Green Apricorn", 10115).getInt();
+		apricornBlueCookedID = cfg.get("itemApricorn", "Cooked Blue Apricorn", 10116).getInt();
+		apricornYellowCookedID = cfg.get("itemApricorn", "Cooked Yellow Apricorn", 10117).getInt();
+		apricornRedCookedID = cfg.get("itemApricorn", "Cooked Red Apricorn", 10118).getInt();
 
 		apricornBlack = new ItemApricorn(apricornBlackID, EnumApricorns.Black).setItemName("Black Apricorn");
 		apricornWhite = new ItemApricorn(apricornWhiteID, EnumApricorns.White).setItemName("White Apricorn");
