@@ -32,6 +32,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	private RidingHelper ridingHelper;
 
+	public boolean isFlying = false;
+
 	private final boolean ridingEnabled = true;
 
 	public Entity5Rideable(World par1World) {
@@ -61,7 +63,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	protected boolean isAIEnabled() {
 		return riddenByEntity == null;
 	}
-	
+
 	@Override
 	protected void updateEntityActionState() {
 	}
@@ -107,6 +109,10 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		// else
 		if (riddenByEntity != null) {
 			ridingHelper.onLivingUpdate();
+			moveStrafing *= 0.4f;
+			moveForward *= 0.4f;
+			if (moveForward > -0.1 && moveForward < 0.1)
+				moveForward = 0;
 			if (playerRiding == null) {
 				for (int i = 0; i < PlayerRidingList.size(); i++) {
 					if (PlayerRidingList.get(i).player == riddenByEntity)
@@ -114,8 +120,27 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				}
 			}
 			if (playerRiding != null) {
-				moveForward += playerRiding.acceleration;
-				moveStrafing += playerRiding.strafe;
+				if (isFlying) {
+					moveForward += 4 * playerRiding.acceleration;
+					moveStrafing += 4 * playerRiding.strafe;
+				} else {
+					moveForward += playerRiding.acceleration;
+					moveStrafing += playerRiding.strafe;
+				}
+				playerRiding.strafe = 0;
+				playerRiding.acceleration = 0;
+				if (playerRiding.jump > 0) {
+					if (onGround) {
+						motionY = 0.5f;
+						jump();
+					} else if (baseStats.canFly) {
+						motionY += 0.1f;
+						isFlying = true;
+					}
+					playerRiding.jump = 0;
+				}
+				if (onGround && isFlying)
+					isFlying = false;
 			}
 		}
 		super.onLivingUpdate();
