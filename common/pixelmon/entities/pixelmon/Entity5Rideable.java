@@ -109,7 +109,6 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		// else
 		if (riddenByEntity != null) {
 			ridingHelper.onLivingUpdate();
-			moveStrafing *= 0.4f;
 			moveForward *= 0.4f;
 			if (moveForward > -0.1 && moveForward < 0.1)
 				moveForward = 0;
@@ -122,12 +121,11 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			if (playerRiding != null) {
 				if (isFlying) {
 					moveForward += 4 * playerRiding.acceleration;
-					moveStrafing += 4 * playerRiding.strafe;
 				} else {
 					moveForward += playerRiding.acceleration;
-					moveStrafing += playerRiding.strafe;
 				}
-				playerRiding.strafe = 0;
+				rotationYaw += playerRiding.rotation;
+				playerRiding.rotation = 0;
 				playerRiding.acceleration = 0;
 				if (playerRiding.jump > 0) {
 					if (onGround) {

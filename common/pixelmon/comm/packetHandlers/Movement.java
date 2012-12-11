@@ -37,9 +37,9 @@ public class Movement extends PacketHandlerBase {
 						else if (movement[j] == EnumMovement.Decelerate)
 							rl.get(i).acceleration--;
 						else if (movement[j] == EnumMovement.Left)
-							rl.get(i).strafe++;
+							rl.get(i).rotation--;
 						else if (movement[j] == EnumMovement.Right)
-							rl.get(i).strafe--;
+							rl.get(i).rotation++;
 						else if (movement[j] == EnumMovement.Jump)
 							rl.get(i).jump++;
 					}
