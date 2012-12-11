@@ -7,5 +7,4 @@ public class PlayerRiding {
 	public int acceleration = 0;
 	public int strafe = 0;
 	public int jump = 0;
-	public int rotation = -9999;
 }

@@ -120,8 +120,6 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				}
 			}
 			if (playerRiding != null) {
-				if (playerRiding.rotation != -9999)
-					rotationYaw = playerRiding.rotation;
 				if (isFlying) {
 					moveForward += 4 * playerRiding.acceleration;
 					moveStrafing += 4 * playerRiding.strafe;

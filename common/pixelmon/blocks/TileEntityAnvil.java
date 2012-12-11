@@ -58,7 +58,7 @@ public class TileEntityAnvil extends TileEntity {
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemOnAnvil);
 			if (item instanceof ItemPokeballDisc || item == PixelmonItemsPokeballs.ironDisc) {
 				count += f;
-				if (count >= 16) {
+				if (count >= 5) {
 					count = 0;
 					state++;
 					returnVal = true;
