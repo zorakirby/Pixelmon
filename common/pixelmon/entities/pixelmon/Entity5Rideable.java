@@ -158,7 +158,10 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 					var5 *= var8;
 				} else {
-					var5 = this.jumpMovementFactor;
+					if (baseStats.canFly)
+						var5 = 0.1f;
+					else
+						var5 = this.jumpMovementFactor;
 				}
 
 				this.moveFlying(par1, par2, var5);
