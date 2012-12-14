@@ -31,6 +31,7 @@ import pixelmon.gui.GuiChooseStarter;
 import pixelmon.gui.GuiHealer;
 import pixelmon.gui.GuiLearnMove;
 import pixelmon.gui.GuiPixelmonOverlay;
+import pixelmon.gui.GuiTrading;
 import pixelmon.gui.battles.ClientBattleManager;
 import pixelmon.gui.battles.GuiBattle;
 import pixelmon.gui.battles.GuiBattle.BattleMode;
@@ -185,6 +186,8 @@ public class ClientProxy extends CommonProxy {
 			return new GuiScreenPokeCheckerStats(ServerStorageDisplay.get(x));
 		else if (ID == EnumGui.PokeCheckerMoves.getIndex())
 			return new GuiScreenPokeCheckerMoves(ServerStorageDisplay.get(x));
+		else if (ID == EnumGui.Trading.getIndex())
+			return new GuiTrading(x);
 
 		return null;
 	}

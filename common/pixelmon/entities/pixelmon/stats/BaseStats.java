@@ -42,4 +42,6 @@ public class BaseStats {
 	public SpawnConditions[] spawnConditions;
 
 	public EVsStore evGain;
+	public boolean canSurf;
+	public boolean canSurfSet;
 }

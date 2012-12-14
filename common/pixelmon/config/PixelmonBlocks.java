@@ -12,10 +12,12 @@ import pixelmon.blocks.BlockFossil;
 import pixelmon.blocks.BlockFossilMachine;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
+import pixelmon.blocks.BlockTradeMachine;
 import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.BlockApricornTree;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.items.ItemBlock;
@@ -36,6 +38,7 @@ public class PixelmonBlocks {
 	public static int anvilId;
 	public static int fossilMachineId;
 	public static int fossilId;
+	public static int tradeMachineId;
 
 	@Mod.Block(name = "Thunderstone Ore")
 	public static Block thunderStoneOre;
@@ -55,6 +58,8 @@ public class PixelmonBlocks {
 	public static Block fossilMachine;
 	@Mod.Block(name = "Fossil")
 	public static Block fossil;
+	@Mod.Block(name = "Trade Machine", itemTypeClass = ItemBlock.class)
+	public static Block tradeMachine;
 
 	public static void load(Configuration configuration) {
 		pokemonHealerActiveId = Integer.parseInt(configuration.getBlock("PokemonHealerActive", 201).value);
@@ -67,6 +72,7 @@ public class PixelmonBlocks {
 		anvilId = Integer.parseInt(configuration.getBlock("Anvil", 215).value);
 		fossilMachineId = Integer.parseInt(configuration.getBlock("Fossil Machine", 216).value);
 		fossilId = Integer.parseInt(configuration.getBlock("Fossil", 217).value);
+		tradeMachineId = Integer.parseInt(configuration.getBlock("Trade Machine", 218).value);
 		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f).setBlockName("LeafStoneOre");
@@ -76,6 +82,7 @@ public class PixelmonBlocks {
 		anvil = new BlockAnvil(anvilId).setBlockName("Anvil");
 		fossilMachine = new BlockFossilMachine(fossilMachineId).setBlockName("Fossil Machine");
 		fossil = new BlockFossil(fossilId).setBlockName("Fossil").setHardness(5f);
+		tradeMachine = new BlockTradeMachine(tradeMachineId).setBlockName("Trade Machine");
 		PixelmonBlocksApricornTrees.load(configuration);
 	}
 
@@ -89,32 +96,29 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(anvil);
 		GameRegistry.registerBlock(fossilMachine);
 		GameRegistry.registerBlock(fossil);
-		
+		GameRegistry.registerBlock(tradeMachine);
+
 		GameRegistry.registerTileEntity(TileEntityPC.class, "Pokemon PC");
 		GameRegistry.registerTileEntity(TileEntityHealer.class, "Healer");
 		GameRegistry.registerTileEntity(TileEntityAnvil.class, "Anvil");
 		GameRegistry.registerTileEntity(TileEntityFossilMachine.class, "Fossil Machine");
-		
+		GameRegistry.registerTileEntity(TileEntityTradeMachine.class, "Trade Machine");
+
 		PixelmonBlocksApricornTrees.registerBlocks();
 	}
 
 	public static void addNames() {
-		try
-		{
-			for(Field field : PixelmonBlocks.class.getFields())
-			{
-				if(field.isAnnotationPresent(Mod.Block.class))
-				{
-					Block block = (Block)field.get(null);
+		try {
+			for (Field field : PixelmonBlocks.class.getFields()) {
+				if (field.isAnnotationPresent(Mod.Block.class)) {
+					Block block = (Block) field.get(null);
 					LanguageRegistry.addName(block, field.getAnnotation(Mod.Block.class).name());
 				}
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		PixelmonBlocksApricornTrees.addNames();
 	}
-	
+
 }

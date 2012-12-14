@@ -6,9 +6,12 @@ import java.util.List;
 
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
+import pixelmon.database.DatabaseMoves;
+import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 import pixelmon.entities.pixelmon.helpers.PlayerRiding;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
+import pixelmon.enums.EnumType;
 import pixelmon.storage.PixelmonStorage;
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
@@ -107,34 +110,19 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	 */
 	@Override
 	public void moveEntityWithHeading(float par1, float par2) {
+		boolean movementHandled = false;
+		if (riddenByEntity != null && baseStats != null && (baseStats.canSurf || !baseStats.canSurfSet) && this.inWater) {
+			if (!baseStats.canSurfSet) {
+				baseStats.canSurf = DatabaseMoves.CanLearnAttack(getName(), "Surf");
+				baseStats.canSurfSet = true;
+			}
+			if (baseStats.canSurf) {
+				movementHandled = true;
+			}
+		}
 		if (baseStats != null && baseStats.canFly) {
 			double var9;
-
-			if (this.isInWater()) {
-				var9 = this.posY;
-				this.moveFlying(par1, par2, this.isAIEnabled() ? 0.04F : 0.02F);
-				this.moveEntity(this.motionX, this.motionY, this.motionZ);
-				this.motionX *= 0.800000011920929D;
-				this.motionY *= 0.800000011920929D;
-				this.motionZ *= 0.800000011920929D;
-				this.motionY -= 0.02D;
-
-				if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
-					this.motionY = 0.30000001192092896D;
-				}
-			} else if (this.handleLavaMovement()) {
-				var9 = this.posY;
-				this.moveFlying(par1, par2, 0.02F);
-				this.moveEntity(this.motionX, this.motionY, this.motionZ);
-				this.motionX *= 0.5D;
-				this.motionY *= 0.5D;
-				this.motionZ *= 0.5D;
-				this.motionY -= 0.02D;
-
-				if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
-					this.motionY = 0.30000001192092896D;
-				}
-			} else {
+			if (!this.isInWater() && !this.handleLavaMovement()) {
 				float var3 = 0.91F;
 
 				if (this.onGround) {
@@ -192,20 +180,24 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				this.motionY *= 0.9800000190734863D;
 				this.motionX *= (double) var3;
 				this.motionZ *= (double) var3;
+
+				this.prevLegYaw = this.legYaw;
+				var9 = this.posX - this.prevPosX;
+				double var12 = this.posZ - this.prevPosZ;
+				float var11 = MathHelper.sqrt_double(var9 * var9 + var12 * var12) * 4.0F;
+
+				if (var11 > 1.0F) {
+					var11 = 1.0F;
+				}
+
+				this.legYaw += (var11 - this.legYaw) * 0.4F;
+				this.legSwing += this.legYaw;
+				movementHandled = true;
+
 			}
 
-			this.prevLegYaw = this.legYaw;
-			var9 = this.posX - this.prevPosX;
-			double var12 = this.posZ - this.prevPosZ;
-			float var11 = MathHelper.sqrt_double(var9 * var9 + var12 * var12) * 4.0F;
-
-			if (var11 > 1.0F) {
-				var11 = 1.0F;
-			}
-
-			this.legYaw += (var11 - this.legYaw) * 0.4F;
-			this.legSwing += this.legYaw;
-		} else
+		}
+		if (!movementHandled)
 			super.moveEntityWithHeading(par1, par2);
 	}
 

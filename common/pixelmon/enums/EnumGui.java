@@ -13,9 +13,11 @@ public enum EnumGui {
 	RenamePokemon(7), 
 	LearnMove(8), 
 	PC(9), 
-	Battle(10), LevelUp(11),
+	Battle(10), 
+	LevelUp(11),
 	PokeCheckerStats(12),
-	PokeCheckerMoves(13);
+	PokeCheckerMoves(13), 
+	Trading(14);
 	
 	private int index;
 	
