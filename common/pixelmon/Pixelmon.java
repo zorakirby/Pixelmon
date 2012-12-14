@@ -32,6 +32,7 @@ import pixelmon.structure.GeneralScattered;
 import pixelmon.structure.SchematicImporter;
 import pixelmon.structure.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
+import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
 import pixelmon.worldGeneration.WorldGenFossils;
 import pixelmon.worldGeneration.WorldGenLeafStoneOre;
@@ -39,8 +40,11 @@ import pixelmon.worldGeneration.WorldGenThunderStoneOre;
 import pixelmon.worldGeneration.WorldGenWaterStoneOre;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.EnumArmorMaterial;
+import net.minecraft.src.EnumToolMaterial;
 import net.minecraft.src.ServerCommandManager;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import cpw.mods.fml.common.FMLLog;
@@ -73,6 +77,10 @@ import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 @Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.8.6")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
+	
+	public static EnumToolMaterial ALUMINUM = EnumHelper.addToolMaterial("ALUMINUM", 2, 200, 6.5F, 2, 14);
+	public static EnumArmorMaterial ALUMINUMARMOR = EnumHelper.addArmorMaterial("ALUMINUM", 15, new int[]{2, 6, 5, 2}, 8);
+	
 	@Instance
 	public static Pixelmon instance;
 	public static Migration migration;
@@ -119,7 +127,8 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
-		//GameRegistry.registerWorldGenerator(new WorldGenFossils());
+		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
+		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 		
 		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
