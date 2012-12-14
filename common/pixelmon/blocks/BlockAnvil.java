@@ -103,6 +103,24 @@ public class BlockAnvil extends BlockContainer {
 				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
 				return true;
 			}
+			
+			Item aluminum = null;
+			if (itemId == PixelmonItems.aluminumPlate.shiftedIndex)
+				aluminum = PixelmonItems.aluminumPlate;
+			else if (itemId == PixelmonItems.aluminumIngot.shiftedIndex)
+				aluminum = PixelmonItems.aluminumIngot;
+			if(aluminum != null){
+				
+				EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(aluminum));
+				
+				var3.delayBeforeCanPickup = 10;
+				
+				world.spawnEntityInWorld(var3);
+				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
+				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).state = 0;
+				return true;
+			}
+			
 			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 
 			var3.delayBeforeCanPickup = 10;
@@ -112,7 +130,7 @@ public class BlockAnvil extends BlockContainer {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).state = 0;
 		}
 		if (player.getCurrentEquippedItem() != null
-				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc || player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc)) {
+				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc || player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc || player.getCurrentEquippedItem().getItem() == PixelmonItems.aluminumIngot)) {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
 			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
