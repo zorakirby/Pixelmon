@@ -1,5 +1,7 @@
 package pixelmon.config;
 
+import java.util.Random;
+
 import pixelmon.enums.EnumApricorns;
 import pixelmon.enums.EnumPokeballs;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -11,7 +13,7 @@ public class PixelmonRecipes {
 
 	public static void addRecipes() {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.healerItem), new Object[] { "IRI", "RDR", "IRI", Character.valueOf('D'),
-				new ItemStack(Item.diamond), Character.valueOf('I'), Item.ingotIron, Character.valueOf('R'), Block.stone });
+				new ItemStack(Item.diamond), Character.valueOf('I'), PixelmonItems.aluminumPlate, Character.valueOf('R'), Item.ingotIron });
 		// GameRegistry.addRecipe(new ItemStack(PixelmonItems.masterBall), new
 		// Object[] { "PPP", "OBO", "DDD", Character.valueOf('P'), new
 		// ItemStack(Item.dyePowder, 1, 5), Character.valueOf('O'),
@@ -32,7 +34,7 @@ public class PixelmonRecipes {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.fireStone, 1), new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'),
 				PixelmonItems.fireStoneShard });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pcItem, 1),
-				new Object[] { "DPD", "DGD", "DRD", Character.valueOf('D'), Item.diamond, Character.valueOf('P'), Block.thinGlass, Character.valueOf('G'),
+				new Object[] { "DPD", "DGD", "DRD", Character.valueOf('D'), PixelmonItems.aluminumPlate, Character.valueOf('P'), Block.thinGlass, Character.valueOf('G'),
 						Block.redstoneLampIdle, Character.valueOf('R'), Item.redstone });
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerWood, 1),
@@ -45,9 +47,29 @@ public class PixelmonRecipes {
 				Character.valueOf('S'), Item.stick });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerDiamond, 1), new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), Item.diamond,
 				Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hammerAluminum, 1), new Object[] { "WWW", "WSW", " S ", Character.valueOf('W'), PixelmonItems.aluminumIngot,
+			Character.valueOf('S'), Item.stick });
+
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.swordAluminum, 1), new Object[] { "W", "W", "S", Character.valueOf('W'), PixelmonItems.aluminumIngot,
+			Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.axeAluminum, 1), new Object[] { "WW ", "WS ", " S ", Character.valueOf('W'), PixelmonItems.aluminumIngot,
+			Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.spadeAluminum, 1), new Object[] { "W", "S", "S", Character.valueOf('W'), PixelmonItems.aluminumIngot,
+			Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pickaxeAluminum, 1), new Object[] { "WWW", " S ", " S ", Character.valueOf('W'), PixelmonItems.aluminumIngot,
+			Character.valueOf('S'), Item.stick });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.hoeAluminum, 1), new Object[] { "WW ", " S ", " S ", Character.valueOf('W'), PixelmonItems.aluminumIngot,
+			Character.valueOf('S'), Item.stick });
+
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.helmetAluminum, 1), new Object[] { "SSS", "S S", Character.valueOf('S'), PixelmonItems.aluminumIngot});
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.torsoAluminum, 1), new Object[] { "S S", "SSS", "SSS", Character.valueOf('S'), PixelmonItems.aluminumIngot});
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.leggingsAluminum, 1), new Object[] { "SSS", "S S", "S S", Character.valueOf('S'), PixelmonItems.aluminumIngot});
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.bootsAluminum, 1), new Object[] { "S S", "S S", Character.valueOf('S'), PixelmonItems.aluminumIngot});
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.anvilItem, 1), new Object[] { "XXX", "XX ", "XXX", Character.valueOf('X'), Item.ingotIron });
 
+		GameRegistry.addSmelting(PixelmonBlocks.bauxite.blockID, new ItemStack(PixelmonItems.aluminumIngot), new Random().nextInt(3));
+		
 		for (EnumApricorns a : EnumApricorns.values()) {
 			GameRegistry.addSmelting(PixelmonItemsApricorns.getApricorn(a).shiftedIndex, new ItemStack(PixelmonItemsApricorns.getCookedApricorn(a), 1), 1);
 		}

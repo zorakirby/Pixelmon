@@ -4,6 +4,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModelBase;
 import net.minecraft.src.World;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.entities.EntityCamera;
@@ -31,6 +32,10 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 
+	public int addArmor(String name){
+		return RenderingRegistry.addNewArmourRendererPrefix(name);
+	}
+	
 	public void preloadTextures() {
 	}
 

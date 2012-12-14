@@ -13,6 +13,7 @@ import pixelmon.blocks.BlockFossilMachine;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.BlockTradeMachine;
+import pixelmon.blocks.PixelmonBlock;
 import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
@@ -24,8 +25,10 @@ import pixelmon.items.ItemBlock;
 import net.minecraft.src.Block;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.Material;
 
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 
 public class PixelmonBlocks {
 	public static int pokemonHealerIdleId;
@@ -38,6 +41,7 @@ public class PixelmonBlocks {
 	public static int anvilId;
 	public static int fossilMachineId;
 	public static int fossilId;
+	public static int bauxiteId;
 	public static int tradeMachineId;
 
 	@Mod.Block(name = "Thunderstone Ore")
@@ -48,6 +52,8 @@ public class PixelmonBlocks {
 	public static Block waterStoneOre;
 	@Mod.Block(name = "FireStone Ore", itemTypeClass = ItemBlock.class)
 	public static Block fireStoneOre;
+	@Mod.Block(name = "Bauxite Ore")
+	public static Block bauxite;
 	@Mod.Block(name = "Healer", itemTypeClass = ItemBlock.class)
 	public static Block healer;
 	@Mod.Block(name = "Pokemon PC", itemTypeClass = ItemBlock.class)
@@ -68,11 +74,12 @@ public class PixelmonBlocks {
 		leafStoneOreId = Integer.parseInt(configuration.getBlock("LeafStoneOre", 204).value);
 		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 206).value);
 		fireStoneOreId = Integer.parseInt(configuration.getBlock("FireStoneOre", 207).value);
+		bauxiteId = Integer.parseInt(configuration.getBlock("Bauxite Ore", 218).value);
 		pcId = Integer.parseInt(configuration.getBlock("PC", 205).value);
 		anvilId = Integer.parseInt(configuration.getBlock("Anvil", 215).value);
 		fossilMachineId = Integer.parseInt(configuration.getBlock("Fossil Machine", 216).value);
 		fossilId = Integer.parseInt(configuration.getBlock("Fossil", 217).value);
-		tradeMachineId = Integer.parseInt(configuration.getBlock("Trade Machine", 218).value);
+		tradeMachineId = Integer.parseInt(configuration.getBlock("Trade Machine", 219).value);
 		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f).setBlockName("LeafStoneOre");
@@ -81,6 +88,8 @@ public class PixelmonBlocks {
 		pc = new BlockPC(pcId, 0).setBlockName("pc");
 		anvil = new BlockAnvil(anvilId).setBlockName("Anvil");
 		fossilMachine = new BlockFossilMachine(fossilMachineId).setBlockName("Fossil Machine");
+		bauxite = new Block(bauxiteId, 6, Material.rock).setBlockName("Bauxite Ore").setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural)
+				.setTextureFile("/pixelmon/block/blocks.png");
 		fossil = new BlockFossil(fossilId).setBlockName("Fossil").setHardness(5f);
 		tradeMachine = new BlockTradeMachine(tradeMachineId).setBlockName("Trade Machine");
 		PixelmonBlocksApricornTrees.load(configuration);
@@ -95,8 +104,11 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(pc);
 		GameRegistry.registerBlock(anvil);
 		GameRegistry.registerBlock(fossilMachine);
+		GameRegistry.registerBlock(bauxite);
 		GameRegistry.registerBlock(fossil);
 		GameRegistry.registerBlock(tradeMachine);
+
+		MinecraftForge.setBlockHarvestLevel(bauxite, "pickaxe", 2);
 
 		GameRegistry.registerTileEntity(TileEntityPC.class, "Pokemon PC");
 		GameRegistry.registerTileEntity(TileEntityHealer.class, "Healer");

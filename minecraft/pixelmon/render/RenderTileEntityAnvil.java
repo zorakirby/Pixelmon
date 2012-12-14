@@ -9,7 +9,9 @@ import net.minecraft.src.TileEntitySpecialRenderer;
 import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsPokeballs;
+import pixelmon.items.ItemPlate;
 import pixelmon.items.ItemPokeballDisc;
 import pixelmon.items.ItemPokeballLid;
 import pixelmon.models.ModelAnvil;
@@ -18,6 +20,10 @@ import pixelmon.models.discs.ModelDiscFlat;
 import pixelmon.models.discs.ModelDiscHemiSphere;
 import pixelmon.models.discs.ModelDiscStage1;
 import pixelmon.models.discs.ModelDiscStage2;
+import pixelmon.models.plates.ModelIngot;
+import pixelmon.models.plates.ModelPlate;
+import pixelmon.models.plates.ModelPlateStage2;
+import pixelmon.models.plates.ModelPlateStage3;
 
 public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 	private ModelAnvil model;
@@ -25,6 +31,10 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 	private ModelDiscHemiSphere modelDiscHemiSphere;
 	private ModelDiscStage1 modelDiscStage1;
 	private ModelDiscStage2 modelDiscStage2;
+	private ModelIngot modelPlateIngot;
+	private ModelPlate modelPlate;
+	private ModelPlateStage2 modelPlateStage2;
+	private ModelPlateStage3 modelPlateStage3;
 
 	public RenderTileEntityAnvil() {
 		model = new ModelAnvil();
@@ -32,6 +42,10 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		modelDiscHemiSphere = new ModelDiscHemiSphere();
 		modelDiscStage1 = new ModelDiscStage1();
 		modelDiscStage2 = new ModelDiscStage2();
+		modelPlateIngot = new ModelIngot();
+		modelPlate = new ModelPlate();
+		modelPlateStage2 = new ModelPlateStage2();
+		modelPlateStage3  = new ModelPlateStage3();
 	}
 
 	public void renderAModelAt(TileEntityAnvil tile, double d, double d1, double d2, float f) {
@@ -68,6 +82,21 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		if (tile.itemOnAnvil != -1) {
 			GL11.glTranslatef((float) 0, (float) 0.03F, (float) 0); // size
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
+			if (tile.itemOnAnvil == PixelmonItems.aluminumIngot.shiftedIndex)
+			{
+				bindTextureByName("/pixelmon/texture/aluminum/ingot.png");
+				if (tile.state == 0)
+					modelPlateIngot.renderModel(0.0625f);
+				else if (tile.state == 1)
+					modelPlateStage2.renderModel(0.0625f);
+				else if (tile.state == 2)
+					modelPlateStage3.renderModel(0.0625f);
+			}
+			else
+				if(tile.itemOnAnvil == PixelmonItems.aluminumPlate.shiftedIndex){
+					bindTextureByName("/pixelmon/texture/aluminum/ingot.png");
+					modelPlate.renderModel(0.0625f);
+				}
 			if (itemToRender instanceof ItemPokeballDisc || itemToRender == PixelmonItemsPokeballs.ironDisc) {
 				if (itemToRender == PixelmonItemsPokeballs.ironDisc)
 					bindTextureByName("/pixelmon/texture/pokeballs/irondisc.png");
@@ -79,8 +108,8 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 					modelDiscStage1.renderModel(0.0625f);
 				else if (tile.state == 2)
 					modelDiscStage2.renderModel(0.0625f);
-
-			} else if (itemToRender instanceof ItemPokeballLid || itemToRender == PixelmonItemsPokeballs.ironBase) {
+				}
+				else if (itemToRender instanceof ItemPokeballLid || itemToRender == PixelmonItemsPokeballs.ironBase) {
 				if (itemToRender == PixelmonItemsPokeballs.ironBase)
 					bindTextureByName("/pixelmon/texture/pokeballs/irondisc.png");
 				else bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
