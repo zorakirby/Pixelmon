@@ -61,7 +61,7 @@ public class Pixelmon {
 	public static Pixelmon instance;
 	public static Migration migration;
 
-	@SidedProxy(clientSide = "pixelmon.ClientProxy", serverSide = "pixelmon.CommonProxy")
+	@SidedProxy(clientSide = "pixelmon.client.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
 
 	public static boolean freeze = false;
