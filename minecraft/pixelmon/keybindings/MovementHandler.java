@@ -34,6 +34,8 @@ public class MovementHandler implements ITickHandler {
 			strafe--;
 		if (Minecraft.getMinecraft().gameSettings.keyBindJump.pressed)
 			jump++;
+		if (Minecraft.getMinecraft().gameSettings.keyBindSneak.pressed)
+			jump--;
 
 		int numMovements = 0;
 		if (acceleration != 0)
@@ -54,8 +56,10 @@ public class MovementHandler implements ITickHandler {
 			movements[i++] = EnumMovement.Right;
 		if (jump > 0)
 			movements[i++] = EnumMovement.Jump;
+		if (jump < 0)
+			movements[i++] = EnumMovement.Crouch;
 
-		if (numMovements > 0){
+		if (numMovements > 0) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, movements));
 		}
 		acceleration = 0;

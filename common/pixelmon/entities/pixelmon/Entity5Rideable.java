@@ -117,6 +117,18 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				baseStats.canSurfSet = true;
 			}
 			if (baseStats.canSurf) {
+				double var9 = this.posY;
+				this.moveFlying(par1, par2, this.isAIEnabled() ? 0.04F : 0.02F);
+				this.moveEntity(this.motionX, this.motionY, this.motionZ);
+				this.motionX *= 0.800000011920929D;
+				this.motionY *= 0.800000011920929D;
+				this.motionZ *= 0.800000011920929D;
+				// this.motionY -= 0.02D;
+
+				if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
+					this.motionY = 0.30000001192092896D;
+				}
+
 				movementHandled = true;
 			}
 		}
@@ -219,14 +231,14 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			}
 			if (playerRiding != null) {
 				if (isFlying) {
-					moveForward += 4 * playerRiding.acceleration;
+					moveForward += 5 * playerRiding.acceleration;
 				} else {
 					moveForward += playerRiding.acceleration;
 				}
 				rotationYaw += playerRiding.rotation;
 				playerRiding.rotation = 0;
 				playerRiding.acceleration = 0;
-				if (playerRiding.jump > 0) {
+				if (!isInWater() && playerRiding.jump > 0) {
 					if (onGround) {
 						motionY = 0.5f;
 						jump();
@@ -234,8 +246,13 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						motionY += 0.02f;
 						isFlying = true;
 					}
-					playerRiding.jump = 0;
+				} else if (isInWater()) {
+					if (playerRiding.jump > 0)
+						motionY += 0.02f;
+					else if (playerRiding.jump < 0)
+						motionY -= 0.02f;
 				}
+				playerRiding.jump = 0;
 				if (onGround && isFlying)
 					isFlying = false;
 			}

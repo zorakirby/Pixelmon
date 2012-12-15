@@ -104,22 +104,24 @@ public class PixelmonSpawner {
 	}
 
 	public static void spawnTick(World world) {
-		if (spawnList.size() > 0) {
-			if (EnumTrainers.has(spawnList.get(0).name)) {
-				Entity trainer = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
-				trainer.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
-				if (((EntityLiving) trainer).getCanSpawnHere())
-					world.spawnEntityInWorld(trainer);
-			} else {
-				EnumCreatureType type = DatabaseStats.GetCreatureType(spawnList.get(0).name);
-				if (type != null && SpawnerAnimals.canCreatureTypeSpawnAtLocation(type, world, spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z)) {
-					Entity pixelmon = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
-					pixelmon.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
-					if (((EntityLiving) pixelmon).getCanSpawnHere())
-						world.spawnEntityInWorld(pixelmon);
+		for (int i = 0; i < 2; i++) {
+			if (spawnList.size() > 0) {
+				if (EnumTrainers.has(spawnList.get(0).name)) {
+					Entity trainer = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
+					trainer.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
+					if (((EntityLiving) trainer).getCanSpawnHere())
+						world.spawnEntityInWorld(trainer);
+				} else {
+					EnumCreatureType type = DatabaseStats.GetCreatureType(spawnList.get(0).name);
+					if (type != null && SpawnerAnimals.canCreatureTypeSpawnAtLocation(type, world, spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z)) {
+						Entity pixelmon = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
+						pixelmon.setLocationAndAngles(spawnList.get(0).x, spawnList.get(0).y, spawnList.get(0).z, random.nextFloat() * 360.0F, 0.0F);
+						if (((EntityLiving) pixelmon).getCanSpawnHere())
+							world.spawnEntityInWorld(pixelmon);
+					}
 				}
+				spawnList.remove(0);
 			}
-			spawnList.remove(0);
 		}
 	}
 

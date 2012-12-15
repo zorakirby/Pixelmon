@@ -42,6 +42,8 @@ public class Movement extends PacketHandlerBase {
 							rl.get(i).rotation++;
 						else if (movement[j] == EnumMovement.Jump)
 							rl.get(i).jump++;
+						else if (movement[j] == EnumMovement.Crouch)
+							rl.get(i).jump--;
 					}
 					prExists = true;
 					break;
