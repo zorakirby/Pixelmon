@@ -8,10 +8,10 @@ package pixelmon.client.models.pokemon;
 
 import java.util.Random;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelMagneton extends ModelBase {
 	// fields

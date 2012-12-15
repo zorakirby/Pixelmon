@@ -1,6 +1,9 @@
 package pixelmon.client.models.pokemon;
 
-import net.minecraft.src.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelGoldeen extends ModelBase {
 	// fields

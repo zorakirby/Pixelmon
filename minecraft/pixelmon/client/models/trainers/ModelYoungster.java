@@ -5,10 +5,10 @@
 // - ZeuX
 package pixelmon.client.models.trainers;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
+import pixelmon.entities.pixelmon.*;
+import net.minecraft.client.model.*;
+import net.minecraft.entity.*;
+import net.minecraft.util.*;
 
 public class ModelYoungster extends ModelBase {
 	// fields

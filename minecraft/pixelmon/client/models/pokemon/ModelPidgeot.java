@@ -1,8 +1,8 @@
 package pixelmon.client.models.pokemon;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 
 public class ModelPidgeot extends ModelBase {
 	// fields

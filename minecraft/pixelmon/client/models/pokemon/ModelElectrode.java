@@ -6,10 +6,10 @@
 
 package pixelmon.client.models.pokemon;
 
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import net.minecraft.src.Entity;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
 
 public class ModelElectrode extends ModelBase {
 	// fields
