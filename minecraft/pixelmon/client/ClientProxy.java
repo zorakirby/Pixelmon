@@ -111,7 +111,7 @@ public class ClientProxy extends CommonProxy {
 	public ModelBase loadModel(String name) {
 		ModelBase model = null;
 		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.pokemon.Model" + name);
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models.pokemon.Model" + name);
 			if (var3 != null) {
 				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
@@ -128,7 +128,7 @@ public class ClientProxy extends CommonProxy {
 	public ModelFossil loadFossilModel(String name) {
 		ModelFossil model = null;
 		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.fossils.Model" + name);
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models.fossils.Model" + name);
 			if (var3 != null) {
 				model = (ModelFossil) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
@@ -144,7 +144,7 @@ public class ClientProxy extends CommonProxy {
 	public ModelBase getTrainerModel(String name) {
 		ModelBase model = null;
 		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.trainers.Model" + name);
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models.trainers.Model" + name);
 			if (var3 != null) {
 				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
