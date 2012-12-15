@@ -18,7 +18,7 @@ public class ApricornTreeStore {
 		}
 		ModelApricornTreeBase model = null;
 		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.models.apricornTrees." + modelList[stage]);
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models.apricornTrees." + modelList[stage]);
 			if (var3 != null) {
 				model = (ModelApricornTreeBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
