@@ -5,9 +5,9 @@
 // - ZeuX
 package pixelmon.client.models.pokemon;
 
-import net.minecraft.client.model.*;
-import net.minecraft.entity.*;
-import net.minecraft.util.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 
 public class ModelSolrock extends ModelBase {
 	// fields

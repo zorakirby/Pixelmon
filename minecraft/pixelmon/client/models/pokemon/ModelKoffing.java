@@ -5,12 +5,11 @@
 // - ZeuX
 package pixelmon.client.models.pokemon;
 
-import java.util.*;
-
-import pixelmon.entities.pixelmon.*;
-import net.minecraft.client.model.*;
-import net.minecraft.entity.*;
-import net.minecraft.util.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ModelKoffing extends ModelBase {
 	// fields
