@@ -5,7 +5,10 @@
 // - ZeuX
 package pixelmon.client.models.trainers;
 
-import net.minecraft.src.*;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelYoungster02 extends ModelBase {
 	// fields
@@ -94,13 +97,13 @@ public class ModelYoungster02 extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		head.rotateAngleY = f3 / (180F / (float) Math.PI);
-		 head.rotateAngleX = f4 / (180F / (float) Math.PI);
-	      rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
-	      leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.4F * f1;
-	      rightleg.rotateAngleY = 0.0F;
-	      leftleg.rotateAngleY = 0.0F;
-	      rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * .5F * f1;
-	      leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .5F * f1;
+		head.rotateAngleX = f4 / (180F / (float) Math.PI);
+		rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
+		leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * f1;
+		rightleg.rotateAngleY = 0.0F;
+		leftleg.rotateAngleY = 0.0F;
+		rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .5F * f1;
+		leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .5F * f1;
 	}
 
 }

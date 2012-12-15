@@ -6,10 +6,10 @@
 
 package pixelmon.client.models.trainers;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelBugCatcher extends ModelBase {
 	// fields
@@ -179,12 +179,11 @@ public class ModelBugCatcher extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		Head.rotateAngleY = f3 / (180F / (float) Math.PI);
-		 Head.rotateAngleX = f4 / (180F / (float) Math.PI);
-		 rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
-	     leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.4F * f1;
-	     rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .8F * f1;
-	     leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * .8F * f1;
+		Head.rotateAngleX = f4 / (180F / (float) Math.PI);
+		rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
+		leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * f1;
+		rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .8F * f1;
+		leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .8F * f1;
 	}
-	 
 
 }
