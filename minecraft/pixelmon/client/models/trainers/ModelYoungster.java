@@ -42,7 +42,7 @@ public class ModelYoungster extends ModelBase {
 	public ModelYoungster() {
 		textureWidth = 64;
 		textureHeight = 32;
-		//setTextureOffset("BackPack.Backpack", 0, 0);
+		// setTextureOffset("BackPack.Backpack", 0, 0);
 
 		backpackstrap1 = new ModelRenderer(this, 59, 27);
 		backpackstrap1.addBox(0F, 0F, 0F, 1, 3, 1);
@@ -158,54 +158,54 @@ public class ModelYoungster extends ModelBase {
 		leftleg.setTextureSize(64, 32);
 		leftleg.mirror = true;
 		setRotation(leftleg, 0F, 0F, 0F);
-	    BackPack2 = new ModelRenderer(this, 51, 27);
-	    BackPack2.addBox(-2F, -0.3F, 1.5F, 4, 2, 1);
-	    BackPack2.setRotationPoint(-0.5F, 10F, 1F);
-	    BackPack2.setTextureSize(64, 32);
-	    BackPack2.mirror = true;
-        setRotation(BackPack2, 0F, 0F, 0F);
-	    Backpack1 = new ModelRenderer(this, 50, 24);
-	    Backpack1.addBox(-2.5F, 6F, 0F, 5, 6, 2);
-	    Backpack1.setRotationPoint(-0.5F, 0F, 1F);
-	    Backpack1.setTextureSize(64, 32);
-	    Backpack1.mirror = true;
-        setRotation(Backpack1, 0F, 0F, 0F);
-      HeadBase = new ModelRenderer(this, "HeadBase");
-      HeadBase.setRotationPoint(-0.5F, 5F, -0.5F);
-      setRotation(HeadBase, 0F, 0F, 0F);
-      HeadBase.mirror = true;
-        ModelRenderer Cap2 = new ModelRenderer(this, 42, 0);
-        Cap2 = new ModelRenderer(this, 42, 0);
-        Cap2.addBox(-1.5F, -5.2F, 0.5F, 3, 0, 4);
-        Cap2.setRotationPoint(0F, 0F, 0F);
-        Cap2.setTextureSize(64, 32);
-        Cap2.mirror = true;
-        setRotation(Cap2, 0F, 0F, 0F);
-        ModelRenderer Cap1 = new ModelRenderer(this, 22, 0);
-        Cap1 = new ModelRenderer(this, 22, 0);
-        Cap1.addBox(-2F, -6F, -2.5F, 4, 1, 5);
-        Cap1.setRotationPoint(0F, 0F, 0F);
-        Cap1.setTextureSize(64, 32);
-        Cap1.mirror = true;
-        setRotation(Cap1, 0F, 0F, 0F);
-        ModelRenderer head = new ModelRenderer(this, 0, 0);
-        head = new ModelRenderer(this, 0, 0);
-        head.addBox(-2.5F, -5F, -2.5F, 5, 5, 5);
-        head.setRotationPoint(0F, 0F, 0F);
-        head.setTextureSize(64, 32);
-        head.mirror = true;
-        setRotation(head, 0F, 0F, 0F);
-        ModelRenderer Cap3 = new ModelRenderer(this, 46, 7);
-        Cap3 = new ModelRenderer(this, 46, 7);
-        Cap3.addBox(-1.5F, -7.5F, -2.5F, 3, 2, 5);
-        Cap3.setRotationPoint(0F, 0F, 0F);
-        Cap3.setTextureSize(64, 32);
-        Cap3.mirror = true;
-        setRotation(Cap3, -0.1358052F, 0F, 0F);
-        HeadBase.addChild(head);
-        HeadBase.addChild(Cap1);
-        HeadBase.addChild(Cap2);
-        HeadBase.addChild(Cap3);
+		BackPack2 = new ModelRenderer(this, 51, 27);
+		BackPack2.addBox(-2F, -0.3F, 1.5F, 4, 2, 1);
+		BackPack2.setRotationPoint(-0.5F, 10F, 1F);
+		BackPack2.setTextureSize(64, 32);
+		BackPack2.mirror = true;
+		setRotation(BackPack2, 0F, 0F, 0F);
+		Backpack1 = new ModelRenderer(this, 50, 24);
+		Backpack1.addBox(-2.5F, 6F, 0F, 5, 6, 2);
+		Backpack1.setRotationPoint(-0.5F, 0F, 1F);
+		Backpack1.setTextureSize(64, 32);
+		Backpack1.mirror = true;
+		setRotation(Backpack1, 0F, 0F, 0F);
+		HeadBase = new ModelRenderer(this, "HeadBase");
+		HeadBase.setRotationPoint(-0.5F, 5F, -0.5F);
+		setRotation(HeadBase, 0F, 0F, 0F);
+		HeadBase.mirror = true;
+		ModelRenderer Cap2 = new ModelRenderer(this, 42, 0);
+		Cap2 = new ModelRenderer(this, 42, 0);
+		Cap2.addBox(-1.5F, -5.2F, 0.5F, 3, 0, 4);
+		Cap2.setRotationPoint(0F, 0F, 0F);
+		Cap2.setTextureSize(64, 32);
+		Cap2.mirror = true;
+		setRotation(Cap2, 0F, 0F, 0F);
+		ModelRenderer Cap1 = new ModelRenderer(this, 22, 0);
+		Cap1 = new ModelRenderer(this, 22, 0);
+		Cap1.addBox(-2F, -6F, -2.5F, 4, 1, 5);
+		Cap1.setRotationPoint(0F, 0F, 0F);
+		Cap1.setTextureSize(64, 32);
+		Cap1.mirror = true;
+		setRotation(Cap1, 0F, 0F, 0F);
+		ModelRenderer head = new ModelRenderer(this, 0, 0);
+		head = new ModelRenderer(this, 0, 0);
+		head.addBox(-2.5F, -5F, -2.5F, 5, 5, 5);
+		head.setRotationPoint(0F, 0F, 0F);
+		head.setTextureSize(64, 32);
+		head.mirror = true;
+		setRotation(head, 0F, 0F, 0F);
+		ModelRenderer Cap3 = new ModelRenderer(this, 46, 7);
+		Cap3 = new ModelRenderer(this, 46, 7);
+		Cap3.addBox(-1.5F, -7.5F, -2.5F, 3, 2, 5);
+		Cap3.setRotationPoint(0F, 0F, 0F);
+		Cap3.setTextureSize(64, 32);
+		Cap3.mirror = true;
+		setRotation(Cap3, -0.1358052F, 0F, 0F);
+		HeadBase.addChild(head);
+		HeadBase.addChild(Cap1);
+		HeadBase.addChild(Cap2);
+		HeadBase.addChild(Cap3);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
@@ -243,13 +243,13 @@ public class ModelYoungster extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
 		HeadBase.rotateAngleY = f3 / (180F / (float) Math.PI);
-		 HeadBase.rotateAngleX = f4 / (180F / (float) Math.PI);
-	      rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
-	      leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 1.4F * f1;
-	      rightleg.rotateAngleY = 0.0F;
-	      leftleg.rotateAngleY = 0.0F;
-	      rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float)Math.PI) * .5F * f1;
-	      leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .5F * f1;
+		HeadBase.rotateAngleX = f4 / (180F / (float) Math.PI);
+		rightleg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
+		leftleg.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * 1.4F * f1;
+		rightleg.rotateAngleY = 0.0F;
+		leftleg.rotateAngleY = 0.0F;
+		rightarm.rotateAngleX = MathHelper.cos(f * 0.6662F + (float) Math.PI) * .5F * f1;
+		leftarm.rotateAngleX = MathHelper.cos(f * 0.6662F) * .5F * f1;
 	}
 
 }
