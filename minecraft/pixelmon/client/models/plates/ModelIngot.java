@@ -1,6 +1,9 @@
 package pixelmon.client.models.plates;
 
-import net.minecraft.src.*;
+import pixelmon.entities.pixelmon.*;
+import net.minecraft.client.model.*;
+import net.minecraft.entity.*;
+import net.minecraft.util.*;
 
 public class ModelIngot extends ModelBase
 {

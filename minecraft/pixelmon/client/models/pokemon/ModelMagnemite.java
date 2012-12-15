@@ -6,12 +6,10 @@
 
 package pixelmon.client.models.pokemon;
 
-import java.util.Random;
-
-import net.minecraft.src.Entity;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
+import java.util.*;
+import net.minecraft.client.model.*;
+import net.minecraft.entity.*;
+import net.minecraft.util.*;
 
 public class ModelMagnemite extends ModelBase {
 	// fields

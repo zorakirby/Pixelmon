@@ -5,9 +5,8 @@
 // - ZeuX
 package pixelmon.client.models.pokemon;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
+import net.minecraft.client.model.*;
+import net.minecraft.entity.*;
 
 public class ModelTentacool extends ModelBase {
 	// fields

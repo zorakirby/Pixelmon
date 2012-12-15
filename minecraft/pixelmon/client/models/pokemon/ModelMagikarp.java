@@ -1,6 +1,9 @@
 package pixelmon.client.models.pokemon;
 
-import net.minecraft.src.*;
+import java.util.*;
+import net.minecraft.client.model.*;
+import net.minecraft.entity.*;
+import net.minecraft.util.*;
 
 public class ModelMagikarp extends ModelBase {
 	// fields

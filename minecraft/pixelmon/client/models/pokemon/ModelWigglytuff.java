@@ -5,9 +5,10 @@
 // - ZeuX
 package pixelmon.client.models.pokemon;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
+import pixelmon.entities.pixelmon.*;
+import net.minecraft.client.model.*;
+import net.minecraft.entity.*;
+import net.minecraft.util.*;
 
 public class ModelWigglytuff extends ModelBase {
 	// fields
