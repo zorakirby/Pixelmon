@@ -217,7 +217,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			}
 			if (playerRiding != null) {
 				if (isFlying) {
-					moveForward += 5 * playerRiding.acceleration;
+					moveForward += 5 * (float) playerRiding.acceleration * 500f / (float) stats.Speed;
 				} else {
 					moveForward += playerRiding.acceleration;
 				}

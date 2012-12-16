@@ -28,6 +28,7 @@ import pixelmon.comm.packetHandlers.SetHeldItem;
 import pixelmon.comm.packetHandlers.StopStartLevelling;
 import pixelmon.comm.packetHandlers.SwapMove;
 import pixelmon.comm.packetHandlers.SwitchPokemon;
+import pixelmon.comm.packetHandlers.TradingPacket;
 import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
@@ -51,6 +52,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new StopStartLevelling());
 		handlers.add(new SwapMove());
 		handlers.add(new SwitchPokemon());
+		handlers.add(new TradingPacket());
 
 	}
 

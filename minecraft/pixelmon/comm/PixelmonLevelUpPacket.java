@@ -44,8 +44,8 @@ public class PixelmonLevelUpPacket extends PixelmonPacket {
 	public void writePacketData(DataOutputStream data) throws IOException {
 		data.writeInt(pokemonID);
 		data.writeInt(level);
-		statsLevel1.writeData(data);
-		statsLevel2.writeData(data);
+		statsLevel1.writePacketData(data);
+		statsLevel2.writePacketData(data);
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class PixelmonLevelUpPacket extends PixelmonPacket {
 		pokemonID = data.readInt();
 		level = data.readInt();
 		statsLevel1 = new PixelmonStatsPacket();
-		statsLevel1.readData(data);
+		statsLevel1.readPacketData(data);
 		statsLevel2 = new PixelmonStatsPacket();
-		statsLevel2.readData(data);
+		statsLevel2.readPacketData(data);
 	}
 }

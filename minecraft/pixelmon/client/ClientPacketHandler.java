@@ -11,6 +11,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import pixelmon.Pixelmon;
 import pixelmon.battles.participants.ParticipantType;
+import pixelmon.client.gui.ClientTradingManager;
 import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.ClientBattleManager.AttackData;
 import pixelmon.client.gui.battles.GuiBattle;
@@ -19,6 +20,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonPokedexPacket;
+import pixelmon.comm.PixelmonStatsPacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
@@ -79,18 +81,45 @@ public class ClientPacketHandler implements IPacketHandler {
 				ClientBattleManager.levelUpList.add(p);
 				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LevelUp.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
-			} else if(packetID == EnumPackets.Pokedex.getIndex())
-			{
+			} else if (packetID == EnumPackets.Pokedex.getIndex()) {
 				PixelmonPokedexPacket p = new PixelmonPokedexPacket();
-				try
-				{
+				try {
 					p.readPacketData(dataStream);
 					EntityPlayer ep = (EntityPlayer) player;
 					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(ep.username)).pokedex = p.getPokedex(ep.username);
-				} catch (Exception e)
-				{
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			} else if (packetID == EnumPackets.RegisterTrader.getIndex()) {
+				String username = Packet.readString(dataStream, 64);
+				ClientTradingManager.findTradePartner(username);
+			} else if (packetID == EnumPackets.SetTradeTarget.getIndex()) {
+				PixelmonDataPacket p = new PixelmonDataPacket();
+				try {
+					p.readPacketData(dataStream);
+					ClientTradingManager.tradeTarget = p;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else if (packetID == EnumPackets.SetTradeTargetStats.getIndex()) {
+				PixelmonStatsPacket p = new PixelmonStatsPacket();
+				try {
+					p.readPacketData(dataStream);
+					ClientTradingManager.tradeTargetStats = p;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else if (packetID == EnumPackets.SetSelectedStats.getIndex()) {
+				PixelmonStatsPacket p = new PixelmonStatsPacket();
+				try {
+					p.readPacketData(dataStream);
+					ClientTradingManager.selectedStats = p;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else if (packetID == EnumPackets.SetTradingReadyClient.getIndex()) {
+				boolean ready = dataStream.readInt() == 1;
+				ClientTradingManager.player2Ready = ready;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
