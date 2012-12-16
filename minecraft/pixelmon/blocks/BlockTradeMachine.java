@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -16,6 +17,7 @@ public class BlockTradeMachine extends BlockContainer {
 		super(id, Material.rock);
 		setHardness(3.5f);
 		setStepSound(Block.soundStoneFootstep);
+		setCreativeTab(CreativeTabs.tabDecorations);
 		setRequiresSelfNotify();
 	}
 
@@ -55,7 +57,7 @@ public class BlockTradeMachine extends BlockContainer {
 			if (te.playerCount < 2) {
 				te.registerPlayer(player);
 			} else {
-				ChatHandler.sendChat(player, "Healer is busy!");
+				ChatHandler.sendChat(player, "Trading Machine Full!");
 			}
 		}
 		return true;
