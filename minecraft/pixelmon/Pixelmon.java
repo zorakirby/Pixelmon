@@ -57,7 +57,7 @@ public class Pixelmon {
 	public static EnumToolMaterial ALUMINUM = EnumHelper.addToolMaterial("ALUMINUM", 2, 200, 6.5F, 2, 14);
 	public static EnumArmorMaterial ALUMINUMARMOR = EnumHelper.addArmorMaterial("ALUMINUM", 15, new int[]{2, 6, 5, 2}, 8);
 	
-	@Instance
+	@Instance("Pixelmon")
 	public static Pixelmon instance;
 	public static Migration migration;
 
