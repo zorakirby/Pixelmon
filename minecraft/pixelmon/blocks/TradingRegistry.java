@@ -11,4 +11,8 @@ public class TradingRegistry {
 		tradeList.add(entity);
 	}
 
+	public static TileEntityTradeMachine getTileEntity(int tradeIndex){
+		return tradeList.get(tradeIndex);
+	}
+
 }
