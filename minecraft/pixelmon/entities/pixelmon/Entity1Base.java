@@ -36,6 +36,11 @@ public abstract class Entity1Base extends EntityTameable {
 		dataWatcher.updateObject(2, name);
 	}
 
+	@Override
+	public String getEntityName() {
+		return getName();
+	}
+
 	public String getNickname() {
 		if (dataWatcher.getWatchableObjectString(3).equals(""))
 			return getName();
