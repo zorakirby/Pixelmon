@@ -99,7 +99,7 @@ public class GuiPixelmonOverlay extends Gui {
 						fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7
 								+ offset, 0xFFFFFF);
 					} else {
-						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30
+						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 39 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30
 								+ fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
 					}
 				}
