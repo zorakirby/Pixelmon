@@ -33,7 +33,7 @@ public class ItemPokedex extends Item {
 
 	public void openPokedexGui(int i, EntityPlayer player, World world) {
 		PokeballManager pm = PixelmonStorage.PokeballManager;
-		EntityPlayerMP e = pm.getPlayerFromName(player.username);
+		EntityPlayerMP e = (EntityPlayerMP)player;
 		pm.getPlayerStorage(e).pokedex.sendToPlayer(e);
 		player.openGui(Pixelmon.instance, EnumGui.Pokedex.getIndex(), world, i, 0, 0);
 	}

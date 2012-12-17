@@ -111,4 +111,19 @@ public class PacketCreator {
 		packet.length = packet.data.length;
 		return packet;
 	}
+
+	public static Packet createPacket(EnumPackets epacket) {
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		DataOutputStream data = new DataOutputStream(bytes);
+		Packet250CustomPayload packet = new Packet250CustomPayload();
+		try {
+			data.writeInt(epacket.getIndex());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		packet.channel = "Pixelmon";
+		packet.data = bytes.toByteArray();
+		packet.length = packet.data.length;
+		return packet;
+	}
 }

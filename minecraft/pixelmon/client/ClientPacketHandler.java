@@ -16,6 +16,7 @@ import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.ClientBattleManager.AttackData;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.battles.GuiBattle.BattleMode;
+import pixelmon.client.gui.pokedex.ClientPokedexManager;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
@@ -85,8 +86,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				PixelmonPokedexPacket p = new PixelmonPokedexPacket();
 				try {
 					p.readPacketData(dataStream);
-					EntityPlayer ep = (EntityPlayer) player;
-					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(ep.username)).pokedex = p.getPokedex(ep.username);
+					ClientPokedexManager.pokedex = p.getPokedex(Minecraft.getMinecraft().thePlayer.username);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
