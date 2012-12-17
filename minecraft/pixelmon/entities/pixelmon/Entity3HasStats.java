@@ -67,7 +67,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		}
 	}
 
-	private void getBaseStats(String name) {
+	void getBaseStats(String name) {
 		boolean has = false;
 		for (int i = 0; i < baseStatsStore.length; i++) {
 			if (baseStatsStore[i] == null)

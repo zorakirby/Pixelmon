@@ -23,7 +23,6 @@ public abstract class Entity2HasModel extends Entity1Base {
 		if (!EnumPokemon.hasPokemon(evolveTo))
 			return;
 		setName(evolveTo);
-		oldName = evolveTo;
 	}
 
 	public void loadModel() {
@@ -46,6 +45,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 		super.onUpdate();
 		if (worldObj.isRemote && !oldName.equals(getName())) {
 			isInitialised = false;
+			((Entity3HasStats)this).getBaseStats(getName());
 			loadModel();
 			oldName = getName();
 		}
