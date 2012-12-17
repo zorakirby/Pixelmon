@@ -876,11 +876,14 @@ public class GuiBattle extends GuiContainer {
 						&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
 					if (bagSection == bagSection.Pokeballs) {
 						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id, battleControllerIndex, 0));
-						mode = BattleMode.Waiting;
 					} else {
 						itemToUse = ClientBattleManager.bagStore.get(i);
 						mode = BattleMode.ApplyToPokemon;
 					}
+					ClientBattleManager.bagStore.get(i).count--;
+					if (ClientBattleManager.bagStore.get(i).count <= 0)
+						ClientBattleManager.bagStore.remove(i);
+					mode = BattleMode.Waiting;
 				}
 			}
 		}
