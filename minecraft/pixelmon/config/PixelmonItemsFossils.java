@@ -13,7 +13,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class PixelmonItemsFossils {
-	public static final boolean isEnabled = false;
+	public static final boolean isEnabled = true;
 	public static int helixFossilID;
 	public static int domeFossilID;
 	public static int oldAmberID;
