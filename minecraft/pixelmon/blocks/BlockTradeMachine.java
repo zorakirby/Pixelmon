@@ -17,7 +17,6 @@ public class BlockTradeMachine extends BlockContainer {
 		super(id, Material.rock);
 		setHardness(3.5f);
 		setStepSound(Block.soundStoneFootstep);
-		setCreativeTab(CreativeTabs.tabDecorations);
 		setRequiresSelfNotify();
 	}
 
@@ -44,6 +43,11 @@ public class BlockTradeMachine extends BlockContainer {
 	@Override
 	public int getRenderType() {
 		return -1;
+	}
+	
+	public void setBlockBounds(int stage) {
+		if(stage == 0)
+		this.setBlockBounds(1f, 0, 0f, 1f, 3f, 1f);
 	}
 
 	/**

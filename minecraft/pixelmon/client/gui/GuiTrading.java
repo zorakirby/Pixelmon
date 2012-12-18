@@ -124,7 +124,7 @@ public class GuiTrading extends GuiContainer {
 			GL11.glPopMatrix();
 		}
 		if (ClientTradingManager.tradePartner != null)
-			drawEntity(ClientTradingManager.tradePartner, (width - 60) / 2, (height - 82) / 2, 20, 0, 0);
+			drawEntity(ClientTradingManager.tradePartner, (width + 60) / 2, (height - 82) / 2, 20, 0, 0);
 		else {
 			GL11.glPushMatrix();
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -146,12 +146,12 @@ public class GuiTrading extends GuiContainer {
 		drawString(fontRenderer, "SP.Defense:", (width + 87), (height - 89), 0xFFFFFF);
 		drawString(fontRenderer, "Speed:", (width + 87), (height - 74), 0xFFFFFF);
 		if (ClientTradingManager.tradeTargetStats != null) {
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.HP), (width + 87), (height - 153), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Attack), (width + 87), (height - 137), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Defence), (width + 87), (height - 121), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.SpecialAttack), (width + 87), (height - 105), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.SpecialDefence), (width + 87), (height - 89), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Speed), (width + 87), (height - 74), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.HP), (width + 223), (height - 153), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Attack), (width + 223), (height - 137), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Defence), (width + 223), (height - 121), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.SpecialAttack), (width + 223), (height - 105), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.SpecialDefence), (width + 223), (height - 89), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Speed), (width + 223), (height - 74), 0xFFFFFF);
 		} else
 			for (int i = 0; i < 6; i++) {
 				drawString(fontRenderer, "?", (width + 227), (height - 153) + i * 16, 0xFFFFFF);
@@ -163,12 +163,12 @@ public class GuiTrading extends GuiContainer {
 		drawString(fontRenderer, "SP.Defense:", (width - 183), (height - 89), 0xFFFFFF);
 		drawString(fontRenderer, "Speed:", (width - 183), (height - 74), 0xFFFFFF);
 		if (ClientTradingManager.selectedStats != null) {
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.HP), (width - 183), (height - 153), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Attack), (width - 183), (height - 137), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Defence), (width - 183), (height - 121), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialAttack), (width - 183), (height - 105), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialDefence), (width - 183), (height - 89), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Speed), (width - 183), (height - 74), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.HP), (width - 47), (height - 153), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Attack), (width - 47), (height - 137), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Defence), (width - 47), (height - 121), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialAttack), (width - 47), (height - 105), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialDefence), (width - 47), (height - 89), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Speed), (width - 47), (height - 74), 0xFFFFFF);
 		} else
 			for (int i = 0; i < 6; i++) {
 				drawString(fontRenderer, "?", (width - 43), (height - 153) + i * 16, 0xFFFFFF);
@@ -217,11 +217,27 @@ public class GuiTrading extends GuiContainer {
 		GL11.glScalef(0.5f, 0.5f, 0f);
 		drawString(fontRenderer, Minecraft.getMinecraft().thePlayer.username + " wants to trade", (width - 235), (height - 178), 0xFFFFFF);
 		if (ClientTradingManager.tradePartner != null)
-			drawString(fontRenderer, ClientTradingManager.tradePartner.username + " wants to trade", (width - 230), (height - 178), 0xFFFFFF);
+			drawString(fontRenderer, ClientTradingManager.tradePartner.username + " wants to trade", (width + 35), (height - 178), 0xFFFFFF);
 		else
 			drawString(fontRenderer, "No user found!", (width + 35), (height - 178), 0xFFFFFF);
 		GL11.glPopMatrix();
-
+		
+		GL11.glPushMatrix();
+			mc.renderEngine.bindTexture(bg);
+		if (ClientTradingManager.tradePartner != null && !ClientTradingManager.player2Ready){
+			GL11.glColor3f(1f, 0f, 0f);
+			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 61, 242, 90, 14);
+		}
+		else if (!ClientTradingManager.player2Ready){
+			GL11.glColor3f(1f, 0f, 0f);
+			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 153, 242, 72, 14);
+		}
+		else if (ClientTradingManager.player2Ready){
+			GL11.glColor3f(0f, 1f, 0f);
+			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 1, 242, 72, 14);
+		}
+		GL11.glPopMatrix();
+			
 		if (selected != -1) {
 			GL11.glPushMatrix();
 			GL11.glColor3f(0f, 1.0f, 0f);
@@ -301,8 +317,8 @@ public class GuiTrading extends GuiContainer {
 	protected void mouseClicked(int par1, int par2, int par3) {
 		super.mouseClicked(par1, par2, par3);
 		if (drawButtonReady(par1, par2) && selected >= 0) {
-			ClientTradingManager.player1Ready = !ClientTradingManager.player1Ready;
 			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
+			ClientTradingManager.player1Ready = !ClientTradingManager.player1Ready;
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetTradingReady, ClientTradingManager.player1Ready ? 1 : 0));
 		}
 		if (drawButtonTrade(par1, par2)) {
@@ -310,6 +326,7 @@ public class GuiTrading extends GuiContainer {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Trade, 0));
 		}
 		if (drawPokemonSelection(par1, par2) != -1) {
+			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
 			this.selected = drawPokemonSelection(par1, par2);
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SelectPokemonForTrade, selected));
 		}
