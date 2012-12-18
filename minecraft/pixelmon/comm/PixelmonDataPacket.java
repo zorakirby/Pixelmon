@@ -220,4 +220,12 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i = 0; i < effectCount; i++)
 			status.add(StatusEffectType.getEffect(data.readShort()));
 	}
+
+	private String description;
+
+	public String getDescription() {
+		if (description == null)
+			description = DatabaseStats.getDescription(name);
+		return description;
+	}
 }

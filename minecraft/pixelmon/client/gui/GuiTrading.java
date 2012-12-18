@@ -139,66 +139,115 @@ public class GuiTrading extends GuiContainer {
 		GL11.glPushMatrix();
 		GL11.glScalef(0.5f, 0.5f, 0f);
 
-		drawString(fontRenderer, "HP:", (width + 87), (height - 153), 0xFFFFFF);
-		drawString(fontRenderer, "Attack:", (width + 87), (height - 137), 0xFFFFFF);
-		drawString(fontRenderer, "Defence:", (width + 87), (height - 121), 0xFFFFFF);
-		drawString(fontRenderer, "SP.Attack:", (width + 87), (height - 105), 0xFFFFFF);
-		drawString(fontRenderer, "SP.Defense:", (width + 87), (height - 89), 0xFFFFFF);
-		drawString(fontRenderer, "Speed:", (width + 87), (height - 74), 0xFFFFFF);
+		drawString(fontRenderer, "HP:", (width + 87), (height - 156), 0xFFFFFF);
+		drawString(fontRenderer, "Attack:", (width + 87), (height - 140), 0xFFFFFF);
+		drawString(fontRenderer, "Defence:", (width + 87), (height - 124), 0xFFFFFF);
+		drawString(fontRenderer, "SP.Attack:", (width + 87), (height - 109), 0xFFFFFF);
+		drawString(fontRenderer, "SP.Defense:", (width + 87), (height - 93), 0xFFFFFF);
+		drawString(fontRenderer, "Speed:", (width + 87), (height - 77), 0xFFFFFF);
 		if (ClientTradingManager.tradeTargetStats != null) {
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.HP), (width + 223), (height - 153), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Attack), (width + 223), (height - 137), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Defence), (width + 223), (height - 121), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.SpecialAttack), (width + 223), (height - 105), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.SpecialDefence), (width + 223), (height - 89), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Speed), (width + 223), (height - 74), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.HP), (width + 223), (height - 156), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Attack), (width + 223), (height - 140), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Defence), (width + 223), (height - 124), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.SpecialAttack), (width + 223), (height - 109), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.SpecialDefence), (width + 223), (height - 93), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.tradeTargetStats.Speed), (width + 223), (height - 77), 0xFFFFFF);
 		} else
 			for (int i = 0; i < 6; i++) {
-				drawString(fontRenderer, "?", (width + 227), (height - 153) + i * 16, 0xFFFFFF);
+				drawString(fontRenderer, "?", (width + 223), (height - 156) + i * 16, 0xFFFFFF);
 			}
-		drawString(fontRenderer, "HP:", (width - 183), (height - 153), 0xFFFFFF);
-		drawString(fontRenderer, "Attack:", (width - 183), (height - 137), 0xFFFFFF);
-		drawString(fontRenderer, "Defence:", (width - 183), (height - 121), 0xFFFFFF);
-		drawString(fontRenderer, "SP.Attack:", (width - 183), (height - 105), 0xFFFFFF);
-		drawString(fontRenderer, "SP.Defense:", (width - 183), (height - 89), 0xFFFFFF);
-		drawString(fontRenderer, "Speed:", (width - 183), (height - 74), 0xFFFFFF);
+		drawString(fontRenderer, "HP:", (width - 181), (height - 156), 0xFFFFFF);
+		drawString(fontRenderer, "Attack:", (width - 181), (height - 140), 0xFFFFFF);
+		drawString(fontRenderer, "Defence:", (width - 181), (height - 124), 0xFFFFFF);
+		drawString(fontRenderer, "SP.Attack:", (width - 181), (height - 109), 0xFFFFFF);
+		drawString(fontRenderer, "SP.Defense:", (width - 181), (height - 93), 0xFFFFFF);
+		drawString(fontRenderer, "Speed:", (width - 181), (height - 77), 0xFFFFFF);
 		if (ClientTradingManager.selectedStats != null) {
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.HP), (width - 47), (height - 153), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Attack), (width - 47), (height - 137), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Defence), (width - 47), (height - 121), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialAttack), (width - 47), (height - 105), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialDefence), (width - 47), (height - 89), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Speed), (width - 47), (height - 74), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.HP), (width - 60), (height - 156), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Attack), (width - 60), (height - 140), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Defence), (width - 60), (height - 124), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialAttack), (width - 60), (height - 109), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialDefence), (width - 60), (height - 93), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Speed), (width - 60), (height - 77), 0xFFFFFF);
 		} else
 			for (int i = 0; i < 6; i++) {
-				drawString(fontRenderer, "?", (width - 43), (height - 153) + i * 16, 0xFFFFFF);
+				drawString(fontRenderer, "?", (width - 55), (height - 156) + i * 16, 0xFFFFFF);
 			}
 		GL11.glPopMatrix();
 
-		// if (selected!=-1 && ServerStorageDisplay.pokemon[selected] != null)
-		// drawEntity(ServerStorageDisplay.pokemon[selected], (width - 210) / 2,
-		// (height - 82) / 2, 20, 0, 0);
-		// else {
-		// GL11.glPushMatrix();
-		// GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		// GL11.glScalef(1.5f, 1.5f, 0f);
-		// mc.renderEngine.bindTexture(bg);
-		// drawTexturedModalRect(width / 3 - 75, height / 3 - 20, 227, 242, 10,
-		// 14);
-		// GL11.glPopMatrix();
-		// }
-		// if (entity.pokemon2 != null)
-		// drawEntity(entity.pokemon2, (width - 60) / 2, (height - 82) / 2, 20,
-		// 0, 0);
-		// else {
-		// GL11.glPushMatrix();
-		// GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		// GL11.glScalef(1.5f, 1.5f, 0f);
-		// mc.renderEngine.bindTexture(bg);
-		// drawTexturedModalRect(width / 3 + 15, height / 3 - 20, 227, 242, 10,
-		// 14);
-		// GL11.glPopMatrix();
-		// }
+		if (selected != -1 && ServerStorageDisplay.pokemon[selected] != null) {
+			PixelmonDataPacket p = ServerStorageDisplay.pokemon[selected];
+			String displayName = p.name;
+			if (!p.nickname.equals(""))
+				displayName = p.nickname;
+
+			String numString = "";
+			if (p.getNationalPokedexNumber() < 10)
+				numString = "00" + p.getNationalPokedexNumber();
+			else if (p.getNationalPokedexNumber() < 100)
+				numString = "0" + p.getNationalPokedexNumber();
+			else
+				numString = "" + p.getNationalPokedexNumber();
+			int var9;
+			if (p.isShiny)
+				var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+			else
+				var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+			drawImageQuad(var9, width / 2 - 117, height / 2 - 33, 24f, 24f, 0f, 0f, 1f, 1f);
+			if (p.heldItemId != -1) {
+				var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
+				drawImageQuad(var9, width / 2 - 117 + 18, height / 2 - 33 + 18, 6, 6, 0f, 0f, 1f, 1f);
+			}
+			GL11.glPushMatrix();
+			GL11.glScalef(0.5f, 0.5f, 0f);
+			drawCenteredString(fontRenderer, p.nickname.equals("") ? p.name : p.nickname, (width - 212), (height - 10), 0xFFFFFF);
+			fontRenderer.drawSplitString(p.getDescription(), (width - 180), (height - 55), 150, 0xFFFFFF);
+			GL11.glPopMatrix();
+		} else {
+			GL11.glPushMatrix();
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			GL11.glScalef(1.5f, 1.5f, 0f);
+			mc.renderEngine.bindTexture(bg);
+			drawTexturedModalRect(width / 3 - 75, height / 3 - 20, 227, 242, 10, 14);
+			GL11.glPopMatrix();
+		}
+
+		if (ClientTradingManager.tradeTarget != null) {
+			PixelmonDataPacket p = ClientTradingManager.tradeTarget;
+			String displayName = p.name;
+			if (!p.nickname.equals(""))
+				displayName = p.nickname;
+
+			String numString = "";
+			if (p.getNationalPokedexNumber() < 10)
+				numString = "00" + p.getNationalPokedexNumber();
+			else if (p.getNationalPokedexNumber() < 100)
+				numString = "0" + p.getNationalPokedexNumber();
+			else
+				numString = "" + p.getNationalPokedexNumber();
+			int var9;
+			if (p.isShiny)
+				var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+			else
+				var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
+			drawImageQuad(var9, width / 2 + 18, height / 2 - 33, 24f, 24f, 0f, 0f, 1f, 1f);
+			if (p.heldItemId != -1) {
+				var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
+				drawImageQuad(var9, width / 2 +18 + 18, height / 2 - 33 + 18, 6, 6, 0f, 0f, 1f, 1f);
+			}
+			GL11.glPushMatrix();
+			GL11.glScalef(0.5f, 0.5f, 0f);
+			drawCenteredString(fontRenderer, p.nickname.equals("") ? p.name : p.nickname, (width +58), (height - 10), 0xFFFFFF);
+			fontRenderer.drawSplitString(p.getDescription(), (width +90), (height - 55), 150, 0xFFFFFF);
+			GL11.glPopMatrix();
+		} else {
+			GL11.glPushMatrix();
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			GL11.glScalef(1.5f, 1.5f, 0f);
+			mc.renderEngine.bindTexture(bg);
+			drawTexturedModalRect(width / 3 + 15, height / 3 - 20, 227, 242, 10, 14);
+			GL11.glPopMatrix();
+		}
 
 		/** Buttons **/
 
@@ -221,23 +270,21 @@ public class GuiTrading extends GuiContainer {
 		else
 			drawString(fontRenderer, "No user found!", (width + 35), (height - 178), 0xFFFFFF);
 		GL11.glPopMatrix();
-		
+
 		GL11.glPushMatrix();
-			mc.renderEngine.bindTexture(bg);
-		if (ClientTradingManager.tradePartner != null && !ClientTradingManager.player2Ready){
+		mc.renderEngine.bindTexture(bg);
+		if (ClientTradingManager.tradePartner != null && !ClientTradingManager.player2Ready) {
 			GL11.glColor3f(1f, 0f, 0f);
 			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 61, 242, 90, 14);
-		}
-		else if (!ClientTradingManager.player2Ready){
+		} else if (!ClientTradingManager.player2Ready) {
 			GL11.glColor3f(1f, 0f, 0f);
 			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 153, 242, 72, 14);
-		}
-		else if (ClientTradingManager.player2Ready){
+		} else if (ClientTradingManager.player2Ready) {
 			GL11.glColor3f(0f, 1f, 0f);
 			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 1, 242, 72, 14);
 		}
 		GL11.glPopMatrix();
-			
+
 		if (selected != -1) {
 			GL11.glPushMatrix();
 			GL11.glColor3f(0f, 1.0f, 0f);
@@ -317,13 +364,17 @@ public class GuiTrading extends GuiContainer {
 	protected void mouseClicked(int par1, int par2, int par3) {
 		super.mouseClicked(par1, par2, par3);
 		if (drawButtonReady(par1, par2) && selected >= 0) {
-			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
-			ClientTradingManager.player1Ready = !ClientTradingManager.player1Ready;
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetTradingReady, ClientTradingManager.player1Ready ? 1 : 0));
+			if (ClientTradingManager.tradeTarget != null) {
+				this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
+				ClientTradingManager.player1Ready = !ClientTradingManager.player1Ready;
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SetTradingReady, ClientTradingManager.player1Ready ? 1 : 0));
+			}
 		}
 		if (drawButtonTrade(par1, par2)) {
-			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Trade, 0));
+			if (ClientTradingManager.player1Ready && ClientTradingManager.player2Ready) {
+				this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Trade, 0));
+			}
 		}
 		if (drawPokemonSelection(par1, par2) != -1) {
 			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);

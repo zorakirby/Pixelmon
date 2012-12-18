@@ -384,4 +384,8 @@ public class DatabaseStats {
 		System.out.println("Error in " + string + " For Pokemon : " + pixelmonName);
 		return null;
 	}
+
+	public static String getDescription(String name) {
+		return (String) getStat(name, "Description");
+	}
 }

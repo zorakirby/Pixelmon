@@ -18,6 +18,9 @@ public class TradingPacket extends PacketHandlerBase {
 
 	public TradingPacket() {
 		packetsHandled.add(EnumPackets.SelectPokemonForTrade);
+		packetsHandled.add(EnumPackets.DeRegisterTrader);
+		packetsHandled.add(EnumPackets.SetTradingReady);
+		packetsHandled.add(EnumPackets.Trade);
 	}
 
 	@Override

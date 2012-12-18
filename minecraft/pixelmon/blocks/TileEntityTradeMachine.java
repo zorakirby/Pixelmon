@@ -70,22 +70,24 @@ public class TileEntityTradeMachine extends TileEntity {
 
 	public void setPos1(int pos) {
 		pos1 = pos;
-		if (player2 == null)
-			return;
 		PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player1);
 		NBTTagCompound n = s.getNBT(s.getIDFromPosition(pos));
+		((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(new PixelmonStatsPacket(n, EnumPackets.SetSelectedStats).getPacket());
+		if (player2 == null)
+			return;
 		((EntityPlayerMP) player2).playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.SetTradeTarget).getPacket());
 		((EntityPlayerMP) player2).playerNetServerHandler.sendPacketToPlayer(new PixelmonStatsPacket(n, EnumPackets.SetTradeTargetStats).getPacket());
-		((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(new PixelmonStatsPacket(n, EnumPackets.SetSelectedStats).getPacket());
 	}
 
 	public void setPos2(int pos) {
 		pos2 = pos;
-		if (player1 == null)
-			return;
 		PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player2);
 		NBTTagCompound n = s.getNBT(s.getIDFromPosition(pos));
+		((EntityPlayerMP) player2).playerNetServerHandler.sendPacketToPlayer(new PixelmonStatsPacket(n, EnumPackets.SetSelectedStats).getPacket());
+		if (player1 == null)
+			return;
 		((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.SetTradeTarget).getPacket());
+		((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(new PixelmonStatsPacket(n, EnumPackets.SetTradeTargetStats).getPacket());
 	}
 
 	public void removePlayer(Player player) {
@@ -100,6 +102,8 @@ public class TileEntityTradeMachine extends TileEntity {
 			pos2 = -1;
 		}
 
+		if (playerCount < 0)
+			playerCount = 0;
 		if (playerCount == 1)
 			((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createStringPacket(EnumPackets.RegisterTrader, ""));
 	}
@@ -111,6 +115,9 @@ public class TileEntityTradeMachine extends TileEntity {
 		NBTTagCompound pokemon2 = storage2.getNBT(storage2.getIDFromPosition(pos2));
 		storage1.changePokemon(pos1, pokemon2);
 		storage2.changePokemon(pos2, pokemon1);
+		player1.closeScreen();
+		player2.closeScreen();
+		playerCount = 0;
 	}
 
 }
