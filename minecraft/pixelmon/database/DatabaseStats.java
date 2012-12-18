@@ -135,6 +135,15 @@ public class DatabaseStats {
 				store.evGain.SpecialAttack = rs.getInt("EvGainSpAtk");
 				store.evGain.SpecialDefence = rs.getInt("EvGainSpDef");
 				store.evGain.Speed = rs.getInt("EvGainSpeed");
+				float rx = rs.getFloat("RidingOffsetX");
+				if (!rs.wasNull())
+					store.ridingOffsetX = rx;
+				float ry = rs.getFloat("RidingOffsetY");
+				if (!rs.wasNull())
+					store.ridingOffsetY = ry;
+				float rz = rs.getFloat("RidingOffsetZ");
+				if (!rs.wasNull())
+					store.ridingOffsetZ = rz;
 			}
 			conn.close();
 			return store;

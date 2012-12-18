@@ -43,4 +43,5 @@ public class BaseStats {
 	public EVsStore evGain;
 	public boolean canSurf;
 	public boolean canSurfSet;
+	public float ridingOffsetX = 0, ridingOffsetY = 0, ridingOffsetZ = 0;
 }

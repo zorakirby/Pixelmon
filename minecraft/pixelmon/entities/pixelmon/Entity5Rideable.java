@@ -7,11 +7,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 import pixelmon.entities.pixelmon.helpers.PlayerRiding;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.PixelmonStorage;
 
 public abstract class Entity5Rideable extends Entity4Textures {
@@ -69,7 +71,6 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						if (riddenByEntity != null) {
 							player.mountEntity(this);
 							((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
-							player.setPosition(posX, posY, posZ);
 						} else {
 							player.mountEntity(this);
 							tasks.taskEntries.clear();
@@ -267,12 +268,27 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		ridingHelper.updateRidden();
 	}
 
+	EnumPokemon ep;
+
+	// provided to allow these values to be shifted in the debug process to work
+	// out ideal riding values
+	private float debugOffsetX = 0, debugOffsetY = 0, debugOffsetZ = 0;
+
 	@Override
 	public void updateRiderPosition() {
+		debugOffsetX = 0f;
+		debugOffsetY = 0;
+		debugOffsetZ = 0f;
 		if (this.riddenByEntity != null) {
+			Vec3 vec = Vec3.createVectorHelper(debugOffsetX + baseStats.ridingOffsetX, 0, debugOffsetZ + baseStats.ridingOffsetZ);
+			vec.rotateAroundY(-rotationYaw * (float)Math.PI / 180.0f);
+
 			double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
 			double var3 = Math.sin((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
-			this.riddenByEntity.setPosition(this.posX + var1, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset(), this.posZ + var3);
+			if (ep == null)
+				ep = EnumPokemon.get(getName());
+			this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY + this.getMountedYOffset() + baseStats.ridingOffsetY + this.riddenByEntity.getYOffset() + debugOffsetY,
+					this.posZ + var3 + vec.zCoord);
 		}
 	}
 
