@@ -10,6 +10,11 @@ import net.minecraft.client.renderer.Tessellator;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+
+import pixelmon.client.gui.pc.GuiPC;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
@@ -18,10 +23,12 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	protected PixelmonDataPacket targetPacket;
 	GuiButton nameButton;
 	boolean renameButton;
+	boolean isPC;
 	
-	public GuiScreenPokeChecker(PixelmonDataPacket pixelmonDataPacket) {
+	public GuiScreenPokeChecker(PixelmonDataPacket pixelmonDataPacket, boolean b) {
 		super(new ContainerEmpty());
 		targetPacket = pixelmonDataPacket;
+		isPC = b;
 	}
 
 	public boolean doesGuiPauseGame() {
@@ -41,13 +48,18 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	public void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 0:
+			if(!isPC)
 			mc.thePlayer.closeScreen();
+			else{
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -5));
+				mc.displayGuiScreen(new GuiPC());
+			}
 			break;
 		case 1:
-			mc.displayGuiScreen(new GuiScreenPokeCheckerMoves(targetPacket));
+			mc.displayGuiScreen(new GuiScreenPokeCheckerMoves(targetPacket, isPC));
 			break;
 		case 2:
-			mc.displayGuiScreen(new GuiScreenPokeCheckerStats(targetPacket));
+			mc.displayGuiScreen(new GuiScreenPokeCheckerStats(targetPacket, isPC));
 			break;
 		case 3:
 			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));

@@ -179,11 +179,11 @@ public class ClientProxy extends CommonProxy {
 		else if (ID == EnumGui.Healer.getIndex())
 			return new GuiHealer();
 		else if (ID == EnumGui.PokeChecker.getIndex())
-			return new GuiScreenPokeChecker(ServerStorageDisplay.get(x));
+			return new GuiScreenPokeChecker(ServerStorageDisplay.get(x), false);
 		else if (ID == EnumGui.PokeCheckerStats.getIndex())
-			return new GuiScreenPokeCheckerStats(ServerStorageDisplay.get(x));
+			return new GuiScreenPokeCheckerStats(ServerStorageDisplay.get(x), false);
 		else if (ID == EnumGui.PokeCheckerMoves.getIndex())
-			return new GuiScreenPokeCheckerMoves(ServerStorageDisplay.get(x));
+			return new GuiScreenPokeCheckerMoves(ServerStorageDisplay.get(x), false);
 		else if (ID == EnumGui.Trading.getIndex())
 			return new GuiTrading(x);
 
