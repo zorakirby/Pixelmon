@@ -50,13 +50,13 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.8.6")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.9.0")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
-	
+
 	public static EnumToolMaterial ALUMINUM = EnumHelper.addToolMaterial("ALUMINUM", 2, 200, 6.5F, 2, 14);
-	public static EnumArmorMaterial ALUMINUMARMOR = EnumHelper.addArmorMaterial("ALUMINUM", 15, new int[]{2, 6, 5, 2}, 8);
-	
+	public static EnumArmorMaterial ALUMINUMARMOR = EnumHelper.addArmorMaterial("ALUMINUM", 15, new int[] { 2, 6, 5, 2 }, 8);
+
 	@Instance("Pixelmon")
 	public static Pixelmon instance;
 	public static Migration migration;
@@ -75,10 +75,10 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "Pixelmon 1.8.6 for 1.4.4";
+		event.getModMetadata().version = "Pixelmon 1.9.0 for 1.4.5";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
-		
+
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
 		Pokedex.init();
 	}
@@ -86,7 +86,7 @@ public class Pixelmon {
 	@Init
 	public void load(FMLInitializationEvent event) {
 		Random rand = new Random();
-		
+
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
@@ -94,8 +94,9 @@ public class Pixelmon {
 		proxy.registerSounds();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
-		//EntityRegistry.registerModEntity(EntityCamera.class, "Camera", PixelmonConfig.idCamera, Pixelmon.instance, 80, 1, true);
-		
+		// EntityRegistry.registerModEntity(EntityCamera.class, "Camera",
+		// PixelmonConfig.idCamera, Pixelmon.instance, 80, 1, true);
+
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
@@ -105,12 +106,12 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
-		
-		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+
+		// GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
 		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
-		//MinecraftForge.EVENT_BUS.register(new MigrationLoader());
+		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 
@@ -119,10 +120,12 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
 		proxy.registerTickHandlers();
-		
-//		SchematicImporter s = new SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
-//		s.readSchematic();
-		//GameRegistry.registerWorldGenerator(new GeneralScattered(rand, s.width, s.width, s));
+
+		// SchematicImporter s = new
+		// SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
+		// s.readSchematic();
+		// GameRegistry.registerWorldGenerator(new GeneralScattered(rand,
+		// s.width, s.width, s));
 	}
 
 	@PostInit
