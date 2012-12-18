@@ -352,10 +352,10 @@ public class PixelmonItems {
 		pickaxeAluminum = new ItemPickaxe(pickaxeAluminumID, Pixelmon.ALUMINUM).setIconIndex(221).setItemName("Aluminum Pickaxe").setTextureFile("/pixelmon/image/pitems.png");
 		hoeAluminum = new ItemHoe(hoeAluminumID, Pixelmon.ALUMINUM).setIconIndex(223).setItemName("Aluminum Hoe").setTextureFile("/pixelmon/image/pitems.png");
 
-		helmetAluminum = new ItemPixelmonArmor(helmetAluminumID, 14, Pixelmon.ALUMINUMARMOR, Pixelmon.proxy.addArmor("pixelmon/aluminum"), 0).setIconIndex(204).setItemName("Aluminum Helmet").setTextureFile("/pixelmon/image/pitems.png");
-		torsoAluminum = new ItemPixelmonArmor(torsoAluminumID, 8, Pixelmon.ALUMINUMARMOR, Pixelmon.proxy.addArmor("pixelmon/aluminum"), 1).setIconIndex(205).setItemName("Aluminum Chestplate").setTextureFile("/pixelmon/image/pitems.png");
-		leggingsAluminum = new ItemPixelmonArmor(leggingsAluminumID, 9, Pixelmon.ALUMINUMARMOR, Pixelmon.proxy.addArmor("pixelmon/aluminum"), 2).setIconIndex(206).setItemName("Aluminum Leggings").setTextureFile("/pixelmon/image/pitems.png");
-		bootsAluminum = new ItemPixelmonArmor(bootsAluminumID, 7, Pixelmon.ALUMINUMARMOR, Pixelmon.proxy.addArmor("pixelmon/aluminum"), 3).setIconIndex(207).setItemName("Aluminum Boots").setTextureFile("/pixelmon/image/pitems.png");
+		helmetAluminum = new ItemPixelmonArmor(helmetAluminumID, 14, Pixelmon.ALUMINUMARMOR, 0, 0).setIconIndex(204).setItemName("Aluminum Helmet").setTextureFile("/pixelmon/image/pitems.png");
+		torsoAluminum = new ItemPixelmonArmor(torsoAluminumID, 8, Pixelmon.ALUMINUMARMOR, 0, 1).setIconIndex(205).setItemName("Aluminum Chestplate").setTextureFile("/pixelmon/image/pitems.png");
+		leggingsAluminum = new ItemPixelmonArmor(leggingsAluminumID, 9, Pixelmon.ALUMINUMARMOR, 0, 2).setIconIndex(206).setItemName("Aluminum Leggings").setTextureFile("/pixelmon/image/pitems.png");
+		bootsAluminum = new ItemPixelmonArmor(bootsAluminumID, 7, Pixelmon.ALUMINUMARMOR, 0, 3).setIconIndex(207).setItemName("Aluminum Boots").setTextureFile("/pixelmon/image/pitems.png");
 	
 
 	}
