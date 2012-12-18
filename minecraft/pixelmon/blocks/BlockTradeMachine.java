@@ -10,6 +10,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import pixelmon.comm.ChatHandler;
@@ -46,16 +47,6 @@ public class BlockTradeMachine extends BlockContainer {
 	public int getRenderType() {
 		return -1;
 	}
-	
-	public void setBlockBounds(int stage) {
-		if(stage == 0)
-		this.setBlockBounds(1f, 0, 0f, 1f, 3f, 1f);
-	}
-
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving) {
-    	super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLiving);
-    	setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
-    }
 	
 	/**
 	 * Called upon block activation (left or right click on the block.). The

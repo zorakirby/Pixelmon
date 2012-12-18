@@ -196,11 +196,6 @@ public class GuiPC extends GuiContainer {
 
 	private boolean goingToPokeChecker = false;
 
-	protected void mouseMovedOrUp(int par1, int par2, int par3) {
-		super.mouseMovedOrUp(par1, par2, par3);
-		mouseSlot.setXandY(par1 - 15, par2 - 15);
-	}
-
 	public void onGuiClosed() {
 		super.onGuiClosed();
 		if (mouseSlot.pokemonData != null) {
@@ -258,6 +253,7 @@ public class GuiPC extends GuiContainer {
 		int w = width;
 		int h = height;
 
+		mouseSlot.setXandY(var2 - 15, var3 - 15);
 		RenderHelper.disableStandardItemLighting();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
