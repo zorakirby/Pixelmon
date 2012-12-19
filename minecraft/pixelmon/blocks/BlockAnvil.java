@@ -87,10 +87,6 @@ public class BlockAnvil extends BlockContainer {
 		if (((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil != -1) {
 			int itemId = ((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil;
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
-			if (item == null) {
-				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
-				return true;
-			}
 
 			Item aluminum = null;
 			if (itemId == PixelmonItems.aluminumPlate.shiftedIndex)
@@ -106,9 +102,15 @@ public class BlockAnvil extends BlockContainer {
 				world.spawnEntityInWorld(var3);
 				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
 				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).state = 0;
+				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 				return true;
 			}
 
+			if (item == null && aluminum == null) {
+				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
+				return true;
+			}
+			
 			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 
 			var3.delayBeforeCanPickup = 10;

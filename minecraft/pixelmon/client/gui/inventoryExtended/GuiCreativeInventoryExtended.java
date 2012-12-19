@@ -243,15 +243,15 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 	protected void mouseClicked(int x, int y, int par3) {
 		if (par3 == 0) {
 			if (pixelmonMenuOpen && buttonBounds.contains(x, y)) {
-				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected);
+				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected, false);
 				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
 			}
 			if (pixelmonMenuOpen && buttonBoundsMoves.contains(x, y)) {
-				GuiScreenPokeChecker poke = new GuiScreenPokeCheckerMoves(selected);
+				GuiScreenPokeChecker poke = new GuiScreenPokeCheckerMoves(selected, false);
 				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerMoves.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
 			}
 			if (pixelmonMenuOpen && buttonBoundsStat.contains(x, y)) {
-				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected);
+				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected, false);
 				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerStats.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
 			}
 			if (pixelmonMenuOpen) {
