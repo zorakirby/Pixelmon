@@ -286,8 +286,14 @@ public class DatabaseStats {
 						i.evolutionStone = EnumEvolutionStone.getEvolutionStone(sSplit[0]);
 					} else if (sSplit[0].equalsIgnoreCase("Friendship")) {
 						i.mode = InfoMode.friendship;
-						if (sSplit.length > 2)
+						if (sSplit.length > 1)
 							i.extraParam = sSplit[1];
+					} else if (sSplit[0].equalsIgnoreCase("Trade")) {
+						i.mode = InfoMode.trade;
+						if (sSplit.length > 1)
+							i.extraParam = sSplit[1];
+						if (sSplit.length > 1)
+							i.extraParam2 = sSplit[2];
 					} else {
 						i.mode = InfoMode.biome;
 						i.extraParam = sSplit[0];

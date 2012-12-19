@@ -4,11 +4,12 @@ import pixelmon.enums.EnumEvolutionStone;
 
 public class EvolutionInfo {
 	public enum InfoMode {
-		biome, stone, friendship
+		biome, stone, friendship, trade
 	}
 
 	public InfoMode mode;
 	public EnumEvolutionStone evolutionStone;
 	public String extraParam;
 	public String pokemonName;
+	public String extraParam2;
 }

@@ -1,5 +1,7 @@
 package pixelmon.blocks;
 
+import java.util.ArrayList;
+
 import cpw.mods.fml.common.network.Player;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,8 +15,12 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonStatsPacket;
+import pixelmon.database.DatabaseStats;
+import pixelmon.database.EvolutionInfo;
+import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerStorage;
 
@@ -118,6 +124,27 @@ public class TileEntityTradeMachine extends TileEntity {
 		player1.closeScreen();
 		player2.closeScreen();
 		playerCount = 0;
+
+		ArrayList<EvolutionInfo> evolve1 = DatabaseStats.getEvolveList(pokemon2.getString("Name"));
+		for (EvolutionInfo e : evolve1) {
+			if (e.mode == InfoMode.trade) {
+				if (EnumPokemon.hasPokemon(e.extraParam)) {
+					EntityPixelmon pixelmon = storage1.sendOut(pokemon2.getInteger("pixelmonID"), worldObj);
+					pixelmon.evolve(e.extraParam);
+					storage1.retrieve(pixelmon);
+				}
+			}
+		}
+		ArrayList<EvolutionInfo> evolve2 = DatabaseStats.getEvolveList(pokemon1.getString("Name"));
+		for (EvolutionInfo e : evolve2) {
+			if (e.mode == InfoMode.trade) {
+				if (EnumPokemon.hasPokemon(e.extraParam)) {
+					EntityPixelmon pixelmon = storage2.sendOut(pokemon1.getInteger("pixelmonID"), worldObj);
+					pixelmon.evolve(e.extraParam);
+					storage2.retrieve(pixelmon);
+				}
+			}
+		}
 	}
 
 }
