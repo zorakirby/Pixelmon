@@ -280,6 +280,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 	}
 
 	public void unloadEntity() {
+		super.unloadEntity();
+			
 		ArrayList<Entity> list = new ArrayList<Entity>();
 		list.add(this);
 		worldObj.unloadEntities(list);

@@ -277,12 +277,12 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	@Override
 	public void updateRiderPosition() {
 		debugOffsetX = 0f;
-		debugOffsetY = 0;
+		debugOffsetY = 0f;
 		debugOffsetZ = 0f;
 		if (this.riddenByEntity != null) {
 			Vec3 vec = Vec3.createVectorHelper(debugOffsetX + baseStats.ridingOffsetX, 0, debugOffsetZ + baseStats.ridingOffsetZ);
-			vec.rotateAroundY(-rotationYaw * (float)Math.PI / 180.0f);
-
+			vec.rotateAroundY(-(this.renderYawOffset) * (float)Math.PI / 180.0f);
+			//System.out.println(rotationYaw +" " + renderYawOffset);
 			double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
 			double var3 = Math.sin((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
 			if (ep == null)
@@ -294,5 +294,12 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);
+	}
+	
+	public void unloadEntity(){
+		if (riddenByEntity !=null){
+			riddenByEntity.mountEntity(this);
+			((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
+		}
 	}
 }
