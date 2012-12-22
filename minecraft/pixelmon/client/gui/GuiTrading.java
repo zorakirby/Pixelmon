@@ -275,13 +275,21 @@ public class GuiTrading extends GuiContainer {
 		mc.renderEngine.bindTexture(bg);
 		if (ClientTradingManager.tradePartner != null && !ClientTradingManager.player2Ready) {
 			GL11.glColor3f(1f, 0f, 0f);
-			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 61, 242, 90, 14);
+			drawTexturedModalRect((width + 45) / 2, (height + 85) / 2, 61, 242, 90, 14);
 		} else if (!ClientTradingManager.player2Ready) {
 			GL11.glColor3f(1f, 0f, 0f);
 			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 153, 242, 72, 14);
 		} else if (ClientTradingManager.player2Ready) {
 			GL11.glColor3f(0f, 1f, 0f);
-			drawTexturedModalRect((width + 65) / 2, (height + 85) / 2, 1, 242, 72, 14);
+			drawTexturedModalRect((width + 75) / 2, (height + 85) / 2, 1, 242, 58, 14);
+		}
+	
+		if (!ClientTradingManager.player1Ready) {
+			GL11.glColor3f(1f, 0f, 0f);
+			drawTexturedModalRect((width - 225) / 2, (height + 85) / 2, 61, 242, 90, 14);
+		} else if (ClientTradingManager.player1Ready) {
+			drawTexturedModalRect((width - 195) / 2, (height + 85) / 2, 1, 242, 58, 14);
+			GL11.glColor3f(0f, 1f, 0f);
 		}
 		GL11.glPopMatrix();
 
