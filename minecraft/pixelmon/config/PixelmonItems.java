@@ -342,8 +342,8 @@ public class PixelmonItems {
 		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, 251).setItemName("Wood Hammer");
 		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, 252).setItemName("Stone Hammer");
 		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, 253).setItemName("Iron Hammer");
-		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, 254).setItemName("Gold Hammer");
-		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, 255).setItemName("Diamond Hammer");
+		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, 255).setItemName("Gold Hammer");
+		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, 254).setItemName("Diamond Hammer");
 		hammerAluminum = new ItemHammer(hammerAluminumID, Pixelmon.ALUMINUM, 250).setItemName("Aluminum Hammer");
 		
 		swordAluminum = new ItemSword(swordAluminumID, Pixelmon.ALUMINUM).setIconIndex(219).setItemName("Aluminum Sword").setTextureFile("/pixelmon/image/pitems.png");

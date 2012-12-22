@@ -33,6 +33,8 @@ public class TileEntityTradeMachine extends TileEntity {
 
 	public int tradeIndex = -1;
 
+	private boolean tradePushed = false;
+	
 	public TileEntityTradeMachine() {
 		if (this.tradeIndex == -1)
 			TradingRegistry.registerTrade(this);
@@ -71,6 +73,7 @@ public class TileEntityTradeMachine extends TileEntity {
 				((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetTradingReadyClient, ready ? 1 : 0));
 			}
 
+		tradePushed = false;
 		return false;
 	}
 
@@ -115,6 +118,8 @@ public class TileEntityTradeMachine extends TileEntity {
 	}
 
 	public void trade() {
+		if (tradePushed) return;
+		tradePushed = true;
 		PlayerStorage storage1 = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player1);
 		PlayerStorage storage2 = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player2);
 		NBTTagCompound pokemon1 = storage1.getNBT(storage1.getIDFromPosition(pos1));
