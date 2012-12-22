@@ -293,6 +293,8 @@ public class GuiTrading extends GuiContainer {
 			GL11.glPopMatrix();
 		}
 
+		drawButtonClose(var2, var3);
+		
 		GL11.glPushMatrix();
 		GL11.glScalef(0.5f, 0.5f, 0f);
 		fontRenderer.drawSplitString("Select a Pokemon", (width / 2 - 118) * 2, (height / 2 + 77) * 2, 50, 0xFFFFFF);
@@ -329,7 +331,7 @@ public class GuiTrading extends GuiContainer {
 			drawTexturedModalRect((width + 60) / 2, (height + 140) / 2, 1, 206, 26, 24);
 			return 5;
 		}
-
+		
 		return -1;
 	}
 
@@ -344,6 +346,19 @@ public class GuiTrading extends GuiContainer {
 			return true;
 		}
 
+		return false;
+	}
+	
+	public boolean drawButtonClose(int par1, int par2) {
+		int bg = mc.renderEngine.getTexture("/pixelmon/gui/tradeGui.png");
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		mc.renderEngine.bindTexture(bg);
+		
+		if (par1 >= (width + 213) / 2 && par1 <= (width + 248) / 2 && par2 <= (height + 199) / 2 && par2 >= (height + 170) / 2) {// Highlight
+		drawTexturedModalRect((width + 214) / 2, (height + 170) / 2, 67, 225, 17, 15);
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -380,6 +395,10 @@ public class GuiTrading extends GuiContainer {
 			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
 			this.selected = drawPokemonSelection(par1, par2);
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SelectPokemonForTrade, selected));
+		}
+		if(drawButtonClose(par1, par2)){
+			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
+			mc.thePlayer.closeScreen();
 		}
 	}
 

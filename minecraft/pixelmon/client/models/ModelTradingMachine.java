@@ -649,9 +649,8 @@ public class ModelTradingMachine extends ModelBase
       Shape91.addBox(0F, 0F, 0F, 18, 3, 1);
       Shape91.setRotationPoint(-28.6F, 10.9F, -0.83F);
       Shape91.setTextureSize(128, 256);
-      Shape91.mirror = true;
       setRotation(Shape91, 0F, 0F, 0.4363323F);
-      Shape91.mirror = false;
+      Shape91.mirror = true;
       Shape92 = new ModelRenderer(this, 98, 37);
       Shape92.addBox(0F, 0F, 0F, 2, 4, 4);
       Shape92.setRotationPoint(7F, -8.5F, -8F);
