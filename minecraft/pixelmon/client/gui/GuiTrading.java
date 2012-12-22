@@ -288,8 +288,8 @@ public class GuiTrading extends GuiContainer {
 			GL11.glColor3f(1f, 0f, 0f);
 			drawTexturedModalRect((width - 225) / 2, (height + 85) / 2, 61, 242, 90, 14);
 		} else if (ClientTradingManager.player1Ready) {
-			drawTexturedModalRect((width - 195) / 2, (height + 85) / 2, 1, 242, 58, 14);
 			GL11.glColor3f(0f, 1f, 0f);
+			drawTexturedModalRect((width - 195) / 2, (height + 85) / 2, 1, 242, 58, 14);
 		}
 		GL11.glPopMatrix();
 
