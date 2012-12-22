@@ -156,22 +156,22 @@ public class GuiTrading extends GuiContainer {
 			for (int i = 0; i < 6; i++) {
 				drawString(fontRenderer, "?", (width + 223), (height - 156) + i * 16, 0xFFFFFF);
 			}
-		drawString(fontRenderer, "HP:", (width - 181), (height - 156), 0xFFFFFF);
-		drawString(fontRenderer, "Attack:", (width - 181), (height - 140), 0xFFFFFF);
-		drawString(fontRenderer, "Defence:", (width - 181), (height - 124), 0xFFFFFF);
-		drawString(fontRenderer, "SP.Attack:", (width - 181), (height - 109), 0xFFFFFF);
-		drawString(fontRenderer, "SP.Defense:", (width - 181), (height - 93), 0xFFFFFF);
-		drawString(fontRenderer, "Speed:", (width - 181), (height - 77), 0xFFFFFF);
+		drawString(fontRenderer, "HP:", (width - 183), (height - 156), 0xFFFFFF);
+		drawString(fontRenderer, "Attack:", (width - 183), (height - 140), 0xFFFFFF);
+		drawString(fontRenderer, "Defence:", (width - 183), (height - 124), 0xFFFFFF);
+		drawString(fontRenderer, "SP.Attack:", (width - 183), (height - 109), 0xFFFFFF);
+		drawString(fontRenderer, "SP.Defense:", (width - 183), (height - 93), 0xFFFFFF);
+		drawString(fontRenderer, "Speed:", (width - 183), (height - 77), 0xFFFFFF);
 		if (ClientTradingManager.selectedStats != null) {
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.HP), (width - 60), (height - 156), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Attack), (width - 60), (height - 140), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Defence), (width - 60), (height - 124), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialAttack), (width - 60), (height - 109), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialDefence), (width - 60), (height - 93), 0xFFFFFF);
-			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Speed), (width - 60), (height - 77), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.HP), (width - 47), (height - 156), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Attack), (width - 47), (height - 140), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Defence), (width - 47), (height - 124), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialAttack), (width - 47), (height - 109), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.SpecialDefence), (width - 47), (height - 93), 0xFFFFFF);
+			drawString(fontRenderer, String.valueOf(ClientTradingManager.selectedStats.Speed), (width - 47), (height - 77), 0xFFFFFF);
 		} else
 			for (int i = 0; i < 6; i++) {
-				drawString(fontRenderer, "?", (width - 55), (height - 156) + i * 16, 0xFFFFFF);
+				drawString(fontRenderer, "?", (width - 47), (height - 156) + i * 16, 0xFFFFFF);
 			}
 		GL11.glPopMatrix();
 
