@@ -27,7 +27,7 @@ public class ItemBlock extends Item {
 	 * false if it don't. This is for ITEMS, not BLOCKS !
 	 */
 	@Override
-	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side) {
+	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (side != 1) {
 			return false;
 		} else {
@@ -51,8 +51,7 @@ public class ItemBlock extends Item {
 					var9 = 3;
 				}
 
-				if (world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z) && world.isBlockNormalCube(x, y - 1, z)
-						&& world.getBlockId(x, y - 1, z) != block.blockID) {
+				if (world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z) && world.isBlockNormalCube(x, y - 1, z) && world.getBlockId(x, y - 1, z) != block.blockID) {
 					if (block instanceof BlockPC && world.getBlockId(x, y + 2, z) == block.blockID) {
 						return false;
 					}

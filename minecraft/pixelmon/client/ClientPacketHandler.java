@@ -5,7 +5,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -24,7 +23,6 @@ import pixelmon.comm.PixelmonPokedexPacket;
 import pixelmon.comm.PixelmonStatsPacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
-import pixelmon.storage.PixelmonStorage;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 
