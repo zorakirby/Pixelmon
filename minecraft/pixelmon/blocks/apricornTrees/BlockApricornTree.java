@@ -14,8 +14,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import pixelmon.config.PixelmonItemsApricorns;
 import pixelmon.enums.EnumApricornTrees;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockApricornTree extends BlockContainer {
 	public static final int numStages = 6;

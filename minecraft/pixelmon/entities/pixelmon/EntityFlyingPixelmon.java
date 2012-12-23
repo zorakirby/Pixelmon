@@ -202,9 +202,9 @@ public abstract class EntityFlyingPixelmon extends EntityPixelmon {
 				continue;
 			}
 			EntityItem entityitem1 = (EntityItem) entity1;
-			if (entityitem1.item.itemID != Item.seeds.shiftedIndex) {
-				continue;
-			}
+//			if (entityitem1.item.itemID != Item.seeds.shiftedIndex) {
+//				continue;
+//			}
 			double d2 = entityitem1.getDistanceSq(entity.posX, entity.posY, entity.posZ);
 			if ((d < 0.0D || d2 < d * d) && (d1 == -1D || d2 < d1)) {
 				d1 = d2;
