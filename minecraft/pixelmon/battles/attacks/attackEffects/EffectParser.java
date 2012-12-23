@@ -50,6 +50,7 @@ import pixelmon.battles.attacks.statusEffects.Freeze;
 import pixelmon.battles.attacks.statusEffects.Infatuated;
 import pixelmon.battles.attacks.statusEffects.Leech;
 import pixelmon.battles.attacks.statusEffects.LightScreen;
+import pixelmon.battles.attacks.statusEffects.LockedInBattle;
 import pixelmon.battles.attacks.statusEffects.Mist;
 import pixelmon.battles.attacks.statusEffects.Paralysis;
 import pixelmon.battles.attacks.statusEffects.Perish;
@@ -138,6 +139,8 @@ public class EffectParser {
 				effect = new Leech();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.LightScreen)
 				effect = new LightScreen();
+			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.LockedInBattle)
+				effect = new LockedInBattle();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Mist)
 				effect = new Mist();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Paralysis)

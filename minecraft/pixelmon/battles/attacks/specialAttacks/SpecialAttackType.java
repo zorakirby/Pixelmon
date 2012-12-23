@@ -22,6 +22,7 @@ public enum SpecialAttackType {
 	Punishment,
 	PsychUp,
 	Psywave,
+	Restore,
 	Return,
 	Reversal,
 	SeismicToss,
@@ -51,6 +52,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Punishment")) return SpecialAttackType.Punishment;
 		if (string.equalsIgnoreCase("PsychUp")) return SpecialAttackType.PsychUp;
 		if (string.equalsIgnoreCase("Psywave")) return SpecialAttackType.Psywave;
+		if (string.equalsIgnoreCase("Restore")) return SpecialAttackType.Restore;
 		if (string.equalsIgnoreCase("Return")) return SpecialAttackType.Return;
 		if (string.equalsIgnoreCase("Reversal")) return SpecialAttackType.Reversal;
 		if (string.equalsIgnoreCase("SeismicToss")) return SpecialAttackType.SeismicToss;
@@ -82,6 +84,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Punishment")) return true;
 		if (string.equalsIgnoreCase("PsychUp")) return true;
 		if (string.equalsIgnoreCase("Psywave")) return true;
+		if (string.equalsIgnoreCase("Restore")) return true;
 		if (string.equalsIgnoreCase("Return")) return true;
 		if (string.equalsIgnoreCase("Reversal")) return true;
 		if (string.equalsIgnoreCase("SeismicToss")) return true;
