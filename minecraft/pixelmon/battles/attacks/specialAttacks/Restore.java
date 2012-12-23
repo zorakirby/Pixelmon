@@ -16,7 +16,7 @@ public class Restore extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) {
-		)
+		
 
 		return false;
 	}
