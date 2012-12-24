@@ -1,11 +1,11 @@
 package pixelmon.items;
 
-import pixelmon.config.PixelmonItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
+import pixelmon.config.PixelmonItems;
 
 public class ItemPixelmonArmor extends ItemArmor implements IArmorTextureProvider{
 

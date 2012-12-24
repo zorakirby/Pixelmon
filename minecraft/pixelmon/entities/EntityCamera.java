@@ -8,8 +8,8 @@ import pixelmon.Pixelmon;
 import pixelmon.AI.AILookAtTarget;
 import pixelmon.battles.BattleController;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityCamera extends EntityLiving {
 	boolean clientSided = false;

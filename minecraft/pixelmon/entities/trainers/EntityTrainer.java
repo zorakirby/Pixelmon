@@ -20,8 +20,8 @@ import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.TrainerInfo;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PlayerStorage;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityTrainer extends EntityCreature {
 

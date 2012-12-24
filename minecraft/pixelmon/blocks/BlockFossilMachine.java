@@ -23,8 +23,8 @@ import pixelmon.entities.pokeballs.PokeballTypeHelper;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokemonFossil;
 import pixelmon.storage.PixelmonStorage;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockFossilMachine extends BlockContainer {
 
@@ -33,8 +33,7 @@ public class BlockFossilMachine extends BlockContainer {
 		setHardness(1f);
 	}
 
-	public ItemStack getPickBlock(MovingObjectPosition target, World world,
-			int x, int y, int z) {
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 		return new ItemStack(PixelmonItemsFossils.fossilMachineItem, 1);
 	}
 
@@ -42,28 +41,22 @@ public class BlockFossilMachine extends BlockContainer {
 	 * Returns a bounding box from the pool of bounding boxes (this means this
 	 * box can change after the pool has been cleared to be reused)
 	 */
-	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World,
-			int par2, int par3, int par4) {
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
 		this.setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
-		return super.getCollisionBoundingBoxFromPool(par1World, par2, par3,
-				par4);
+		return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
 	}
 
 	@SideOnly(Side.CLIENT)
 	/**
 	 * Returns the bounding box of the wired rectangular prism to render.
 	 */
-	public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World,
-			int par2, int par3, int par4) {
+	public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
 		this.setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
-		return super
-				.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
+		return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
 	}
 
-	public void randomDisplayTick(World par1World, int par2, int par3,
-			int par4, Random par5Random) {
-		TileEntityFossilMachine tile = ((TileEntityFossilMachine) par1World
-				.getBlockTileEntity(par2, par3, par4));
+	public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) {
+		TileEntityFossilMachine tile = ((TileEntityFossilMachine) par1World.getBlockTileEntity(par2, par3, par4));
 		int var6 = par1World.getBlockMetadata(par2, par3, par4);
 		double var7 = (double) ((float) par2 + 0.05);
 		double var9 = (double) ((float) par3 + 0.5F);
@@ -72,37 +65,25 @@ public class BlockFossilMachine extends BlockContainer {
 
 		if (tile.fossilProgress > 0 || tile.pokemonProgress > 0)
 			for (int i = 50; i > ((int) (((tile.fossilProgress + tile.pokemonProgress) * 2) / 96) / 2); i--)
-				par1World.spawnParticle("reddust",
-						var7 + par5Random.nextFloat(),
-						var9 + par5Random.nextFloat() + par5Random.nextFloat(),
-						var11 + par5Random.nextFloat(), -255D, 1.0D, 255.0D);
+				par1World.spawnParticle("reddust", var7 + par5Random.nextFloat(), var9 + par5Random.nextFloat() + par5Random.nextFloat(), var11 + par5Random.nextFloat(), -255D,
+						1.0D, 255.0D);
 
-		if (tile.fossilProgress > 1
-				&& tile.pokemonProgress < tile.pokemonMaxProgress) {
-			par1World.playSound((double) par2 + 0.5D, (double) par3 + 0.5D,
-					(double) par4 + 0.5D, "portal.portal", 0.01F,
-					par5Random.nextFloat() * 0.4F + 0.8F);
+		if (tile.fossilProgress > 1 && tile.pokemonProgress < tile.pokemonMaxProgress) {
+			par1World.playSound((double) par2 + 0.5D, (double) par3 + 0.5D, (double) par4 + 0.5D, "portal.portal", 0.01F, par5Random.nextFloat() * 0.4F + 0.8F, true);
 		}
 	}
 
-	public void capturePokemonInMachine(World world, int x, int y, int z,
-			EntityPlayer player, int side, float par7, float par8, float par9) {
-		TileEntityFossilMachine tile = ((TileEntityFossilMachine) world
-				.getBlockTileEntity(x, y, z));
-		EntityPixelmon p = (EntityPixelmon) PixelmonEntityList
-				.createEntityByName(tile.currentPokemon, world);
+	public void capturePokemonInMachine(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9) {
+		TileEntityFossilMachine tile = ((TileEntityFossilMachine) world.getBlockTileEntity(x, y, z));
+		EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(tile.currentPokemon, world);
 		p.setTamed(true);
 		p.setOwner(((EntityPlayer) player).username);
-		p.caughtBall = (((ItemPokeBall) PixelmonItemsPokeballs
-				.getItemFromID(tile.currentPokeball)).type);
+		p.caughtBall = (((ItemPokeBall) PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type);
 		p.clearAttackTarget();
 		if (tile.isShiny)
 			p.setIsShiny(true);
-		PokeballTypeHelper.doAfterEffect(
-				(((ItemPokeBall) PixelmonItemsPokeballs
-						.getItemFromID(tile.currentPokeball)).type), p);
-		PixelmonStorage.PokeballManager.getPlayerStorage(
-				(EntityPlayerMP) player).addToParty(p);
+		PokeballTypeHelper.doAfterEffect((((ItemPokeBall) PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type), p);
+		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).addToParty(p);
 		world.spawnEntityInWorld(p);
 		p.catchInPokeball();
 		p.friendship.initFromCapture();
@@ -110,16 +91,12 @@ public class BlockFossilMachine extends BlockContainer {
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer player, int side, float par7, float par8, float par9) {
-		TileEntityFossilMachine tile = ((TileEntityFossilMachine) world
-				.getBlockTileEntity(x, y, z));
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9) {
+		TileEntityFossilMachine tile = ((TileEntityFossilMachine) world.getBlockTileEntity(x, y, z));
 		if (world.isRemote)
 			return false;
 		// Item Retrieval
-		if (tile.currentPokeball != -1
-				&& player.getCurrentEquippedItem() != null
-				&& !(player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil)) {
+		if (tile.currentPokeball != -1 && player.getCurrentEquippedItem() != null && !(player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil)) {
 			int itemId = tile.currentPokeball;
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
 			if (item == null) {
@@ -127,19 +104,15 @@ public class BlockFossilMachine extends BlockContainer {
 				tile.currentPokeballTexture = "";
 				return true;
 			}
-			EntityItem var3 = new EntityItem(world, x, y + maxY, z,
-					new ItemStack(item));
+			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 
 			var3.delayBeforeCanPickup = 10;
 
 			world.spawnEntityInWorld(var3);
 			tile.currentPokeball = -1;
-			((WorldServer) world).getPlayerManager()
-					.flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 		}
-		if (tile.currentFossil != -1
-				&& player.getCurrentEquippedItem() != null
-				&& !(player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall)) {
+		if (tile.currentFossil != -1 && player.getCurrentEquippedItem() != null && !(player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall)) {
 			int itemId = tile.currentFossil;
 			Item item = PixelmonItems.getFossilItem(itemId);
 			if (item == null) {
@@ -148,8 +121,7 @@ public class BlockFossilMachine extends BlockContainer {
 				tile.pokemonProgress = 0.0f;
 				return true;
 			}
-			EntityItem var3 = new EntityItem(world, x, y + maxY, z,
-					new ItemStack(item));
+			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 
 			var3.delayBeforeCanPickup = 10;
 
@@ -157,35 +129,26 @@ public class BlockFossilMachine extends BlockContainer {
 			tile.currentFossil = -1;
 			tile.fossilProgress = 0.0f;
 			tile.pokemonProgress = 0.0f;
-			((WorldServer) world).getPlayerManager()
-					.flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 		}
 		// Item Placing
-		if (player.getCurrentEquippedItem() != null
-				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall)
-				&& tile.currentPokeball == -1) {
+		if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall) && tile.currentPokeball == -1) {
 			tile.currentPokeball = player.getCurrentEquippedItem().itemID;
-			tile.currentPokeballTexture = ((ItemPokeBall) player
-					.getCurrentEquippedItem().getItem()).type.getTexture();
+			tile.currentPokeballTexture = ((ItemPokeBall) player.getCurrentEquippedItem().getItem()).type.getTexture();
 			player.getCurrentEquippedItem().stackSize--;
-			((WorldServer) world).getPlayerManager()
-					.flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 			return true;
 		}
-		if (player.getCurrentEquippedItem() != null
-				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil)
-				&& tile.currentFossil == -1 && !tile.pokemonOccupied) {
+		if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil) && tile.currentFossil == -1
+				&& !tile.pokemonOccupied) {
 			tile.currentFossil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
-			((WorldServer) world).getPlayerManager()
-					.flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 			return true;
 		}
 		// Pokemon retrieval
-		if (tile.currentPokeball != -1 && tile.pokemonOccupied
-				&& tile.pokemonProgress == tile.pokemonMaxProgress) {
-			capturePokemonInMachine(world, x, y, z, player, side, par7, par8,
-					par9);
+		if (tile.currentPokeball != -1 && tile.pokemonOccupied && tile.pokemonProgress == tile.pokemonMaxProgress) {
+			capturePokemonInMachine(world, x, y, z, player, side, par7, par8, par9);
 			tile.pokemonOccupied = false;
 			tile.fossilProgress = 0.0f;
 			tile.pokemonProgress = 0.0f;
@@ -193,13 +156,10 @@ public class BlockFossilMachine extends BlockContainer {
 			tile.currentPokemon = "";
 			tile.currentPokeball = -1;
 			tile.completionRate = 0;
-			((WorldServer) world).getPlayerManager()
-					.flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 		}
-		if (!tile.pokemonOccupied
-				&& player.getCurrentEquippedItem() != null
-				&& !(player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil && !(player
-						.getCurrentEquippedItem().getItem() instanceof ItemPokeBall))) {
+		if (!tile.pokemonOccupied && player.getCurrentEquippedItem() != null
+				&& !(player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil && !(player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall))) {
 			tile.pokemonOccupied = false;
 			tile.fossilProgress = 0.0f;
 			tile.pokemonProgress = 0.0f;
@@ -207,8 +167,7 @@ public class BlockFossilMachine extends BlockContainer {
 			tile.currentPokemon = "";
 			tile.currentPokeball = -1;
 			tile.completionRate = 0;
-			((WorldServer) world).getPlayerManager()
-					.flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 		}
 
 		((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
