@@ -292,7 +292,7 @@ public class DatabaseStats {
 						i.mode = InfoMode.trade;
 						if (sSplit.length > 1)
 							i.extraParam = sSplit[1];
-						if (sSplit.length > 1)
+						if (sSplit.length > 2)
 							i.extraParam2 = sSplit[2];
 					} else {
 						i.mode = InfoMode.biome;
