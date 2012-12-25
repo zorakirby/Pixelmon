@@ -78,7 +78,7 @@ public class PixelmonItemsFossils {
 	public static void load(Configuration cfg) {
 		if (!isEnabled)
 			return;
-		fossilMachineItemID = cfg.get("fossils", "FossilMachineItem", 10016).getInt();
+		fossilMachineItemID = cfg.get("fossils", "FossilMachineItem", 10017).getInt();
 
 		helixFossilID = cfg.get("fossils", "HelixFossil", 10080).getInt();
 		domeFossilID = cfg.get("fossils", "DomeFossil", 10081).getInt();

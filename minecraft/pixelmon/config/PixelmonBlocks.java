@@ -62,18 +62,18 @@ public class PixelmonBlocks {
 	public static Block tradeMachine;
 
 	public static void load(Configuration configuration) {
-		pokemonHealerActiveId = Integer.parseInt(configuration.getBlock("PokemonHealerActive", 201).value);
-		pokemonHealerIdleId = Integer.parseInt(configuration.getBlock("PokemonHealerIdle", 202).value);
-		thunderStoneOreId = Integer.parseInt(configuration.getBlock("ThunderStoneOre", 203).value);
-		leafStoneOreId = Integer.parseInt(configuration.getBlock("LeafStoneOre", 204).value);
-		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 206).value);
-		fireStoneOreId = Integer.parseInt(configuration.getBlock("FireStoneOre", 207).value);
-		bauxiteId = Integer.parseInt(configuration.getBlock("Bauxite Ore", 218).value);
-		pcId = Integer.parseInt(configuration.getBlock("PC", 205).value);
-		anvilId = Integer.parseInt(configuration.getBlock("Anvil", 215).value);
-		fossilMachineId = Integer.parseInt(configuration.getBlock("Fossil Machine", 216).value);
-		fossilId = Integer.parseInt(configuration.getBlock("Fossil", 217).value);
-		tradeMachineId = Integer.parseInt(configuration.getBlock("Trade Machine", 219).value);
+		pokemonHealerActiveId = Integer.parseInt(configuration.getBlock("PokemonHealerActive", 300).value);
+		pokemonHealerIdleId = Integer.parseInt(configuration.getBlock("PokemonHealerIdle", 301).value);
+		thunderStoneOreId = Integer.parseInt(configuration.getBlock("ThunderStoneOre", 302).value);
+		leafStoneOreId = Integer.parseInt(configuration.getBlock("LeafStoneOre", 303).value);
+		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 304).value);
+		fireStoneOreId = Integer.parseInt(configuration.getBlock("FireStoneOre", 305).value);
+		bauxiteId = Integer.parseInt(configuration.getBlock("Bauxite Ore", 306).value);
+		pcId = Integer.parseInt(configuration.getBlock("PC", 307).value);
+		anvilId = Integer.parseInt(configuration.getBlock("Anvil", 308).value);
+		fossilMachineId = Integer.parseInt(configuration.getBlock("Fossil Machine", 309).value);
+		fossilId = Integer.parseInt(configuration.getBlock("Fossil", 310).value);
+		tradeMachineId = Integer.parseInt(configuration.getBlock("Trade Machine", 311).value);
 		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f).setBlockName("LeafStoneOre");
@@ -90,17 +90,17 @@ public class PixelmonBlocks {
 	}
 
 	public static void registerBlocks() {
-		GameRegistry.registerBlock(healer);
-		GameRegistry.registerBlock(thunderStoneOre);
-		GameRegistry.registerBlock(leafStoneOre);
-		GameRegistry.registerBlock(waterStoneOre);
-		GameRegistry.registerBlock(fireStoneOre);
-		GameRegistry.registerBlock(pc);
-		GameRegistry.registerBlock(anvil);
-		GameRegistry.registerBlock(fossilMachine);
-		GameRegistry.registerBlock(bauxite);
-		GameRegistry.registerBlock(fossil);
-		GameRegistry.registerBlock(tradeMachine);
+		GameRegistry.registerBlock(healer, "PokeHealer");
+		GameRegistry.registerBlock(thunderStoneOre, "Thunderstone Ore");
+		GameRegistry.registerBlock(leafStoneOre, "Leafstone Ore");
+		GameRegistry.registerBlock(waterStoneOre, "Waterstone Ore");
+		GameRegistry.registerBlock(fireStoneOre, "Firestone Ore");
+		GameRegistry.registerBlock(pc, "PC");
+		GameRegistry.registerBlock(anvil, "Pixelmon Anvil");
+		GameRegistry.registerBlock(fossilMachine, "Fossil Machine");
+		GameRegistry.registerBlock(bauxite, "Bauxite");
+		GameRegistry.registerBlock(fossil, "Fossil");
+		GameRegistry.registerBlock(tradeMachine, "Trading Machine");
 
 		MinecraftForge.setBlockHarvestLevel(bauxite, "pickaxe", 2);
 
