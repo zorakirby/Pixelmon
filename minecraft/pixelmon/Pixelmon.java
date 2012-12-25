@@ -9,6 +9,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
+import pixelmon.battles.BattleTickHandler;
 import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.client.ClientPacketHandler;
 import pixelmon.comm.ConnectionHandler;
@@ -119,6 +120,7 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
+		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
 		proxy.registerTickHandlers();
 
 		// SchematicImporter s = new

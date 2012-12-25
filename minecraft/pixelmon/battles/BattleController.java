@@ -99,9 +99,9 @@ public class BattleController {
 			return;
 		int tickTop;
 		if (moveStage == MoveStage.PickAttacks)
-			tickTop = 20;
+			tickTop = 30;
 		else
-			tickTop = 50;
+			tickTop = 70;
 		if (battleTicks++ > tickTop) {
 
 			if (moveStage == MoveStage.PickAttacks) { // Pick Moves
