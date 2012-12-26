@@ -35,6 +35,7 @@ import pixelmon.battles.attacks.specialAttacks.PsychUp;
 import pixelmon.battles.attacks.specialAttacks.Psywave;
 import pixelmon.battles.attacks.specialAttacks.Punishment;
 import pixelmon.battles.attacks.specialAttacks.RazorWind;
+import pixelmon.battles.attacks.specialAttacks.Restore;
 import pixelmon.battles.attacks.specialAttacks.Return;
 import pixelmon.battles.attacks.specialAttacks.Reversal;
 import pixelmon.battles.attacks.specialAttacks.SeismicToss;
@@ -247,6 +248,8 @@ public class EffectParser {
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Venoshock)
 				effect = new Venoshock();
 			
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.MilkDrink)
+				effect = new Restore(1);
 		}
 
 		if (hasModifier) {
