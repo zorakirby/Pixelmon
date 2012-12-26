@@ -36,7 +36,7 @@ public class LockedInBattle extends StatusEffectBase {
 		}
 			
 		
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Turn end");
+		
 	}
 
 }
