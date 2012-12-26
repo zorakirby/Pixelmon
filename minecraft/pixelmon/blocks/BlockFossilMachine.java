@@ -20,6 +20,8 @@ import pixelmon.config.PixelmonItemsFossils;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.PokeballTypeHelper;
+import pixelmon.enums.EnumPokemon;
+import pixelmon.enums.EnumTrainers;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokemonFossil;
 import pixelmon.storage.PixelmonStorage;
@@ -76,18 +78,21 @@ public class BlockFossilMachine extends BlockContainer {
 	public void capturePokemonInMachine(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9) {
 		TileEntityFossilMachine tile = ((TileEntityFossilMachine) world.getBlockTileEntity(x, y, z));
 		EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(tile.currentPokemon, world);
-		p.setTamed(true);
-		p.setOwner(((EntityPlayer) player).username);
-		p.caughtBall = (((ItemPokeBall) PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type);
-		p.clearAttackTarget();
-		if (tile.isShiny)
-			p.setIsShiny(true);
-		PokeballTypeHelper.doAfterEffect((((ItemPokeBall) PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type), p);
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).addToParty(p);
-		world.spawnEntityInWorld(p);
-		p.catchInPokeball();
-		p.friendship.initFromCapture();
-		((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+		if(tile!=null)
+			if(EnumPokemon.hasPokemon(tile.currentPokemon) && !EnumTrainers.has(tile.currentPokemon)){
+				p.setTamed(true);
+				p.setOwner(((EntityPlayer) player).username);
+				p.caughtBall = (((ItemPokeBall) PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type);
+				p.clearAttackTarget();
+				if (tile.isShiny)
+					p.setIsShiny(true);
+				PokeballTypeHelper.doAfterEffect((((ItemPokeBall) PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type), p);
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).addToParty(p);
+				world.spawnEntityInWorld(p);
+				p.catchInPokeball();
+				p.friendship.initFromCapture();
+				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+		}
 	}
 
 	@Override
