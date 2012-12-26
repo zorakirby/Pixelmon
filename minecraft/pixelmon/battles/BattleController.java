@@ -334,7 +334,7 @@ public class BattleController {
 	}
 
 	private void calculateEscape(EntityPixelmon user, EntityPixelmon target) {
-		
+
 		
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " tries to run away");
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.SpeedModifier) / 100;
@@ -345,9 +345,14 @@ public class BattleController {
 		float F = A * 32 / B + 30 * C;
 		
 		if (F > 255 || new Random().nextInt(255) < F) {
+			if(!user.isLockedInBattle){
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Running can escape");
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " escaped!");
 			endBattle(target == participant1.currentPokemon());
-			
+			}
+			else {
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Its locked in battle!");
+			}
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " couldn't escape!");
 	}
