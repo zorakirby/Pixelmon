@@ -33,6 +33,7 @@ import pixelmon.items.ItemData;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPotion;
+import pixelmon.items.PixelmonItem;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiBattle extends GuiContainer {
@@ -884,9 +885,8 @@ public class GuiBattle extends GuiContainer {
 						itemToUse = ClientBattleManager.bagStore.get(i);
 						mode = BattleMode.ApplyToPokemon;
 					}
-					ClientBattleManager.bagStore.get(i).count--;
-					if (ClientBattleManager.bagStore.get(i).count <= 0)
-						ClientBattleManager.bagStore.remove(i);
+					ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
+					((PixelmonItem)PixelmonItems.getItem(itemToUse.id)).removeFromInventory(inv);
 				}
 			}
 		}
