@@ -96,7 +96,7 @@ public class PixelmonSpawner {
 	}
 
 	public static void spawnTick(World world) {
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 1; i++) {
 			if (spawnList.size() > 0) {
 				if (EnumTrainers.has(spawnList.get(0).name)) {
 					Entity trainer = PixelmonEntityList.createEntityByName(spawnList.get(0).name, world);
