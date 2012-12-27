@@ -79,12 +79,10 @@ public class BattleController {
 	private Attack[] attacks = new Attack[2];
 
 	public void endBattle(boolean did1Win) {
-		
 		battleEnded = true;
 		participant1.EndBattle(did1Win, participant2);
 		participant2.EndBattle(!did1Win, participant1);
 		BattleRegistry.deRegisterBattle(this);
-		
 	}
 
 	public void endBattleWithoutXP() {

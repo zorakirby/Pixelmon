@@ -2,10 +2,13 @@ package pixelmon;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.entities.EntityCamera;
 import pixelmon.gui.GuiHandler;
+import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
 
@@ -23,7 +26,7 @@ public class CommonProxy implements IGuiHandler {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return guiHandler.getServerGuiElement(ID, player, world, x, y, z);
 	}
-
+	
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return null;

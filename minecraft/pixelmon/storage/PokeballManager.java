@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import pixelmon.DownloadHelper;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -93,7 +95,7 @@ public class PokeballManager {
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
-		return "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
+		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
 	}
 
 	@ForgeSubscribe
