@@ -35,6 +35,7 @@ import pixelmon.battles.attacks.specialAttacks.PsychUp;
 import pixelmon.battles.attacks.specialAttacks.Psywave;
 import pixelmon.battles.attacks.specialAttacks.Punishment;
 import pixelmon.battles.attacks.specialAttacks.RazorWind;
+import pixelmon.battles.attacks.specialAttacks.Restore;
 import pixelmon.battles.attacks.specialAttacks.Return;
 import pixelmon.battles.attacks.specialAttacks.Reversal;
 import pixelmon.battles.attacks.specialAttacks.SeismicToss;
@@ -50,6 +51,7 @@ import pixelmon.battles.attacks.statusEffects.Freeze;
 import pixelmon.battles.attacks.statusEffects.Infatuated;
 import pixelmon.battles.attacks.statusEffects.Leech;
 import pixelmon.battles.attacks.statusEffects.LightScreen;
+import pixelmon.battles.attacks.statusEffects.LockedInBattle;
 import pixelmon.battles.attacks.statusEffects.Mist;
 import pixelmon.battles.attacks.statusEffects.Paralysis;
 import pixelmon.battles.attacks.statusEffects.Perish;
@@ -138,6 +140,8 @@ public class EffectParser {
 				effect = new Leech();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.LightScreen)
 				effect = new LightScreen();
+			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.LockedInBattle)
+				effect = new LockedInBattle();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Mist)
 				effect = new Mist();
 			if (StatusEffectType.getStatusEffect(effectTypeString) == StatusEffectType.Paralysis)
@@ -244,6 +248,8 @@ public class EffectParser {
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Venoshock)
 				effect = new Venoshock();
 			
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.MilkDrink)
+				effect = new Restore(1);
 		}
 
 		if (hasModifier) {

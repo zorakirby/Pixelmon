@@ -7,7 +7,7 @@ import pixelmon.enums.EnumPotions;
 import pixelmon.storage.PixelmonStorage;
 
 public class ItemPotion extends PixelmonItem {
-	private EnumPotions type;
+	public EnumPotions type;
 
 	public ItemPotion(int par1, EnumPotions type) {
 		super(par1);

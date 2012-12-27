@@ -473,10 +473,12 @@ public class GuiBattle extends GuiContainer {
 
 	boolean isHealing = false;
 
+	int healAmount=0;
+	
 	private void drawChoosePokemon(int mouseX, int mouseY) {
 		isHealing = false;
 		if (mode == BattleMode.ApplyToPokemon && pixelmonToHeal != null) {
-			if (pixelmonToHeal.health >= pixelmonToHeal.hp) {
+			if (pixelmonToHeal.health >= healAmount || pixelmonToHeal.health >= pixelmonToHeal.hp) {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, itemToUse.id, battleControllerIndex, 0));
 				removeItem(itemToUse);
 				mode = BattleMode.Waiting;
@@ -843,6 +845,7 @@ public class GuiBattle extends GuiContainer {
 		if (pokemonToApplyTo != -1) {
 			if (PixelmonItems.getItem(itemToUse.id) instanceof ItemPotion) {
 				pixelmonToHeal = ServerStorageDisplay.pokemon[pokemonToApplyTo];
+				healAmount = pixelmonToHeal.health + ((ItemPotion)PixelmonItems.getItem(itemToUse.id)).type.getHealAmount();
 				Timer timer = new Timer();
 				timer.scheduleAtFixedRate(new HealerTask(), 100, 100);
 			}
@@ -876,6 +879,7 @@ public class GuiBattle extends GuiContainer {
 						&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
 					if (bagSection == bagSection.Pokeballs) {
 						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id, battleControllerIndex, 0));
+						mode = BattleMode.Waiting;
 					} else {
 						itemToUse = ClientBattleManager.bagStore.get(i);
 						mode = BattleMode.ApplyToPokemon;
@@ -883,7 +887,6 @@ public class GuiBattle extends GuiContainer {
 					ClientBattleManager.bagStore.get(i).count--;
 					if (ClientBattleManager.bagStore.get(i).count <= 0)
 						ClientBattleManager.bagStore.remove(i);
-					mode = BattleMode.Waiting;
 				}
 			}
 		}

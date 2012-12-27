@@ -15,6 +15,7 @@ public enum SpecialAttackType {
 	HornDrill,
 	JumpKick,
 	Magnitude,
+	MilkDrink,
 	NightShade,
 	PainSplit,
 	Payday,
@@ -22,6 +23,7 @@ public enum SpecialAttackType {
 	Punishment,
 	PsychUp,
 	Psywave,
+	Restore,
 	Return,
 	Reversal,
 	SeismicToss,
@@ -44,6 +46,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("HornDrill")) return SpecialAttackType.HornDrill;
 		if (string.equalsIgnoreCase("JumpKick")) return SpecialAttackType.JumpKick;
 		if (string.equalsIgnoreCase("Magnitude")) return SpecialAttackType.Magnitude;
+		if (string.equalsIgnoreCase("MilkDrink")) return SpecialAttackType.MilkDrink;
 		if (string.equalsIgnoreCase("NightShade")) return SpecialAttackType.NightShade;
 		if (string.equalsIgnoreCase("PainSplit")) return SpecialAttackType.PainSplit;
 		if (string.equalsIgnoreCase("Payday")) return SpecialAttackType.Payday;
@@ -51,6 +54,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Punishment")) return SpecialAttackType.Punishment;
 		if (string.equalsIgnoreCase("PsychUp")) return SpecialAttackType.PsychUp;
 		if (string.equalsIgnoreCase("Psywave")) return SpecialAttackType.Psywave;
+		if (string.equalsIgnoreCase("Restore")) return SpecialAttackType.Restore;
 		if (string.equalsIgnoreCase("Return")) return SpecialAttackType.Return;
 		if (string.equalsIgnoreCase("Reversal")) return SpecialAttackType.Reversal;
 		if (string.equalsIgnoreCase("SeismicToss")) return SpecialAttackType.SeismicToss;
@@ -75,6 +79,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("HiddenPower")) return true;
 		if (string.equalsIgnoreCase("HornDrill")) return true;
 		if (string.equalsIgnoreCase("JumpKick")) return true;
+		if (string.equalsIgnoreCase("MilkDrink")) return true;
 		if (string.equalsIgnoreCase("NightShade")) return true;
 		if (string.equalsIgnoreCase("PainSplit")) return true;
 		if (string.equalsIgnoreCase("Payday")) return true;
@@ -82,6 +87,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Punishment")) return true;
 		if (string.equalsIgnoreCase("PsychUp")) return true;
 		if (string.equalsIgnoreCase("Psywave")) return true;
+		if (string.equalsIgnoreCase("Restore")) return true;
 		if (string.equalsIgnoreCase("Return")) return true;
 		if (string.equalsIgnoreCase("Reversal")) return true;
 		if (string.equalsIgnoreCase("SeismicToss")) return true;

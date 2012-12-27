@@ -27,30 +27,22 @@ public class DatabaseHelper {
 	public static boolean has() {
 		try {
 			File databaseDir = new File(DownloadHelper.getDir(), "database");
-			// if(!databaseDir.exists())
-			// {
-			// databaseDir.mkdir();
-			// DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
-			// DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar",
-			// sqliteURL);
-			// }
-			// else
-			// {
-			File databaseFile = new File(databaseDir, "Pixelmon.db");
-			// if(!databaseFile.exists())
-			// {
-			// DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
-			// }
-			// else
-			// {
-			// checkVersion();
-			// }
-			File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
-			// if (!sqlitejar.exists())
-			// DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar",
-			// sqliteURL);
-			((ModClassLoader) Loader.instance().getModClassLoader()).addFile(sqlitejar);
-			// }
+			if (!databaseDir.exists()) {
+				databaseDir.mkdir();
+				DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+				DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
+			} else {
+				File databaseFile = new File(databaseDir, "Pixelmon.db");
+				if (!databaseFile.exists()) {
+					DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+				} else {
+					checkVersion();
+				}
+				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
+				if (!sqlitejar.exists())
+					DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
+				((ModClassLoader) Loader.instance().getModClassLoader()).addFile(sqlitejar);
+			}
 
 			Class.forName("org.sqlite.JDBC");
 			Connection c = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
@@ -88,8 +80,8 @@ public class DatabaseHelper {
 		}
 	}
 
-	public static String databaseURL = "http://www.pixelmon-mod.com/4downloads/files/Pixelmon.db";
-	public static String sqliteURL = "http://www.pixelmon-mod.com/4downloads/files/sqlite-jdbc-3.7.2.jar";
+	public static String databaseURL = "http://www.mediafire.com/download.php?dd6e8urdhkq9lm8";
+	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
 	/**
 	 * Gets a <code>Statement</code> from the given <code>Connection</code>

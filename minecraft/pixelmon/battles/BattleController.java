@@ -309,8 +309,15 @@ public class BattleController {
 	private void takeTurn(IBattleParticipant user, IBattleParticipant target, Attack a) {
 		boolean isP1 = user == participant1;
 		boolean isP2 = user == participant2;
-		if ((isP1 && pixelmon1WillTryFlee) || (isP2 && pixelmon2WillTryFlee))
+		
+		if ((isP1 && pixelmon1WillTryFlee && !user.currentPokemon().isLockedInBattle) 
+				|| (isP2 && pixelmon2WillTryFlee && !target.currentPokemon().isLockedInBattle))
 			calculateEscape(user.currentPokemon(), target.currentPokemon());
+		else if((isP1 && pixelmon1WillTryFlee && user.currentPokemon().isLockedInBattle)) 
+				ChatHandler.sendBattleMessage(user.currentPokemon().getOwner(), "Cannot escape!");
+		else if((isP2 && pixelmon2WillTryFlee && target.currentPokemon().isLockedInBattle))
+				ChatHandler.sendBattleMessage(target.currentPokemon().getOwner(), "Cannot escape!");
+							
 		else if (pixelmon1IsSwitching && isP1) {
 			pixelmon1IsSwitching = false;
 		} else if (pixelmon2IsSwitching && isP2) {
@@ -325,6 +332,8 @@ public class BattleController {
 	}
 
 	private void calculateEscape(EntityPixelmon user, EntityPixelmon target) {
+
+		
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " tries to run away");
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.SpeedModifier) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.SpeedModifier) / 100;
@@ -332,12 +341,20 @@ public class BattleController {
 			B = 255;
 		float C = player1EscapeAttempts++;
 		float F = A * 32 / B + 30 * C;
+		
 		if (F > 255 || new Random().nextInt(255) < F) {
+			if(!user.isLockedInBattle){
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Running can escape");
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " escaped!");
 			endBattle(target == participant1.currentPokemon());
+			}
+			else {
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Its locked in battle!");
+			}
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " couldn't escape!");
 	}
+	
 
 	private void awardExp(ArrayList<Integer> users, EntityPixelmon entityPixelmon, EntityPixelmon target) {
 		ArrayList<Integer> doneUsers = new ArrayList<Integer>();

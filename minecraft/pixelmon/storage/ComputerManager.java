@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import pixelmon.DownloadHelper;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -80,7 +82,6 @@ public class ComputerManager{
 					i--;
 				}
 			}
-			// CompressedStreamTools.write(data, getFile());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,7 +98,7 @@ public class ComputerManager{
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
-		return "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
+		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
 	}
 
 	
