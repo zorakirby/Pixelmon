@@ -26,6 +26,7 @@ public class PixelmonConfig {
 	public static int chanceOfNoPokemon;
 
 	public static boolean scaleModelsUp;
+	public static boolean pokemonDropsEnabled = true;
 
 	public static int idTrainers = 199;
 	public static int idPixelmon = 200;
@@ -41,6 +42,7 @@ public class PixelmonConfig {
 		maxPokemonPerChunk = config.get("general", "Max number of pokemon per chunk", 4).getInt(4);
 		chanceOfNoPokemon = config.get("general", "Percent chance of no pokemon in chunk", 30).getInt(20);
 		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
+		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled", true).getBoolean(true);
 		idTrainers = config.get("IDs", "Trainer ID", 199).getInt(199);
 		idPixelmon = config.get("IDs", "Pixelmon ID", 200).getInt(200);
 		idPokeball = config.get("IDs", "Pokeball ID", 201).getInt(201);

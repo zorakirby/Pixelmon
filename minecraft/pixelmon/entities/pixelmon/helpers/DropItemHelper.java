@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon.helpers;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.Entity8HoldsItems;
 
@@ -16,7 +17,7 @@ public class DropItemHelper {
 
 	public int getDropItemID() {
 		String droppedItem = pixelmon.baseStats.droppedItem;
-		if (pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
+		if (!PixelmonConfig.pokemonDropsEnabled || pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
 			return 0;
 		if (droppedItem == null)
 			return 0;
