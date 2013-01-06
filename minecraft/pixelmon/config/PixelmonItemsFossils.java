@@ -111,23 +111,23 @@ public class PixelmonItemsFossils {
 		coverFossil = new ItemPokemonFossil(coverFossilID, "Tirtouga", "CoverFossil").setItemName("coverFossil").setIconIndex(122);
 		plumeFossil = new ItemPokemonFossil(plumeFossilID, "Archen", "PlumeFossil").setItemName("plumeFossil").setIconIndex(138);
 
-		helixFossilUncovered = new ItemFossilUncovered(helixFossilUncoveredID).setItemName("helixFossilUncovered").setIconIndex(11)
+		helixFossilUncovered = new ItemFossilUncovered(helixFossilUncoveredID,  "Omanyte", "HelixFossil").setItemName("helixFossilUncovered").setIconIndex(11)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		domeFossilUncovered = new ItemFossilUncovered(domeFossilUncoveredID).setItemName("domeFossilUncovered").setIconIndex(27)
+		domeFossilUncovered = new ItemFossilUncovered(domeFossilUncoveredID, "Kabuto", "DomeFossil").setItemName("domeFossilUncovered").setIconIndex(27)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		oldAmberUncovered = new ItemFossilUncovered(oldAmberUncoveredID).setItemName("oldAmberUncovered").setIconIndex(43)
+		oldAmberUncovered = new ItemFossilUncovered(oldAmberUncoveredID, "Aerodactyl", "OldAmber").setItemName("oldAmberUncovered").setIconIndex(43)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		rootFossilUncovered = new ItemFossilUncovered(rootFossilUncoveredID).setItemName("rootFossilUncovered").setIconIndex(59)
+		rootFossilUncovered = new ItemFossilUncovered(rootFossilUncoveredID, "Lileep", "RootFossil").setItemName("rootFossilUncovered").setIconIndex(59)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		clawFossilUncovered = new ItemFossilUncovered(clawFossilUncoveredID).setItemName("clawFossilUncovered").setIconIndex(75)
+		clawFossilUncovered = new ItemFossilUncovered(clawFossilUncoveredID, "Anorith", "ClawFossil").setItemName("clawFossilUncovered").setIconIndex(75)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		skullFossilUncovered = new ItemFossilUncovered(skullFossilUncoveredID).setItemName("skullFossilUncovered").setIconIndex(91)
+		skullFossilUncovered = new ItemFossilUncovered(skullFossilUncoveredID, "Cranidos", "SkullFossil").setItemName("skullFossilUncovered").setIconIndex(91)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		armorFossilUncovered = new ItemFossilUncovered(armorFossilUncoveredID).setItemName("armorFossilUncovered").setIconIndex(107)
+		armorFossilUncovered = new ItemFossilUncovered(armorFossilUncoveredID, "Shieldon", "ArmorFossil").setItemName("armorFossilUncovered").setIconIndex(107)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		coverFossilUncovered = new ItemFossilUncovered(coverFossilUncoveredID).setItemName("coverFossilUncovered").setIconIndex(123)
+		coverFossilUncovered = new ItemFossilUncovered(coverFossilUncoveredID, "Tirtouga", "CoverFossil").setItemName("coverFossilUncovered").setIconIndex(123)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		plumeFossilUncovered = new ItemFossilUncovered(plumeFossilUncoveredID).setItemName("plumeFossilUncovered").setIconIndex(139)
+		plumeFossilUncovered = new ItemFossilUncovered(plumeFossilUncoveredID, "Archen", "PlumeFossil").setItemName("plumeFossilUncovered").setIconIndex(139)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
 
 	}

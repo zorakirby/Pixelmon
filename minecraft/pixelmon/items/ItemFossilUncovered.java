@@ -1,9 +1,19 @@
 package pixelmon.items;
 
-public class ItemFossilUncovered extends PixelmonItem {
+import java.util.List;
 
-	public ItemFossilUncovered(int par1) {
-		super(par1);
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+
+public class ItemFossilUncovered extends ItemPokemonFossil {
+
+	public ItemFossilUncovered(int Id, String pokemon, String modelName) {
+		super(Id, pokemon, modelName);
+	}
+	
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 	}
 
+
+	
 }
