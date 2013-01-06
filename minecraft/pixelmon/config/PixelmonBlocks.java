@@ -64,15 +64,15 @@ public class PixelmonBlocks {
 	public static void load(Configuration configuration) {
 		pokemonHealerActiveId = Integer.parseInt(configuration.getBlock("PokemonHealerActive", 300).value);
 		pokemonHealerIdleId = Integer.parseInt(configuration.getBlock("PokemonHealerIdle", 301).value);
-		thunderStoneOreId = Integer.parseInt(configuration.getBlock("ThunderStoneOre", 302).value);
-		leafStoneOreId = Integer.parseInt(configuration.getBlock("LeafStoneOre", 303).value);
-		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 304).value);
-		fireStoneOreId = Integer.parseInt(configuration.getBlock("FireStoneOre", 305).value);
-		bauxiteId = Integer.parseInt(configuration.getBlock("Bauxite Ore", 306).value);
+		thunderStoneOreId = Integer.parseInt(configuration.getBlock("ThunderStoneOre", 221).value);
+		leafStoneOreId = Integer.parseInt(configuration.getBlock("LeafStoneOre", 222).value);
+		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 223).value);
+		fireStoneOreId = Integer.parseInt(configuration.getBlock("FireStoneOre", 224).value);
+		bauxiteId = Integer.parseInt(configuration.getBlock("Bauxite Ore", 220).value);
 		pcId = Integer.parseInt(configuration.getBlock("PC", 307).value);
 		anvilId = Integer.parseInt(configuration.getBlock("Anvil", 308).value);
 		fossilMachineId = Integer.parseInt(configuration.getBlock("Fossil Machine", 309).value);
-		fossilId = Integer.parseInt(configuration.getBlock("Fossil", 310).value);
+		fossilId = Integer.parseInt(configuration.getBlock("Fossil", 225).value);
 		tradeMachineId = Integer.parseInt(configuration.getBlock("Trade Machine", 311).value);
 		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
