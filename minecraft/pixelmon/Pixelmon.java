@@ -20,9 +20,7 @@ import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
 import pixelmon.pokedex.Pokedex;
-import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
-import pixelmon.spawning.PixelmonWaterSpawner;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
@@ -110,8 +108,6 @@ public class Pixelmon {
 
 		// GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
-//		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
-//		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
@@ -119,7 +115,7 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
 		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
-		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
+		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
 		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
 		proxy.registerTickHandlers();
 
