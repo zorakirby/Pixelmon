@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -27,6 +28,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingSpecialSpawnEvent;
@@ -57,21 +59,18 @@ public class PixelmonWaterSpawner implements ITickHandler {
 	 * eligibleChunksForSpawning. pars: the world, hostileCreatures,
 	 * passiveCreatures. returns number of eligible chunks.
 	 */
-	public static final int findChunksForSpawning(WorldServer par0WorldServer) {
+	public static final void findChunksForSpawning(WorldServer world) {
 		eligibleChunksForSpawning.clear();
-		int var3;
-		int var6;
-
-		for (var3 = 0; var3 < par0WorldServer.playerEntities.size(); ++var3) {
-			EntityPlayer var4 = (EntityPlayer) par0WorldServer.playerEntities.get(var3);
-			int var5 = MathHelper.floor_double(var4.posX / 16.0D);
-			var6 = MathHelper.floor_double(var4.posZ / 16.0D);
+		for (int i = 0; i < world.playerEntities.size(); ++i) {
+			EntityPlayer player = (EntityPlayer) world.playerEntities.get(i);
+			int x = MathHelper.floor_double(player.posX / 16.0D);
+			int z = MathHelper.floor_double(player.posZ / 16.0D);
 			byte var7 = 8;
 
-			for (int var8 = -var7; var8 <= var7; ++var8) {
-				for (int var9 = -var7; var9 <= var7; ++var9) {
-					boolean var10 = var8 == -var7 || var8 == var7 || var9 == -var7 || var9 == var7;
-					ChunkCoordIntPair var11 = new ChunkCoordIntPair(var8 + var5, var9 + var6);
+			for (int j = -var7; j <= var7; ++j) {
+				for (int k = -var7; k <= var7; ++k) {
+					boolean var10 = j == -var7 || j == var7 || k == -var7 || k == var7;
+					ChunkCoordIntPair var11 = new ChunkCoordIntPair(j + x, k + z);
 
 					if (!var10) {
 						eligibleChunksForSpawning.put(var11, Boolean.valueOf(false));
@@ -82,96 +81,94 @@ public class PixelmonWaterSpawner implements ITickHandler {
 			}
 		}
 
-		var3 = 0;
-		ChunkCoordinates var31 = par0WorldServer.getSpawnPoint();
+	}
 
-		if (countWaterPokemonEntities(par0WorldServer) <= EnumCreatureType.waterCreature.getMaxNumberOfCreature() * eligibleChunksForSpawning.size() / 256) {
-			Iterator var35 = eligibleChunksForSpawning.keySet().iterator();
+	public static void doLandSpawning(WorldServer world) {
+		if (countLandPokemonEntities(world) <= EnumCreatureType.creature.getMaxNumberOfCreature() * eligibleChunksForSpawning.size() / 256) {
+			ChunkCoordinates chunkCoords = world.getSpawnPoint();
+			Iterator chunkIterator = eligibleChunksForSpawning.keySet().iterator();
 			ArrayList<ChunkCoordIntPair> tmp = new ArrayList(eligibleChunksForSpawning.keySet());
 			Collections.shuffle(tmp);
-			var35 = tmp.iterator();
-			label108:
+			chunkIterator = tmp.iterator();
+			label110:
 
-			while (var35.hasNext()) {
-				ChunkCoordIntPair var37 = (ChunkCoordIntPair) var35.next();
+			while (chunkIterator.hasNext()) {
+				ChunkCoordIntPair ccIntPair = (ChunkCoordIntPair) chunkIterator.next();
 
-				if (!((Boolean) eligibleChunksForSpawning.get(var37)).booleanValue()) {
-					ChunkPosition var36 = getRandomSpawningPointInChunk(par0WorldServer, var37.chunkXPos, var37.chunkZPos);
-					int var12 = var36.x;
-					int var13 = var36.y;
-					int var14 = var36.z;
+				if (!((Boolean) eligibleChunksForSpawning.get(ccIntPair)).booleanValue()) {
+					ChunkPosition chunkPos = getRandomSpawningPointInChunk(world, ccIntPair.chunkXPos, ccIntPair.chunkZPos);
+					int cpX = chunkPos.x;
+					int cpY = chunkPos.y;
+					int cpZ = chunkPos.z;
 
-					if (!par0WorldServer.isBlockNormalCube(var12, var13, var14) && par0WorldServer.getBlockMaterial(var12, var13, var14) == Material.water) {
-						int var15 = 0;
-						int var16 = 0;
+					if (!world.isBlockNormalCube(cpX, cpY, cpZ) && world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
+						int numInChunk = 0;
+						int count = 0;
 
-						while (var16 < 3) {
-							int var17 = var12;
-							int var18 = var13;
-							int var19 = var14;
-							byte var20 = 6;
+						while (count < 3) {
+							int cpXtmp = cpX;
+							int cpYtmp = cpY;
+							int cpZtmp = cpZ;
+							byte rndmMax = 6;
 							String pokemonName = null;
-							int var22 = 0;
+							int count2 = 0;
 
 							while (true) {
-								if (var22 < 4) {
-									label101: {
-										var17 += par0WorldServer.rand.nextInt(var20) - par0WorldServer.rand.nextInt(var20);
-										var18 += par0WorldServer.rand.nextInt(1) - par0WorldServer.rand.nextInt(1);
-										var19 += par0WorldServer.rand.nextInt(var20) - par0WorldServer.rand.nextInt(var20);
+								if (count2 < 4) {
+									label102: {
+										cpXtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
+										cpYtmp += world.rand.nextInt(1) - world.rand.nextInt(1);
+										cpZtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
 
-										if (canWaterPokemonSpawnHere(par0WorldServer, var17, var18, var19)) {
-											float var23 = (float) var17 + 0.5F;
-											float var24 = (float) var18;
-											float var25 = (float) var19 + 0.5F;
+										if (canLandPokemonSpawnHere(world, cpXtmp, cpYtmp, cpZtmp)) {
+											float x = (float) cpXtmp + 0.5F;
+											float y = (float) cpYtmp;
+											float z = (float) cpZtmp + 0.5F;
 
-											if (par0WorldServer.getClosestPlayer((double) var23, (double) var24, (double) var25, 24.0D) == null) {
-												float var26 = var23 - (float) var31.posX;
-												float var27 = var24 - (float) var31.posY;
-												float var28 = var25 - (float) var31.posZ;
-												float var29 = var26 * var26 + var27 * var27 + var28 * var28;
+											if (world.getClosestPlayer((double) x, (double) y, (double) z, 24.0D) == null) {
+												float xd = x - (float) chunkCoords.posX;
+												float yd = y - (float) chunkCoords.posY;
+												float zd = z - (float) chunkCoords.posZ;
+												float d = xd * xd + yd * yd + zd * zd;
 
-												if (var29 >= 576.0F) {
+												if (d >= 576.0F) {
 													if (pokemonName == null) {
-														pokemonName = getRandomCreatureName(par0WorldServer.provider, var17, var18, var19);
+														pokemonName = getRandomLandPokemonName(world.provider, cpXtmp, cpYtmp, cpZtmp);
 
 														if (pokemonName == null) {
-															break label101;
+															break label102;
 														}
 													}
 
-													EntityLiving var38;
+													EntityLiving pokemon;
 
 													try {
-														var38 = PixelmonEntityList.createEntityByName(pokemonName, par0WorldServer);
-													} catch (Exception var30) {
-														var30.printStackTrace();
-														return var3;
+														pokemon = PixelmonEntityList.createEntityByName(pokemonName, world);
+													} catch (Exception e) {
+														e.printStackTrace();
+														return;
 													}
 
-													var38.setLocationAndAngles((double) var23, (double) var24, (double) var25,
-															par0WorldServer.rand.nextFloat() * 360.0F, 0.0F);
+													pokemon.setLocationAndAngles((double) x, (double) y, (double) z, world.rand.nextFloat() * 360.0F, 0.0F);
 
-													if (var38.getCanSpawnHere()) {
-														++var15;
-														par0WorldServer.spawnEntityInWorld(var38);
+													if (pokemon.getCanSpawnHere()) {
+														++numInChunk;
+														world.spawnEntityInWorld(pokemon);
 
-														if (var15 >= var38.getMaxSpawnedInChunk()) {
-															continue label108;
+														if (numInChunk >= pokemon.getMaxSpawnedInChunk()) {
+															continue label110;
 														}
 													}
-
-													var3 += var15;
 												}
 											}
 										}
 
-										++var22;
+										++count2;
 										continue;
 									}
 								}
 
-								++var16;
+								++count;
 								break;
 							}
 						}
@@ -179,8 +176,123 @@ public class PixelmonWaterSpawner implements ITickHandler {
 				}
 			}
 		}
-		return var3;
 
+	}
+
+	public static void doWaterSpawning(WorldServer world) {
+		ChunkCoordinates chunkCoords = world.getSpawnPoint();
+
+		if (countWaterPokemonEntities(world) <= EnumCreatureType.waterCreature.getMaxNumberOfCreature() * eligibleChunksForSpawning.size() / 256) {
+			Iterator chunkIterator = eligibleChunksForSpawning.keySet().iterator();
+			ArrayList<ChunkCoordIntPair> tmp = new ArrayList(eligibleChunksForSpawning.keySet());
+			Collections.shuffle(tmp);
+			chunkIterator = tmp.iterator();
+			label108:
+
+			while (chunkIterator.hasNext()) {
+				ChunkCoordIntPair ccIntPair = (ChunkCoordIntPair) chunkIterator.next();
+
+				if (!((Boolean) eligibleChunksForSpawning.get(ccIntPair)).booleanValue()) {
+					ChunkPosition chunkPos = getRandomSpawningPointInChunk(world, ccIntPair.chunkXPos, ccIntPair.chunkZPos);
+					int cpX = chunkPos.x;
+					int cpY = chunkPos.y;
+					int cpZ = chunkPos.z;
+
+					if (!world.isBlockNormalCube(cpX, cpY, cpZ) && world.getBlockMaterial(cpX, cpY, cpZ) == Material.water) {
+						int numInChunk = 0;
+						int count = 0;
+
+						while (count < 3) {
+							int cpXtmp = cpX;
+							int cpYtmp = cpY;
+							int cpZtmp = cpZ;
+							byte rndmMax = 6;
+							String pokemonName = null;
+							int count2 = 0;
+
+							while (true) {
+								if (count2 < 4) {
+									label101: {
+										cpXtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
+										cpYtmp += world.rand.nextInt(1) - world.rand.nextInt(1);
+										cpZtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
+
+										if (canWaterPokemonSpawnHere(world, cpXtmp, cpYtmp, cpZtmp)) {
+											float x = (float) cpXtmp + 0.5F;
+											float y = (float) cpYtmp;
+											float z = (float) cpZtmp + 0.5F;
+
+											if (world.getClosestPlayer((double) x, (double) y, (double) z, 24.0D) == null) {
+												float xd = x - (float) chunkCoords.posX;
+												float yd = y - (float) chunkCoords.posY;
+												float zd = z - (float) chunkCoords.posZ;
+												float d = xd * xd + yd * yd + zd * zd;
+
+												if (d >= 576.0F) {
+													if (pokemonName == null) {
+														pokemonName = getRandomWaterPokemonName(world.provider, cpXtmp, cpYtmp, cpZtmp);
+
+														if (pokemonName == null) {
+															break label101;
+														}
+													}
+
+													EntityLiving pokemon;
+
+													try {
+														pokemon = PixelmonEntityList.createEntityByName(pokemonName, world);
+													} catch (Exception e) {
+														e.printStackTrace();
+														return;
+													}
+
+													pokemon.setLocationAndAngles((double) x, (double) y, (double) z, world.rand.nextFloat() * 360.0F, 0.0F);
+
+													if (pokemon.getCanSpawnHere()) {
+														++numInChunk;
+														world.spawnEntityInWorld(pokemon);
+
+														if (numInChunk >= pokemon.getMaxSpawnedInChunk()) {
+															continue label108;
+														}
+													}
+												}
+											}
+										}
+
+										++count2;
+										continue;
+									}
+								}
+
+								++count;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * Counts how many entities of an entity class exist in the world. Args:
+	 * entityClass
+	 */
+	public static int countLandPokemonEntities(World world) {
+		int var2 = 0;
+
+		for (int var3 = 0; var3 < world.loadedEntityList.size(); ++var3) {
+			Entity var4 = (Entity) world.loadedEntityList.get(var3);
+
+			if (var4 instanceof EntityPixelmon) {
+				if (((EntityPixelmon) var4).baseStats.creatureType == EnumCreatureType.creature)
+					++var2;
+			}
+		}
+
+		return var2;
 	}
 
 	/**
@@ -205,9 +317,18 @@ public class PixelmonWaterSpawner implements ITickHandler {
 	/**
 	 * only spawns creatures allowed by the chunkProvider
 	 */
-	public static String getRandomCreatureName(WorldProvider worldProvider, int par2, int par3, int par4) {
+	public static String getRandomWaterPokemonName(WorldProvider worldProvider, int par2, int par3, int par4) {
 		BiomeGenBase b = worldProvider.worldObj.getBiomeGenForCoords(par2, par4);
 		List<SpawnData> spawnData = SpawnRegistry.getWaterSpawnsForBiome(b);
+		return spawnData != null && !spawnData.isEmpty() ? ((SpawnData) WeightedRandom.getRandomItem(rand, spawnData)).name : null;
+	}
+
+	/**
+	 * only spawns creatures allowed by the chunkProvider
+	 */
+	public static String getRandomLandPokemonName(WorldProvider worldProvider, int par2, int par3, int par4) {
+		BiomeGenBase b = worldProvider.worldObj.getBiomeGenForCoords(par2, par4);
+		List<SpawnData> spawnData = SpawnRegistry.getSpawnsForBiome(b);
 		return spawnData != null && !spawnData.isEmpty() ? ((SpawnData) WeightedRandom.getRandomItem(rand, spawnData)).name : null;
 	}
 
@@ -217,6 +338,17 @@ public class PixelmonWaterSpawner implements ITickHandler {
 	 */
 	public static boolean canWaterPokemonSpawnHere(World par1World, int par2, int par3, int par4) {
 		return par1World.getBlockMaterial(par2, par3, par4).isLiquid() && !par1World.isBlockNormalCube(par2, par3 + 1, par4);
+	}
+
+	public static boolean canLandPokemonSpawnHere(World par1World, int par2, int par3, int par4) {
+		if (!par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4)) {
+			return false;
+		} else {
+			int var5 = par1World.getBlockId(par2, par3 - 1, par4);
+			boolean spawnBlock = (Block.blocksList[var5] != null && Block.blocksList[var5].canCreatureSpawn(EnumCreatureType.creature, par1World, par2, par3 - 1, par4));
+			return spawnBlock && var5 != Block.bedrock.blockID && !par1World.isBlockNormalCube(par2, par3, par4) && !par1World.getBlockMaterial(par2, par3, par4).isLiquid()
+					&& !par1World.isBlockNormalCube(par2, par3 + 1, par4);
+		}
 	}
 
 	/**
@@ -254,6 +386,8 @@ public class PixelmonWaterSpawner implements ITickHandler {
 	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
 		PixelmonSpawner.spawnTick(MinecraftServer.getServer().worldServerForDimension(0));
 		findChunksForSpawning(MinecraftServer.getServer().worldServerForDimension(0));
+		doWaterSpawning(MinecraftServer.getServer().worldServerForDimension(0));
+		doLandSpawning(MinecraftServer.getServer().worldServerForDimension(0));
 	}
 
 	@Override
