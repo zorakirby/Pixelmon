@@ -144,6 +144,7 @@ public class DatabaseStats {
 				float rz = rs.getFloat("RidingOffsetZ");
 				if (!rs.wasNull())
 					store.ridingOffsetZ = rz;
+				store.maxGroupSize = rs.getInt("MaxGroupSize");
 			}
 			conn.close();
 			return store;

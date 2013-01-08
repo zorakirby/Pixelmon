@@ -154,10 +154,10 @@ public class EntityPixelmon extends Entity9HasSounds {
 						return true;
 					}
 				}
-				if(itemstack.getItem() instanceof ItemPokedex)
-				{
+				if (itemstack.getItem() instanceof ItemPokedex) {
 					ItemPokedex pokedex = (ItemPokedex) itemstack.getItem();
-					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(Pokedex.nameToID(getName()), DexRegisterStatus.seen);
+					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(Pokedex.nameToID(getName()),
+							DexRegisterStatus.seen);
 					pokedex.openPokedexGui(Pokedex.nameToID(getName()), player, worldObj);
 				}
 
@@ -216,7 +216,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
-		boolean[] conds = { true, lightLevel > 8 };
+		boolean[] conds = { true, true };
 		for (SpawnConditions s : baseStats.spawnConditions) {
 			if (s == SpawnConditions.Grass && blockId != Block.grass.blockID)
 				conds[s.index] = false;
@@ -237,8 +237,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 		if (Pixelmon.freeze)
 			return;
 		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
-			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness && worldObj.isDaytime())
-				setDead();
+			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
+				if (worldObj.getWorldTime() < 12000 && this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)))
+					setDead();
 			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight && !worldObj.isDaytime())
 				setDead();
 		}
@@ -281,7 +282,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void unloadEntity() {
 		super.unloadEntity();
-			
+
 		ArrayList<Entity> list = new ArrayList<Entity>();
 		list.add(this);
 		worldObj.unloadEntities(list);

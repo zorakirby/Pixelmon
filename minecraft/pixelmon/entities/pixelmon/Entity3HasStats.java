@@ -257,4 +257,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		else
 			doesLevel = true;
 	}
+
+	@Override
+	public int getMaxSpawnedInChunk() {
+		if (baseStats == null)
+			return 1;
+		return baseStats.maxGroupSize;
+	}
 }
