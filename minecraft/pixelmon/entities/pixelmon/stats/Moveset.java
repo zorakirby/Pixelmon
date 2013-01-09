@@ -11,71 +11,40 @@ import pixelmon.database.DatabaseMoves;
 public class Moveset extends AbstractList<Attack>
 implements List<Attack>, RandomAccess, Cloneable
 {
+	private Attack[] attacks = new Attack[4];
 	
-	private Attack move1;
-	private Attack move2;
-	private Attack move3;
-	private Attack move4;
-	
-	public Moveset()
-	{
-	}
+	public Moveset() {}
 	
 	public Moveset(int index, Attack a)
 	{
-		this();
-		move1 = a;
+		attacks[0] = a;
 	}
 	
 	public Attack get(int index) 
 	{
-		switch(index)
-		{
-			case 0: return move1;
-			case 1: return move2;
-			case 2: return move3;
-			case 3: return move4;
-			default: return null;
-		}
+		if (index < 0 || index > 3) return null;
+		return attacks[index];
 	}
 
 	public boolean add(Attack a)
 	{
-		if (size() ==0) move1=a;
-		else if (size() ==1) move2=a;
-		else if (size() ==2) move3=a;
-		else if (size() ==3) move4=a;
-		else return false;
+		if (size() >= 4) return false;
+		attacks[size()] = a;
 		return true;
 	}
 	
 	public Attack set(int index, Attack a)
 	{
-		Attack a1 = get(index);
-		switch(index)
-		{
-			case 0: 
-				move1 = a;
-				break;
-			case 1: 
-				move2 = a;
-				break;
-			case 2: 
-				move3 = a;
-				break;
-			case 3: 
-				move4 = a;
-				break;
-		}
-		return a1;
+		Attack retval = attacks[index];
+		attacks[index] = a;
+		return retval;
 	}
 	
 	public void swap(int index, int index2)
 	{
-		Attack a = get(index);
-		Attack a1 = get(index2);
-		set(index, a1);
-		set(index2, a);
+		Attack a = attacks[index];
+		attacks[index] = attacks[index2];
+		attacks[index2] = a;
 	}
 	
 	public Attack remove(int index)
@@ -89,23 +58,21 @@ implements List<Attack>, RandomAccess, Cloneable
 	{
 		if(!(o instanceof Attack))
 			return false;
-		boolean b = false;
-		for(int i = 1; i < 5; i++)
-		{
-			b = isAt(i, (Attack) o);
-			if(b)
-				remove(i);
+		for (int i = 0; i < this.size(); i++){
+			if (attacks[i] == (Attack)o) {
+				attacks[i] = null;
+				return true;
+			}
 		}
-		return b;
+		return false;
 	}
 	
 	public int size() 
 	{
-		int count=0;
-		if (move1!=null) count++;
-		if (move2!=null) count++;
-		if (move3!=null) count++;
-		if (move4!=null) count++;
+		int count = 0;
+		for (int i = 0; i < 4; i++){
+			if(attacks[i] != null) count++;
+		}
 		return count;
 	}
 	
@@ -116,39 +83,25 @@ implements List<Attack>, RandomAccess, Cloneable
 	
 	public boolean isAt(int index, Attack a)
 	{
-		if(isEmpty()) 
-			return false;
-		if(!contains(a))
-			return false;
-		switch(index)
-		{
-			case 0: return move1 == a;
-			case 1: return move2 == a;
-			case 2: return move3 == a;
-			case 3: return move4 == a;
-		}
-		return false;
+		if (isEmpty()) return false;
+		if (!contains(a)) return false;
+		return attacks[index] == a;
 	}
 	
 	public boolean contains(Object o)
 	{
-		if(isEmpty())
-			return false;
-		if(!(o instanceof Attack))
-			return false;
-		Attack a = (Attack) o;
-		return move1 == a ||
-			   move2 == a ||
-			   move3 == a ||
-			   move4 == a;
+		if (isEmpty()) return false;
+		if (o instanceof Attack){
+			for (int i = 0; i < this.size(); i ++){
+				if (attacks[i] == (Attack)o) return true;
+			}
+		}
+		return false;
 	}
 	
 	public void clear()
 	{
-		move1 = null;
-		move2 = null;
-		move3 = null;
-		move4 = null;
+		attacks = new Attack[4];
 	}
 
 	public void writeToNBT(NBTTagCompound var1) {
