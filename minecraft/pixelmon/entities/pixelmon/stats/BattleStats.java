@@ -3,218 +3,177 @@ package pixelmon.entities.pixelmon.stats;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class BattleStats {
-	public int Accuracy;
-	public int Evasion;
-	public int AttackModifier;
-	public int DefenceModifier;
-	public int SpecialAttackModifier;
-	public int SpecialDefenceModifier;
-	public int SpeedModifier;
+	public int Accuracy, Evasion, AttackModifier, DefenceModifier, SpecialAttackModifier, SpecialDefenceModifier, SpeedModifier;
+	private int[] stages = new int[7];
 	
 	public void setIsParalyzed(){
 		SpeedModifier/=4;
 	}
+	
 	public void setNotParalyzed(){
 		SpeedModifier*=4;
 	}
 	
-	public boolean IncreaseAccuracy(int Amount){
-		int oldVal = Accuracy;
-		for (int i =0; i < Amount; i++){
-			Accuracy = increaseAccuracyOrEvasion(Accuracy);
-		}
-		if (oldVal== Accuracy) return false;
-		return true;
+	public boolean IncreaseAccuracy(int amount){
+		return IncreaseStat(amount, "Accuracy");
 	}
 
-	public boolean DecreaseAccuracy(int Amount){
-		int oldVal=Accuracy;
-		for (int i = 0; i < Amount; i++)
-			Accuracy = decreaseAccuracyOrEvasion(Accuracy);
-		if (oldVal== Accuracy) return false;
-		return true;
+	public boolean DecreaseAccuracy(int amount){
+		return DecreaseStat(amount, "Accuracy");
 	}
 	
-	public boolean IncreaseEvasion(int Amount){
-		int oldVal= Evasion;
-		for (int i =0; i < Amount; i++){
-			Evasion = increaseAccuracyOrEvasion(Evasion);
-		}
-		if (oldVal== Evasion) return false;
-		return true;
+	public boolean IncreaseEvasion(int amount){
+		return IncreaseStat(amount, "Evasion");
 	}
 
-	public boolean DecreaseEvasion(int Amount){
-		int oldVal=Evasion;
-		for (int i = 0; i < Amount; i++)
-			Evasion = decreaseAccuracyOrEvasion(Evasion);
-		if (oldVal== Evasion) return false;
-		return true;
-
+	public boolean DecreaseEvasion(int amount){
+		return DecreaseStat(amount, "Evasion");
 	}
 	
-	public boolean IncreaseAttack(int Amount){
-		int oldVal = AttackModifier;
-		for (int i =0; i < Amount; i++){
-			AttackModifier = increaseBattleStat(AttackModifier);
-		}
-		if (oldVal== AttackModifier) return false;
-		return true;
+	public boolean IncreaseAttack(int amount){
+		return IncreaseStat(amount, "AttackModifier");
 	}
 	
-	public boolean DecreaseAttack(int Amount){
-		int oldVal = AttackModifier;
-		for (int i =0; i < Amount; i++){
-			AttackModifier = decreaseBattleStat(AttackModifier);
-		}
-		if (oldVal== AttackModifier) return false;
-		return true;
+	public boolean DecreaseAttack(int amount){
+		return DecreaseStat(amount, "AttackModifier");
 	}
 	
-	public boolean IncreaseDefence(int Amount){
-		int oldVal = DefenceModifier;
-		for (int i =0; i < Amount; i++){
-			DefenceModifier = increaseBattleStat(DefenceModifier);
-		}
-		if (oldVal== DefenceModifier) return false;
-		return true;
-
+	public boolean IncreaseDefence(int amount){
+		return IncreaseStat(amount, "DefenceModifier");
 	}
 	
-	public boolean DecreaseDefence(int Amount){
-		int oldVal = DefenceModifier;
-		for (int i =0; i < Amount; i++){
-			DefenceModifier = decreaseBattleStat(DefenceModifier);
-		}
-		if (oldVal== DefenceModifier) return false;
-		return true;
+	public boolean DecreaseDefence(int amount){
+		return DecreaseStat(amount, "DefenceModifier");
 	}
 	
-	public boolean IncreaseSpecialAttack(int Amount){
-		int oldVal = SpecialAttackModifier;
-		for (int i =0; i < Amount; i++){
-			SpecialAttackModifier = increaseBattleStat(SpecialAttackModifier);
-		}
-		if (oldVal== SpecialAttackModifier) return false;
-		return true;
-
+	public boolean IncreaseSpecialAttack(int amount){
+		return IncreaseStat(amount, "SpecialAttackModifier");
 	}
 	
-	public boolean DecreaseSpecialAttack(int Amount){
-		int oldVal = SpecialAttackModifier;
-		for (int i =0; i < Amount; i++){
-			SpecialAttackModifier = decreaseBattleStat(SpecialAttackModifier);
-		}
-		if (oldVal== SpecialAttackModifier) return false;
-		return true;
+	public boolean DecreaseSpecialAttack(int amount){
+		return DecreaseStat(amount, "SpecialAttackModifier");
 	}
 		
-	public boolean IncreaseSpecialDefence(int Amount){
-		int oldVal = SpecialDefenceModifier;
-		for (int i =0; i < Amount; i++){
-			SpecialDefenceModifier = increaseBattleStat(SpecialDefenceModifier);
-		}
-		if (oldVal== SpecialDefenceModifier) return false;
-		return true;
+	public boolean IncreaseSpecialDefence(int amount){
+		return IncreaseStat(amount, "SpecialDefenceModifier");
 	}
 	
-	public boolean DecreaseSpecialDefence(int Amount){
-		int oldVal = SpecialDefenceModifier;
-		for (int i =0; i < Amount; i++){
-			SpecialDefenceModifier = decreaseBattleStat(SpecialDefenceModifier);
-		}
-		if (oldVal== SpecialDefenceModifier) return false;
-		return true;
+	public boolean DecreaseSpecialDefence(int amount){
+		return DecreaseStat(amount, "SpecialDefenceModifier");
 	}
 	
-	public boolean IncreaseSpeed(int Amount){
-		int oldVal = SpeedModifier;
-		for (int i =0; i < Amount; i++){
-			SpeedModifier = increaseBattleStat(SpeedModifier);
-		}
-		if (oldVal== SpeedModifier) return false;
-		return true;
-
+	public boolean IncreaseSpeed(int amount){
+		return IncreaseStat(amount, "SpeedModifier");
 	}
 	
-	public boolean DecreaseSpeed(int Amount){
-		int oldVal = SpeedModifier;
-		for (int i =0; i < Amount; i++){
-			SpeedModifier = decreaseBattleStat(SpeedModifier);
-		}
-		if (oldVal== SpeedModifier) return false;
-		return true;
+	public boolean DecreaseSpeed(int amount){
+		return DecreaseStat(amount, "SpeedModifier");
 	}
 	
 	public BattleStats(){
 		clearBattleStats();
 	}
 	
-	private int increaseBattleStat(int initialValue){
-		if (initialValue==25) return 29;
-		if (initialValue==29) return 33;
-		if (initialValue==33) return 40;
-		if (initialValue==40) return 50;
-		if (initialValue==50) return 67;
-		if (initialValue==67) return 100;
-		if (initialValue==100) return 150;
-		if (initialValue==150) return 200;
-		if (initialValue==200) return 250;
-		if (initialValue==250) return 300;
-		if (initialValue==300) return 350;
-		if (initialValue==350) return 400;
-		if (initialValue==400) return 400;
-		return initialValue;
-	}
-	private int increaseAccuracyOrEvasion(int initialValue){
-		if (initialValue==33) return 39;
-		if (initialValue==38) return 43;
-		if (initialValue==43) return 50;
-		if (initialValue==50) return 60;
-		if (initialValue==60) return 75;
-		if (initialValue==75) return 100;
-		if (initialValue==100) return 133;
-		if (initialValue==133) return 167;
-		if (initialValue==167) return 200;
-		if (initialValue==200) return 233;
-		if (initialValue==233) return 267;
-		if (initialValue==267) return 300;
-		if (initialValue==300) return 300;
-		return initialValue;
+	/**
+	 * Gets the new value of the stat. Specific to Accuracy or Evasion
+	 * @param stage - The currrent stage of the stat (bounds of -6 to 6)
+	 * @return The new value for the stat
+	 */
+	private int GetAccOrEva(double stage){		
+		if (stage < 1) return (int) Math.round((3 / (Math.abs(stage) + 3)) * 100);
+		else return (int) Math.round(((Math.abs(stage) + 3) / 3) * 100);
 	}
 	
-	private int decreaseBattleStat(int initialValue){
-		if (initialValue==25) return 25;
-		if (initialValue==29) return 25;
-		if (initialValue==33) return 29;
-		if (initialValue==40) return 33;
-		if (initialValue==50) return 40;
-		if (initialValue==67) return 50;
-		if (initialValue==100) return 67;
-		if (initialValue==150) return 100;
-		if (initialValue==200) return 150;
-		if (initialValue==250) return 200;
-		if (initialValue==300) return 250;
-		if (initialValue==350) return 300;
-		if (initialValue==400) return 350;
-		return initialValue;
+	/**
+	 * Gets the new value of the stat
+	 * @param stage - The currrent stage of the stat (bounds of -6 to 6)
+	 * @return The new value for the stat
+	 */
+	private int GetStat(double stage){
+		if (stage < 1) return (int) Math.round((2 / (Math.abs(stage) + 2)) * 100);
+		else return (int) Math.round(((Math.abs(stage) + 2) / 2) * 100);
 	}
-	private int decreaseAccuracyOrEvasion(int initialValue){
-		if (initialValue==33) return 33;
-		if (initialValue==38) return 33;
-		if (initialValue==43) return 38;
-		if (initialValue==50) return 43;
-		if (initialValue==60) return 50;
-		if (initialValue==75) return 60;
-		if (initialValue==100) return 75;
-		if (initialValue==133) return 100;
-		if (initialValue==167) return 133;
-		if (initialValue==200) return 167;
-		if (initialValue==233) return 200;
-		if (initialValue==267) return 233;
-		if (initialValue==300) return 267;
-		return initialValue;
+	
+	/**
+	 * Increases the given stat the amount of stages
+	 * @param amount - The amount of stages to increase the stat
+	 * @param stat - The name of the stat to increase
+	 * @return Whether the change was successful
+	 */
+	public boolean IncreaseStat(int amount, String stat){
+		if (amount < 0) return DecreaseStat(Math.abs(amount), stat); //If received a negative value then we need to decrease stat
+		int stageIndex = GetStageIndex(stat);
+		int currentStage = stages[stageIndex];
+		if (currentStage == 6) return false; //If currently at highest stage return failed
+		currentStage += Math.abs(amount);
+		if (currentStage > 6) currentStage = 6; //If new stage is higher then allowed reset to max
+		
+		int newValue;
+		if (stageIndex < 2)
+			newValue = GetAccOrEva(currentStage);
+		else
+			newValue = GetStat(currentStage);
+		
+		stages[stageIndex] = currentStage;
+		ChangeStat(stat, newValue);
+		return true;
 	}
+	
+	/**
+	 * Decreases the given stat the amount of stages
+	 * @param amount - The amount of stages to decrease the stat
+	 * @param stat - The name of the stat to increase
+	 * @return Whether the change was successful
+	 */
+	public boolean DecreaseStat(int amount, String stat){
+		int stageIndex = GetStageIndex(stat);
+		int currentStage = stages[stageIndex];
+		if (currentStage == -6) return false; //If currently at lowest stage return failed
+		currentStage -= Math.abs(amount);
+		if (currentStage < -6) currentStage = -6; //If new stage is lower then allowed reset to max
+		
+		int newValue;
+		if (stageIndex < 2)
+			newValue = GetAccOrEva(currentStage);
+		else
+			newValue = GetStat(currentStage);
+		
+		stages[stageIndex] = currentStage;
+		ChangeStat(stat, newValue);
+		return true;
+	}
+	
+	/**
+	 * Changes a stat to its value
+	 * @param stat - The name of the stat to change
+	 * @param value - The new value to change the stat to
+	 */
+	private void ChangeStat(String stat, int value){
+		if (stat.equalsIgnoreCase("Accuracy")) Accuracy = value;
+		if (stat.equalsIgnoreCase("Evasion")) Evasion = value;
+		if (stat.equalsIgnoreCase("AttackModifier")) AttackModifier = value;
+		if (stat.equalsIgnoreCase("DefenceModifier")) DefenceModifier = value;
+		if (stat.equalsIgnoreCase("SpecialAttackModifier")) SpecialAttackModifier = value;
+		if (stat.equalsIgnoreCase("SpecialDefenceModifier")) SpecialDefenceModifier = value;
+		if (stat.equalsIgnoreCase("SpeedModifier")) SpeedModifier = value;
+	}
+	
+	/**
+	 * Gets the array index for the stage array of the equivalent stat
+	 * @param stat - The stat you need the index for
+	 * @return The index to the stage array based on the given stat
+	 */
+	private int GetStageIndex(String stat){
+		if (stat.equalsIgnoreCase("Accuracy")) return 0;
+		if (stat.equalsIgnoreCase("Evasion")) return 1;
+		if (stat.equalsIgnoreCase("AttackModifier")) return 2;
+		if (stat.equalsIgnoreCase("DefenceModifier")) return 3;
+		if (stat.equalsIgnoreCase("SpecialAttackModifier")) return 4;
+		if (stat.equalsIgnoreCase("SpecialDefenceModifier")) return 5;
+		if (stat.equalsIgnoreCase("SpeedModifier")) return 6;		
+		return -1;
+	}
+	
 	public void writeToNBT(NBTTagCompound var1) {
 		var1.setInteger("BattleAccuracy", Accuracy);
 		var1.setInteger("BattleEvasion", Evasion);
@@ -225,14 +184,13 @@ public class BattleStats {
 		var1.setInteger("BattleSpeedModifier", SpeedModifier);
 	}
 	
+	/**
+	 * Reset battle specific stats.
+	 */
 	public void clearBattleStats(){
-		AttackModifier=100;
-		DefenceModifier=100;
-		SpecialAttackModifier=100;
-		SpecialDefenceModifier=100;
-		SpeedModifier=100;
-		Accuracy = 100;
-		Evasion=100;
+		AttackModifier = DefenceModifier = SpecialAttackModifier = 
+				SpecialDefenceModifier = SpeedModifier = Accuracy = Evasion = 100;
+		stages = new int[7];
 	}
 	
 	public void readFromNBT(NBTTagCompound var1) {
