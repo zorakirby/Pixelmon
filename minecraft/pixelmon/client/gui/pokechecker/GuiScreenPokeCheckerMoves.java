@@ -143,7 +143,11 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawString(fontRenderer, "" + attack.baseAttack.basePower, 30 - bpextra, 118, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "--", 30 - bpextra, 118, 0xFFFFFF);
-		drawString(fontRenderer, "" + attack.baseAttack.accuracy, 30 - acextra, 148, 0xFFFFFF);
+		
+		if (attack.baseAttack.accuracy == -1)
+			drawString(fontRenderer, "--", 30 - acextra, 148, 0xFFFFFF);
+		else 
+			drawString(fontRenderer, "" + attack.baseAttack.accuracy, 30 - acextra, 148, 0xFFFFFF);
 
 		fontRenderer.drawSplitString(attack.baseAttack.description, 60, 112, 110, 0xFFFFFF);
 	}
