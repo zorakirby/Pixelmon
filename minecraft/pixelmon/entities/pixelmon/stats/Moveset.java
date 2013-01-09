@@ -13,10 +13,7 @@ implements List<Attack>, RandomAccess, Cloneable
 {
 	private Attack[] attacks = new Attack[4];
 	
-	public Moveset()
-	{
-		
-	}
+	public Moveset() {}
 	
 	public Moveset(int index, Attack a)
 	{
@@ -45,10 +42,9 @@ implements List<Attack>, RandomAccess, Cloneable
 	
 	public void swap(int index, int index2)
 	{
-		Attack a = get(index);
-		Attack a1 = get(index2);
-		set(index, a1);
-		set(index2, a);
+		Attack a = attacks[index];
+		attacks[index] = attacks[index2];
+		attacks[index2] = a;
 	}
 	
 	public Attack remove(int index)

@@ -101,7 +101,7 @@ public class BattleStats {
 	 * @return Whether the change was successful
 	 */
 	public boolean IncreaseStat(int amount, String stat){
-		if (amount < 0) return DecreaseStat(Math.abs(amount), stat); //If received a negative value then we need to decrease stat
+		if (amount < 0) return DecreaseStat(Math.abs(amount), stat); //If received a negative value then we assume we need to decrease stat
 		int stageIndex = GetStageIndex(stat);
 		int currentStage = stages[stageIndex];
 		if (currentStage == 6) return false; //If currently at highest stage return failed
