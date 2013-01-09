@@ -4,11 +4,13 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemFossilUncovered;
 import pixelmon.items.ItemPokemonFossil;
+import pixelmon.items.PixelmonItem;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -32,7 +34,12 @@ public class PixelmonItemsFossils {
 	public static int armorFossilUncoveredID;
 	public static int coverFossilUncoveredID;
 	public static int plumeFossilUncoveredID;
-
+	
+	public static int fossilMachineDisplayID;
+	public static int fossilMachineTankID;
+	public static int fossilMachineTopID;
+	public static int fossilMachineBaseID;
+	
 	public static int fossilMachineItemID;
 
 	@Mod.Item(name = "Fossil Machine", typeClass = "pixelmon.items.ItemBlock")
@@ -74,31 +81,46 @@ public class PixelmonItemsFossils {
 	public static Item coverFossilUncovered;
 	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item plumeFossilUncovered;
+	
+	@Mod.Item(name = "Fossil Machine Tank", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item fossilMachineTank;
+	@Mod.Item(name = "Fossil Machine Display", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item fossilMachineDisplay;
+	@Mod.Item(name = "Fossil Machine Top", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item fossilMachineTop;
+	@Mod.Item(name = "Fossil Machine Base", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item fossilMachineBase;
+	
 
 	public static void load(Configuration cfg) {
 		if (!isEnabled)
 			return;
-		fossilMachineItemID = cfg.get("fossils", "FossilMachineItem", 10017).getInt();
+		fossilMachineItemID = cfg.get("fossils", "FossilMachineItem", 20000).getInt();
+		fossilMachineTankID = cfg.get("fossils", "FossilMachineTank", 20001).getInt();
+		fossilMachineDisplayID = cfg.get("fossils", "FossilMachineDisplay", 20002).getInt();
+		fossilMachineTopID = cfg.get("fossils", "FossilMachineTop", 20003).getInt();
+		fossilMachineBaseID = cfg.get("fossils", "FossilMachineBase", 20004).getInt();
 
-		helixFossilID = cfg.get("fossils", "HelixFossil", 10080).getInt();
-		domeFossilID = cfg.get("fossils", "DomeFossil", 10081).getInt();
-		oldAmberID = cfg.get("fossils", "OldAmber", 10082).getInt();
-		rootFossilID = cfg.get("fossils", "RootFossil", 10083).getInt();
-		clawFossilID = cfg.get("fossils", "ClawFossil", 10084).getInt();
-		skullFossilID = cfg.get("fossils", "SkullFossil", 10085).getInt();
-		armorFossilID = cfg.get("fossils", "ArmorFossil", 10086).getInt();
-		coverFossilID = cfg.get("fossils", "PlumeFossil", 10087).getInt();
-		plumeFossilID = cfg.get("fossils", "CoverFossil", 10088).getInt();
+		helixFossilID = cfg.get("fossils", "HelixFossil", 21000).getInt();
+		domeFossilID = cfg.get("fossils", "DomeFossil", 21001).getInt();
+		oldAmberID = cfg.get("fossils", "OldAmber", 21002).getInt();
+		rootFossilID = cfg.get("fossils", "RootFossil", 21003).getInt();
+		clawFossilID = cfg.get("fossils", "ClawFossil", 21004).getInt();
+		skullFossilID = cfg.get("fossils", "SkullFossil", 21005).getInt();
+		armorFossilID = cfg.get("fossils", "ArmorFossil", 21006).getInt();
+		coverFossilID = cfg.get("fossils", "PlumeFossil", 21007).getInt();
+		plumeFossilID = cfg.get("fossils", "CoverFossil", 21008).getInt();
 
-		helixFossilUncoveredID = cfg.get("fossils", "HelixFossilUncovered", 10089).getInt();
-		domeFossilUncoveredID = cfg.get("fossils", "DomeFossilUncovered", 10090).getInt();
-		oldAmberUncoveredID = cfg.get("fossils", "OldAmberUncovered", 10091).getInt();
-		rootFossilUncoveredID = cfg.get("fossils", "RootFossilUncovered", 10092).getInt();
-		clawFossilUncoveredID = cfg.get("fossils", "ClawFossilUncovered", 10093).getInt();
-		skullFossilUncoveredID = cfg.get("fossils", "SkullFossilUncovered", 10094).getInt();
-		armorFossilUncoveredID = cfg.get("fossils", "ArmorFossilUncovered", 10095).getInt();
-		coverFossilUncoveredID = cfg.get("fossils", "PlumeFossilUncovered", 10096).getInt();
-		plumeFossilUncoveredID = cfg.get("fossils", "CoverFossilUncovered", 10097).getInt();
+		helixFossilUncoveredID = cfg.get("fossils", "HelixFossilUncovered", 21100).getInt();
+		domeFossilUncoveredID = cfg.get("fossils", "DomeFossilUncovered", 21101).getInt();
+		oldAmberUncoveredID = cfg.get("fossils", "OldAmberUncovered", 21102).getInt();
+		rootFossilUncoveredID = cfg.get("fossils", "RootFossilUncovered", 21103).getInt();
+		clawFossilUncoveredID = cfg.get("fossils", "ClawFossilUncovered", 21104).getInt();
+		skullFossilUncoveredID = cfg.get("fossils", "SkullFossilUncovered", 21105).getInt();
+		armorFossilUncoveredID = cfg.get("fossils", "ArmorFossilUncovered", 21106).getInt();
+		coverFossilUncoveredID = cfg.get("fossils", "PlumeFossilUncovered", 21107).getInt();
+		plumeFossilUncoveredID = cfg.get("fossils", "CoverFossilUncovered", 21108).getInt();
+		
 
 		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, 82).setItemName("Fossil Machine");
 		helixFossil = new ItemPokemonFossil(helixFossilID, "Omanyte", "HelixFossil").setItemName("helixFossil").setIconIndex(10);
@@ -111,6 +133,11 @@ public class PixelmonItemsFossils {
 		coverFossil = new ItemPokemonFossil(coverFossilID, "Tirtouga", "CoverFossil").setItemName("coverFossil").setIconIndex(122);
 		plumeFossil = new ItemPokemonFossil(plumeFossilID, "Archen", "PlumeFossil").setItemName("plumeFossil").setIconIndex(138);
 
+		fossilMachineTank = new PixelmonItem(fossilMachineTankID).setItemName("Fossil Machine Tank").setIconCoord(2, 7).setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineDisplay = new PixelmonItem(fossilMachineDisplayID).setItemName("Fossil Machine Display").setIconCoord(2, 6).setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineTop = new PixelmonItem(fossilMachineTopID).setItemName("Fossil Machine Top").setIconCoord(2, 8).setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineBase = new PixelmonItem(fossilMachineBaseID).setItemName("Fossil Machine Base").setIconCoord(2, 10).setCreativeTab(CreativeTabs.tabDecorations);
+		
 		helixFossilUncovered = new ItemFossilUncovered(helixFossilUncoveredID).setItemName("helixFossilUncovered").setIconIndex(11)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
 		domeFossilUncovered = new ItemFossilUncovered(domeFossilUncoveredID).setItemName("domeFossilUncovered").setIconIndex(27)

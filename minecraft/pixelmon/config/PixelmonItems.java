@@ -37,6 +37,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 //import pixelmon.items.heldItems.ItemEverstone;
 
 public class PixelmonItems {
+	public static int itemID = 10000;
 	public static int pokeDexID;
 
 	public static int rareCandyID;
