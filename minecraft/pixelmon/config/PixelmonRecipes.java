@@ -14,6 +14,8 @@ public class PixelmonRecipes {
 	public static void addRecipes() {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.healerItem), new Object[] { "IRI", "RDR", "IRI", Character.valueOf('D'),
 				new ItemStack(Item.diamond), Character.valueOf('I'), PixelmonItems.aluminumPlate, Character.valueOf('R'), Item.ingotIron });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsFossils.fossilMachineItem), new Object[] { "IRI", "GGG", "III", Character.valueOf('G'),
+				new ItemStack(Block.thinGlass), Character.valueOf('I'), PixelmonItems.aluminumPlate, Character.valueOf('R'), Item.redstone});
 		// GameRegistry.addRecipe(new ItemStack(PixelmonItems.masterBall), new
 		// Object[] { "PPP", "OBO", "DDD", Character.valueOf('P'), new
 		// ItemStack(Item.dyePowder, 1, 5), Character.valueOf('O'),

@@ -224,9 +224,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 				conds[s.index] = false;
 			if (s == SpawnConditions.Sand && blockId != Block.sand.blockID)
 				conds[s.index] = false;
-			if (s == SpawnConditions.Darkness && lightLevel > 8)
+			if (s == SpawnConditions.Darkness && lightLevel > 11)
 				conds[s.index] = false;
-			if (s == SpawnConditions.DayLight && lightLevel < 8)
+			if (s == SpawnConditions.DayLight && lightLevel < 11)
 				conds[s.index] = false;
 		}
 		return conds[0] && conds[1];
@@ -238,7 +238,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 			return;
 		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
-				if (worldObj.getWorldTime() < 12000 && this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)))
+				if (worldObj.getWorldTime() < 12000
+						&& this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)))
 					setDead();
 			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight && !worldObj.isDaytime())
 				setDead();
