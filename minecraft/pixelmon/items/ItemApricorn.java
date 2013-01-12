@@ -56,7 +56,7 @@ public class ItemApricorn extends PixelmonItem {
 			if (par3World.canPlaceEntityOnSide(this.blockID, par4, par5, par6, false, par7, par2EntityPlayer)) {
 				Block var12 = Block.blocksList[this.blockID];
 				int var13 = this.getMetadata(par1ItemStack.getItemDamage());
-				int var14 = Block.blocksList[this.blockID].func_85104_a(par3World, par4, par5, par6, par7, par8, par9, par10, var13);
+				int var14 = Block.blocksList[this.blockID].onBlockPlaced(par3World, par4, par5, par6, par7, par8, par9, par10, var13);
 				if (placeBlockAt(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, var14)) {
 					par3World.playSoundEffect((double) ((float) par4 + 0.5F), (double) ((float) par5 + 0.5F), (double) ((float) par6 + 0.5F), var12.stepSound.getStepSound(),
 							(var12.stepSound.getVolume() + 1.0F) / 2.0F, var12.stepSound.getPitch() * 0.8F);
@@ -88,7 +88,7 @@ public class ItemApricorn extends PixelmonItem {
 
 		if (world.getBlockId(x, y, z) == this.blockID) {
 			Block.blocksList[this.blockID].onBlockPlacedBy(world, x, y, z, player);
-			Block.blocksList[this.blockID].func_85105_g(world, x, y, z, metadata);
+			Block.blocksList[this.blockID].onPostBlockPlaced(world, x, y, z, metadata);
 		}
 
 		return true;

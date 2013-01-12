@@ -385,7 +385,7 @@ public class PixelmonItems {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemPokemonFossil)
-						if (item.shiftedIndex == id)
+						if (item.itemID == id)
 							return item;
 				}
 			}
@@ -401,7 +401,7 @@ public class PixelmonItems {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemHeld)
-						if (item.shiftedIndex == id)
+						if (item.itemID == id)
 							return item;
 				}
 			}
@@ -416,7 +416,7 @@ public class PixelmonItems {
 			for (Field field : PixelmonItems.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
-					if (item.shiftedIndex == id)
+					if (item.itemID == id)
 						return item;
 				}
 			}

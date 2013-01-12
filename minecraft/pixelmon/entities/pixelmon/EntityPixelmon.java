@@ -74,7 +74,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 			if (itemstack != null) {
 				if (getOwner() == player) {
-					if (itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex) {
+					if (itemstack.itemID == PixelmonItems.rareCandy.itemID) {
 						getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
 						if (!player.capabilities.isCreativeMode)
 							player.inventory.consumeInventoryItem(itemstack.itemID);
@@ -301,8 +301,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 	}
 
 	@Override
-	public EntityAgeable func_90011_a(EntityAgeable var1) {
-		// TODO Auto-generated method stub
+	public EntityAgeable createChild(EntityAgeable var1) {
 		return null;
 	}
+
 }

@@ -23,44 +23,44 @@ public class DropItemHelper {
 			return 0;
 
 		if (droppedItem.equalsIgnoreCase("Apple"))
-			return Item.appleRed.shiftedIndex;
+			return Item.appleRed.itemID;
 		else if (droppedItem.equalsIgnoreCase("Blaze Powder"))
-			return Item.blazePowder.shiftedIndex;
+			return Item.blazePowder.itemID;
 		else if (droppedItem.equalsIgnoreCase("Bones"))
-			return Item.bone.shiftedIndex;
+			return Item.bone.itemID;
 		else if (droppedItem.equalsIgnoreCase("Diamond"))
-			return Item.diamond.shiftedIndex;
+			return Item.diamond.itemID;
 		else if (droppedItem.equalsIgnoreCase("Egg"))
-			return Item.egg.shiftedIndex;
+			return Item.egg.itemID;
 		else if (droppedItem.equalsIgnoreCase("Ender Pearl"))
-			return Item.enderPearl.shiftedIndex;
+			return Item.enderPearl.itemID;
 		else if (droppedItem.equalsIgnoreCase("Feather"))
-			return Item.feather.shiftedIndex;
+			return Item.feather.itemID;
 		else if (droppedItem.equalsIgnoreCase("Glowstone"))
-			return Item.lightStoneDust.shiftedIndex;
+			return Item.lightStoneDust.itemID;
 		else if (droppedItem.equalsIgnoreCase("Gold Nugget"))
-			return Item.goldNugget.shiftedIndex;
+			return Item.goldNugget.itemID;
 		else if (droppedItem.equalsIgnoreCase("Gunpowder"))
-			return Item.gunpowder.shiftedIndex;
+			return Item.gunpowder.itemID;
 		else if (droppedItem.equalsIgnoreCase("Ink sac")) {
 			pixelmon.entityDropItem(new ItemStack(Item.dyePowder, 1, 0), 0.0F);
 			return 0;
 		} else if (droppedItem.equalsIgnoreCase("Iron Ingot"))
-			return Item.ingotIron.shiftedIndex;
+			return Item.ingotIron.itemID;
 		else if (droppedItem.equalsIgnoreCase("Leather"))
-			return Item.leather.shiftedIndex;
+			return Item.leather.itemID;
 		else if (droppedItem.equalsIgnoreCase("Raw Beef"))
-			return Item.beefRaw.shiftedIndex;
+			return Item.beefRaw.itemID;
 		else if (droppedItem.equalsIgnoreCase("Raw Fish"))
-			return Item.fishRaw.shiftedIndex;
+			return Item.fishRaw.itemID;
 		else if (droppedItem.equalsIgnoreCase("Rotten Flesh"))
-			return Item.rottenFlesh.shiftedIndex;
+			return Item.rottenFlesh.itemID;
 		else if (droppedItem.equalsIgnoreCase("Seeds"))
-			return Item.seeds.shiftedIndex;
+			return Item.seeds.itemID;
 		else if (droppedItem.equalsIgnoreCase("Slimeball"))
-			return Item.slimeBall.shiftedIndex;
+			return Item.slimeBall.itemID;
 		else if (droppedItem.equalsIgnoreCase("String"))
-			return Item.silk.shiftedIndex;
+			return Item.silk.itemID;
 		else if (droppedItem.equalsIgnoreCase("Thunderstone Shard"))
 			return PixelmonItems.thunderStoneShardID;
 		else if (droppedItem.equalsIgnoreCase("Wool"))

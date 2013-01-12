@@ -39,16 +39,16 @@ public class BlockEvolutionStoneOre extends Block {
 		int result = 0;
 		switch (type) {
 		case Thunderstone:
-			result = PixelmonItems.thunderStoneShard.shiftedIndex;
+			result = PixelmonItems.thunderStoneShard.itemID;
 			break;
 		case Leafstone:
-			result = PixelmonItems.leafStoneShard.shiftedIndex;
+			result = PixelmonItems.leafStoneShard.itemID;
 			break;
 		case Waterstone:
-			result = PixelmonItems.waterStoneShard.shiftedIndex;
+			result = PixelmonItems.waterStoneShard.itemID;
 			break;
 		case Firestone:
-			result = PixelmonItems.fireStoneShard.shiftedIndex;
+			result = PixelmonItems.fireStoneShard.itemID;
 			break;
 		}
 

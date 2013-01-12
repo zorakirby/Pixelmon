@@ -46,7 +46,7 @@ public class PixelmonItem extends Item {
 	public int removeFromInventory(ItemStack[] inv) {
 		int newStackSize = -1;
 		for (int i = 0; i < inv.length; i++) {
-			if (inv[i] != null && inv[i].getItem().shiftedIndex == shiftedIndex) {
+			if (inv[i] != null && inv[i].getItem().itemID == itemID) {
 				inv[i].stackSize--;
 				newStackSize = inv[i].stackSize;
 				if (inv[i].stackSize < 1) {
@@ -61,7 +61,7 @@ public class PixelmonItem extends Item {
 	public void removeFromInventory(ItemStack[] inv, ItemStack[] c_inv) {
 		int newStackSize = removeFromInventory(inv);
 		for (int i = 0; i < c_inv.length; i++) {
-			if (c_inv[i] != null && c_inv[i].getItem().shiftedIndex == shiftedIndex) {
+			if (c_inv[i] != null && c_inv[i].getItem().itemID == itemID) {
 				if (newStackSize > 0) {
 					c_inv[i].stackSize = newStackSize;
 				} else {

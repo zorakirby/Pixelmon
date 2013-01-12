@@ -189,7 +189,7 @@ public class PixelmonItemsFossils {
 		}
 
 		if (fossilList.size() > 0) {
-			return fossilList.get(new Random().nextInt(fossilList.size())).shiftedIndex;
+			return fossilList.get(new Random().nextInt(fossilList.size())).itemID;
 		}
 		return -1;
 	}
@@ -200,7 +200,7 @@ public class PixelmonItemsFossils {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemPokemonFossil)
-						if (item.shiftedIndex == currentFossil)
+						if (item.itemID == currentFossil)
 							return (ItemPokemonFossil) item;
 				}
 			}

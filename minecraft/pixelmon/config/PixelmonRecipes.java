@@ -83,7 +83,7 @@ public class PixelmonRecipes {
 		GameRegistry.addSmelting(PixelmonBlocks.bauxite.blockID, new ItemStack(PixelmonItems.aluminumIngot), new Random().nextInt(3));
 		
 		for (EnumApricorns a : EnumApricorns.values()) {
-			GameRegistry.addSmelting(PixelmonItemsApricorns.getApricorn(a).shiftedIndex, new ItemStack(PixelmonItemsApricorns.getCookedApricorn(a), 1), 1);
+			GameRegistry.addSmelting(PixelmonItemsApricorns.getApricorn(a).itemID, new ItemStack(PixelmonItemsApricorns.getCookedApricorn(a), 1), 1);
 		}
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ironDisc, 5), new Object[] { "XXX", Character.valueOf('X'), Item.ingotIron });
