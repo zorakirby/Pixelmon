@@ -260,8 +260,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		if (baseStats == null)
-			return 1;
-		return baseStats.maxGroupSize;
+		return 4;
 	}
 }

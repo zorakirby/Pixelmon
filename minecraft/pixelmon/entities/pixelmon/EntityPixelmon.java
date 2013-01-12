@@ -23,6 +23,7 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.config.PixelmonItems;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.SpawnConditions;
+import pixelmon.database.SpawnLocation;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
@@ -37,6 +38,7 @@ import pixelmon.storage.PixelmonStorage;
 
 public class EntityPixelmon extends Entity9HasSounds {
 
+	public SpawnLocation pokemonType;
 	public boolean playerOwned = false;
 
 	public EntityPixelmon(World par1World) {
@@ -224,8 +226,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 				conds[s.index] = false;
 			if (s == SpawnConditions.Sand && blockId != Block.sand.blockID)
 				conds[s.index] = false;
-			if (s == SpawnConditions.Darkness && lightLevel > 11)
-				conds[s.index] = false;
+			if (s == SpawnConditions.Darkness)
+				if (lightLevel > 11 && !(var2 < 60 && !this.worldObj.canBlockSeeTheSky(var1, var2, var3)))
+					conds[s.index] = false;
 			if (s == SpawnConditions.DayLight && lightLevel < 11)
 				conds[s.index] = false;
 		}
