@@ -80,7 +80,7 @@ public class DatabaseHelper {
 		}
 	}
 
-	public static String databaseURL = "http://www.mediafire.com/download.php?dd6e8urdhkq9lm8";
+	public static String databaseURL = "http://www.mediafire.com/download.php?v10fbe9v4gu4cvd";
 	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
 	/**

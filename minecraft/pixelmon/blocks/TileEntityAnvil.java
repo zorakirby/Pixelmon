@@ -53,7 +53,7 @@ public class TileEntityAnvil extends TileEntity {
 
 	public boolean blockHit(int f) {
 		boolean returnVal = false;
-		if (itemOnAnvil == PixelmonItems.aluminumIngot.shiftedIndex){
+		if (itemOnAnvil == PixelmonItems.aluminumIngot.itemID){
 			count += f;
 			if (count >= 15) {
 				count = 0;
@@ -61,7 +61,7 @@ public class TileEntityAnvil extends TileEntity {
 				returnVal = true;
 				if (state == 3) {
 					state = 0;
-					itemOnAnvil = PixelmonItems.aluminumPlate.shiftedIndex;
+					itemOnAnvil = PixelmonItems.aluminumPlate.itemID;
 				}
 			}
 		}
@@ -76,7 +76,7 @@ public class TileEntityAnvil extends TileEntity {
 					if (state == 3) {
 						state = 0;
 						if (item == PixelmonItemsPokeballs.ironDisc)
-							itemOnAnvil = PixelmonItemsPokeballs.ironBase.shiftedIndex;
+							itemOnAnvil = PixelmonItemsPokeballs.ironBase.itemID;
 						else
 							itemOnAnvil -= 20;
 					}

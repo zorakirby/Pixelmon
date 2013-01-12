@@ -49,7 +49,7 @@ public class GuiBattle extends GuiContainer {
 	private int guiWidth = 300;
 	private int guiHeight = 60;
 
-	boolean cameraEnabled = false;
+	boolean cameraEnabled = true;
 
 	public GuiBattle(int battleControllerIndex) {
 		super(new ContainerEmpty());
@@ -343,8 +343,12 @@ public class GuiBattle extends GuiContainer {
 			drawString(fontRenderer, "" + attack.baseAttack.basePower, width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "--", width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
-		drawString(fontRenderer, "" + attack.baseAttack.accuracy, width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
-
+			
+		if (attack.baseAttack.accuracy == -1)
+			drawString(fontRenderer, "--", width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
+		else 
+			drawString(fontRenderer, "" + attack.baseAttack.accuracy, width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
+		
 		fontRenderer.drawSplitString(attack.baseAttack.description, width / 2 - 25, height / 2 + 55, 100, 0xFFFFFF);
 	}
 

@@ -144,6 +144,8 @@ public class DatabaseStats {
 				float rz = rs.getFloat("RidingOffsetZ");
 				if (!rs.wasNull())
 					store.ridingOffsetZ = rz;
+				store.maxGroupSize = rs.getInt("MaxGroupSize");
+				store.spawnLocations = SpawnLocation.getSpawnLocations(rs.getString("SpawnLocation"));
 			}
 			conn.close();
 			return store;
@@ -402,5 +404,21 @@ public class DatabaseStats {
 
 	public static String getDescription(String name) {
 		return (String) getStat(name, "Description");
+	}
+
+	public static SpawnLocation[] getSpawnLocations(String name) {
+		Connection conn = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DatabaseHelper.getConnection();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select SpawnLocation from Pixelmon where Name='" + name + "'");
+			while (rs.next()) {
+				return SpawnLocation.getSpawnLocations(rs.getString("SpawnLocation"));
+			}
+		} catch (Exception e) {
+
+		}
+		return null;
 	}
 }

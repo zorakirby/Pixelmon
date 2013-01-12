@@ -25,7 +25,7 @@ public class BagPacket extends PacketHandlerBase {
 
 		ItemStack usedStack = null;
 		for (ItemStack i : ((EntityPlayer) player).inventory.mainInventory) {
-		     if (i != null && i.getItem().shiftedIndex == itemIndex){
+		     if (i != null && i.getItem().itemID == itemIndex){
 				usedStack = i;
 				break;
 		     }

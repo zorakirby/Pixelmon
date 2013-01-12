@@ -46,6 +46,7 @@ public class MultipleHitAttackModifier extends AttackModifierBase {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Critical Hit!");
 		}
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " attacked " + count + " times!");
+		count = 0;
 		return true;
 	}
 

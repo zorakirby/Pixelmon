@@ -58,7 +58,7 @@ public class BlockAnvil extends BlockContainer {
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return PixelmonItems.anvilItem.shiftedIndex;
+		return PixelmonItems.anvilItem.itemID;
 	}
 
 	@Override
@@ -90,9 +90,9 @@ public class BlockAnvil extends BlockContainer {
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
 
 			Item aluminum = null;
-			if (itemId == PixelmonItems.aluminumPlate.shiftedIndex)
+			if (itemId == PixelmonItems.aluminumPlate.itemID)
 				aluminum = PixelmonItems.aluminumPlate;
-			else if (itemId == PixelmonItems.aluminumIngot.shiftedIndex)
+			else if (itemId == PixelmonItems.aluminumIngot.itemID)
 				aluminum = PixelmonItems.aluminumIngot;
 			if (aluminum != null) {
 

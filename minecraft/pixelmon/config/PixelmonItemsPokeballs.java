@@ -352,7 +352,7 @@ public class PixelmonItemsPokeballs {
 			for (Field field : PixelmonItemsPokeballs.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
-					if (item.shiftedIndex == itemId)
+					if (item.itemID == itemId)
 						return item;
 				}
 			}

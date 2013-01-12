@@ -37,6 +37,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 //import pixelmon.items.heldItems.ItemEverstone;
 
 public class PixelmonItems {
+	public static int itemID = 10000;
 	public static int pokeDexID;
 
 	public static int rareCandyID;
@@ -278,21 +279,21 @@ public class PixelmonItems {
 		hammerIronID = cfg.get("item", "Iron Hammer", 10109).getInt();
 		hammerGoldID = cfg.get("item", "Gold Hammer", 10110).getInt();
 		hammerDiamondID = cfg.get("item", "Diamond Hammer", 10111).getInt();
-		hammerAluminumID = cfg.get("Aluminum Hammer", "item", 10122).getInt();
+		hammerAluminumID = cfg.get("item", "Aluminum Hammer", 10122).getInt();
 		
-		aluminumIngotID = cfg.get("AluminumIngot", "item", 10120).getInt();
-		aluminumPlateID = cfg.get("AluminumPlate", "item", 10121).getInt();
+		aluminumIngotID = cfg.get("item", "AluminumIngot", 10120).getInt();
+		aluminumPlateID = cfg.get("item", "AluminumPlate", 10121).getInt();
 		
-		swordAluminumID = cfg.get("Aluminum Sword", "item", 10123).getInt();
-		axeAluminumID = cfg.get("Aluminum Axe", "item", 10124).getInt();
-		shovelAluminumID = cfg.get("Aluminum Shovel", "item", 10125).getInt();
-		pickaxeAluminumID = cfg.get("Aluminum Pickaxe", "item", 10126).getInt();
-		hoeAluminumID = cfg.get("Aluminum Hoe", "item", 10127).getInt();
+		swordAluminumID = cfg.get("item", "Aluminum Sword", 10123).getInt();
+		axeAluminumID = cfg.get("item", "Aluminum Axe", 10124).getInt();
+		shovelAluminumID = cfg.get("item", "Aluminum Shovel", 10125).getInt();
+		pickaxeAluminumID = cfg.get("item", "Aluminum Pickaxe", 10126).getInt();
+		hoeAluminumID = cfg.get("item", "Aluminum Hoe", 10127).getInt();
 		
-		helmetAluminumID = cfg.get("Aluminum Helmet", "item", 10128).getInt();
-		torsoAluminumID = cfg.get("Aluminum Chestplate", "item", 10129).getInt();
-		leggingsAluminumID = cfg.get("Aluminum Leggings", "item", 10130).getInt();
-		bootsAluminumID = cfg.get("Aluminum Boots", "item", 10131).getInt();
+		helmetAluminumID = cfg.get("item", "Aluminum Helmet", 10128).getInt();
+		torsoAluminumID = cfg.get("item", "Aluminum Chestplate", 10129).getInt();
+		leggingsAluminumID = cfg.get("item", "Aluminum Leggings", 10130).getInt();
+		bootsAluminumID = cfg.get("item", "Aluminum Boots", 10131).getInt();
 
 		pokeDex = new ItemPokedex(pokeDexID).setItemName("Pokedex").setIconIndex(18).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID).setItemName("Rare Candy").setIconIndex(6).setCreativeTab(PixelmonCreativeTabs.restoration);
@@ -384,7 +385,7 @@ public class PixelmonItems {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemPokemonFossil)
-						if (item.shiftedIndex == id)
+						if (item.itemID == id)
 							return item;
 				}
 			}
@@ -400,7 +401,7 @@ public class PixelmonItems {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemHeld)
-						if (item.shiftedIndex == id)
+						if (item.itemID == id)
 							return item;
 				}
 			}
@@ -415,7 +416,7 @@ public class PixelmonItems {
 			for (Field field : PixelmonItems.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
-					if (item.shiftedIndex == id)
+					if (item.itemID == id)
 						return item;
 				}
 			}

@@ -27,7 +27,7 @@ public class BlockPC extends BlockContainer {
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3)
 	{
-	return PixelmonItems.pcItem.shiftedIndex;
+	return PixelmonItems.pcItem.itemID;
 	}
 	@Override
 	public int quantityDropped(Random random) {

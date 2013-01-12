@@ -136,8 +136,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	protected boolean canDespawn() {
 		if (getOwner() != null)
 			return false;
-		if (baseStats.creatureType == EnumCreatureType.creature)
-			return false;
 		return true;
 	}
 
@@ -258,5 +256,10 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			doesLevel = nbt.getBoolean("DoesLevel");
 		else
 			doesLevel = true;
+	}
+
+	@Override
+	public int getMaxSpawnedInChunk() {
+		return 4;
 	}
 }
