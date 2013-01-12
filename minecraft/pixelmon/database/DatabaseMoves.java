@@ -32,7 +32,7 @@ public class DatabaseMoves {
 						move.level = Integer.parseInt(moveSplits[0]);
 						if (move.level > level)
 							break;
-						if (moveSplits[1].startsWith("(s)")) {
+						if (moveSplits[1].startsWith("(s)")|| moveSplits[1].startsWith("(S)")) {
 							move.STAB = true;
 							move.moveName = moveSplits[1].substring(3, moveSplits[1].length());
 						} else {
