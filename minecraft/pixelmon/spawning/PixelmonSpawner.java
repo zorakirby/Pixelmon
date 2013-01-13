@@ -199,7 +199,7 @@ public class PixelmonSpawner implements ITickHandler {
 					int cpY = chunkPos.y;
 					int cpZ = chunkPos.z;
 
-					if (!world.isBlockNormalCube(cpX, cpY, cpZ) && world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
+					if (cpY > 60 && !world.isBlockNormalCube(cpX, cpY, cpZ) && world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
 						int numInChunk = 0;
 						int count = 0;
 

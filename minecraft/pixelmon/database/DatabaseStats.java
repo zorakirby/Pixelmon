@@ -116,10 +116,6 @@ public class DatabaseStats {
 				if (rs.wasNull())
 					System.out.println("Error in Aggression" + " For Pokemon : " + name);
 				String type = rs.getString("CreatureType");
-				if (type.equalsIgnoreCase("Land"))
-					store.creatureType = EnumCreatureType.creature;
-				else
-					store.creatureType = EnumCreatureType.waterCreature;
 				store.droppedItem = rs.getString("DroppedItem");
 				store.spawnConditions = SpawnConditions.ParseSpawnConditions(rs.getString("SpawnConditions"));
 				store.baseFriendship = rs.getInt("BaseFriendship");

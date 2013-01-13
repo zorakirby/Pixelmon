@@ -194,7 +194,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	// }
 
 	public boolean getCanSpawnHere() {
-		if (baseStats.creatureType == EnumCreatureType.waterCreature) {
+		if (pokemonType == SpawnLocation.Water) {
 			int wdepth = WorldHelper.getWaterDepth((int) posX, (int) posY, (int) posZ, worldObj);
 			if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 				return true;

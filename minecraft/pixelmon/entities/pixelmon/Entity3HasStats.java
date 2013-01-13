@@ -9,6 +9,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
+import pixelmon.database.SpawnLocation;
 import pixelmon.entities.pixelmon.stats.BaseStats;
 import pixelmon.entities.pixelmon.stats.FriendShip;
 import pixelmon.entities.pixelmon.stats.IVStore;
@@ -114,7 +115,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void moveEntityWithHeading(float par1, float par2) {
 		if (baseStats != null) {
-			if (baseStats.creatureType == EnumCreatureType.waterCreature && isInWater()) {
+			if (((EntityPixelmon)this).pokemonType == SpawnLocation.Water && isInWater()) {
 				this.moveEntity(this.motionX, this.motionY, this.motionZ);
 				return;
 			}
@@ -141,7 +142,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	protected void fall(float f) {
 		if (baseStats != null) {
-			if (baseStats.creatureType == EnumCreatureType.waterCreature)
+			if (((EntityPixelmon)this).pokemonType == SpawnLocation.Water)
 				return;
 			if (baseStats.canFly)
 				return;
@@ -152,7 +153,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public boolean canBreatheUnderwater() {
 		if (baseStats != null) {
-			if (baseStats.creatureType == EnumCreatureType.waterCreature)
+			if (((EntityPixelmon)this).pokemonType == SpawnLocation.Water)
 				return true;
 			else
 				return false;

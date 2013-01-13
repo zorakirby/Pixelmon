@@ -34,8 +34,6 @@ public class BaseStats {
 
 	public Aggression aggression;
 
-	public EnumCreatureType creatureType;
-
 	public String droppedItem;
 
 	public SwimmingParameters swimmingParameters;
