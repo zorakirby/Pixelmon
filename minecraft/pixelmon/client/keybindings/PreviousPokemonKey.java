@@ -2,6 +2,7 @@ package pixelmon.client.keybindings;
 
 import java.util.EnumSet;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
@@ -10,7 +11,7 @@ import cpw.mods.fml.common.TickType;
 public class PreviousPokemonKey extends KeyHandler {
 
 	public PreviousPokemonKey() {
-		super(new KeyBinding[]{new KeyBinding("Select Previous Pixelmon", 26)}, new boolean[]{false});	
+		super(new KeyBinding[] { new KeyBinding("Select Previous Pixelmon", 26) }, new boolean[] { false });
 	}
 
 	@Override
@@ -19,9 +20,9 @@ public class PreviousPokemonKey extends KeyHandler {
 	}
 
 	@Override
-	public void keyDown(EnumSet<TickType> types, KeyBinding kb,
-			boolean tickEnd, boolean isRepeat) {
-		if (tickEnd) return;
+	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
+		if (tickEnd || Minecraft.getMinecraft().theWorld == null)
+			return;
 		GuiPixelmonOverlay.selectPreviousPixelmon();
 	}
 

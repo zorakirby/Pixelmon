@@ -18,7 +18,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class SendPokemonKey extends KeyHandler {
 
 	public SendPokemonKey() {
-		super(new KeyBinding[]{new KeyBinding("Send/Recieve Pixelmon", Keyboard.KEY_P)}, new boolean[]{false});	
+		super(new KeyBinding[] { new KeyBinding("Send/Recieve Pixelmon", Keyboard.KEY_P) }, new boolean[] { false });
 	}
 
 	@Override
@@ -27,13 +27,11 @@ public class SendPokemonKey extends KeyHandler {
 	}
 
 	@Override
-	public void keyDown(EnumSet<TickType> types, KeyBinding kb,
-			boolean tickEnd, boolean isRepeat) {
-		if(Minecraft.getMinecraft().currentScreen != null || tickEnd)
-		{
+	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
+		if (Minecraft.getMinecraft().currentScreen != null || Minecraft.getMinecraft().theWorld == null || tickEnd) {
 			return;
 		}
-		if (ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon]!=null)
+		if (ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon] != null)
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
 	}
 
