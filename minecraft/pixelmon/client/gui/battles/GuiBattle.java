@@ -882,11 +882,11 @@ public class GuiBattle extends GuiContainer {
 			if (i < ClientBattleManager.bagStore.size()) {
 				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
 						&& mouseY < height / 2 - 24 + (i - startIndex) * 21) {
+					itemToUse = ClientBattleManager.bagStore.get(i);
 					if (bagSection == bagSection.Pokeballs) {
 						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, ClientBattleManager.bagStore.get(i).id, battleControllerIndex, 0));
 						mode = BattleMode.Waiting;
 					} else {
-						itemToUse = ClientBattleManager.bagStore.get(i);
 						mode = BattleMode.ApplyToPokemon;
 					}
 					ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;

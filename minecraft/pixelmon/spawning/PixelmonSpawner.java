@@ -27,6 +27,7 @@ import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
@@ -82,7 +83,6 @@ public class PixelmonSpawner implements ITickHandler {
 				}
 			}
 		}
-
 	}
 
 	public static void doUndergroundSpawning(WorldServer world) {
@@ -103,7 +103,8 @@ public class PixelmonSpawner implements ITickHandler {
 					int cpY = chunkPos.y;
 					int cpZ = chunkPos.z;
 
-					if (cpY < 60 && !world.isBlockNormalCube(cpX, cpY, cpZ) && world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
+					if (world.getWorldInfo().getTerrainType() != WorldType.FLAT && cpY < 60 && !world.isBlockNormalCube(cpX, cpY, cpZ)
+							&& world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
 						int numInChunk = 0;
 						int count = 0;
 
@@ -199,7 +200,8 @@ public class PixelmonSpawner implements ITickHandler {
 					int cpY = chunkPos.y;
 					int cpZ = chunkPos.z;
 
-					if (cpY > 60 && !world.isBlockNormalCube(cpX, cpY, cpZ) && world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
+					if ((world.getWorldInfo().getTerrainType() == WorldType.FLAT || cpY > 60) && !world.isBlockNormalCube(cpX, cpY, cpZ)
+							&& world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
 						int numInChunk = 0;
 						int count = 0;
 
@@ -395,7 +397,7 @@ public class PixelmonSpawner implements ITickHandler {
 
 		return var2;
 	}
-	
+
 	/**
 	 * Counts how many entities of an entity class exist in the world. Args:
 	 * entityClass
