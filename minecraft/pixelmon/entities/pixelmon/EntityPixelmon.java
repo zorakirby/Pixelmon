@@ -24,6 +24,7 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.SpawnConditions;
 import pixelmon.database.SpawnLocation;
+import pixelmon.entities.pixelmon.helpers.AIHelper;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
@@ -261,6 +262,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 		super.writeEntityToNBT(nbt);
 		if (getOwner() != null)
 			nbt.setString("pixelmonOwner", getOwnerName());
+		if (pokemonType == null)
+			pokemonType = SpawnLocation.Land;
+		nbt.setInteger("pixelmonType", pokemonType.index);
 	}
 
 	@Override
@@ -280,10 +284,18 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		if (nbt.hasKey("pixelmonOwner"))
-			super.setOwner("pixelmonOwner");
+			super.setOwner(nbt.getString("pixelmonOwner"));
 		int h = health;
 		level.readFromNBT(nbt);
 		setEntityHealth(h);
+
+		if (nbt.hasKey("pixelmonType"))
+			pokemonType = SpawnLocation.getFromIndex(nbt.getInteger("pixelmonType"));
+		else if (baseStats.spawnLocations[0] == SpawnLocation.Land)
+			pokemonType = SpawnLocation.Land;
+		else
+			pokemonType = SpawnLocation.Water;
+		aiHelper = new AIHelper(getName(), this, tasks);
 	}
 
 	public void unloadEntity() {
