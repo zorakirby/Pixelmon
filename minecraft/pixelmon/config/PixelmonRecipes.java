@@ -14,6 +14,18 @@ public class PixelmonRecipes {
 	public static void addRecipes() {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.healerItem), new Object[] { "IRI", "RDR", "IRI", Character.valueOf('D'),
 				new ItemStack(Item.diamond), Character.valueOf('I'), PixelmonItems.aluminumPlate, Character.valueOf('R'), Item.ingotIron });
+		
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsFossils.fossilMachineBase), new Object[] { "   ", "III", "III", 
+			Character.valueOf('I'), PixelmonItems.aluminumPlate});
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsFossils.fossilMachineDisplay), new Object[] { " R ", "ROR", " R ", 
+			Character.valueOf('O'), Block.obsidian, Character.valueOf('R'), Item.redstone});
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsFossils.fossilMachineTop), new Object[] {"IRI", "III","   ", 
+			Character.valueOf('I'), PixelmonItems.aluminumPlate, Character.valueOf('R'), Item.redstone});
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsFossils.fossilMachineTank), new Object[] { "GWG", "GWG", "GWG", 
+			Character.valueOf('G'), Block.thinGlass, Character.valueOf('W'), Item.bucketWater});
+		GameRegistry.addRecipe(new ItemStack(PixelmonItemsFossils.fossilMachineItem), new Object[] { " L ", " TD", " B ", Character.valueOf('L'),
+				new ItemStack(PixelmonItemsFossils.fossilMachineTop), Character.valueOf('T'), PixelmonItemsFossils.fossilMachineTank, Character.valueOf('D'), PixelmonItemsFossils.fossilMachineDisplay, 
+				Character.valueOf('B'), PixelmonItemsFossils.fossilMachineBase});
 		// GameRegistry.addRecipe(new ItemStack(PixelmonItems.masterBall), new
 		// Object[] { "PPP", "OBO", "DDD", Character.valueOf('P'), new
 		// ItemStack(Item.dyePowder, 1, 5), Character.valueOf('O'),
@@ -71,7 +83,7 @@ public class PixelmonRecipes {
 		GameRegistry.addSmelting(PixelmonBlocks.bauxite.blockID, new ItemStack(PixelmonItems.aluminumIngot), new Random().nextInt(3));
 		
 		for (EnumApricorns a : EnumApricorns.values()) {
-			GameRegistry.addSmelting(PixelmonItemsApricorns.getApricorn(a).shiftedIndex, new ItemStack(PixelmonItemsApricorns.getCookedApricorn(a), 1), 1);
+			GameRegistry.addSmelting(PixelmonItemsApricorns.getApricorn(a).itemID, new ItemStack(PixelmonItemsApricorns.getCookedApricorn(a), 1), 1);
 		}
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItemsPokeballs.ironDisc, 5), new Object[] { "XXX", Character.valueOf('X'), Item.ingotIron });

@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import pixelmon.DownloadHelper;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -37,7 +38,7 @@ public class PlayerStorage {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
 		this.userName = player.username;
-		this.saveFile = "saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/" + player.username + ".pk";
+		this.saveFile = DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/" + player.username + ".pk";
 		pokedex = new Pokedex(player);
 	}
 

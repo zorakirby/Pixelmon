@@ -25,9 +25,9 @@ public class PixelmonEntityList {
 			ClassType type = null;
 			for (EnumPokemon pokemon : EnumPokemon.values())
 				if (pokemon.name.equalsIgnoreCase(par0Str))
-					type = pokemon.type;
+					type = ClassType.Pixelmon;
 
-			if (type == ClassType.Pixelmon || type == ClassType.WaterPixelmon) {
+			if (type == ClassType.Pixelmon) {
 				var2 = new EntityPixelmon(par1World);
 				((EntityPixelmon) var2).init(par0Str);
 			} else {
@@ -77,10 +77,9 @@ public class PixelmonEntityList {
 
 		for (EnumPokemon pokemon : EnumPokemon.values()) {
 			String name = pokemon.name;
-			ClassType type = pokemon.type;
 			int rarity = DatabaseStats.GetRarity(name);
 			if (rarity > 0)
-				SpawnRegistry.addSpawn(name, rarity, type);
+				SpawnRegistry.addSpawn(name, rarity, ClassType.Pixelmon);
 		}
 
 		for (EnumTrainers trainer : EnumTrainers.values()) {
@@ -92,6 +91,6 @@ public class PixelmonEntityList {
 	}
 
 	public enum ClassType {
-		Trainer, Pixelmon, WaterPixelmon
+		Trainer, Pixelmon
 	}
 }

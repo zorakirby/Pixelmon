@@ -16,7 +16,7 @@ public class CameruptInteraction extends PixelmonInteraction {
     {
         ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
 
-        if (var2 != null && var2.itemID == Item.bucketEmpty.shiftedIndex)
+        if (var2 != null && var2.itemID == Item.bucketEmpty.itemID)
         {
             if (--var2.stackSize <= 0)
             {
@@ -24,7 +24,7 @@ public class CameruptInteraction extends PixelmonInteraction {
             }
             else if (!par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.bucketLava)))
             {
-                par1EntityPlayer.dropPlayerItem(new ItemStack(Item.bucketMilk.shiftedIndex, 1, 0));
+                par1EntityPlayer.dropPlayerItem(new ItemStack(Item.bucketMilk.itemID, 1, 0));
             }
 
             return true;

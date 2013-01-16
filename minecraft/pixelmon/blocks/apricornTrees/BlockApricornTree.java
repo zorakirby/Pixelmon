@@ -32,7 +32,7 @@ public class BlockApricornTree extends BlockContainer {
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return PixelmonItemsApricorns.getApricorn(tree.apricorn).shiftedIndex;
+		return PixelmonItemsApricorns.getApricorn(tree.apricorn).itemID;
 	}
 
 	@Override

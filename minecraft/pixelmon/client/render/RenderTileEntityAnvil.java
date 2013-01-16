@@ -78,7 +78,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		if (tile.itemOnAnvil != -1) {
 			GL11.glTranslatef((float) 0, (float) 0.03F, (float) 0); // size
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
-			if (tile.itemOnAnvil == PixelmonItems.aluminumIngot.shiftedIndex)
+			if (tile.itemOnAnvil == PixelmonItems.aluminumIngot.itemID)
 			{
 				bindTextureByName("/pixelmon/texture/aluminum/ingot.png");
 				if (tile.state == 0)
@@ -89,7 +89,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 					modelPlateStage3.renderModel(0.0625f);
 			}
 			else
-				if(tile.itemOnAnvil == PixelmonItems.aluminumPlate.shiftedIndex){
+				if(tile.itemOnAnvil == PixelmonItems.aluminumPlate.itemID){
 					bindTextureByName("/pixelmon/texture/aluminum/ingot.png");
 					modelPlate.renderModel(0.0625f);
 				}

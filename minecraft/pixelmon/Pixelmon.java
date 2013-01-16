@@ -20,9 +20,7 @@ import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
 import pixelmon.pokedex.Pokedex;
-import pixelmon.spawning.ChunkDataEvents;
 import pixelmon.spawning.PixelmonSpawner;
-import pixelmon.spawning.PixelmonWaterSpawner;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
@@ -51,7 +49,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.9.0")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.9.1")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
@@ -76,7 +74,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "Pixelmon 1.9.0 for 1.4.6";
+		event.getModMetadata().version = "Pixelmon 1.9.1 for 1.4.6";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
@@ -110,8 +108,6 @@ public class Pixelmon {
 
 		// GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
-		MinecraftForge.EVENT_BUS.register(new ChunkDataEvents());
-		MinecraftForge.EVENT_BUS.register(new PixelmonSpawner());
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
@@ -119,7 +115,7 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
 		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
-		TickRegistry.registerTickHandler(new PixelmonWaterSpawner(), Side.SERVER);
+		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
 		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
 		proxy.registerTickHandlers();
 

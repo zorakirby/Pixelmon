@@ -197,4 +197,9 @@ public class EntityTrainer extends EntityCreature {
 	public int getLvl() {
 		return dataWatcher.getWatchableObjectInt(5);
 	}
+	
+	@Override
+	public int getMaxSpawnedInChunk() {
+		return 1;
+	}
 }

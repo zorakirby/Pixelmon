@@ -23,6 +23,7 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.config.PixelmonItems;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.SpawnConditions;
+import pixelmon.database.SpawnLocation;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
@@ -37,6 +38,7 @@ import pixelmon.storage.PixelmonStorage;
 
 public class EntityPixelmon extends Entity9HasSounds {
 
+	public SpawnLocation pokemonType;
 	public boolean playerOwned = false;
 
 	public EntityPixelmon(World par1World) {
@@ -72,7 +74,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 			if (itemstack != null) {
 				if (getOwner() == player) {
-					if (itemstack.itemID == PixelmonItems.rareCandy.shiftedIndex) {
+					if (itemstack.itemID == PixelmonItems.rareCandy.itemID) {
 						getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
 						if (!player.capabilities.isCreativeMode)
 							player.inventory.consumeInventoryItem(itemstack.itemID);
@@ -154,10 +156,10 @@ public class EntityPixelmon extends Entity9HasSounds {
 						return true;
 					}
 				}
-				if(itemstack.getItem() instanceof ItemPokedex)
-				{
+				if (itemstack.getItem() instanceof ItemPokedex) {
 					ItemPokedex pokedex = (ItemPokedex) itemstack.getItem();
-					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(Pokedex.nameToID(getName()), DexRegisterStatus.seen);
+					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(Pokedex.nameToID(getName()),
+							DexRegisterStatus.seen);
 					pokedex.openPokedexGui(Pokedex.nameToID(getName()), player, worldObj);
 				}
 
@@ -192,7 +194,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 	// }
 
 	public boolean getCanSpawnHere() {
-		if (baseStats.creatureType == EnumCreatureType.waterCreature) {
+		if (pokemonType == SpawnLocation.Water) {
+			if (baseStats.swimmingParameters == null)
+				return false;
 			int wdepth = WorldHelper.getWaterDepth((int) posX, (int) posY, (int) posZ, worldObj);
 			if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 				return true;
@@ -216,7 +220,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
-		boolean[] conds = { true, lightLevel > 8 };
+		boolean[] conds = { true, true };
 		for (SpawnConditions s : baseStats.spawnConditions) {
 			if (s == SpawnConditions.Grass && blockId != Block.grass.blockID)
 				conds[s.index] = false;
@@ -224,9 +228,10 @@ public class EntityPixelmon extends Entity9HasSounds {
 				conds[s.index] = false;
 			if (s == SpawnConditions.Sand && blockId != Block.sand.blockID)
 				conds[s.index] = false;
-			if (s == SpawnConditions.Darkness && lightLevel > 8)
-				conds[s.index] = false;
-			if (s == SpawnConditions.DayLight && lightLevel < 8)
+			if (s == SpawnConditions.Darkness)
+				if (lightLevel > 11 && !(var2 < 60 && !this.worldObj.canBlockSeeTheSky(var1, var2, var3)))
+					conds[s.index] = false;
+			if (s == SpawnConditions.DayLight && lightLevel < 11)
 				conds[s.index] = false;
 		}
 		return conds[0] && conds[1];
@@ -237,8 +242,10 @@ public class EntityPixelmon extends Entity9HasSounds {
 		if (Pixelmon.freeze)
 			return;
 		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
-			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness && worldObj.isDaytime())
-				setDead();
+			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
+				if (worldObj.getWorldTime() < 12000
+						&& this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)))
+					setDead();
 			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight && !worldObj.isDaytime())
 				setDead();
 		}
@@ -281,7 +288,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void unloadEntity() {
 		super.unloadEntity();
-			
+
 		ArrayList<Entity> list = new ArrayList<Entity>();
 		list.add(this);
 		worldObj.unloadEntities(list);
@@ -296,8 +303,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 	}
 
 	@Override
-	public EntityAgeable func_90011_a(EntityAgeable var1) {
-		// TODO Auto-generated method stub
+	public EntityAgeable createChild(EntityAgeable var1) {
 		return null;
 	}
+
 }

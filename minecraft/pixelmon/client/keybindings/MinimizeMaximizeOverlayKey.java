@@ -14,7 +14,7 @@ import cpw.mods.fml.common.TickType;
 public class MinimizeMaximizeOverlayKey extends KeyHandler {
 
 	public MinimizeMaximizeOverlayKey() {
-		super(new KeyBinding[]{new KeyBinding("Minimize/Maximize Overlay", Keyboard.KEY_O)}, new boolean[]{false});	
+		super(new KeyBinding[] { new KeyBinding("Minimize/Maximize Overlay", Keyboard.KEY_O) }, new boolean[] { false });
 	}
 
 	@Override
@@ -23,10 +23,8 @@ public class MinimizeMaximizeOverlayKey extends KeyHandler {
 	}
 
 	@Override
-	public void keyDown(EnumSet<TickType> types, KeyBinding kb,
-			boolean tickEnd, boolean isRepeat) {
-		if(Minecraft.getMinecraft().currentScreen != null || tickEnd)
-		{
+	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
+		if (Minecraft.getMinecraft().currentScreen != null || Minecraft.getMinecraft().theWorld == null || tickEnd) {
 			return;
 		}
 		GuiPixelmonOverlay.isGuiMinimized = !GuiPixelmonOverlay.isGuiMinimized;

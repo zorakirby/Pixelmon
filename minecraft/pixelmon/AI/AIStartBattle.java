@@ -52,6 +52,8 @@ public class AIStartBattle extends EntityAIBase {
 				return false;
 			if (target.battleController != null)
 				return false;
+			if (target.getHealth() <= 0 || target.isFainted || target.isDead)
+				return false;
 			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon) theEntity), new WildPixelmonParticipant(target));
 			return true;
 		}
