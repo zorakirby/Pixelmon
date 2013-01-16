@@ -1,5 +1,6 @@
 package pixelmon.client.models.pokemon;
 
+import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.SkeletonQuadruped;
 import net.minecraft.client.model.ModelBase;
@@ -7,9 +8,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ModelBulbasaur extends ModelBase// Quadruped
+public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 {
-	SkeletonBase skeleton;
 
 	public ModelBulbasaur() {
 		// super(6, 0.0F);
@@ -112,8 +112,6 @@ public class ModelBulbasaur extends ModelBase// Quadruped
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-		// super.setRotationAngles(f, f1, f2, f3, f4, f5);
-		skeleton.walk(f, f1, f2, f3, f4);
 		Left_ear.rotateAngleX = f4 / 57.29578F;
 		Left_ear.rotateAngleY = f3 / 57.29578F;
 		Right_Ear.rotateAngleX = f4 / 57.29578F;
