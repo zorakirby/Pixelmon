@@ -1,25 +1,29 @@
 package pixelmon.client.models.animations;
 
+import java.util.ArrayList;
+
+import pixelmon.entities.pixelmon.EntityPixelmon;
+
 import net.minecraft.client.model.ModelRenderer;
 
 public class SkeletonBase {
-	float toDegrees = 57.29578F;
-	float toRadians = 1 / toDegrees;
-	ModelRenderer headPiece;
-	float headStartAngleX, headStartAngleY;
-
-	public SkeletonBase(ModelRenderer headPiece) {
-		this.headPiece = headPiece;
-		headStartAngleX = headPiece.rotateAngleX;
-		headStartAngleY = headPiece.rotateAngleY;
+	protected float toDegrees = 57.29578F;
+	protected float toRadians = 1 / toDegrees;
+	ArrayList<Module> modules = new ArrayList<Module>();
+	
+	public SkeletonBase() {
 	}
 
-	public void walk(float f, float f1, float f2, float f3, float f4) {
-		animateHead(f3, f4);
+	public void add(Module module){
+		modules.add(module);
+	}
+	
+	public void walk(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
+		for(Module m: modules) m.walk(entity, f, f1, f2, f3, f4);
 	}
 
-	public void animateHead(float rotateAnglePitch, float rotateAngleYaw) {
-		headPiece.rotateAngleX = rotateAngleYaw * toRadians + headStartAngleX;
-		headPiece.rotateAngleY = rotateAnglePitch * toRadians + headStartAngleY;
+	public void swim(EntityPixelmon pixelmon, float f, float f1, float f2, float f3, float f4){
+		
 	}
+	
 }

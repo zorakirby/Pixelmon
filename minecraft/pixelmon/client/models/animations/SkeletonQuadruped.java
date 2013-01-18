@@ -1,5 +1,6 @@
 package pixelmon.client.models.animations;
 
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.MathHelper;
 
@@ -13,9 +14,9 @@ public class SkeletonQuadruped extends SkeletonBase {
 	float frontLegRotationLimit, backLegRotationLimit;
 	float legSpeed;
 
-	public SkeletonQuadruped(ModelRenderer headPiece, ModelRenderer frontLeftLeg, ModelRenderer frontRightLeg, ModelRenderer backLeftLeg, ModelRenderer backRightLeg,
+	public SkeletonQuadruped(Module headModule, ModelRenderer frontLeftLeg, ModelRenderer frontRightLeg, ModelRenderer backLeftLeg, ModelRenderer backRightLeg,
 			float frontLegRotationLimit, float backLegRotationLimit, float legSpeed) {
-		super(headPiece);
+		modules.add(headModule);
 		flLeg = frontLeftLeg;
 		frLeg = frontRightLeg;
 		blLeg = backLeftLeg;
@@ -35,8 +36,8 @@ public class SkeletonQuadruped extends SkeletonBase {
 	}
 
 	@Override
-	public void walk(float f, float f1, float f2, float f3, float f4) {
-		super.walk(f, f1, f2, f3, f4);
+	public void walk(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
+		super.walk(entity, f, f1, f2, f3, f4);
 		brLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * backLegRotationLimit * f1 + brLegInitX;
 		blLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * backLegRotationLimit * f1 + blLegInitX;
 		frLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * frontLegRotationLimit * f1 + frLegInitX;

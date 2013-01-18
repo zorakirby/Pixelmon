@@ -1,6 +1,7 @@
 package pixelmon.client.models.pokemon;
 
 import pixelmon.client.models.PixelmonModelBase;
+import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.SkeletonQuadruped;
 import net.minecraft.client.model.ModelBase;
@@ -93,7 +94,8 @@ public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 		Leg_FrontLeft.rotateAngleY = 0F;
 		Leg_FrontLeft.rotateAngleZ = 0F;
 		
-		skeleton = new SkeletonQuadruped(Head, Leg_FrontLeft, Leg_FrontRight, Leg_RearLeft, Leg_RearRight, 1.4F, 1.4F, 0.6F);
+		ModuleHead head = new ModuleHead(Head);
+		skeleton = new SkeletonQuadruped(head, Leg_FrontLeft, Leg_FrontRight, Leg_RearLeft, Leg_RearRight, 1.4F, 1.4F, 0.6F);
 	}
 
 	public void render(Entity var1, float f, float f1, float f2, float f3, float f4, float f5) {
