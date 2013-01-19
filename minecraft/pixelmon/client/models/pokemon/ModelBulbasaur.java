@@ -11,12 +11,23 @@ import net.minecraft.util.MathHelper;
 
 public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 {
+	ModelRenderer BodyPiece;
 
 	public ModelBulbasaur() {
-		// super(6, 0.0F);
+		ModelRenderer Left_ear;
+		ModelRenderer Right_Ear;
+		ModelRenderer body;
+		ModelRenderer head;
+		ModelRenderer bulbTop;
+		ModelRenderer bulbBase;
+		ModelRenderer legFR;
+		ModelRenderer legRR;
+		ModelRenderer legRL;
+		ModelRenderer legFL;
+
 		Left_ear = new ModelRenderer(this, 27, 0);
 		Left_ear.addBox(2, -6, -4, 2, 2, 4, 0F);
-		Left_ear.setRotationPoint(0, 16, -7);
+		Left_ear.setRotationPoint(0, 0, 0);
 
 		Left_ear.rotateAngleX = 0F;
 		Left_ear.rotateAngleY = 0F;
@@ -24,112 +35,73 @@ public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 
 		Right_Ear = new ModelRenderer(this, 27, 0);
 		Right_Ear.addBox(-4, -6, -4, 2, 2, 4, 0F);
-		Right_Ear.setRotationPoint(0, 16, -7);
+		Right_Ear.setRotationPoint(0, 0, 0);
 
 		Right_Ear.rotateAngleX = 0F;
 		Right_Ear.rotateAngleY = 0F;
 		Right_Ear.rotateAngleZ = 0F;
 
-		Body = new ModelRenderer(this, 0, 0);
-		Body.addBox(-5, -7, -7, 10, 14, 7, 0F);
-		Body.setRotationPoint(0, 14, 1);
+		BodyPiece = new ModelRenderer(this, "Body");
+		BodyPiece.setRotationPoint(0, 14, 1);
+		body = new ModelRenderer(this, 0, 0);
+		body.addBox(-5, -7, -7, 10, 14, 7, 0F);
+		body.setRotationPoint(0, 0, 0);
+		body.rotateAngleX = 1.396263F;
 
-		Body.rotateAngleX = 1.396263F;
-		Body.rotateAngleY = 0F;
-		Body.rotateAngleZ = 0F;
+		BodyPiece.addChild(body);
 
-		Head = new ModelRenderer(this, 32, 17);
-		Head.addBox(-4, -4, -8, 8, 7, 8, 0F);
-		Head.setRotationPoint(0, 16, -7);
+		head = new ModelRenderer(this, 32, 17);
+		head.addBox(-4, -4, -8, 8, 7, 8, 0F);
+		head.setRotationPoint(0, 0, 0);
 
-		Head.rotateAngleX = 0F;
-		Head.rotateAngleY = 0F;
-		Head.rotateAngleZ = 0F;
+		ModelRenderer HeadPiece;
+		HeadPiece = new ModelRenderer(this, "Head");
+		HeadPiece.setRotationPoint(0, 2, -8);
+		HeadPiece.addChild(head);
+		HeadPiece.addChild(Left_ear);
+		HeadPiece.addChild(Right_Ear);
 
-		Bulb_Top = new ModelRenderer(this, 14, 21);
-		Bulb_Top.addBox(-3, -3, 5, 6, 6, 3, 0F);
-		Bulb_Top.setRotationPoint(0, 14, 1);
+		BodyPiece.addChild(HeadPiece);
 
-		Bulb_Top.rotateAngleX = 1.396263F;
-		Bulb_Top.rotateAngleY = 0F;
-		Bulb_Top.rotateAngleZ = 0F;
+		bulbTop = new ModelRenderer(this, 14, 21);
+		bulbTop.addBox(-3, -3, 5, 6, 6, 3, 0F);
+		bulbTop.setRotationPoint(0, 0, 0);
 
-		Bulb_Base = new ModelRenderer(this, 34, 2);
-		Bulb_Base.addBox(-5, -5, 0, 10, 10, 5, 0F);
-		Bulb_Base.setRotationPoint(0, 14, 1);
+		bulbTop.rotateAngleX = 1.396263F;
+		BodyPiece.addChild(bulbTop);
 
-		Bulb_Base.rotateAngleX = 1.396263F;
-		Bulb_Base.rotateAngleY = 0F;
-		Bulb_Base.rotateAngleZ = 0F;
+		bulbBase = new ModelRenderer(this, 34, 2);
+		bulbBase.addBox(-5, -5, 0, 10, 10, 5, 0F);
+		bulbBase.setRotationPoint(0, 0, 0);
+		BodyPiece.addChild(bulbBase);
 
-		Leg_FrontRight = new ModelRenderer(this, 0, 21);
-		Leg_FrontRight.addBox(-3, 0, -2, 3, 8, 3, 0F);
-		Leg_FrontRight.setRotationPoint(-5, 16, -3);
+		bulbBase.rotateAngleX = 1.396263F;
 
-		Leg_FrontRight.rotateAngleX = 0F;
-		Leg_FrontRight.rotateAngleY = 0F;
-		Leg_FrontRight.rotateAngleZ = 0F;
+		legFR = new ModelRenderer(this, 0, 21);
+		legFR.addBox(-3, 0, -2, 3, 8, 3, 0F);
+		legFR.setRotationPoint(-5, 2, -4);
+		BodyPiece.addChild(legFR);
+		legRR = new ModelRenderer(this, 0, 21);
+		legRR.addBox(-3, 0, -2, 3, 6, 3, 0F);
+		legRR.setRotationPoint(-5, 4, 4);
+		BodyPiece.addChild(legRR);
 
-		Leg_RearRight = new ModelRenderer(this, 0, 21);
-		Leg_RearRight.addBox(-3, 0, -2, 3, 6, 3, 0F);
-		Leg_RearRight.setRotationPoint(-5, 18, 5);
+		legRL = new ModelRenderer(this, 0, 21);
+		legRL.addBox(0, 0, -2, 3, 6, 3, 0F);
+		legRL.setRotationPoint(5, 4, 4);
+		BodyPiece.addChild(legRL);
 
-		Leg_RearRight.rotateAngleX = 0F;
-		Leg_RearRight.rotateAngleY = 0F;
-		Leg_RearRight.rotateAngleZ = 0F;
+		legFL = new ModelRenderer(this, 0, 21);
+		legFL.addBox(0, 0, -2, 3, 8, 3, 0F);
+		legFL.setRotationPoint(5, 2, -4);
+		BodyPiece.addChild(legFL);
 
-		Leg_RearLeft = new ModelRenderer(this, 0, 21);
-		Leg_RearLeft.addBox(0, 0, -2, 3, 6, 3, 0F);
-		Leg_RearLeft.setRotationPoint(5, 18, 5);
-
-		Leg_RearLeft.rotateAngleX = 0F;
-		Leg_RearLeft.rotateAngleY = 0F;
-		Leg_RearLeft.rotateAngleZ = 0F;
-
-		Leg_FrontLeft = new ModelRenderer(this, 0, 21);
-		Leg_FrontLeft.addBox(0, 0, -2, 3, 8, 3, 0F);
-		Leg_FrontLeft.setRotationPoint(5, 16, -3);
-
-		Leg_FrontLeft.rotateAngleX = 0F;
-		Leg_FrontLeft.rotateAngleY = 0F;
-		Leg_FrontLeft.rotateAngleZ = 0F;
-		
-		ModuleHead head = new ModuleHead(Head);
-		skeleton = new SkeletonQuadruped(head, Leg_FrontLeft, Leg_FrontRight, Leg_RearLeft, Leg_RearRight, 1.4F, 1.4F, 0.6F);
+		ModuleHead headModule = new ModuleHead(HeadPiece);
+		skeleton = new SkeletonQuadruped(headModule, legFL, legFR, legRL, legRR, 1.4F, 1.4F, 0.6F);
 	}
 
 	public void render(Entity var1, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(var1, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5);
-		Left_ear.render(f5);
-		Right_Ear.render(f5);
-		Body.render(f5);
-		Head.render(f5);
-		Bulb_Top.render(f5);
-		Bulb_Base.render(f5);
-		Leg_FrontRight.render(f5);
-		Leg_RearRight.render(f5);
-		Leg_RearLeft.render(f5);
-		Leg_FrontLeft.render(f5);
+		BodyPiece.render(f5);
 	}
-
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-		Left_ear.rotateAngleX = f4 / 57.29578F;
-		Left_ear.rotateAngleY = f3 / 57.29578F;
-		Right_Ear.rotateAngleX = f4 / 57.29578F;
-		Right_Ear.rotateAngleY = f3 / 57.29578F;
-	}
-
-	// fields
-	public ModelRenderer Left_ear;
-	public ModelRenderer Right_Ear;
-	public ModelRenderer Body;
-	public ModelRenderer Head;
-	public ModelRenderer Bulb_Top;
-	public ModelRenderer Bulb_Base;
-	public ModelRenderer Leg_FrontRight;
-	public ModelRenderer Leg_RearRight;
-	public ModelRenderer Leg_RearLeft;
-	public ModelRenderer Leg_FrontLeft;
-
 }
