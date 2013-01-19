@@ -599,7 +599,7 @@ public class ModelCamerupt extends PixelmonModelBase {
 		BODYPIECE.addChild(NECKPIECE);
 
 		ModuleHead headModule = new ModuleHead(HEADPIECE);
-		skeleton = new SkeletonQuadruped(headModule, UPPERLEFTLEGPIECE, UPPERRIGHTLEGPIECE, BOTTOMLEFTLEGPIECE, BOTTOMRIGHTLEGPIECE, 1.1f, 1.1f, 0.8f);
+		skeleton = new SkeletonQuadruped(BODYPIECE, headModule, UPPERLEFTLEGPIECE, UPPERRIGHTLEGPIECE, BOTTOMLEFTLEGPIECE, BOTTOMRIGHTLEGPIECE, 1.1f, 1.1f, 0.8f);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

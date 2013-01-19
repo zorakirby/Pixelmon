@@ -8,7 +8,8 @@ public class SkeletonBiped extends SkeletonBase {
 	protected ModelRenderer leftArm, rightArm;
 	protected ModelRenderer leftLeg, rightLeg;
 	
-	public SkeletonBiped(ModelRenderer leftArm, ModelRenderer rightArm, ModelRenderer leftLeg, ModelRenderer rightLeg) {
+	public SkeletonBiped(ModelRenderer body, ModelRenderer leftArm, ModelRenderer rightArm, ModelRenderer leftLeg, ModelRenderer rightLeg) {
+		super(body);
 		this.leftArm = leftArm; this.rightArm = rightArm;
 		this.leftLeg = leftLeg; this.rightLeg = rightLeg;
 	}

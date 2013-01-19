@@ -5,8 +5,8 @@ import net.minecraft.client.model.ModelRenderer;
 
 public class SkeletonBipedSitting extends SkeletonBiped {
 
-	public SkeletonBipedSitting(ModelRenderer leftArm, ModelRenderer rightArm, ModelRenderer leftLeg, ModelRenderer rightLeg) {
-		super(leftArm, rightArm, leftLeg, rightLeg);
+	public SkeletonBipedSitting(ModelRenderer body, ModelRenderer leftArm, ModelRenderer rightArm, ModelRenderer leftLeg, ModelRenderer rightLeg) {
+		super(body, leftArm, rightArm, leftLeg, rightLeg);
 	}
 
 	@Override

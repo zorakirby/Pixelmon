@@ -10,8 +10,10 @@ public class SkeletonBase {
 	protected float toDegrees = 57.29578F;
 	protected float toRadians = 1 / toDegrees;
 	ArrayList<Module> modules = new ArrayList<Module>();
+	public ModelRenderer body;
 	
-	public SkeletonBase() {
+	public SkeletonBase(ModelRenderer body) {
+		this.body = body;
 	}
 
 	public void add(Module module){

@@ -97,7 +97,7 @@ public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 		BodyPiece.addChild(legFL);
 
 		ModuleHead headModule = new ModuleHead(HeadPiece);
-		skeleton = new SkeletonQuadruped(headModule, legFL, legFR, legRL, legRR, 1.4F, 1.4F, 0.6F);
+		skeleton = new SkeletonQuadruped(BodyPiece, headModule, legFL, legFR, legRL, legRR, 1.4F, 1.4F, 0.6F);
 	}
 
 	public void render(Entity var1, float f, float f1, float f2, float f3, float f4, float f5) {

@@ -14,8 +14,9 @@ public class SkeletonQuadruped extends SkeletonBase {
 	float frontLegRotationLimit, backLegRotationLimit;
 	float legSpeed;
 
-	public SkeletonQuadruped(Module headModule, ModelRenderer frontLeftLeg, ModelRenderer frontRightLeg, ModelRenderer backLeftLeg, ModelRenderer backRightLeg,
+	public SkeletonQuadruped(ModelRenderer body, Module headModule, ModelRenderer frontLeftLeg, ModelRenderer frontRightLeg, ModelRenderer backLeftLeg, ModelRenderer backRightLeg,
 			float frontLegRotationLimit, float backLegRotationLimit, float legSpeed) {
+		super(body);
 		modules.add(headModule);
 		flLeg = frontLeftLeg;
 		frLeg = frontRightLeg;
