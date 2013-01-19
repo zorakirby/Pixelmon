@@ -32,16 +32,17 @@ public class SkeletonQuadruped extends SkeletonBase {
 
 		this.frontLegRotationLimit = frontLegRotationLimit;
 		this.backLegRotationLimit = backLegRotationLimit;
+		this.legSpeed = legSpeed;
 
 	}
 
 	@Override
 	public void walk(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
 		super.walk(entity, f, f1, f2, f3, f4);
-		brLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * backLegRotationLimit * f1 + brLegInitX;
-		blLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * backLegRotationLimit * f1 + blLegInitX;
-		frLeg.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * frontLegRotationLimit * f1 + frLegInitX;
-		flLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * frontLegRotationLimit * f1 + flLegInitX;
+		brLeg.rotateAngleX = MathHelper.cos(f * legSpeed) * backLegRotationLimit * f1 + brLegInitX;
+		blLeg.rotateAngleX = MathHelper.cos(f * legSpeed + 3.141593F) * backLegRotationLimit * f1 + blLegInitX;
+		frLeg.rotateAngleX = MathHelper.cos(f * legSpeed + 3.141593F) * frontLegRotationLimit * f1 + frLegInitX;
+		flLeg.rotateAngleX = MathHelper.cos(f * legSpeed) * frontLegRotationLimit * f1 + flLegInitX;
 	}
 
 }
