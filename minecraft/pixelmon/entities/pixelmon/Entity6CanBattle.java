@@ -18,6 +18,7 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.database.DatabaseMoves;
+import pixelmon.entities.pixelmon.helpers.BattleVariables;
 import pixelmon.entities.pixelmon.stats.BattleStats;
 import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.entities.trainers.EntityTrainer;
@@ -32,6 +33,8 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	protected EntityTrainer trainer;
 	public boolean isLockedInBattle = false;
 	public EntityPixelmon locker = null;
+	
+	public BattleVariables battleVariables;
 
 	public Entity6CanBattle(World par1World) {
 		super(par1World);

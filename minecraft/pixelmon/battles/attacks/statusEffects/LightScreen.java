@@ -7,7 +7,6 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class LightScreen extends StatusEffectBase {
-	private int effectTurns = -1;
 
 	public LightScreen() {
 		super(StatusEffectType.LightScreen, false, false, true);
@@ -17,12 +16,12 @@ public class LightScreen extends StatusEffectBase {
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 
 		if (checkChance()) {
-			if (user.status.contains(this)){
+			if (user.status.contains(this)) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " already has a lightscreen!");
 				return;
 			}
 			user.status.add(this);
-			effectTurns = 5;
+			user.battleVariables.set(type, 5);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " has put up a screen of shimmering light!");
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
@@ -37,10 +36,10 @@ public class LightScreen extends StatusEffectBase {
 
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
-		if (effectTurns == 0) {
+		if (user.battleVariables.get(type) == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + "'s Lightscreen wears off!");
 			user.status.remove(this);
 		}
-		effectTurns--;
+		user.battleVariables.decrement(type);
 	}
 }

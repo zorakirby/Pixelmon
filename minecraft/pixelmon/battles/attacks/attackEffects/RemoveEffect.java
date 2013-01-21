@@ -28,7 +28,7 @@ public class RemoveEffect extends EffectBase {
 	}
 
 	@Override
-	public boolean cantMiss() {
+	public boolean cantMiss(EntityPixelmon user) {
 		return false;
 	}
 

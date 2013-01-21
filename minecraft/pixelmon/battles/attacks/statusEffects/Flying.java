@@ -6,15 +6,12 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Flying extends StatusEffectBase {
-
-	int turnCount;
 	public Flying() {
 		super(StatusEffectType.Flying, false, false, true);
 	}
 
 	@Override
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
-		turnCount=0;
 	}
 
 	@Override
@@ -28,7 +25,7 @@ public class Flying extends StatusEffectBase {
 			return true;
 		return false;
 	}
-	
+
 	@Override
 	public boolean stopsStatusChange() {
 		return true;

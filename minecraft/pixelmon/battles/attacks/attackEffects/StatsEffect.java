@@ -63,7 +63,7 @@ public class StatsEffect extends EffectBase{
 	}
 
 	@Override
-	public boolean cantMiss() {
+	public boolean cantMiss(EntityPixelmon user) {
 		if (isUser) return true;
 		return false;
 	}

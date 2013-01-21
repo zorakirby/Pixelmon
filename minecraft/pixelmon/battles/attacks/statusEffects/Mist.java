@@ -13,7 +13,6 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Mist extends StatusEffectBase {
 
-	int turnCount =0;
 	public Mist() {
 		super(StatusEffectType.Mist, false, true, false);
 	}
@@ -28,34 +27,34 @@ public class Mist extends StatusEffectBase {
 				}
 
 			user.status.add(this);
-			turnCount=0;
+			user.battleVariables.set(type, 0);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " creates a cloud of mist!");
-
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
 	@Override
 	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
-		if (a.baseAttack.attackCategory ==  Attack.ATTACK_STATUS){
-			for (EffectBase e:a.baseAttack.effects){
-				if (e.effectType == EffectType.Stats){
-					for (ModifierBase m: (((StatsEffect)e).modifiers)){
-						if (m.type == ModifierType.User) return false;
+		if (a.baseAttack.attackCategory == Attack.ATTACK_STATUS) {
+			for (EffectBase e : a.baseAttack.effects) {
+				if (e.effectType == EffectType.Stats) {
+					for (ModifierBase m : (((StatsEffect) e).modifiers)) {
+						if (m.type == ModifierType.User)
+							return false;
 					}
 					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is protected by the mist!");
 					return true;
 				}
 			}
 		}
-			
+
 		return false;
 	}
 
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
-		turnCount++;
-		if (turnCount==5) {
+		user.battleVariables.increment(type);
+		if (user.battleVariables.get(type) == 5) {
 			user.status.remove(this);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The mist wore off!");
 		}

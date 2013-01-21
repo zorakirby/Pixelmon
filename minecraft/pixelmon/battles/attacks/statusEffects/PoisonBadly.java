@@ -9,8 +9,6 @@ import pixelmon.enums.EnumType;
 
 public class PoisonBadly extends StatusEffectBase {
 
-	double poisonAmount = 1 / 16;
-
 	public PoisonBadly() {
 		super(StatusEffectType.PoisonBadly, true, false, false);
 	}
@@ -25,7 +23,7 @@ public class PoisonBadly extends StatusEffectBase {
 				if (e.type == StatusEffectType.Poison || e.type == StatusEffectType.PoisonBadly) {
 					return;
 				}
-			poisonAmount = 1 / 16;
+			target.battleVariables.set(type, 1);
 			target.status.add(this);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has been badly poisoned!");
 		}
@@ -34,8 +32,8 @@ public class PoisonBadly extends StatusEffectBase {
 	@Override
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is hurt by poison!");
-		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) * poisonAmount));
-		poisonAmount += 1 / 16;
+		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) * user.battleVariables.get(this)));
+		user.battleVariables.increment(type);
 	}
 
 	@Override

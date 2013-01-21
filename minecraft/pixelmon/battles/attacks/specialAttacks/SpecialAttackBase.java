@@ -23,7 +23,7 @@ public abstract class SpecialAttackBase extends EffectBase{
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 	}
 	
-	public boolean cantMiss() {
+	public boolean cantMiss(EntityPixelmon user) {
 		return false;
 	}
 }

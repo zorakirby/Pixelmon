@@ -69,7 +69,7 @@ public abstract class StatusEffectBase extends EffectBase {
 	public void turnTick(EntityPixelmon pixelmon1, EntityPixelmon target) {
 	}
 
-	public boolean cantMiss() {
+	public boolean cantMiss(EntityPixelmon user) {
 		return false;
 	}
 

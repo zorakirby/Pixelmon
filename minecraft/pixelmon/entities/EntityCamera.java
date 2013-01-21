@@ -96,10 +96,10 @@ public class EntityCamera extends EntityLiving {
 			EntityLiving part2 = battleController.participant2.currentPokemon();
 
 			if (battleController.turnCount % 2 == 0) {
-				setPositionAndUpdate(part1.posX, part1.posY, part1.posZ);
-				rotationYaw = part1.rotationYawHead;
+				setPositionAndUpdate(player.posX, player.posY, player.posZ);
+				rotationYaw = player.rotationYawHead;
 			} else {
-				setPositionAndUpdate(part2.posX, part2.posY, part2.posZ);
+				setPositionAndUpdate(part1.posX, part1.posY, part1.posZ);
 				rotationYaw = part2.rotationYawHead;
 			}
 		}

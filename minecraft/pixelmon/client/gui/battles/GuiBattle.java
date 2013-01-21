@@ -343,12 +343,12 @@ public class GuiBattle extends GuiContainer {
 			drawString(fontRenderer, "" + attack.baseAttack.basePower, width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "--", width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
-			
+
 		if (attack.baseAttack.accuracy == -1)
 			drawString(fontRenderer, "--", width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
-		else 
+		else
 			drawString(fontRenderer, "" + attack.baseAttack.accuracy, width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
-		
+
 		fontRenderer.drawSplitString(attack.baseAttack.description, width / 2 - 25, height / 2 + 55, 100, 0xFFFFFF);
 	}
 
@@ -478,8 +478,8 @@ public class GuiBattle extends GuiContainer {
 
 	boolean isHealing = false;
 
-	int healAmount=0;
-	
+	int healAmount = 0;
+
 	private void drawChoosePokemon(int mouseX, int mouseY) {
 		isHealing = false;
 		if (mode == BattleMode.ApplyToPokemon && pixelmonToHeal != null) {
@@ -661,7 +661,8 @@ public class GuiBattle extends GuiContainer {
 		if (ClientBattleManager.hasMoreMessages()) {
 			ClientBattleManager.removeMessage();
 			return;
-		} else if (mode == BattleMode.YesNo)
+		}
+		if (mode == BattleMode.YesNo)
 			YesNoDialogClicked(mouseX, mouseY);
 		else if (ClientBattleManager.hasLevelUps() || ClientBattleManager.hasNewAttacks()) {
 			if (!ClientBattleManager.hasNewAttacks()
@@ -669,8 +670,7 @@ public class GuiBattle extends GuiContainer {
 				LevelUpClick(mouseX, mouseY);
 			else
 				ReplaceAttackClicked(mouseX, mouseY);
-		}
-		if (mode == BattleMode.MainMenu) {
+		} else if (mode == BattleMode.MainMenu) {
 			int x1 = width / 2 + 31;
 			int y1 = height - guiHeight + 9;
 			int x2 = width / 2 + 90;
@@ -720,7 +720,6 @@ public class GuiBattle extends GuiContainer {
 					GuiPixelmonOverlay.isVisible = true;
 					return;
 				} else {
-					mode = BattleMode.Waiting;
 					mode = oldMode;
 				}
 
@@ -850,7 +849,7 @@ public class GuiBattle extends GuiContainer {
 		if (pokemonToApplyTo != -1) {
 			if (PixelmonItems.getItem(itemToUse.id) instanceof ItemPotion) {
 				pixelmonToHeal = ServerStorageDisplay.pokemon[pokemonToApplyTo];
-				healAmount = pixelmonToHeal.health + ((ItemPotion)PixelmonItems.getItem(itemToUse.id)).type.getHealAmount();
+				healAmount = pixelmonToHeal.health + ((ItemPotion) PixelmonItems.getItem(itemToUse.id)).type.getHealAmount();
 				Timer timer = new Timer();
 				timer.scheduleAtFixedRate(new HealerTask(), 100, 100);
 			}
@@ -890,7 +889,7 @@ public class GuiBattle extends GuiContainer {
 						mode = BattleMode.ApplyToPokemon;
 					}
 					ItemStack[] inv = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
-					((PixelmonItem)PixelmonItems.getItem(itemToUse.id)).removeFromInventory(inv);
+					((PixelmonItem) PixelmonItems.getItem(itemToUse.id)).removeFromInventory(inv);
 				}
 			}
 		}
