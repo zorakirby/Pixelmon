@@ -27,6 +27,7 @@ public class PixelmonConfig {
 
 	public static boolean scaleModelsUp;
 	public static boolean pokemonDropsEnabled = true;
+	public static boolean checkForDatabaseUpdates = true;
 
 	public static int idTrainers = 199;
 	public static int idPixelmon = 200;
@@ -44,6 +45,7 @@ public class PixelmonConfig {
 		maxNumWaterPokemon = config.get("general", "Max number of Water Pokemon (at one time)", 20).getInt(20);
 		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
 		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled", true).getBoolean(true);
+		checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
 		idTrainers = config.get("IDs", "Trainer ID", 199).getInt(199);
 		idPixelmon = config.get("IDs", "Pixelmon ID", 200).getInt(200);
 		idPokeball = config.get("IDs", "Pokeball ID", 201).getInt(201);

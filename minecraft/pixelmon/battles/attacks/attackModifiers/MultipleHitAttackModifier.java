@@ -32,6 +32,7 @@ public class MultipleHitAttackModifier extends AttackModifierBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) {
+		count = 0;
 		while (RepeatsAttack()) {
 			double crit = a.calcCriticalHit(null);
 			for (EffectBase e : a.baseAttack.effects)
@@ -46,7 +47,7 @@ public class MultipleHitAttackModifier extends AttackModifierBase {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Critical Hit!");
 		}
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " attacked " + count + " times!");
-		count = 0;
+
 		return true;
 	}
 

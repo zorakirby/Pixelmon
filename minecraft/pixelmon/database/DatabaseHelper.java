@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import pixelmon.DownloadHelper;
+import pixelmon.config.PixelmonConfig;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModClassLoader;
 
@@ -24,6 +25,7 @@ public class DatabaseHelper {
 	 * 
 	 * @return True if they do, otherwise false
 	 */
+	public static boolean checkForDatabaseUpdates = true;
 	public static boolean has() {
 		try {
 			File databaseDir = new File(DownloadHelper.getDir(), "database");
@@ -36,7 +38,8 @@ public class DatabaseHelper {
 				if (!databaseFile.exists()) {
 					DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
 				} else {
-					checkVersion();
+					if (checkForDatabaseUpdates)
+						checkVersion();
 				}
 				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
 				if (!sqlitejar.exists())

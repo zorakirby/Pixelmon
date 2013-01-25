@@ -15,24 +15,24 @@ public class SolarBeam extends MultiTurnSpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-		if (!persists){
-			persists = true;
-			turnCounter=0;
+		if (!doesPersist(user)){
+			setPersists(user, true);
+			initTurnCount(user);
 		}
-		turnCounter++;
-		for(StatusEffectBase e: user.status) if (e.type == StatusEffectType.Sunny) turnCounter++;
-		if (turnCounter == 1){
+		incrementTurnCount(user);
+		for(StatusEffectBase e: user.status) if (e.type == StatusEffectType.Sunny) incrementTurnCount(user);
+		if (getTurnCount(user) == 1){
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is storing energy!");
 			return true;
 		}else{
-			persists = false;
+			setPersists(user, false);
 			return false;
 		}
 	}
 
 	@Override
-	public boolean cantMiss() {
-		if (turnCounter ==0) return true;
+	public boolean cantMiss(EntityPixelmon user) {
+		if (getTurnCount(user)==0) return true;
 		return false;
 	}
 

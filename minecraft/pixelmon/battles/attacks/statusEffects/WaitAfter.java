@@ -9,7 +9,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public class WaitAfter extends StatusEffectBase {
 
 	private int numTurns;
-	private int turnCount;
+
 	public WaitAfter(int value) {
 		super(StatusEffectType.WaitAfter, false, true, false);
 		numTurns = value;
@@ -17,13 +17,13 @@ public class WaitAfter extends StatusEffectBase {
 
 	@Override
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
-		turnCount = 0;
+		user.battleVariables.set(type, 0);
 		user.status.add(this);
 	}
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName()+ " is recharging!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is recharging!");
 		return false;
 	}
 
@@ -34,8 +34,9 @@ public class WaitAfter extends StatusEffectBase {
 
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
-		turnCount++;
-		if (turnCount == numTurns) user.status.remove(this);
+		user.battleVariables.increment(type);
+		if (user.battleVariables.get(type) == numTurns)
+			user.status.remove(this);
 	}
 
 }

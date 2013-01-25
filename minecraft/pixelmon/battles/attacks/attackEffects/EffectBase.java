@@ -14,7 +14,7 @@ public abstract class EffectBase {
 
 	public ApplyStage applyStage;
 	public ArrayList<ModifierBase> modifiers = new ArrayList<ModifierBase>();
-	public boolean persists;
+	private boolean persists;
 	public int value = -1, value2 = -1;
 
 	public EffectBase(EffectType effectType, ApplyStage applyStage,
@@ -43,14 +43,14 @@ public abstract class EffectBase {
 		return true;
 	}
 
-	public abstract boolean cantMiss();
+	public abstract boolean cantMiss(EntityPixelmon user);
 	
 	public static EffectBase getEffect(String e) {
 		EffectParser p = new EffectParser();
 		return p.ParseEffect(e);
 	}
 	
-	public boolean doesPersist(){
+	public boolean doesPersist(EntityPixelmon user){
 		return persists;
 	}
 

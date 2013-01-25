@@ -9,7 +9,6 @@ import pixelmon.enums.EnumType;
 
 public class Sunny extends StatusEffectBase {
 
-	private int turnCount = -1;
 	public Sunny() {
 		super(StatusEffectType.Sunny, false, false, true);
 	}
@@ -27,7 +26,8 @@ public class Sunny extends StatusEffectBase {
 					return;
 				}
 
-			turnCount=5;
+			target.battleVariables.set(type, 5);
+			user.battleVariables.set(type, 5);
 			target.status.add(this);
 			user.status.add(this);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " makes the sun shine more brightly!");
@@ -42,16 +42,16 @@ public class Sunny extends StatusEffectBase {
 		if (a.baseAttack.attackType == EnumType.Fire)
 			return damage *= 1.5;
 		else if (a.baseAttack.attackType == EnumType.Water)
-			return damage*=0.5;
+			return damage *= 0.5;
 		else
 			return damage;
 	}
 
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
-		if (turnCount == 0) {
+		if (user.battleVariables.get(type) == 0) {
 			user.status.remove(this);
 		}
-		turnCount--;
+		user.battleVariables.decrement(type);
 	}
 }

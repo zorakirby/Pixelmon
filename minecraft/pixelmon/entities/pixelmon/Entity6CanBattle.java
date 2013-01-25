@@ -18,6 +18,7 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.battles.participants.IBattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.database.DatabaseMoves;
+import pixelmon.entities.pixelmon.helpers.BattleVariables;
 import pixelmon.entities.pixelmon.stats.BattleStats;
 import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.entities.trainers.EntityTrainer;
@@ -32,6 +33,8 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	protected EntityTrainer trainer;
 	public boolean isLockedInBattle = false;
 	public EntityPixelmon locker = null;
+
+	public BattleVariables battleVariables = new BattleVariables();
 
 	public Entity6CanBattle(World par1World) {
 		super(par1World);
@@ -79,12 +82,13 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		if (!worldObj.isRemote) {
-			if(battleController != null)
-			{
-				if(par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.explosion
+			if (par1DamageSource.damageType == "player")
+				return false;
+			if (battleController != null) {
+				if (par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.explosion
 						|| par1DamageSource == DamageSource.fall || par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall
 						|| par1DamageSource == DamageSource.lava || par1DamageSource == DamageSource.onFire)
-						return false;
+					return false;
 			}
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 			updateHealth();

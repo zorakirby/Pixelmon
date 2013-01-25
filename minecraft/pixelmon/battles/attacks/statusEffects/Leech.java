@@ -8,8 +8,6 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Leech extends StatusEffectBase {
 
-	private int effectTurns;
-
 	public Leech() {
 		super(StatusEffectType.Leech, true, false, false);
 	}

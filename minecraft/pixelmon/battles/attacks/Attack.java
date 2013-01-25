@@ -42,10 +42,10 @@ public class Attack {
 			AttackBase a = new AttackBase(attackIndex, moveName, rs);
 			fullAttackList[attackIndex] = a;
 			baseAttack = a;
-		}else{
+		} else {
 			baseAttack = fullAttackList[attackIndex];
 		}
-		
+
 		this.pp = rs.getInt("PP");
 		this.ppBase = pp;
 	}
@@ -70,7 +70,7 @@ public class Attack {
 				return;
 		}
 
-		if (baseAttack.accuracy == -1)
+		if (baseAttack.accuracy == -1 || cantMiss(user))
 			cantMiss = true;
 		for (int i = 0; i < baseAttack.effects.size(); i++) {
 			EffectBase e = baseAttack.effects.get(i);
@@ -287,17 +287,17 @@ public class Attack {
 		}
 		for (int i = 0; i < baseAttack.effects.size(); i++) {
 			EffectBase e = baseAttack.effects.get(i);
-			if (e.persists)
+			if (e.doesPersist(entityPixelmon))
 				return true;
 		}
 		return false;
 	}
 
-	public boolean cantMiss() {
+	public boolean cantMiss(EntityPixelmon user) {
 		for (int i = 0; i < baseAttack.effects.size(); i++) {
 			EffectBase e = baseAttack.effects.get(i);
 			if (e instanceof MultiTurnSpecialAttackBase)
-				if (((MultiTurnSpecialAttackBase) e).cantMiss())
+				if (((MultiTurnSpecialAttackBase) e).cantMiss(user))
 					return true;
 		}
 		return false;

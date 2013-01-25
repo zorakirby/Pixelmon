@@ -1,5 +1,6 @@
 package pixelmon;
 
+import java.io.File;
 import java.util.Random;
 
 import net.minecraft.command.ServerCommandManager;
@@ -65,9 +66,11 @@ public class Pixelmon {
 
 	public static boolean freeze = false;
 
+	public static File modDirectory;
+
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
-
+		modDirectory = new File(event.getModConfigurationDirectory().getParent());
 		if (!DatabaseHelper.has()) {
 			throw new RuntimeException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!");
 		}

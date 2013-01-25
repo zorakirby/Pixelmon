@@ -21,7 +21,7 @@ public class Freeze extends StatusEffectBase {
 				if (e.type == StatusEffectType.Freeze) {
 					return;
 				}
-			if (target.type.contains(EnumType.Ice)){
+			if (target.type.contains(EnumType.Ice)) {
 				return;
 			}
 			target.status.add(this);

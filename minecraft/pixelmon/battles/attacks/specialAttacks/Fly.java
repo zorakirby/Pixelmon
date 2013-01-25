@@ -17,12 +17,12 @@ public class Fly extends MultiTurnSpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-		if (!persists){
-			persists = true;
-			turnCounter=0;
+		if (!doesPersist(user)){
+			setPersists(user, true);
+			initTurnCount(user);
 		}
-		turnCounter++;
-		if (turnCounter == 1){
+		incrementTurnCount(user);
+		if (getTurnCount(user) == 1){
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " Flies up in the air!");
 			user.status.add(new Flying());
 			return true;
@@ -31,14 +31,14 @@ public class Fly extends MultiTurnSpecialAttackBase {
 				StatusEffectBase e = user.status.get(i);
 				if (e.type == StatusEffectType.Flying) user.status.remove(e);
 			}
-			persists = false;
+			setPersists(user, false);
 			return false;
 		}
 	}
 
 	@Override
-	public boolean cantMiss() {
-		if (turnCounter ==0) return true;
+	public boolean cantMiss(EntityPixelmon user) {
+		if (getTurnCount(user) ==0) return true;
 		return false;
 	}
 }
