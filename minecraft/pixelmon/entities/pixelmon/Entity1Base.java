@@ -24,7 +24,7 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	protected void init(String name) {
-		dataWatcher.updateObject(2, name);
+		setName(name);
 		isInitialised = true;
 	}
 

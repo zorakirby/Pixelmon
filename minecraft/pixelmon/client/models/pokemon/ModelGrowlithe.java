@@ -13,7 +13,6 @@ import net.minecraft.util.MathHelper;
 public class ModelGrowlithe extends ModelBase {
 	// fields
 	ModelRenderer Body;
-	ModelRenderer Back;
 	ModelRenderer Front_Legs1;
 	ModelRenderer Front_Legs2;
 	ModelRenderer Back_Legs1;
@@ -44,12 +43,13 @@ public class ModelGrowlithe extends ModelBase {
 		Body.setTextureSize(64, 32);
 		Body.mirror = true;
 		setRotation(Body, 0F, 0F, 0F);
-		Back = new ModelRenderer(this, 27, 22);
+		ModelRenderer Back = new ModelRenderer(this, 27, 22);
 		Back.addBox(0F, 0F, 0F, 4, 1, 9);
-		Back.setRotationPoint(-3F, 16.3F, -1F);
+		Back.setRotationPoint(0, -0.2F, 1);
 		Back.setTextureSize(64, 32);
 		Back.mirror = true;
 		setRotation(Back, 0F, 0F, 0F);
+		Body.addChild(Back);
 		Front_Legs1 = new ModelRenderer(this, 0, 15);
 		Front_Legs1.addBox(-1F, 0F, -1F, 2, 4, 2);
 		Front_Legs1.setRotationPoint(-3F, 20F, 0F);
@@ -152,11 +152,12 @@ public class ModelGrowlithe extends ModelBase {
 		Covers4.setTextureSize(64, 32);
 		Covers4.mirror = true;
 		setRotation(Covers4, 0F, 0F, 0F);
-		Head = new ModelRenderer(this, "Head");
-		Head.setRotationPoint(0F, 0F, 0F);
-		setRotation(Head, 0F, 0F, 0F);
-		Head.mirror = true;
-		Head = new ModelRenderer(this, 46, 0);
+
+		Head = getHead();
+	}
+
+	private ModelRenderer getHead() {
+		ModelRenderer Head = new ModelRenderer(this, 46, 0);
 		Head.addBox(-2.5F, -4F, -4F, 5, 5, 4);
 		Head.setRotationPoint(-1F, 16.7F, -1F);
 		Head.setTextureSize(64, 32);
@@ -260,13 +261,13 @@ public class ModelGrowlithe extends ModelBase {
 		Top_of_Head.mirror = true;
 		setRotation(Top_of_Head, 0F, 0F, 0F);
 		Head.addChild(Top_of_Head);
+		return Head;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		Body.render(f5);
-		Back.render(f5);
 		Front_Legs1.render(f5);
 		Front_Legs2.render(f5);
 		Back_Legs1.render(f5);
