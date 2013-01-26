@@ -96,8 +96,6 @@ public class Pixelmon {
 		proxy.registerSounds();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
-		// EntityRegistry.registerModEntity(EntityCamera.class, "Camera",
-		// PixelmonConfig.idCamera, Pixelmon.instance, 80, 1, true);
 
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
