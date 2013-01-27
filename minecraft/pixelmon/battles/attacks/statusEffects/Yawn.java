@@ -29,7 +29,9 @@ public class Yawn extends StatusEffectBase {
 		user.battleVariables.increment(type);
 
 		if (user.battleVariables.get(type) == 2) {
-			user.status.add(new Sleep());
+			Sleep sleep = new Sleep();
+			sleep.init(user);
+			user.status.add(sleep);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " fell asleep!");
 			user.status.remove(this);
 		}

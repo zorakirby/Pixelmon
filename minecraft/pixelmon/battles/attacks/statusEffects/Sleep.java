@@ -62,4 +62,8 @@ public class Sleep extends StatusEffectBase {
 	public boolean clearsOnBattleEnd() {
 		return false;
 	}
+
+	public void init(EntityPixelmon target) {
+		target.battleVariables.set(type, RandomHelper.getRandomNumberBetween(1, 4));
+	}
 }
