@@ -25,6 +25,9 @@ public class DatabaseHelper {
 	 * 
 	 * @return True if they do, otherwise false
 	 */
+	public static String databaseURL = "http://www.mediafire.com/download.php?4ma2jd7pyob7ml3";
+	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
+
 	public static boolean checkForDatabaseUpdates = true;
 	public static boolean has() {
 		try {
@@ -82,9 +85,6 @@ public class DatabaseHelper {
 			return null;
 		}
 	}
-
-	public static String databaseURL = "http://www.mediafire.com/download.php?v10fbe9v4gu4cvd";
-	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
 	/**
 	 * Gets a <code>Statement</code> from the given <code>Connection</code>
