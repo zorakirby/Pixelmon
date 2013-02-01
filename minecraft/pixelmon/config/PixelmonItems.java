@@ -395,14 +395,14 @@ public class PixelmonItems {
 		return null;
 	}
 
-	public static Item getHeldItem(int id) {
+	public static ItemHeld getHeldItem(int id) {
 		try {
 			for (Field field : PixelmonItems.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemHeld)
 						if (item.itemID == id)
-							return item;
+							return (ItemHeld)item;
 				}
 			}
 		} catch (Exception e) {

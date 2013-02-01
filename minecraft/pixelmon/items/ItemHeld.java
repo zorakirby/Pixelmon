@@ -1,6 +1,7 @@
 package pixelmon.items;
 
 import net.minecraft.item.ItemStack;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumHeldItems;

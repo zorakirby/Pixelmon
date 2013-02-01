@@ -18,6 +18,7 @@ import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumHeldItems;
 import pixelmon.items.ItemHeld;
@@ -142,7 +143,7 @@ public class BattleController {
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player)
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
-				awardExp(p, p.currentPokemon());
+				Experience.awardExp(participants, p, p.currentPokemon());
 
 				p.currentPokemon().setEntityHealth(0);
 				p.currentPokemon().setDead();
@@ -210,64 +211,7 @@ public class BattleController {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " couldn't escape!");
 	}
 
-	private void awardExp(BattleParticipant faintedParticipant, EntityPixelmon faintedPokemon) {
-		for (BattleParticipant p : participants) {
-			if (p.team != faintedParticipant.team && p.getType() == ParticipantType.Player) {
-				PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) p.currentPokemon().getOwner());
-
-				ArrayList<Integer> doneUsers = new ArrayList<Integer>();
-				if (!p.attackersList.contains(p.currentPokemon().getPokemonId()))
-					p.attackersList.add(p.currentPokemon().getPokemonId());
-				for (int i = 0; i < p.attackersList.size(); i++) {
-					if (p.currentPokemon().getOwner() != null) {
-						if (storage.isFainted(p.attackersList.get(i))) {
-							p.attackersList.remove(i);
-							i--;
-						}
-					}
-				}
-				for (int userIndex : p.attackersList) {
-					if (!doneUsers.contains(userIndex)) {
-						double a, t, b, e, L, Lp, s, power;
-						NBTTagCompound user = null;
-						user = storage.getNBT(userIndex);
-						if (user != null)
-							a = 1.5;
-						else
-							return;
-						t = 1;// traded
-						b = faintedPokemon.baseStats.baseExp;
-						e = ItemHeld.isItemOfType(p.currentPokemon().getHeldItem(), EnumHeldItems.luckyEgg) ? 1.5 : 1;
-						L = faintedPokemon.getLvl().getLevel();
-						Lp = user.getInteger("Level");
-						s = p.attackersList.size();
-						power = 1;
-
-						double exp = ((a * b * L) / (5 * s) * (Math.pow(2 * L + 10, 2.5) / Math.pow(L + Lp + 10, 2.5)) + 1) * t * e * power;
-						if (userIndex == p.currentPokemon().getPokemonId()) {
-							p.currentPokemon().getLvl().awardEXP((int) exp);
-							if (p.currentPokemon().getLvl().canLevelUp())
-								p.currentPokemon().stats.EVs.gainEV(faintedPokemon.baseStats.evGain);
-						} else {
-							EntityPixelmon pix;
-							boolean wasAlreadyOut = false;
-							if (storage.EntityAlreadyExists(userIndex, p.currentPokemon().getOwner().worldObj)) {
-								pix = storage.getAlreadyExists(userIndex, p.currentPokemon().getOwner().worldObj);
-								wasAlreadyOut = true;
-							} else
-								pix = storage.sendOut(userIndex, p.currentPokemon().getOwner().worldObj);
-							pix.getLvl().awardEXP((int) exp);
-							pix.stats.EVs.gainEV(faintedPokemon.baseStats.evGain);
-							if (!wasAlreadyOut)
-								storage.retrieve(pix);
-						}
-						doneUsers.add(userIndex);
-					}
-				}
-			}
-		}
-	}
-
+	
 	public void setFlee(EntityPixelmon mypixelmon) {
 		for (BattleParticipant p : participants)
 			if (mypixelmon == p.currentPokemon()) {
