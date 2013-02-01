@@ -303,6 +303,16 @@ public class PlayerStorage {
 		}
 	}
 
+	public void sendUpdatedList() {
+		for (int i = 0; i < partyPokemon.length; i++) {
+			NBTTagCompound nbt = partyPokemon[i];
+			if (nbt != null) {
+				if (mode == PokeballManagerMode.Player)
+					player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
+			}
+		}
+	}
+
 	public int getIDFromPosition(int pos) {
 		for (int i = 0; i < partyPokemon.length; i++) {
 			NBTTagCompound n = partyPokemon[i];

@@ -18,7 +18,7 @@ public class SmackedDown extends StatusEffectBase {
 	}
 
 	@Override
-	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) throws Exception {
 		double stab = 1;
 		if (a.STAB)
 			stab = 1.5;

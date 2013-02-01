@@ -13,14 +13,14 @@ public class Rest extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 
 		user.status.clear();
 		user.heal(user.getMaxHealth());
 		user.status.add(new Sleep(3));
 	}
 
-	public boolean ApplyRepeatedEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+	public boolean ApplyRepeatedEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		user.status.remove(this);
 		return false;
 	}

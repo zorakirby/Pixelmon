@@ -14,7 +14,7 @@ public class Perish extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception{
 		if (checkChance()) {
 			for (StatusEffectBase a : target.status)
 				if (a.type == StatusEffectType.Perish) {
@@ -30,15 +30,15 @@ public class Perish extends StatusEffectBase {
 			user.battleVariables.set(type, 0);
 			user.status.add(new Perish());
 			ChatHandler.sendBattleMessage(user.getOwner(), user.getName() + " heard the Perish Song!");
+			target.battleVariables.set(type, 0);
 			target.status.add(new Perish());
 			ChatHandler.sendBattleMessage(target.getOwner(), target.getName() + " heard the Perish Song!");
-
 		}
 
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception{
 
 		if (user.battleVariables.get(type) == 3) {
 			if (!target.isDead) {

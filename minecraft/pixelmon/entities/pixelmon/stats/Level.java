@@ -45,10 +45,9 @@ public class Level {
 	}
 
 	public void readFromNBT(NBTTagCompound var1) {
-		setLevel(var1.getInteger("Level"));
 		setExp(var1.getInteger("EXP"));
 		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
-		updateStats();
+		setLevel(var1.getInteger("Level"));
 	}
 
 	public int getLevel() {
@@ -196,7 +195,7 @@ public class Level {
 			}
 			if (!canLevelUp())
 				return;
-			
+
 			PixelmonStatsPacket stats = null;
 			if (pixelmon.getOwner() != null)
 				stats = PixelmonStatsPacket.createPacket(pixelmon);

@@ -4,9 +4,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.Pixelmon;
-import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.controller.BattleController;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -16,11 +16,10 @@ import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerStorage;
 
-public class PlayerParticipant implements IBattleParticipant {
+public class PlayerParticipant extends BattleParticipant {
 	public EntityPlayerMP player;
 	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
-	BattleController bc;
 
 	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) {
 		player = p;
@@ -51,7 +50,8 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void StartBattle(IBattleParticipant opponent) {
+	public void StartBattle(BattleController bc, BattleParticipant opponent) {
+		super.StartBattle(bc,opponent);
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetOpponentType, opponent.getType().index));
 		player.openGui(Pixelmon.instance, EnumGui.Battle.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), 0, 0);
@@ -59,12 +59,17 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void EndBattle(boolean didWin, IBattleParticipant foe) {
+	public void EndBattle() {
 		currentPixelmon.battleStats.clearBattleStats();
 		for (int i = 0; i < currentPixelmon.status.size(); i++) {
-			if (currentPixelmon.status.get(i).clearsOnBattleEnd()) {
-				currentPixelmon.status.remove(i);
-				i--;
+			try {
+				if (currentPixelmon.status.get(i).clearsOnBattleEnd()) {
+					currentPixelmon.status.remove(i);
+					i--;
+				}
+			} catch (Exception exc) {
+				System.out.println("Error in clearsOnBattleEnd for " + currentPixelmon.status.get(i).type.toString());
+				System.out.println(exc.getStackTrace());
 			}
 		}
 		currentPixelmon.EndBattle();
@@ -73,7 +78,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void getNextPokemon(IBattleParticipant opponent) {
+	public void getNextPokemon() {
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.EnforcedSwitch, 0));
 	}
 
@@ -88,24 +93,24 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public Attack getMove(IBattleParticipant participant2) {
+	public Attack getMove() {
 		if (bc == null)
 			return null;
 		if (currentPixelmon.moveset.size() == 0) {
-			bc.endBattle(false);
+			bc.endBattle();
 			return null;
 		}
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, 0));
-		bc.waitForMove(this);
+		wait = true;
 		return null;
 	}
 
 	@Override
-	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
+	public void switchPokemon(int newPixelmonId) {
 		currentPixelmon.battleStats.clearBattleStats();
 		if (!currentPixelmon.isFainted) {
 			ChatHandler.sendBattleMessage(player, "That's enough " + currentPixelmon.getNickname() + "!");
-			ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), player.username + " withdrew " + currentPixelmon.getNickname() + "!");
+			bc.sendToOtherParticipants(this, player.username + " withdrew " + currentPixelmon.getNickname() + "!");
 		}
 		currentPixelmon.catchInPokeball();
 		storage.retrieve(currentPixelmon);
@@ -122,9 +127,10 @@ public class PlayerParticipant implements IBattleParticipant {
 		newPixelmon.releaseFromPokeball();
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon, newPixelmon.getPokemonId()));
 		ChatHandler.sendBattleMessage(player, "Go " + newPixelmon.getNickname() + "!");
-		ChatHandler.sendBattleMessage(participant2.currentPokemon().getOwner(), player.username + " sent out " + newPixelmon.getNickname() + "!");
+		bc.sendToOtherParticipants(this, player.username + " sent out " + newPixelmon.getNickname() + "!");
 		currentPixelmon = newPixelmon;
-		participant2.updateOpponent(this);
+		for (BattleParticipant p : bc.participants)
+			p.updateOpponent();
 	}
 
 	@Override
@@ -139,11 +145,6 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void setBattleController(BattleController bc) {
-		this.bc = bc;
-	}
-
-	@Override
 	public void updatePokemon() {
 		storage.updateNBT(currentPixelmon);
 	}
@@ -154,7 +155,7 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void updateOpponent(IBattleParticipant opponent) {
+	public void updateOpponent() {
 		PixelmonDataPacket p = new PixelmonDataPacket(opponent.currentPokemon(), EnumPackets.SetOpponent);
 		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 	}
@@ -165,6 +166,8 @@ public class PlayerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void update() {		
+	public String getFaintMessage() {
+		return player.username + "'s " + currentPokemon().getName() + " fainted!";
 	}
+
 }

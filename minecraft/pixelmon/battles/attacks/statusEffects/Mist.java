@@ -18,7 +18,7 @@ public class Mist extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception{
 		if (checkChance()) {
 			for (StatusEffectBase e : user.status)
 				if (e.type == StatusEffectType.Paralysis) {
@@ -34,7 +34,7 @@ public class Mist extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a)throws Exception {
 		if (a.baseAttack.attackCategory == Attack.ATTACK_STATUS) {
 			for (EffectBase e : a.baseAttack.effects) {
 				if (e.effectType == EffectType.Stats) {

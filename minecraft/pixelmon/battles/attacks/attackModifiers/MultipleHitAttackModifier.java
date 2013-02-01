@@ -31,7 +31,7 @@ public class MultipleHitAttackModifier extends AttackModifierBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) throws Exception {
 		count = 0;
 		while (RepeatsAttack()) {
 			double crit = a.calcCriticalHit(null);

@@ -16,13 +16,13 @@ public class WaitAfter extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		user.battleVariables.set(type, 0);
 		user.status.add(this);
 	}
 
 	@Override
-	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is recharging!");
 		return false;
 	}
@@ -33,7 +33,7 @@ public class WaitAfter extends StatusEffectBase {
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		user.battleVariables.increment(type);
 		if (user.battleVariables.get(type) == numTurns)
 			user.status.remove(this);

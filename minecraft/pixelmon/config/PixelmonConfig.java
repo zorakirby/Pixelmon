@@ -24,6 +24,8 @@ public class PixelmonConfig {
 	public static int maxNumLandPokemon;
 	public static int maxNumWaterPokemon;
 	public static int maxNumUndergroundPokemon;
+	
+	public static int trainerRarityModifier;
 
 	public static boolean scaleModelsUp;
 	public static boolean pokemonDropsEnabled = true;
@@ -43,6 +45,7 @@ public class PixelmonConfig {
 		maxNumLandPokemon = config.get("general", "Max number of Land Pokemon (at one time)", 40).getInt(40);
 		maxNumUndergroundPokemon = config.get("general", "Max number of Underground Pokemon (at one time)", 60).getInt(60);
 		maxNumWaterPokemon = config.get("general", "Max number of Water Pokemon (at one time)", 20).getInt(20);
+		trainerRarityModifier = config.get("general", "Trainer Rarity (percentage 0-200)", 100).getInt(100);
 		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
 		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled", true).getBoolean(true);
 		checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);

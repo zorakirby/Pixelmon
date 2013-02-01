@@ -17,8 +17,7 @@ public abstract class EffectBase {
 	private boolean persists;
 	public int value = -1, value2 = -1;
 
-	public EffectBase(EffectType effectType, ApplyStage applyStage,
-			boolean persists) {
+	public EffectBase(EffectType effectType, ApplyStage applyStage, boolean persists) {
 		this.applyStage = applyStage;
 		this.persists = persists;
 		this.effectType = effectType;
@@ -28,13 +27,13 @@ public abstract class EffectBase {
 		modifiers.add(modifier);
 	}
 
-	public abstract void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList);
+	public abstract void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception;
 
 	public enum ApplyStage {
 		Start, During, End, Priority
 	}
 
-	public boolean checkChance() {
+	public boolean checkChance() throws Exception {
 		for (ModifierBase m : modifiers) {
 			if (m.type == ModifierType.Chance) {
 				return ((ChanceModifier) m).RollChance();
@@ -43,25 +42,25 @@ public abstract class EffectBase {
 		return true;
 	}
 
-	public abstract boolean cantMiss(EntityPixelmon user);
-	
+	public abstract boolean cantMiss(EntityPixelmon user) throws Exception;
+
 	public static EffectBase getEffect(String e) {
 		EffectParser p = new EffectParser();
 		return p.ParseEffect(e);
 	}
-	
-	public boolean doesPersist(EntityPixelmon user){
+
+	public boolean doesPersist(EntityPixelmon user) throws Exception {
 		return persists;
 	}
 
-	public boolean hasSpecialAccuracyEffect() {
+	public boolean hasSpecialAccuracyEffect() throws Exception {
 		return false;
 	}
 
-	public double getAccuracy(EntityPixelmon user, EntityPixelmon target) {
+	public double getAccuracy(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		return 100;
 	}
 
-	public void ApplyMissEffect(EntityPixelmon user, EntityPixelmon target) {		
+	public void ApplyMissEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 	}
 }

@@ -25,7 +25,7 @@ public class DatabaseHelper {
 	 * 
 	 * @return True if they do, otherwise false
 	 */
-	public static String databaseURL = "http://www.mediafire.com/download.php?4ma2jd7pyob7ml3";
+	public static String databaseURL = "http://www.mediafire.com/download.php?pwd9km9y8tpngzt";
 	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
 	public static boolean checkForDatabaseUpdates = true;

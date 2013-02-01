@@ -22,7 +22,7 @@ public class Sleep extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Sleep) {
@@ -43,13 +43,13 @@ public class Sleep extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is still sleeping!");
 		return false;
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (user.battleVariables.get(type) == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " wakes up!");
 			user.status.remove(this);
@@ -63,7 +63,7 @@ public class Sleep extends StatusEffectBase {
 		return false;
 	}
 
-	public void init(EntityPixelmon target) {
+	public void init(EntityPixelmon target) throws Exception {
 		target.battleVariables.set(type, RandomHelper.getRandomNumberBetween(1, 4));
 	}
 }

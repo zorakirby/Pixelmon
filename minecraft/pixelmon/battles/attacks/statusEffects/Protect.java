@@ -14,7 +14,7 @@ public class Protect extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (user.hasStatus(type))
 			return;
 		float chance = 1f;
@@ -36,13 +36,13 @@ public class Protect extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " protects itself!");
 		return true;
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		user.status.remove(this);
 	}
 }

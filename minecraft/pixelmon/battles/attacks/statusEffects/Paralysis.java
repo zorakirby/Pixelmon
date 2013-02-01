@@ -13,7 +13,7 @@ public class Paralysis extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList)throws Exception {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Paralysis) {
@@ -28,7 +28,7 @@ public class Paralysis extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target)throws Exception {
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 25) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is paralyzed and cannot move!");
 			return false;

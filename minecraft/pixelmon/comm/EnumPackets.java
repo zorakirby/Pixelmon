@@ -5,7 +5,7 @@ public enum EnumPackets {
 			19), SwitchPokemon(20), Flee(21), RenamePokemon(22), PCClick(23), ReplaceMove(24), BagPacket(25), StopStartLevelling(26), BattleMessage(27), SetOpponent(28), SetBattlingPokemon(
 			29), BackToMainMenu(30), ExitBattle(31), ChooseMoveToReplace(32), LevelUp(33), SetOpponentType(34), SetHeldItem(35), SwapMove(36), EnforcedSwitch(37), DeleteMove(38), Pokedex(
 			39), Movement(40), RegisterTrader(41), SelectPokemonForTrade(42), SetTradeTarget(43), SetTradeTargetStats(44), SetSelectedStats(45), DeRegisterTrader(46), SetTradingReady(
-			47), SetTradingReadyClient(48), Trade(49);
+			47), SetTradingReadyClient(48), Trade(49), RequestUpdatedPokemonList(50);
 	private int index;
 
 	private EnumPackets(int i) {

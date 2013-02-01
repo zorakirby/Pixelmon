@@ -3,6 +3,8 @@ package pixelmon.battles;
 import java.util.ArrayList;
 
 import net.minecraft.entity.player.EntityPlayer;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 
 public class BattleRegistry {
@@ -32,15 +34,12 @@ public class BattleRegistry {
 
 	public static BattleController getBattle(EntityPlayer player) {
 		for (int i = 0; i < battleList.size(); i++) {
-			if (battleList.get(i).participant1 instanceof PlayerParticipant) {
-				if (((PlayerParticipant) battleList.get(i).participant1).player == player) {
-					return battleList.get(i);
+			for (BattleParticipant p : battleList.get(i).participants)
+				if (p instanceof PlayerParticipant) {
+					if (((PlayerParticipant) p).player == player) {
+						return battleList.get(i);
+					}
 				}
-			} else if (battleList.get(i).participant2 instanceof PlayerParticipant) {
-				if (((PlayerParticipant) battleList.get(i).participant2).player == player) {
-					return battleList.get(i);
-				}
-			}
 		}
 		return null;
 	}

@@ -15,7 +15,7 @@ public class PetalDance extends MultiTurnSpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (!doesPersist(user)) {
 			setPersists(user, true);
 			initTurnCount(user);

@@ -2,23 +2,36 @@ package pixelmon;
 
 import java.util.EnumSet;
 
+import pixelmon.client.PixelmonServerStore;
+import pixelmon.client.ServerStorageDisplay;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class TickHandler implements ITickHandler {
-
+	int ticksSinceSentLogin=0;
 	@Override
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {
-		for(TickType type : types)
-		{
-			if(type == TickType.RENDER && !Minecraft.getMinecraft().session.username.equals("ASH") && !ObfuscationReflectionHelper.obfuscation)
-			{
+		for (TickType type : types) {
+			if (type == TickType.RENDER && !Minecraft.getMinecraft().session.username.equals("ASH") && !ObfuscationReflectionHelper.obfuscation) {
 				Minecraft.getMinecraft().session.username = "ASH";
 			}
-			if(type == TickType.RENDER)
-			{
+			if (type == TickType.RENDER) {
+				if (ServerStorageDisplay.count() == 0) {
+					ticksSinceSentLogin++;
+					if (ticksSinceSentLogin >=50){
+						ticksSinceSentLogin = 0;
+						Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.RequestUpdatedPokemonList, 0);
+						PacketDispatcher.sendPacketToServer(packet);
+					}
+				}
 			}
 		}
 	}
@@ -29,7 +42,6 @@ public class TickHandler implements ITickHandler {
 
 	@Override
 	public EnumSet<TickType> ticks() {
-		// TODO Auto-generated method stub
 		return EnumSet.of(TickType.RENDER, TickType.WORLD);
 	}
 

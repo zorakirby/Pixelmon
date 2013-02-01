@@ -14,7 +14,7 @@ public class RecoilAttackModifier extends AttackModifierBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) throws Exception {
 		double crit = a.calcCriticalHit(null);
 		for (EffectBase e : a.baseAttack.effects)
 			crit = a.calcCriticalHit(e);

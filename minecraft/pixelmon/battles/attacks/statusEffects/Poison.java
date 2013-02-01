@@ -14,7 +14,7 @@ public class Poison extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList)throws Exception {
 		if (checkChance()) {
 			if (target.type.contains(EnumType.Poison)){
 				return;
@@ -29,7 +29,7 @@ public class Poison extends StatusEffectBase {
 	}
 
 	@Override
-	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
+	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception{
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is hurt by poison!");
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 8));
 	}

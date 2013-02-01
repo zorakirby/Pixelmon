@@ -16,7 +16,7 @@ public class Bide extends MultiTurnSpecialAttackBase {
 	int initHealth;
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception{
 		int endHealth;
 		if (!doesPersist(user)) {
 			setPersists(user, true);

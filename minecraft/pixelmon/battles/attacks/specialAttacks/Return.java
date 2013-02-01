@@ -12,9 +12,8 @@ public class Return extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-		
-		a.baseAttack.basePower = (int)(user.friendship.friendship /2.5);
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+		a.baseAttack.basePower = (int) (user.friendship.friendship / 2.5);
 		return false;
 	}
 

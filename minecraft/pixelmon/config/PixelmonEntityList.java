@@ -85,6 +85,9 @@ public class PixelmonEntityList {
 		for (EnumTrainers trainer : EnumTrainers.values()) {
 			String name = trainer.toString();
 			int rarity = DatabaseTrainers.getRarity(name);
+			double rardbl = (double)rarity;
+			rardbl *= ((double)PixelmonConfig.trainerRarityModifier)/100.0;
+			rarity = (int) rardbl;
 			if (rarity > 0)
 				SpawnRegistry.addSpawn(name, rarity, ClassType.Trainer);
 		}

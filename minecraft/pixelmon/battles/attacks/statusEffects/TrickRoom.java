@@ -14,7 +14,7 @@ public class TrickRoom extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		for (int i = 0; i < user.battleController.battleStatusList.size(); i++) {
 			if (user.battleController.battleStatusList.get(i).type == type) {
 				user.battleController.battleStatusList.remove(i);
@@ -27,7 +27,7 @@ public class TrickRoom extends StatusEffectBase {
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (user.battleVariables.get(type) == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
 			user.status.remove(this);
@@ -36,7 +36,7 @@ public class TrickRoom extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean pokemon1MovesFirst(EntityPixelmon user, EntityPixelmon target) {
+	public boolean participantMovesFirst(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (user.stats.Speed * user.battleStats.SpeedModifier > target.stats.Speed * target.battleStats.SpeedModifier)
 			return false;
 		else if (target.stats.Speed * target.battleStats.SpeedModifier > user.stats.Speed * user.battleStats.SpeedModifier)

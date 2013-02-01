@@ -3,16 +3,15 @@ package pixelmon.battles.participants;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.controller.BattleController;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.trainers.EntityTrainer;
 
-public class TrainerParticipant implements IBattleParticipant {
+public class TrainerParticipant extends BattleParticipant {
 
 	public EntityTrainer trainer;
-	private BattleController bc;
 
 	public TrainerParticipant(EntityTrainer trainer, EntityPlayer opponent) {
 		this.trainer = trainer;
@@ -23,15 +22,6 @@ public class TrainerParticipant implements IBattleParticipant {
 	@Override
 	public ParticipantType getType() {
 		return ParticipantType.Trainer;
-	}
-
-	@Override
-	public void setBattleController(BattleController bc) {
-		this.bc = bc;
-	}
-
-	@Override
-	public void StartBattle(IBattleParticipant opponent) {
 	}
 
 	@Override
@@ -50,17 +40,17 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void EndBattle(boolean didWin, IBattleParticipant foe) {
-		if (didWin) {
+	public void EndBattle() {
+		if (trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted) {
 			trainer.releasedPokemon.battleStats.clearBattleStats();
 			trainer.releasedPokemon.EndBattle();
 			trainer.healAllPokemon();
 			this.trainer.setAttackTarget(null);
 			trainer.releasedPokemon.status.clear();
 			trainer.releasedPokemon.setDead();
-			trainer.winBattle(foe.currentPokemon().getOwner());
+			trainer.winBattle(opponent.currentPokemon().getOwner());
 		} else {
-			trainer.loseBattle(foe.currentPokemon().getOwner());
+			trainer.loseBattle(opponent.currentPokemon().getOwner());
 			if (trainer.releasedPokemon != null)
 				trainer.releasedPokemon.EndBattle();
 			trainer.setDead();
@@ -69,7 +59,7 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void getNextPokemon(IBattleParticipant opponent) {
+	public void getNextPokemon() {
 		bc.SwitchPokemon(currentPokemon(), trainer.getNextPokemonID());
 	}
 
@@ -84,27 +74,28 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public Attack getMove(IBattleParticipant participant2) {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, participant2.currentPokemon().type, trainer.releasedPokemon, participant2.currentPokemon());
+	public Attack getMove() {
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, opponent.currentPokemon().type, trainer.releasedPokemon, opponent.currentPokemon());
 	}
 
 	@Override
-	public void switchPokemon(IBattleParticipant opponent, int newPixelmonId) {
+	public void switchPokemon(int newPixelmonId) {
 		currentPokemon().battleStats.clearBattleStats();
 		if (!currentPokemon().isFainted) {
-			ChatHandler.sendBattleMessage(opponent.currentPokemon().getOwner(), trainer.info.name + " withdrew " + currentPokemon().getNickname() + "!");
+			bc.sendToOtherParticipants(this, trainer.info.name + " withdrew " + currentPokemon().getNickname() + "!");
 		}
 		currentPokemon().catchInPokeball();
 		trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
 
 		trainer.releasePokemon();
 
-		ChatHandler.sendBattleMessage(opponent.currentPokemon().getOwner(), trainer.info.name + " sent out " + currentPokemon().getNickname() + "!");
+		bc.sendToOtherParticipants(this, trainer.info.name + " sent out " + currentPokemon().getNickname() + "!");
 
 		if (opponent instanceof PlayerParticipant) {
-			ChatHandler.sendBattleMessage(((PlayerParticipant) opponent).player, trainer.getName() + " sent out " + currentPokemon().getName());
+			bc.sendToOtherParticipants(this, trainer.getName() + " sent out " + currentPokemon().getName());
 		}
-		opponent.updateOpponent(this);
+		for (BattleParticipant p : bc.participants)
+			p.updateOpponent();
 	}
 
 	@Override
@@ -124,15 +115,17 @@ public class TrainerParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void update() {
-	}
-
-	@Override
 	public EntityLiving getEntity() {
 		return trainer;
 	}
 
 	@Override
-	public void updateOpponent(IBattleParticipant opponent) {
+	public void updateOpponent() {
 	}
+
+	@Override
+	public String getFaintMessage() {
+		return trainer.info.name + "'s " + currentPokemon().getName() + " fainted!";
+	}
+
 }

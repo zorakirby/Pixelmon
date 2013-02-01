@@ -726,6 +726,8 @@ public class GuiBattle extends GuiContainer {
 				drawLevelStage = LevelStage.First;
 			else {
 				if (battleControllerIndex == -1 && !ClientBattleManager.hasNewAttacks()) {
+					if (!wasThirdPerson)
+						Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
 					mc.thePlayer.closeScreen();
 					mc.setIngameFocus();
 					GuiPixelmonOverlay.isVisible = true;
@@ -804,6 +806,8 @@ public class GuiBattle extends GuiContainer {
 			if (battleControllerIndex != -1 || ClientBattleManager.hasNewAttacks() || ClientBattleManager.hasLevelUps())
 				mode = oldMode;
 			else {
+				if (!wasThirdPerson)
+					Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
 				mc.thePlayer.closeScreen();
 				mc.setIngameFocus();
 				GuiPixelmonOverlay.isVisible = true;

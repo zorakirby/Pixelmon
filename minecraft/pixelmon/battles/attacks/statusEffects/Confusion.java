@@ -16,7 +16,7 @@ public class Confusion extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Confusion) {
@@ -29,7 +29,7 @@ public class Confusion extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is confused...");
 		if ((new Random()).nextInt(100) <= 50) {
 			user.attackEntityFrom(DamageSource.causeMobDamage(user), calculateConfusionDamage(user));
@@ -39,7 +39,7 @@ public class Confusion extends StatusEffectBase {
 		return true;
 	}
 
-	private int calculateConfusionDamage(EntityPixelmon user) {
+	private int calculateConfusionDamage(EntityPixelmon user) throws Exception {
 		double stab = 1;
 		double type = EnumType.getTotalEffectiveness(user.type, EnumType.Normal);
 		double critical = 1;
@@ -50,11 +50,11 @@ public class Confusion extends StatusEffectBase {
 		double Damage = ((2 * user.getLvl().getLevel() + 10) / 250 * (attack / defence) * 40 + 2) * modifier;
 
 		return (int) Math.floor(Damage);
-				//(int) Math.round(Damage);
+		// (int) Math.round(Damage);
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (effectTurns == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " snaps out of confusion!");
 			user.status.remove(this);

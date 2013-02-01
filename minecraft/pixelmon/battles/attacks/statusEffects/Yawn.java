@@ -12,7 +12,7 @@ public class Yawn extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (!target.hasStatus(type) && !target.hasStatus(StatusEffectType.Sleep)) {
 			target.status.add(this);
 			target.battleVariables.set(type, 0);
@@ -25,7 +25,7 @@ public class Yawn extends StatusEffectBase {
 	}
 
 	@Override
-	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
+	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		user.battleVariables.increment(type);
 
 		if (user.battleVariables.get(type) == 2) {

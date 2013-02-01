@@ -13,7 +13,7 @@ public class LightScreen extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception{
 
 		if (checkChance()) {
 			if (user.status.contains(this)) {
@@ -28,14 +28,14 @@ public class LightScreen extends StatusEffectBase {
 	}
 
 	@Override
-	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) throws Exception{
 		if (a.baseAttack.attackCategory == Attack.ATTACK_SPECIAL)
 			return damage / 2;
 		return damage;
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception{
 		if (user.battleVariables.get(type) == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + "'s Lightscreen wears off!");
 			user.status.remove(this);

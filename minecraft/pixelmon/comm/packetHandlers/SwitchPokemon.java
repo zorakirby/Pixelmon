@@ -4,8 +4,9 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.comm.EnumPackets;
 import pixelmon.storage.PixelmonStorage;
@@ -19,20 +20,15 @@ public class SwitchPokemon extends PacketHandlerBase {
 
 	@Override
 	public void handlePacket(int index, Player pl, DataInputStream dataStream) throws IOException {
-		EntityPlayerMP player = (EntityPlayerMP)pl;
+		EntityPlayerMP player = (EntityPlayerMP) pl;
 		int pos = dataStream.readInt();
 		BattleController bc = BattleRegistry.getBattle(dataStream.readInt());
-		if (bc.participant1 instanceof PlayerParticipant) {
-			if (((PlayerParticipant) bc.participant1).player == player) {
-				bc.SwitchPokemon(bc.participant1.currentPokemon(), PixelmonStorage.PokeballManager.getPlayerStorage(player).getIDFromPosition(pos));
+		for (BattleParticipant p : bc.participants)
+			if (p instanceof PlayerParticipant) {
+				if (((PlayerParticipant) p).player == player) {
+					bc.SwitchPokemon(p.currentPokemon(), PixelmonStorage.PokeballManager.getPlayerStorage(player).getIDFromPosition(pos));
+				}
 			}
-		}
-		if (bc.participant2 instanceof PlayerParticipant) {
-			if (((PlayerParticipant) bc.participant2).player == player) {
-				bc.SwitchPokemon(bc.participant2.currentPokemon(), PixelmonStorage.PokeballManager.getPlayerStorage(player).getIDFromPosition(pos));
-			}
-
-		}
 	}
 
 }

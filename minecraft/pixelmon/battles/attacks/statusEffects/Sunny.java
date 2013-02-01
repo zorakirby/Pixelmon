@@ -14,7 +14,7 @@ public class Sunny extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			if (!user.getOwner().worldObj.isDaytime()) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "There's no sun at night!");
@@ -38,7 +38,7 @@ public class Sunny extends StatusEffectBase {
 	}
 
 	@Override
-	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) throws Exception {
 		if (a.baseAttack.attackType == EnumType.Fire)
 			return damage *= 1.5;
 		else if (a.baseAttack.attackType == EnumType.Water)
@@ -48,7 +48,7 @@ public class Sunny extends StatusEffectBase {
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (user.battleVariables.get(type) == 0) {
 			user.status.remove(this);
 		}

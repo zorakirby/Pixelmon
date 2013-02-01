@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
+import pixelmon.battles.controller.BattleController;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import cpw.mods.fml.common.network.Player;
