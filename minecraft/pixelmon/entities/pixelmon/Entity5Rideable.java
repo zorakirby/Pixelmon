@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 import pixelmon.entities.pixelmon.helpers.PlayerRiding;
@@ -24,8 +25,6 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	private RidingHelper ridingHelper;
 
 	public boolean isFlying = false;
-
-	private final boolean ridingEnabled = true;
 
 	public Entity5Rideable(World par1World) {
 		super(par1World);
@@ -62,7 +61,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	@Override
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
-			if (ridingEnabled) {
+			if (PixelmonConfig.allowRiding) {
 				ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 				if (itemstack == null) {
 					if (baseStats.isRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
