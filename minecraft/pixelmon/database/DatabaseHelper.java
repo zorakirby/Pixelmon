@@ -29,6 +29,7 @@ public class DatabaseHelper {
 	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
 	public static boolean checkForDatabaseUpdates = true;
+
 	public static boolean has() {
 		try {
 			File databaseDir = new File(DownloadHelper.getDir(), "database");
@@ -47,6 +48,10 @@ public class DatabaseHelper {
 				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
 				if (!sqlitejar.exists())
 					DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
+				if (!sqlitejar.exists())
+					System.out.println("SQLite Jar still not found at " + sqlitejar.getAbsolutePath());
+				if (!databaseFile.exists())
+					System.out.println("Database still not found at " + databaseFile.getAbsolutePath());
 				((ModClassLoader) Loader.instance().getModClassLoader()).addFile(sqlitejar);
 			}
 

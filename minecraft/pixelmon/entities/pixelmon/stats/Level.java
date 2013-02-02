@@ -17,7 +17,9 @@ import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.database.ExperienceGroup;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBiomes;
+import pixelmon.enums.EnumHeldItems;
 import pixelmon.enums.EnumPokemon;
+import pixelmon.items.ItemHeld;
 import pixelmon.storage.PixelmonStorage;
 
 public class Level {
@@ -173,7 +175,8 @@ public class Level {
 		while (getExp() >= getExpToNextLevel()) {
 			int newExp = getExp() - getExpToNextLevel();
 
-			if (pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
+			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.expShare) && pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1
+					&& getLevel() >= pixelmon.baseStats.evolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
 			}
 			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {

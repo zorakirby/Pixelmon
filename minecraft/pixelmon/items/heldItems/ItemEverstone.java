@@ -7,7 +7,6 @@ public class ItemEverstone extends ItemHeld {
 
 	public ItemEverstone(int id, EnumHeldItems heldItemType) {
 		super(id, heldItemType);
-
 	}
 
 }
