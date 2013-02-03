@@ -20,7 +20,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumHeldItems;
+import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.PixelmonItem;
 import pixelmon.storage.PixelmonStorage;
@@ -192,8 +192,8 @@ public class BattleController {
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {
 
 		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " tries to run away");
-		float A = ((float) user.stats.Speed) * ((float) user.battleStats.SpeedModifier) / 100;
-		float B = ((float) target.stats.Speed) * ((float) target.battleStats.SpeedModifier) / 100;
+		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
+		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
 		if (B > 255)
 			B = 255;
 		float C = p.escapeAttempts++;
@@ -288,5 +288,5 @@ public class BattleController {
 	public void endPause() {
 		paused = false;
 	}
-
+	
 }

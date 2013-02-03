@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import pixelmon.comm.EnumPackets;
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerStorage;
@@ -27,7 +28,7 @@ public class SetHeldItem extends PacketHandlerBase {
 		int oldItemId = storage.getNBT(pokemonId).getInteger("HeldItem");
 		if (storage.EntityAlreadyExists(pokemonId, ((EntityPlayerMP) player).worldObj)) {
 			EntityPixelmon pixelmon = storage.getAlreadyExists(pokemonId, ((EntityPlayerMP) player).worldObj);
-			Item heldItem = PixelmonItems.getHeldItem(itemId);
+			Item heldItem = PixelmonItemsHeld.getHeldItem(itemId);
 			if (heldItem != null)
 				pixelmon.heldItem = new ItemStack(heldItem);
 			else
@@ -47,13 +48,13 @@ public class SetHeldItem extends PacketHandlerBase {
 				((EntityPlayerMP) player).inventory.setItemStack(currentItem);
 		} else {
 			if (itemId == -1) {
-				((EntityPlayerMP) player).inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+				((EntityPlayerMP) player).inventory.setItemStack(new ItemStack(PixelmonItemsHeld.getHeldItem(oldItemId)));
 			} else if (itemId != oldItemId) {
 				if (currentItem == null || currentItem.stackSize <= 0)
-					((EntityPlayerMP) player).inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+					((EntityPlayerMP) player).inventory.setItemStack(new ItemStack(PixelmonItemsHeld.getHeldItem(oldItemId)));
 				else {
 					((EntityPlayerMP) player).inventory.setItemStack(currentItem);
-					Item item = PixelmonItems.getHeldItem(oldItemId);
+					Item item = PixelmonItemsHeld.getHeldItem(oldItemId);
 					if (item != null)
 						((EntityPlayerMP) player).dropPlayerItem(new ItemStack(item));
 				}

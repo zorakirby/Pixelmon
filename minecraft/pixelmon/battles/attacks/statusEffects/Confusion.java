@@ -45,8 +45,8 @@ public class Confusion extends StatusEffectBase {
 		double critical = 1;
 		double rand = ((new Random()).nextDouble() + 85.0) * 15.0 / 100.0;
 		double modifier = stab * type * critical * rand;
-		double attack = ((double) user.stats.Attack) * ((double) user.battleStats.AttackModifier) / 100;
-		double defence = ((double) user.stats.Defence) * ((double) user.battleStats.DefenceModifier) / 100;
+		double attack = ((double) user.stats.Attack) * ((double) user.battleStats.getAttackModifier()) / 100;
+		double defence = ((double) user.stats.Defence) * ((double) user.battleStats.getDefenceModifier()) / 100;
 		double Damage = ((2 * user.getLvl().getLevel() + 10) / 250 * (attack / defence) * 40 + 2) * modifier;
 
 		return (int) Math.floor(Damage);

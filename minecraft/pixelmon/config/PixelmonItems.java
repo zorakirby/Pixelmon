@@ -34,6 +34,7 @@ import pixelmon.items.heldItems.ItemExpShare;
 import pixelmon.items.heldItems.ItemLuckyEgg;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+
 //import pixelmon.items.heldItems.ItemEverstone;
 
 public class PixelmonItems {
@@ -73,27 +74,19 @@ public class PixelmonItems {
 	public static int fireStoneShardID;
 	public static int everStoneShardID;
 
-	public static int luckyEggID;
-	public static int expShareID;
-	public static int everStoneID;
-
-	public static int berryOranID;
-	public static int berryRawstID;
-	public static int berryLeppaID;
-
 	public static int hammerWoodID;
 	public static int hammerStoneID;
 	public static int hammerIronID;
 	public static int hammerGoldID;
 	public static int hammerDiamondID;
 	public static int hammerAluminumID;
-	
+
 	public static int swordAluminumID;
 	public static int axeAluminumID;
 	public static int shovelAluminumID;
 	public static int pickaxeAluminumID;
 	public static int hoeAluminumID;
-	
+
 	public static int helmetAluminumID;
 	public static int torsoAluminumID;
 	public static int leggingsAluminumID;
@@ -101,7 +94,7 @@ public class PixelmonItems {
 
 	public static int aluminumIngotID;
 	public static int aluminumPlateID;
-	
+
 	@Mod.Item(name = "Pokedex", typeClass = "pixelmon.items.ItemPokedex")
 	public static Item pokeDex;
 
@@ -149,9 +142,6 @@ public class PixelmonItems {
 	public static Item thunderStone;
 	@Mod.Item(name = "Leaf Stone", typeClass = "pixelmon.items.ItemEvolutionStone")
 	public static Item leafStone;
-	// @Mod.Item(name = "Everstone", typeClass =
-	// "pixelmon.items.ItemEvolutionStone")
-	// public static Item Everstone;
 
 	@Mod.Item(name = "PC", typeClass = "pixelmon.items.ItemBlock")
 	public static Item pcItem;
@@ -170,21 +160,8 @@ public class PixelmonItems {
 	public static Item waterStoneShard;
 	@Mod.Item(name = "Fire Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item fireStoneShard;
-	// @Mod.Item(name = "Ever Stone Shard", typeClass =
-	// "pixelmon.items.PixelmonItem")
-	// public static Item everStoneShard;
-
-	@Mod.Item(name = "Lucky Egg", typeClass = "pixelmon.items.heldItems.ItemLuckyEgg")
-	public static Item luckyEgg;
-	@Mod.Item(name = "EXP Share", typeClass = "pixelmon.items.heldItems.ItemExpShare")
-	public static Item expShare;
-
-	@Mod.Item(name = "Oran Berry", typeClass = "pixelmon.items.heldItems.ItemBerryOran")
-	public static Item berryOran;
-	@Mod.Item(name = "Rawst Berry", typeClass = "pixelmon.items.heldItems.ItemBerryRawst")
-	public static Item berryRawst;
-	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.heldItems.ItemBerryLeppa")
-	public static Item berryLeppa;
+	@Mod.Item(name = "Ever Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item everStoneShard;
 
 	@Mod.Item(name = "Wood Hammer", typeClass = "pixelmon.items.ItemHammer")
 	public static Item hammerWood;
@@ -198,13 +175,12 @@ public class PixelmonItems {
 	public static Item hammerDiamond;
 	@Mod.Item(name = "Aluminum Hammer", typeClass = "pixelmon.items.ItemTool")
 	public static Item hammerAluminum;
-	
-	
+
 	@Mod.Item(name = "Aluminum Ingot", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item aluminumIngot;
 	@Mod.Item(name = "Aluminum Plate", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item aluminumPlate;
-	
+
 	@Mod.Item(name = "Aluminum Sword", typeClass = "pixelmon.items.ItemTool")
 	public static Item swordAluminum;
 	@Mod.Item(name = "Aluminum Axe", typeClass = "pixelmon.items.ItemTool")
@@ -225,13 +201,13 @@ public class PixelmonItems {
 	@Mod.Item(name = "Aluminum Boots", typeClass = "pixelmon.items.ItemPixelmonArmor")
 	public static Item bootsAluminum;
 
-
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
 		PixelmonItemsApricorns.load(cfg);
 		PixelmonItemsBadges.load(cfg);
 		PixelmonItemsTMs.load(cfg);
 		PixelmonItemsFossils.load(cfg);
+		PixelmonItemsHeld.load(cfg);
 
 		pokeDexID = cfg.get("item", "PokeDex", 10027).getInt();
 		rareCandyID = cfg.get("item", "RareCandy", 10005).getInt();
@@ -259,7 +235,6 @@ public class PixelmonItems {
 		waterStoneID = cfg.get("evolutionStone", "WaterStone", 10009).getInt();
 		moonStoneID = cfg.get("evolutionStone", "MoonStone", 10010).getInt();
 		thunderStoneID = cfg.get("evolutionStone", "ThunderStone", 10011).getInt();
-		everStoneID = cfg.get("evolutionStone", "EverStone", 100126).getInt();
 		leafStoneID = cfg.get("evolutionStone", "LeafStone", 10012).getInt();
 		thunderStoneShardID = cfg.get("evolutionStone", "ThunderStoneShard", 10021).getInt();
 		leafStoneShardID = cfg.get("evolutionStone", "LeafStoneShard", 10022).getInt();
@@ -267,29 +242,22 @@ public class PixelmonItems {
 		fireStoneShardID = cfg.get("evolutionStone", "FireStoneShard", 10024).getInt();
 		// everStoneShardID = cfg.get("EverStoneShard", "item", 10025).getInt();
 
-		luckyEggID = cfg.get("heldItem", "LuckyEgg", 10035).getInt();
-		expShareID = cfg.get("heldItem", "EXPShare", 10036).getInt();
-
-		berryOranID = cfg.get("berry", "OranBerry", 10040).getInt();
-		berryRawstID = cfg.get("berry", "RawstBerry", 10041).getInt();
-		berryLeppaID = cfg.get("berry", "LeppaBerry", 10042).getInt();
-
 		hammerWoodID = cfg.get("item", "Wood Hammer", 10107).getInt();
 		hammerStoneID = cfg.get("item", "Stone Hammer", 10108).getInt();
 		hammerIronID = cfg.get("item", "Iron Hammer", 10109).getInt();
 		hammerGoldID = cfg.get("item", "Gold Hammer", 10110).getInt();
 		hammerDiamondID = cfg.get("item", "Diamond Hammer", 10111).getInt();
 		hammerAluminumID = cfg.get("item", "Aluminum Hammer", 10122).getInt();
-		
+
 		aluminumIngotID = cfg.get("item", "AluminumIngot", 10120).getInt();
 		aluminumPlateID = cfg.get("item", "AluminumPlate", 10121).getInt();
-		
+
 		swordAluminumID = cfg.get("item", "Aluminum Sword", 10123).getInt();
 		axeAluminumID = cfg.get("item", "Aluminum Axe", 10124).getInt();
 		shovelAluminumID = cfg.get("item", "Aluminum Shovel", 10125).getInt();
 		pickaxeAluminumID = cfg.get("item", "Aluminum Pickaxe", 10126).getInt();
 		hoeAluminumID = cfg.get("item", "Aluminum Hoe", 10127).getInt();
-		
+
 		helmetAluminumID = cfg.get("item", "Aluminum Helmet", 10128).getInt();
 		torsoAluminumID = cfg.get("item", "Aluminum Chestplate", 10129).getInt();
 		leggingsAluminumID = cfg.get("item", "Aluminum Leggings", 10130).getInt();
@@ -313,11 +281,9 @@ public class PixelmonItems {
 		iceHeal = new ItemStatusAilmentHealer(iceHealID, EnumStatusAilmentHealers.IceHeal).setItemName("Ice Heal");
 		fullHeal = new ItemStatusAilmentHealer(fullHealID, EnumStatusAilmentHealers.FullHeal).setItemName("Full Heal");
 		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.Firestone, 3).setItemName("FireStone").setCreativeTab(PixelmonCreativeTabs.natural);
-		waterStone = new ItemEvolutionStone(waterStoneID, EnumEvolutionStone.Waterstone, 1).setItemName("WaterStone").setCreativeTab(
-				PixelmonCreativeTabs.natural);
+		waterStone = new ItemEvolutionStone(waterStoneID, EnumEvolutionStone.Waterstone, 1).setItemName("WaterStone").setCreativeTab(PixelmonCreativeTabs.natural);
 		moonStone = new ItemEvolutionStone(moonStoneID, EnumEvolutionStone.Moonstone, 4).setItemName("MoonStone").setCreativeTab(PixelmonCreativeTabs.natural);
-		thunderStone = new ItemEvolutionStone(thunderStoneID, EnumEvolutionStone.Thunderstone, 0).setItemName("ThunderStone").setCreativeTab(
-				PixelmonCreativeTabs.natural);
+		thunderStone = new ItemEvolutionStone(thunderStoneID, EnumEvolutionStone.Thunderstone, 0).setItemName("ThunderStone").setCreativeTab(PixelmonCreativeTabs.natural);
 		leafStone = new ItemEvolutionStone(leafStoneID, EnumEvolutionStone.Leafstone, 2).setItemName("LeafStone").setCreativeTab(PixelmonCreativeTabs.natural);
 		pcItem = new ItemBlock(pcItemID, PixelmonBlocks.pc, 34).setItemName("PC");
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 50).setItemName("Healer");
@@ -328,36 +294,33 @@ public class PixelmonItems {
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(35).setCreativeTab(PixelmonCreativeTabs.natural);
 		waterStoneShard = new PixelmonItem(waterStoneShardID).setItemName("WaterStoneShard").setIconIndex(19).setCreativeTab(PixelmonCreativeTabs.natural);
 		fireStoneShard = new PixelmonItem(fireStoneShardID).setItemName("FireStoneShard").setIconIndex(51).setCreativeTab(PixelmonCreativeTabs.natural);
-		luckyEgg = new ItemLuckyEgg(luckyEggID).setItemName("LuckyEgg").setIconIndex(7);
-		expShare = new ItemExpShare(expShareID).setItemName("ExpShare").setIconIndex(23);
-		// everStoneShard = new
-		// PixelmonItem(everStoneShardID).setItemName("EverstoneShard").setIconIndex(60);
-		
-		berryOran = new ItemBerryOran(berryOranID).setItemName("OranBerry").setIconIndex(5);
-		berryLeppa = new ItemBerryLeppa(berryLeppaID).setItemName("LeppaBerry").setIconIndex(21);
-		berryRawst = new ItemBerryRawst(berryRawstID).setItemName("RawstBerry").setIconIndex(37);
-		
+
+		everStoneShard = new PixelmonItem(everStoneShardID).setItemName("EverstoneShard").setIconIndex(60);
+
 		aluminumIngot = new PixelmonItem(aluminumIngotID).setItemName("AluminumIngot").setIconIndex(233).setCreativeTab(CreativeTabs.tabMaterials);
 		aluminumPlate = new PixelmonItem(aluminumPlateID).setItemName("AluminumPlate").setIconIndex(249).setCreativeTab(CreativeTabs.tabMaterials);
-		
+
 		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, 251).setItemName("Wood Hammer");
 		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, 252).setItemName("Stone Hammer");
 		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, 253).setItemName("Iron Hammer");
 		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, 255).setItemName("Gold Hammer");
 		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, 254).setItemName("Diamond Hammer");
 		hammerAluminum = new ItemHammer(hammerAluminumID, Pixelmon.ALUMINUM, 250).setItemName("Aluminum Hammer");
-		
+
 		swordAluminum = new ItemSword(swordAluminumID, Pixelmon.ALUMINUM).setIconIndex(219).setItemName("Aluminum Sword").setTextureFile("/pixelmon/image/pitems.png");
 		axeAluminum = new ItemAxe(axeAluminumID, Pixelmon.ALUMINUM).setIconIndex(222).setItemName("Aluminum Axe").setTextureFile("/pixelmon/image/pitems.png");
 		spadeAluminum = new ItemSpade(shovelAluminumID, Pixelmon.ALUMINUM).setIconIndex(220).setItemName("Aluminum Shovel").setTextureFile("/pixelmon/image/pitems.png");
 		pickaxeAluminum = new ItemPickaxe(pickaxeAluminumID, Pixelmon.ALUMINUM).setIconIndex(221).setItemName("Aluminum Pickaxe").setTextureFile("/pixelmon/image/pitems.png");
 		hoeAluminum = new ItemHoe(hoeAluminumID, Pixelmon.ALUMINUM).setIconIndex(223).setItemName("Aluminum Hoe").setTextureFile("/pixelmon/image/pitems.png");
 
-		helmetAluminum = new ItemPixelmonArmor(helmetAluminumID, 14, Pixelmon.ALUMINUMARMOR, 0, 0).setIconIndex(204).setItemName("Aluminum Helmet").setTextureFile("/pixelmon/image/pitems.png");
-		torsoAluminum = new ItemPixelmonArmor(torsoAluminumID, 8, Pixelmon.ALUMINUMARMOR, 0, 1).setIconIndex(205).setItemName("Aluminum Chestplate").setTextureFile("/pixelmon/image/pitems.png");
-		leggingsAluminum = new ItemPixelmonArmor(leggingsAluminumID, 9, Pixelmon.ALUMINUMARMOR, 0, 2).setIconIndex(206).setItemName("Aluminum Leggings").setTextureFile("/pixelmon/image/pitems.png");
-		bootsAluminum = new ItemPixelmonArmor(bootsAluminumID, 7, Pixelmon.ALUMINUMARMOR, 0, 3).setIconIndex(207).setItemName("Aluminum Boots").setTextureFile("/pixelmon/image/pitems.png");
-	
+		helmetAluminum = new ItemPixelmonArmor(helmetAluminumID, 14, Pixelmon.ALUMINUMARMOR, 0, 0).setIconIndex(204).setItemName("Aluminum Helmet")
+				.setTextureFile("/pixelmon/image/pitems.png");
+		torsoAluminum = new ItemPixelmonArmor(torsoAluminumID, 8, Pixelmon.ALUMINUMARMOR, 0, 1).setIconIndex(205).setItemName("Aluminum Chestplate")
+				.setTextureFile("/pixelmon/image/pitems.png");
+		leggingsAluminum = new ItemPixelmonArmor(leggingsAluminumID, 9, Pixelmon.ALUMINUMARMOR, 0, 2).setIconIndex(206).setItemName("Aluminum Leggings")
+				.setTextureFile("/pixelmon/image/pitems.png");
+		bootsAluminum = new ItemPixelmonArmor(bootsAluminumID, 7, Pixelmon.ALUMINUMARMOR, 0, 3).setIconIndex(207).setItemName("Aluminum Boots")
+				.setTextureFile("/pixelmon/image/pitems.png");
 
 	}
 
@@ -367,6 +330,7 @@ public class PixelmonItems {
 		PixelmonItemsBadges.addNames();
 		PixelmonItemsTMs.addNames();
 		PixelmonItemsFossils.addNames();
+		PixelmonItemsHeld.addNames();
 		try {
 			for (Field field : PixelmonItems.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
@@ -387,22 +351,6 @@ public class PixelmonItems {
 					if (item instanceof ItemPokemonFossil)
 						if (item.itemID == id)
 							return item;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public static ItemHeld getHeldItem(int id) {
-		try {
-			for (Field field : PixelmonItems.class.getFields()) {
-				if (field.isAnnotationPresent(Mod.Item.class)) {
-					Item item = (Item) field.get(null);
-					if (item instanceof ItemHeld)
-						if (item.itemID == id)
-							return (ItemHeld)item;
 				}
 			}
 		} catch (Exception e) {

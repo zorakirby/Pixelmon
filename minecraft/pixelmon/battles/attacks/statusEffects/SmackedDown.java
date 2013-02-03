@@ -30,11 +30,11 @@ public class SmackedDown extends StatusEffectBase {
 		double modifier = stab * type * critical * rand;
 		double attack = 0, defence = 0;
 		if (a.baseAttack.attackCategory == Attack.ATTACK_PHYSICAL) {
-			attack = ((double) target.stats.Attack) * ((double) target.battleStats.AttackModifier) / 100;
-			defence = ((double) user.stats.Defence) * ((double) user.battleStats.DefenceModifier) / 100;
+			attack = ((double) target.stats.Attack) * ((double) target.battleStats.getAttackModifier()) / 100;
+			defence = ((double) user.stats.Defence) * ((double) user.battleStats.getDefenceModifier()) / 100;
 		} else if (a.baseAttack.attackCategory == Attack.ATTACK_SPECIAL) {
-			attack = ((double) target.stats.SpecialAttack) * ((double) target.battleStats.SpecialAttackModifier) / 100;
-			defence = ((double) user.stats.SpecialDefence) * ((double) user.battleStats.SpecialDefenceModifier) / 100;
+			attack = ((double) target.stats.SpecialAttack) * ((double) target.battleStats.getSpecialAttackModifier()) / 100;
+			defence = ((double) user.stats.SpecialDefence) * ((double) user.battleStats.getSpecialDefenceModifier()) / 100;
 		}
 		double Damage = ((2 * ((float) target.getLvl().getLevel()) + 10) / 250 * (attack / defence) * a.baseAttack.basePower + 2) * modifier;
 

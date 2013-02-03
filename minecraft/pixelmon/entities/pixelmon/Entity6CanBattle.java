@@ -26,7 +26,7 @@ import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 
 public abstract class Entity6CanBattle extends Entity5Rideable {
-	public BattleStats battleStats = new BattleStats();
+	public BattleStats battleStats = new BattleStats(this);
 	public ArrayList<StatusEffectBase> status = new ArrayList<StatusEffectBase>();
 	public Moveset moveset = new Moveset();
 	public BattleController battleController;

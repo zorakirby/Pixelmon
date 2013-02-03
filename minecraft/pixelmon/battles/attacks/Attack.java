@@ -22,7 +22,9 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
+import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
+import pixelmon.items.heldItems.ChoiceItem;
 import pixelmon.storage.PixelmonStorage;
 
 public class Attack {
@@ -56,7 +58,7 @@ public class Attack {
 		boolean attackHandled = false, cantMiss = false;
 		flinched = false;
 		user.getLookHelper().setLookPositionWithEntity(target, 0, 0);
-		double accuracy = ((double) baseAttack.accuracy) * ((double) user.battleStats.Accuracy) / ((double) target.battleStats.Evasion);
+		double accuracy = ((double) baseAttack.accuracy) * ((double) user.battleStats.getAccuracy()) / ((double) target.battleStats.getEvasion());
 		double crit = calcCriticalHit(null);
 		/* Check for Protect */
 		for (int i = 0; i < target.status.size(); i++) {
@@ -232,11 +234,17 @@ public class Attack {
 		double modifier = stab * type * critical * rand;
 		double attack = 0, defence = 0;
 		if (baseAttack.attackCategory == ATTACK_PHYSICAL) {
-			attack = ((double) user.stats.Attack) * ((double) user.battleStats.AttackModifier) / 100;
-			defence = ((double) target.stats.Defence) * ((double) target.battleStats.DefenceModifier) / 100;
+			attack = ((double) user.stats.Attack) * ((double) user.battleStats.getAttackModifier()) / 100;
+			defence = ((double) target.stats.Defence) * ((double) target.battleStats.getDefenceModifier()) / 100;
+			if (ItemHeld.isItemOfType(user.getHeldItem(), EnumHeldItems.choiceItem)){
+				attack = ((ChoiceItem)user.getHeldItem().getItem()).affectAttack(attack);
+			}
 		} else if (baseAttack.attackCategory == ATTACK_SPECIAL) {
-			attack = ((double) user.stats.SpecialAttack) * ((double) user.battleStats.SpecialAttackModifier) / 100;
-			defence = ((double) target.stats.SpecialDefence) * ((double) target.battleStats.SpecialDefenceModifier) / 100;
+			attack = ((double) user.stats.SpecialAttack) * ((double) user.battleStats.getSpecialAttackModifier()) / 100;
+			defence = ((double) target.stats.SpecialDefence) * ((double) target.battleStats.getSpecialDefenceModifier()) / 100;
+			if (ItemHeld.isItemOfType(user.getHeldItem(), EnumHeldItems.choiceItem)){
+				attack = ((ChoiceItem)user.getHeldItem().getItem()).affectSpecialAttack(attack);
+			}
 		}
 		double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250 * (attack / defence) * baseAttack.basePower + 2) * modifier;
 

@@ -6,7 +6,7 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumHeldItems;
+import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 
 public class ItemBerryLeppa extends ItemHeld {

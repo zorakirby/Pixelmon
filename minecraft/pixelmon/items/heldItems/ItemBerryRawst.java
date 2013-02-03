@@ -4,7 +4,7 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumHeldItems;
+import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 
 public class ItemBerryRawst extends ItemHeld {

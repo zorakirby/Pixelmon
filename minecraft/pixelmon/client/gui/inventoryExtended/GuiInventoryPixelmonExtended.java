@@ -27,6 +27,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.enums.EnumGui;
 import pixelmon.items.ItemHeld;
 import pixelmon.storage.PlayerStorage;
@@ -138,7 +139,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				drawImageQuad(spriteIndex, slot.x, slot.y, 16f, 16f, 0f, 0f, 1f, 1f);
 
 				if (p.heldItemId != -1) {
-					ItemHeld heldItem = (ItemHeld) PixelmonItems.getHeldItem(p.heldItemId);
+					ItemHeld heldItem = (ItemHeld) PixelmonItemsHeld.getHeldItem(p.heldItemId);
 					if (heldItem != null) {
 						spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
 						int iconIndex = heldItem.getIconIndex(new ItemStack(heldItem));
@@ -188,7 +189,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			return true;
 		else if (inv.getItemStack() == null)
 			return false;
-		if (PixelmonItems.getHeldItem(inv.getItemStack().itemID) != null)
+		if (PixelmonItemsHeld.getHeldItem(inv.getItemStack().itemID) != null)
 			return true;
 		return false;
 	}
@@ -317,10 +318,10 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 							inventory.setItemStack(currentItem);
 					} else {
 						if (itemId == -1) {
-							inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+							inventory.setItemStack(new ItemStack(PixelmonItemsHeld.getHeldItem(oldItemId)));
 						} else if (itemId != oldItemId) {
 							if (currentItem.stackSize <= 0)
-								inventory.setItemStack(new ItemStack(PixelmonItems.getHeldItem(oldItemId)));
+								inventory.setItemStack(new ItemStack(PixelmonItemsHeld.getHeldItem(oldItemId)));
 							else
 								inventory.setItemStack(currentItem);
 						} else {

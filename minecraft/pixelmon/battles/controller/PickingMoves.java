@@ -90,9 +90,9 @@ public class PickingMoves {
 	}
 
 	private static boolean doesGoFirst(BattleParticipant p, BattleParticipant foe) {
-		if (p.currentPokemon().stats.Speed * p.currentPokemon().battleStats.SpeedModifier > foe.currentPokemon().stats.Speed * foe.currentPokemon().battleStats.SpeedModifier)
+		if (p.currentPokemon().stats.Speed * p.currentPokemon().battleStats.getSpeedModifier() > foe.currentPokemon().stats.Speed * foe.currentPokemon().battleStats.getSpeedModifier())
 			return true;
-		else if (foe.currentPokemon().stats.Speed * foe.currentPokemon().battleStats.SpeedModifier > p.currentPokemon().stats.Speed * p.currentPokemon().battleStats.SpeedModifier)
+		else if (foe.currentPokemon().stats.Speed * foe.currentPokemon().battleStats.getSpeedModifier() > p.currentPokemon().stats.Speed * p.currentPokemon().battleStats.getSpeedModifier())
 			return false;
 
 		if (RandomHelper.getRandomNumberBetween(0, 2) >= 1)

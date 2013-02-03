@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.StringTranslate;
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsHeld;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -20,7 +21,7 @@ public class CreativeTabHeldItems extends CreativeTabs {
 
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		return PixelmonItems.expShare;
+		return PixelmonItemsHeld.expShare;
 	}
 
 	public String getTranslatedTabLabel() {

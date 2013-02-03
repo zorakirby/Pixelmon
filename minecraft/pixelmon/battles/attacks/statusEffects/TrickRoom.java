@@ -37,9 +37,9 @@ public class TrickRoom extends StatusEffectBase {
 
 	@Override
 	public boolean participantMovesFirst(EntityPixelmon user, EntityPixelmon target) throws Exception {
-		if (user.stats.Speed * user.battleStats.SpeedModifier > target.stats.Speed * target.battleStats.SpeedModifier)
+		if (user.stats.Speed * user.battleStats.getSpeedModifier() > target.stats.Speed * target.battleStats.getSpeedModifier())
 			return false;
-		else if (target.stats.Speed * target.battleStats.SpeedModifier > user.stats.Speed * user.battleStats.SpeedModifier)
+		else if (target.stats.Speed * target.battleStats.getSpeedModifier() > user.stats.Speed * user.battleStats.getSpeedModifier())
 			return true;
 		else {
 			if (RandomHelper.getRandomNumberBetween(0, 2) >= 1)

@@ -17,8 +17,8 @@ import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.database.ExperienceGroup;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBiomes;
-import pixelmon.enums.EnumHeldItems;
 import pixelmon.enums.EnumPokemon;
+import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 import pixelmon.storage.PixelmonStorage;
 

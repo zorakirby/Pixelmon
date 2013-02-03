@@ -7,8 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumHeldItems;
+import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerStorage;
@@ -36,7 +37,7 @@ public class Experience {
 					if (nbt.hasKey("HeldItem")) {
 						int itemId = nbt.getInteger("HeldItem");
 						if (itemId != -1) {
-							if (PixelmonItems.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
+							if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
 								expShareCount++;
 							}
 						}
@@ -47,7 +48,7 @@ public class Experience {
 					if (nbt.hasKey("HeldItem")) {
 						int itemId = nbt.getInteger("HeldItem");
 						if (itemId != -1) {
-							if (PixelmonItems.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
+							if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
 								calcExp(storage, p, faintedPokemon, nbt.getInteger("pixelmonID"), true, 0.5 * 1 / (double) expShareCount);
 							}
 						}
