@@ -1,5 +1,6 @@
 package pixelmon.client.gui.pokedex;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -78,11 +79,12 @@ public class GuiPokedex extends GuiContainer {
 		mc.renderEngine.bindTexture(i);
 		drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
 		fontRenderer.drawString("Pokedex", left + 6, top + 5, 0xFFFFFF);
-		String s = selectedEntry.getPokedexDisplayNumber() + " " + (pokedex.hasSeen(currentEntry) ? selectedEntry.name : "???");
+		String s = selectedEntry.getPokedexDisplayNumber() + " "
+				+ (pokedex.hasSeen(currentEntry) || Minecraft.getMinecraft().thePlayer.capabilities.isCreativeMode ? selectedEntry.name : "???");
 		drawCenteredString(fontRenderer, s, left + 174, top + 38 - 3, 0x575757);
 		s = "Description";
 		drawCenteredString(fontRenderer, s, left + 141, top + 125, 0x575757);
-		boolean b = pokedex.hasCaught(currentEntry);
+		boolean b = pokedex.hasCaught(currentEntry) || Minecraft.getMinecraft().thePlayer.capabilities.isCreativeMode;
 		// b = true;
 		s = "";
 		if (b) {
@@ -103,7 +105,7 @@ public class GuiPokedex extends GuiContainer {
 		fontRenderer.drawString(s, left + 164, top + 69 + 0, 0x575757);
 		fontRenderer.drawString("More...", left + 46, top + 204 - 3, optionsHover ? 0x0000FF : 0x575757);
 		scrollPane.drawScreen(mouseX, mouseY, mfloat);
-		b = pokedex.hasSeen(currentEntry);
+		b = pokedex.hasSeen(currentEntry)|| Minecraft.getMinecraft().thePlayer.capabilities.isCreativeMode;
 		// b = !pokedex.isUnknown(currentEntry);
 		GL11.glDepthMask(true);
 		if (b) {

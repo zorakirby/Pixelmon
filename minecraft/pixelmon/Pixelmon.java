@@ -82,7 +82,7 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
-		Pokedex.init();
+		//Pokedex.init();
 	}
 
 	@Init

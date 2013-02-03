@@ -87,7 +87,7 @@ public class PlayerStorage {
 	public void addToParty(EntityPixelmon p) {
 		if (mode == PokeballManagerMode.Player && pokedex != null) {
 			pokedex.set(Pokedex.nameToID(p.getName()), DexRegisterStatus.caught);
-			pokedex.sendToPlayer(pokedex.owner);
+			pokedex.sendToPlayer((EntityPlayerMP)pokedex.owner);
 		}
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
