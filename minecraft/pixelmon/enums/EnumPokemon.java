@@ -86,6 +86,7 @@ public enum EnumPokemon {
 	Raichu("Raichu"),
 	Rattata("Rattata"),
 	Sandile("Sandile"),
+	Sandshrew("Sandshrew"),
 	Scyther("Scyther"),
 	Seaking("Seaking"),
 	Shellder("Shellder"),
