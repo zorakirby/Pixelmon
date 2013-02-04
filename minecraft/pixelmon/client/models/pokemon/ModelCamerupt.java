@@ -1,11 +1,14 @@
 package pixelmon.client.models.pokemon;
 
+import pixelmon.client.models.PixelmonModelBase;
+import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.SkeletonQuadruped;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ModelCamerupt extends ModelBase {
+public class ModelCamerupt extends PixelmonModelBase {
 	// fields
 	ModelRenderer UPPERLEFTLEGPIECE;
 	ModelRenderer BOTTOMRIGHTLEGPIECE;
@@ -88,8 +91,7 @@ public class ModelCamerupt extends ModelBase {
 		BOTTOMRIGHTLEGPIECE.setRotationPoint(-4.5F, 17.96667F, 11.5F);
 		setRotation(BOTTOMRIGHTLEGPIECE, 0F, 0F, 0F);
 		BOTTOMRIGHTLEGPIECE.mirror = true;
-		ModelRenderer bottomrighthorizontalheel = new ModelRenderer(this, 123,
-				10);
+		ModelRenderer bottomrighthorizontalheel = new ModelRenderer(this, 123, 10);
 		bottomrighthorizontalheel.addBox(-3F, 4F, -2.5F, 6, 2, 4);
 		bottomrighthorizontalheel.setRotationPoint(0F, 0F, 0F);
 		bottomrighthorizontalheel.setTextureSize(200, 200);
@@ -113,8 +115,7 @@ public class ModelCamerupt extends ModelBase {
 		bottomrightupperleftheel.setTextureSize(200, 200);
 		bottomrightupperleftheel.mirror = true;
 		setRotation(bottomrightupperleftheel, 0F, 0F, 0F);
-		ModelRenderer bottomrightupperrightheel = new ModelRenderer(this, 123,
-				0);
+		ModelRenderer bottomrightupperrightheel = new ModelRenderer(this, 123, 0);
 		bottomrightupperrightheel.addBox(-1.5F, 4F, -4F, 1, 2, 1);
 		bottomrightupperrightheel.setRotationPoint(0F, 0F, 0F);
 		bottomrightupperrightheel.setTextureSize(200, 200);
@@ -126,8 +127,7 @@ public class ModelCamerupt extends ModelBase {
 		bottomrightlowleg.setTextureSize(200, 200);
 		bottomrightlowleg.mirror = true;
 		setRotation(bottomrightlowleg, 0F, 0F, 0F);
-		ModelRenderer bottomrightlowerrightheel = new ModelRenderer(this, 123,
-				0);
+		ModelRenderer bottomrightlowerrightheel = new ModelRenderer(this, 123, 0);
 		bottomrightlowerrightheel.addBox(-2.5F, 4F, -3.5F, 2, 2, 6);
 		bottomrightlowerrightheel.setRotationPoint(0F, 0F, 0F);
 		bottomrightlowerrightheel.setTextureSize(200, 200);
@@ -159,8 +159,7 @@ public class ModelCamerupt extends ModelBase {
 		upperrightupperleftheel.setTextureSize(200, 200);
 		upperrightupperleftheel.mirror = true;
 		setRotation(upperrightupperleftheel, 0F, 0F, 0F);
-		ModelRenderer upperrighthorizontalheel = new ModelRenderer(this, 123,
-				10);
+		ModelRenderer upperrighthorizontalheel = new ModelRenderer(this, 123, 10);
 		upperrighthorizontalheel.addBox(-3F, 4F, -2.5F, 6, 2, 4);
 		upperrighthorizontalheel.setRotationPoint(0F, 0F, 0F);
 		upperrighthorizontalheel.setTextureSize(200, 200);
@@ -216,8 +215,7 @@ public class ModelCamerupt extends ModelBase {
 		BOTTOMLEFTLEGPIECE.setRotationPoint(4.5F, 18F, 11.5F);
 		setRotation(BOTTOMLEFTLEGPIECE, 0F, 0F, 0F);
 		BOTTOMLEFTLEGPIECE.mirror = true;
-		ModelRenderer bottomlefthorizontalheel = new ModelRenderer(this, 123,
-				10);
+		ModelRenderer bottomlefthorizontalheel = new ModelRenderer(this, 123, 10);
 		bottomlefthorizontalheel.addBox(-3F, 4F, -2.5F, 6, 2, 4);
 		bottomlefthorizontalheel.setRotationPoint(0F, 0F, 0F);
 		bottomlefthorizontalheel.setTextureSize(200, 200);
@@ -592,19 +590,22 @@ public class ModelCamerupt extends ModelBase {
 
 		MOUTHPIECE.addChild(mouth);
 		HEADPIECE.addChild(MOUTHPIECE);
+
+		BODYPIECE.addChild(UPPERLEFTLEGPIECE);
+		BODYPIECE.addChild(UPPERRIGHTLEGPIECE);
+		BODYPIECE.addChild(BOTTOMLEFTLEGPIECE);
+		BODYPIECE.addChild(BOTTOMRIGHTLEGPIECE);
+		BODYPIECE.addChild(UPPERTAILPIECE);
+		BODYPIECE.addChild(NECKPIECE);
+
+		ModuleHead headModule = new ModuleHead(HEADPIECE);
+		skeleton = new SkeletonQuadruped(BODYPIECE, headModule, UPPERLEFTLEGPIECE, UPPERRIGHTLEGPIECE, BOTTOMLEFTLEGPIECE, BOTTOMRIGHTLEGPIECE, 1.1f, 1.1f, 0.8f);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3,
-			float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		UPPERLEFTLEGPIECE.render(f5);
-		BOTTOMRIGHTLEGPIECE.render(f5);
-		UPPERRIGHTLEGPIECE.render(f5);
-		BOTTOMLEFTLEGPIECE.render(f5);
 		BODYPIECE.render(f5);
-		UPPERTAILPIECE.render(f5);
-		NECKPIECE.render(f5);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
@@ -613,19 +614,8 @@ public class ModelCamerupt extends ModelBase {
 		model.rotateAngleZ = z;
 	}
 
-	public void setRotationAngles(float f, float f1, float f2, float f3,
-			float f4, float f5, Entity entity) {
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		HEADPIECE.rotateAngleY = f3 / (180F / (float) Math.PI);
-		HEADPIECE.rotateAngleX = f4 / (180F / (float) Math.PI);
-		UPPERRIGHTLEGPIECE.rotateAngleX = MathHelper.cos(f * .8F) * 1.1F * f1;
-		BOTTOMRIGHTLEGPIECE.rotateAngleX = MathHelper.cos(f * .8F
-				+ (float) Math.PI)
-				* 1.1F * f1;
-		BOTTOMLEFTLEGPIECE.rotateAngleX = MathHelper.cos(f * .8F) * 1.1F * f1;
-		UPPERLEFTLEGPIECE.rotateAngleX = MathHelper.cos(f * .8F
-				+ (float) Math.PI)
-				* 1.1F * f1;
 	}
 
 }

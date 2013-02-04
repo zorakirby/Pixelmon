@@ -13,13 +13,11 @@ public class Flee extends StatusEffectBase {
 
 	@Override
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
-		
 
 		target.aggression = Aggression.passive;
 		user.aggression = Aggression.passive;
 
 		target.battleController.endBattleWithoutXP();
-		
 
 	}
 

@@ -8,18 +8,16 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
-
 public class FireSpin extends StatusEffectBase {
-	int effectTurns = -1;
 
 	public FireSpin() {
 		super(StatusEffectType.FireSpin, true, false, false);
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
-			if (target.type.contains(EnumType.Fire)){
+			if (target.type.contains(EnumType.Fire)) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "no effect!");
 				return;
 			}
@@ -28,28 +26,28 @@ public class FireSpin extends StatusEffectBase {
 					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already spinning in fire!");
 					return;
 				}
-			effectTurns = RandomHelper.getRandomNumberBetween(4, 5);
+			target.battleVariables.set(type, RandomHelper.getRandomNumberBetween(4, 5));
 			target.status.add(this);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is trapped in a vortex!");
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
 	}
 
-
 	@Override
-	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
+	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is trapped in a vortex and takes damage!");
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 16));
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
-		if (effectTurns == 0) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
+		if (user.battleVariables.get(type) == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " breaks free of the swirling vortex!");
 			user.status.remove(this);
 		}
-		effectTurns--;
+		user.battleVariables.decrement(type);
 	}
+
 	public boolean stopsSwitching() {
 		return true;
 	}

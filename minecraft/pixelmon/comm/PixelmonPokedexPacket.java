@@ -37,11 +37,11 @@ public class PixelmonPokedexPacket extends PixelmonPacket
 		this(p.writeToNBT(new NBTTagCompound()));
 	}
 	
-	public Pokedex getPokedex(String username)
+	public Pokedex getPokedex()
 	{
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setTag("Pokedex", data);
-		Pokedex p = new Pokedex(username);
+		Pokedex p = new Pokedex();
 		p.readFromNBT(nbt);
 		return p;
 	}

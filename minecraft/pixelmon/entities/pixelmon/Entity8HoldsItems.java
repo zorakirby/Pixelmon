@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.entities.pixelmon.interactions.PixelmonInteraction;
 
@@ -54,7 +55,7 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 		if (nbt.hasKey("HeldItem")) {
 			int itemId = nbt.getInteger("HeldItem");
 			if (itemId != -1) {
-				heldItem = new ItemStack(PixelmonItems.getHeldItem(itemId));
+				heldItem = new ItemStack(PixelmonItemsHeld.getHeldItem(itemId));
 			}
 		}
 

@@ -1,11 +1,11 @@
 package pixelmon.battles.participants;
 
 import net.minecraft.entity.EntityLiving;
-import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.controller.BattleController;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
-public class WildPixelmonParticipant implements IBattleParticipant {
+public class WildPixelmonParticipant extends BattleParticipant {
 
 	EntityPixelmon pixelmon;
 
@@ -34,13 +34,9 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void StartBattle(IBattleParticipant opponent) {
-	}
-
-	@Override
-	public void EndBattle(boolean didWin, IBattleParticipant foe) {
+	public void EndBattle() {
 		pixelmon.EndBattle();
-		if (!didWin)
+		if (currentPokemon().isFainted || currentPokemon().isDead)
 			pixelmon.setDead();
 		else {
 			pixelmon.battleStats.clearBattleStats();
@@ -50,7 +46,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void getNextPokemon(IBattleParticipant opponent) {
+	public void getNextPokemon() {
 		return;
 	}
 
@@ -59,24 +55,21 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 		return pixelmon.isDead || pixelmon.isFainted || pixelmon.getHealth() <= 0;
 	}
 
-	boolean isWild = true;
-	private BattleController bc;
-
 	@Override
 	public String getName() {
 		return pixelmon.getName();
 	}
 
 	@Override
-	public Attack getMove(IBattleParticipant participant2) {
+	public Attack getMove() {
 		if (pixelmon.moveset.size() > 0)
-			return Attack.getWhichMoveIsBest(pixelmon.moveset, participant2.currentPokemon().type, pixelmon, participant2.currentPokemon());
+			return Attack.getWhichMoveIsBest(pixelmon.moveset, opponent.currentPokemon().type, pixelmon, opponent.currentPokemon());
 		bc.setFlee(pixelmon);
 		return null;
 	}
 
 	@Override
-	public void switchPokemon(IBattleParticipant participant2, int newPixelmonId) {
+	public void switchPokemon(int newPixelmonId) {
 
 	}
 
@@ -93,16 +86,7 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void setBattleController(BattleController bc) {
-		this.bc = bc;
-	}
-
-	@Override
 	public void updatePokemon() {
-	}
-
-	@Override
-	public void update() {
 	}
 
 	@Override
@@ -111,6 +95,12 @@ public class WildPixelmonParticipant implements IBattleParticipant {
 	}
 
 	@Override
-	public void updateOpponent(IBattleParticipant opponent) {
+	public void updateOpponent() {
 	}
+
+	@Override
+	public String getFaintMessage() {
+		return "The Wild " + currentPokemon().getName() + " fainted!";
+	}
+
 }

@@ -5,7 +5,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 
 import org.lwjgl.input.Keyboard;
 
-import pixelmon.battles.BattleController;
+import pixelmon.battles.controller.BattleController;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.gui.ContainerEmpty;
 

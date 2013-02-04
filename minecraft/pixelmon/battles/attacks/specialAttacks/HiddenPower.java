@@ -13,7 +13,7 @@ public class HiddenPower extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack attack, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack attack, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		int a, b, c, d, e, f;
 
 		a = user.stats.IVs.HP % 2;

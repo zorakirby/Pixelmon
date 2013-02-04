@@ -8,14 +8,12 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Leech extends StatusEffectBase {
 
-	private int effectTurns;
-
 	public Leech() {
 		super(StatusEffectType.Leech, true, false, false);
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Leech) {
@@ -29,7 +27,7 @@ public class Leech extends StatusEffectBase {
 	}
 
 	@Override
-	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
+	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " drains health from " + user.getName());
 		int dmg = (int) (((float) user.getMaxHealth()) / 8);
 		if (user.getHealth() < 16)

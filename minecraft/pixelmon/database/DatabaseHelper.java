@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import pixelmon.DownloadHelper;
+import pixelmon.config.PixelmonConfig;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModClassLoader;
 
@@ -24,6 +25,11 @@ public class DatabaseHelper {
 	 * 
 	 * @return True if they do, otherwise false
 	 */
+	public static String databaseURL = "http://www.mediafire.com/download.php?pwd9km9y8tpngzt";
+	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
+
+	public static boolean checkForDatabaseUpdates = true;
+
 	public static boolean has() {
 		try {
 			File databaseDir = new File(DownloadHelper.getDir(), "database");
@@ -36,11 +42,16 @@ public class DatabaseHelper {
 				if (!databaseFile.exists()) {
 					DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
 				} else {
-					checkVersion();
+					if (checkForDatabaseUpdates)
+						checkVersion();
 				}
 				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
 				if (!sqlitejar.exists())
 					DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
+				if (!sqlitejar.exists())
+					System.out.println("SQLite Jar still not found at " + sqlitejar.getAbsolutePath());
+				if (!databaseFile.exists())
+					System.out.println("Database still not found at " + databaseFile.getAbsolutePath());
 				((ModClassLoader) Loader.instance().getModClassLoader()).addFile(sqlitejar);
 			}
 
@@ -79,9 +90,6 @@ public class DatabaseHelper {
 			return null;
 		}
 	}
-
-	public static String databaseURL = "http://www.mediafire.com/download.php?v10fbe9v4gu4cvd";
-	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
 	/**
 	 * Gets a <code>Statement</code> from the given <code>Connection</code>

@@ -9,15 +9,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
-import pixelmon.battles.BattleController;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.battles.attacks.attackEffects.EffectParser;
 import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
-import pixelmon.battles.participants.IBattleParticipant;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.database.DatabaseMoves;
+import pixelmon.entities.pixelmon.helpers.BattleVariables;
 import pixelmon.entities.pixelmon.stats.BattleStats;
 import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.entities.trainers.EntityTrainer;
@@ -25,13 +26,15 @@ import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 
 public abstract class Entity6CanBattle extends Entity5Rideable {
-	public BattleStats battleStats = new BattleStats();
+	public BattleStats battleStats = new BattleStats(this);
 	public ArrayList<StatusEffectBase> status = new ArrayList<StatusEffectBase>();
 	public Moveset moveset = new Moveset();
 	public BattleController battleController;
 	protected EntityTrainer trainer;
 	public boolean isLockedInBattle = false;
 	public EntityPixelmon locker = null;
+
+	public BattleVariables battleVariables = new BattleVariables();
 
 	public Entity6CanBattle(World par1World) {
 		super(par1World);
@@ -42,7 +45,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		moveset = DatabaseMoves.GetInitialMoves(getName(), getLvl().getLevel());
 	}
 
-	public void StartBattle(IBattleParticipant p1, IBattleParticipant p2) {
+	public void StartBattle(BattleParticipant p1, BattleParticipant p2) {
 		if (moveset.size() == 0)
 			loadMoveset();
 
@@ -79,19 +82,20 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		if (!worldObj.isRemote) {
-			if(battleController != null)
-			{
-				if(par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.explosion
+			if (par1DamageSource.damageType == "player")
+				return false;
+			if (battleController != null) {
+				if (par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.explosion
 						|| par1DamageSource == DamageSource.fall || par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall
 						|| par1DamageSource == DamageSource.lava || par1DamageSource == DamageSource.onFire)
-						return false;
+					return false;
 			}
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
 			updateHealth();
 			if (battleController != null) {
-				if (battleController.getOpponent((EntityPixelmon) this) instanceof PlayerParticipant) {
-					((PlayerParticipant) battleController.getOpponent((EntityPixelmon) this)).updateOpponentHealth((EntityPixelmon) this);
-				}
+				for (BattleParticipant p : battleController.participants)
+					if (p instanceof PlayerParticipant && p.currentPokemon() != this)
+						((PlayerParticipant) p).updateOpponentHealth((EntityPixelmon) this);
 			}
 			if (health - par2 < 0) {
 				this.onDeath(par1DamageSource);
@@ -155,7 +159,11 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		super.writeEntityToNBT(nbt);
 		moveset.writeToNBT(nbt);
 		for (int i = 0; i < status.size(); i++) {
-			status.get(i).writeToNBT(i, nbt);
+			try {
+				status.get(i).writeToNBT(i, nbt);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		nbt.setShort("EffectCount", (short) status.size());
 	}

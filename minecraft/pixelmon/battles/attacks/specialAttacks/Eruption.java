@@ -9,20 +9,13 @@ public class Eruption extends SpecialAttackBase {
 
 	public Eruption() {
 		super(SpecialAttackType.Eruption, ApplyStage.During, false);
-		
+
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
-							   Attack a, ArrayList<String> attackList,
-							   ArrayList<String> targetAttackList)
-							   {
-		
-		
-		a.baseAttack.basePower = 150 * (user.getHealth()/user.getMaxHealth());
-		
-
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+		a.baseAttack.basePower = 150 * (user.getHealth() / user.getMaxHealth());
 		return false;
-							   }
+	}
 
 }

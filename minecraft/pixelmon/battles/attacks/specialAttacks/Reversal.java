@@ -13,8 +13,7 @@ public class Reversal extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		int percentage = (int) (user.getMaxHealth() / user.getHealth() * 100);
 
 		if (percentage >= 71)

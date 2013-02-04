@@ -14,8 +14,9 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 		public int index;
 
 		public static Aggression getAggression(int index) {
-			for (Aggression a: values())
-				if (a.index == index) return a;
+			for (Aggression a : values())
+				if (a.index == index)
+					return a;
 			return Aggression.passive;
 		}
 	};
@@ -23,7 +24,7 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 	public Aggression aggression;
 
 	protected AIHelper aiHelper;
-	
+
 	public Entity7HasAI(World par1World) {
 		super(par1World);
 	}
@@ -45,14 +46,13 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 			aggression = Aggression.aggressive;
 		else
 			aggression = Aggression.passive;
-
-		aiHelper = new AIHelper(name, this, tasks);
 	}
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
-		if (aggression==null) aggression = Aggression.passive;
+		if (aggression == null)
+			aggression = Aggression.passive;
 		nbt.setInteger("Aggression", aggression.index);
 	}
 
@@ -60,5 +60,13 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		aggression = Aggression.getAggression(nbt.getInteger("Aggression"));
+	}
+
+	@Override
+	public void onEntityUpdate() {
+		super.onEntityUpdate();
+		if (aiHelper == null && baseStats != null)
+			aiHelper = new AIHelper(getName(), this, tasks);
+
 	}
 }

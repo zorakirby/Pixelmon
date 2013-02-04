@@ -1,9 +1,10 @@
 package pixelmon.items;
 
 import net.minecraft.item.ItemStack;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumHeldItems;
+import pixelmon.enums.heldItems.EnumHeldItems;
 
 /**
  * 
@@ -15,13 +16,15 @@ import pixelmon.enums.EnumHeldItems;
 
 public abstract class ItemHeld extends PixelmonItem {
 	private EnumHeldItems heldItemType;
-	private boolean effectsBattles;
+	private boolean usableInBattle;
+	private boolean affectsBattles;
 
 	public ItemHeld(int id, EnumHeldItems heldItemType) {
 		super(id);
 		isEquippable = true;
 		this.heldItemType = heldItemType;
-		effectsBattles = heldItemType.getBattleModifier();
+		usableInBattle = heldItemType.getUsableInBattle();
+		affectsBattles = heldItemType.getAffectsBattle();
 		setCreativeTab(PixelmonCreativeTabs.held);
 	}
 
@@ -29,8 +32,12 @@ public abstract class ItemHeld extends PixelmonItem {
 		return heldItemType;
 	}
 
-	public boolean doesEffectBattles() {
-		return effectsBattles;
+	public boolean usableInBattle() {
+		return usableInBattle;
+	}
+	
+	public boolean getAffectsBattle() {
+		return affectsBattles;
 	}
 
 	public static void useItem(EntityPixelmon user, EntityPixelmon target, EnumHeldItems item) {
@@ -54,7 +61,7 @@ public abstract class ItemHeld extends PixelmonItem {
 
 	public static void useBattleItems(EntityPixelmon user, EntityPixelmon target) {
 		for (EnumHeldItems item : EnumHeldItems.values()) {
-			if (!item.getBattleModifier()) {
+			if (!item.getUsableInBattle()) {
 				continue;
 			}
 			useItem(user, target, item);

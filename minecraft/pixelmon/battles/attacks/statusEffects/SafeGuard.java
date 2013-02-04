@@ -7,13 +7,12 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class SafeGuard extends StatusEffectBase {
 
-	private int effectTurns;
 	public SafeGuard() {
 		super(StatusEffectType.SafeGuard, false, false, true);
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			for (StatusEffectBase e : user.status)
 				if (e.type == StatusEffectType.SafeGuard) {
@@ -22,7 +21,7 @@ public class SafeGuard extends StatusEffectBase {
 				}
 
 			user.status.add(this);
-			effectTurns = 5;
+			user.battleVariables.set(type, 5);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is looking a bit guarded!");
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
@@ -34,11 +33,11 @@ public class SafeGuard extends StatusEffectBase {
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
-		if (effectTurns == 0) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
+		if (user.battleVariables.get(type) == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + "'s Safeguard wears off!");
 			user.status.remove(this);
 		}
-		effectTurns--;
+		user.battleVariables.decrement(type);
 	}
 }

@@ -115,7 +115,6 @@ public class DatabaseStats {
 				store.aggression = new Aggression(rs.getString("Aggression"), name);
 				if (rs.wasNull())
 					System.out.println("Error in Aggression" + " For Pokemon : " + name);
-				String type = rs.getString("CreatureType");
 				store.droppedItem = rs.getString("DroppedItem");
 				store.spawnConditions = SpawnConditions.ParseSpawnConditions(rs.getString("SpawnConditions"));
 				store.baseFriendship = rs.getInt("BaseFriendship");

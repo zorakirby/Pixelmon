@@ -84,7 +84,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				PixelmonPokedexPacket p = new PixelmonPokedexPacket();
 				try {
 					p.readPacketData(dataStream);
-					ClientPokedexManager.pokedex = p.getPokedex(Minecraft.getMinecraft().thePlayer.username);
+					ClientPokedexManager.pokedex = p.getPokedex();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

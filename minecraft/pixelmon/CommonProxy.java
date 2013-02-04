@@ -2,13 +2,9 @@ package pixelmon;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import pixelmon.client.models.fossils.ModelFossil;
-import pixelmon.entities.EntityCamera;
 import pixelmon.gui.GuiHandler;
-import pixelmon.storage.PixelmonStorage;
-import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
 
@@ -64,9 +60,6 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void loadEvents() {
-	}
-
-	public void registerCameraEntity(EntityCamera entityCamera) {
 	}
 
 	private ModelBase[] models = new ModelBase[0];

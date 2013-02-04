@@ -1,8 +1,9 @@
 package pixelmon.entities.pokeballs.captures;
 
 import net.minecraft.entity.player.EntityPlayer;
-import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
@@ -20,10 +21,10 @@ public class CaptureLevelBall extends CaptureBase {
 		if (mode == Mode.battle) {
 			BattleController bc = BattleRegistry.getBattle((EntityPlayer) thrower);
 			int ownerPokemonLevel = 0;
-			if (bc.participant1 instanceof PlayerParticipant && ((PlayerParticipant) bc.participant1).player == thrower)
-				ownerPokemonLevel = ((PlayerParticipant) bc.participant1).currentPokemon().getLvl().getLevel();
-			else if (bc.participant2 instanceof PlayerParticipant && ((PlayerParticipant) bc.participant2).player == thrower)
-				ownerPokemonLevel = ((PlayerParticipant) bc.participant2).currentPokemon().getLvl().getLevel();
+			for (BattleParticipant p : bc.participants) {
+				if (p instanceof PlayerParticipant && p.getEntity() == thrower)
+					ownerPokemonLevel = p.currentPokemon().getLvl().getLevel();
+			}
 			if (ownerPokemonLevel > 1 * p2.getLvl().getLevel())
 				ballBonus = 2;
 			if (ownerPokemonLevel > 2 * p2.getLvl().getLevel())

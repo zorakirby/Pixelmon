@@ -14,19 +14,20 @@ public class Guillotine extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
 		target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth());
 		return true;
 	}
-	
-	public boolean hasSpecialAccuracyEffect() {
+
+	public boolean hasSpecialAccuracyEffect() throws Exception {
 		return true;
 	}
 
-	public double getAccuracy(EntityPixelmon user, EntityPixelmon target) {
-		if (target.getLvl().getLevel() > user.getLvl().getLevel()) return 0;
-		
+	public double getAccuracy(EntityPixelmon user, EntityPixelmon target) throws Exception {
+		if (target.getLvl().getLevel() > user.getLvl().getLevel())
+			return 0;
+
 		return (user.getLvl().getLevel() - target.getLvl().getLevel()) + 30;
 	}
 }

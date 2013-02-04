@@ -1,7 +1,13 @@
 package pixelmon.database;
 
 public enum SpawnLocation {
-	Land, Water, OnWater, UnderGround, Air, AirPersistent;
+	Land(0), Water(1), OnWater(2), UnderGround(3), Air(4), AirPersistent(5);
+
+	public int index;
+
+	private SpawnLocation(int index) {
+		this.index = index;
+	}
 
 	public static SpawnLocation[] getSpawnLocations(String string) {
 		String[] splits = string.split(";");
@@ -15,5 +21,12 @@ public enum SpawnLocation {
 		}
 
 		return locations;
+	}
+
+	public static SpawnLocation getFromIndex(int integer) {
+		for (SpawnLocation s : values())
+			if (s.index == integer)
+				return s;
+		return null;
 	}
 }

@@ -5,33 +5,18 @@
 // - ZeuX
 package pixelmon.client.models.pokemon;
 
+import pixelmon.client.models.PixelmonModelBase;
+import pixelmon.client.models.animations.Module;
+import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.SkeletonQuadruped;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ModelGrowlithe extends ModelBase {
+public class ModelGrowlithe extends PixelmonModelBase {
 	// fields
 	ModelRenderer Body;
-	ModelRenderer Back;
-	ModelRenderer Front_Legs1;
-	ModelRenderer Front_Legs2;
-	ModelRenderer Back_Legs1;
-	ModelRenderer Back_Legs2;
-	ModelRenderer Belly;
-	ModelRenderer Neck;
-	ModelRenderer Shoulder1;
-	ModelRenderer Shoulder2;
-	ModelRenderer Shoulder3;
-	ModelRenderer Shoulder4;
-	ModelRenderer Main_Bushy_Tail_Bit;
-	ModelRenderer Normal_Bushy_Tail_Bit;
-	ModelRenderer Minority_Bushy_Tail_Bit;
-	ModelRenderer Covers1;
-	ModelRenderer Covers2;
-	ModelRenderer Covers3;
-	ModelRenderer Covers4;
-	ModelRenderer Head;
 
 	public ModelGrowlithe() {
 		textureWidth = 64;
@@ -43,122 +28,138 @@ public class ModelGrowlithe extends ModelBase {
 		Body.setRotationPoint(-3F, 16.5F, -2F);
 		Body.setTextureSize(64, 32);
 		Body.mirror = true;
-		setRotation(Body, 0F, 0F, 0F);
-		Back = new ModelRenderer(this, 27, 22);
+		ModelRenderer Back = new ModelRenderer(this, 27, 22);
 		Back.addBox(0F, 0F, 0F, 4, 1, 9);
-		Back.setRotationPoint(-3F, 16.3F, -1F);
+		Back.setRotationPoint(0, -0.2F, 1);
 		Back.setTextureSize(64, 32);
 		Back.mirror = true;
-		setRotation(Back, 0F, 0F, 0F);
-		Front_Legs1 = new ModelRenderer(this, 0, 15);
-		Front_Legs1.addBox(-1F, 0F, -1F, 2, 4, 2);
-		Front_Legs1.setRotationPoint(-3F, 20F, 0F);
-		Front_Legs1.setTextureSize(64, 32);
-		Front_Legs1.mirror = true;
-		setRotation(Front_Legs1, 0F, 0F, 0F);
-		Front_Legs2 = new ModelRenderer(this, 0, 15);
-		Front_Legs2.addBox(-1F, 0F, -1F, 2, 4, 2);
-		Front_Legs2.setRotationPoint(1F, 20F, 0F);
-		Front_Legs2.setTextureSize(64, 32);
-		Front_Legs2.mirror = true;
-		setRotation(Front_Legs2, 0F, 0F, 0F);
-		Back_Legs1 = new ModelRenderer(this, 0, 15);
-		Back_Legs1.addBox(-1F, 0F, -1F, 2, 4, 2);
-		Back_Legs1.setRotationPoint(1F, 20F, 6F);
-		Back_Legs1.setTextureSize(64, 32);
-		Back_Legs1.mirror = true;
-		setRotation(Back_Legs1, 0F, 0F, 0F);
-		Back_Legs2 = new ModelRenderer(this, 0, 15);
-		Back_Legs2.addBox(-1F, 0F, -1F, 2, 4, 2);
-		Back_Legs2.setRotationPoint(-3F, 20F, 6F);
-		Back_Legs2.setTextureSize(64, 32);
-		Back_Legs2.mirror = true;
-		setRotation(Back_Legs2, 0F, 0F, 0F);
-		Belly = new ModelRenderer(this, 0, 22);
+		Body.addChild(Back);
+		ModelRenderer legFR = new ModelRenderer(this, 0, 15);
+		legFR.addBox(-1F, 0F, -1F, 2, 4, 2);
+		legFR.setRotationPoint(0, 3.5F, 2);
+		legFR.setTextureSize(64, 32);
+		legFR.mirror = true;
+		Body.addChild(legFR);
+		ModelRenderer legFL = new ModelRenderer(this, 0, 15);
+		legFL.addBox(-1F, 0F, -1F, 2, 4, 2);
+		legFL.setRotationPoint(4F, 3.5F, 2F);
+		legFL.setTextureSize(64, 32);
+		legFL.mirror = true;
+		Body.addChild(legFL);
+		ModelRenderer legBL = new ModelRenderer(this, 0, 15);
+		legBL.addBox(-1F, 0F, -1F, 2, 4, 2);
+		legBL.setRotationPoint(4, 3.5F, 8);
+		legBL.setTextureSize(64, 32);
+		legBL.mirror = true;
+		Body.addChild(legBL);
+		ModelRenderer legBR = new ModelRenderer(this, 0, 15);
+		legBR.addBox(-1F, 0F, -1F, 2, 4, 2);
+		legBR.setRotationPoint(0, 3.5F, 8);
+		legBR.setTextureSize(64, 32);
+		legBR.mirror = true;
+		Body.addChild(legBR);
+
+		ModelRenderer Belly = new ModelRenderer(this, 0, 22);
 		Belly.addBox(0F, 0F, 0F, 4, 1, 9);
-		Belly.setRotationPoint(-3F, 19.2F, -1.5F);
+		Belly.setRotationPoint(0, 2.7F, -0.5F);
 		Belly.setTextureSize(64, 32);
 		Belly.mirror = true;
-		setRotation(Belly, 0F, 0F, 0F);
-		Neck = new ModelRenderer(this, 44, 14);
+		Body.addChild(Belly);
+		ModelRenderer Neck = new ModelRenderer(this, 44, 14);
 		Neck.addBox(0F, 0F, 0F, 3, 3, 4);
-		Neck.setRotationPoint(-2.5F, 14.9F, -2F);
+		Neck.setRotationPoint(0.5F, -1.6F, 0);
 		Neck.setTextureSize(64, 32);
 		Neck.mirror = true;
 		setRotation(Neck, -0.8179294F, 0F, 0F);
-		Shoulder1 = new ModelRenderer(this, 0, 0);
+		Body.addChild(Neck);
+		ModelRenderer Shoulder1 = new ModelRenderer(this, 0, 0);
 		Shoulder1.addBox(0.1F, -1F, -1F, 1, 2, 2);
-		Shoulder1.setRotationPoint(0.7F, 19.3F, 6F);
+		Shoulder1.setRotationPoint(2.3F, 2.8F, 8);
 		Shoulder1.setTextureSize(64, 32);
 		Shoulder1.mirror = true;
 		setRotation(Shoulder1, 0F, 0F, -0.1858931F);
-		Shoulder2 = new ModelRenderer(this, 0, 0);
+		Body.addChild(Shoulder1);
+		ModelRenderer Shoulder2 = new ModelRenderer(this, 0, 0);
 		Shoulder2.addBox(0.1F, -1F, -1F, 1, 2, 2);
-		Shoulder2.setRotationPoint(0.7F, 19.3F, 0F);
+		Shoulder2.setRotationPoint(3.7F, 2.8F, 2);
 		Shoulder2.setTextureSize(64, 32);
 		Shoulder2.mirror = true;
 		setRotation(Shoulder2, 0F, 0F, -0.1858931F);
-		Shoulder3 = new ModelRenderer(this, 0, 0);
+		Body.addChild(Shoulder2);
+		ModelRenderer Shoulder3 = new ModelRenderer(this, 0, 0);
 		Shoulder3.addBox(-1F, -1F, -1F, 1, 2, 2);
-		Shoulder3.setRotationPoint(-2.7F, 19.2F, 6F);
+		Shoulder3.setRotationPoint(-0.3F, 2.8F, 8);
 		Shoulder3.setTextureSize(64, 32);
 		Shoulder3.mirror = true;
 		setRotation(Shoulder3, 0F, 0F, 0.185895F);
-		Shoulder4 = new ModelRenderer(this, 0, 0);
+		Body.addChild(Shoulder3);
+		ModelRenderer Shoulder4 = new ModelRenderer(this, 0, 0);
 		Shoulder4.addBox(0F, -1F, -1F, 1, 2, 2);
-		Shoulder4.setRotationPoint(-3.8F, 19.1F, 0F);
+		Shoulder4.setRotationPoint(-0.8F, 2.6F, 2);
 		Shoulder4.setTextureSize(64, 32);
 		Shoulder4.mirror = true;
 		setRotation(Shoulder4, 0F, 0F, 0.185895F);
-		Main_Bushy_Tail_Bit = new ModelRenderer(this, 29, 14);
+		Body.addChild(Shoulder4);
+		ModelRenderer Tail = new ModelRenderer(this, "Tail");
+		Tail.setRotationPoint(2f, -0.3777777f, 10);
+		ModelRenderer Main_Bushy_Tail_Bit = new ModelRenderer(this, 29, 14);
 		Main_Bushy_Tail_Bit.addBox(-2F, -2F, -1F, 4, 4, 3);
-		Main_Bushy_Tail_Bit.setRotationPoint(-1F, 16.13333F, 8F);
+		Main_Bushy_Tail_Bit.setRotationPoint(0, 0, 0);
 		Main_Bushy_Tail_Bit.setTextureSize(64, 32);
 		Main_Bushy_Tail_Bit.mirror = true;
 		setRotation(Main_Bushy_Tail_Bit, -0.5948578F, 0F, 0F);
-		Normal_Bushy_Tail_Bit = new ModelRenderer(this, 31, 14);
+		Tail.addChild(Main_Bushy_Tail_Bit);
+		ModelRenderer Normal_Bushy_Tail_Bit = new ModelRenderer(this, 31, 14);
 		Normal_Bushy_Tail_Bit.addBox(-1.533333F, -1F, 0F, 3, 2, 3);
-		Normal_Bushy_Tail_Bit.setRotationPoint(-1F, 15F, 9F);
+		Normal_Bushy_Tail_Bit.setRotationPoint(0, -1.13333F, -1);
 		Normal_Bushy_Tail_Bit.setTextureSize(64, 32);
 		Normal_Bushy_Tail_Bit.mirror = true;
 		setRotation(Normal_Bushy_Tail_Bit, 0.2602503F, 0F, 0F);
-		Minority_Bushy_Tail_Bit = new ModelRenderer(this, 29, 18);
+		Tail.addChild(Normal_Bushy_Tail_Bit);
+		ModelRenderer Minority_Bushy_Tail_Bit = new ModelRenderer(this, 29, 18);
 		Minority_Bushy_Tail_Bit.addBox(-1F, -1F, 0F, 2, 1, 2);
-		Minority_Bushy_Tail_Bit.setRotationPoint(-1F, 14.5F, 11F);
+		Minority_Bushy_Tail_Bit.setRotationPoint(0, -1.63333F, 3F);
 		Minority_Bushy_Tail_Bit.setTextureSize(64, 32);
 		Minority_Bushy_Tail_Bit.mirror = true;
 		setRotation(Minority_Bushy_Tail_Bit, -0.2602503F, 0F, 0F);
-		Covers1 = new ModelRenderer(this, 0, 0);
+		Tail.addChild(Minority_Bushy_Tail_Bit);
+		Body.addChild(Tail);
+		ModelRenderer Covers1 = new ModelRenderer(this, 0, 0);
 		Covers1.addBox(0F, 0F, 0F, 1, 3, 3);
-		Covers1.setRotationPoint(-3.1F, 17.3F, 5F);
+		Covers1.setRotationPoint(-0.1F, 0.8F, 7);
 		Covers1.setTextureSize(64, 32);
 		Covers1.mirror = true;
-		setRotation(Covers1, 0F, 0F, 0F);
-		Covers2 = new ModelRenderer(this, 0, 0);
+		Body.addChild(Covers1);
+		ModelRenderer Covers2 = new ModelRenderer(this, 0, 0);
 		Covers2.addBox(0F, 0F, 0F, 1, 2, 2);
-		Covers2.setRotationPoint(-3.3F, 16.3F, 6F);
+		Covers2.setRotationPoint(-0.3F, -0.2F, 8);
 		Covers2.setTextureSize(64, 32);
 		Covers2.mirror = true;
-		setRotation(Covers2, 0F, 0F, 0F);
-		Covers3 = new ModelRenderer(this, 0, 0);
+		Body.addChild(Covers2);
+		ModelRenderer Covers3 = new ModelRenderer(this, 0, 0);
 		Covers3.addBox(0F, 0F, 0F, 1, 3, 3);
-		Covers3.setRotationPoint(0.1F, 17.3F, 5F);
+		Covers3.setRotationPoint(3.1F, 0.8F, 7);
 		Covers3.setTextureSize(64, 32);
 		Covers3.mirror = true;
 		setRotation(Covers3, 0F, 0F, 0F);
-		Covers4 = new ModelRenderer(this, 0, 0);
+		Body.addChild(Covers3);
+		ModelRenderer Covers4 = new ModelRenderer(this, 0, 0);
 		Covers4.addBox(0F, 0F, 0F, 1, 2, 2);
-		Covers4.setRotationPoint(0.2F, 16.3F, 6F);
+		Covers4.setRotationPoint(3.2F, -0.2F, 8F);
 		Covers4.setTextureSize(64, 32);
 		Covers4.mirror = true;
-		setRotation(Covers4, 0F, 0F, 0F);
-		Head = new ModelRenderer(this, "Head");
-		Head.setRotationPoint(0F, 0F, 0F);
-		setRotation(Head, 0F, 0F, 0F);
-		Head.mirror = true;
-		Head = new ModelRenderer(this, 46, 0);
+		Body.addChild(Covers4);
+
+		ModelRenderer Head = getHead();
+		Body.addChild(Head);
+		Module head = new ModuleHead(Head);
+		skeleton = new SkeletonQuadruped(Body, head, legFL, legFR, legBL, legBR, 1.3f, 1.3f, 0.662f);
+	}
+
+	private ModelRenderer getHead() {
+		ModelRenderer Head = new ModelRenderer(this, 46, 0);
 		Head.addBox(-2.5F, -4F, -4F, 5, 5, 4);
-		Head.setRotationPoint(-1F, 16.7F, -1F);
+		Head.setRotationPoint(2, 0.2F, 1);
 		Head.setTextureSize(64, 32);
 		Head.mirror = true;
 		setRotation(Head, 0F, 0F, 0F);
@@ -260,31 +261,13 @@ public class ModelGrowlithe extends ModelBase {
 		Top_of_Head.mirror = true;
 		setRotation(Top_of_Head, 0F, 0F, 0F);
 		Head.addChild(Top_of_Head);
+		return Head;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		Body.render(f5);
-		Back.render(f5);
-		Front_Legs1.render(f5);
-		Front_Legs2.render(f5);
-		Back_Legs1.render(f5);
-		Back_Legs2.render(f5);
-		Belly.render(f5);
-		Neck.render(f5);
-		Shoulder1.render(f5);
-		Shoulder2.render(f5);
-		Shoulder3.render(f5);
-		Shoulder4.render(f5);
-		Main_Bushy_Tail_Bit.render(f5);
-		Normal_Bushy_Tail_Bit.render(f5);
-		Minority_Bushy_Tail_Bit.render(f5);
-		Covers1.render(f5);
-		Covers2.render(f5);
-		Covers3.render(f5);
-		Covers4.render(f5);
-		Head.render(f5);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
@@ -294,12 +277,7 @@ public class ModelGrowlithe extends ModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-		Head.rotateAngleX = f4 / 57.29578F;
-		Head.rotateAngleY = f3 / 57.29578F;
-		Back_Legs2.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.3F * f1;
-		Back_Legs1.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * 1.3F * f1;
-		Front_Legs1.rotateAngleX = MathHelper.cos(f * 0.6662F + 3.141593F) * 1.3F * f1;
-		Front_Legs2.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.3F * f1;
+
 	}
 
 }

@@ -12,7 +12,7 @@ public class Burn extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception{
 
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
@@ -25,13 +25,13 @@ public class Burn extends StatusEffectBase {
 	}
 
 	@Override
-	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) {
+	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target)throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is hurt by its burn!");
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 8));
 	}
 
 	@Override
-	public boolean clearsOnBattleEnd() {
+	public boolean clearsOnBattleEnd() throws Exception{
 		return false;
 	}
 }

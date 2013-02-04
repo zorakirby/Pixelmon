@@ -3,8 +3,9 @@ package pixelmon.comm.packetHandlers;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.comm.EnumPackets;
 import cpw.mods.fml.common.network.Player;
 
@@ -20,9 +21,8 @@ public class ChooseAttack extends PacketHandlerBase {
 		int battleIndex = dataStream.readInt();
 		int pokemonID = dataStream.readInt();
 		BattleController bc = BattleRegistry.getBattle(battleIndex);
-		if (bc.participant1.currentPokemon().getPokemonId() == pokemonID)
-			bc.setAttack(bc.participant1.currentPokemon(), bc.participant1.currentPokemon().moveset.get(buttonId));
-		else
-			bc.setAttack(bc.participant2.currentPokemon(), bc.participant2.currentPokemon().moveset.get(buttonId));
-}
+		for (BattleParticipant p : bc.participants)
+			if (p.currentPokemon().getPokemonId() == pokemonID)
+				bc.setAttack(p.currentPokemon(), p.currentPokemon().moveset.get(buttonId));
+	}
 }

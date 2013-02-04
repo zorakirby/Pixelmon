@@ -23,6 +23,7 @@ import pixelmon.comm.packetHandlers.PacketHandlerBase;
 import pixelmon.comm.packetHandlers.RegisterPlayer;
 import pixelmon.comm.packetHandlers.RenamePokemon;
 import pixelmon.comm.packetHandlers.ReplaceMove;
+import pixelmon.comm.packetHandlers.RequestUpdatedPokemonList;
 import pixelmon.comm.packetHandlers.SendPixelmon;
 import pixelmon.comm.packetHandlers.SetHeldItem;
 import pixelmon.comm.packetHandlers.StopStartLevelling;
@@ -47,6 +48,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new RegisterPlayer());
 		handlers.add(new RenamePokemon());
 		handlers.add(new ReplaceMove());
+		handlers.add(new RequestUpdatedPokemonList());
 		handlers.add(new SendPixelmon());
 		handlers.add(new SetHeldItem());
 		handlers.add(new StopStartLevelling());

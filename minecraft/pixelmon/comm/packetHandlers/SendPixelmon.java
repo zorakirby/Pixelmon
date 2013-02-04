@@ -9,6 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.battles.BattleRegistry;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -31,7 +33,8 @@ public class SendPixelmon extends PacketHandlerBase {
 		NBTTagCompound nbt = PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(pokemonId);
 		if (nbt == null)
 			return;
-		if (!PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj) && !PixelmonStorage.PokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
+		if (!PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(pokemonId, player.worldObj)
+				&& !PixelmonStorage.PokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
 
 			if (playerPokeballs.get(player) != null && !playerPokeballs.get(player).isDead)
 				return;
@@ -53,15 +56,12 @@ public class SendPixelmon extends PacketHandlerBase {
 			if (pixelmon == null) {
 				return;
 			}
-			if (BattleRegistry.getBattle(player) != null
-					&& (BattleRegistry.getBattle(player).participant1.currentPokemon().getPokemonId() == pixelmon.getPokemonId() || BattleRegistry.getBattle(player).participant2.currentPokemon()
-							.getPokemonId() == pixelmon.getPokemonId())) {
-				if (pixelmon.battleController == null) {
-					BattleRegistry.deRegisterBattle(BattleRegistry.getBattle(player));
-				} else {
-					ChatHandler.sendChat(player, pixelmon.getName() + " is in a battle!");
-					return;
-				}
+
+			if (pixelmon.battleController == null) {
+				BattleRegistry.deRegisterBattle(BattleRegistry.getBattle(player));
+			} else {
+				ChatHandler.sendChat(player, pixelmon.getName() + " is in a battle!");
+				return;
 			}
 
 			if (pixelmon.getOwner() == null)

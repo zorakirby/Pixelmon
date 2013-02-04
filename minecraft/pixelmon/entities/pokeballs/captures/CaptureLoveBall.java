@@ -1,8 +1,9 @@
 package pixelmon.entities.pokeballs.captures;
 
 import net.minecraft.entity.player.EntityPlayer;
-import pixelmon.battles.BattleController;
 import pixelmon.battles.BattleRegistry;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
@@ -21,12 +22,11 @@ public class CaptureLoveBall extends CaptureBase {
 			BattleController bc = BattleRegistry.getBattle((EntityPlayer) thrower);
 			boolean ownerPokemonIsMale = true;
 			String ownerPokemonName = "";
-			if (bc.participant1 instanceof PlayerParticipant && ((PlayerParticipant) bc.participant1).player == thrower) {
-				ownerPokemonIsMale = ((PlayerParticipant) bc.participant1).currentPokemon().isMale;
-				ownerPokemonName = ((PlayerParticipant) bc.participant1).currentPokemon().getName();
-			} else if (bc.participant2 instanceof PlayerParticipant && ((PlayerParticipant) bc.participant2).player == thrower) {
-				ownerPokemonIsMale = ((PlayerParticipant) bc.participant2).currentPokemon().isMale;
-				ownerPokemonName = ((PlayerParticipant) bc.participant2).currentPokemon().getName();
+			for (BattleParticipant p : bc.participants) {
+				if (p instanceof PlayerParticipant && p.getEntity() == thrower) {
+					ownerPokemonIsMale = p.currentPokemon().isMale;
+					ownerPokemonName = p.currentPokemon().getName();
+				}
 			}
 			if (ownerPokemonIsMale != p2.isMale && ownerPokemonName.equals(p2.getName()))
 				return 8;

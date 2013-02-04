@@ -25,59 +25,59 @@ public abstract class StatusEffectBase extends EffectBase {
 	}
 
 	@Override
-	public abstract void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList);
+	public abstract void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList)throws Exception;
 
-	public boolean hasRepeatedEffect() {
+	public boolean hasRepeatedEffect() throws Exception{
 		return hasRepeatedEffect;
 	}
 
-	public boolean hasPreMoveEffect() {
+	public boolean hasPreMoveEffect() throws Exception{
 		return hasPreMoveEffect;
 	}
 
-	public boolean hasInMoveEffect() {
+	public boolean hasInMoveEffect() throws Exception{
 		return hasInMoveEffect;
 	}
 
-	public boolean stopsSwitching() {
+	public boolean stopsSwitching() throws Exception{
 		return false;
 	}
 
-	public boolean clearsOnBattleEnd() {
+	public boolean clearsOnBattleEnd() throws Exception{
 		return true;
 	}
 
-	public void applyRepeatedEffect(EntityPixelmon entityPixelmon, EntityPixelmon entityPixelmon2) {
+	public void applyRepeatedEffect(EntityPixelmon entityPixelmon, EntityPixelmon entityPixelmon2)throws Exception {
 	}
 
-	public boolean canAttackThisTurn(EntityPixelmon pixelmon1, EntityPixelmon pixelmon2) {
+	public boolean canAttackThisTurn(EntityPixelmon pixelmon1, EntityPixelmon pixelmon2) throws Exception{
 		return true;
 	}
 
-	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a)throws Exception {
 		return false;
 	}
 
-	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) {
+	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) throws Exception{
 		return damage;
 	}
 
-	public boolean stopsStatusChange() {
+	public boolean stopsStatusChange() throws Exception{
 		return false;
 	}
 
-	public void turnTick(EntityPixelmon pixelmon1, EntityPixelmon target) {
+	public void turnTick(EntityPixelmon pixelmon1, EntityPixelmon target) throws Exception{
 	}
 
-	public boolean cantMiss() {
+	public boolean cantMiss(EntityPixelmon user) throws Exception{
 		return false;
 	}
 
-	public boolean pokemon1MovesFirst(EntityPixelmon user, EntityPixelmon target) {
+	public boolean participantMovesFirst(EntityPixelmon user, EntityPixelmon target)throws Exception {
 		return false;
 	}
 
-	public void writeToNBT(int i, NBTTagCompound nbt) {
+	public void writeToNBT(int i, NBTTagCompound nbt) throws Exception{
 		if (!clearsOnBattleEnd()) {
 			nbt.setInteger("Status" + i, type.index);
 		}

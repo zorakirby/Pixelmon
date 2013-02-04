@@ -23,7 +23,6 @@ import pixelmon.client.gui.GuiChooseStarter;
 import pixelmon.client.gui.GuiHealer;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.GuiTrading;
-import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.inventoryExtended.InventoryDetectionTickHandler;
 import pixelmon.client.gui.pc.GuiPC;
@@ -46,7 +45,6 @@ import pixelmon.client.render.RenderTileEntityPC;
 import pixelmon.client.render.RenderTileEntityTradingMachine;
 import pixelmon.client.render.RenderTileFossilMachine;
 import pixelmon.client.render.RenderTrainer;
-import pixelmon.entities.EntityCamera;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.trainers.EntityTrainer;
@@ -69,7 +67,6 @@ public class ClientProxy extends CommonProxy {
 			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getCaptureTexture());
 		}
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
-		RenderingRegistry.registerEntityRenderingHandler(EntityCamera.class, new RenderInvisible());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityApricornTree.class, new RenderTileEntityApricornTrees());
@@ -227,11 +224,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerTickHandlers() {
 		TickRegistry.registerTickHandler(new InventoryDetectionTickHandler(), Side.CLIENT);
-	}
-
-	@Override
-	public void registerCameraEntity(EntityCamera entityCamera) {
-		ClientBattleManager.camera = entityCamera;
 	}
 
 	public ModelBase[] models = new ModelBase[650];

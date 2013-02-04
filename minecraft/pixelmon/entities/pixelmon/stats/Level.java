@@ -18,6 +18,8 @@ import pixelmon.database.ExperienceGroup;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumPokemon;
+import pixelmon.enums.heldItems.EnumHeldItems;
+import pixelmon.items.ItemHeld;
 import pixelmon.storage.PixelmonStorage;
 
 public class Level {
@@ -45,10 +47,9 @@ public class Level {
 	}
 
 	public void readFromNBT(NBTTagCompound var1) {
-		setLevel(var1.getInteger("Level"));
 		setExp(var1.getInteger("EXP"));
 		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
-		updateStats();
+		setLevel(var1.getInteger("Level"));
 	}
 
 	public int getLevel() {
@@ -174,7 +175,8 @@ public class Level {
 		while (getExp() >= getExpToNextLevel()) {
 			int newExp = getExp() - getExpToNextLevel();
 
-			if (pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
+			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.expShare) && pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1
+					&& getLevel() >= pixelmon.baseStats.evolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
 			}
 			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
@@ -196,7 +198,7 @@ public class Level {
 			}
 			if (!canLevelUp())
 				return;
-			
+
 			PixelmonStatsPacket stats = null;
 			if (pixelmon.getOwner() != null)
 				stats = PixelmonStatsPacket.createPacket(pixelmon);

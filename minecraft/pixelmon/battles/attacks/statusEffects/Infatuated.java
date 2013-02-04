@@ -15,7 +15,7 @@ public class Infatuated extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList)throws Exception {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Infatuated) {
@@ -30,7 +30,7 @@ public class Infatuated extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target)throws Exception {
 		if (originalTarget !=target){
 			user.status.remove(this);
 			return true;

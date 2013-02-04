@@ -8,14 +8,21 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Sleep extends StatusEffectBase {
 
-	int effectTurns = -1;
+	int setTurnsValue = -1;
+	boolean setTurns = false;
 
 	public Sleep() {
 		super(StatusEffectType.Sleep, false, true, false);
 	}
 
+	public Sleep(int i) {
+		super(StatusEffectType.Sleep, false, true, false);
+		setTurnsValue = i;
+		setTurns = true;
+	}
+
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Sleep) {
@@ -25,7 +32,10 @@ public class Sleep extends StatusEffectBase {
 
 			target.status.add(this);
 
-			effectTurns = RandomHelper.getRandomNumberBetween(1, 4);
+			if (setTurns)
+				target.battleVariables.set(type, setTurnsValue);
+			else
+				target.battleVariables.set(type, RandomHelper.getRandomNumberBetween(1, 4));
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has fallen asleep!");
 
 		} else
@@ -33,22 +43,27 @@ public class Sleep extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is still sleeping!");
 		return false;
 	}
 
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
-		if (effectTurns == 0) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
+		if (user.battleVariables.get(type) == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " wakes up!");
 			user.status.remove(this);
 		}
-		effectTurns--;
+		user.battleVariables.decrement(type);
 
 	}
+
 	@Override
 	public boolean clearsOnBattleEnd() {
 		return false;
+	}
+
+	public void init(EntityPixelmon target) throws Exception {
+		target.battleVariables.set(type, RandomHelper.getRandomNumberBetween(1, 4));
 	}
 }

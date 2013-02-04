@@ -15,13 +15,13 @@ public class Freeze extends StatusEffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			for (StatusEffectBase e : target.status)
 				if (e.type == StatusEffectType.Freeze) {
 					return;
 				}
-			if (target.type.contains(EnumType.Ice)){
+			if (target.type.contains(EnumType.Ice)) {
 				return;
 			}
 			target.status.add(this);
@@ -30,7 +30,7 @@ public class Freeze extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) {
+	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 20) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " breaks free from the ice!");
 			user.status.remove(this);
@@ -42,11 +42,11 @@ public class Freeze extends StatusEffectBase {
 	}
 
 	@Override
-	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
+	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) throws Exception {
 		return false;
 	}
 
-	public boolean clearsOnBattleEnd() {
+	public boolean clearsOnBattleEnd() throws Exception {
 		return false;
 	}
 }

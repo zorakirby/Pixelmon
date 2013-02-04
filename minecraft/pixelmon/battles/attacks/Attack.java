@@ -22,7 +22,9 @@ import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
+import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
+import pixelmon.items.heldItems.ChoiceItem;
 import pixelmon.storage.PixelmonStorage;
 
 public class Attack {
@@ -42,10 +44,10 @@ public class Attack {
 			AttackBase a = new AttackBase(attackIndex, moveName, rs);
 			fullAttackList[attackIndex] = a;
 			baseAttack = a;
-		}else{
+		} else {
 			baseAttack = fullAttackList[attackIndex];
 		}
-		
+
 		this.pp = rs.getInt("PP");
 		this.ppBase = pp;
 	}
@@ -56,26 +58,42 @@ public class Attack {
 		boolean attackHandled = false, cantMiss = false;
 		flinched = false;
 		user.getLookHelper().setLookPositionWithEntity(target, 0, 0);
-		double accuracy = ((double) baseAttack.accuracy) * ((double) user.battleStats.Accuracy) / ((double) target.battleStats.Evasion);
+		double accuracy = ((double) baseAttack.accuracy) * ((double) user.battleStats.getAccuracy()) / ((double) target.battleStats.getEvasion());
 		double crit = calcCriticalHit(null);
 		/* Check for Protect */
 		for (int i = 0; i < target.status.size(); i++) {
 			StatusEffectBase e = target.status.get(i);
-			if (e.stopsIncomingAttack(user, target, this))
-				return;
+			try {
+				if (e.stopsIncomingAttack(user, target, this))
+					return;
+			} catch (Exception exc) {
+				System.out.println("Error calculating stopsIncomingAttack for " + e.type.toString() + " for attack " + baseAttack.attackName);
+				System.out.println(exc.getStackTrace());
+			}
+
 		}
 		for (int i = 0; i < user.status.size(); i++) {
 			StatusEffectBase e = user.status.get(i);
-			if (!e.canAttackThisTurn(user, target))
-				return;
+			try {
+				if (!e.canAttackThisTurn(user, target))
+					return;
+			} catch (Exception exc) {
+				System.out.println("Error calculating canAttackThisTurn for " + e.type.toString() + " for attack " + baseAttack.attackName);
+				System.out.println(exc.getStackTrace());
+			}
 		}
 
-		if (baseAttack.accuracy == -1)
+		if (baseAttack.accuracy == -1 || cantMiss(user))
 			cantMiss = true;
 		for (int i = 0; i < baseAttack.effects.size(); i++) {
 			EffectBase e = baseAttack.effects.get(i);
-			if (e.hasSpecialAccuracyEffect())
-				accuracy = e.getAccuracy(user, target);
+			try {
+				if (e.hasSpecialAccuracyEffect())
+					accuracy = e.getAccuracy(user, target);
+			} catch (Exception exc) {
+				System.out.println("Error calculating hasSpecialAccuracyEffect for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+				System.out.println(exc.getStackTrace());
+			}
 		}
 
 		if (cantMiss || RandomHelper.getRandomNumberBetween(0, 100) <= accuracy) {
@@ -83,32 +101,55 @@ public class Attack {
 			for (int j = 0; j < baseAttack.effects.size(); j++) {
 				EffectBase e = baseAttack.effects.get(j);
 				if (e.effectType == EffectType.Stats) {
-					e.ApplyEffect(user, target, attackList);
+					try {
+						e.ApplyEffect(user, target, attackList);
+					} catch (Exception exc) {
+						System.out.println("Error in applyEffect for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+						System.out.println(exc.getStackTrace());
+					}
 				} else if (e.effectType == EffectType.Status) {
 					if (target.status.size() > 0) {
 						for (int i = 0; i < target.status.size(); i++) {
 							StatusEffectBase et = target.status.get(i);
-							if (!et.stopsStatusChange())
-								e.ApplyEffect(user, target, attackList);
+							try {
+								if (!et.stopsStatusChange())
+									e.ApplyEffect(user, target, attackList);
+							} catch (Exception exc) {
+								System.out.println("Error in applyEffect for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+								System.out.println(exc.getStackTrace());
+							}
 						}
-					} else
-						e.ApplyEffect(user, target, attackList);
+					} else {
+						try {
+							e.ApplyEffect(user, target, attackList);
+						} catch (Exception exc) {
+							System.out.println("Error in applyEffect for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+							System.out.println(exc.getStackTrace());
+						}
+					}
 				}
 				if (e.effectType == EffectType.AttackModifier) {
 				}
 			}
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
-				if (e.applyStage == ApplyStage.During) {
-					if (e.effectType == EffectType.AttackModifier) {
-						if (((AttackModifierBase) e).type == AttackModifierType.CriticalHit)
-							crit = calcCriticalHit(e);
-						else
-							attackHandled = ((AttackModifierBase) e).ApplyEffect(user, target, this);
-					} else if (e.effectType == EffectType.SpecialAttack)
-						attackHandled = ((SpecialAttackBase) e).ApplyEffect(user, target, this, attackList, targetAttackList);
-					else if (e.effectType == EffectType.MultiTurnSpecialAttack)
-						attackHandled = ((MultiTurnSpecialAttackBase) e).ApplyEffect(user, target, this, attackList, targetAttackList);
+				try {
+					if (e.applyStage == ApplyStage.During) {
+						if (e.effectType == EffectType.AttackModifier) {
+							if (((AttackModifierBase) e).type == AttackModifierType.CriticalHit)
+								crit = calcCriticalHit(e);
+							else
+								attackHandled = ((AttackModifierBase) e).ApplyEffect(user, target, this);
+						} else if (e.effectType == EffectType.SpecialAttack)
+							attackHandled = ((SpecialAttackBase) e).ApplyEffect(user, target, this, attackList, targetAttackList);
+
+						else if (e.effectType == EffectType.MultiTurnSpecialAttack)
+							attackHandled = ((MultiTurnSpecialAttackBase) e).ApplyEffect(user, target, this, attackList, targetAttackList);
+
+					}
+				} catch (Exception exc) {
+					System.out.println("Error in applyEffect for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
 				}
 			}
 
@@ -140,19 +181,29 @@ public class Attack {
 
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
-				if (e.applyStage == ApplyStage.End) {
-					if (e.effectType == EffectType.AttackModifier) {
-						if (((AttackModifierBase) e).type == AttackModifierType.Flinch)
-							flinched = ((AttackModifierBase) e).ApplyEffect(user, target, this);
-					} else if (e.effectType == EffectType.Remove)
-						e.ApplyEffect(user, target, attackList);
+				try {
+					if (e.applyStage == ApplyStage.End) {
+						if (e.effectType == EffectType.AttackModifier) {
+							if (((AttackModifierBase) e).type == AttackModifierType.Flinch)
+								flinched = ((AttackModifierBase) e).ApplyEffect(user, target, this);
+						} else if (e.effectType == EffectType.Remove)
+							e.ApplyEffect(user, target, attackList);
+					}
+				} catch (Exception exc) {
+					System.out.println("Error in applyEffect for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
 				}
 			}
 		} else {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " tried to use " + baseAttack.attackName + ", but it missed!");
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
-				e.ApplyMissEffect(user, target);
+				try {
+					e.ApplyMissEffect(user, target);
+				} catch (Exception exc) {
+					System.out.println("Error in applyMissEffect for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
+				}
 			}
 		}
 		if (user.getOwner() != null)
@@ -183,17 +234,28 @@ public class Attack {
 		double modifier = stab * type * critical * rand;
 		double attack = 0, defence = 0;
 		if (baseAttack.attackCategory == ATTACK_PHYSICAL) {
-			attack = ((double) user.stats.Attack) * ((double) user.battleStats.AttackModifier) / 100;
-			defence = ((double) target.stats.Defence) * ((double) target.battleStats.DefenceModifier) / 100;
+			attack = ((double) user.stats.Attack) * ((double) user.battleStats.getAttackModifier()) / 100;
+			defence = ((double) target.stats.Defence) * ((double) target.battleStats.getDefenceModifier()) / 100;
+			if (ItemHeld.isItemOfType(user.getHeldItem(), EnumHeldItems.choiceItem)){
+				attack = ((ChoiceItem)user.getHeldItem().getItem()).affectAttack(attack);
+			}
 		} else if (baseAttack.attackCategory == ATTACK_SPECIAL) {
-			attack = ((double) user.stats.SpecialAttack) * ((double) user.battleStats.SpecialAttackModifier) / 100;
-			defence = ((double) target.stats.SpecialDefence) * ((double) target.battleStats.SpecialDefenceModifier) / 100;
+			attack = ((double) user.stats.SpecialAttack) * ((double) user.battleStats.getSpecialAttackModifier()) / 100;
+			defence = ((double) target.stats.SpecialDefence) * ((double) target.battleStats.getSpecialDefenceModifier()) / 100;
+			if (ItemHeld.isItemOfType(user.getHeldItem(), EnumHeldItems.choiceItem)){
+				attack = ((ChoiceItem)user.getHeldItem().getItem()).affectSpecialAttack(attack);
+			}
 		}
 		double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250 * (attack / defence) * baseAttack.basePower + 2) * modifier;
 
 		for (int i = 0; i < target.status.size(); i++) {
 			StatusEffectBase e = target.status.get(i);
-			Damage = e.adjustDamage(this, Damage, user, target, crit);
+			try {
+				Damage = e.adjustDamage(this, Damage, user, target, crit);
+			} catch (Exception exc) {
+				System.out.println("Error in adjustDamage for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+				System.out.println(exc.getStackTrace());
+			}
 		}
 		return (int) Math.floor(Damage);
 	}
@@ -287,18 +349,29 @@ public class Attack {
 		}
 		for (int i = 0; i < baseAttack.effects.size(); i++) {
 			EffectBase e = baseAttack.effects.get(i);
-			if (e.persists)
-				return true;
+			try {
+				if (e.doesPersist(entityPixelmon))
+					return true;
+			} catch (Exception exc) {
+				System.out.println("Error in doesPersist for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+				System.out.println(exc.getStackTrace());
+			}
+
 		}
 		return false;
 	}
 
-	public boolean cantMiss() {
+	public boolean cantMiss(EntityPixelmon user) {
 		for (int i = 0; i < baseAttack.effects.size(); i++) {
 			EffectBase e = baseAttack.effects.get(i);
-			if (e instanceof MultiTurnSpecialAttackBase)
-				if (((MultiTurnSpecialAttackBase) e).cantMiss())
-					return true;
+			try {
+				if (e instanceof MultiTurnSpecialAttackBase)
+					if (((MultiTurnSpecialAttackBase) e).cantMiss(user))
+						return true;
+			} catch (Exception exc) {
+				System.out.println("Error in cantMiss for " + e.effectType.toString() + " for attack " + baseAttack.attackName);
+				System.out.println(exc.getStackTrace());
+			}
 		}
 		return false;
 	}

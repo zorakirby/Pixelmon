@@ -7,41 +7,39 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class TrickRoom extends StatusEffectBase {
-	private int effectTurns = -1;
+
 	public TrickRoom() {
 		super(StatusEffectType.TrickRoom, false, false, false);
 		this.applyStage = ApplyStage.Priority;
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
-		for (int i=0; i < user.battleController.battleStatusList.size(); i++){
-			if (user.battleController.battleStatusList.get(i).type == type){
+	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+		for (int i = 0; i < user.battleController.battleStatusList.size(); i++) {
+			if (user.battleController.battleStatusList.get(i).type == type) {
 				user.battleController.battleStatusList.remove(i);
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
 				return;
 			}
 		}
-		effectTurns = 5;
+		user.battleVariables.set(type, 5);
 		user.battleController.battleStatusList.add(this);
 	}
-	
+
 	@Override
-	public void turnTick(EntityPixelmon user, EntityPixelmon target) {
-		if (effectTurns == 0) {
+	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
+		if (user.battleVariables.get(type) == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
 			user.status.remove(this);
 		}
-		effectTurns--;
+		user.battleVariables.decrement(type);
 	}
-	
+
 	@Override
-	public boolean pokemon1MovesFirst(EntityPixelmon user, EntityPixelmon target) {
-		if (user.stats.Speed * user.battleStats.SpeedModifier > target.stats.Speed
-				* target.battleStats.SpeedModifier)
+	public boolean participantMovesFirst(EntityPixelmon user, EntityPixelmon target) throws Exception {
+		if (user.stats.Speed * user.battleStats.getSpeedModifier() > target.stats.Speed * target.battleStats.getSpeedModifier())
 			return false;
-		else if (target.stats.Speed * target.battleStats.SpeedModifier > user.stats.Speed
-				* user.battleStats.SpeedModifier)
+		else if (target.stats.Speed * target.battleStats.getSpeedModifier() > user.stats.Speed * user.battleStats.getSpeedModifier())
 			return true;
 		else {
 			if (RandomHelper.getRandomNumberBetween(0, 2) >= 1)

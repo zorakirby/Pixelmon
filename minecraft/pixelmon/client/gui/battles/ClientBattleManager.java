@@ -2,12 +2,13 @@ package pixelmon.client.gui.battles;
 
 import java.util.ArrayList;
 
+import net.minecraft.client.Minecraft;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
-import pixelmon.entities.EntityCamera;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.items.ItemData;
 
 public class ClientBattleManager {
@@ -27,8 +28,6 @@ public class ClientBattleManager {
 
 	public static int pokemonId = -1;
 
-	public static EntityCamera camera;
-	
 	public static PixelmonDataPacket opponent;
 
 	public static ArrayList<ItemData> bagStore = new ArrayList<ItemData>();
@@ -61,9 +60,29 @@ public class ClientBattleManager {
 		return messageList.size() > 0;
 	}
 
-	public static PixelmonDataPacket getUserPokemon() {
+	public static PixelmonDataPacket getUserPokemonPacket() {
 		if (pokemonId != -1) {
 			return ServerStorageDisplay.get(pokemonId);
+		}
+		return null;
+	}
+
+	static int oldId = -1;
+	static EntityPixelmon oldPixelmon;
+
+	public static EntityPixelmon getUserPokemon() {
+		if (pokemonId != -1) {
+			if (oldId == pokemonId)
+				return oldPixelmon;
+			for (Object e : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+				if (e instanceof EntityPixelmon) {
+					if (((EntityPixelmon) e).getPokemonId() == pokemonId) {
+						oldPixelmon = (EntityPixelmon) e;
+						return (EntityPixelmon) e;
+					}
+				}
+			}
+			oldId = pokemonId;
 		}
 		return null;
 	}

@@ -15,8 +15,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import pixelmon.battles.BattleController;
-import pixelmon.battles.participants.IBattleParticipant;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.TrainerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
@@ -213,7 +213,7 @@ public class EntityPokeBall extends EntityThrowable {
 					pixelmon.releaseFromPokeball();
 					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)
 							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn((EntityPixelmon) movingobjectposition.entityHit)) {
-						IBattleParticipant part;
+						BattleParticipant part;
 						if (((EntityPixelmon) movingobjectposition.entityHit).getOwner() != null)
 							part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
 									(EntityPixelmon) movingobjectposition.entityHit);

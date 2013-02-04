@@ -1,5 +1,6 @@
 package pixelmon;
 
+import java.io.File;
 import java.util.Random;
 
 import net.minecraft.command.ServerCommandManager;
@@ -49,7 +50,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.9.1")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "1.9.6")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
@@ -65,21 +66,23 @@ public class Pixelmon {
 
 	public static boolean freeze = false;
 
+	public static File modDirectory;
+
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
-
+		modDirectory = new File(event.getModConfigurationDirectory().getParent());
 		if (!DatabaseHelper.has()) {
 			throw new RuntimeException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!");
 		}
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "Pixelmon 1.9.1 for 1.4.6";
+		event.getModMetadata().version = "Pixelmon 1.9.6 for 1.4.7";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
-		Pokedex.init();
+		//Pokedex.init();
 	}
 
 	@Init
@@ -93,8 +96,6 @@ public class Pixelmon {
 		proxy.registerSounds();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
-		// EntityRegistry.registerModEntity(EntityCamera.class, "Camera",
-		// PixelmonConfig.idCamera, Pixelmon.instance, 80, 1, true);
 
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
