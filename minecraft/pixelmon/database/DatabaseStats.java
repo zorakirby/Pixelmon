@@ -140,6 +140,7 @@ public class DatabaseStats {
 				if (!rs.wasNull())
 					store.ridingOffsetZ = rz;
 				store.maxGroupSize = rs.getInt("MaxGroupSize");
+				store.minGroupSize = rs.getInt("MinGroupSize");
 				store.spawnLocations = SpawnLocation.getSpawnLocations(rs.getString("SpawnLocation"));
 			}
 			conn.close();

@@ -1,5 +1,6 @@
 package pixelmon;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -7,15 +8,33 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedInputStream;
 
+import javax.swing.text.Document;
+import javax.swing.text.rtf.RTFEditorKit;
+
 import net.minecraft.server.MinecraftServer;
 import pixelmon.client.ClientProxy;
+import pixelmon.database.DatabaseHelper;
 
 public class DownloadHelper {
+
+	public static String readFile(String url) {
+		StringBuffer val = new StringBuffer();
+		try {
+			byte[] array = new byte[4096];
+			RTFEditorKit rtfParser = new RTFEditorKit();
+			Document document = rtfParser.createDefaultDocument();
+			rtfParser.read(new URL(url).openStream(), document, 0);
+			return document.getText(0, document.getLength());
+		} catch (Exception e) {
+		}
+		return null;
+	}
 
 	public static void downloadFile(String destination, String url) {
 		try {
@@ -101,5 +120,18 @@ public class DownloadHelper {
 
 	public static File getDir() {
 		return Pixelmon.modDirectory;
+	}
+
+	private static String dbPath = null;
+
+	public static String getDatabasePath() {
+		if (dbPath != null)
+			return dbPath;
+		String databasePath = DownloadHelper.readFile(DatabaseHelper.databaseURL);
+		int startString = databasePath.indexOf("\n");
+		if (startString != -1)
+			databasePath = databasePath.substring(0, startString);
+		dbPath = databasePath;
+		return dbPath;
 	}
 }

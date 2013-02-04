@@ -40,7 +40,7 @@ public class PixelmonItemsHeld {
 	public static Item berryLeppa;
 
 	public static void load(Configuration cfg) {
-		everStoneID = cfg.get("evolutionStone", "EverStone", 12000).getInt();
+		everStoneID = cfg.get("heldItem", "EverStone", 12000).getInt();
 
 		luckyEggID = cfg.get("heldItem", "LuckyEgg", 12001).getInt();
 		expShareID = cfg.get("heldItem", "EXPShare", 12002).getInt();

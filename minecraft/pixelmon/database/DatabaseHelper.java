@@ -25,7 +25,7 @@ public class DatabaseHelper {
 	 * 
 	 * @return True if they do, otherwise false
 	 */
-	public static String databaseURL = "http://www.mediafire.com/download.php?pwd9km9y8tpngzt";
+	public static String databaseURL = "http://www.mediafire.com/?cbangc8w9p8dix0";
 	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
 	public static boolean checkForDatabaseUpdates = true;
@@ -35,12 +35,12 @@ public class DatabaseHelper {
 			File databaseDir = new File(DownloadHelper.getDir(), "database");
 			if (!databaseDir.exists()) {
 				databaseDir.mkdir();
-				DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+				DownloadHelper.downloadFile("database/Pixelmon.db", DownloadHelper.getDatabasePath());
 				DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
 			} else {
 				File databaseFile = new File(databaseDir, "Pixelmon.db");
 				if (!databaseFile.exists()) {
-					DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+					DownloadHelper.downloadFile("database/Pixelmon.db", DownloadHelper.getDatabasePath());
 				} else {
 					if (checkForDatabaseUpdates)
 						checkVersion();
@@ -68,8 +68,8 @@ public class DatabaseHelper {
 	}
 
 	public static void checkVersion() {
-		if (!DownloadHelper.compareVersion("database/Pixelmon.db", databaseURL)) {
-			DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+		if (!DownloadHelper.compareVersion("database/Pixelmon.db", DownloadHelper.getDatabasePath())) {
+			DownloadHelper.downloadFile("database/Pixelmon.db", DownloadHelper.getDatabasePath());
 		}
 	}
 

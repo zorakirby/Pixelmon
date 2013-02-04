@@ -45,4 +45,5 @@ public class BaseStats {
 	public float ridingOffsetX = 0, ridingOffsetY = 0, ridingOffsetZ = 0;
 	public int maxGroupSize;
 	public SpawnLocation[] spawnLocations;
+	public int minGroupSize;
 }

@@ -115,7 +115,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void moveEntityWithHeading(float par1, float par2) {
 		if (baseStats != null) {
-			if (((EntityPixelmon)this).pokemonType == SpawnLocation.Water && isInWater()) {
+			if (((EntityPixelmon) this).pokemonType == SpawnLocation.Water && isInWater()) {
 				this.moveEntity(this.motionX, this.motionY, this.motionZ);
 				return;
 			}
@@ -142,7 +142,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	protected void fall(float f) {
 		if (baseStats != null) {
-			if (((EntityPixelmon)this).pokemonType == SpawnLocation.Water)
+			if (((EntityPixelmon) this).pokemonType == SpawnLocation.Water)
 				return;
 			if (baseStats.canFly)
 				return;
@@ -153,7 +153,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public boolean canBreatheUnderwater() {
 		if (baseStats != null) {
-			if (((EntityPixelmon)this).pokemonType == SpawnLocation.Water)
+			if (((EntityPixelmon) this).pokemonType == SpawnLocation.Water)
 				return true;
 			else
 				return false;
@@ -261,6 +261,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return 4;
+		return rand.nextInt(baseStats.maxGroupSize - baseStats.minGroupSize + 1) + baseStats.minGroupSize;
 	}
 }

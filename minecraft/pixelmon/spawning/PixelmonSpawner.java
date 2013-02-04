@@ -41,6 +41,10 @@ import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
 public class PixelmonSpawner implements ITickHandler {
+	private enum spawnType {
+		Land, Underground, Water
+	}
+
 	/** The 17x17 area around the player where mobs can spawn */
 	private static HashMap eligibleChunksForSpawning = new HashMap();
 
@@ -86,13 +90,13 @@ public class PixelmonSpawner implements ITickHandler {
 	}
 
 	public static void doUndergroundSpawning(WorldServer world) {
-		if (countUndergroundPokemonEntities(world) <= PixelmonConfig.maxNumUndergroundPokemon * eligibleChunksForSpawning.size() / 256) {
+		int count = countUndergroundPokemonEntities(world);
+		if (count <= PixelmonConfig.maxNumUndergroundPokemon * eligibleChunksForSpawning.size() / 256) {
 			ChunkCoordinates chunkCoords = world.getSpawnPoint();
 			Iterator chunkIterator = eligibleChunksForSpawning.keySet().iterator();
 			ArrayList<ChunkCoordIntPair> tmp = new ArrayList(eligibleChunksForSpawning.keySet());
 			Collections.shuffle(tmp);
 			chunkIterator = tmp.iterator();
-			label110:
 
 			while (chunkIterator.hasNext()) {
 				ChunkCoordIntPair ccIntPair = (ChunkCoordIntPair) chunkIterator.next();
@@ -105,76 +109,9 @@ public class PixelmonSpawner implements ITickHandler {
 
 					if (world.getWorldInfo().getTerrainType() != WorldType.FLAT && cpY < 60 && !world.isBlockNormalCube(cpX, cpY, cpZ)
 							&& world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
-						int numInChunk = 0;
-						int count = 0;
-
-						while (count < 3) {
-							int cpXtmp = cpX;
-							int cpYtmp = cpY;
-							int cpZtmp = cpZ;
-							byte rndmMax = 6;
-							String pokemonName = null;
-							int count2 = 0;
-
-							while (true) {
-								if (count2 < 4) {
-									label102: {
-										cpXtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
-										cpYtmp += world.rand.nextInt(1) - world.rand.nextInt(1);
-										cpZtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
-
-										if (canLandPokemonSpawnHere(world, cpXtmp, cpYtmp, cpZtmp)) {
-											float x = (float) cpXtmp + 0.5F;
-											float y = (float) cpYtmp;
-											float z = (float) cpZtmp + 0.5F;
-
-											if (world.getClosestPlayer((double) x, (double) y, (double) z, 24.0D) == null) {
-												float xd = x - (float) chunkCoords.posX;
-												float yd = y - (float) chunkCoords.posY;
-												float zd = z - (float) chunkCoords.posZ;
-												float d = xd * xd + yd * yd + zd * zd;
-
-												if (d >= 576.0F) {
-													if (pokemonName == null) {
-														pokemonName = getRandomLandPokemonName(world.provider, cpXtmp, cpYtmp, cpZtmp);
-
-														if (pokemonName == null) {
-															break label102;
-														}
-													}
-
-													EntityLiving pokemon;
-
-													try {
-														pokemon = PixelmonEntityList.createEntityByName(pokemonName, world);
-													} catch (Exception e) {
-														e.printStackTrace();
-														return;
-													}
-
-													pokemon.setLocationAndAngles((double) x, (double) y, (double) z, world.rand.nextFloat() * 360.0F, 0.0F);
-													((EntityPixelmon) pokemon).pokemonType = SpawnLocation.UnderGround;
-													if (pokemon.getCanSpawnHere()) {
-														++numInChunk;
-														world.spawnEntityInWorld(pokemon);
-
-														if (numInChunk >= pokemon.getMaxSpawnedInChunk()) {
-															continue label110;
-														}
-													}
-												}
-											}
-										}
-
-										++count2;
-										continue;
-									}
-								}
-
-								++count;
-								break;
-							}
-						}
+						count += doSpawn(SpawnLocation.UnderGround, world, cpX, cpY, cpZ, chunkCoords);
+						if (count > PixelmonConfig.maxNumUndergroundPokemon * eligibleChunksForSpawning.size() / 256)
+							return;
 					}
 				}
 			}
@@ -182,14 +119,96 @@ public class PixelmonSpawner implements ITickHandler {
 
 	}
 
+	private static int doSpawn(SpawnLocation spawnLocation, World world, int cpX, int cpY, int cpZ, ChunkCoordinates chunkCoords) {
+		int numInChunk = 0;
+		int count = 0;
+
+		while (count < 3) {
+			int cpXtmp = cpX;
+			int cpYtmp = cpY;
+			int cpZtmp = cpZ;
+			byte rndmMax = 6;
+			String pokemonName = null;
+			int count2 = 0;
+			int maxInChunk = -1;
+
+			while (true) {
+				if (count2 < 4) {
+					outerWhile: {
+						cpXtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
+						cpYtmp += world.rand.nextInt(1) - world.rand.nextInt(1);
+						cpZtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
+
+						if ((spawnLocation == SpawnLocation.UnderGround || spawnLocation == SpawnLocation.Land) && canLandPokemonSpawnHere(world, cpXtmp, cpYtmp, cpZtmp)
+								|| spawnLocation == SpawnLocation.Water && canWaterPokemonSpawnHere(world, cpXtmp, cpYtmp, cpZtmp)) {
+							float x = (float) cpXtmp + 0.5F;
+							float y = (float) cpYtmp;
+							float z = (float) cpZtmp + 0.5F;
+
+							if (world.getClosestPlayer((double) x, (double) y, (double) z, 24.0D) == null) {
+								float xd = x - (float) chunkCoords.posX;
+								float yd = y - (float) chunkCoords.posY;
+								float zd = z - (float) chunkCoords.posZ;
+								float d = xd * xd + yd * yd + zd * zd;
+
+								if (d >= 576.0F) {
+									if (pokemonName == null) {
+										if (spawnLocation == SpawnLocation.UnderGround || spawnLocation == SpawnLocation.Land)
+											pokemonName = getRandomLandPokemonName(world.provider, cpXtmp, cpYtmp, cpZtmp);
+										if (spawnLocation == SpawnLocation.Water)
+											pokemonName = getRandomWaterPokemonName(world.provider, cpXtmp, cpYtmp, cpZtmp);
+
+										if (pokemonName == null) {
+											break outerWhile;
+										}
+									}
+
+									EntityLiving pokemon;
+
+									try {
+										pokemon = PixelmonEntityList.createEntityByName(pokemonName, world);
+									} catch (Exception e) {
+										e.printStackTrace();
+										return 0;
+									}
+
+									pokemon.setLocationAndAngles((double) x, (double) y, (double) z, world.rand.nextFloat() * 360.0F, 0.0F);
+									if (pokemon instanceof EntityPixelmon)
+										((EntityPixelmon) pokemon).pokemonType = spawnLocation;
+									if (pokemon.getCanSpawnHere()) {
+										++numInChunk;
+										world.spawnEntityInWorld(pokemon);
+
+										if (maxInChunk == -1)
+											maxInChunk = pokemon.getMaxSpawnedInChunk();
+										if (numInChunk >= maxInChunk) {
+											return numInChunk;
+										}
+									}
+								}
+							}
+						}
+
+						++count2;
+						continue;
+					}
+				}
+
+				++count;
+				break;
+			}
+		}
+		return 0;
+	}
+
 	public static void doLandSpawning(WorldServer world) {
-		if (countLandPokemonEntities(world) <= PixelmonConfig.maxNumLandPokemon * eligibleChunksForSpawning.size() / 256) {
+		int count = countLandPokemonEntities(world);
+		if (count <= PixelmonConfig.maxNumLandPokemon * eligibleChunksForSpawning.size() / 256) {
 			ChunkCoordinates chunkCoords = world.getSpawnPoint();
 			Iterator chunkIterator = eligibleChunksForSpawning.keySet().iterator();
 			ArrayList<ChunkCoordIntPair> tmp = new ArrayList(eligibleChunksForSpawning.keySet());
 			Collections.shuffle(tmp);
 			chunkIterator = tmp.iterator();
-			label110:
 
 			while (chunkIterator.hasNext()) {
 				ChunkCoordIntPair ccIntPair = (ChunkCoordIntPair) chunkIterator.next();
@@ -202,78 +221,9 @@ public class PixelmonSpawner implements ITickHandler {
 
 					if ((world.getWorldInfo().getTerrainType() == WorldType.FLAT || cpY > 60) && !world.isBlockNormalCube(cpX, cpY, cpZ)
 							&& world.getBlockMaterial(cpX, cpY, cpZ) == Material.air) {
-						int numInChunk = 0;
-						int count = 0;
-
-						while (count < 3) {
-							int cpXtmp = cpX;
-							int cpYtmp = cpY;
-							int cpZtmp = cpZ;
-							byte rndmMax = 6;
-							String pokemonName = null;
-							int count2 = 0;
-
-							while (true) {
-								if (count2 < 4) {
-									label102: {
-										cpXtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
-										cpYtmp += world.rand.nextInt(1) - world.rand.nextInt(1);
-										cpZtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
-
-										if (canLandPokemonSpawnHere(world, cpXtmp, cpYtmp, cpZtmp)) {
-											float x = (float) cpXtmp + 0.5F;
-											float y = (float) cpYtmp;
-											float z = (float) cpZtmp + 0.5F;
-
-											if (world.getClosestPlayer((double) x, (double) y, (double) z, 24.0D) == null) {
-												float xd = x - (float) chunkCoords.posX;
-												float yd = y - (float) chunkCoords.posY;
-												float zd = z - (float) chunkCoords.posZ;
-												float d = xd * xd + yd * yd + zd * zd;
-
-												if (d >= 576.0F) {
-													if (pokemonName == null) {
-														pokemonName = getRandomLandPokemonName(world.provider, cpXtmp, cpYtmp, cpZtmp);
-
-														if (pokemonName == null) {
-															break label102;
-														}
-													}
-
-													EntityLiving pokemon;
-
-													try {
-														pokemon = PixelmonEntityList.createEntityByName(pokemonName, world);
-													} catch (Exception e) {
-														e.printStackTrace();
-														return;
-													}
-
-													pokemon.setLocationAndAngles((double) x, (double) y, (double) z, world.rand.nextFloat() * 360.0F, 0.0F);
-													if (pokemon instanceof EntityPixelmon)
-														((EntityPixelmon) pokemon).pokemonType = SpawnLocation.Land;
-
-													if (pokemon.getCanSpawnHere()) {
-														++numInChunk;
-														world.spawnEntityInWorld(pokemon);
-
-														if (numInChunk >= pokemon.getMaxSpawnedInChunk()) {
-															continue label110;
-														}
-													}
-												}
-											}
-										}
-
-										++count2;
-										continue;
-									}
-								}
-
-								++count;
-								break;
-							}
-						}
+						count += doSpawn(SpawnLocation.Land, world, cpX, cpY, cpZ, chunkCoords);
+						if (count > PixelmonConfig.maxNumLandPokemon * eligibleChunksForSpawning.size() / 256)
+							return;
 					}
 				}
 			}
@@ -282,14 +232,13 @@ public class PixelmonSpawner implements ITickHandler {
 	}
 
 	public static void doWaterSpawning(WorldServer world) {
-		ChunkCoordinates chunkCoords = world.getSpawnPoint();
-
-		if (countWaterPokemonEntities(world) <= PixelmonConfig.maxNumWaterPokemon * eligibleChunksForSpawning.size() / 256) {
+		int count = countWaterPokemonEntities(world);
+		if (count <= PixelmonConfig.maxNumWaterPokemon * eligibleChunksForSpawning.size() / 256) {
+			ChunkCoordinates chunkCoords = world.getSpawnPoint();
 			Iterator chunkIterator = eligibleChunksForSpawning.keySet().iterator();
 			ArrayList<ChunkCoordIntPair> tmp = new ArrayList(eligibleChunksForSpawning.keySet());
 			Collections.shuffle(tmp);
 			chunkIterator = tmp.iterator();
-			label108:
 
 			while (chunkIterator.hasNext()) {
 				ChunkCoordIntPair ccIntPair = (ChunkCoordIntPair) chunkIterator.next();
@@ -301,77 +250,9 @@ public class PixelmonSpawner implements ITickHandler {
 					int cpZ = chunkPos.z;
 
 					if (!world.isBlockNormalCube(cpX, cpY, cpZ) && world.getBlockMaterial(cpX, cpY, cpZ) == Material.water) {
-						int numInChunk = 0;
-						int count = 0;
-
-						while (count < 3) {
-							int cpXtmp = cpX;
-							int cpYtmp = cpY;
-							int cpZtmp = cpZ;
-							byte rndmMax = 6;
-							String pokemonName = null;
-							int count2 = 0;
-
-							while (true) {
-								if (count2 < 4) {
-									label101: {
-										cpXtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
-										cpYtmp += world.rand.nextInt(1) - world.rand.nextInt(1);
-										cpZtmp += world.rand.nextInt(rndmMax) - world.rand.nextInt(rndmMax);
-
-										if (canWaterPokemonSpawnHere(world, cpXtmp, cpYtmp, cpZtmp)) {
-											float x = (float) cpXtmp + 0.5F;
-											float y = (float) cpYtmp;
-											float z = (float) cpZtmp + 0.5F;
-
-											if (world.getClosestPlayer((double) x, (double) y, (double) z, 24.0D) == null) {
-												float xd = x - (float) chunkCoords.posX;
-												float yd = y - (float) chunkCoords.posY;
-												float zd = z - (float) chunkCoords.posZ;
-												float d = xd * xd + yd * yd + zd * zd;
-
-												if (d >= 576.0F) {
-													if (pokemonName == null) {
-														pokemonName = getRandomWaterPokemonName(world.provider, cpXtmp, cpYtmp, cpZtmp);
-
-														if (pokemonName == null) {
-															break label101;
-														}
-													}
-
-													EntityLiving pokemon;
-
-													try {
-														pokemon = PixelmonEntityList.createEntityByName(pokemonName, world);
-													} catch (Exception e) {
-														e.printStackTrace();
-														return;
-													}
-
-													pokemon.setLocationAndAngles((double) x, (double) y, (double) z, world.rand.nextFloat() * 360.0F, 0.0F);
-													((EntityPixelmon) pokemon).pokemonType = SpawnLocation.Water;
-
-													if (pokemon.getCanSpawnHere()) {
-														++numInChunk;
-														world.spawnEntityInWorld(pokemon);
-
-														if (numInChunk >= pokemon.getMaxSpawnedInChunk()) {
-															continue label108;
-														}
-													}
-												}
-											}
-										}
-
-										++count2;
-										continue;
-									}
-								}
-
-								++count;
-								break;
-							}
-						}
+						count += doSpawn(SpawnLocation.Water, world, cpX, cpY, cpZ, chunkCoords);
+						if (count > PixelmonConfig.maxNumWaterPokemon * eligibleChunksForSpawning.size() / 256)
+							return;
 					}
 				}
 			}

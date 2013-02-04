@@ -160,8 +160,6 @@ public class PixelmonItems {
 	public static Item waterStoneShard;
 	@Mod.Item(name = "Fire Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item fireStoneShard;
-	@Mod.Item(name = "Ever Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item everStoneShard;
 
 	@Mod.Item(name = "Wood Hammer", typeClass = "pixelmon.items.ItemHammer")
 	public static Item hammerWood;
@@ -294,8 +292,6 @@ public class PixelmonItems {
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(35).setCreativeTab(PixelmonCreativeTabs.natural);
 		waterStoneShard = new PixelmonItem(waterStoneShardID).setItemName("WaterStoneShard").setIconIndex(19).setCreativeTab(PixelmonCreativeTabs.natural);
 		fireStoneShard = new PixelmonItem(fireStoneShardID).setItemName("FireStoneShard").setIconIndex(51).setCreativeTab(PixelmonCreativeTabs.natural);
-
-		everStoneShard = new PixelmonItem(everStoneShardID).setItemName("EverstoneShard").setIconIndex(60);
 
 		aluminumIngot = new PixelmonItem(aluminumIngotID).setItemName("AluminumIngot").setIconIndex(233).setCreativeTab(CreativeTabs.tabMaterials);
 		aluminumPlate = new PixelmonItem(aluminumPlateID).setItemName("AluminumPlate").setIconIndex(249).setCreativeTab(CreativeTabs.tabMaterials);
