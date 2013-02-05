@@ -1,15 +1,18 @@
 package pixelmon.enums;
 
+import java.awt.Color;
 import java.util.Random;
 
 public enum EnumBossMode {
-	Normal(0, -1), Uncommon(1, 60), Rare(2, 30), Legendary(3, 10);
+	Normal(0, -1, Color.WHITE), Uncommon(1, 60, Color.CYAN), Rare(2, 30, Color.RED), Legendary(3, 10, Color.MAGENTA);
 	public int index;
 	public int rarity;
+	public Color colour;
 
-	private EnumBossMode(int index, int rarity) {
+	private EnumBossMode(int index, int rarity, Color colour) {
 		this.index = index;
 		this.rarity = rarity;
+		this.colour = colour;
 	}
 
 	public static EnumBossMode getMode(int index) {

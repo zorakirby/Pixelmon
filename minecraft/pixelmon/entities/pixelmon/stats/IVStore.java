@@ -48,4 +48,20 @@ public class IVStore {
 		SpDef = iVs.SpDef;
 		Speed = iVs.Speed;
 	}
+
+	public int get(StatsType stat) {
+		if (stat == StatsType.Attack)
+			return Attack;
+		if (stat == StatsType.Defence)
+			return Defence;
+		if (stat == StatsType.HP)
+			return HP;
+		if (stat == StatsType.SpecialAttack)
+			return SpAtt;
+		if (stat == StatsType.SpecialDefence)
+			return SpDef;
+		if (stat == StatsType.Speed)
+			return Speed;
+		return -1;
+	}
 }

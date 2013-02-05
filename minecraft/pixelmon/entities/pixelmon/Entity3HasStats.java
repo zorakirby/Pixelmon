@@ -211,7 +211,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		float scale = 1;
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
 		if (isInitialised)
-			scale = getScale() * scaleFactor;
+			scale = getScale() * scaleFactor * getGrowthScaleFactor();
 		float halfWidth = this.width * scale / 2.0F;
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
@@ -223,7 +223,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	public void updateStats() {
-		stats.setLevelStats(baseStats, level.getLevel());
+		stats.setLevelStats(getNature(), baseStats, level.getLevel());
 		dataWatcher.updateObject(20, (short) stats.HP);
 		updateHealth();
 	}

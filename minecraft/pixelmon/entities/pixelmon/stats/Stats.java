@@ -1,5 +1,6 @@
 package pixelmon.entities.pixelmon.stats;
 
+import pixelmon.enums.EnumNature;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class Stats {
@@ -12,13 +13,27 @@ public class Stats {
 	public IVStore IVs;
 	public EVsStore EVs = new EVsStore();
 
-	public void setLevelStats(BaseStats baseStats, int level) {
-		HP = (int) ((((float) IVs.HP + 2 * (float) baseStats.hp + ((float) EVs.HP) / 4f + 100f) * (float) level) / 100f + 10f);
-		Attack = (int) ((((float) IVs.Attack + 2 * (float) baseStats.attack + ((float) EVs.Attack) / 4f) * (float) level) / 100f + 5f);
-		Defence = (int) ((((float) IVs.Defence + 2 * (float) baseStats.defence + ((float) EVs.Defence) / 4f) * (float) level) / 100f + 5f);
-		SpecialAttack = (int) ((((float) IVs.SpAtt + 2 * (float) baseStats.spAtt + ((float) EVs.SpecialAttack) / 4f) * (float) level) / 100f + 5f);
-		SpecialDefence = (int) ((((float) IVs.SpDef + 2 * (float) baseStats.spDef + ((float) EVs.SpecialDefence) / 4f) * (float) level) / 100f + 5f);
-		Speed = (int) ((((float) IVs.Speed + 2 * (float) baseStats.speed + ((float) EVs.Speed) / 4f) * (float) level) / 100f + 5f);
+	public void setLevelStats(EnumNature nature, BaseStats baseStats, int level) {
+		HP = calculateHP(baseStats, level);
+		Attack = calculateStat(StatsType.Attack, nature, baseStats, level);
+		Defence = calculateStat(StatsType.Defence, nature, baseStats, level);
+		SpecialAttack = calculateStat(StatsType.SpecialAttack, nature, baseStats, level);
+		SpecialDefence = calculateStat(StatsType.SpecialDefence, nature, baseStats, level);
+		Speed = calculateStat(StatsType.Speed, nature, baseStats, level);
+	}
+
+	public int calculateHP(BaseStats baseStats, int level) {
+		return (int) ((((float) IVs.HP + 2 * (float) baseStats.hp + ((float) EVs.HP) / 4f + 100f) * (float) level) / 100f + 10f);
+	}
+
+	public int calculateStat(StatsType stat, EnumNature nature, BaseStats baseStats, int level) {
+		float val = (float) IVs.get(stat) + 2 * (float) baseStats.get(stat) + ((float) EVs.get(stat) / 4f) * (float) level;
+		val /= 100f + 5;
+		if (stat == nature.increasedStat)
+			val *= 1.1f;
+		if (stat == nature.decreasedStat)
+			val *= 0.9f;
+		return (int) val;
 	}
 
 	public void writeToNBT(NBTTagCompound var1) {

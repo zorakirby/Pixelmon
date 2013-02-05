@@ -46,4 +46,20 @@ public class BaseStats {
 	public int maxGroupSize;
 	public SpawnLocation[] spawnLocations;
 	public int minGroupSize;
+
+	public int get(StatsType stat) {
+		if (stat == StatsType.Attack)
+			return attack;
+		if (stat == StatsType.Defence)
+			return defence;
+		if (stat == StatsType.HP)
+			return hp;
+		if (stat == StatsType.SpecialAttack)
+			return spAtt;
+		if (stat == StatsType.SpecialDefence)
+			return spDef;
+		if (stat == StatsType.Speed)
+			return speed;
+		return -1;
+	}
 }

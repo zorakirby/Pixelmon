@@ -49,4 +49,20 @@ public class EVsStore {
 		Speed = nbt.getInteger("EVSpeed");
 	}
 
+	public int get(StatsType stat) {
+		if (stat == StatsType.Attack)
+			return Attack;
+		if (stat == StatsType.Defence)
+			return Defence;
+		if (stat == StatsType.HP)
+			return HP;
+		if (stat == StatsType.SpecialAttack)
+			return SpecialAttack;
+		if (stat == StatsType.SpecialDefence)
+			return SpecialDefence;
+		if (stat == StatsType.Speed)
+			return Speed;
+		return -1;
+	}
+
 }

@@ -7,6 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import pixelmon.enums.EnumBossMode;
+import pixelmon.enums.EnumGrowth;
+import pixelmon.enums.EnumNature;
 import pixelmon.enums.EnumPokeballs;
 
 public abstract class Entity1Base extends EntityTameable {
@@ -22,13 +24,17 @@ public abstract class Entity1Base extends EntityTameable {
 		dataWatcher.addObject(2, ""); // Name
 		dataWatcher.addObject(3, ""); // NickName
 		dataWatcher.addObject(4, -1); // pokemonId
-		dataWatcher.addObject(21, (short) -1);
+		dataWatcher.addObject(21, (short) -1); // BossMode
+		dataWatcher.addObject(22, (short) -1); // Nature
+		dataWatcher.addObject(23, (short) -1); // Growth
 	}
 
 	protected void init(String name) {
 		setName(name);
 		isInitialised = true;
 		setBoss(EnumBossMode.Normal);
+		setNature(EnumNature.getRandomNature());
+		setGrowth(EnumGrowth.getRandomGrowth());
 	}
 
 	public String getName() {
@@ -50,6 +56,22 @@ public abstract class Entity1Base extends EntityTameable {
 
 	public EnumBossMode getBossMode() {
 		return EnumBossMode.getMode(dataWatcher.getWatchableObjectShort(21));
+	}
+
+	public void setNature(EnumNature nature) {
+		dataWatcher.updateObject(22, (short) nature.index);
+	}
+
+	public void setGrowth(EnumGrowth growth) {
+		dataWatcher.updateObject(23, (short) growth.index);
+	}
+
+	public EnumNature getNature() {
+		return EnumNature.getNatureFromIndex(dataWatcher.getWatchableObjectShort(22));
+	}
+
+	public EnumGrowth getGrowth() {
+		return EnumGrowth.getGrowthFromIndex(dataWatcher.getWatchableObjectShort(23));
 	}
 
 	public String getNickname() {
@@ -107,6 +129,9 @@ public abstract class Entity1Base extends EntityTameable {
 		nbt.setBoolean("IsMale", isMale);
 		nbt.setBoolean("IsInBall", isInBall);
 		nbt.setBoolean("IsFainted", isFainted);
+		nbt.setShort("BossMode", dataWatcher.getWatchableObjectShort(21));
+		nbt.setShort("Nature", dataWatcher.getWatchableObjectShort(22));
+		nbt.setShort("Growth", dataWatcher.getWatchableObjectShort(23));
 	}
 
 	@Override
@@ -123,6 +148,18 @@ public abstract class Entity1Base extends EntityTameable {
 		isMale = nbt.getBoolean("IsMale");
 		isInBall = nbt.getBoolean("IsInBall");
 		isFainted = nbt.getBoolean("IsFainted");
+		if (nbt.hasKey("BossMode"))
+			dataWatcher.updateObject(21, nbt.getShort("BossMode"));
+		else
+			setBoss(EnumBossMode.Normal);
+		if (nbt.hasKey("Nature"))
+			dataWatcher.updateObject(22, nbt.getShort("Nature"));
+		else
+			setNature(EnumNature.getRandomNature());
+		if (nbt.hasKey("Growth"))
+			dataWatcher.updateObject(23, nbt.getShort("Growth"));
+		else
+			setGrowth(EnumGrowth.Ordinary);
 	}
 
 	@Override

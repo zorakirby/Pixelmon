@@ -40,12 +40,16 @@ public abstract class Entity2HasModel extends Entity1Base {
 
 	String oldName;
 
+	public float getGrowthScaleFactor() {
+		return getGrowth().scaleValue;
+	}
+
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if (worldObj.isRemote && !oldName.equals(getName())) {
 			isInitialised = false;
-			((Entity3HasStats)this).getBaseStats(getName());
+			((Entity3HasStats) this).getBaseStats(getName());
 			loadModel();
 			oldName = getName();
 		}
