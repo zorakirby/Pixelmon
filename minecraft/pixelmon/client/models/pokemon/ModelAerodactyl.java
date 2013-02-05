@@ -363,6 +363,7 @@ public class ModelAerodactyl extends PixelmonModelBase {
 		setRotation(Second_Right_Wing_Bone, 0F, 0.8726646F, 0F);
 		RightWing.addChild(Second_Right_Wing_Bone);
 		ModelRenderer Second_Right_Folds = new ModelRenderer(this, 216, 0);
+		Second_Right_Folds.addBox(-13.5F, 1F, -15.5F, 7, 0, 11);
 		Second_Right_Folds.setTextureSize(512, 64);
 		Second_Right_Folds.mirror = true;
 		setRotation(Second_Right_Folds, 0F, 0.8726646F, 0F);
