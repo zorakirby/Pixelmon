@@ -6,6 +6,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumPokeballs;
 
 public abstract class Entity1Base extends EntityTameable {
@@ -21,11 +22,13 @@ public abstract class Entity1Base extends EntityTameable {
 		dataWatcher.addObject(2, ""); // Name
 		dataWatcher.addObject(3, ""); // NickName
 		dataWatcher.addObject(4, -1); // pokemonId
+		dataWatcher.addObject(21, (short) -1);
 	}
 
 	protected void init(String name) {
 		setName(name);
 		isInitialised = true;
+		setBoss(EnumBossMode.Normal);
 	}
 
 	public String getName() {
@@ -39,6 +42,14 @@ public abstract class Entity1Base extends EntityTameable {
 	@Override
 	public String getEntityName() {
 		return getName();
+	}
+
+	public void setBoss(EnumBossMode mode) {
+		dataWatcher.updateObject(21, (short) mode.index);
+	}
+
+	public EnumBossMode getBossMode() {
+		return EnumBossMode.getMode(dataWatcher.getWatchableObjectShort(21));
 	}
 
 	public String getNickname() {

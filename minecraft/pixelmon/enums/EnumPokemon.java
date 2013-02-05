@@ -4,6 +4,7 @@ import pixelmon.config.PixelmonEntityList.ClassType;
 
 public enum EnumPokemon {
 	Abra("Abra"),
+	Aerodactyl("Aerodactyl"),
 	Alakazam("Alakazam"),
 	Arcanine("Arcanine"),
 	Arbok("Arbok"),

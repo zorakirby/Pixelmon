@@ -117,7 +117,7 @@ public class ClientProxy extends CommonProxy {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Can't find Model for " + name);
+			e.printStackTrace();
 		}
 		if (model == null)
 			System.out.println("Can't find Model for " + name);

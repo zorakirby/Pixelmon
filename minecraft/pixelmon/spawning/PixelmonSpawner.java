@@ -37,6 +37,7 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.SpawnLocation;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -122,6 +123,7 @@ public class PixelmonSpawner implements ITickHandler {
 	private static int doSpawn(SpawnLocation spawnLocation, World world, int cpX, int cpY, int cpZ, ChunkCoordinates chunkCoords) {
 		int numInChunk = 0;
 		int count = 0;
+		boolean isBoss = false;
 
 		while (count < 3) {
 			int cpXtmp = cpX;
@@ -179,8 +181,13 @@ public class PixelmonSpawner implements ITickHandler {
 										++numInChunk;
 										world.spawnEntityInWorld(pokemon);
 
-										if (maxInChunk == -1)
+										if (maxInChunk == -1){
+											if (world.rand.nextInt(1000)==0){
+												isBoss = true;
+												((EntityPixelmon)pokemon).setBoss(EnumBossMode.getRandomMode());
+											}
 											maxInChunk = pokemon.getMaxSpawnedInChunk();
+										}
 										if (numInChunk >= maxInChunk) {
 											return numInChunk;
 										}
