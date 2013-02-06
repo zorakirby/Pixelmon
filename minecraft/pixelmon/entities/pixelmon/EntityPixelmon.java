@@ -39,7 +39,7 @@ import pixelmon.storage.PixelmonStorage;
 
 public class EntityPixelmon extends Entity9HasSounds {
 
-	public SpawnLocation pokemonType;
+	public SpawnLocation pokemonLocation;
 	public boolean playerOwned = false;
 
 	public EntityPixelmon(World par1World) {
@@ -195,7 +195,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	// }
 
 	public boolean getCanSpawnHere() {
-		if (pokemonType == SpawnLocation.Water) {
+		if (pokemonLocation == SpawnLocation.Water) {
 			if (baseStats.swimmingParameters == null)
 				return false;
 			int wdepth = WorldHelper.getWaterDepth((int) posX, (int) posY, (int) posZ, worldObj);
@@ -262,9 +262,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 		super.writeEntityToNBT(nbt);
 		if (getOwner() != null)
 			nbt.setString("pixelmonOwner", getOwnerName());
-		if (pokemonType == null)
-			pokemonType = SpawnLocation.Land;
-		nbt.setInteger("pixelmonType", pokemonType.index);
+		if (pokemonLocation == null)
+			pokemonLocation = SpawnLocation.Land;
+		nbt.setInteger("pixelmonType", pokemonLocation.index);
 	}
 
 	@Override
@@ -290,11 +290,11 @@ public class EntityPixelmon extends Entity9HasSounds {
 		setEntityHealth(h);
 
 		if (nbt.hasKey("pixelmonType"))
-			pokemonType = SpawnLocation.getFromIndex(nbt.getInteger("pixelmonType"));
+			pokemonLocation = SpawnLocation.getFromIndex(nbt.getInteger("pixelmonType"));
 		else if (baseStats.spawnLocations[0] == SpawnLocation.Land)
-			pokemonType = SpawnLocation.Land;
+			pokemonLocation = SpawnLocation.Land;
 		else
-			pokemonType = SpawnLocation.Water;
+			pokemonLocation = SpawnLocation.Water;
 		aiHelper = new AIHelper(getName(), this, tasks);
 	}
 
