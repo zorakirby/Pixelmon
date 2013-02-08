@@ -93,15 +93,15 @@ public abstract class Entity1Base extends EntityTameable {
 		dataWatcher.updateObject(4, id);
 	}
 
-	/**
-	 * Returns a boundingBox used to collide the entity with other entities and
-	 * blocks. This enables the entity to be pushable on contact, like boats or
-	 * minecarts.
-	 */
-	@Override
-	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
-		return par1Entity.boundingBox;
-	}
+//	/**
+//	 * Returns a boundingBox used to collide the entity with other entities and
+//	 * blocks. This enables the entity to be pushable on contact, like boats or
+//	 * minecarts.
+//	 */
+//	@Override
+//	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
+//		return par1Entity.boundingBox;
+//	}
 
 	/**
 	 * returns the bounding box for this entity

@@ -867,6 +867,9 @@ public class GuiBattle extends GuiContainer {
 			}
 		}
 		if (pokemonToApplyTo != -1) {
+			if (ServerStorageDisplay.pokemon[pokemonToApplyTo].isFainted// && PixelmonItems.getItem(itemToUse.id) instanceof ItemRevive)
+					)
+					return;
 			if (PixelmonItems.getItem(itemToUse.id) instanceof ItemPotion) {
 				pixelmonToHeal = ServerStorageDisplay.pokemon[pokemonToApplyTo];
 				healAmount = pixelmonToHeal.health + ((ItemPotion) PixelmonItems.getItem(itemToUse.id)).type.getHealAmount();

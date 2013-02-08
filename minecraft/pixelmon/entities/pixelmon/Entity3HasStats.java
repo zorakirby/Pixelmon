@@ -2,9 +2,12 @@ package pixelmon.entities.pixelmon;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.config.PixelmonConfig;
@@ -39,6 +42,25 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		friendship = new FriendShip((EntityPixelmon) this);
 		dataWatcher.addObject(20, (short) 10); // MaxHP
 		dataWatcher.addObject(7, (short) health);
+	}
+
+	@Override
+	public boolean isEntityInsideOpaqueBlock() {
+		if (super.isEntityInsideOpaqueBlock())
+			if (worldObj.getBlockMaterial((int) posX + 1, (int) posY, (int) posZ) == Material.air)
+				setPosition(posX + 1, posY, posZ);
+			else if (worldObj.getBlockMaterial((int) posX - 1, (int) posY, (int) posZ) == Material.air)
+				setPosition(posX - 1, posY, posZ);
+			else if (worldObj.getBlockMaterial((int) posX, (int) posY + 1, (int) posZ) == Material.air)
+				setPosition(posX, posY + 1, posZ);
+			else if (worldObj.getBlockMaterial((int) posX, (int) posY - 1, (int) posZ) == Material.air)
+				setPosition(posX, posY - 1, posZ);
+			else if (worldObj.getBlockMaterial((int) posX, (int) posY, (int) posZ + 1) == Material.air)
+				setPosition(posX, posY, posZ + 1);
+			else if (worldObj.getBlockMaterial((int) posX, (int) posY, (int) posZ - 1) == Material.air)
+				setPosition(posX, posY, posZ - 1);
+
+		return super.isEntityInsideOpaqueBlock();
 	}
 
 	@Override
@@ -129,6 +151,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		getBaseStats(evolveTo);
 		type.clear();
 		setType();
+		updateStats();
+		
 		if (getOwner() != null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
 	}

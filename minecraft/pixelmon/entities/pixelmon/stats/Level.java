@@ -174,7 +174,16 @@ public class Level {
 		}
 		while (getExp() >= getExpToNextLevel()) {
 			int newExp = getExp() - getExpToNextLevel();
+			if (!canLevelUp())
+				return;
 
+			PixelmonStatsPacket stats = null;
+			if (pixelmon.getOwner() != null)
+				stats = PixelmonStatsPacket.createPacket(pixelmon);
+			setLevel(getLevel() + 1);
+			onLevelUp(stats);
+			setExp(newExp);
+			
 			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.expShare) && pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1
 					&& getLevel() >= pixelmon.baseStats.evolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
@@ -196,15 +205,7 @@ public class Level {
 
 				}
 			}
-			if (!canLevelUp())
-				return;
 
-			PixelmonStatsPacket stats = null;
-			if (pixelmon.getOwner() != null)
-				stats = PixelmonStatsPacket.createPacket(pixelmon);
-			setLevel(getLevel() + 1);
-			onLevelUp(stats);
-			setExp(newExp);
 		}
 	}
 
