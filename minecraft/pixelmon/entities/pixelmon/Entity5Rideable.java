@@ -271,7 +271,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	@Override
 	public void updateRidden() {
 		super.updateRidden();
-		ridingHelper.updateRidden();
+		if (ridingHelper!=null)
+			ridingHelper.updateRidden();
 	}
 
 	EnumPokemon ep;
