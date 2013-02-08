@@ -1,5 +1,6 @@
 package pixelmon.client.render;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -256,8 +257,6 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 			GL11.glScalef(-var14 + 0.012f, -var14 + 0.012f, var14 + 0.012f);
 		}
 		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glDepthMask(false);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -268,8 +267,6 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		int var17 = var12.getStringWidth(par2Str) / 2;
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, par11);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glDepthMask(true);
 		var15.startDrawingQuads();
 		var15.addVertex((double) (-var17 - 1), (double) (-1 + var16), 0.0D);
 		var15.addVertex((double) (-var17 - 1), (double) (8 + var16), 0.0D);
