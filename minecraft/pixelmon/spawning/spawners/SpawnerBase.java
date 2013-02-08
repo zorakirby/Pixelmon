@@ -13,8 +13,9 @@ public abstract class SpawnerBase {
 	public int count = 0;
 	public int maxNum = 0;
 
-	public SpawnerBase(int maxNum) {
+	public SpawnerBase(int maxNum, SpawnLocation spawnLocation) {
 		this.maxNum = maxNum;
+		this.spawnLocation = spawnLocation;
 	}
 
 	public abstract boolean getSpawnCondition(World world, int cpX, int cpY, int cpZ);

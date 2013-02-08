@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import pixelmon.config.PixelmonConfig;
+import pixelmon.database.SpawnLocation;
 import pixelmon.spawning.SpawnData;
 import pixelmon.spawning.SpawnRegistry;
 import net.minecraft.block.Block;
@@ -18,7 +19,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 public class SpawnerUnderground extends SpawnerBase {
 
 	public SpawnerUnderground() {
-		super(PixelmonConfig.maxNumUndergroundPokemon);
+		super(PixelmonConfig.maxNumUndergroundPokemon, SpawnLocation.UnderGround);
 	}
 
 	@Override

@@ -51,6 +51,7 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	public void setBoss(EnumBossMode mode) {
+		
 		dataWatcher.updateObject(21, (short) mode.index);
 	}
 

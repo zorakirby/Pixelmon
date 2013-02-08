@@ -1,5 +1,7 @@
 package pixelmon.client.gui;
 
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -7,6 +9,8 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.ForgeSubscribe;
 
@@ -14,6 +18,7 @@ import org.lwjgl.opengl.GL11;
 
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class GuiPixelmonOverlay extends Gui {
 	public static boolean isGuiMinimized = false;
@@ -25,18 +30,23 @@ public class GuiPixelmonOverlay extends Gui {
 		fontRenderer = Minecraft.getMinecraft().fontRenderer;
 	}
 
+	static int count = 100;
+
 	@ForgeSubscribe
 	public void onRenderWorldLast(RenderWorldLastEvent event) {
+		if (count++ >= 100) {
+			count = 0;
+			checkEntitysInWorld(Minecraft.getMinecraft().theWorld);
+		}
 		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null || !isVisible)
 			return;
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthMask(false);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		
+
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if (event != null) {
 			GL11.glEnable(GL11.GL_BLEND);
@@ -58,7 +68,7 @@ public class GuiPixelmonOverlay extends Gui {
 
 		fontRenderer.setUnicodeFlag(true);
 		int i = 0;
-		 
+
 		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
 			int offset = 0;
 			if (p != null) {
@@ -84,6 +94,8 @@ public class GuiPixelmonOverlay extends Gui {
 				else
 					numString = "" + p.getNationalPokedexNumber();
 				int var9;
+				if (p.outside)
+					drawTexturedModalRect(2, var7 / 6 + i * 30 + 3 + offset, 75, 209, 28, 28);
 				if (p.isShiny)
 					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
 				else
@@ -96,11 +108,10 @@ public class GuiPixelmonOverlay extends Gui {
 				if (!isGuiMinimized) {
 					fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
 					if (p.health <= 0) {
-						fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7
-								+ offset, 0xFFFFFF);
+						fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
 					} else {
-						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 39 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30
-								+ fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
+						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 39 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7
+								+ offset, 0xFFFFFF);
 					}
 				}
 			}
@@ -108,7 +119,7 @@ public class GuiPixelmonOverlay extends Gui {
 		}
 
 		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
-		this.drawTexturedModalRect(2, var7 / 6 + 4 + selectedPixelmon * 30, 45, 209, 40, 40);
+		this.drawTexturedModalRect(2, var7 / 6 + 4 + selectedPixelmon * 30, 45, 209, 28, 28);
 		fontRenderer.setUnicodeFlag(false);
 
 		RenderHelper.disableStandardItemLighting();
@@ -117,6 +128,31 @@ public class GuiPixelmonOverlay extends Gui {
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 
+	}
+
+	public boolean checkEntitysInWorld(World world) {
+		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
+			if (p != null)
+				p.outside = false;
+		}
+		@SuppressWarnings("unchecked")
+		List<Entity> EntityList = world.loadedEntityList;
+		for (int i = 0; i < EntityList.size(); i++) {
+			Entity e = EntityList.get(i);
+			if (e instanceof EntityPixelmon) {
+				int existingId = ((EntityPixelmon) e).getPokemonId();
+				if (existingId != -1) {
+					for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
+						if (p != null) {
+							if (((EntityPixelmon) e).getPokemonId() == p.pokemonID) {
+								p.outside = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	public static void selectNextPixelmon() {
@@ -146,8 +182,6 @@ public class GuiPixelmonOverlay extends Gui {
 		// activate the specified texture
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureHandle);
 
-		float var7 = 0.00390625F;
-		float var8 = 0.00390625F;
 		Tessellator var9 = Tessellator.instance;
 		var9.startDrawingQuads();
 		var9.addVertexWithUV((double) (x + 0), (double) (y + h), (double) this.zLevel, (double) ((float) us), (double) ((float) ve));

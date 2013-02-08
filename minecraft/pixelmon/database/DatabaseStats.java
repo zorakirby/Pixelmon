@@ -417,4 +417,35 @@ public class DatabaseStats {
 		}
 		return null;
 	}
+
+	public static ArrayList<String> getPreEvolutions(String name) {
+		ArrayList<String> preEvolutions = new ArrayList<String>();
+		String newEvolution;
+		while ((newEvolution = getPreEvolution(name)) != null) {
+			preEvolutions.add(newEvolution);
+			name = newEvolution;
+		}
+		return preEvolutions;
+	}
+
+	private static String getPreEvolution(String name) {
+		Connection conn = null;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			conn = DatabaseHelper.getConnection();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select Name from Pixelmon where EvolveInto='" + name + "'");
+			while (rs.next()) {
+				return rs.getString("Name");
+			}
+		} catch (Exception e) {
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		}
+		return null;
+	}
 }

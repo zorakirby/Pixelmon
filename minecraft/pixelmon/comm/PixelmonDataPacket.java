@@ -222,6 +222,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	}
 
 	private String description;
+	public boolean outside;
 
 	public String getDescription() {
 		if (description == null)

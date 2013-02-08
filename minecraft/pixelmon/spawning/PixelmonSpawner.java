@@ -133,16 +133,17 @@ public class PixelmonSpawner implements ITickHandler {
 	}
 
 	private static boolean countEntities(WorldServer world) {
+		for (SpawnerBase s : spawners)
+			s.count = 0;
 		for (int var3 = 0; var3 < world.loadedEntityList.size(); ++var3) {
 			Entity var4 = (Entity) world.loadedEntityList.get(var3);
 			for (SpawnerBase b : spawners) {
-				int var2 = 0;
 				if (var4 instanceof EntityPixelmon) {
 					if (((EntityPixelmon) var4).pokemonLocation == b.spawnLocation)
-						++var2;
+						b.count++;
 				} else if (var4 instanceof EntityTrainer) {
 					if (((EntityTrainer) var4).trainerLocation == b.spawnLocation)
-						++var2;
+						b.count++;
 				}
 			}
 		}
@@ -215,11 +216,15 @@ public class PixelmonSpawner implements ITickHandler {
 										world.spawnEntityInWorld(pokemon);
 
 										if (maxInChunk == -1) {
-											if (world.rand.nextInt(1000) == 0) {
+											if (world.rand.nextInt(1000) == 0 && pokemon instanceof EntityPixelmon) {
+												EntityPixelmon pixelmon = (EntityPixelmon) pokemon;
+												ArrayList<String> preEvolutions = pixelmon.getPreEvolutions();
+												pixelmon.setBoss(EnumBossMode.getRandomMode());
 												isBoss = true;
-												((EntityPixelmon) pokemon).setBoss(EnumBossMode.getRandomMode());
 											}
 											maxInChunk = pokemon.getMaxSpawnedInChunk();
+											if (isBoss)
+												maxInChunk *= 2;
 										}
 										if (numInChunk >= maxInChunk) {
 											return numInChunk;

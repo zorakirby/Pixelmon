@@ -22,6 +22,7 @@ import pixelmon.entities.pixelmon.helpers.BattleVariables;
 import pixelmon.entities.pixelmon.stats.BattleStats;
 import pixelmon.entities.pixelmon.stats.Moveset;
 import pixelmon.entities.trainers.EntityTrainer;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 
@@ -43,6 +44,14 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public void loadMoveset() {
 		moveset = DatabaseMoves.GetInitialMoves(getName(), getLvl().getLevel());
+	}
+
+	@Override
+	public void setBoss(EnumBossMode mode) {
+		super.setBoss(mode);
+		if (mode != EnumBossMode.Normal) {
+			getLvl().setLevel(getLvl().getLevel() + mode.extraLevels);
+		}
 	}
 
 	public void StartBattle(BattleParticipant p1, BattleParticipant p2) {

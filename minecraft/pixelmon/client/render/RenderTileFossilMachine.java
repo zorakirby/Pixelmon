@@ -284,15 +284,16 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 	}
 
 	public String fossilTexture(TileEntityFossilMachine tile) {
-		if(tile.currentFossil != -1)
-		return PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModelName().toLowerCase();
-		else return "";
+		if (tile.currentFossil != -1)
+			return PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModelName().toLowerCase();
+		else
+			return "";
 	}
 
 	public void renderModel(TileEntityFossilMachine tile, float f) {
 		if (tile.currentFossil != -1)
-		if (PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel() != null)
-		PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel().renderModel(tile, f);
+			if (PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel() != null)
+				PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel().renderModel(tile, f);
 	}
 
 	@Override

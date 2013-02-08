@@ -375,7 +375,7 @@ public class RenderPixelmon extends RenderLiving {
 
 	protected void preRenderScale(EntityPixelmon entity, float f) {
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
-		scaleFactor *= entity.getGrowthScaleFactor();
+		scaleFactor *= entity.getScaleFactor();
 		GL11.glScalef(scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale()
 				* entity.baseStats.giScale);
 		if (entity.doesHover) {

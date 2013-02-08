@@ -22,6 +22,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.config.PixelmonItems;
 import pixelmon.database.DatabaseMoves;
+import pixelmon.database.DatabaseStats;
 import pixelmon.database.SpawnConditions;
 import pixelmon.database.SpawnLocation;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
@@ -318,7 +319,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public EntityAgeable createChild(EntityAgeable var1) {
 		return null;
 	}
-	
-	
+
+	public ArrayList<String> getPreEvolutions() {
+		return DatabaseStats.getPreEvolutions(getName());
+	}
 
 }
