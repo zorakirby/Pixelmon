@@ -32,9 +32,12 @@ public abstract class Entity1Base extends EntityTameable {
 	protected void init(String name) {
 		setName(name);
 		isInitialised = true;
-		setBoss(EnumBossMode.Normal);
-		setNature(EnumNature.getRandomNature());
-		setGrowth(EnumGrowth.getRandomGrowth());
+		if (getBossMode() == null)
+			setBoss(EnumBossMode.Normal);
+		if (getNature() == null)
+			setNature(EnumNature.getRandomNature());
+		if (getGrowth() == null)
+			setGrowth(EnumGrowth.getRandomGrowth());
 	}
 
 	public String getName() {
@@ -51,7 +54,8 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	public void setBoss(EnumBossMode mode) {
-		
+		if (getOwner() != null)
+			mode = EnumBossMode.Rare;
 		dataWatcher.updateObject(21, (short) mode.index);
 	}
 
@@ -93,15 +97,15 @@ public abstract class Entity1Base extends EntityTameable {
 		dataWatcher.updateObject(4, id);
 	}
 
-//	/**
-//	 * Returns a boundingBox used to collide the entity with other entities and
-//	 * blocks. This enables the entity to be pushable on contact, like boats or
-//	 * minecarts.
-//	 */
-//	@Override
-//	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
-//		return par1Entity.boundingBox;
-//	}
+	/**
+	 * Returns a boundingBox used to collide the entity with other entities and
+	 * blocks. This enables the entity to be pushable on contact, like boats or
+	 * minecarts.
+	 */
+	@Override
+	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
+		return par1Entity.boundingBox;
+	}
 
 	/**
 	 * returns the bounding box for this entity

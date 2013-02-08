@@ -44,6 +44,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		dataWatcher.addObject(7, (short) health);
 	}
 
+	public int getCatchRate() {
+		float c = baseStats.catchRate;
+		c *= getBossMode().catchRateModifier;
+		return (int) c;
+	}
+
 	@Override
 	public boolean isEntityInsideOpaqueBlock() {
 		if (super.isEntityInsideOpaqueBlock())
@@ -152,7 +158,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		type.clear();
 		setType();
 		updateStats();
-		
+
 		if (getOwner() != null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
 	}

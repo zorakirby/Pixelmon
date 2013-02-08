@@ -17,6 +17,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.trainers.EntityTrainer;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.pokedex.Pokedex.DexRegisterStatus;

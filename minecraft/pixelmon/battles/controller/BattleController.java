@@ -49,11 +49,12 @@ public class BattleController {
 	}
 
 	private void initBattle() throws Exception {
-		BattleRegistry.registerBattle(this);
 		for (BattleParticipant p : participants) {
-			if (!p.checkPokemon())
+			if (!p.checkPokemon()){
 				throw new Exception("Battle Could not start!");
+			}
 		}
+		BattleRegistry.registerBattle(this);
 		for (BattleParticipant p : participants) {
 			p.StartBattle(this, otherParticipant(p));
 			p.updateOpponent();

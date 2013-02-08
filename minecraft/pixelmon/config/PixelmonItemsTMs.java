@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
+import pixelmon.Pixelmon;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.database.Move;
 import pixelmon.enums.EnumType;
@@ -27,6 +28,7 @@ public class PixelmonItemsTMs {
 			while (rs.next()) {
 				try {
 					ItemTM item = new ItemTM(startId++, rs.getString("Name"), rs.getInt("TMIndex"), EnumType.parseType(rs.getString("Type")), false);
+					Pixelmon.proxy.registerBossDropItem(item);
 					TMs.add(item);
 				} catch (Exception e) {
 					System.out.println("Problem loading TMs");
