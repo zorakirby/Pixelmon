@@ -34,6 +34,7 @@ import pixelmon.battles.attacks.specialAttacks.PetalDance;
 import pixelmon.battles.attacks.specialAttacks.PsychUp;
 import pixelmon.battles.attacks.specialAttacks.Psywave;
 import pixelmon.battles.attacks.specialAttacks.Punishment;
+import pixelmon.battles.attacks.specialAttacks.RaiseStats;
 import pixelmon.battles.attacks.specialAttacks.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.Restore;
 import pixelmon.battles.attacks.specialAttacks.Return;
@@ -239,6 +240,8 @@ public class EffectParser {
 				effect = new PsychUp();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.JumpKick)
 				effect = new JumpKick();
+			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.RaiseStats)
+				effect = new RaiseStats();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Return)
 				effect = new Return();
 			else if (SpecialAttackType.getSpecialAttackType(effectTypeString)== SpecialAttackType.Reversal)
