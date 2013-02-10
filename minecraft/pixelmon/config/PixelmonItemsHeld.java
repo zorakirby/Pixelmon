@@ -76,7 +76,7 @@ public class PixelmonItemsHeld {
 
 	public static ItemHeld getHeldItem(int id) {
 		try {
-			for (Field field : PixelmonItems.class.getFields()) {
+			for (Field field : PixelmonItemsHeld.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemHeld)
