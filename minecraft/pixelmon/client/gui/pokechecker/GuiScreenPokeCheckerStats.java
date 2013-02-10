@@ -15,6 +15,7 @@ import pixelmon.client.gui.pc.GuiPC;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.enums.EnumNature;
 
 public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 	protected PixelmonDataPacket targetPacket;
@@ -96,7 +97,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xcccccc);
 		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(mc.thePlayer.username), 8, 120, 0xcccccc);
+		drawCenteredString(fontRenderer, String.valueOf(mc.thePlayer.username), 8, 115, 0xcccccc);
 		
 		drawString(fontRenderer, "HP:", 60, -7, 0xcccccc);
 		drawString(fontRenderer, String.valueOf(targetPacket.HP), 200 - (String.valueOf(targetPacket.HP).length()*3), -7, 0xcccccc);
@@ -114,7 +115,9 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		drawString(fontRenderer, "Happiness", 72, 115, 0xcccccc);
 		drawCenteredString(fontRenderer, String.valueOf(targetPacket.friendship), 95, 130, 0xcccccc);
 		drawString(fontRenderer, "Nature", 158, 115, 0xcccccc);
-		drawString(fontRenderer, "Coming Soon", 145, 135, -5111808);
+		drawCenteredString(fontRenderer, targetPacket.nature.toString(), 174, 130, -1);
+		drawCenteredString(fontRenderer, "Growth", 8, 135, 0xcccccc);
+		drawCenteredString(fontRenderer, targetPacket.growth.toString(), 8, 148, -1);
 		drawString(fontRenderer, "Stats", 145, 166, -6250336);
 	}
 

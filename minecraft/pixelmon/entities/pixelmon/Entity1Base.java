@@ -54,8 +54,6 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	public void setBoss(EnumBossMode mode) {
-		if (getOwner() != null)
-			mode = EnumBossMode.Rare;
 		dataWatcher.updateObject(21, (short) mode.index);
 	}
 
@@ -144,7 +142,8 @@ public abstract class Entity1Base extends EntityTameable {
 		super.readEntityFromNBT(nbt);
 		dataWatcher.updateObject(4, nbt.getInteger("pixelmonID"));
 		dataWatcher.updateObject(2, nbt.getString("Name"));
-		init(getName());
+		if (!isInitialised)
+			init(getName());
 		if (nbt.hasKey("Nickname"))
 			dataWatcher.updateObject(3, nbt.getString("Nickname"));
 

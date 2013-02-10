@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 

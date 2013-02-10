@@ -10,6 +10,8 @@ import net.minecraft.network.packet.Packet;
 import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumGrowth;
+import pixelmon.enums.EnumNature;
 import pixelmon.enums.EnumType;
 
 public class PixelmonDataPacket extends PixelmonPacket {
@@ -64,6 +66,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public int heldItemId = -1;
 	public int xp;
 	private int effectCount = 0;
+	public EnumNature nature;
+	public EnumGrowth growth;
 	public ArrayList<StatusEffectType> status = new ArrayList<StatusEffectType>();
 
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
@@ -86,6 +90,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isMale = p.getBoolean("IsMale");
 		isFainted = p.getBoolean("IsFainted");
 		isShiny = p.getBoolean("IsShiny");
+		nature = EnumNature.getNatureFromIndex(p.getShort("Nature"));
+		growth = EnumGrowth.getGrowthFromIndex(p.getShort("Growth"));
 		order = p.getInteger("PixelmonOrder");
 		numMoves = p.getInteger("PixelmonNumberMoves");
 		for (int i = 0; i < numMoves; i++) {
@@ -124,6 +130,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isMale = p.isMale;
 		isFainted = p.isFainted;
 		isShiny = p.getIsShiny();
+		nature = p.getNature();
+		growth = p.getGrowth();
 		order = 0;
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
@@ -179,6 +187,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeShort(SpecialDefence);
 		data.writeShort(boxNumber);
 		data.writeBoolean(isShiny);
+		data.writeShort(nature.index);
+		data.writeShort(growth.index);
 		data.writeBoolean(doesLevel);
 		data.writeInt(heldItemId);
 		data.writeShort(effectCount);
@@ -214,6 +224,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		SpecialDefence = data.readShort();
 		boxNumber = data.readShort();
 		isShiny = data.readBoolean();
+		nature = EnumNature.getNatureFromIndex(data.readShort());
+		growth = EnumGrowth.getGrowthFromIndex(data.readShort());
 		doesLevel = data.readBoolean();
 		heldItemId = data.readInt();
 		effectCount = data.readShort();
