@@ -406,7 +406,6 @@ public class GuiTrading extends GuiContainer {
 		}
 		if(drawButtonClose(par1, par2)){
 			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.DeRegisterTrader, 0));
 			mc.thePlayer.closeScreen();
 		}
 	}
