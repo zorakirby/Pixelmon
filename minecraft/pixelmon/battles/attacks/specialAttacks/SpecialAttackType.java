@@ -23,6 +23,7 @@ public enum SpecialAttackType {
 	Punishment,
 	PsychUp,
 	Psywave,
+	RaiseStats,
 	Restore,
 	Return,
 	Reversal,
@@ -54,6 +55,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Punishment")) return SpecialAttackType.Punishment;
 		if (string.equalsIgnoreCase("PsychUp")) return SpecialAttackType.PsychUp;
 		if (string.equalsIgnoreCase("Psywave")) return SpecialAttackType.Psywave;
+		if (string.equalsIgnoreCase("RaiseStats")) return SpecialAttackType.RaiseStats;
 		if (string.equalsIgnoreCase("Restore")) return SpecialAttackType.Restore;
 		if (string.equalsIgnoreCase("Return")) return SpecialAttackType.Return;
 		if (string.equalsIgnoreCase("Reversal")) return SpecialAttackType.Reversal;
@@ -80,6 +82,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("HornDrill")) return true;
 		if (string.equalsIgnoreCase("JumpKick")) return true;
 		if (string.equalsIgnoreCase("MilkDrink")) return true;
+		if (string.equalsIgnoreCase("Magnitude")) return true;
 		if (string.equalsIgnoreCase("NightShade")) return true;
 		if (string.equalsIgnoreCase("PainSplit")) return true;
 		if (string.equalsIgnoreCase("Payday")) return true;
@@ -87,6 +90,7 @@ public enum SpecialAttackType {
 		if (string.equalsIgnoreCase("Punishment")) return true;
 		if (string.equalsIgnoreCase("PsychUp")) return true;
 		if (string.equalsIgnoreCase("Psywave")) return true;
+		if (string.equalsIgnoreCase("RaiseStats")) return true;
 		if (string.equalsIgnoreCase("Restore")) return true;
 		if (string.equalsIgnoreCase("Return")) return true;
 		if (string.equalsIgnoreCase("Reversal")) return true;
