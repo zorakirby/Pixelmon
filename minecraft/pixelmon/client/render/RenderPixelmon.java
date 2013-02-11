@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL12;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 
 public class RenderPixelmon extends RenderLiving {
 	public RenderPixelmon(float par2) { // par2 = shadow size
@@ -26,18 +27,19 @@ public class RenderPixelmon extends RenderLiving {
 		if (mainModel == null) {
 			if (pixelmon.getName().equals(""))
 				return;
-			pixelmon.init(((EntityPixelmon) entityLiving).getName());
+			pixelmon.init(pixelmon.getName());
 			pixelmon.loadModel();
-			mainModel = ((EntityPixelmon) entityLiving).model;
+			mainModel = pixelmon.model;
 		}
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
-		renderPixelmon((EntityPixelmon) entityLiving, d, d1, d2, f, f1);
-		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
-		if (var10 <= (float) 8 || pixelmon.getOwner() != null || ServerStorageDisplay.contains(pixelmon.getPokemonId())) {
-			drawHealthBar(entityLiving, d, d1, d2, f, f1);
+		renderPixelmon(pixelmon, d, d1, d2, f, f1);
+		float var10 = pixelmon.getDistanceToEntity(this.renderManager.livingPlayer);
+		int renderdistance = pixelmon.getBossMode() != EnumBossMode.Normal ? 16 : 8;
+		if (var10 <= renderdistance || pixelmon.getOwner() != null || ServerStorageDisplay.contains(pixelmon.getPokemonId())) {
+			drawHealthBar(pixelmon, d, d1, d2, f, f1);
 			if (ServerStorageDisplay.contains(pixelmon.getPokemonId()))
-				drawExpBar(entityLiving, d, d1, d2, f, f1);
-			drawNameTag(entityLiving, d, d1, d2);
+				drawExpBar(pixelmon, d, d1, d2, f, f1);
+			drawNameTag(pixelmon, d, d1, d2);
 		}
 
 	}
@@ -223,9 +225,8 @@ public class RenderPixelmon extends RenderLiving {
 		this.passSpecialRender(pixelmon, par2, par4, par6);
 	}
 
-	public void drawNameTag(EntityLiving entityliving, double par2, double par4, double par6) {
-		if (Minecraft.isGuiEnabled() && (entityliving instanceof EntityPixelmon)) {
-			EntityPixelmon entitypixelmon = (EntityPixelmon) entityliving;
+	public void drawNameTag(EntityPixelmon entitypixelmon, double par2, double par4, double par6) {
+		if (Minecraft.isGuiEnabled()) {
 			String s = " Lv: " + entitypixelmon.getLvl().getLevel() + " ";
 			s += entitypixelmon.getNickname();
 			if (entitypixelmon.getOwner() != null) {
@@ -240,8 +241,8 @@ public class RenderPixelmon extends RenderLiving {
 		}
 	}
 
-	protected void renderLivingLabel(EntityLiving entityLiving, String par2Str, double par3, double par5, double par7, int par9) {
-		double var10 = entityLiving.getDistanceSqToEntity(this.renderManager.livingPlayer);
+	protected void renderLivingLabel(EntityPixelmon entitypixelmon, String par2Str, double par3, double par5, double par7, int par9) {
+		double var10 = entitypixelmon.getDistanceSqToEntity(this.renderManager.livingPlayer);
 
 		if (var10 <= (double) (par9 * par9)) {
 			FontRenderer var12 = this.getFontRendererFromRenderManager();
@@ -249,14 +250,14 @@ public class RenderPixelmon extends RenderLiving {
 			float var14 = 0.016666668F * var13;
 			GL11.glPushMatrix();
 			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
-			GL11.glTranslatef((float) par3 + 0.0F, (float) par5 + 1.1f + entityLiving.height * ((EntityPixelmon) entityLiving).getScale() * scaleFactor, (float) par7);
+			GL11.glTranslatef((float) par3 + 0.0F, (float) par5 + 1.1f + entitypixelmon.height * entitypixelmon.getScale() * scaleFactor, (float) par7);
 			GL11.glNormal3f(0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
 			GL11.glScalef(-var14, -var14, var14);
 			GL11.glDisable(GL11.GL_LIGHTING);
 			GL11.glDepthMask(false);
-			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			// GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			Tessellator var15 = Tessellator.instance;
@@ -273,9 +274,9 @@ public class RenderPixelmon extends RenderLiving {
 			var15.draw();
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
 			var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, 553648127);
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			// GL11.glEnable(GL11.GL_DEPTH_TEST);
 			GL11.glDepthMask(true);
-			var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, -1);
+			var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, entitypixelmon.getBossMode().getColourInt());
 			GL11.glEnable(GL11.GL_LIGHTING);
 			GL11.glDisable(GL11.GL_BLEND);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -375,7 +376,7 @@ public class RenderPixelmon extends RenderLiving {
 
 	protected void preRenderScale(EntityPixelmon entity, float f) {
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
-		scaleFactor *= entity.getGrowthScaleFactor();
+		scaleFactor *= entity.getScaleFactor();
 		GL11.glScalef(scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale()
 				* entity.baseStats.giScale);
 		if (entity.doesHover) {

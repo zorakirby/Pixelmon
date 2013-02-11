@@ -2,8 +2,10 @@ package pixelmon;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import pixelmon.client.models.fossils.ModelFossil;
+import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.gui.GuiHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -70,6 +72,10 @@ public class CommonProxy implements IGuiHandler {
 
 	public ModelFossil loadFossilModel(String modelName) {
 		return null;
+	}
+	
+	public void registerBossDropItem(Item item){
+		DropItemHelper.bossDropItems.add(item);
 	}
 
 }

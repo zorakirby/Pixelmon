@@ -30,11 +30,11 @@ public class AIHelper {
 		if (tasks.taskEntries.size() != 0)
 			tasks.taskEntries.clear();
 		initBaseAI(entity, tasks);
-		if (((EntityPixelmon)entity).pokemonType == SpawnLocation.Land && !entity.baseStats.canFly) {
+		if (((EntityPixelmon)entity).pokemonLocation == SpawnLocation.Land && !entity.baseStats.canFly) {
 			initGroundAI(Name, entity, tasks);
 		} else if (entity.baseStats.canFly) {
 			initFlyingAI(Name, entity, tasks);
-		} else if (((EntityPixelmon)entity).pokemonType == SpawnLocation.Water) {
+		} else if (((EntityPixelmon)entity).pokemonLocation == SpawnLocation.Water) {
 			initSwimmingAI(Name, entity, tasks);
 		}
 	}
@@ -51,7 +51,7 @@ public class AIHelper {
 	}
 
 	private void initBaseAI(Entity7HasAI entity, EntityAITasks tasks) {
-		if (((EntityPixelmon)entity).pokemonType == SpawnLocation.Water)
+		if (((EntityPixelmon)entity).pokemonLocation == SpawnLocation.Water)
 			tasks.addTask(i++, new EntityAISwimming(entity));
 		tasks.addTask(i++, new AIIsInBattle(entity));
 		if (entity.aggression == Aggression.aggressive) {

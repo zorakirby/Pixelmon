@@ -17,6 +17,7 @@ import pixelmon.AI.AITrainerInBattle;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseTrainers;
+import pixelmon.database.SpawnLocation;
 import pixelmon.database.TrainerInfo;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PlayerStorage;
@@ -29,6 +30,7 @@ public class EntityTrainer extends EntityCreature {
 	public EntityPixelmon releasedPokemon;
 	public TrainerInfo info;
 	private ModelBase model = null;
+	public SpawnLocation trainerLocation;
 
 	public EntityTrainer(World par1World) {
 		super(par1World);

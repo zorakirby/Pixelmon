@@ -1,11 +1,15 @@
 package pixelmon.entities.pixelmon.helpers;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.Entity8HoldsItems;
+import pixelmon.enums.EnumBossMode;
 
 public class DropItemHelper {
 
@@ -16,6 +20,10 @@ public class DropItemHelper {
 	}
 
 	public int getDropItemID() {
+		if (pixelmon.getBossMode() != EnumBossMode.Normal) {
+			dropBossItems();
+			return 0;
+		}
 		String droppedItem = pixelmon.baseStats.droppedItem;
 		if (!PixelmonConfig.pokemonDropsEnabled || pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
 			return 0;
@@ -68,5 +76,15 @@ public class DropItemHelper {
 		;
 
 		return 0;
+	}
+
+	public static ArrayList<Item> bossDropItems = new ArrayList<Item>();
+
+	private void dropBossItems() {
+		Random r = new Random();
+		for (int i = 0; i < pixelmon.getBossMode().numDroppedItems; i++) {
+			Item item = bossDropItems.get(r.nextInt(bossDropItems.size()));
+			pixelmon.dropItem(item.itemID, 1);
+		}
 	}
 }

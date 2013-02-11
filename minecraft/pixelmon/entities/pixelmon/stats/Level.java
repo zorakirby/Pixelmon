@@ -138,23 +138,11 @@ public class Level {
 			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
 		}
-		String name = pixelmon.getName();
-
+		
 		if (pixelmon.getOwner() != null)
 			pixelmon.friendship.onLevelUp();
 
-		if (DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
-			ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
-			for (Attack a : newAttacks) {
-				if (pixelmon.moveset.size() >= 4) {
-					((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace,
-							pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
-				} else {
-					pixelmon.moveset.add(a);
-					ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
-				}
-			}
-		}
+		
 		setScale();
 	}
 
@@ -174,7 +162,16 @@ public class Level {
 		}
 		while (getExp() >= getExpToNextLevel()) {
 			int newExp = getExp() - getExpToNextLevel();
+			if (!canLevelUp())
+				return;
 
+			PixelmonStatsPacket stats = null;
+			if (pixelmon.getOwner() != null)
+				stats = PixelmonStatsPacket.createPacket(pixelmon);
+			setLevel(getLevel() + 1);
+			onLevelUp(stats);
+			setExp(newExp);
+			
 			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.expShare) && pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1
 					&& getLevel() >= pixelmon.baseStats.evolveLevel) {
 				pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
@@ -196,15 +193,19 @@ public class Level {
 
 				}
 			}
-			if (!canLevelUp())
-				return;
-
-			PixelmonStatsPacket stats = null;
-			if (pixelmon.getOwner() != null)
-				stats = PixelmonStatsPacket.createPacket(pixelmon);
-			setLevel(getLevel() + 1);
-			onLevelUp(stats);
-			setExp(newExp);
+			String name = pixelmon.getName();
+			if (DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
+				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
+				for (Attack a : newAttacks) {
+					if (pixelmon.moveset.size() >= 4) {
+						((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace,
+								pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
+					} else {
+						pixelmon.moveset.add(a);
+						ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
+					}
+				}
+			}
 		}
 	}
 

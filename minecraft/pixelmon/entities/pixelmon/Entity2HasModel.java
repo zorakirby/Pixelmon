@@ -40,8 +40,8 @@ public abstract class Entity2HasModel extends Entity1Base {
 
 	String oldName;
 
-	public float getGrowthScaleFactor() {
-		return getGrowth().scaleValue;
+	public float getScaleFactor() {
+		return getGrowth().scaleValue * getBossMode().scaleFactor;
 	}
 
 	@Override

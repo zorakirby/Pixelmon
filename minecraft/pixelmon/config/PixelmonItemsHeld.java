@@ -2,6 +2,7 @@ package pixelmon.config;
 
 import java.lang.reflect.Field;
 
+import pixelmon.Pixelmon;
 import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.heldItems.ItemBerryLeppa;
@@ -65,6 +66,7 @@ public class PixelmonItemsHeld {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					LanguageRegistry.addName(item, field.getAnnotation(Mod.Item.class).name());
+					Pixelmon.proxy.registerBossDropItem(item);
 				}
 			}
 		} catch (Exception e) {
@@ -74,7 +76,7 @@ public class PixelmonItemsHeld {
 
 	public static ItemHeld getHeldItem(int id) {
 		try {
-			for (Field field : PixelmonItems.class.getFields()) {
+			for (Field field : PixelmonItemsHeld.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemHeld)

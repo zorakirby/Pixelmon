@@ -32,9 +32,12 @@ public abstract class Entity1Base extends EntityTameable {
 	protected void init(String name) {
 		setName(name);
 		isInitialised = true;
-		setBoss(EnumBossMode.Normal);
-		setNature(EnumNature.getRandomNature());
-		setGrowth(EnumGrowth.getRandomGrowth());
+		if (getBossMode() == null)
+			setBoss(EnumBossMode.Normal);
+		if (getNature() == null)
+			setNature(EnumNature.getRandomNature());
+		if (getGrowth() == null)
+			setGrowth(EnumGrowth.getRandomGrowth());
 	}
 
 	public String getName() {
@@ -139,7 +142,8 @@ public abstract class Entity1Base extends EntityTameable {
 		super.readEntityFromNBT(nbt);
 		dataWatcher.updateObject(4, nbt.getInteger("pixelmonID"));
 		dataWatcher.updateObject(2, nbt.getString("Name"));
-		init(getName());
+		if (!isInitialised)
+			init(getName());
 		if (nbt.hasKey("Nickname"))
 			dataWatcher.updateObject(3, nbt.getString("Nickname"));
 

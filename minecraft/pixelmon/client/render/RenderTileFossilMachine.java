@@ -1,5 +1,6 @@
 package pixelmon.client.render;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -187,7 +188,6 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		GL11.glScalef(-f3, -f3, f3);
 		GL11.glDisable(2896 /* GL_LIGHTING */);
 		GL11.glDepthMask(false);
-		GL11.glDisable(2929 /* GL_DEPTH_TEST */);
 		GL11.glEnable(3042 /* GL_BLEND */);
 		GL11.glBlendFunc(770, 771);
 		Tessellator tessellator = Tessellator.instance;
@@ -207,7 +207,6 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		tessellator.addVertex(f8 - 25F, -7 + byte0, 0.0D);
 		tessellator.draw();
 		GL11.glEnable(3553 /* GL_TEXTURE_2D */);
-		GL11.glEnable(2929 /* GL_DEPTH_TEST */);
 		GL11.glDepthMask(true);
 		GL11.glEnable(2896 /* GL_LIGHTING */);
 		GL11.glDisable(3042 /* GL_BLEND */);
@@ -256,8 +255,6 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 			GL11.glScalef(-var14 + 0.012f, -var14 + 0.012f, var14 + 0.012f);
 		}
 		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glDepthMask(false);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -268,8 +265,6 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		int var17 = var12.getStringWidth(par2Str) / 2;
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, par11);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glDepthMask(true);
 		var15.startDrawingQuads();
 		var15.addVertex((double) (-var17 - 1), (double) (-1 + var16), 0.0D);
 		var15.addVertex((double) (-var17 - 1), (double) (8 + var16), 0.0D);
@@ -284,15 +279,16 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 	}
 
 	public String fossilTexture(TileEntityFossilMachine tile) {
-		if(tile.currentFossil != -1)
-		return PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModelName().toLowerCase();
-		else return "";
+		if (tile.currentFossil != -1)
+			return PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModelName().toLowerCase();
+		else
+			return "";
 	}
 
 	public void renderModel(TileEntityFossilMachine tile, float f) {
 		if (tile.currentFossil != -1)
-		if (PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel() != null)
-		PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel().renderModel(tile, f);
+			if (PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel() != null)
+				PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel().renderModel(tile, f);
 	}
 
 	@Override

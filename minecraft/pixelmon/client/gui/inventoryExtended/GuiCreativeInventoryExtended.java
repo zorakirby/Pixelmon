@@ -148,7 +148,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 			}
 			drawButtonContainer();
 		}
-		int guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtendedCreative2.png");
+		int guiIndex = mc.renderEngine.getTexture("/pixelmon/gui/PixelmonCreativeInventory.png");
 
 		int mouseX = Mouse.getX() * this.width / this.mc.displayWidth;
 		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;

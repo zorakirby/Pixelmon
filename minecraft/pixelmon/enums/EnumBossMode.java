@@ -4,15 +4,27 @@ import java.awt.Color;
 import java.util.Random;
 
 public enum EnumBossMode {
-	Normal(0, -1, Color.WHITE), Uncommon(1, 60, Color.CYAN), Rare(2, 30, Color.RED), Legendary(3, 10, Color.MAGENTA);
+	Normal(0, -1, Color.WHITE, 1, 0, 1, 0), 
+	Uncommon(1, 60, Color.CYAN, 1.2f, 5, 1.5f, 1), 
+	Rare(2, 30, Color.RED, 1.4f, 10, 2, 3), 
+	Legendary(3, 10, Color.YELLOW, 1.6f, 20, 3, 5);
+
 	public int index;
 	public int rarity;
 	public Color colour;
+	public float scaleFactor;
+	public int extraLevels;
+	public float catchRateModifier = 1;
+	public int numDroppedItems = 0;
 
-	private EnumBossMode(int index, int rarity, Color colour) {
+	private EnumBossMode(int index, int rarity, Color colour, float scaleFactor, int extraLevels, float catchRateModifier, int numDroppedItems) {
 		this.index = index;
+		this.catchRateModifier = catchRateModifier;
 		this.rarity = rarity;
 		this.colour = colour;
+		this.scaleFactor = scaleFactor;
+		this.extraLevels = extraLevels;
+		this.numDroppedItems = numDroppedItems;
 	}
 
 	public static EnumBossMode getMode(int index) {
@@ -33,5 +45,17 @@ public enum EnumBossMode {
 			}
 		}
 		return null;
+	}
+
+	public int getColourInt() {
+		if (colour == Color.WHITE)
+			return -1;
+		if (colour == Color.CYAN)
+			return 100000;
+		if (colour == Color.RED)
+			return -65280;
+		if (colour == Color.YELLOW)
+			return -255;
+		return -1;
 	}
 }

@@ -27,7 +27,7 @@ public class Stats {
 	}
 
 	public int calculateStat(StatsType stat, EnumNature nature, BaseStats baseStats, int level) {
-		float val = (float) IVs.get(stat) + 2 * (float) baseStats.get(stat) + ((float) EVs.get(stat) / 4f) * (float) level;
+		float val = ((float) IVs.get(stat) + 2 * (float) baseStats.get(stat) + ((float) EVs.get(stat) / 4f)) * (float) level;
 		val /= 100f + 5;
 		if (stat == nature.increasedStat)
 			val *= 1.1f;

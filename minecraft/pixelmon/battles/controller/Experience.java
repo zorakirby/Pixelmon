@@ -34,22 +34,26 @@ public class Experience {
 				}
 				int expShareCount = 0;
 				for (NBTTagCompound nbt : storage.partyPokemon) {
-					if (nbt.hasKey("HeldItem")) {
-						int itemId = nbt.getInteger("HeldItem");
-						if (itemId != -1) {
-							if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
-								expShareCount++;
+					if (nbt != null) {
+						if (nbt.hasKey("HeldItem")) {
+							int itemId = nbt.getInteger("HeldItem");
+							if (itemId != -1) {
+								if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
+									expShareCount++;
+								}
 							}
 						}
 					}
 				}
 
 				for (NBTTagCompound nbt : storage.partyPokemon) {
-					if (nbt.hasKey("HeldItem")) {
-						int itemId = nbt.getInteger("HeldItem");
-						if (itemId != -1) {
-							if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
-								calcExp(storage, p, faintedPokemon, nbt.getInteger("pixelmonID"), true, 0.5 * 1 / (double) expShareCount);
+					if (nbt != null) {
+						if (nbt.hasKey("HeldItem")) {
+							int itemId = nbt.getInteger("HeldItem");
+							if (itemId != -1) {
+								if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
+									calcExp(storage, p, faintedPokemon, nbt.getInteger("pixelmonID"), true, 0.5 * 1 / (double) expShareCount);
+								}
 							}
 						}
 					}
