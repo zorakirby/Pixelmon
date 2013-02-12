@@ -582,7 +582,12 @@ public class GuiBattle extends GuiContainer {
 					int xpos = width / 2 - 30;
 					int ypos = height - 195 + pos * 30;
 					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31 && !isHealing)
-						drawImageQuad(guiIndex, xpos, ypos, 150, 32, 43f / 256f, 205f / 256f, 194f / 256f, 237f / 256f);
+						// if (mode==BattleMode.ApplyToPokemon &&
+						// PixelmonItems.getItem(itemToUse.id) instanceof
+						// ItemRevive)
+						// else
+						if (!pdata.isFainted)
+							drawImageQuad(guiIndex, xpos, ypos, 150, 32, 43f / 256f, 205f / 256f, 194f / 256f, 237f / 256f);
 				}
 			}
 		}
@@ -787,9 +792,11 @@ public class GuiBattle extends GuiContainer {
 					int xpos = width / 2 - 30;
 					int ypos = height - 195 + pos * 30;
 					if (mouseX > xpos && mouseX < xpos + 150 && mouseY > ypos + 1 && mouseY < ypos + 31) {
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwitchPokemon, pdata.order, battleControllerIndex, 0));
-						mode = BattleMode.Waiting;
-						return;
+						if (!pdata.isFainted) {
+							PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SwitchPokemon, pdata.order, battleControllerIndex, 0));
+							mode = BattleMode.Waiting;
+							return;
+						}
 					}
 				}
 				pos++;
@@ -867,9 +874,12 @@ public class GuiBattle extends GuiContainer {
 			}
 		}
 		if (pokemonToApplyTo != -1) {
-			if (ServerStorageDisplay.pokemon[pokemonToApplyTo].isFainted// && PixelmonItems.getItem(itemToUse.id) instanceof ItemRevive)
-					)
-					return;
+			if (ServerStorageDisplay.pokemon[pokemonToApplyTo].isFainted// &&
+																		// PixelmonItems.getItem(itemToUse.id)
+																		// instanceof
+																		// ItemRevive)
+			)
+				return;
 			if (PixelmonItems.getItem(itemToUse.id) instanceof ItemPotion) {
 				pixelmonToHeal = ServerStorageDisplay.pokemon[pokemonToApplyTo];
 				healAmount = pixelmonToHeal.health + ((ItemPotion) PixelmonItems.getItem(itemToUse.id)).type.getHealAmount();
