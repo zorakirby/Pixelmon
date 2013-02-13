@@ -138,11 +138,10 @@ public class Level {
 			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
 		}
-		
+
 		if (pixelmon.getOwner() != null)
 			pixelmon.friendship.onLevelUp();
 
-		
 		setScale();
 	}
 
@@ -171,26 +170,26 @@ public class Level {
 			setLevel(getLevel() + 1);
 			onLevelUp(stats);
 			setExp(newExp);
-			
-			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.expShare) && pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1
-					&& getLevel() >= pixelmon.baseStats.evolveLevel) {
-				pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
-			}
-			for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
-				if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
-					boolean evolves = true;
-					if (e.extraParam != null) {
-						if (e.extraParam.equalsIgnoreCase("day") && !pixelmon.worldObj.isDaytime())
-							evolves = false;
-						else if (e.extraParam.equalsIgnoreCase("night") && pixelmon.worldObj.isDaytime())
-							evolves = false;
-					}
-					if (evolves)
-						pixelmon.evolve(e.pokemonName);
-				} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.biome) {
-					if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome())
-						pixelmon.evolve(e.pokemonName);
+			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.everStone)) {
+				if (pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
+					pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
+				}
+				for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
+					if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
+						boolean evolves = true;
+						if (e.extraParam != null) {
+							if (e.extraParam.equalsIgnoreCase("day") && !pixelmon.worldObj.isDaytime())
+								evolves = false;
+							else if (e.extraParam.equalsIgnoreCase("night") && pixelmon.worldObj.isDaytime())
+								evolves = false;
+						}
+						if (evolves)
+							pixelmon.evolve(e.pokemonName);
+					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.biome) {
+						if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome())
+							pixelmon.evolve(e.pokemonName);
 
+					}
 				}
 			}
 			String name = pixelmon.getName();

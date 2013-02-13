@@ -34,12 +34,12 @@ public class PixelmonItemsFossils {
 	public static int armorFossilUncoveredID;
 	public static int coverFossilUncoveredID;
 	public static int plumeFossilUncoveredID;
-	
+
 	public static int fossilMachineDisplayID;
 	public static int fossilMachineTankID;
 	public static int fossilMachineTopID;
 	public static int fossilMachineBaseID;
-	
+
 	public static int fossilMachineItemID;
 
 	@Mod.Item(name = "Fossil Machine", typeClass = "pixelmon.items.ItemBlock")
@@ -81,7 +81,7 @@ public class PixelmonItemsFossils {
 	public static Item coverFossilUncovered;
 	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item plumeFossilUncovered;
-	
+
 	@Mod.Item(name = "Fossil Machine Tank", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item fossilMachineTank;
 	@Mod.Item(name = "Fossil Machine Display", typeClass = "pixelmon.items.PixelmonItem")
@@ -90,7 +90,6 @@ public class PixelmonItemsFossils {
 	public static Item fossilMachineTop;
 	@Mod.Item(name = "Fossil Machine Base", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item fossilMachineBase;
-	
 
 	public static void load(Configuration cfg) {
 		if (!isEnabled)
@@ -120,7 +119,6 @@ public class PixelmonItemsFossils {
 		armorFossilUncoveredID = cfg.get("fossils", "ArmorFossilUncovered", 21106).getInt();
 		coverFossilUncoveredID = cfg.get("fossils", "PlumeFossilUncovered", 21107).getInt();
 		plumeFossilUncoveredID = cfg.get("fossils", "CoverFossilUncovered", 21108).getInt();
-		
 
 		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, 82).setItemName("Fossil Machine");
 		helixFossil = new ItemPokemonFossil(helixFossilID, "Omanyte", "HelixFossil").setItemName("helixFossil").setIconIndex(10);
@@ -137,24 +135,24 @@ public class PixelmonItemsFossils {
 		fossilMachineDisplay = new PixelmonItem(fossilMachineDisplayID).setItemName("Fossil Machine Display").setIconCoord(2, 6).setCreativeTab(CreativeTabs.tabDecorations);
 		fossilMachineTop = new PixelmonItem(fossilMachineTopID).setItemName("Fossil Machine Top").setIconCoord(2, 8).setCreativeTab(CreativeTabs.tabDecorations);
 		fossilMachineBase = new PixelmonItem(fossilMachineBaseID).setItemName("Fossil Machine Base").setIconCoord(2, 10).setCreativeTab(CreativeTabs.tabDecorations);
-		
-		helixFossilUncovered = new ItemFossilUncovered(helixFossilUncoveredID).setItemName("helixFossilUncovered").setIconIndex(11)
+
+		helixFossilUncovered = new ItemFossilUncovered(helixFossilUncoveredID, (ItemPokemonFossil) helixFossil).setItemName("helixFossilUncovered").setIconIndex(11)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		domeFossilUncovered = new ItemFossilUncovered(domeFossilUncoveredID).setItemName("domeFossilUncovered").setIconIndex(27)
+		domeFossilUncovered = new ItemFossilUncovered(domeFossilUncoveredID, (ItemPokemonFossil) domeFossil).setItemName("domeFossilUncovered").setIconIndex(27)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		oldAmberUncovered = new ItemFossilUncovered(oldAmberUncoveredID).setItemName("oldAmberUncovered").setIconIndex(43)
+		oldAmberUncovered = new ItemFossilUncovered(oldAmberUncoveredID, (ItemPokemonFossil) oldAmber).setItemName("oldAmberUncovered").setIconIndex(43)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		rootFossilUncovered = new ItemFossilUncovered(rootFossilUncoveredID).setItemName("rootFossilUncovered").setIconIndex(59)
+		rootFossilUncovered = new ItemFossilUncovered(rootFossilUncoveredID, (ItemPokemonFossil) rootFossil).setItemName("rootFossilUncovered").setIconIndex(59)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		clawFossilUncovered = new ItemFossilUncovered(clawFossilUncoveredID).setItemName("clawFossilUncovered").setIconIndex(75)
+		clawFossilUncovered = new ItemFossilUncovered(clawFossilUncoveredID, (ItemPokemonFossil) clawFossil).setItemName("clawFossilUncovered").setIconIndex(75)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		skullFossilUncovered = new ItemFossilUncovered(skullFossilUncoveredID).setItemName("skullFossilUncovered").setIconIndex(91)
+		skullFossilUncovered = new ItemFossilUncovered(skullFossilUncoveredID, (ItemPokemonFossil) skullFossil).setItemName("skullFossilUncovered").setIconIndex(91)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		armorFossilUncovered = new ItemFossilUncovered(armorFossilUncoveredID).setItemName("armorFossilUncovered").setIconIndex(107)
+		armorFossilUncovered = new ItemFossilUncovered(armorFossilUncoveredID, (ItemPokemonFossil) armorFossil).setItemName("armorFossilUncovered").setIconIndex(107)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		coverFossilUncovered = new ItemFossilUncovered(coverFossilUncoveredID).setItemName("coverFossilUncovered").setIconIndex(123)
+		coverFossilUncovered = new ItemFossilUncovered(coverFossilUncoveredID, (ItemPokemonFossil) coverFossil).setItemName("coverFossilUncovered").setIconIndex(123)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
-		plumeFossilUncovered = new ItemFossilUncovered(plumeFossilUncoveredID).setItemName("plumeFossilUncovered").setIconIndex(139)
+		plumeFossilUncovered = new ItemFossilUncovered(plumeFossilUncoveredID, (ItemPokemonFossil) plumeFossil).setItemName("plumeFossilUncovered").setIconIndex(139)
 				.setCreativeTab(PixelmonCreativeTabs.natural);
 
 	}
@@ -202,6 +200,21 @@ public class PixelmonItemsFossils {
 					if (item instanceof ItemPokemonFossil)
 						if (item.itemID == currentFossil)
 							return (ItemPokemonFossil) item;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Item getItemFromIndex(int itemID) {
+		try {
+			for (Field field : PixelmonItemsFossils.class.getFields()) {
+				if (field.isAnnotationPresent(Mod.Item.class)) {
+					Item item = (Item) field.get(null);
+					if (item.itemID == itemID)
+						return item;
 				}
 			}
 		} catch (Exception e) {
