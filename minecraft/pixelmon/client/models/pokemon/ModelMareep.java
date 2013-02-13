@@ -33,42 +33,44 @@ public class ModelMareep extends PixelmonModelBase
     
       Body = new ModelRenderer(this, "Body");
       Body.setRotationPoint(0, 17, -2);
+      ModelRenderer Wool = new ModelRenderer(this, "Wool");
       ModelRenderer  wool = new ModelRenderer(this, 0, 47);
       wool.addBox(-5F, -2.733333F, -2F, 8, 8, 9);
       wool.setTextureSize(128, 64);
       wool.mirror = true;
       setRotation(wool, 0.0349066F, 0F, 0F);
-      Body.addChild(wool);
+      Wool.addChild(wool);
       ModelRenderer  wool_2 = new ModelRenderer(this, 0, 38);
       wool_2.addBox(-4F, -1.4F, -3F, 6, 6, 2);
       wool_2.setTextureSize(128, 64);
       wool_2.mirror = true;
       setRotation(wool_2, -0.1396263F, 0F, 0F);
-      Body.addChild(wool_2);
+      Wool.addChild(wool_2);
       ModelRenderer  wool_3 = new ModelRenderer(this, 0, 29);
       wool_3.addBox(-4F, -1.066667F, 6F, 6, 6, 2);
       wool_3.setTextureSize(128, 64);
       wool_3.mirror = true;
       setRotation(wool_3, 0.122173F, 0F, 0F);
-      Body.addChild(wool_3);
+      Wool.addChild(wool_3);
       ModelRenderer  wool_4 = new ModelRenderer(this, 35, 51);
       wool_4.addBox(1.933333F, -1.733333F, -1F, 2, 6, 7);
       wool_4.setTextureSize(128, 64);
       wool_4.mirror = true;
       setRotation(wool_4, 0.0349066F, 0F, 0F);
-      Body.addChild(wool_4);
+      Wool.addChild(wool_4);
       ModelRenderer  wool_5 = new ModelRenderer(this, 35, 51);
       wool_5.addBox(-5.733333F, -1.733333F, -1F, 2, 6, 7);
       wool_5.setTextureSize(128, 64);
       wool_5.mirror = true;
       setRotation(wool_5, 0.0349066F, 0F, 0F);
-      Body.addChild(wool_5);
+      Wool.addChild(wool_5);
       ModelRenderer  wool_6 = new ModelRenderer(this, 28, 41);
       wool_6.addBox(-4F, -3.466667F, -1F, 6, 2, 7);
       wool_6.setTextureSize(128, 64);
       wool_6.mirror = true;
       setRotation(wool_6, 0.0349066F, 0F, 0F);
-      Body.addChild(wool_6);
+      Wool.addChild(wool_6);
+      Body.addChild(Wool);
       ModelRenderer  body = new ModelRenderer(this, 100, 51);
       body.addBox(-4F, 0F, -2F, 6, 5, 8);
       body.setTextureSize(128, 64);
@@ -216,15 +218,12 @@ public class ModelMareep extends PixelmonModelBase
       ModuleHead headModule = new ModuleHead(Head);
       skeleton = new SkeletonQuadruped(Body, headModule, FLLeg, FRLeg, BLLeg, BRLeg, 1.1f, 1.1f, 0.8f);
       
-      
-      
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
     Body.render(f5);
-    
   }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
