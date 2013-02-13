@@ -5,6 +5,7 @@
 // - ZeuX
 package pixelmon.client.models;
 
+import pixelmon.blocks.TileEntityFossilCleaner;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -179,7 +180,6 @@ public class ModelFossilCleaningMachineOff extends ModelBase {
 		ControlPanelBottom.setTextureSize(128, 64);
 		ControlPanelBottom.mirror = true;
 		setRotation(ControlPanelBottom, 0F, 0F, 0F);
-		ControlPanelTop.mirror = true;
 		ControlPanelTop = new ModelRenderer(this, 74, 17);
 		ControlPanelTop.addBox(-3.5F, 4.7F, -2.8F, 7, 4, 2);
 		ControlPanelTop.setRotationPoint(0F, 17.2F, 2F);
@@ -229,6 +229,34 @@ public class ModelFossilCleaningMachineOff extends ModelBase {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
+	}
+	
+	public void renderModel(TileEntityFossilCleaner entity, float f5) {
+		MainBottomMost.render(f5);
+		Main.render(f5);
+		MainSecondBottom.render(f5);
+		TopBase.render(f5);
+		MainHorizontalLR.render(f5);
+		MainHorizontalFB.render(f5);
+		Neck.render(f5);
+		TopFiller.render(f5);
+		TopLeftTop.render(f5);
+		TopLeftMiddle.render(f5);
+		TopLeftBottom.render(f5);
+		TopBackTop.render(f5);
+		TopBackBottom.render(f5);
+		TopBackMiddle.render(f5);
+		TopFrontTop.render(f5);
+		TopFrontBottom.render(f5);
+		TopFrontMiddle.render(f5);
+		TopRightTop.render(f5);
+		TopRightBottom.render(f5);
+		TopRightMiddle.render(f5);
+		OnButton.render(f5);
+		OffButton.render(f5);
+		ControlPanelBottom.render(f5);
+		ControlPanelTop.render(f5);
+		Watch.render(f5);
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {

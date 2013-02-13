@@ -62,6 +62,7 @@ public class PixelmonItems {
 	public static int healerItemID;
 	public static int anvilItemID;
 	public static int tradeMachineItemID;
+	public static int fossilCleanerItemID;
 
 	public static int fireStoneID;
 	public static int waterStoneID;
@@ -151,6 +152,8 @@ public class PixelmonItems {
 	public static Item anvilItem;
 	@Mod.Item(name = "Trade Machine", typeClass = "pixelmon.items.ItemBlock")
 	public static Item tradeMachineItem;
+	@Mod.Item(name = "Fossil Cleaner", typeClass = "pixelmon.items.ItemBlock")
+	public static Item fossilCleanerItem;
 
 	@Mod.Item(name = "Thunder Stone Shard", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item thunderStoneShard;
@@ -228,6 +231,7 @@ public class PixelmonItems {
 		healerItemID = cfg.get("item", "HealerItem", 10014).getInt();
 		anvilItemID = cfg.get("item", "AnvilItem", 10015).getInt();
 		tradeMachineItemID = cfg.get("item", "TradeMachineItem", 10016).getInt();
+		fossilCleanerItemID = cfg.get("item", "FossilCleanerItem", 10028).getInt();
 
 		fireStoneID = cfg.get("evolutionStone", "FireStone", 10008).getInt();
 		waterStoneID = cfg.get("evolutionStone", "WaterStone", 10009).getInt();
@@ -287,6 +291,7 @@ public class PixelmonItems {
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, 50).setItemName("Healer");
 		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, 66).setItemName("Anvil");
 		tradeMachineItem = new ItemBlock(tradeMachineItemID, PixelmonBlocks.tradeMachine, 146).setItemName("Trade Machine");
+		fossilCleanerItem = new ItemBlock(fossilCleanerItemID, PixelmonBlocks.fossilCleaner, 146).setItemName("FossilCleaner");
 
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID).setItemName("ThunderStoneShard").setIconIndex(3).setCreativeTab(PixelmonCreativeTabs.natural);
 		leafStoneShard = new PixelmonItem(leafStoneShardID).setItemName("LeafStoneShard").setIconIndex(35).setCreativeTab(PixelmonCreativeTabs.natural);

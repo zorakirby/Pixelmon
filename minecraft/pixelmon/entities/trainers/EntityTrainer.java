@@ -47,6 +47,8 @@ public class EntityTrainer extends EntityCreature {
 		setName(name);
 		pokemonStorage = new PlayerStorage(this);
 		info = DatabaseTrainers.GetTrainerInfo(name);
+		if (info == null)
+			System.out.println("Database entry error/missing for trainer " + name);
 		dataWatcher.updateObject(5, info.level);
 		if (dataWatcher.getWatchableObjectString(4) == "")
 			dataWatcher.updateObject(4, info.model);
@@ -199,7 +201,7 @@ public class EntityTrainer extends EntityCreature {
 	public int getLvl() {
 		return dataWatcher.getWatchableObjectInt(5);
 	}
-	
+
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 1;
