@@ -18,14 +18,14 @@ public abstract class Entity4Textures extends Entity3HasStats {
 
 	public Entity4Textures(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(5, (short) 0); // shiny
+		dataWatcher.addObject(5, (short) -1); // shiny
 		dataWatcher.addObject(6, (short) 0); // roasted
 		dataWatcher.addObject(18, (short) 0); // red
 	}
 
 	protected void init(String name) {
 		super.init(name);
-		if (!alreadyInitialised) {
+		if (!alreadyInitialised && dataWatcher.getWatchableObjectShort(5) == (short) -1) {
 			if ((new Random()).nextFloat() < 1 / 8192f) {
 				dataWatcher.updateObject(5, (short) 1);
 			}
@@ -46,10 +46,12 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	@Override
 	public String getTexture() {
 		if (dataWatcher.getWatchableObjectShort(5) == (short) 1
-				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
+				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream(
+						"/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
 			return "/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
 		else if (dataWatcher.getWatchableObjectShort(6) == (short) 1
-				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
+				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream(
+						"/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
 			return "/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";
 		else
 			return "/pixelmon/texture/pokemon/" + getName().toLowerCase() + ".png";
@@ -65,7 +67,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		else
 			dataWatcher.updateObject(5, (short) 0);
 	}
-	
+
 	public boolean getIsRed() {
 		return dataWatcher.getWatchableObjectShort(18) == (short) 1;
 	}

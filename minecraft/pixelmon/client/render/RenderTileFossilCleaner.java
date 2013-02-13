@@ -46,17 +46,18 @@ public class RenderTileFossilCleaner extends TileEntitySpecialRenderer {
 			return;
 		if (Minecraft.getMinecraft().theWorld.getBlockId(tile.xCoord, tile.yCoord-1, tile.zCoord) == PixelmonBlocks.pc.blockID) return;
 
-		bindTextureByName("/pixelmon/texture/blocks/pc.png"); // texture
 		GL11.glPushMatrix(); // start
 		GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F); // size
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F); // rotate based on metadata
-		GL11.glScalef(1.0F, -1F, -1F); // if you read this comment out this line
-										// and you can see what happens
-		if (tileEntity.isOn())
-			onModel.renderModel(tileEntity, 0.0625F); // renders and yes 0.0625 is a random
-		else
-			offModel.renderModel(tileEntity, 0.0625F); // renders and yes 0.0625 is a random
-											// number
+		GL11.glScalef(1.0F, -1F, -1F); 
+		
+		if (tileEntity.isOn()){
+			bindTextureByName("/pixelmon/texture/blocks/fossilcleaningmachineon.png");
+			onModel.renderModel(tileEntity, 0.0625F); 
+		}else{
+			bindTextureByName("/pixelmon/texture/blocks/fossilcleaningmachineoff.png");
+			offModel.renderModel(tileEntity, 0.0625F); 
+		}
 		GL11.glPopMatrix(); // end
 	}
 

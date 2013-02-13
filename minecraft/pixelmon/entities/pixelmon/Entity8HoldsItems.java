@@ -13,6 +13,7 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 	public ItemStack heldItem;
 	private DropItemHelper dropItemHelper = new DropItemHelper(this);
 	private PixelmonInteraction interaction;
+	public int numInteractions;
 
 	public Entity8HoldsItems(World par1World) {
 		super(par1World);
@@ -30,6 +31,13 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 			if (interaction.interact(par1EntityPlayer))
 				return true;
 		return super.interact(par1EntityPlayer);
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if (interaction != null)
+			interaction.tick();
 	}
 
 	public void setHeldItem(ItemStack var1) {
