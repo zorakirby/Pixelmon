@@ -218,6 +218,9 @@ public class ModelMareep extends PixelmonModelBase
       ModuleHead headModule = new ModuleHead(Head);
       skeleton = new SkeletonQuadruped(Body, headModule, FLLeg, FRLeg, BLLeg, BRLeg, 1.1f, 1.1f, 0.8f);
       
+      Wool.isHidden=true;
+      
+      
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
