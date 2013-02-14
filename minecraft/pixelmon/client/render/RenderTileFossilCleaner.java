@@ -50,6 +50,8 @@ public class RenderTileFossilCleaner extends TileEntitySpecialRenderer {
 		GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F); // size
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F); // rotate based on metadata
 		GL11.glScalef(1.0F, -1F, -1F); 
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
 		
 		if (tileEntity.isOn()){
 			bindTextureByName("/pixelmon/texture/blocks/fossilcleaningmachineon.png");
