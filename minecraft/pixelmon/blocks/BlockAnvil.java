@@ -88,30 +88,18 @@ public class BlockAnvil extends BlockContainer {
 		if (((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil != -1) {
 			int itemId = ((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil;
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
-
-			Item aluminum = null;
-			if (itemId == PixelmonItems.aluminumPlate.itemID)
-				aluminum = PixelmonItems.aluminumPlate;
-			else if (itemId == PixelmonItems.aluminumIngot.itemID)
-				aluminum = PixelmonItems.aluminumIngot;
-			if (aluminum != null) {
-
-				EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(aluminum));
-
-				var3.delayBeforeCanPickup = 10;
-
-				world.spawnEntityInWorld(var3);
-				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
-				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).state = 0;
-				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
-				return true;
+			if (item == null) {
+				if (itemId == PixelmonItems.aluminumPlate.itemID)
+					item = PixelmonItems.aluminumPlate;
+				else if (itemId == PixelmonItems.aluminumIngot.itemID)
+					item = PixelmonItems.aluminumIngot;
 			}
 
-			if (item == null && aluminum == null) {
+			if (item == null) {
 				((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = -1;
 				return true;
 			}
-			
+
 			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
 
 			var3.delayBeforeCanPickup = 10;
