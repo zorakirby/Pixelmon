@@ -161,42 +161,42 @@ public class ModelZubat extends PixelmonModelBase
       LeftWing = new ModelRenderer (this, "Left Wing");
       LeftWing.setRotationPoint(0.5F,0,0.5F);
       WingL1 = new ModelRenderer(this, 16, 0);
-      WingL1.addBox(-1F, 0F, 0.5F, 1, 8, 1);
+      WingL1.addBox(-1F, 0F, -0.5F, 1, 8, 1);
       WingL1.setTextureSize(64, 32);
       WingL1.mirror = true;
       setRotation(WingL1, 0F, 0F, -2.639681F);
       LeftWing.addChild(WingL1);
       WingL2 = new ModelRenderer(this, 21, 0);
       WingL2.addBox(-1F, 0F, -1F, 1, 3, 1);
-      WingL2.setRotationPoint(4F, -7F, 1.5F);
+      WingL2.setRotationPoint(4F, -7F, 0.5F);
       WingL2.setTextureSize(64, 32);
       WingL2.mirror = true;
       setRotation(WingL2, 0F, 0F, -1.041001F);
       LeftWing.addChild(WingL2);
       WingL3 = new ModelRenderer(this, 10, 23);
       WingL3.addBox(-1F, 0F, -1F, 1, 7, 1);
-      WingL3.setRotationPoint(6F, -6F, 1.5F);
+      WingL3.setRotationPoint(6F, -6F, 0.5F);
       WingL3.setTextureSize(64, 32);
       WingL3.mirror = true;
       setRotation(WingL3, 0F, 0F, -0.7807508F);
       LeftWing.addChild(WingL3);
       WingLMid = new ModelRenderer(this, 17, 0);
       WingLMid.addBox(-1F, 0F, -1F, 1, 7, 1);
-      WingLMid.setRotationPoint(5F, -6F, 1.5F);
+      WingLMid.setRotationPoint(5F, -6F, 0.5F);
       WingLMid.setTextureSize(64, 32);
       WingLMid.mirror = true;
       setRotation(WingLMid, 0F, 0, -0.1858931F);
       LeftWing.addChild(WingLMid);
       WebbingL1 = new ModelRenderer(this, 28, 15);
       WebbingL1.addBox(0F, 0F, 0F, 5, 5, 0);
-      WebbingL1.setRotationPoint(4F, -6F, 0.5F);
+      WebbingL1.setRotationPoint(4F, -6F, 0F);
       WebbingL1.setTextureSize(64, 32);
       WebbingL1.mirror = true;
       setRotation(WebbingL1, 0F, 0F, 0.5576792F);
       LeftWing.addChild(WebbingL1);
       WebbingL2 = new ModelRenderer(this, 27, 16);
       WebbingL2.addBox(0F, 0F, 0F, 4, 3, 0);
-      WebbingL2.setRotationPoint(4F, -2F, 0.5F);
+      WebbingL2.setRotationPoint(4F, -2F, 0F);
       WebbingL2.setTextureSize(64, 32);
       WebbingL2.mirror = true;
       setRotation(WebbingL2, 0F, 0F, -0.6320364F);
@@ -229,22 +229,35 @@ public class ModelZubat extends PixelmonModelBase
   public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
 	  	  
-		
-		if (((EntityPixelmon)entity).animationCounter * 3 -90 < 0) { 
-			RightWing.rotateAngleX = -((EntityPixelmon)entity).animationCounter * 0.052F;
+		if (((EntityPixelmon)entity).animationCounter * 3 - 180 < 0) { 
+			LeftWing.rotateAngleZ = -1.5F + (((EntityPixelmon)entity).animationCounter + 90) * 0.0174532925F;
 			}
 			
-		if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
-			RightWing.rotateAngleX = (((EntityPixelmon)entity).animationCounter * 0.052F);
+		else if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
+			LeftWing.rotateAngleZ = 0.5F + -((((EntityPixelmon)entity).animationCounter - 90) * 0.0174532925F);
 			}
+		
+		
+		if (((EntityPixelmon)entity).animationCounter * 3 - 180 < 0) { 
+			RightWing.rotateAngleZ = 1.5F + -(((EntityPixelmon)entity).animationCounter + 90) * 0.0174532925F;
+			}
+			
+		else if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
+			RightWing.rotateAngleZ = -0.5F + ((((EntityPixelmon)entity).animationCounter - 90) * 0.0174532925F);
+			}
+		
+		if (((EntityPixelmon)entity).animationCounter * 3 -180 < 0) { 
+			Body.rotationPointY = 15 -(((EntityPixelmon)entity).animationCounter + 180) * 0.174532925F;
+		}
+		
+		else if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
+			Body.rotationPointY = -5 + (((EntityPixelmon)entity).animationCounter - 180) * 0.174532925F;
+		}
+		
 		
 		if (((EntityPixelmon)entity).animationCounter >= 120){
 			((EntityPixelmon)entity).animationCounter = 0;}
 		
-	  
-	 // LeftWing.rotateAngleY = 0.785398163F;
-	  //RightWing.rotateAngleY = -0.785398163F;
-	  Body.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F;
   }
 
 }

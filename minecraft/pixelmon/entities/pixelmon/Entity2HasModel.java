@@ -56,7 +56,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 			oldName = getName();
 					}
 		if (worldObj.isRemote)
-			  animationCounter++;
+			  animationCounter = animationCounter + 10;
 
 		
 	}

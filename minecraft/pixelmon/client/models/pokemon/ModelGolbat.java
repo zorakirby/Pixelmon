@@ -1,5 +1,6 @@
 package pixelmon.client.models.pokemon;
 
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -18,7 +19,7 @@ public class ModelGolbat extends ModelBase {
 		setTextureOffset("BODYBASE.DeleteThis3", 0, 0);
 
 		RIGHTWING = new ModelRenderer(this, "RIGHTWING");
-		RIGHTWING.setRotationPoint(-2.5F, 6F, 1.5F);
+		RIGHTWING.setRotationPoint(-2.5F, -4F, 0.5F);
 		setRotation(RIGHTWING, 0F, 0F, 0F);
 		RIGHTWING.mirror = true;
 		ModelRenderer RightWingArm1 = new ModelRenderer(this, 28, 30);
@@ -87,7 +88,7 @@ public class ModelGolbat extends ModelBase {
 		RIGHTWING.addChild(RightWingSpoke1);
 
 		LEFTWING = new ModelRenderer(this, "LEFTWING");
-		LEFTWING.setRotationPoint(2F, 6F, 1.5F);
+		LEFTWING.setRotationPoint(2F, -4F, 0.5F);
 		setRotation(LEFTWING, 0F, 0F, 0F);
 		LEFTWING.mirror = true;
 		ModelRenderer LeftWingArm1 = new ModelRenderer(this, 28, 30);
@@ -405,13 +406,13 @@ public class ModelGolbat extends ModelBase {
 		BODYBASE.addChild(UpperHalfLeft);
 		BODYBASE.addChild(UpperHalfFront);
 		BODYBASE.addChild(LowerHalfFront);
+		BODYBASE.addChild(LEFTWING);
+		BODYBASE.addChild(RIGHTWING);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		RIGHTWING.render(f5);
-		LEFTWING.render(f5);
 		BODYBASE.render(f5);
 	}
 
@@ -423,6 +424,36 @@ public class ModelGolbat extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		
+		if (((EntityPixelmon)entity).animationCounter * 3 - 180 < 0) { 
+			LEFTWING.rotateAngleZ = -1.5F + (((EntityPixelmon)entity).animationCounter + 90) * 0.0174532925F;
+			}
+			
+		else if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
+			LEFTWING.rotateAngleZ = 0.5F + -((((EntityPixelmon)entity).animationCounter - 90) * 0.0174532925F);
+			}
+		
+		
+		if (((EntityPixelmon)entity).animationCounter * 3 - 180 < 0) { 
+			RIGHTWING.rotateAngleZ = 1.5F + -(((EntityPixelmon)entity).animationCounter + 90) * 0.0174532925F;
+			}
+			
+		else if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
+			RIGHTWING.rotateAngleZ = -0.5F + ((((EntityPixelmon)entity).animationCounter - 90) * 0.0174532925F);
+			}
+		
+		if (((EntityPixelmon)entity).animationCounter * 3 -180 < 0) { 
+			BODYBASE.rotationPointY = 45 -(((EntityPixelmon)entity).animationCounter + 180) * 0.174532925F;
+		}
+		
+		else if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
+			BODYBASE.rotationPointY = 25 + (((EntityPixelmon)entity).animationCounter - 180) * 0.174532925F;
+		}
+		
+		
+		if (((EntityPixelmon)entity).animationCounter >= 120){
+			((EntityPixelmon)entity).animationCounter = 0;}
+		
 	}
 
 }
