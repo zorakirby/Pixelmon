@@ -87,6 +87,8 @@ public class DownloadHelper {
 	}
 
 	public static boolean compareVersion(String file, String url) {
+		if (url == null)
+			return true;
 		try {
 			long fileVersion = getChecksum(new FileInputStream(new File(getDir(), file)));
 			long urlVersion = getChecksum(new URL(url).openStream());
@@ -128,6 +130,8 @@ public class DownloadHelper {
 		if (dbPath != null)
 			return dbPath;
 		String databasePath = DownloadHelper.readFile(DatabaseHelper.databaseURL);
+		if (databasePath == null)
+			return null;
 		int startString = databasePath.indexOf("\n");
 		if (startString != -1)
 			databasePath = databasePath.substring(0, startString);
