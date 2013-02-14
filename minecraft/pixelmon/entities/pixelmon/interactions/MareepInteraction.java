@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import pixelmon.client.models.pokemon.ModelMareep;
 import pixelmon.entities.pixelmon.Entity8HoldsItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -34,5 +36,4 @@ public class MareepInteraction extends PixelmonInteraction {
 	public PixelmonInteraction getInstance() {
 		return new MareepInteraction();
 	}
-
 }
