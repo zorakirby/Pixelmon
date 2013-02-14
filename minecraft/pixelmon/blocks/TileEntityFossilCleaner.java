@@ -55,15 +55,15 @@ public class TileEntityFossilCleaner extends TileEntity {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		nbt.setShort("DirtyFossilID", (short) itemInCleaner);
-		nbt.setShort("FossilTimer", (short) timer);
+		itemInCleaner = nbt.getShort("ItemInCleaner");
+		timer = nbt.getShort("CleanerTimer");
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		itemInCleaner = nbt.getShort("DirtyFossilID");
-		timer = nbt.getShort("FossilTimer");
+		nbt.setShort("ItemInCleaner", (short) itemInCleaner);
+		nbt.setShort("CleanerTimer", (short) timer);
 	}
 
 	@Override
@@ -76,6 +76,12 @@ public class TileEntityFossilCleaner extends TileEntity {
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
 		readFromNBT(pkt.customParam1);
+	}
+
+	public void setItemInCleaner(int itemID) {
+		itemInCleaner = itemID;
+		timer = 360;
+		itemClean = false;
 	}
 
 }

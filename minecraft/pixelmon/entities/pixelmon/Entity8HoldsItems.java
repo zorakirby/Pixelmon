@@ -12,7 +12,7 @@ import pixelmon.entities.pixelmon.interactions.PixelmonInteraction;
 public abstract class Entity8HoldsItems extends Entity7HasAI {
 	public ItemStack heldItem;
 	private DropItemHelper dropItemHelper = new DropItemHelper(this);
-	private PixelmonInteraction interaction;
+	public PixelmonInteraction interaction;
 	public int numInteractions;
 
 	public Entity8HoldsItems(World par1World) {
@@ -55,6 +55,8 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 			nbt.setInteger("HeldItem", heldItem.itemID);
 		else
 			nbt.setInteger("HeldItem", -1);
+		if (interaction != null)
+			interaction.writeEntityToNBT(nbt);
 	}
 
 	@Override
@@ -66,6 +68,8 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 				heldItem = new ItemStack(PixelmonItemsHeld.getHeldItem(itemId));
 			}
 		}
+		if (interaction != null)
+			interaction.readEntityFromNBT(nbt);
 
 	}
 

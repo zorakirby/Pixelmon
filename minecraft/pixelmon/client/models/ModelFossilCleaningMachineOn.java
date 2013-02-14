@@ -67,7 +67,7 @@ public class ModelFossilCleaningMachineOn extends ModelBase {
 		Neck.mirror = true;
 		setRotation(Neck, 0F, 0F, 0F);
 
-		ModelRenderer Top = new ModelRenderer(this, "Top");
+		Top = new ModelRenderer(this, "Top");
 		Top.setRotationPoint(0, 17.2F, 2);
 		ModelRenderer TopBase = new ModelRenderer(this, 41, 17);
 		TopBase.addBox(-4F, -3.4F, -4F, 8, 2, 8);
@@ -215,7 +215,7 @@ public class ModelFossilCleaningMachineOn extends ModelBase {
 		ControlPanelTop.render(f5);
 		Watch.render(f5);
 		Top.render(f5);
-		Top.rotateAngleY = entity.timer / 3.14159f;
+		Top.rotateAngleY = entity.timer / 1.5f;
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {

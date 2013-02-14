@@ -34,7 +34,6 @@ public class ComputerBox {
 		p.writeToNBT(n);
 		n.setString("id", p.getName());
 		n.setName(p.getName());
-		n.setString("Nickname", n.getName());
 		n.setBoolean("IsInBall", true);
 		n.setBoolean("IsShiny", p.getIsShiny());
 		int pos = getNextSpace();

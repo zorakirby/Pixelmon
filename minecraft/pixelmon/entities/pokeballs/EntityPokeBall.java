@@ -336,15 +336,16 @@ public class EntityPokeBall extends EntityThrowable {
 					p.setIsRed(false);
 				}
 			}
-			if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY) - 2, (int) this.posZ) && this.posY % 1 <= this.height) {
-				this.motionY = 0;
-				this.motionX = 0;
-				this.motionZ = 0;
-				setIsOnGround(true);
+			if (thrower != null) {
+				if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY) - 2, (int) this.posZ) && this.posY % 1 <= this.height) {
+					this.motionY = 0;
+					this.motionX = 0;
+					this.motionZ = 0;
+					setIsOnGround(true);
+				}
+				if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY - 1), (int) this.posZ) && this.posY % 1 <= this.height)
+					posY++;
 			}
-			if (!thrower.worldObj.isAirBlock((int) this.posX, (int) Math.ceil(this.posY - 1), (int) this.posZ) && this.posY % 1 <= this.height)
-				posY++;
-
 			waitTime++;
 		}
 	}

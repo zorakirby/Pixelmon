@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 public class BlockFossilCleaner extends BlockContainer {
 
@@ -77,7 +78,10 @@ public class BlockFossilCleaner extends BlockContainer {
 				((TileEntityFossilCleaner) world.getBlockTileEntity(x, y, z)).itemInCleaner = -1;
 			}
 			if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemFossilUncovered)) {
-
+				((TileEntityFossilCleaner) world.getBlockTileEntity(x, y, z)).setItemInCleaner(player.getCurrentEquippedItem().itemID);
+				player.getCurrentEquippedItem().stackSize--;
+				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+				return true;
 			}
 			return true;
 		}
