@@ -160,6 +160,7 @@ public class PixelmonSpawner implements ITickHandler {
 		int numInChunk = 0;
 		int count = 0;
 		boolean isBoss = false;
+		ArrayList<String> preEvolutions = null;
 
 		while (count < 3) {
 			int cpXtmp = cpX;
@@ -197,6 +198,8 @@ public class PixelmonSpawner implements ITickHandler {
 										}
 									}
 
+									if (isBoss)
+										pokemonName = preEvolutions.get(rand.nextInt(preEvolutions.size()));
 									EntityLiving pokemon;
 
 									try {
@@ -218,7 +221,8 @@ public class PixelmonSpawner implements ITickHandler {
 										if (maxInChunk == -1) {
 											if (world.rand.nextInt(1000) == 0 && pokemon instanceof EntityPixelmon) {
 												EntityPixelmon pixelmon = (EntityPixelmon) pokemon;
-												ArrayList<String> preEvolutions = pixelmon.getPreEvolutions();
+												preEvolutions = pixelmon.getPreEvolutions();
+												preEvolutions.add(pokemonName);
 												pixelmon.setBoss(EnumBossMode.getRandomMode());
 												isBoss = true;
 											}

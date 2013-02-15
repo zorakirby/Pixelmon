@@ -23,7 +23,7 @@ public class MareepInteraction extends PixelmonInteraction {
 		ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
 
 		if (var2 != null && var2.itemID == Item.shears.itemID) {
-			par1EntityPlayer.dropPlayerItem(new ItemStack(Block.cloth.blockID, 1, 0));
+			par1EntityPlayer.dropPlayerItem(new ItemStack(Block.cloth, par1EntityPlayer.getRNG().nextInt(2) + 1));
 
 			numInteractions--;
 			return true;
