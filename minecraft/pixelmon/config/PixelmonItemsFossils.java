@@ -7,6 +7,7 @@ import java.util.Random;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemFossilUncovered;
 import pixelmon.items.ItemPokemonFossil;
@@ -179,7 +180,8 @@ public class PixelmonItemsFossils {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					if (item instanceof ItemFossilUncovered)
-						fossilList.add((ItemFossilUncovered) item);
+						if (EnumPokemon.hasPokemon(((ItemFossilUncovered) item).cleanedFossil.pokemon))
+							fossilList.add((ItemFossilUncovered) item);
 				}
 			}
 		} catch (Exception e) {
