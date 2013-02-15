@@ -41,10 +41,13 @@ public class PixelmonItemsFossils {
 	public static int fossilMachineTopID;
 	public static int fossilMachineBaseID;
 
-	public static int fossilMachineItemID;
+	public static int fossilMachineItemID;	
+	public static int fossilCleanerItemID;
 
 	@Mod.Item(name = "Fossil Machine", typeClass = "pixelmon.items.ItemBlock")
 	public static Item fossilMachineItem;
+	@Mod.Item(name = "Fossil Cleaner", typeClass = "pixelmon.items.ItemBlock")
+	public static Item fossilCleanerItem;
 
 	@Mod.Item(name = "Helix Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
 	public static Item helixFossil;
@@ -96,6 +99,7 @@ public class PixelmonItemsFossils {
 		if (!isEnabled)
 			return;
 		fossilMachineItemID = cfg.get("fossils", "FossilMachineItem", 20000).getInt();
+		fossilCleanerItemID = cfg.get("item", "FossilCleanerItem", 10028).getInt();
 		fossilMachineTankID = cfg.get("fossils", "FossilMachineTank", 20001).getInt();
 		fossilMachineDisplayID = cfg.get("fossils", "FossilMachineDisplay", 20002).getInt();
 		fossilMachineTopID = cfg.get("fossils", "FossilMachineTop", 20003).getInt();
@@ -122,6 +126,8 @@ public class PixelmonItemsFossils {
 		plumeFossilUncoveredID = cfg.get("fossils", "CoverFossilUncovered", 21108).getInt();
 
 		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, 82).setItemName("Fossil Machine");
+		fossilCleanerItem = new ItemBlock(fossilCleanerItemID, PixelmonBlocks.fossilCleaner, 146).setItemName("FossilCleaner");
+
 		helixFossil = new ItemPokemonFossil(helixFossilID, "Omanyte", "HelixFossil").setItemName("helixFossil").setIconIndex(10);
 		domeFossil = new ItemPokemonFossil(domeFossilID, "Kabuto", "DomeFossil").setItemName("domeFossil").setIconIndex(26);
 		oldAmber = new ItemPokemonFossil(oldAmberID, "Aerodactyl", "OldAmber").setItemName("oldAmber").setIconIndex(42);

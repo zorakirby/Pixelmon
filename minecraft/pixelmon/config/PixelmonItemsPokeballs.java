@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
+import pixelmon.Pixelmon;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.items.ItemPokeBall;
 import pixelmon.items.ItemPokeballDisc;
@@ -340,6 +341,7 @@ public class PixelmonItemsPokeballs {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					LanguageRegistry.addName(item, field.getAnnotation(Mod.Item.class).name());
+					Pixelmon.proxy.registerBossDropItem(item);
 				}
 			}
 		} catch (Exception e) {
