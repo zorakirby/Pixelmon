@@ -755,22 +755,23 @@ public class GuiBattle extends GuiContainer {
 		int y1 = height - guiHeight + 9;
 		int y2 = height - guiHeight + 33;
 		int w = 87, h = 20;
-		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h) {
+		PixelmonMovesetDataPacket[] moveset = ClientBattleManager.getUserPokemonPacket().moveset;
+		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h && moveset[0].pp > 0) {
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
-		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h) {
+		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h && moveset[1].pp > 0) {
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
-		} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
+		} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h && moveset[2].pp > 0) {
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
-		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
+		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h && moveset[3].pp > 0) {
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
