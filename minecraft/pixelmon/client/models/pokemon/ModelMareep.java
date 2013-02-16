@@ -8,7 +8,7 @@ package pixelmon.client.models.pokemon;
 
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.SkeletonQuadruped;
+import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

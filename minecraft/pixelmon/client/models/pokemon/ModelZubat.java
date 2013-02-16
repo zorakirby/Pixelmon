@@ -17,7 +17,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.SkeletonBird;
+import pixelmon.client.models.animations.Bird.SkeletonBird;
 import net.minecraft.util.MathHelper;
 import net.minecraft.client.model.ModelBase;
 import pixelmon.entities.pixelmon.Entity2HasModel;

@@ -9,7 +9,7 @@ import net.minecraft.client.model.ModelRenderer;
 public class SkeletonBase {
 	protected float toDegrees = 57.29578F;
 	protected float toRadians = 1 / toDegrees;
-	ArrayList<Module> modules = new ArrayList<Module>();
+	protected ArrayList<Module> modules = new ArrayList<Module>();
 	public ModelRenderer body;
 	
 	public SkeletonBase(ModelRenderer body) {

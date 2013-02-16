@@ -4,7 +4,7 @@ import pixelmon.client.models.PixelmonModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.SkeletonBiped;
+import pixelmon.client.models.animations.Biped.SkeletonBiped;
 
 
 

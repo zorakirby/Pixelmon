@@ -1,5 +1,6 @@
-package pixelmon.client.models.animations;
+package pixelmon.client.models.animations.Biped;
 
+import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelRenderer;
 

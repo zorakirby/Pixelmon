@@ -1,5 +1,7 @@
-package pixelmon.client.models.animations;
+package pixelmon.client.models.animations.quadruped;
 
+import pixelmon.client.models.animations.Module;
+import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.MathHelper;

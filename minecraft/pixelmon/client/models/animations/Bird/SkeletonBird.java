@@ -1,5 +1,7 @@
-package pixelmon.client.models.animations;
+package pixelmon.client.models.animations.Bird;
 
+import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.SkeletonBase;
 import net.minecraft.client.model.ModelRenderer;
 
 public class SkeletonBird extends SkeletonBase {

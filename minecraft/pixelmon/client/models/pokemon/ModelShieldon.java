@@ -15,7 +15,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.SkeletonQuadruped;
+import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
 
 public class ModelShieldon extends PixelmonModelBase
 {

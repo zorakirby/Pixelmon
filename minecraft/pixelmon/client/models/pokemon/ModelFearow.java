@@ -9,7 +9,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.SkeletonBird;
+import pixelmon.client.models.animations.Bird.SkeletonBird;
 
 public class ModelFearow extends PixelmonModelBase {
 	// fields
