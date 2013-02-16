@@ -2,6 +2,7 @@ package pixelmon.client.models.animations;
 
 import java.util.ArrayList;
 
+import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 import net.minecraft.client.model.ModelRenderer;
@@ -14,7 +15,7 @@ public class ModuleHead extends Module {
 
 	float headStartAngleX, headStartAngleY;
 
-	public ModuleHead(ModelRenderer head) {
+	public ModuleHead(PixelmonModelRenderer head) {
 		this.head = head;
 		headStartAngleX = head.rotateAngleX;
 		headStartAngleY = head.rotateAngleY;
