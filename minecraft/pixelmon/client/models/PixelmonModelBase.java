@@ -22,7 +22,7 @@ public abstract class PixelmonModelBase extends ModelBase {
 		EntityPixelmon pixelmon = (EntityPixelmon) entity;
 		if (entity.worldObj.getBlockMaterial((int) Math.ceil(entity.posX), (int) Math.ceil(entity.posY), (int) Math.ceil(entity.posZ)) == Material.water)
 			skeleton.swim(pixelmon, f, f1, f2, f3, f4);
-		else if (entity.isAirBorne)
+		else if (entity.isAirBorne || pixelmon.doesHover)
 			skeleton.fly(pixelmon, f, f1, f2, f3, f4);
 		else
 			skeleton.walk(pixelmon, f, f1, f2, f3, f4);
