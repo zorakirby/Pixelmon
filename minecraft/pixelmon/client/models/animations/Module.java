@@ -9,7 +9,9 @@ public abstract class Module {
 	public Module() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public abstract void walk(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4);
+
+	public abstract void fly(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4);
 
 }
