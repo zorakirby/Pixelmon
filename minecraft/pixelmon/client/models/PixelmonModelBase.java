@@ -12,7 +12,7 @@ public abstract class PixelmonModelBase extends ModelBase {
 	public PixelmonModelBase() {
 
 	}
-	
+
 	@Override
 	public void render(Entity var1, float f, float f1, float f2, float f3, float f4, float f5) {
 		doAnimation(var1, f, f1, f2, f3, f4, f5);
@@ -22,6 +22,8 @@ public abstract class PixelmonModelBase extends ModelBase {
 		EntityPixelmon pixelmon = (EntityPixelmon) entity;
 		if (entity.worldObj.getBlockMaterial((int) Math.ceil(entity.posX), (int) Math.ceil(entity.posY), (int) Math.ceil(entity.posZ)) == Material.water)
 			skeleton.swim(pixelmon, f, f1, f2, f3, f4);
+		else if (entity.isAirBorne)
+			skeleton.fly(pixelmon, f, f1, f2, f3, f4);
 		else
 			skeleton.walk(pixelmon, f, f1, f2, f3, f4);
 	}
