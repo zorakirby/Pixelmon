@@ -1,6 +1,7 @@
 package pixelmon.entities.pixelmon;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -12,25 +13,35 @@ import pixelmon.entities.pixelmon.interactions.PixelmonInteraction;
 public abstract class Entity8HoldsItems extends Entity7HasAI {
 	public ItemStack heldItem;
 	private DropItemHelper dropItemHelper = new DropItemHelper(this);
-	public PixelmonInteraction interaction;
+	private PixelmonInteraction interaction;
 	public int numInteractions;
 
 	public Entity8HoldsItems(World par1World) {
 		super(par1World);
+		dataWatcher.addObject(24, (short) 0);
 	}
 
 	@Override
 	protected void init(String name) {
 		super.init(name);
-		interaction = PixelmonInteraction.getInteraction(this);
+		if (!worldObj.isRemote) {
+			if (interaction == null)
+				interaction = PixelmonInteraction.getInteraction(this, true);
+			else
+				interaction = PixelmonInteraction.getInteraction(this, false);
+		}
+	}
+
+	public int getNumInteractions() {
+		return dataWatcher.getWatchableObjectShort(24);
 	}
 
 	@Override
-	public boolean interact(EntityPlayer par1EntityPlayer) {
-		if (interaction != null)
-			if (interaction.interact(par1EntityPlayer))
+	public boolean interact(EntityPlayer player) {
+		if (interaction != null && player instanceof EntityPlayerMP)
+			if (interaction.interact(player))
 				return true;
-		return super.interact(par1EntityPlayer);
+		return super.interact(player);
 	}
 
 	@Override

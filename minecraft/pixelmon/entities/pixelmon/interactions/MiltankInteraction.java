@@ -8,12 +8,12 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class MiltankInteraction extends PixelmonInteraction {
 
-	public MiltankInteraction() {
-		super("Miltank", 2);
+	public MiltankInteraction(EntityPixelmon pixelmon, boolean isFirstInteraction) {
+		super(pixelmon, 2, isFirstInteraction);
 	}
 
 	public boolean interact(EntityPlayer par1EntityPlayer) {
-		if (numInteractions == 0)
+		if (getNumInteractions() == 0)
 			return false;
 
 		ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
@@ -25,16 +25,13 @@ public class MiltankInteraction extends PixelmonInteraction {
 				par1EntityPlayer.dropPlayerItem(new ItemStack(Item.bucketMilk.itemID, 1, 0));
 			}
 
-			numInteractions--;
+			setNumInteractions(getNumInteractions() - 1);
+			count = 0;
+
 			return true;
 		} else {
 			return false;
 		}
-	}
-
-	@Override
-	public PixelmonInteraction getInstance() {
-		return new MiltankInteraction();
 	}
 
 }

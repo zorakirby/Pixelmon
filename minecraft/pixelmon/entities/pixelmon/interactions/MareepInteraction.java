@@ -11,13 +11,13 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class MareepInteraction extends PixelmonInteraction {
 
-	public MareepInteraction() {
-		super("Mareep", 1);
+	public MareepInteraction(EntityPixelmon pixelmon, boolean isFirstInteraction) {
+		super(pixelmon, 1, isFirstInteraction);
 	}
 
 	@Override
 	public boolean interact(EntityPlayer par1EntityPlayer) {
-		if (numInteractions == 0)
+		if (getNumInteractions() == 0)
 			return false;
 
 		ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
@@ -25,15 +25,13 @@ public class MareepInteraction extends PixelmonInteraction {
 		if (var2 != null && var2.itemID == Item.shears.itemID) {
 			par1EntityPlayer.dropPlayerItem(new ItemStack(Block.cloth, par1EntityPlayer.getRNG().nextInt(2) + 1));
 
-			numInteractions--;
+			setNumInteractions(getNumInteractions() - 1);
+			count=0;
+
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	@Override
-	public PixelmonInteraction getInstance() {
-		return new MareepInteraction();
-	}
 }
