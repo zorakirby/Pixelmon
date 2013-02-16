@@ -247,11 +247,11 @@ public class ModelZubat extends PixelmonModelBase
 			}
 		
 		if (((EntityPixelmon)entity).animationCounter * 3 -180 < 0) { 
-			Body.rotationPointY = 15 -(((EntityPixelmon)entity).animationCounter + 180) * 0.174532925F;
+			Body.rotationPointY = 25 -(((EntityPixelmon)entity).animationCounter + 180) * 0.174532925F;
 		}
 		
 		else if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
-			Body.rotationPointY = -5 + (((EntityPixelmon)entity).animationCounter - 180) * 0.174532925F;
+			Body.rotationPointY = 5 + (((EntityPixelmon)entity).animationCounter - 180) * 0.174532925F;
 		}
 		
 		

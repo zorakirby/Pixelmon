@@ -9,11 +9,14 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.client.models.animations.Bird.SkeletonBird;
 
 public class ModelAerodactyl extends PixelmonModelBase {
 	// fields
 	ModelRenderer Body;
+	ModelRenderer LeftWing;
+	ModelRenderer RightWing;
 
 	public ModelAerodactyl() {
 		textureWidth = 512;
@@ -272,7 +275,7 @@ public class ModelAerodactyl extends PixelmonModelBase {
 		Head.addChild(Upper_Neck);
 		Body.addChild(Head);
 
-		ModelRenderer LeftWing = new ModelRenderer(this, "Left Wing");
+		LeftWing = new ModelRenderer(this, "Left Wing");
 		LeftWing.setRotationPoint(4, -8, 4);
 		ModelRenderer First_Left_Wing_Bone = new ModelRenderer(this, 219, 23);
 		First_Left_Wing_Bone.addBox(-1F, 0F, 0F, 1, 10, 1);
@@ -342,7 +345,7 @@ public class ModelAerodactyl extends PixelmonModelBase {
 		LeftWing.addChild(Third_Left_Upper_Folds);
 		Body.addChild(LeftWing);
 
-		ModelRenderer RightWing = new ModelRenderer(this, "Right Wing");
+		RightWing = new ModelRenderer(this, "Right Wing");
 		RightWing.setRotationPoint(-4, -8, 4);
 		ModelRenderer First_Right_Folds = new ModelRenderer(this, 178, 0);
 		First_Right_Folds.addBox(1F, 1F, 1F, 7, 0, 12);
@@ -537,6 +540,7 @@ public class ModelAerodactyl extends PixelmonModelBase {
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		Body.render(f5);
 	}
 
@@ -546,4 +550,37 @@ public class ModelAerodactyl extends PixelmonModelBase {
 		model.rotateAngleZ = z;
 	}
 
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
+		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+		
+		if (((EntityPixelmon)entity).animationCounter2 * 3 - 180 < 0) { 
+			LeftWing.rotateAngleZ = 2F + (((EntityPixelmon)entity).animationCounter2 + 90) * 0.034906585F;
+			}
+			
+		else if (((EntityPixelmon)entity).animationCounter2 * 3 >= 0) {
+			LeftWing.rotateAngleZ = 0F + -((((EntityPixelmon)entity).animationCounter2 - 90) * 0.034906585F);
+			}
+		
+		
+		if (((EntityPixelmon)entity).animationCounter2 * 3 - 180 < 0) { 
+			RightWing.rotateAngleZ = -2F + -(((EntityPixelmon)entity).animationCounter2 + 90) * 0.034906585F;
+			}
+			
+		else if (((EntityPixelmon)entity).animationCounter2 * 3 >= 0) {
+			RightWing.rotateAngleZ = 0F + ((((EntityPixelmon)entity).animationCounter2 - 90) * 0.034906585F);
+			}
+		
+		if (((EntityPixelmon)entity).animationCounter2 * 3 -180 < 0) { 
+			Body.rotationPointY = 20 -(((EntityPixelmon)entity).animationCounter2 + 180) * 0.174532925F;
+		}
+		
+		else if (((EntityPixelmon)entity).animationCounter2 * 3 >= 0) {
+			Body.rotationPointY = 0 + (((EntityPixelmon)entity).animationCounter2 - 180) * 0.174532925F;
+		}
+		
+		
+		if (((EntityPixelmon)entity).animationCounter2 >= 120){
+			((EntityPixelmon)entity).animationCounter2 = 0;}
+		
+	}
 }
