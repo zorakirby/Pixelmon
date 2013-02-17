@@ -40,8 +40,8 @@ public class ModelLittleBoySwimmer extends ModelBase
     textureWidth = 64;
     textureHeight = 32;
     
-      BodyPiece = new ModelRenderer(this, "Body");
-      Body.setRotationPoint(0, 0, 0);
+      BodyPiece = new ModelRenderer(this, "BodyPiece");
+      BodyPiece.setRotationPoint(0, 0, 0);
       RightLeg = new ModelRenderer(this, 0, 0);
       RightLeg.addBox(0F, 0F, 0F, 1, 4, 1);
       RightLeg.setRotationPoint(-2F, 20F, 0F);
@@ -64,8 +64,8 @@ public class ModelLittleBoySwimmer extends ModelBase
       setRotation(Body, 0F, 0F, 0F);
       BodyPiece.addChild(Body);
       Head = new ModelRenderer(this, 41, 0);
-      Head.addBox(0F, 0F, 0F, 4, 4, 3);
-      Head.setRotationPoint(-2.5F, 10F, -1F);
+      Head.addBox(-2F, -4F, -1.5F, 4, 4, 3);
+      Head.setRotationPoint(-0.5F, 14F, 0.5F);
       Head.setTextureSize(64, 32);
       Head.mirror = true;
       setRotation(Head, 0F, 0F, 0F);
