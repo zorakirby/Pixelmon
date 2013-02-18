@@ -183,7 +183,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public boolean canBreatheUnderwater() {
 		if (baseStats != null) {
-			if (((EntityPixelmon) this).pokemonLocation == SpawnLocation.Water)
+			if (((EntityPixelmon) this).pokemonLocation == SpawnLocation.Water || baseStats.type1 == EnumType.Water || baseStats.type2 == EnumType.Water)
 				return true;
 			else
 				return false;
