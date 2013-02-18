@@ -90,7 +90,7 @@ public class ModelMaleSwimmer extends ModelBase
       BodyPiece.addChild(leftleg);
       head = new ModelRenderer(this, 0, 0);
       head.addBox(-2.5F, -5F, -3F, 5, 5, 5);
-      head.setRotationPoint(-0.5F, 5F, 0F);
+      head.setRotationPoint(0F, 0F, 0F);
       head.setTextureSize(64, 32);
       head.mirror = true;
       setRotation(head, 0F, 0F, 0F);

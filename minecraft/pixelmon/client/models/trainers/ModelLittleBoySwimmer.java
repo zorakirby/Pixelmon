@@ -117,10 +117,10 @@ public class ModelLittleBoySwimmer extends ModelBase
       setRotation(Bodytube4, 0F, 0F, 0F);
       BodyPiece.addChild(Bodytube4);
       RightArm = new ModelRenderer(this, 0, 23);
-      RightArm.addBox(0F, 0F, -0.5F, 1, 5, 1);
+      RightArm.addBox(-1F, 0F, -0.5F, 1, 5, 1);
       RightArm.setTextureSize(64, 32);
       RightArm.mirror = true;
-      setRotation(RightArm, 0F, 3.141593F, -0.2443461F);
+      setRotation(RightArm, 0F, 0F, 0.2443461F);
       RightArmPiece.addChild(RightArm);
       LeftArm = new ModelRenderer(this, 0, 23);
       LeftArm.addBox(0F, 0F, -0.5F, 1, 5, 1);
