@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -17,6 +18,15 @@ import pixelmon.storage.PlayerStorage;
 public class Experience {
 
 	static void awardExp(ArrayList<BattleParticipant> participants, BattleParticipant faintedParticipant, EntityPixelmon faintedPokemon) {
+		if (!PixelmonConfig.allowPVPExperience) {
+			boolean allPlayers = true;
+			for (BattleParticipant p : participants) {
+				if (p.getType() != ParticipantType.Player)
+					allPlayers = false;
+			}
+			if (allPlayers)
+				return;
+		}
 		for (BattleParticipant p : participants) {
 			if (p.team != faintedParticipant.team && p.getType() == ParticipantType.Player) {
 				PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) p.currentPokemon().getOwner());
