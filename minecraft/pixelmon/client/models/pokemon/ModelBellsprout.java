@@ -92,7 +92,7 @@ public class ModelBellsprout extends PixelmonModelBase {
 		Stem_11.setTextureSize(128, 128);
 		Stem_11.mirror = true;
 		setRotation(Stem_11, 0F, -1.58825F, 1.675516F);
-		Body.addChild(Stem_10);
+		Body.addChild(Stem_11);
 		PixelmonModelRenderer Leaf_L = new PixelmonModelRenderer(this, 66, 57);
 		Leaf_L.addBox(-7F, 0F, -16F, 14, 0, 18);
 		Leaf_L.setRotationPoint(2F, 19F, 9.6F);
@@ -106,7 +106,7 @@ public class ModelBellsprout extends PixelmonModelBase {
 		Leaf_R.setTextureSize(128, 128);
 		Leaf_R.mirror = true;
 		setRotation(Leaf_R, 0F, -1.62441F, 1.58825F);
-		Body.addChild(Leaf_L);
+		Body.addChild(Leaf_R);
 
 		PixelmonModelRenderer Head = new PixelmonModelRenderer(this, "Head");
 		Head.setRotationPoint(1, -3, 6);
@@ -127,7 +127,7 @@ public class ModelBellsprout extends PixelmonModelBase {
 		Head.addChild(EyeR);
 		PixelmonModelRenderer Head_Tip = new PixelmonModelRenderer(this, 3, 2);
 		Head_Tip.addBox(-3F, -4F, 0F, 6, 6, 2);
-		Head_Tip.setRotationPoint(-1F, -4.9F, -4);
+		Head_Tip.setRotationPoint(-1F, -0.9F, -4);
 		Head_Tip.setTextureSize(128, 128);
 		Head_Tip.mirror = true;
 		setRotation(Head_Tip, 1.832596F, 0F, 0F);
@@ -141,7 +141,7 @@ public class ModelBellsprout extends PixelmonModelBase {
 		Head.addChild(Head_Top);
 		PixelmonModelRenderer Head_2 = new PixelmonModelRenderer(this, 1, 54);
 		Head_2.addBox(-3F, -3F, 0F, 6, 5, 2);
-		Head_2.setRotationPoint(-1F, -1F, 0);
+		Head_2.setRotationPoint(-1F, 1F, 0);
 		Head_2.setTextureSize(128, 128);
 		Head_2.mirror = true;
 		setRotation(Head_2, 0.2443461F, 0F, 0F);
