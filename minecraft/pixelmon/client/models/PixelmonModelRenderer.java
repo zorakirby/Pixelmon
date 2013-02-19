@@ -81,7 +81,7 @@ public class PixelmonModelRenderer extends ModelRenderer {
 	                    {
 	                        GL11.glRotatef(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
 	                    }
-
+	                    
 	                    if (this.rotateAngleZ != 0.0F)
 	                    {
 	                        GL11.glRotatef(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
