@@ -11,6 +11,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public float animationNum1 = 0f;
 	
 	public int animationCounter = 0;
+	public int animationCounter2 = 0;
 
 	public Entity2HasModel(World par1World) {
 		super(par1World);
@@ -57,6 +58,8 @@ public abstract class Entity2HasModel extends Entity1Base {
 					}
 		if (worldObj.isRemote)
 			  animationCounter = animationCounter + 10;
+		if (worldObj.isRemote)
+			  animationCounter2 = animationCounter2 + 3;
 
 		
 	}
