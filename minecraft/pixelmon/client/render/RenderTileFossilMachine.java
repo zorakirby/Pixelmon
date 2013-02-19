@@ -31,7 +31,6 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 	}
 
 	public void renderAModelAt(TileEntityFossilMachine tile, double d, double d1, double d2, float f) {
-		pokemon = new EntityPixelmon(tile.worldObj);
 		// this is for rotation
 		int j = 0;
 		int i = tile.getBlockMetadata();
@@ -129,7 +128,10 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 			GL11.glPopMatrix();
 		}
 
-		if (EnumPokemon.hasPokemon(tile.currentPokemon) && !EnumTrainers.has(tile.currentPokemon))
+		if (!EnumPokemon.hasPokemon(tile.currentPokemon)) {
+			return;
+		}
+		if (pokemon == null || (pokemon != null && pokemon.getName() != tile.currentPokemon))
 			pokemon = ((EntityPixelmon) PixelmonEntityList.createEntityByName(tile.currentPokemon, tile.getWorldObj()));
 
 		// Pokemon Rendering
