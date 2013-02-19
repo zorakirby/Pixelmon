@@ -537,7 +537,7 @@ public class ModelMagnemite extends PixelmonModelBase
   
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
-	  Body.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F - 5F;
+	  Body.rotationPointY = MathHelper.cos(.2F * f2) * 5F * .5F - 20F;
 
 		int randomInt = randomGenerator.nextInt(200);
 

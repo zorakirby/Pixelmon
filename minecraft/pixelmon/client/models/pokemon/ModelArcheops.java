@@ -237,6 +237,7 @@ public class ModelArcheops extends PixelmonModelBase
       Head.addChild(head_side_L);
       Head.addChild(lower_jaw_R);
       Head.addChild(lower_jaw_L);
+      Head.addChild(lower_jaw);
       Body.addChild(Head);
       
       PixelmonModelRenderer Tail = new PixelmonModelRenderer(this, "Tail");

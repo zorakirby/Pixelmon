@@ -361,7 +361,7 @@ public class ModelBeedrill extends ModelBase {
 		RF4.setTextureSize(512, 256);
 		RF4.mirror = true;
 		setRotation(RF4, 0F, 0F, 0F);
-		LWT = new ModelRenderer(this, 35, -2);
+		LWT = new ModelRenderer(this, 35, 0);
 		LWT.addBox(0F, -32F, 0.01F, 35, 35, 0);
 		LWT.setRotationPoint(3F, -3F, 6F);
 		LWT.setTextureSize(512, 256);

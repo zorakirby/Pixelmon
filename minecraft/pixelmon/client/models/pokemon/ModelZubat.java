@@ -67,7 +67,7 @@ public class ModelZubat extends PixelmonModelBase {
 		Left_Ear1.setRotationPoint(3.5F, -4F, -1F);
 		Left_Ear1.setTextureSize(64, 32);
 		Left_Ear1.mirror = true;
-		setRotation(Left_Ear1, 0F, 3.141593F, 0.6889403F);
+		setRotation(Left_Ear1, 0F, 3.141593F, -0.6889403F);
 		Head.addChild(Left_Ear1);
 		Right_Ear1 = new PixelmonModelRenderer(this, 49, 9);
 		Right_Ear1.addBox(0F, 0F, 0F, 2, 3, 1);
