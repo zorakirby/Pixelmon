@@ -216,9 +216,6 @@ public class ModelZubat extends PixelmonModelBase {
 			LeftWing.rotateAngleZ = -1.5F + (((EntityPixelmon) entity).animationCounter + 90) * 0.0174532925F;
 		}
 		
-		else if (((EntityPixelmon)entity).animationCounter * 3 >= 0) {
-			Body.rotationPointY = 5 + (((EntityPixelmon)entity).animationCounter - 180) * 0.174532925F;
-		}
 		else if (((EntityPixelmon) entity).animationCounter * 3 >= 0) {
 			LeftWing.rotateAngleZ = 0.5F + -((((EntityPixelmon) entity).animationCounter - 90) * 0.0174532925F);
 		}
