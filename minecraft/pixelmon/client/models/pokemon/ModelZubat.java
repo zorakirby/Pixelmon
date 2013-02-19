@@ -208,13 +208,14 @@ public class ModelZubat extends PixelmonModelBase {
 	Random randomGenerator = new Random();
 	int[] count = { 0, 0 };
 	boolean[] Headisrotating = { false, false, false, false, false, false, false };
+  
 
 	public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 
 		if (((EntityPixelmon) entity).animationCounter * 3 - 180 < 0) {
 			LeftWing.rotateAngleZ = -1.5F + (((EntityPixelmon) entity).animationCounter + 90) * 0.0174532925F;
 		}
-
+		
 		else if (((EntityPixelmon) entity).animationCounter * 3 >= 0) {
 			LeftWing.rotateAngleZ = 0.5F + -((((EntityPixelmon) entity).animationCounter - 90) * 0.0174532925F);
 		}
@@ -238,7 +239,8 @@ public class ModelZubat extends PixelmonModelBase {
 		if (((EntityPixelmon) entity).animationCounter >= 120) {
 			((EntityPixelmon) entity).animationCounter = 0;
 		}
-
+		
 	}
-
 }
+
+

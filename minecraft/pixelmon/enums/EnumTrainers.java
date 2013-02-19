@@ -5,7 +5,11 @@ public enum EnumTrainers {
 	Fisherman,
 	//FemaleRocketGrunt, This model needs to be pieced correctly.
 	BugCatcher,
-	Ornithologist;
+	Ornithologist,
+	Swimmer,
+	FireBreather,
+	BugManiac;
+	
 	public static boolean has(String creatureName) {
 		for (EnumTrainers trainer : values())
 			if (trainer.toString().equalsIgnoreCase(creatureName))
