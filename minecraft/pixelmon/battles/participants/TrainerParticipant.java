@@ -111,7 +111,7 @@ public class TrainerParticipant extends BattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		if (trainer != null)
+		if (trainer != null && currentPokemon() != null)
 			trainer.pokemonStorage.getNBT(currentPokemon().getPokemonId()).setBoolean("IsFainted", true);
 	}
 

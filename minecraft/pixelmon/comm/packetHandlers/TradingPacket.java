@@ -36,7 +36,8 @@ public class TradingPacket extends PacketHandlerBase {
 			}
 		} else if (index == EnumPackets.DeRegisterTrader.getIndex()) {
 			TileEntityTradeMachine te = TradingRegistry.getTileEntity((EntityPlayer) player);
-			te.removePlayer(player);
+			if (te != null)
+				te.removePlayer(player);
 		} else if (index == EnumPackets.SetTradingReady.getIndex()) {
 			boolean ready = dataStream.readInt() == 1;
 			TileEntityTradeMachine te = TradingRegistry.getTileEntity((EntityPlayer) player);

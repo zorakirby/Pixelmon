@@ -33,13 +33,15 @@ public class RenderPixelmon extends RenderLiving {
 		}
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
 		renderPixelmon(pixelmon, d, d1, d2, f, f1);
+		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
+
 		float var10 = pixelmon.getDistanceToEntity(this.renderManager.livingPlayer);
 		int renderdistance = pixelmon.getBossMode() != EnumBossMode.Normal ? 16 : 8;
-		if (var10 <= renderdistance || pixelmon.getOwner() != null || ServerStorageDisplay.contains(pixelmon.getPokemonId())) {
-			drawHealthBar(pixelmon, d, d1, d2, f, f1);
+		if (var10 <= renderdistance || owned) {
+			drawHealthBar(pixelmon, d, d1, d2, f, f1, owned);
 			if (ServerStorageDisplay.contains(pixelmon.getPokemonId()))
-				drawExpBar(pixelmon, d, d1, d2, f, f1);
-			drawNameTag(pixelmon, d, d1, d2);
+				drawExpBar(pixelmon, d, d1, d2, f, f1, owned);
+			drawNameTag(pixelmon, d, d1, d2, owned);
 		}
 
 	}
@@ -225,7 +227,7 @@ public class RenderPixelmon extends RenderLiving {
 		this.passSpecialRender(pixelmon, par2, par4, par6);
 	}
 
-	public void drawNameTag(EntityPixelmon entitypixelmon, double par2, double par4, double par6) {
+	public void drawNameTag(EntityPixelmon entitypixelmon, double par2, double par4, double par6, boolean owned) {
 		if (Minecraft.isGuiEnabled()) {
 			String s = " Lv: " + entitypixelmon.getLvl().getLevel() + " ";
 			s += entitypixelmon.getNickname();
@@ -236,58 +238,57 @@ public class RenderPixelmon extends RenderLiving {
 			} else
 				s += " (Wild)";
 			if (!entitypixelmon.isSneaking()) {
-				renderLivingLabel(entitypixelmon, s, par2, par4, par6, 64);
+				renderLivingLabel(entitypixelmon, s, par2, par4, par6, owned);
 			}
 		}
 	}
 
-	protected void renderLivingLabel(EntityPixelmon entitypixelmon, String par2Str, double par3, double par5, double par7, int par9) {
+	protected void renderLivingLabel(EntityPixelmon entitypixelmon, String par2Str, double par3, double par5, double par7, boolean owned) {
 		double var10 = entitypixelmon.getDistanceSqToEntity(this.renderManager.livingPlayer);
+		FontRenderer var12 = this.getFontRendererFromRenderManager();
+		float var13 = 1.6F;
+		float var14 = 0.016666668F * var13;
+		GL11.glPushMatrix();
+		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+		GL11.glTranslatef((float) par3 + 0.0F, (float) par5 + 1.1f + entitypixelmon.height * entitypixelmon.getScale() * scaleFactor, (float) par7);
+		GL11.glNormal3f(0.0F, 1.0F, 0.0F);
+		GL11.glRotatef(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+		GL11.glRotatef(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+		GL11.glScalef(-var14, -var14, var14);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDepthMask(false);
+		if (owned)
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		Tessellator var15 = Tessellator.instance;
+		byte var16 = 0;
 
-		if (var10 <= (double) (par9 * par9)) {
-			FontRenderer var12 = this.getFontRendererFromRenderManager();
-			float var13 = 1.6F;
-			float var14 = 0.016666668F * var13;
-			GL11.glPushMatrix();
-			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
-			GL11.glTranslatef((float) par3 + 0.0F, (float) par5 + 1.1f + entitypixelmon.height * entitypixelmon.getScale() * scaleFactor, (float) par7);
-			GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-			GL11.glRotatef(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-			GL11.glRotatef(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-			GL11.glScalef(-var14, -var14, var14);
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glDepthMask(false);
-			// GL11.glDisable(GL11.GL_DEPTH_TEST);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			Tessellator var15 = Tessellator.instance;
-			byte var16 = 0;
-
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			var15.startDrawingQuads();
-			int var17 = var12.getStringWidth(par2Str) / 2;
-			var15.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
-			var15.addVertex((double) (-var17 - 1), (double) (-1 + var16), 0.0D);
-			var15.addVertex((double) (-var17 - 1), (double) (8 + var16), 0.0D);
-			var15.addVertex((double) (var17 + 1), (double) (8 + var16), 0.0D);
-			var15.addVertex((double) (var17 + 1), (double) (-1 + var16), 0.0D);
-			var15.draw();
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, 553648127);
-			// GL11.glEnable(GL11.GL_DEPTH_TEST);
-			GL11.glDepthMask(true);
-			var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, entitypixelmon.getBossMode().getColourInt());
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glDisable(GL11.GL_BLEND);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			GL11.glPopMatrix();
-		}
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		var15.startDrawingQuads();
+		int var17 = var12.getStringWidth(par2Str) / 2;
+		var15.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
+		var15.addVertex((double) (-var17 - 1), (double) (-1 + var16), 0.0D);
+		var15.addVertex((double) (-var17 - 1), (double) (8 + var16), 0.0D);
+		var15.addVertex((double) (var17 + 1), (double) (8 + var16), 0.0D);
+		var15.addVertex((double) (var17 + 1), (double) (-1 + var16), 0.0D);
+		var15.draw();
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, 553648127);
+		if (owned)
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(true);
+		var12.drawString(par2Str, -var12.getStringWidth(par2Str) / 2, var16, entitypixelmon.getBossMode().getColourInt());
+		GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glPopMatrix();
 	}
 
-	public void drawExpBar(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
+	public void drawExpBar(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1, boolean owned) {
 		float f2 = 1.6F;
 		float f3 = 0.01666667F * f2;
-		if ((float) entityLiving.getDistanceToEntity(renderManager.livingPlayer) < 28F && Minecraft.isGuiEnabled()) {
+		if (Minecraft.isGuiEnabled()) {
 			GL11.glPushMatrix();
 			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
 			GL11.glTranslatef((float) d + 0.0F, (float) d1 + entityLiving.height * ((EntityPixelmon) entityLiving).getScale() * scaleFactor, (float) d2);
@@ -297,7 +298,8 @@ public class RenderPixelmon extends RenderLiving {
 			GL11.glScalef(-f3, -f3, f3);
 			GL11.glDisable(2896 /* GL_LIGHTING */);
 			GL11.glDepthMask(false);
-			GL11.glDisable(2929 /* GL_DEPTH_TEST */);
+			if (owned)
+				GL11.glDisable(2929 /* GL_DEPTH_TEST */);
 			GL11.glEnable(3042 /* GL_BLEND */);
 			GL11.glBlendFunc(770, 771);
 			Tessellator tessellator = Tessellator.instance;
@@ -321,7 +323,8 @@ public class RenderPixelmon extends RenderLiving {
 			tessellator.addVertex(f8 - 25F, -7 + byte0, 0.0D);
 			tessellator.draw();
 			GL11.glEnable(3553 /* GL_TEXTURE_2D */);
-			GL11.glEnable(2929 /* GL_DEPTH_TEST */);
+			if (owned)
+				GL11.glEnable(2929 /* GL_DEPTH_TEST */);
 			GL11.glDepthMask(true);
 			GL11.glEnable(2896 /* GL_LIGHTING */);
 			GL11.glDisable(3042 /* GL_BLEND */);
@@ -330,10 +333,10 @@ public class RenderPixelmon extends RenderLiving {
 		}
 	}
 
-	public void drawHealthBar(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
+	public void drawHealthBar(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1, boolean owned) {
 		float f2 = 1.6F;
 		float f3 = 0.01666667F * f2;
-		if ((float) entityLiving.getDistanceToEntity(renderManager.livingPlayer) < 28F && Minecraft.isGuiEnabled()) {
+		if (Minecraft.isGuiEnabled()) {
 			GL11.glPushMatrix();
 			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
 			GL11.glTranslatef((float) d + 0.0F, (float) d1 + entityLiving.height * ((EntityPixelmon) entityLiving).getScale() * scaleFactor, (float) d2);
@@ -343,7 +346,8 @@ public class RenderPixelmon extends RenderLiving {
 			GL11.glScalef(-f3, -f3, f3);
 			GL11.glDisable(2896 /* GL_LIGHTING */);
 			GL11.glDepthMask(false);
-			GL11.glDisable(2929 /* GL_DEPTH_TEST */);
+			if (owned)
+				GL11.glDisable(2929 /* GL_DEPTH_TEST */);
 			GL11.glEnable(3042 /* GL_BLEND */);
 			GL11.glBlendFunc(770, 771);
 			Tessellator tessellator = Tessellator.instance;
@@ -365,7 +369,8 @@ public class RenderPixelmon extends RenderLiving {
 			tessellator.addVertex(f8 - 25F, -7 + byte0, 0.0D);
 			tessellator.draw();
 			GL11.glEnable(3553 /* GL_TEXTURE_2D */);
-			GL11.glEnable(2929 /* GL_DEPTH_TEST */);
+			if (owned)
+				GL11.glEnable(2929 /* GL_DEPTH_TEST */);
 			GL11.glDepthMask(true);
 			GL11.glEnable(2896 /* GL_LIGHTING */);
 			GL11.glDisable(3042 /* GL_BLEND */);

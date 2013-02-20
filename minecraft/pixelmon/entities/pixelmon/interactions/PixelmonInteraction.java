@@ -59,7 +59,7 @@ public abstract class PixelmonInteraction {
 
 	}
 
-	private static HashMap<String, Class> pixelmonInteractions = new HashMap<>();
+	private static HashMap<String, Class> pixelmonInteractions = new HashMap<String, Class>();
 	static {
 		pixelmonInteractions.put("Miltank", MiltankInteraction.class);
 		pixelmonInteractions.put("Camerupt", CameruptInteraction.class);
