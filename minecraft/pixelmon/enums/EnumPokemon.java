@@ -91,6 +91,7 @@ public enum EnumPokemon {
 	Pidgeot("Pidgeot"),
 	Piloswine("Piloswine"),
 	Poliwag("Poliwag"),
+	Poliwhirl("Poliwhirl"),
 	Ponyta("Ponyta"),
 	Primeape("Primeape"),
 	Psyduck("Psyduck"),

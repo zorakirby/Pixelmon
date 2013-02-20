@@ -59,7 +59,7 @@ public class ModelGrowlithe extends PixelmonModelBase {
 
 		PixelmonModelRenderer Belly = new PixelmonModelRenderer(this, 0, 22);
 		Belly.addBox(0F, 0F, 0F, 4, 1, 9);
-		Belly.setRotationPoint(0, 2.7F, -0.5F);
+		Belly.setRotationPoint(0, 2.7F, 0.5F);
 		Belly.setTextureSize(64, 32);
 		Belly.mirror = true;
 		Body.addChild(Belly);
@@ -109,7 +109,7 @@ public class ModelGrowlithe extends PixelmonModelBase {
 		Tail.addChild(Main_Bushy_Tail_Bit);
 		PixelmonModelRenderer Normal_Bushy_Tail_Bit = new PixelmonModelRenderer(this, 31, 14);
 		Normal_Bushy_Tail_Bit.addBox(-1.533333F, -1F, 0F, 3, 2, 3);
-		Normal_Bushy_Tail_Bit.setRotationPoint(0, -1.13333F, -1);
+		Normal_Bushy_Tail_Bit.setRotationPoint(0, -1.13333F, 1);
 		Normal_Bushy_Tail_Bit.setTextureSize(64, 32);
 		Normal_Bushy_Tail_Bit.mirror = true;
 		setRotation(Normal_Bushy_Tail_Bit, 0.2602503F, 0F, 0F);
