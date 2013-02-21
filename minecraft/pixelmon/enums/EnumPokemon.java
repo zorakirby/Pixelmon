@@ -24,6 +24,7 @@ public enum EnumPokemon {
 	Charmeleon("Charmeleon"),
 	Clefable("Clefable"),
 	Clefairy("Clefairy"),
+	Cloyster("Cloyster"),
 	Cranidos("Cranidos"),
 	Cubone("Cubone"),
 	Diglett("Diglett"),
