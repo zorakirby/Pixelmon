@@ -126,7 +126,7 @@ public class PixelmonItemsFossils {
 		plumeFossilUncoveredID = cfg.get("fossils", "CoverFossilUncovered", 21108).getInt();
 
 		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, 82).setItemName("Fossil Machine");
-		fossilCleanerItem = new ItemBlock(fossilCleanerItemID, PixelmonBlocks.fossilCleaner, 146).setItemName("FossilCleaner");
+		fossilCleanerItem = new ItemBlock(fossilCleanerItemID, PixelmonBlocks.fossilCleaner, 210).setItemName("FossilCleaner");
 
 		helixFossil = new ItemPokemonFossil(helixFossilID, "Omanyte", "HelixFossil").setItemName("helixFossil").setIconIndex(10);
 		domeFossil = new ItemPokemonFossil(domeFossilID, "Kabuto", "DomeFossil").setItemName("domeFossil").setIconIndex(26);

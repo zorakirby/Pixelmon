@@ -500,21 +500,25 @@ public class EntityPokeBall extends EntityThrowable {
 			numShakes = 4;
 			return;
 		}
+		int passedShakes = 0;
 		int pokemonRate = p2.getCatchRate();
 		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), p2.getName(), pokemonRate);
-		int hpMax = p2.getMaxHealth();
-		int hpCurrent = p2.getHealth();
-		int bonusStatus = 1;
-		double ballBonus = PokeballTypeHelper.getBallBonus(getType(), thrower, p2, mode);
-		double a, b, p;
-		a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * ballBonus) / (3 * hpMax)) * bonusStatus;
-		b = Math.round(Math.pow((255.0 / a), 0.25) * 4096.0) / 4096.0;
-		b = Math.floor(65536.0 / b);
-		int passedShakes = 0;
-		for (int i = 0; i < 4; i++) {
-			int roll = new Random().nextInt(65536);
-			if (roll <= b) {
-				passedShakes++;
+		if (pokemonRate > 0) {
+			int hpMax = p2.getMaxHealth();
+			int hpCurrent = p2.getHealth();
+			int bonusStatus = 1;
+			double ballBonus = PokeballTypeHelper.getBallBonus(getType(), thrower, p2, mode);
+			double a, b, p;
+			a = (((3 * hpMax - 2 * hpCurrent) * pokemonRate * ballBonus) / (3 * hpMax)) * bonusStatus;
+			b = Math.round(Math.pow((255.0 / a), 0.25) * 4096.0) / 4096.0;
+			b = Math.floor(65536.0 / b);
+			if (b != 0) {
+				for (int i = 0; i < 4; i++) {
+					int roll = new Random().nextInt(65536);
+					if (roll <= b) {
+						passedShakes++;
+					}
+				}
 			}
 		}
 		if (passedShakes == 4) {

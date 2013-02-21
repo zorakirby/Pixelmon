@@ -311,10 +311,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 		}
 	}
 
-	public void setTrainer(EntityTrainer entityTrainer) {
-		trainer = entityTrainer;
-	}
-
 	@Override
 	public EntityAgeable createChild(EntityAgeable var1) {
 		return null;
