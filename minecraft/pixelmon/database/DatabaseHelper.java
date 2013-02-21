@@ -28,7 +28,7 @@ public class DatabaseHelper {
 	public static String databaseURL = "http://www.mediafire.com/?cbangc8w9p8dix0";
 	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
-	public static boolean checkForDatabaseUpdates = false;
+	public static boolean checkForDatabaseUpdates = true;
 
 	public static boolean has() {
 		try {

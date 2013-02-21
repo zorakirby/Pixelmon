@@ -9,7 +9,6 @@ package pixelmon.client.models.pokemon;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
@@ -213,11 +212,34 @@ public class ModelZubat extends PixelmonModelBase {
 
 	public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 
-		this.Body.rotateAngleX = ((float)Math.PI / 4F) - 0.25F;
-        this.Body.rotateAngleY = 0.0F;
-        this.RightWing.rotateAngleY = MathHelper.cos(f2 * 1.3F) * (float)Math.PI * 0.25F;
-        this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
+		if (((EntityPixelmon) entity).animationCounter * 3 - 180 < 0) {
+			LeftWing.rotateAngleZ = -1.5F + (((EntityPixelmon) entity).animationCounter + 90) * 0.0174532925F;
+		}
+		
+		else if (((EntityPixelmon) entity).animationCounter * 3 >= 0) {
+			LeftWing.rotateAngleZ = 0.5F + -((((EntityPixelmon) entity).animationCounter - 90) * 0.0174532925F);
+		}
 
+		if (((EntityPixelmon) entity).animationCounter * 3 - 180 < 0) {
+			RightWing.rotateAngleZ = 1.5F + -(((EntityPixelmon) entity).animationCounter + 90) * 0.0174532925F;
+		}
+
+		else if (((EntityPixelmon) entity).animationCounter * 3 >= 0) {
+			RightWing.rotateAngleZ = -0.5F + ((((EntityPixelmon) entity).animationCounter - 90) * 0.0174532925F);
+		}
+
+		if (((EntityPixelmon) entity).animationCounter * 3 - 180 < 0) {
+			Body.rotationPointY = 15 - (((EntityPixelmon) entity).animationCounter + 180) * 0.174532925F;
+		}
+
+		else if (((EntityPixelmon) entity).animationCounter * 3 >= 0) {
+			Body.rotationPointY = -5 + (((EntityPixelmon) entity).animationCounter - 180) * 0.174532925F;
+		}
+
+		if (((EntityPixelmon) entity).animationCounter >= 120) {
+			((EntityPixelmon) entity).animationCounter = 0;
+		}
+		
 	}
 }
 
