@@ -132,7 +132,7 @@ public class ModelSkullFossil extends ModelFossil {
 		Shape28.render(f5);
 	}
 
-	public void renderModel(TileEntityFossilMachine tile, float f5) {
+	public void renderModel(float f5) {
 		base1.render(f5);
 		base_2.render(f5);
 		base_3.render(f5);

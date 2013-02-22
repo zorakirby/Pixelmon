@@ -8,6 +8,7 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.WorldServer;
 
 public class TileEntityFossilCleaner extends TileEntity {
 
@@ -32,6 +33,8 @@ public class TileEntityFossilCleaner extends TileEntity {
 				if (!itemClean && PixelmonItemsFossils.getItemFromIndex(itemInCleaner) instanceof ItemFossilUncovered) {
 					itemInCleaner = ((ItemFossilUncovered) PixelmonItemsFossils.getItemFromIndex(itemInCleaner)).cleanedFossil.itemID;
 					itemClean = true;
+					if (worldObj instanceof WorldServer)
+						((WorldServer) worldObj).getPlayerManager().flagChunkForUpdate(xCoord, yCoord, zCoord);
 				}
 			}
 
@@ -47,6 +50,8 @@ public class TileEntityFossilCleaner extends TileEntity {
 			int itemId = itemInCleaner;
 			itemInCleaner = -1;
 			timer = 360;
+			if (worldObj instanceof WorldServer)
+				((WorldServer) worldObj).getPlayerManager().flagChunkForUpdate(xCoord, yCoord, zCoord);
 			return PixelmonItemsFossils.getFossilFromIndex(itemId);
 		}
 		return null;

@@ -132,7 +132,7 @@ public class ModelDomeFossil extends ModelFossil {
 		base4.render(f5);
 	}
 
-	public void renderModel(TileEntityFossilMachine tile, float f5) {
+	public void renderModel(float f5) {
 		top_1.render(f5);
 		top_l1.render(f5);
 		top_r2.render(f5);

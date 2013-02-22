@@ -290,7 +290,7 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 	public void renderModel(TileEntityFossilMachine tile, float f) {
 		if (tile.currentFossil != -1)
 			if (PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel() != null)
-				PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel().renderModel(tile, f);
+				PixelmonItemsFossils.getFossilFromIndex(tile.currentFossil).getModel().renderModel(f);
 	}
 
 	@Override

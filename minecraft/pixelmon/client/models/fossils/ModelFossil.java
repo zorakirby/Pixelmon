@@ -15,5 +15,5 @@ public abstract class ModelFossil extends ModelBase {
 		return this.fossilName;
 	}
 	
-	public abstract void renderModel(TileEntityFossilMachine entity, float f5);
+	public abstract void renderModel(float f5);
 }

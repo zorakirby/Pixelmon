@@ -99,7 +99,7 @@ public class ModelCoverFossil extends ModelFossil {
 		base10.render(f5);
 	}
 
-	public void renderModel(TileEntityFossilMachine entity, float f5) {
+	public void renderModel(float f5) {
 		base1.render(f5);
 		base2.render(f5);
 		base3.render(f5);

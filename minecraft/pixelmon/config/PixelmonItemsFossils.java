@@ -215,6 +215,22 @@ public class PixelmonItemsFossils {
 		}
 		return null;
 	}
+	
+	public static ItemFossilUncovered getUncoveredFossilFromIndex(int currentFossil) {
+		try {
+			for (Field field : PixelmonItemsFossils.class.getFields()) {
+				if (field.isAnnotationPresent(Mod.Item.class)) {
+					Item item = (Item) field.get(null);
+					if (item instanceof ItemFossilUncovered)
+						if (item.itemID == currentFossil)
+							return (ItemFossilUncovered) item;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public static Item getItemFromIndex(int itemID) {
 		try {

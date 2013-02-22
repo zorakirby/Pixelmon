@@ -140,7 +140,7 @@ public class ModelClawFossil extends ModelFossil {
 		base.render(f5);
 	}
 
-	public void renderModel(TileEntityFossilMachine entity, float f5) {
+	public void renderModel(float f5) {
 		claw_1_1.render(f5);
 		claw_1_2.render(f5);
 		claw_2_1.render(f5);

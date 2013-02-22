@@ -194,7 +194,7 @@ public class ModelOldAmber extends ModelFossil {
 		setRotation(Amber_26, 0.033743F, 0F, 0F);
 	}
 
-	public void renderModel(TileEntityFossilMachine tile, float f5) {
+	public void renderModel(float f5) {
 		Amber_1.render(f5);
 		Amber_2.render(f5);
 		Amber_3.render(f5);

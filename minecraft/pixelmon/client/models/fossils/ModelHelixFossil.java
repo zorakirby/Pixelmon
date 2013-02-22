@@ -140,7 +140,7 @@ public class ModelHelixFossil extends ModelFossil {
 		base_6.render(f5);
 	}
 
-	public void renderModel(TileEntityFossilMachine entity, float f5) {
+	public void renderModel(float f5) {
 		helix1.render(f5);
 		helix2.render(f5);
 		helix3.render(f5);

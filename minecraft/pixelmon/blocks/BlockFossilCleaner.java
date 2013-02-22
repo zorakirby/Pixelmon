@@ -76,6 +76,7 @@ public class BlockFossilCleaner extends BlockContainer {
 
 				world.spawnEntityInWorld(var3);
 				((TileEntityFossilCleaner) world.getBlockTileEntity(x, y, z)).itemInCleaner = -1;
+				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 			}
 			if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemFossilUncovered)) {
 				((TileEntityFossilCleaner) world.getBlockTileEntity(x, y, z)).setItemInCleaner(player.getCurrentEquippedItem().itemID);
