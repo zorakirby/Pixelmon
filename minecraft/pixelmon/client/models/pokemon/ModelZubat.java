@@ -214,10 +214,10 @@ public class ModelZubat extends PixelmonModelBase {
 	public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 
 		this.Body.rotateAngleX = ((float)Math.PI / 4F) - 0.25F;
-        this.Body.rotateAngleY = 0.0F;
-        this.RightWing.rotateAngleY = MathHelper.cos(f2 * 1.3F) * (float)Math.PI * 0.25F;
-        this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
-
+	       this.Body.rotateAngleY = 0.0F;
+	       this.RightWing.rotateAngleY = MathHelper.cos(f2 * 1.3F) * (float)Math.PI * 0.25F;
+	       this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
+		
 	}
 }
 
