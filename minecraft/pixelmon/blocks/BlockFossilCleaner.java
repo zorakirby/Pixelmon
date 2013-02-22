@@ -24,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
@@ -32,6 +33,15 @@ public class BlockFossilCleaner extends BlockContainer {
 	public BlockFossilCleaner(int i) {
 		super(i, Material.iron);
 		setHardness(1f);
+	}
+	
+	@Override
+	public int idDropped(int par1, Random par2Random, int par3) {
+		return PixelmonItemsFossils.fossilCleanerItem.itemID;
+	}
+	
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		return new ItemStack(PixelmonItemsFossils.fossilCleanerItem, 1);
 	}
 
 	@Override
