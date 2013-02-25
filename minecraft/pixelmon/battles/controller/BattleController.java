@@ -50,7 +50,7 @@ public class BattleController {
 
 	private void initBattle() throws Exception {
 		for (BattleParticipant p : participants) {
-			if (!p.checkPokemon()){
+			if (!p.checkPokemon()) {
 				throw new Exception("Battle Could not start!");
 			}
 		}
@@ -96,43 +96,50 @@ public class BattleController {
 	int turn = 0;
 
 	public void update() {
-		if (isWaiting() || paused)
-			return;
-		int tickTop;
-		if (moveStage == MoveStage.PickAttacks)
-			tickTop = 30;
-		else
-			tickTop = 70;
-		if (battleTicks++ > tickTop) {
+		try {
+			if (isWaiting() || paused)
+				return;
+			int tickTop;
+			if (moveStage == MoveStage.PickAttacks)
+				tickTop = 30;
+			else
+				tickTop = 70;
+			if (participants.size() < 2)
+				return;
+			if (battleTicks++ > tickTop) {
 
-			if (moveStage == MoveStage.PickAttacks) { // Pick Moves
-				// moveToPositions();
-				PickingMoves.pickMoves(this);
-				PickingMoves.checkMoveSpeed(this);
-				moveStage = MoveStage.Move;
-				turn = 0;
-			} else if (moveStage == MoveStage.Move) { // First Move
-				takeTurn(participants.get(turn));
-				turn++;
+				if (moveStage == MoveStage.PickAttacks) { // Pick Moves
+					// moveToPositions();
+					PickingMoves.pickMoves(this);
+					PickingMoves.checkMoveSpeed(this);
+					moveStage = MoveStage.Move;
+					turn = 0;
+				} else if (moveStage == MoveStage.Move) { // First Move
+					takeTurn(participants.get(turn));
+					turn++;
 
-				if (turn == participants.size()) {
-					moveStage = MoveStage.PickAttacks;
-					for (BattleParticipant p : participants) {
-						p.turnTick();
-					}
-					for (int i = 0; i < battleStatusList.size(); i++) {
-						try {
-							battleStatusList.get(i).turnTick(null, null);
-						} catch (Exception e) {
-							System.out.println("Error on battleStatus tick for " + battleStatusList.get(i).type.toString());
-							e.printStackTrace();
+					if (turn == participants.size()) {
+						moveStage = MoveStage.PickAttacks;
+						for (BattleParticipant p : participants) {
+							p.turnTick();
 						}
+						for (int i = 0; i < battleStatusList.size(); i++) {
+							try {
+								battleStatusList.get(i).turnTick(null, null);
+							} catch (Exception e) {
+								System.out.println("Error on battleStatus tick for " + battleStatusList.get(i).type.toString());
+								e.printStackTrace();
+							}
+						}
+						turnCount++;
 					}
-					turnCount++;
+					checkAndReplaceFaintedPokemon();
 				}
-				checkAndReplaceFaintedPokemon();
+				battleTicks = 0;
 			}
-			battleTicks = 0;
+		} catch (Exception e) {
+			System.out.println("Caught error in battle.  Continuing...");
+			e.printStackTrace();
 		}
 	}
 
@@ -212,7 +219,6 @@ public class BattleController {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " couldn't escape!");
 	}
 
-	
 	public void setFlee(EntityPixelmon mypixelmon) {
 		for (BattleParticipant p : participants)
 			if (mypixelmon == p.currentPokemon()) {
@@ -289,5 +295,5 @@ public class BattleController {
 	public void endPause() {
 		paused = false;
 	}
-	
+
 }

@@ -41,16 +41,17 @@ public class PokeballManager {
 		return getPlayerStorage(owner);
 	}
 
-	public EntityPlayerMP getPlayerFromName(String name)
-	{
-		for(PlayerStorage p : playerPokemonList)
-			if(p.player.username.equals(name))
+	public EntityPlayerMP getPlayerFromName(String name) {
+		for (PlayerStorage p : playerPokemonList)
+			if (p.player.username.equals(name))
 				return p.player;
 		return null;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void loadPlayer(EntityPlayerMP player) {
+		if (player == null)
+			return;
 		File saveDirPath = new File(getSaveFolder(player));
 		if (!saveDirPath.exists())
 			saveDirPath.mkdirs();

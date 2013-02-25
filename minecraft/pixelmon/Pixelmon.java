@@ -23,6 +23,9 @@ import pixelmon.migration.Migration;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.structure.GeneralScattered;
+import pixelmon.structure.SchematicImporter;
+import pixelmon.structure.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
@@ -82,7 +85,7 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
 		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
-		//Pokedex.init();
+		// Pokedex.init();
 	}
 
 	@Init
@@ -107,7 +110,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 
-		// GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
@@ -119,12 +122,6 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
 		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
 		proxy.registerTickHandlers();
-
-		// SchematicImporter s = new
-		// SchematicImporter("resources/pixelmon/structures/standAlone/Mansion.schematic");
-		// s.readSchematic();
-		// GameRegistry.registerWorldGenerator(new GeneralScattered(rand,
-		// s.width, s.width, s));
 	}
 
 	@PostInit
