@@ -250,6 +250,7 @@ public class RenderPixelmon extends RenderLiving {
 		float var14 = 0.016666668F * var13;
 		GL11.glPushMatrix();
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+		scaleFactor *= entitypixelmon.getScaleFactor();
 		GL11.glTranslatef((float) par3 + 0.0F, (float) par5 + 1.1f + entitypixelmon.height * entitypixelmon.getScale() * scaleFactor, (float) par7);
 		GL11.glNormal3f(0.0F, 1.0F, 0.0F);
 		GL11.glRotatef(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
@@ -291,6 +292,7 @@ public class RenderPixelmon extends RenderLiving {
 		if (Minecraft.isGuiEnabled()) {
 			GL11.glPushMatrix();
 			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+			scaleFactor *= ((EntityPixelmon)entityLiving).getScaleFactor();
 			GL11.glTranslatef((float) d + 0.0F, (float) d1 + entityLiving.height * ((EntityPixelmon) entityLiving).getScale() * scaleFactor, (float) d2);
 			GL11.glNormal3f(0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
@@ -339,6 +341,7 @@ public class RenderPixelmon extends RenderLiving {
 		if (Minecraft.isGuiEnabled()) {
 			GL11.glPushMatrix();
 			float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
+			scaleFactor *= ((EntityPixelmon) entityLiving).getScaleFactor();
 			GL11.glTranslatef((float) d + 0.0F, (float) d1 + entityLiving.height * ((EntityPixelmon) entityLiving).getScale() * scaleFactor, (float) d2);
 			GL11.glNormal3f(0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);

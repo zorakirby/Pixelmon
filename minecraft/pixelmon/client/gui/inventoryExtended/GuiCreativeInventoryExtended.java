@@ -226,16 +226,6 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		var9.draw();
 	}
 
-	@Override
-	protected void actionPerformed(GuiButton par1GuiButton) {
-		super.actionPerformed(par1GuiButton);
-		if (par1GuiButton.id == 3) {
-			GuiScreenPokeCheckerInv poke = new GuiScreenPokeCheckerInv(selected, this);
-			mc.displayGuiScreen(poke);
-		}
-	}
-
-
 	Rectangle buttonBounds;
 	Rectangle buttonBoundsMoves;
 	Rectangle buttonBoundsStat;

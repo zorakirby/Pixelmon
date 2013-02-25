@@ -20,13 +20,13 @@ public class DropItemHelper {
 	}
 
 	public int getDropItemID() {
+		if (!PixelmonConfig.pokemonDropsEnabled || pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
+			return 0;
 		if (pixelmon.getBossMode() != EnumBossMode.Normal) {
 			dropBossItems();
 			return 0;
 		}
 		String droppedItem = pixelmon.baseStats.droppedItem;
-		if (!PixelmonConfig.pokemonDropsEnabled || pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
-			return 0;
 		if (droppedItem == null)
 			return 0;
 

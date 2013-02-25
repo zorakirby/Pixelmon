@@ -8,7 +8,7 @@ import pixelmon.comm.EnumPackets;
 import cpw.mods.fml.common.network.Player;
 
 public abstract class PacketHandlerBase {
-	ArrayList<EnumPackets> packetsHandled;
+	protected ArrayList<EnumPackets> packetsHandled;
 
 	public PacketHandlerBase() {
 		packetsHandled = new ArrayList<EnumPackets>();

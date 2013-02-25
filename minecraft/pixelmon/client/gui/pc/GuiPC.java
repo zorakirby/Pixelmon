@@ -24,13 +24,18 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class GuiPC extends GuiContainer {
 
 	private int boxNumber, trashX, trashY, checkX, checkY;
-	private SlotPC mouseSlot;
 	private SlotPCPC[][] pcSlots = new SlotPCPC[PlayerComputerStorage.boxCount][ComputerBox.boxLimit];
 	private SlotPCParty[] partySlots = new SlotPCParty[6];
 
 	public GuiPC() {
 		super(new ContainerEmpty());
 		boxNumber = 0;
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.RequestPCData));
+	}
+
+	public GuiPC(PixelmonDataPacket targetPacket) {
+		this();
+		mouseHeldPokemon = targetPacket;
 	}
 
 	public void initGui() {
@@ -43,7 +48,6 @@ public class GuiPC extends GuiContainer {
 		checkY = trashY;
 		checkX = width / 2 - 140;
 
-		mouseSlot = new SlotPC(0, 0, (PixelmonDataPacket) null);
 		for (int i = 0; i < PlayerComputerStorage.boxCount; i++) {
 			for (int j = 0; j < ComputerBox.boxLimit; j++) {
 				int x = j % 6;
@@ -72,44 +76,6 @@ public class GuiPC extends GuiContainer {
 			PixelmonDataPacket p = ServerStorageDisplay.pokemon[i];
 			if (p != null) {
 				partySlots[i].setPokemon(p);
-			}
-		}
-		sort();
-
-	}
-
-	public void sort() {
-		SlotPCPC[][] temp = new SlotPCPC[PlayerComputerStorage.boxCount][ComputerBox.boxLimit];
-		for (int i = 0; i < pcSlots.length; i++) {
-			for (int j = 0; j < pcSlots[i].length; j++) {
-				PixelmonDataPacket p = pcSlots[i][j].pokemonData;
-				if (p != null) {
-					int box = p.boxNumber;
-					int pos = p.order;
-					temp[box][pos] = new SlotPCPC(pcSlots[box][pos].x, pcSlots[box][pos].y, box, pos);
-					temp[box][pos].setPokemon(p);
-				}
-			}
-		}
-		int z = 0;
-		for (SlotPCPC[] i : temp) {
-			int y = 0;
-			for (SlotPCPC j : temp[z]) {
-				if (j != null) {
-					pcSlots[z][y] = j;
-				} else {
-					pcSlots[z][y].setPokemon((PixelmonDataPacket) null);
-				}
-				y++;
-			}
-			z++;
-		}
-		for (int i = 0; i < partySlots.length; i++) {
-			PixelmonDataPacket p = partySlots[i].pokemonData;
-			if (p != null) {
-				int pos = p.order;
-				partySlots[i].setPokemon((PixelmonDataPacket) null);
-				partySlots[pos].setPokemon(p);
 			}
 		}
 	}
@@ -148,43 +114,38 @@ public class GuiPC extends GuiContainer {
 
 				boolean changed = false;
 				PixelmonDataPacket temp = slot.pokemonData;
-				if ((slot instanceof SlotPCParty && mouseSlot.pokemonData == null && checkIfLast())) {
+				if ((slot instanceof SlotPCParty && PixelmonServerStore.getMousePokemon() == null && checkIfLast())) {
 					return;
 				}
 				if (slot.pokemonData != null) {
-					slot.setPokemon((PixelmonDataPacket) null);
 					changed = true;
 				}
-				if (mouseSlot.pokemonData != null) {
-					slot.setPokemon(mouseSlot.pokemonData);
-					mouseSlot.pokemonData = null;
+				if (PixelmonServerStore.getMousePokemon() != null) {
 					changed = true;
 				}
-				mouseSlot.pokemonData = temp;
 				if (changed) {
 					if (slot instanceof SlotPCParty) {
 						int pos = ((SlotPCParty) slot).partyPosition;
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -1, boxNumber, pos));
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClickOnParty, pos));
 					}
 					if (slot instanceof SlotPCPC) {
 						int boxNumber = ((SlotPCPC) slot).boxNumber;
 						int pos = ((SlotPCPC) slot).boxPosition;
-						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, this.boxNumber, boxNumber, pos));
+						PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClickOnBox, this.boxNumber, pos));
 					}
 				}
 				return;
 
 			} else if (new Rectangle(trashX, trashY, 32, 32).contains(par1, par2)) {
-				if (mouseSlot.pokemonData != null) {
-					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -2));
+				if (PixelmonServerStore.getMousePokemon() != null) {
+					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCTrashPokemon));
 				}
 
-				mouseSlot.clearPokemon();
 				return;
 			} else if (new Rectangle(checkX, checkY, 32, 32).contains(par1, par2)) {
-				if (mouseSlot.pokemonData != null) {
+				if (PixelmonServerStore.getMousePokemon() != null) {
 					goingToPokeChecker = true;
-					mc.displayGuiScreen(new GuiScreenPokeCheckerPC(mouseSlot.pokemonData, this, 0, 0));
+					mc.displayGuiScreen(new GuiScreenPokeCheckerPC(PixelmonServerStore.getMousePokemon(), 0, 0));
 				}
 				return;
 
@@ -194,21 +155,19 @@ public class GuiPC extends GuiContainer {
 		}
 	}
 
+	public PixelmonDataPacket mouseHeldPokemon = null;
+
 	private boolean goingToPokeChecker = false;
 
 	public void onGuiClosed() {
 		super.onGuiClosed();
-		if (mouseSlot.pokemonData != null) {
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -4));
-		}
-		mouseSlot.pokemonData = null;
-		if (!goingToPokeChecker) {
-			PixelmonServerStore.store.clear();
+		if (goingToPokeChecker)
+			return;
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClosed));
+		PixelmonServerStore.clearList();
+		PixelmonServerStore.clearMousePokemon();
 
-			GuiPixelmonOverlay.checkSelection();
-		}
-		goingToPokeChecker = false;
-
+		GuiPixelmonOverlay.checkSelection();
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -250,10 +209,11 @@ public class GuiPC extends GuiContainer {
 	}
 
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+		refreshSlots();
 		int w = width;
 		int h = height;
 
-		mouseSlot.setXandY(var2 - 15, var3 - 15);
+		SlotPC mouseSlot = new SlotPC(var2 - 15, var3 - 15, PixelmonServerStore.getMousePokemon());
 		RenderHelper.disableStandardItemLighting();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -344,13 +304,30 @@ public class GuiPC extends GuiContainer {
 			if (p.isFainted) {
 				fontRenderer.drawString("Fainted", mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
 			} else {
-				fontRenderer.drawString("HP " + p.health + "/" + p.hp, mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20,
-						0xFFFFFF);
+				fontRenderer.drawString("HP " + p.health + "/" + p.hp, mouseSlot.x + 35 + fontRenderer.getStringWidth("Lvl " + p.lvl), mouseSlot.y + 20, 0xFFFFFF);
 			}
 
 		}
 		fontRenderer.drawString("Box: " + (boxNumber + 1), width / 2 - 18, height / 6 - 20, 0xffffff);
 
+	}
+
+	private void refreshSlots() {
+		for (int i = 0; i < PlayerComputerStorage.boxCount; i++) {
+			for (int j = 0; j < ComputerBox.boxLimit; j++) {
+				PixelmonDataPacket p = PixelmonServerStore.getFromBox(i, j);
+				if (p != null) {
+					pcSlots[i][j].setPokemon(p);
+				}
+
+			}
+		}
+		for (int i = 0; i < 6; i++) {
+			PixelmonDataPacket p = ServerStorageDisplay.pokemon[i];
+			if (p != null) {
+				partySlots[i].setPokemon(p);
+			}
+		}
 	}
 
 }

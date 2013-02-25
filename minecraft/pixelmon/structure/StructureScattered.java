@@ -17,20 +17,20 @@ abstract class StructureScattered extends StructureComponent {
 	protected final int scatteredFeatureSizeZ;
 	protected int field_74936_d = -1;
 
-	protected StructureScattered(Random par1Random, int par2, int par3, int par4, int par5, int par6, int par7) {
+	protected StructureScattered(Random par1Random, int x, int y, int z, int width, int height, int length) {
 		super(0);
-		this.scatteredFeatureSizeX = par5;
-		this.scatteredFeatureSizeY = par6;
-		this.scatteredFeatureSizeZ = par7;
+		this.scatteredFeatureSizeX = width;
+		this.scatteredFeatureSizeY = height;
+		this.scatteredFeatureSizeZ = length;
 		this.coordBaseMode = 2;//par1Random.nextInt(4);
 
 		switch (this.coordBaseMode) {
 		case 0:
 		case 2:
-			this.boundingBox = new StructureBoundingBox(par2, par3, par4, par2 + par5 - 1, par3 + par6 - 1, par4 + par7 - 1);
+			this.boundingBox = new StructureBoundingBox(x, y, z, x + width - 1, y + height - 1, z + length - 1);
 			break;
 		default:
-			this.boundingBox = new StructureBoundingBox(par2, par3, par4, par2 + par7 - 1, par3 + par6 - 1, par4 + par5 - 1);
+			this.boundingBox = new StructureBoundingBox(x, y, z, x + length - 1, y + height - 1, z + width - 1);
 		}
 	}
 

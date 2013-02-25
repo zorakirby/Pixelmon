@@ -51,8 +51,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 			if (!isPC)
 				mc.thePlayer.closeScreen();
 			else {
-				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -5));
-				mc.displayGuiScreen(new GuiPC());
+				GuiPC gui = new GuiPC(targetPacket);
+				mc.displayGuiScreen(gui);
 			}
 			break;
 		case 1:

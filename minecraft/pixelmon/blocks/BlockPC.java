@@ -62,15 +62,6 @@ public class BlockPC extends BlockContainer {
 	public boolean onBlockActivated(World world, int par2, int par3, int par4, EntityPlayer player, int par6, float par7, float par8, float par9) {
 		if(!world.isRemote)
 		{
-			PlayerComputerStorage s = PixelmonStorage.ComputerManager.getPlayerStorage(player);
-			for(ComputerBox b : s.getBoxList()){
-				for(NBTTagCompound n: b.getStoredPokemon()){
-					if (n != null) {
-						PixelmonDataPacket p = new PixelmonDataPacket(n, EnumPackets.AddToTempStore);
-						((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
-					}
-				}
-			}
 			player.openGui(Pixelmon.instance, EnumGui.PC.getIndex(), world, 0,0,0); // GUIPC
 			return true;
 		}

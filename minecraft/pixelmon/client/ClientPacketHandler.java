@@ -42,8 +42,14 @@ public class ClientPacketHandler implements IPacketHandler {
 				ServerStorageDisplay.update(dataStream);
 			} else if (packetID == EnumPackets.AddToTempStore.getIndex()) {
 				PixelmonServerStore.addToList(dataStream);
+			} else if (packetID == EnumPackets.RemoveFromTempStore.getIndex()) {
+				PixelmonServerStore.removeFromList(dataStream.readInt(), dataStream.readInt());
 			} else if (packetID == EnumPackets.ClearTempStore.getIndex()) {
 				PixelmonServerStore.clearList();
+			} else if (packetID == EnumPackets.SetMousePokemon.getIndex()) {
+				PixelmonServerStore.setMousePokemon(dataStream);
+			} else if (packetID == EnumPackets.ClearMousePokemon.getIndex()) {
+				PixelmonServerStore.clearMousePokemon();
 			} else if (packetID == EnumPackets.BattleMessage.getIndex()) {
 				ClientBattleManager.addMessage(Packet.readString(dataStream, 64));
 			} else if (packetID == EnumPackets.SetOpponentType.getIndex()) {

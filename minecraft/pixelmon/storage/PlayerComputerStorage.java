@@ -17,8 +17,7 @@ public class PlayerComputerStorage {
 	public PlayerComputerStorage(EntityPlayer player) {
 		this.player = player;
 		for (int i = 0; i < boxCount; i++) {
-			storageBoxes[i] = new ComputerBox(i);
-
+			storageBoxes[i] = new ComputerBox(this, i);
 		}
 	}
 
@@ -60,30 +59,36 @@ public class PlayerComputerStorage {
 		} while (isUsed);
 		return id;
 	}
-	
-	public void changePokemon(int box, int boxPos, NBTTagCompound n){
-		if(n != null){
+
+	public void changePokemon(int box, int boxPos, NBTTagCompound n) {
+		if (n != null) {
 			n.setInteger("BoxNumber", box);
 			n.setInteger("PixelmonOrder", boxPos);
 		}
 		ComputerBox c = storageBoxes[box];
-		NBTTagCompound[] pixelmon = c.getStoredPokemon();
-		pixelmon[boxPos] = n;
-		c.setStoredPokemon(pixelmon);
-		c.hasChanged = true;
+		c.changePokemon(boxPos, n);
+	}
+
+	public void addToBox(int originalBox, NBTTagCompound n) {
+		ComputerBox c = storageBoxes[originalBox];
+		if (n != null) {
+			n.setInteger("BoxNumber", originalBox);
+		}
+		c.addToFirstSpace(n);
 	}
 
 	public ComputerBox getBox(int boxNumber) {
 		return storageBoxes[boxNumber];
 	}
 
-	public ComputerBox getBoxFromPosition(int pos){
-		for (int i=0; i < boxCount;i++){
-			if (storageBoxes[i].position == pos) return storageBoxes[i];
+	public ComputerBox getBoxFromPosition(int pos) {
+		for (int i = 0; i < boxCount; i++) {
+			if (storageBoxes[i].position == pos)
+				return storageBoxes[i];
 		}
 		return null;
 	}
-	
+
 	public ComputerBox[] getBoxList() {
 		return storageBoxes;
 	}
@@ -94,7 +99,7 @@ public class PlayerComputerStorage {
 
 		while (i.hasNext()) {
 			NBTTagCompound tag = i.next();
-			ComputerBox c = new ComputerBox(Integer.parseInt(tag.getName()));
+			ComputerBox c = new ComputerBox(this, Integer.parseInt(tag.getName()));
 			c.load(tag);
 			storageBoxes[Integer.parseInt(tag.getName())] = c;
 		}
@@ -116,4 +121,5 @@ public class PlayerComputerStorage {
 		}
 		return false;
 	}
+
 }

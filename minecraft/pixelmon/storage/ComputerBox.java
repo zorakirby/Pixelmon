@@ -2,7 +2,12 @@ package pixelmon.storage;
 
 import java.util.Iterator;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
+import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.comm.packetHandlers.PC.PCData;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ComputerBox {
@@ -10,10 +15,12 @@ public class ComputerBox {
 	public static final int boxLimit = 30;
 	public int position;
 	private NBTTagCompound[] storedPokemon = new NBTTagCompound[boxLimit];
+	private PlayerComputerStorage parentStorage;
 
-	public ComputerBox(int position) {
+	public ComputerBox(PlayerComputerStorage parentStorage, int position) {
 		this.position = position;
 		hasChanged = true;
+		this.parentStorage = parentStorage;
 	}
 
 	public boolean hasSpace() {
@@ -73,10 +80,6 @@ public class ComputerBox {
 		return storedPokemon;
 	}
 
-	public void setStoredPokemon(NBTTagCompound[] pokemon) {
-		storedPokemon = pokemon;
-	}
-
 	public NBTTagCompound getNBTByPosition(int pos) {
 		return storedPokemon[pos];
 	}
@@ -102,5 +105,34 @@ public class ComputerBox {
 			}
 		}
 		hasChanged = false;
+	}
+
+	public void addToFirstSpace(NBTTagCompound n) {
+		for (int i = 0; i < boxLimit; i++) {
+			if (storedPokemon[i] == null) {
+				n.setInteger("PixelmonOrder", i);
+				storedPokemon[i] = n;
+				updatePCData(i);
+				hasChanged = true;
+				return;
+			}
+		}
+	}
+
+	public void changePokemon(int boxPos, NBTTagCompound n) {
+		storedPokemon[boxPos] = n;
+		updatePCData(boxPos);
+		hasChanged = true;
+	}
+
+	private void updatePCData(int pos) {
+		if (PCData.guiOpen.containsKey(parentStorage.player) && PCData.guiOpen.get(parentStorage.player)) {
+			if (storedPokemon[pos] != null) {
+				PixelmonDataPacket p = new PixelmonDataPacket(storedPokemon[pos], EnumPackets.AddToTempStore);
+				((EntityPlayerMP) parentStorage.player).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
+			} else {
+				((EntityPlayerMP) parentStorage.player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.RemoveFromTempStore, position, pos));
+			}
+		}
 	}
 }

@@ -88,7 +88,7 @@ public class PlayerStorage {
 	public void addToParty(EntityPixelmon p) {
 		if (mode == PokeballManagerMode.Player && pokedex != null) {
 			pokedex.set(Pokedex.nameToID(p.getName()), DexRegisterStatus.caught);
-			pokedex.sendToPlayer((EntityPlayerMP)pokedex.owner);
+			pokedex.sendToPlayer((EntityPlayerMP) pokedex.owner);
 		}
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
@@ -233,6 +233,20 @@ public class PlayerStorage {
 				player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.AddToStorage).getPacket());
 		}
 		partyPokemon[pos] = n;
+	}
+
+	public void addToFirstEmptySpace(NBTTagCompound n) {
+		for (int i = 0; i < partyPokemon.length; i++) {
+			if (partyPokemon[i] == null) {
+				if (n != null) {
+					n.setInteger("PixelmonOrder", i);
+					if (mode == PokeballManagerMode.Player)
+						player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.AddToStorage).getPacket());
+				}
+				partyPokemon[i] = n;
+				return;
+			}
+		}
 	}
 
 	public int count() {
@@ -466,4 +480,5 @@ public class PlayerStorage {
 			}
 		}
 	}
+
 }

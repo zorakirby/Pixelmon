@@ -5,48 +5,61 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.storage.ComputerBox;
+import pixelmon.storage.PlayerComputerStorage;
 
 public class PixelmonServerStore {
-	public static ArrayList<PixelmonDataPacket> store = new ArrayList<PixelmonDataPacket>();
+	private static PixelmonDataPacket[][] store = new PixelmonDataPacket[PlayerComputerStorage.boxCount][ComputerBox.boxLimit];
+	private static PixelmonDataPacket mousePokemon;
 
 	public static void addToList(DataInputStream dataStream) {
-		PixelmonDataPacket packet = new PixelmonDataPacket();
+		PixelmonDataPacket p = new PixelmonDataPacket();
 		try {
-			packet.readPacketData(dataStream);
-			store.add(packet);
+			p.readPacketData(dataStream);
+			store[p.boxNumber][p.order] = p;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static PixelmonDataPacket getPixelmonData(int index) {
-		for (PixelmonDataPacket p : store) {
-			if (p.order == index)
-				return p;
-		}
-		return null;
-	}
-
 	public static void clearList() {
-		store.clear();
+		for (int i = 0; i < PlayerComputerStorage.boxCount; i++)
+			for (int j = 0; j < ComputerBox.boxLimit; j++)
+				store[i][j] = null;
 	}
 
 	public static PixelmonDataPacket getFromBox(int i, int j) {
-		for (PixelmonDataPacket p: store){
-			if (p.boxNumber == i && p.order == j) return p;
-		}
-		return null;
-	}
-
-	public static void addToList(PixelmonDataPacket p) {
-		store.add(p);
+		return store[i][j];
 	}
 
 	public static PixelmonDataPacket getPixelmonDataFromID(int id) {
-		for (PixelmonDataPacket p : store) {
-			if (p.pokemonID == id)
-				return p;
-		}
+		for (int i = 0; i < PlayerComputerStorage.boxCount; i++)
+			for (int j = 0; j < ComputerBox.boxLimit; j++)
+				if (store[i][j] != null)
+					if (store[i][j].pokemonID == id)
+						return store[i][j];
 		return null;
+	}
+
+	public static void removeFromList(int box, int pos) {
+		store[box][pos] = null;
+	}
+
+	public static void setMousePokemon(DataInputStream dataStream) {
+		PixelmonDataPacket p = new PixelmonDataPacket();
+		try {
+			p.readPacketData(dataStream);
+			mousePokemon = p;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void clearMousePokemon() {
+		mousePokemon = null;
+	}
+
+	public static PixelmonDataPacket getMousePokemon() {
+		return mousePokemon;
 	}
 }

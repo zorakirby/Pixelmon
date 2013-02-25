@@ -14,12 +14,10 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 
-	protected GuiScreen parent;
 	private int index, box;
 
-	public GuiScreenPokeCheckerPC(PixelmonDataPacket packet, GuiScreen parent, int box, int index) {
+	public GuiScreenPokeCheckerPC(PixelmonDataPacket packet, int box, int index) {
 		super(packet, true);
-		this.parent = parent;
 		this.index = index;
 		this.box = box;
 	}
@@ -35,8 +33,8 @@ public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 	public void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 0:
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.PCClick, -5));
-			mc.displayGuiScreen(parent);
+			GuiPC gui = new GuiPC(targetPacket);
+			mc.displayGuiScreen(gui);
 			break;
 		case 1:
 			mc.displayGuiScreen(new GuiScreenPokeCheckerMoves(targetPacket, true));
@@ -52,10 +50,11 @@ public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 			break;
 		}
 	}
-	
-	public void keyTyped(char c, int i){
-		if(i == 1){
-			mc.displayGuiScreen(parent);
+
+	public void keyTyped(char c, int i) {
+		if (i == 1) {
+			GuiPC gui = new GuiPC(targetPacket);
+			mc.displayGuiScreen(gui);
 		}
 	}
 
