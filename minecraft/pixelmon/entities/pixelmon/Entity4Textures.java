@@ -18,14 +18,14 @@ public abstract class Entity4Textures extends Entity3HasStats {
 
 	public Entity4Textures(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(5, (short) -1); // shiny
+		dataWatcher.addObject(5, (short) 0); // shiny
 		dataWatcher.addObject(6, (short) 0); // roasted
 		dataWatcher.addObject(18, (short) 0); // red
 	}
 
 	protected void init(String name) {
 		super.init(name);
-		if (!alreadyInitialised && dataWatcher.getWatchableObjectShort(5) == (short) -1) {
+		if (!worldObj.isRemote) {
 			if ((new Random()).nextFloat() < 1 / 8192f) {
 				dataWatcher.updateObject(5, (short) 1);
 			}
@@ -45,7 +45,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
-		if (dataWatcher.getWatchableObjectShort(5) == (short) 1
+		if (getIsShiny()
 				&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream(
 						"/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
 			return "/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
