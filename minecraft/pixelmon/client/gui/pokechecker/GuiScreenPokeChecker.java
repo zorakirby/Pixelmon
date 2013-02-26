@@ -71,6 +71,15 @@ public class GuiScreenPokeChecker extends GuiContainer {
 
 	}
 
+	@Override
+	public void onGuiClosed() {
+		if (isPC) {
+			GuiPC gui = new GuiPC(targetPacket);
+			mc.displayGuiScreen(gui);
+		}
+		super.onGuiClosed();
+	}
+
 	protected void mouseClicked(int x, int y, int par3) {
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();

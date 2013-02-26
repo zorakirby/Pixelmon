@@ -17,7 +17,7 @@ public class CommandSpawn extends CommandBase {
 
 	@Override
 	public String getCommandName() {
-		return "spawn";
+		return "pokespawn";
 	}
 
 	@Override

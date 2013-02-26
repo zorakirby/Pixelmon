@@ -41,7 +41,7 @@ public class TrainerParticipant extends BattleParticipant {
 
 	@Override
 	public void EndBattle() {
-		if (trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted) {
+		if (hasMorePokemon()) {
 			trainer.releasedPokemon.battleStats.clearBattleStats();
 			trainer.releasedPokemon.EndBattle();
 			trainer.healAllPokemon();
@@ -91,9 +91,6 @@ public class TrainerParticipant extends BattleParticipant {
 
 		bc.sendToOtherParticipants(this, trainer.info.name + " sent out " + currentPokemon().getNickname() + "!");
 
-		if (opponent instanceof PlayerParticipant) {
-			bc.sendToOtherParticipants(this, trainer.getName() + " sent out " + currentPokemon().getName());
-		}
 		for (BattleParticipant p : bc.participants)
 			p.updateOpponent();
 	}

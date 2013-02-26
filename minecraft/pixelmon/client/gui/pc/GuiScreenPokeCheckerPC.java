@@ -26,6 +26,7 @@ public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 		super.initGui();
 	}
 
+	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
 	}

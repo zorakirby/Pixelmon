@@ -213,6 +213,10 @@ public class EntityPokeBall extends EntityThrowable {
 					pixelmon.releaseFromPokeball();
 					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)
 							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn((EntityPixelmon) movingobjectposition.entityHit)) {
+						if (((EntityPixelmon) movingobjectposition.entityHit).battleController != null) {
+							setDead();
+							return;
+						}
 						BattleParticipant part;
 						if (((EntityPixelmon) movingobjectposition.entityHit).getOwner() != null)
 							part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
@@ -223,6 +227,12 @@ public class EntityPokeBall extends EntityThrowable {
 						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
 
 					} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
+						if (((EntityTrainer) movingobjectposition.entityHit).releasedPokemon != null
+								&& ((EntityTrainer) movingobjectposition.entityHit).releasedPokemon.battleController != null) {
+							setDead();
+							return;
+						}
+
 						TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
 						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), trainer);
 					} else

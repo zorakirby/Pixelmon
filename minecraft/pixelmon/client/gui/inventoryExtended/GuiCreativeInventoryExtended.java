@@ -34,7 +34,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 	public SlotInventoryPixelmon[] pixelmonSlots;
-	
+
 	boolean pixelmonMenuOpen;
 	int menuX;
 	int menuY;
@@ -51,18 +51,17 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		pixelmonSlots = new SlotInventoryPixelmon[6];
 	}
 
-	public void drawButtonContainer(){
+	public void drawButtonContainer() {
 		GL11.glColor3f(1.0f, 1.0f, 1.0f);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pokecheckerPopup.png"));
-		if(pixelmonMenuOpen)
-		this.drawTexturedModalRect(menuX - 73, menuY - 10, 0, 0, 67, 76);
+		if (pixelmonMenuOpen)
+			this.drawTexturedModalRect(menuX - 73, menuY - 10, 0, 0, 67, 76);
 	}
-	
+
 	@Override
 	public void initGui() {
 		super.initGui();
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int width = var5.getScaledWidth();
 		int height = var5.getScaledHeight();
 		for (int i = 0; i < pixelmonSlots.length; i++) {
@@ -84,7 +83,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		super.drawScreen(par1, par2, par3);
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
-		if(pixelmonMenuOpen){
+		if (pixelmonMenuOpen) {
 			this.drawCenteredString(fontRenderer, selected.name, menuX - 40, menuY - 8, 0xffffff);
 		}
 	}
@@ -96,8 +95,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/PixelmonCreativeInventory.png"));
 		this.drawTexturedModalRect(width / 2 - 150, height / 2 - 83, 0, 0, 54, 167);
 
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		int textureIndex;
@@ -138,8 +136,8 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 						int iconIndex = heldItem.getIconIndex(new ItemStack(heldItem));
 						int yindex = (int) Math.floor(((double) iconIndex) / 16.0);
 						int xindex = iconIndex - yindex * 16;
-						drawImageQuad(spriteIndex, slot.heldItemX, slot.heldItemY, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f,
-								(16f * (xindex + 1)) / 256f, 16f * (yindex + 1) / 256f);
+						drawImageQuad(spriteIndex, slot.heldItemX, slot.heldItemY, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f, (16f * (xindex + 1)) / 256f,
+								16f * (yindex + 1) / 256f);
 					}
 				} else {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
@@ -185,7 +183,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 			return true;
 		return false;
 	}
-	
+
 	private void drawPokemonInfo(int x, int y, SlotInventoryPixelmon s) {
 		if (s == null)
 			return;
@@ -205,8 +203,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		if (p.health <= 0) {
 			fontRenderer.drawString("Fainted", s.x - 77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
 		} else {
-			fontRenderer.drawString("HP " + p.health + "/" + p.hp, s.x - 77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1,
-					0xFFFFFF);
+			fontRenderer.drawString("HP " + p.health + "/" + p.hp, s.x - 77 + fontRenderer.getStringWidth("Lvl " + p.lvl), s.y + fontRenderer.FONT_HEIGHT + 1, 0xFFFFFF);
 		}
 
 	}
@@ -235,15 +232,15 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 		if (par3 == 0) {
 			if (pixelmonMenuOpen && buttonBounds.contains(x, y)) {
 				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected, false);
-				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeChecker.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);
 			}
 			if (pixelmonMenuOpen && buttonBoundsMoves.contains(x, y)) {
 				GuiScreenPokeChecker poke = new GuiScreenPokeCheckerMoves(selected, false);
-				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerMoves.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerMoves.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);
 			}
 			if (pixelmonMenuOpen && buttonBoundsStat.contains(x, y)) {
 				GuiScreenPokeChecker poke = new GuiScreenPokeChecker(selected, false);
-				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerStats.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);			
+				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerStats.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);
 			}
 			if (pixelmonMenuOpen) {
 				controlList.remove(pMenuButtonSumm);
@@ -298,7 +295,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 
 					if (currentItem != null)
 						currentItem.stackSize--;
-					if (oldItemId == -1) {
+					if (oldItemId == -1 || PixelmonItemsHeld.getHeldItem(oldItemId) == null) {
 						if (currentItem == null || currentItem.stackSize <= 0)
 							inventory.setItemStack(null);
 						else
