@@ -17,11 +17,11 @@ public class PCData {
 		return mousePokemon.get(player);
 	}
 
-	public static void setMousePokemon(EntityPlayer player, MapEntry entry){
+	public static void setMousePokemon(EntityPlayer player, MapEntry entry) {
 		mousePokemon.put(player, entry);
-		if (entry==null)
+		if (entry == null || entry.nbt == null)
 			((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearMousePokemon));
-		else{
+		else {
 			PixelmonDataPacket p = new PixelmonDataPacket(entry.nbt, EnumPackets.SetMousePokemon);
 			((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 		}
