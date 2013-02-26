@@ -316,9 +316,7 @@ public class GuiPC extends GuiContainer {
 		for (int i = 0; i < PlayerComputerStorage.boxCount; i++) {
 			for (int j = 0; j < ComputerBox.boxLimit; j++) {
 				PixelmonDataPacket p = PixelmonServerStore.getFromBox(i, j);
-				if (p != null) {
-					pcSlots[i][j].setPokemon(p);
-				}
+				pcSlots[i][j].setPokemon(p);
 
 			}
 		}

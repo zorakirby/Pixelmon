@@ -21,10 +21,10 @@ public class PCClosed extends PacketHandlerBase {
 	public void handlePacket(int index, Player pl, DataInputStream dataStream) throws IOException {
 		EntityPlayer player = (EntityPlayer) pl;
 		PCData.guiOpen.put(player, false);
-		if (PCData.getMousePokemon(player) == null)
+		if (PCData.getMousePokemon(player) == null || PCData.getMousePokemon(player).nbt==null)
 			return;
 		MapEntry e = PCData.getMousePokemon(player);
-		if (e != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(e.nbt.getInteger("pixelmonID"), player.worldObj)) {
+		if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(e.nbt.getInteger("pixelmonID"), player.worldObj)) {
 			EntityPixelmon pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(e.nbt.getInteger("pixelmonID"), player.worldObj);
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).retrieve(pixelmon);
 			pixelmon.catchInPokeball();
