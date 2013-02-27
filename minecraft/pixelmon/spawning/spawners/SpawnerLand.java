@@ -32,11 +32,7 @@ public class SpawnerLand extends SpawnerBase {
 	@Override
 	public String getRandomPokemon(WorldProvider worldProvider, Random rand, int par2, int par3, int par4) {
 		BiomeGenBase b = worldProvider.worldObj.getBiomeGenForCoords(par2, par4);
-		List<SpawnData> spawnData;
-		if (par3 < 60)
-			spawnData = SpawnRegistry.getUndergroundSpawnsForBiome(b);
-		else
-			spawnData = SpawnRegistry.getSpawnsForBiome(b);
+		List<SpawnData> spawnData = SpawnRegistry.getSpawnsForBiome(b);
 		return spawnData != null && !spawnData.isEmpty() ? ((SpawnData) WeightedRandom.getRandomItem(rand, spawnData)).name : null;
 	}
 

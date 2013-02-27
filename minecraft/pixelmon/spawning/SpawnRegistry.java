@@ -29,18 +29,18 @@ public class SpawnRegistry {
 			return;
 		if (spawnLocations == null) {
 			for (BiomeGenBase b : biomes) {
-				storeSpawnInfo(biomeSpawns, name, rarity, type, b);
+				storeSpawnInfo(biomeSpawns, name, rarity, type, b, null);
 			}
 		} else {
 			for (SpawnLocation s : spawnLocations) {
 				for (BiomeGenBase b : biomes) {
 					if (type == ClassType.Pixelmon) {
-						if (s == SpawnLocation.Land) {
-							storeSpawnInfo(biomeSpawns, name, rarity, type, b);
+						if (s == SpawnLocation.Land || s == SpawnLocation.Air) {
+							storeSpawnInfo(biomeSpawns, name, rarity, type, b, s);
 						} else if (s == SpawnLocation.UnderGround) {
-							storeSpawnInfo(undergroundSpawns, name, rarity, type, b);
+							storeSpawnInfo(undergroundSpawns, name, rarity, type, b, s);
 						} else if (s == SpawnLocation.Water || s == SpawnLocation.OnWater) {
-							storeSpawnInfo(biomeWaterSpawns, name, rarity, type, b);
+							storeSpawnInfo(biomeWaterSpawns, name, rarity, type, b, s);
 						}
 					}
 				}
@@ -48,14 +48,14 @@ public class SpawnRegistry {
 		}
 	}
 
-	private static void storeSpawnInfo(HashMap<BiomeGenBase, List<SpawnData>> hashmap, String name, int rarity, ClassType type, BiomeGenBase b) {
+	private static void storeSpawnInfo(HashMap<BiomeGenBase, List<SpawnData>> hashmap, String name, int rarity, ClassType type, BiomeGenBase b, SpawnLocation s) {
 		List<SpawnData> spawnList;
 		if (hashmap.containsKey(b))
 			spawnList = hashmap.get(b);
 		else
 			spawnList = new ArrayList<SpawnData>();
 
-		spawnList.add(new SpawnData(name, rarity, type));
+		spawnList.add(new SpawnData(name, rarity, type, s));
 		hashmap.put(b, spawnList);
 	}
 
