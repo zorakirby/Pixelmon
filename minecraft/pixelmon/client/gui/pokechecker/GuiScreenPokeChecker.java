@@ -73,11 +73,17 @@ public class GuiScreenPokeChecker extends GuiContainer {
 
 	@Override
 	public void onGuiClosed() {
-		if (isPC) {
-			GuiPC gui = new GuiPC(targetPacket);
-			mc.displayGuiScreen(gui);
-		}
 		super.onGuiClosed();
+	}
+
+	@Override
+	protected void keyTyped(char par1, int par2) {
+		if (par2 == 1) {
+			if (isPC) {
+				GuiPC gui = new GuiPC(targetPacket);
+				mc.displayGuiScreen(gui);
+			}
+		}
 	}
 
 	protected void mouseClicked(int x, int y, int par3) {
