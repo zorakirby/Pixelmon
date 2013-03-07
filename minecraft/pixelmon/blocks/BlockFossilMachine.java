@@ -78,8 +78,9 @@ public class BlockFossilMachine extends BlockContainer {
 	public void capturePokemonInMachine(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9) {
 		TileEntityFossilMachine tile = ((TileEntityFossilMachine) world.getBlockTileEntity(x, y, z));
 		EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(tile.currentPokemon, world);
-		if(tile!=null)
-			if(EnumPokemon.hasPokemon(tile.currentPokemon) && !EnumTrainers.has(tile.currentPokemon)){
+		if (tile != null)
+			if (EnumPokemon.hasPokemon(tile.currentPokemon) && !EnumTrainers.has(tile.currentPokemon)) {
+				p.getLvl().setLevel(1);
 				p.setTamed(true);
 				p.setOwner(((EntityPlayer) player).username);
 				p.caughtBall = (((ItemPokeBall) PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type);
@@ -92,7 +93,7 @@ public class BlockFossilMachine extends BlockContainer {
 				p.catchInPokeball();
 				p.friendship.initFromCapture();
 				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
-		}
+			}
 	}
 
 	@Override
@@ -144,14 +145,14 @@ public class BlockFossilMachine extends BlockContainer {
 			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 			return true;
 		}
-		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil && EnumPokemon.hasPokemon(((ItemPokemonFossil)player.getCurrentEquippedItem().getItem()).pokemon))
-		if ((player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil) && tile.currentFossil == -1
-				&& !tile.pokemonOccupied) {
-			tile.currentFossil = player.getCurrentEquippedItem().itemID;
-			player.getCurrentEquippedItem().stackSize--;
-			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
-			return true;
-		}
+		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil
+				&& EnumPokemon.hasPokemon(((ItemPokemonFossil) player.getCurrentEquippedItem().getItem()).pokemon))
+			if ((player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil) && tile.currentFossil == -1 && !tile.pokemonOccupied) {
+				tile.currentFossil = player.getCurrentEquippedItem().itemID;
+				player.getCurrentEquippedItem().stackSize--;
+				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+				return true;
+			}
 		// Pokemon retrieval
 		if (tile.currentPokeball != -1 && tile.pokemonOccupied && tile.pokemonProgress == tile.pokemonMaxProgress) {
 			capturePokemonInMachine(world, x, y, z, player, side, par7, par8, par9);

@@ -47,8 +47,11 @@ public class EntityTrainer extends EntityCreature {
 		setName(name);
 		pokemonStorage = new PlayerStorage(this);
 		info = DatabaseTrainers.GetTrainerInfo(name);
-		if (info == null)
+		if (info == null) {
 			System.out.println("Database entry error/missing for trainer " + name);
+			setDead();
+			return;
+		}
 		dataWatcher.updateObject(5, info.level);
 		if (dataWatcher.getWatchableObjectString(4) == "")
 			dataWatcher.updateObject(4, info.model);
@@ -68,7 +71,7 @@ public class EntityTrainer extends EntityCreature {
 
 	@Override
 	protected boolean canDespawn() {
-		return false;
+		return true;
 	}
 
 	public ModelBase getModel() {
@@ -181,6 +184,9 @@ public class EntityTrainer extends EntityCreature {
 		super.writeEntityToNBT(nbt);
 		nbt.setString("Name", getName());
 		nbt.setString("Model", dataWatcher.getWatchableObjectString(4));
+		if (trainerLocation == null)
+			trainerLocation = SpawnLocation.Land;
+		nbt.setInteger("trainerLocation", trainerLocation.index);
 	}
 
 	@Override
@@ -190,6 +196,10 @@ public class EntityTrainer extends EntityCreature {
 		if (nbt.hasKey("Model")) {
 			dataWatcher.updateObject(4, nbt.getString("Model"));
 		}
+		if (nbt.hasKey("trainerLocation"))
+			trainerLocation = SpawnLocation.getFromIndex(nbt.getInteger("trainerLocation"));
+		else
+			trainerLocation = SpawnLocation.Land;
 		init(getName());
 	}
 

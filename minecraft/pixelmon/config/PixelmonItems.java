@@ -12,6 +12,7 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.Configuration;
 import pixelmon.Pixelmon;
+import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.enums.EnumEthers;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPotions;
@@ -321,6 +322,7 @@ public class PixelmonItems {
 	}
 
 	public static void addNames() {
+		Pixelmon.proxy.registerBossDropItem(moonStone);
 		PixelmonItemsPokeballs.addNames();
 		PixelmonItemsApricorns.addNames();
 		PixelmonItemsBadges.addNames();

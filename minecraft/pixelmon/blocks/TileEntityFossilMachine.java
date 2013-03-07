@@ -100,7 +100,7 @@ public class TileEntityFossilMachine extends TileEntity {
 
 	public void swapFossilForPokemon() {
 		currentPokemon = PixelmonItemsFossils.getFossilFromIndex(currentFossil)
-				.getPokemon();
+				.getPokemon();	
 		this.pokemonOccupied = true;
 		this.currentFossil = -1;
 	}
