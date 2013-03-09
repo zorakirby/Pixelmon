@@ -127,7 +127,6 @@ public class EffectParser {
 	}
 
 	public class ModifierStoreClass {
-
 		public ModifierType effectModifier;
 		public String modifierTypeString;
 		public String modifierValueString;

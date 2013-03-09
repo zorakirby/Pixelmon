@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.util.DamageSource;
+import pixelmon.RandomHelper;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
@@ -29,9 +30,9 @@ public class Confusion extends StatusBase {
 
 	private int calculateConfusionDamage(EntityPixelmon user) throws Exception {
 		double stab = 1;
-		double type = EnumType.getTotalEffectiveness(user.type, EnumType.Normal);
+		double type = 1;
 		double critical = 1;
-		double rand = ((new Random()).nextDouble() + 85.0) * 15.0 / 100.0;
+		double rand = ((double) RandomHelper.getRandomNumberBetween(85, 100)) / 100;
 		double modifier = stab * type * critical * rand;
 		double attack = ((double) user.stats.Attack) * ((double) user.battleStats.getAttackModifier()) / 100;
 		double defence = ((double) user.stats.Defence) * ((double) user.battleStats.getDefenceModifier()) / 100;

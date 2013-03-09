@@ -23,6 +23,7 @@ public class EffectRegistry {
 		effectMap.put("firespin", ApplyFireSpin.class);
 		effectMap.put("flee", ApplyFlee.class);
 		effectMap.put("freeze", ApplyFreeze.class);
+		effectMap.put("immobilize", ApplyImmobilize.class);
 		effectMap.put("infatuated", ApplyInfatuated.class);
 		effectMap.put("leech", ApplyLeech.class);
 		effectMap.put("lightscreen", ApplyLightScreen.class);
@@ -48,8 +49,8 @@ public class EffectRegistry {
 		effectMap.put("multiplehit", MultipleHit.class);
 		effectMap.put("priority", Priority.class);
 		effectMap.put("recoil", Recoil.class);
-		
-		//Basic Attacks
+
+		// Basic Attacks
 		effectMap.put("acrobatics", Acrobatics.class);
 		effectMap.put("acupressure", Acupressure.class);
 		effectMap.put("curse", Curse.class);
@@ -66,6 +67,7 @@ public class EffectRegistry {
 		effectMap.put("magnitude", Magnitude.class);
 		effectMap.put("nightshade", NightShade.class);
 		effectMap.put("painsplit", PainSplit.class);
+		effectMap.put("payday", PayDay.class);
 		effectMap.put("psychup", PsychUp.class);
 		effectMap.put("psywave", Psywave.class);
 		effectMap.put("punishment", Punishment.class);
@@ -77,7 +79,7 @@ public class EffectRegistry {
 		effectMap.put("smackdown", SmackDown.class);
 		effectMap.put("venoshock", Venoshock.class);
 
-		//Multi-Turn Attacks
+		// Multi-Turn Attacks
 		effectMap.put("bide", Bide.class);
 		effectMap.put("fly", Fly.class);
 		effectMap.put("petaldance", PetalDance.class);
@@ -97,7 +99,7 @@ public class EffectRegistry {
 				if (c.isVarArgs())
 					effect = (EffectBase) effectClass.getConstructors()[0].newInstance(new Object[] { values });
 				else
-					effect = (EffectBase) effectClass.getConstructors()[0].newInstance(new Object[] { });
+					effect = (EffectBase) effectClass.getConstructors()[0].newInstance(new Object[] {});
 			}
 		} catch (Exception exc) {
 			exc.printStackTrace();

@@ -270,6 +270,8 @@ public class BattleController {
 
 	boolean paused = false;
 
+	public int money;
+
 	public void pauseBattle() {
 		paused = true;
 	}
