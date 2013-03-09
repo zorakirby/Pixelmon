@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import pixelmon.battles.attacks.animations.AttackAnimationLeapForward;
 import pixelmon.battles.attacks.animations.AttackAnimationParser;
 import pixelmon.battles.attacks.animations.IAttackAnimation;
-import pixelmon.battles.attacks.attackEffects.EffectBase;
 import pixelmon.enums.EnumType;
 
 public class AttackBase {

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import pixelmon.battles.attacks.Attack;
-import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -77,7 +77,7 @@ public abstract class BattleParticipant {
 
 	public void turnTick() {
 		for (int i = 0; i < currentPokemon().status.size(); i++) {
-			StatusEffectBase s = currentPokemon().status.get(i);
+			StatusBase s = currentPokemon().status.get(i);
 			try {
 				s.applyRepeatedEffect(currentPokemon(), opponent.currentPokemon());
 				s.turnTick(currentPokemon(), opponent.currentPokemon());

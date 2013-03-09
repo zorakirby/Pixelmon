@@ -1,6 +1,6 @@
 package pixelmon.items;
 
-import pixelmon.battles.attacks.statusEffects.StatusEffectType;
+import pixelmon.battles.status.StatusType;
 import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumStatusAilmentHealers;
@@ -19,7 +19,7 @@ public class ItemStatusAilmentHealer extends PixelmonItem {
 
 	public boolean healPokemon(EntityPixelmon pxm) {
 		boolean healedAilment = false;
-		for(StatusEffectType s: this.type.statusesHealed()){
+		for(StatusType s: this.type.statusesHealed()){
 			if (pxm.removeStatus(s)){
 				healedAilment = true;
 			}
@@ -29,7 +29,7 @@ public class ItemStatusAilmentHealer extends PixelmonItem {
 	
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
-		for(StatusEffectType s: this.type.statusesHealed()){
+		for(StatusType s: this.type.statusesHealed()){
 			userPokemon.removeStatus(s);
 		}
 		if (this.type.healsHP()){

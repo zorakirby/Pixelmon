@@ -2,9 +2,6 @@ package pixelmon.entities.pixelmon.helpers;
 
 import java.util.HashMap;
 
-import pixelmon.battles.attacks.attackModifiers.AttackModifierType;
-import pixelmon.battles.attacks.statusEffects.StatusEffectType;
-
 public class BattleVariables {
 	private HashMap<Object, Integer> variables = new HashMap<Object, Integer>();
 	private HashMap<Object, Boolean> booleans = new HashMap<Object, Boolean>();

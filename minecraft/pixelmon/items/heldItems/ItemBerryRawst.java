@@ -1,7 +1,6 @@
 package pixelmon.items.heldItems;
 
-import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
-import pixelmon.battles.attacks.statusEffects.StatusEffectType;
+import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.heldItems.EnumHeldItems;
@@ -15,7 +14,7 @@ public class ItemBerryRawst extends ItemHeld {
 	}
 
 	public boolean effectEntity(EntityPixelmon helper) {
-		if (helper.removeStatus(StatusEffectType.Burn)) {
+		if (helper.removeStatus(StatusType.Burn)) {
 			ChatHandler.sendChat(helper.getOwner(), helper.getName() + " just consumed a Rawst Berry and was healed of it's burn!");
 			return true;
 		}
@@ -24,7 +23,7 @@ public class ItemBerryRawst extends ItemHeld {
 
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
-		if (userPokemon.removeStatus(StatusEffectType.Burn)) {
+		if (userPokemon.removeStatus(StatusType.Burn)) {
 			ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getName() + " was healed of it's burn!");
 		}
 	}

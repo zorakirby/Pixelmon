@@ -1,7 +1,5 @@
 package pixelmon.battles.attacks.animations;
 
-import pixelmon.battles.attacks.attackModifiers.AttackModifierType;
-
 public enum AttackAnimationType {
 	StepForward,
 	StepBackward,

@@ -3,8 +3,10 @@ package pixelmon.config;
 import java.lang.reflect.Field;
 
 import pixelmon.Pixelmon;
+import pixelmon.enums.heldItems.EnumChoiceItems;
 import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
+import pixelmon.items.heldItems.ChoiceItem;
 import pixelmon.items.heldItems.ItemBerryLeppa;
 import pixelmon.items.heldItems.ItemBerryOran;
 import pixelmon.items.heldItems.ItemBerryRawst;
@@ -24,6 +26,10 @@ public class PixelmonItemsHeld {
 	public static int berryOranID;
 	public static int berryRawstID;
 	public static int berryLeppaID;
+	
+	public static int choiceBandID;
+	public static int choiceScarfID;
+	public static int choiceSpectaclesID;
 
 	@Mod.Item(name = "Everstone", typeClass = "pixelmon.items.ItemEvolutionStone")
 	public static Item everStone;
@@ -33,12 +39,22 @@ public class PixelmonItemsHeld {
 	@Mod.Item(name = "EXP Share", typeClass = "pixelmon.items.heldItems.ItemExpShare")
 	public static Item expShare;
 
+	@Mod.Item(name = "Choice Band", typeClass = "pixelmon.items.heldItems.ChoiceItem")
+	public static Item choiceBand;
+	@Mod.Item(name = "Choice Scarf", typeClass = "pixelmon.items.heldItems.ChoiceItem")
+	public static Item choiceScarf;
+	@Mod.Item(name = "Choice Spectacles", typeClass = "pixelmon.items.heldItems.ChoiceItem")
+	public static Item choiceSpectacles;
+
+	
 	@Mod.Item(name = "Oran Berry", typeClass = "pixelmon.items.heldItems.ItemBerryOran")
 	public static Item berryOran;
 	@Mod.Item(name = "Rawst Berry", typeClass = "pixelmon.items.heldItems.ItemBerryRawst")
 	public static Item berryRawst;
 	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.heldItems.ItemBerryLeppa")
 	public static Item berryLeppa;
+	
+	
 
 	public static void load(Configuration cfg) {
 		everStoneID = cfg.get("heldItem", "EverStone", 12000).getInt();
@@ -46,12 +62,19 @@ public class PixelmonItemsHeld {
 		luckyEggID = cfg.get("heldItem", "LuckyEgg", 12001).getInt();
 		expShareID = cfg.get("heldItem", "EXPShare", 12002).getInt();
 
+		choiceBandID = cfg.get("heldItem", "ChoiceBand", 12006).getInt();
+		choiceScarfID = cfg.get("heldItem", "ChoiceScarf", 12007).getInt();
+		choiceSpectaclesID = cfg.get("heldItem", "ChoiceSpectacles", 12008).getInt();
+		
 		berryOranID = cfg.get("berry", "OranBerry", 12003).getInt();
 		berryRawstID = cfg.get("berry", "RawstBerry", 12004).getInt();
 		berryLeppaID = cfg.get("berry", "LeppaBerry", 12005).getInt();
 
-		luckyEgg = new ItemLuckyEgg(luckyEggID).setItemName("LuckyEgg").setIconIndex(7);
-		expShare = new ItemExpShare(expShareID).setItemName("ExpShare").setIconIndex(23);
+		luckyEgg = new ItemLuckyEgg(luckyEggID).setItemName("Lucky Egg").setIconIndex(7);
+		expShare = new ItemExpShare(expShareID).setItemName("Exp Share").setIconIndex(23);
+		choiceBand = new ChoiceItem(choiceBandID, EnumChoiceItems.ChoiceBand).setItemName("Choice Band");
+		choiceScarf = new ChoiceItem(choiceScarfID, EnumChoiceItems.ChoiceScarf).setItemName("Choice Scarf");
+		choiceSpectacles = new ChoiceItem(choiceSpectaclesID, EnumChoiceItems.ChoiceSpecs).setItemName("Choice Spectacles");
 
 		berryOran = new ItemBerryOran(berryOranID).setItemName("OranBerry").setIconIndex(5);
 		berryLeppa = new ItemBerryLeppa(berryLeppaID).setItemName("LeppaBerry").setIconIndex(21);

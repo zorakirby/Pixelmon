@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
-import pixelmon.battles.attacks.statusEffects.StatusEffectType;
+import pixelmon.battles.status.StatusType;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGrowth;
@@ -68,7 +68,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	private int effectCount = 0;
 	public EnumNature nature;
 	public EnumGrowth growth;
-	public ArrayList<StatusEffectType> status = new ArrayList<StatusEffectType>();
+	public ArrayList<StatusType> status = new ArrayList<StatusType>();
 
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
 
@@ -112,7 +112,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		doesLevel = p.getBoolean("DoesLevel");
 		effectCount = p.getShort("EffectCount");
 		for (int i = 0; i < effectCount; i++) {
-			status.add(StatusEffectType.getEffect(p.getInteger("Effect" + i)));
+			status.add(StatusType.getEffect(p.getInteger("Effect" + i)));
 		}
 	}
 
@@ -230,7 +230,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		heldItemId = data.readInt();
 		effectCount = data.readShort();
 		for (int i = 0; i < effectCount; i++)
-			status.add(StatusEffectType.getEffect(data.readShort()));
+			status.add(StatusType.getEffect(data.readShort()));
 	}
 
 	private String description;

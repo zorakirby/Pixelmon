@@ -4,27 +4,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import pixelmon.RandomHelper;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
-import pixelmon.battles.attacks.attackEffects.EffectBase;
-import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
-import pixelmon.battles.attacks.attackModifiers.PriorityAttackModifier;
-import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
-import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.heldItems.EnumHeldItems;
-import pixelmon.items.ItemHeld;
 import pixelmon.items.PixelmonItem;
-import pixelmon.storage.PixelmonStorage;
-import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.Player;
 
 public class BattleController {
@@ -35,7 +24,7 @@ public class BattleController {
 
 	private int battleTicks = 0;
 
-	public ArrayList<StatusEffectBase> battleStatusList = new ArrayList<StatusEffectBase>();
+	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
 

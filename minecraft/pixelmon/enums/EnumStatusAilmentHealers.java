@@ -1,7 +1,7 @@
 package pixelmon.enums;
 
 import net.minecraft.item.Item;
-import pixelmon.battles.attacks.statusEffects.StatusEffectType;
+import pixelmon.battles.status.StatusType;
 import pixelmon.config.PixelmonItems;
 
 public enum EnumStatusAilmentHealers {
@@ -9,14 +9,14 @@ public enum EnumStatusAilmentHealers {
 			112), BurnHeal(130, "Burn", false, "burn", 128), IceHeal(146, "Freeze", false, "iceheal", 144), FullHeal(162, "all", false, "fullheal", 160);
 
 	private EnumStatusAilmentHealers(int index, String status, boolean healsHP, String filenamePrefix, int iconIndex) {
-		StatusEffectType[] statuses = {};
+		StatusType[] statuses = {};
 		if (status.equalsIgnoreCase("all")) {
-			statuses = new StatusEffectType[] { StatusEffectType.Burn, StatusEffectType.Confusion, StatusEffectType.Freeze, StatusEffectType.Paralysis, StatusEffectType.Poison,
-					StatusEffectType.PoisonBadly, StatusEffectType.Sleep };
+			statuses = new StatusType[] { StatusType.Burn, StatusType.Confusion, StatusType.Freeze, StatusType.Paralysis, StatusType.Poison,
+					StatusType.PoisonBadly, StatusType.Sleep };
 		} else if (status.equalsIgnoreCase("Poison")) {
-			statuses = new StatusEffectType[] { StatusEffectType.Poison, StatusEffectType.PoisonBadly };
+			statuses = new StatusType[] { StatusType.Poison, StatusType.PoisonBadly };
 		} else {
-			statuses = new StatusEffectType[] { StatusEffectType.getStatusEffect(status) };
+			statuses = new StatusType[] { StatusType.getStatusEffect(status) };
 		}
 		this.index = index;
 		this.filenamePrefix = filenamePrefix;
@@ -25,13 +25,13 @@ public enum EnumStatusAilmentHealers {
 		this.healsHP = healsHP;
 	}
 
-	private StatusEffectType[] statuses;
+	private StatusType[] statuses;
 	private boolean healsHP;
 	private int index;
 	private String filenamePrefix;
 	private int iconIndex;
 
-	public StatusEffectType[] statusesHealed() {
+	public StatusType[] statusesHealed() {
 		return statuses;
 	}
 

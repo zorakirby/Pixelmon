@@ -1,10 +1,7 @@
 package pixelmon.items.heldItems;
 
 import pixelmon.battles.attacks.Attack;
-import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
-import pixelmon.battles.attacks.statusEffects.StatusEffectType;
 import pixelmon.comm.ChatHandler;
-import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
