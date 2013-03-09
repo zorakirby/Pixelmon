@@ -9,6 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import pixelmon.battles.attacks.specialAttacks.attackModifiers.*;
+import pixelmon.battles.attacks.specialAttacks.basic.*;
+import pixelmon.battles.attacks.specialAttacks.multiTurn.*;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.*;
 
 public class EffectRegistry {
@@ -46,6 +48,41 @@ public class EffectRegistry {
 		effectMap.put("multiplehit", MultipleHit.class);
 		effectMap.put("priority", Priority.class);
 		effectMap.put("recoil", Recoil.class);
+		
+		//Basic Attacks
+		effectMap.put("acrobatics", Acrobatics.class);
+		effectMap.put("acupressure", Acupressure.class);
+		effectMap.put("curse", Curse.class);
+		effectMap.put("echoedvoice", EchoedVoice.class);
+		effectMap.put("eruption", Eruption.class);
+		effectMap.put("facade", Acrobatics.class);
+		effectMap.put("frustration", Frustration.class);
+		effectMap.put("guillotine", Guillotine.class);
+		effectMap.put("gyroball", GyroBall.class);
+		effectMap.put("heavyslam", HeavySlam.class);
+		effectMap.put("hiddenpower", HiddenPower.class);
+		effectMap.put("horndrill", HornDrill.class);
+		effectMap.put("jumpkick", JumpKick.class);
+		effectMap.put("magnitude", Magnitude.class);
+		effectMap.put("nightshade", NightShade.class);
+		effectMap.put("painsplit", PainSplit.class);
+		effectMap.put("psychup", PsychUp.class);
+		effectMap.put("psywave", Psywave.class);
+		effectMap.put("punishment", Punishment.class);
+		effectMap.put("raisestats", RaiseStats.class);
+		effectMap.put("restore", Restore.class);
+		effectMap.put("return", Return.class);
+		effectMap.put("reversal", Reversal.class);
+		effectMap.put("seismictoss", SeismicToss.class);
+		effectMap.put("smackdown", SmackDown.class);
+		effectMap.put("venoshock", Venoshock.class);
+
+		//Multi-Turn Attacks
+		effectMap.put("bide", Bide.class);
+		effectMap.put("fly", Fly.class);
+		effectMap.put("petaldance", PetalDance.class);
+		effectMap.put("razorwind", RazorWind.class);
+		effectMap.put("solarbeam", SolarBeam.class);
 	}
 
 	public static EffectBase getEffect(String effectTypeString, Value[] values) {
