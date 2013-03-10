@@ -65,4 +65,39 @@ public class EVsStore {
 		return -1;
 	}
 
+	public EVsStore cloneEVs() {
+		EVsStore s = new EVsStore();
+		s.HP = HP;
+		s.Attack = Attack;
+		s.Defence = Defence;
+		s.SpecialAttack = SpecialAttack;
+		s.SpecialDefence = SpecialDefence;
+		s.Speed = Speed;
+		return s;
+	}
+
+	public void doubleValues() {
+		Attack *= 2;
+		Defence *= 2;
+		HP *= 2;
+		SpecialAttack *= 2;
+		SpecialDefence *= 2;
+		Speed *= 2;
+	}
+
+	public void addEVs(int i, StatsType stat) {
+		if (stat == StatsType.Attack)
+			Attack += 4;
+		else if (stat == StatsType.Defence)
+			Defence += 4;
+		else if (stat == StatsType.HP)
+			HP += 4;
+		else if (stat == StatsType.SpecialAttack)
+			SpecialAttack += 4;
+		else if (stat == StatsType.SpecialDefence)
+			SpecialDefence += 4;
+		else if (stat == StatsType.Speed)
+			Speed += 4;
+	}
+
 }

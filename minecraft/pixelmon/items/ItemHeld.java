@@ -39,7 +39,7 @@ public abstract class ItemHeld extends PixelmonItem {
 	public boolean getAffectsBattle() {
 		return affectsBattles;
 	}
-
+	
 	public static void useItem(EntityPixelmon user, EntityPixelmon target, EnumHeldItems item) {
 		if (user.getHeldItem() != null && user.getHeldItem().getItem() != null && user.getHeldItem().getItem() instanceof ItemHeld) {
 			if (((ItemHeld) user.getHeldItem().getItem()).heldItemType == item && ((ItemHeld) user.getHeldItem().getItem()).effectEntity(user)) {

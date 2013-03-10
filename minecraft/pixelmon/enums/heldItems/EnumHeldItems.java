@@ -3,7 +3,7 @@ package pixelmon.enums.heldItems;
 
 public enum EnumHeldItems {
 	expShare(false, false), luckyEgg(false, false),
-	oran, rawst, leppa, choiceItem(false, true), everStone
+	oran, rawst, leppa, choiceItem(false, true), everStone, evAdjusting
 	
 	;
 	
