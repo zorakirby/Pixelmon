@@ -2,7 +2,7 @@ package pixelmon.client.gui.battles;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
+ 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
