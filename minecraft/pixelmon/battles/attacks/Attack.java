@@ -250,10 +250,6 @@ public class Attack {
 			}
 		}
 		
-		// No!
-		// None of that.
-		// Shame on you.
-		
 		//  double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250 * (attack / defense)
 		//  * baseAttack.basePower + 2) * modifier;
 		
