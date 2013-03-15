@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+ 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
@@ -233,23 +233,35 @@ public class Attack {
 			stab = 1.5;
 		double type = EnumType.getTotalEffectiveness(target.type, baseAttack.attackType);
 		double critical = crit;
-		double rand = ((double) RandomHelper.getRandomNumberBetween(85, 100)) / 100;
-		double modifier = stab * type * critical * rand;
-		double attack = 0, defence = 0;
+		double rand = ((((double) RandomHelper.getRandomNumberBetween(1, 128))%16) + 85) * 0.01;
+		double modifier = stab * type * critical; // Add in Type/Weakness/Resistance in again.
+		double attack = 0, defense = 0, Level = (double)(user.getLvl().getLevel());
 		if (baseAttack.attackCategory == ATTACK_PHYSICAL) {
-			attack = ((double) user.stats.Attack) * ((double) user.battleStats.getAttackModifier()) / 100;
-			defence = ((double) target.stats.Defence) * ((double) target.battleStats.getDefenceModifier()) / 100;
+			attack = ((double) user.stats.Attack) * ((double) user.battleStats.getAttackModifier()) * 0.01;
+			defense = ((double) target.stats.Defence) * ((double) target.battleStats.getDefenceModifier()) * 0.01;
 			if (ItemHeld.isItemOfType(user.getHeldItem(), EnumHeldItems.choiceItem)) {
 				attack = ((ChoiceItem) user.getHeldItem().getItem()).affectAttack(attack);
 			}
 		} else if (baseAttack.attackCategory == ATTACK_SPECIAL) {
-			attack = ((double) user.stats.SpecialAttack) * ((double) user.battleStats.getSpecialAttackModifier()) / 100;
-			defence = ((double) target.stats.SpecialDefence) * ((double) target.battleStats.getSpecialDefenceModifier()) / 100;
+			attack = ((double) user.stats.SpecialAttack) * ((double) user.battleStats.getSpecialAttackModifier()) * 0.01;
+			defense = ((double) target.stats.SpecialDefence) * ((double) target.battleStats.getSpecialDefenceModifier()) * 0.01;
 			if (ItemHeld.isItemOfType(user.getHeldItem(), EnumHeldItems.choiceItem)) {
 				attack = ((ChoiceItem) user.getHeldItem().getItem()).affectSpecialAttack(attack);
 			}
 		}
-		double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250 * (attack / defence) * baseAttack.basePower + 2) * modifier;
+		
+		// No!
+		// None of that.
+		// Shame on you.
+		
+		//  double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250 * (attack / defense)
+		//  * baseAttack.basePower + 2) * modifier;
+		
+		double DmgRand = ((15 * rand) + 85) * 0.01;
+		double DamageBase = (((((((2 * Level) / 5) + 2) * attack * baseAttack.basePower) * 0.02) / defense) + 2);
+		
+		//Split up so they can be monitored while debugging.
+		double Damage = DamageBase * modifier * DmgRand * 0.85;
 
 		for (int i = 0; i < target.status.size(); i++) {
 			StatusBase e = target.status.get(i);
@@ -260,7 +272,7 @@ public class Attack {
 				System.out.println(exc.getStackTrace());
 			}
 		}
-		return (int) Math.floor(Damage);
+		return (int) (Damage);
 	}
 
 	public double calcCriticalHit(EffectBase e) {
