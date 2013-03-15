@@ -609,7 +609,6 @@ public class GuiBattle extends GuiContainer {
 		tessellator.addVertex(x + barWidth, y + height, 0.0);
 		tessellator.addVertex(x + barWidth, y, 0.0);
 		
-		//Sanity for myself.
 			// Get value as percent.
 			// Get Width of bar
 		float Percent = ((float)(p.health)) / ((float) p.hp), fWidth = Percent * (float)(width);
