@@ -2,7 +2,7 @@ package pixelmon.client.gui.battles;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
+ 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -593,12 +593,13 @@ public class GuiBattle extends GuiContainer {
 		}
 	}
 
-	public void drawHealthBar(int x, int y, int width, int height, PixelmonDataPacket p) {
+	public void drawHealthBar(int x, int y, int width, int height, PixelmonDataPacket p) 
+	{
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glPushMatrix();
 		Tessellator tessellator = Tessellator.instance;
-		GL11.glDisable(3553 /* GL_TEXTURE_2D */);
+		GL11.glDisable(3553); // GL_TEXTURE_2D
 		tessellator.startDrawingQuads();
 
 		int barWidth = width - 6;
@@ -607,12 +608,18 @@ public class GuiBattle extends GuiContainer {
 		tessellator.addVertex(x, y + height, 0.0);
 		tessellator.addVertex(x + barWidth, y + height, 0.0);
 		tessellator.addVertex(x + barWidth, y, 0.0);
-		barWidth = (int) (((float) p.health) / ((float) p.hp) * (((float) width) - 6f));
+		
+			// Get value as percent.
+			// Get Width of bar
+		float Percent = ((float)(p.health)) / ((float) p.hp), fWidth = Percent * (float)(width);
+			// Set Width of bar
+		int CurWidth = (int)(fWidth) - 6;
+		
 		tessellator.setColorRGBA_F(0.2F, 1F, 0.2F, 1.0F);
 		tessellator.addVertex(x, y, 0.0);
 		tessellator.addVertex(x, y + height, 0.0);
-		tessellator.addVertex(x + barWidth, y + height, 0.0);
-		tessellator.addVertex(x + barWidth, y, 0.0);
+		tessellator.addVertex(x + CurWidth, y + height, 0.0);
+		tessellator.addVertex(x + CurWidth, y, 0.0);
 		tessellator.draw();
 		GL11.glPopMatrix();
 		GL11.glEnable(3553);
