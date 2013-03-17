@@ -25,7 +25,7 @@ public class GuiEvolve extends GuiContainer
 	public void initGui()
 	{
 		super.initGui();
-		controlList.clear();
+		buttonList.clear();
 	}
 	
 	public void updateScreen()

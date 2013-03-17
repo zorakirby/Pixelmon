@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.input.Mouse;
@@ -133,11 +134,11 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 					ItemHeld heldItem = (ItemHeld) PixelmonItemsHeld.getHeldItem(p.heldItemId);
 					if (heldItem != null) {
 						spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
-						int iconIndex = heldItem.getIconIndex(new ItemStack(heldItem));
-						int yindex = (int) Math.floor(((double) iconIndex) / 16.0);
-						int xindex = iconIndex - yindex * 16;
-						drawImageQuad(spriteIndex, slot.heldItemX, slot.heldItemY, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f, (16f * (xindex + 1)) / 256f,
-								16f * (yindex + 1) / 256f);
+						Icon icon = heldItem.getIconIndex(new ItemStack(heldItem));
+//						int yindex = (int) Math.floor(((double) iconIndex) / 16.0);
+//						int xindex = iconIndex - yindex * 16;
+//						drawImageQuad(spriteIndex, slot.heldItemX, slot.heldItemY, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f, (16f * (xindex + 1)) / 256f,
+//								16f * (yindex + 1) / 256f);
 					}
 				} else {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
@@ -194,7 +195,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 			displayName = p.nickname;
 		int var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
 		fontRenderer.drawString(displayName, s.x - 82, s.y, 0xFFFFFF);
-		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
 		if (p.isMale)
 			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 208, 5, 9);
 		else
@@ -243,9 +244,9 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerStats.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);
 			}
 			if (pixelmonMenuOpen) {
-				controlList.remove(pMenuButtonSumm);
-				controlList.remove(pMenuButtonMove);
-				controlList.remove(pMenuButtonStat);
+				buttonList.remove(pMenuButtonSumm);
+				buttonList.remove(pMenuButtonMove);
+				buttonList.remove(pMenuButtonStat);
 				pMenuButtonSumm = null;
 				pMenuButtonMove = null;
 				pMenuButtonStat = null;
@@ -258,9 +259,9 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 				if (s.getBounds().contains(x, y)) { // click on a pokemon sprite
 					if (par3 == 1) {
 						if (pixelmonMenuOpen) {
-							controlList.remove(pMenuButtonSumm);
-							controlList.remove(pMenuButtonMove);
-							controlList.remove(pMenuButtonStat);
+							buttonList.remove(pMenuButtonSumm);
+							buttonList.remove(pMenuButtonMove);
+							buttonList.remove(pMenuButtonStat);
 							pMenuButtonSumm = null;
 							pMenuButtonMove = null;
 							pMenuButtonStat = null;
@@ -275,9 +276,9 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 						buttonBounds = new Rectangle(x - 63, y + 5, 47, 13);
 						buttonBoundsMoves = new Rectangle(x - 63, y + 24, 47, 13);
 						buttonBoundsStat = new Rectangle(x - 63, y + 43, 47, 13);
-						controlList.add(pMenuButtonSumm);
-						controlList.add(pMenuButtonMove);
-						controlList.add(pMenuButtonStat);
+						buttonList.add(pMenuButtonSumm);
+						buttonList.add(pMenuButtonMove);
+						buttonList.add(pMenuButtonStat);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;
 						return;

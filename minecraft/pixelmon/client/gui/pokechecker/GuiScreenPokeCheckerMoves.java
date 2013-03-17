@@ -40,12 +40,12 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 
 	public void initGui() {
 		super.initGui();
-		controlList.clear();
+		buttonList.clear();
 
-		controlList.add(new GuiPokeCheckerTabs(3, 0, width / 2 + 107, (int) height / 2 + 80, 17, 15, ""));
-		controlList.add(new GuiPokeCheckerTabs(0, 1, width / 2 - 127, (int) height / 2 + 80, 90, 15, "Summary"));
-		controlList.add(new GuiPokeCheckerTabs(2, 2, width / 2 + 36, (int) height / 2 + 80, 69, 15, "Stats"));
-		controlList.add(new GuiPokeCheckerTabs(4, 4, width / 2 - 44, (int) height / 2 - 107, 9, 9, "", targetPacket));
+		buttonList.add(new GuiPokeCheckerTabs(3, 0, width / 2 + 107, (int) height / 2 + 80, 17, 15, ""));
+		buttonList.add(new GuiPokeCheckerTabs(0, 1, width / 2 - 127, (int) height / 2 + 80, 90, 15, "Summary"));
+		buttonList.add(new GuiPokeCheckerTabs(2, 2, width / 2 + 36, (int) height / 2 + 80, 69, 15, "Stats"));
+		buttonList.add(new GuiPokeCheckerTabs(4, 4, width / 2 - 44, (int) height / 2 - 107, 9, 9, "", targetPacket));
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -155,7 +155,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	public void drawSelection(int i, int i1) {
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture(bg);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		if (targetPacket.numMoves > 0 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76 || move1) {
 			drawTexturedModalRect(58, -17, 1, 231, 153, 24);
 			resetAll();
@@ -183,7 +183,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor3f(0.0F, 1.0F, 0.0F);// Gives the selection a light green
 											// color.
-		mc.renderEngine.bindTexture(bg);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		if (selectednumber == 0)
 			drawTexturedModalRect(58, -17, 1, 231, 153, 24);
 		else if (selectednumber == 1)
@@ -199,7 +199,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor3f(1.0F, 0.0F, 0.0F);// Gives the selection a light red
 		// color.
-		mc.renderEngine.bindTexture(bg);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		if (selectednumber >= targetPacket.numMoves && i > width / 2 + 130 && i < width / 2 + 158 && i1 > height / 2 - 25 && i1 < height / 2 + 9) {
 			drawTexturedModalRect(220, 60, 230, 225, 26, 31);
 		}
@@ -255,15 +255,15 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		if (x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 2 - 15 && y < var7 / 2 + 5) {
 			if (par3 == 1 && !renameButton) {
 				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
-				controlList.add(nameButton);
+				buttonList.add(nameButton);
 				renameButton = true;
 			} else if (par3 != 1 && renameButton) {
-				controlList.remove(nameButton);
+				buttonList.remove(nameButton);
 				renameButton = false;
 			} else if (par3 == 1 && renameButton) {
-				controlList.remove(nameButton);
+				buttonList.remove(nameButton);
 				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
-				controlList.add(nameButton);
+				buttonList.add(nameButton);
 			}
 		}
 	}
@@ -282,7 +282,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryMoves.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture(bg);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 		drawTexturedModalRect((width - xSize) / 2 + 220, (height - ySize) / 2 + 60, 203, 225, 26, 31);
 

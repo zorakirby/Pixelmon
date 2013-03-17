@@ -10,15 +10,13 @@ import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumEvolutionStone;
 
-public class ItemEvolutionStone extends Item {
+public class ItemEvolutionStone extends PixelmonItem {
 
 	private EnumEvolutionStone stoneType;
 
 	public ItemEvolutionStone(int id, EnumEvolutionStone stoneType, int i) {
-		super(id);
+		super(id, "evolutionstones/" + stoneType.toString().toLowerCase());
 		this.stoneType = stoneType;
-		this.iconIndex = 4 + i * 16;
-		setTextureFile("/pixelmon/image/pitems.png");
 		setCreativeTab(CreativeTabs.tabMisc);
 	}
 

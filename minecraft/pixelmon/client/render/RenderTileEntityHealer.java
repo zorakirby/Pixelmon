@@ -1,5 +1,6 @@
 package pixelmon.client.render;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -89,15 +90,16 @@ public class RenderTileEntityHealer extends TileEntitySpecialRenderer {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(tile.rotation, 0, 1, 0);
+		int tex;
 		if (tile.allPlaced) {
 			if (tile.flashTimer < 10 || tile.stayDark)
-				ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getCaptureTexture(), 0);
+				tex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getCaptureTexture());
 			else
-				ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture(), 0);
+				tex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture());
 			if (tile.flashTimer >= 20)
 				tile.flashTimer = 0;
 		} else {
-			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture(), 0);
+			tex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/texture/pokeballs/" + tile.pokeballType[k].getTexture());
 		}
 		RenderHelper.enableStandardItemLighting();
 		GL11.glScalef(0.8F, 0.8F, 0.8F);

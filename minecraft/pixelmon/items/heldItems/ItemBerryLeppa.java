@@ -9,7 +9,7 @@ import pixelmon.items.ItemHeld;
 public class ItemBerryLeppa extends ItemHeld {
 
 	public ItemBerryLeppa(int id) {
-		super(id, EnumHeldItems.leppa);
+		super(id, EnumHeldItems.leppa, "leppaberry");
 		SetUsableInBattle(true);
 	}
 

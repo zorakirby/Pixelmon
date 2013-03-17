@@ -9,8 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.items.ItemBlock;
-import pixelmon.items.ItemFossilUncovered;
-import pixelmon.items.ItemPokemonFossil;
+import pixelmon.items.ItemCoveredFossil;
+import pixelmon.items.ItemFossil;
 import pixelmon.items.PixelmonItem;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -26,22 +26,22 @@ public class PixelmonItemsFossils {
 	public static int armorFossilID;
 	public static int coverFossilID;
 	public static int plumeFossilID;
-	public static int helixFossilUncoveredID;
-	public static int domeFossilUncoveredID;
-	public static int oldAmberUncoveredID;
-	public static int rootFossilUncoveredID;
-	public static int clawFossilUncoveredID;
-	public static int skullFossilUncoveredID;
-	public static int armorFossilUncoveredID;
-	public static int coverFossilUncoveredID;
-	public static int plumeFossilUncoveredID;
+	public static int helixFossilCoveredID;
+	public static int domeFossilCoveredID;
+	public static int oldAmberCoveredID;
+	public static int rootFossilCoveredID;
+	public static int clawFossilCoveredID;
+	public static int skullFossilCoveredID;
+	public static int armorFossilCoveredID;
+	public static int coverFossilCoveredID;
+	public static int plumeFossilCoveredID;
 
 	public static int fossilMachineDisplayID;
 	public static int fossilMachineTankID;
 	public static int fossilMachineTopID;
 	public static int fossilMachineBaseID;
 
-	public static int fossilMachineItemID;	
+	public static int fossilMachineItemID;
 	public static int fossilCleanerItemID;
 
 	@Mod.Item(name = "Fossil Machine", typeClass = "pixelmon.items.ItemBlock")
@@ -67,24 +67,24 @@ public class PixelmonItemsFossils {
 	public static Item coverFossil;
 	@Mod.Item(name = "Plume Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
 	public static Item plumeFossil;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item helixFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item domeFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
-	public static Item oldAmberUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item rootFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item clawFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item skullFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item armorFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item coverFossilUncovered;
-	@Mod.Item(name = "Uncovered Fossil", typeClass = "pixelmon.items.PixelmonItem")
-	public static Item plumeFossilUncovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
+	public static Item helixFossilCovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
+	public static Item domeFossilCovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.ItemPokemonFossil")
+	public static Item oldAmberCovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item rootFossilCovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item clawFossilCovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item skullFossilCovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item armorFossilCovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item coverFossilCovered;
+	@Mod.Item(name = "Covered Fossil", typeClass = "pixelmon.items.PixelmonItem")
+	public static Item plumeFossilCovered;
 
 	@Mod.Item(name = "Fossil Machine Tank", typeClass = "pixelmon.items.PixelmonItem")
 	public static Item fossilMachineTank;
@@ -115,52 +115,43 @@ public class PixelmonItemsFossils {
 		coverFossilID = cfg.get("fossils", "PlumeFossil", 21007).getInt();
 		plumeFossilID = cfg.get("fossils", "CoverFossil", 21008).getInt();
 
-		helixFossilUncoveredID = cfg.get("fossils", "HelixFossilUncovered", 21100).getInt();
-		domeFossilUncoveredID = cfg.get("fossils", "DomeFossilUncovered", 21101).getInt();
-		oldAmberUncoveredID = cfg.get("fossils", "OldAmberUncovered", 21102).getInt();
-		rootFossilUncoveredID = cfg.get("fossils", "RootFossilUncovered", 21103).getInt();
-		clawFossilUncoveredID = cfg.get("fossils", "ClawFossilUncovered", 21104).getInt();
-		skullFossilUncoveredID = cfg.get("fossils", "SkullFossilUncovered", 21105).getInt();
-		armorFossilUncoveredID = cfg.get("fossils", "ArmorFossilUncovered", 21106).getInt();
-		coverFossilUncoveredID = cfg.get("fossils", "PlumeFossilUncovered", 21107).getInt();
-		plumeFossilUncoveredID = cfg.get("fossils", "CoverFossilUncovered", 21108).getInt();
+		helixFossilCoveredID = cfg.get("fossils", "HelixFossilCovered", 21100).getInt();
+		domeFossilCoveredID = cfg.get("fossils", "DomeFossilCovered", 21101).getInt();
+		oldAmberCoveredID = cfg.get("fossils", "OldAmberCovered", 21102).getInt();
+		rootFossilCoveredID = cfg.get("fossils", "RootFossilCovered", 21103).getInt();
+		clawFossilCoveredID = cfg.get("fossils", "ClawFossilCovered", 21104).getInt();
+		skullFossilCoveredID = cfg.get("fossils", "SkullFossilCovered", 21105).getInt();
+		armorFossilCoveredID = cfg.get("fossils", "ArmorFossilCovered", 21106).getInt();
+		coverFossilCoveredID = cfg.get("fossils", "PlumeFossilCovered", 21107).getInt();
+		plumeFossilCoveredID = cfg.get("fossils", "CoverFossilCovered", 21108).getInt();
 
-		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, 82).setItemName("Fossil Machine");
-		fossilCleanerItem = new ItemBlock(fossilCleanerItemID, PixelmonBlocks.fossilCleaner, 210).setItemName("FossilCleaner");
+		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, "fossilmachine");
+		fossilCleanerItem = new ItemBlock(fossilCleanerItemID, PixelmonBlocks.fossilCleaner, "fossilcleaner");
 
-		helixFossil = new ItemPokemonFossil(helixFossilID, "Omanyte", "HelixFossil").setItemName("helixFossil").setIconIndex(10);
-		domeFossil = new ItemPokemonFossil(domeFossilID, "Kabuto", "DomeFossil").setItemName("domeFossil").setIconIndex(26);
-		oldAmber = new ItemPokemonFossil(oldAmberID, "Aerodactyl", "OldAmber").setItemName("oldAmber").setIconIndex(42);
-		rootFossil = new ItemPokemonFossil(rootFossilID, "Lileep", "RootFossil").setItemName("rootFossil").setIconIndex(58);
-		clawFossil = new ItemPokemonFossil(clawFossilID, "Anorith", "ClawFossil").setItemName("clawFossil").setIconIndex(74);
-		skullFossil = new ItemPokemonFossil(skullFossilID, "Cranidos", "SkullFossil").setItemName("skullFossil").setIconIndex(90);
-		armorFossil = new ItemPokemonFossil(armorFossilID, "Shieldon", "ArmorFossil").setItemName("armorFossil").setIconIndex(106);
-		coverFossil = new ItemPokemonFossil(coverFossilID, "Tirtouga", "CoverFossil").setItemName("coverFossil").setIconIndex(122);
-		plumeFossil = new ItemPokemonFossil(plumeFossilID, "Archen", "PlumeFossil").setItemName("plumeFossil").setIconIndex(138);
+		helixFossil = new ItemFossil(helixFossilID, "Omanyte", "HelixFossil");
+		domeFossil = new ItemFossil(domeFossilID, "Kabuto", "DomeFossil");
+		oldAmber = new ItemFossil(oldAmberID, "Aerodactyl", "OldAmber");
+		rootFossil = new ItemFossil(rootFossilID, "Lileep", "RootFossil");
+		clawFossil = new ItemFossil(clawFossilID, "Anorith", "ClawFossil");
+		skullFossil = new ItemFossil(skullFossilID, "Cranidos", "SkullFossil");
+		armorFossil = new ItemFossil(armorFossilID, "Shieldon", "ArmorFossil");
+		coverFossil = new ItemFossil(coverFossilID, "Tirtouga", "CoverFossil");
+		plumeFossil = new ItemFossil(plumeFossilID, "Archen", "PlumeFossil");
 
-		fossilMachineTank = new PixelmonItem(fossilMachineTankID).setItemName("Fossil Machine Tank").setIconCoord(2, 7).setCreativeTab(CreativeTabs.tabDecorations);
-		fossilMachineDisplay = new PixelmonItem(fossilMachineDisplayID).setItemName("Fossil Machine Display").setIconCoord(2, 6).setCreativeTab(CreativeTabs.tabDecorations);
-		fossilMachineTop = new PixelmonItem(fossilMachineTopID).setItemName("Fossil Machine Top").setIconCoord(2, 8).setCreativeTab(CreativeTabs.tabDecorations);
-		fossilMachineBase = new PixelmonItem(fossilMachineBaseID).setItemName("Fossil Machine Base").setIconCoord(2, 10).setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineTank = new PixelmonItem(fossilMachineTankID, "blocks/fossilmachinetank").setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineDisplay = new PixelmonItem(fossilMachineDisplayID, "blocks/fossilmachinedisplay").setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineTop = new PixelmonItem(fossilMachineTopID, "blocks/fossilmachinetop").setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineBase = new PixelmonItem(fossilMachineBaseID, "blocks/fossilmachinebase").setCreativeTab(CreativeTabs.tabDecorations);
 
-		helixFossilUncovered = new ItemFossilUncovered(helixFossilUncoveredID, (ItemPokemonFossil) helixFossil).setItemName("helixFossilUncovered").setIconIndex(11)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
-		domeFossilUncovered = new ItemFossilUncovered(domeFossilUncoveredID, (ItemPokemonFossil) domeFossil).setItemName("domeFossilUncovered").setIconIndex(27)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
-		oldAmberUncovered = new ItemFossilUncovered(oldAmberUncoveredID, (ItemPokemonFossil) oldAmber).setItemName("oldAmberUncovered").setIconIndex(43)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
-		rootFossilUncovered = new ItemFossilUncovered(rootFossilUncoveredID, (ItemPokemonFossil) rootFossil).setItemName("rootFossilUncovered").setIconIndex(59)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
-		clawFossilUncovered = new ItemFossilUncovered(clawFossilUncoveredID, (ItemPokemonFossil) clawFossil).setItemName("clawFossilUncovered").setIconIndex(75)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
-		skullFossilUncovered = new ItemFossilUncovered(skullFossilUncoveredID, (ItemPokemonFossil) skullFossil).setItemName("skullFossilUncovered").setIconIndex(91)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
-		armorFossilUncovered = new ItemFossilUncovered(armorFossilUncoveredID, (ItemPokemonFossil) armorFossil).setItemName("armorFossilUncovered").setIconIndex(107)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
-		coverFossilUncovered = new ItemFossilUncovered(coverFossilUncoveredID, (ItemPokemonFossil) coverFossil).setItemName("coverFossilUncovered").setIconIndex(123)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
-		plumeFossilUncovered = new ItemFossilUncovered(plumeFossilUncoveredID, (ItemPokemonFossil) plumeFossil).setItemName("plumeFossilUncovered").setIconIndex(139)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
+		helixFossilCovered = new ItemCoveredFossil(helixFossilCoveredID, (ItemFossil) helixFossil).setCreativeTab(PixelmonCreativeTabs.natural);
+		domeFossilCovered = new ItemCoveredFossil(domeFossilCoveredID, (ItemFossil) domeFossil).setCreativeTab(PixelmonCreativeTabs.natural);
+		oldAmberCovered = new ItemCoveredFossil(oldAmberCoveredID, (ItemFossil) oldAmber).setCreativeTab(PixelmonCreativeTabs.natural);
+		rootFossilCovered = new ItemCoveredFossil(rootFossilCoveredID, (ItemFossil) rootFossil).setCreativeTab(PixelmonCreativeTabs.natural);
+		clawFossilCovered = new ItemCoveredFossil(clawFossilCoveredID, (ItemFossil) clawFossil).setCreativeTab(PixelmonCreativeTabs.natural);
+		skullFossilCovered = new ItemCoveredFossil(skullFossilCoveredID, (ItemFossil) skullFossil).setCreativeTab(PixelmonCreativeTabs.natural);
+		armorFossilCovered = new ItemCoveredFossil(armorFossilCoveredID, (ItemFossil) armorFossil).setCreativeTab(PixelmonCreativeTabs.natural);
+		coverFossilCovered = new ItemCoveredFossil(coverFossilCoveredID, (ItemFossil) coverFossil).setCreativeTab(PixelmonCreativeTabs.natural);
+		plumeFossilCovered = new ItemCoveredFossil(plumeFossilCoveredID, (ItemFossil) plumeFossil).setCreativeTab(PixelmonCreativeTabs.natural);
 
 	}
 
@@ -180,14 +171,14 @@ public class PixelmonItemsFossils {
 	}
 
 	public static int getRandomFossilId() {
-		ArrayList<ItemFossilUncovered> fossilList = new ArrayList<ItemFossilUncovered>();
+		ArrayList<ItemCoveredFossil> fossilList = new ArrayList<ItemCoveredFossil>();
 		try {
 			for (Field field : PixelmonItemsFossils.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
-					if (item instanceof ItemFossilUncovered)
-						if (EnumPokemon.hasPokemon(((ItemFossilUncovered) item).cleanedFossil.pokemon))
-							fossilList.add((ItemFossilUncovered) item);
+					if (item instanceof ItemCoveredFossil)
+						if (EnumPokemon.hasPokemon(((ItemCoveredFossil) item).cleanedFossil.pokemon))
+							fossilList.add((ItemCoveredFossil) item);
 				}
 			}
 		} catch (Exception e) {
@@ -200,14 +191,14 @@ public class PixelmonItemsFossils {
 		return -1;
 	}
 
-	public static ItemPokemonFossil getFossilFromIndex(int currentFossil) {
+	public static ItemFossil getFossilFromIndex(int currentFossil) {
 		try {
 			for (Field field : PixelmonItemsFossils.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
-					if (item instanceof ItemPokemonFossil)
+					if (item instanceof ItemFossil)
 						if (item.itemID == currentFossil)
-							return (ItemPokemonFossil) item;
+							return (ItemFossil) item;
 				}
 			}
 		} catch (Exception e) {
@@ -215,15 +206,15 @@ public class PixelmonItemsFossils {
 		}
 		return null;
 	}
-	
-	public static ItemFossilUncovered getUncoveredFossilFromIndex(int currentFossil) {
+
+	public static ItemCoveredFossil getCoveredFossilFromIndex(int currentFossil) {
 		try {
 			for (Field field : PixelmonItemsFossils.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
-					if (item instanceof ItemFossilUncovered)
+					if (item instanceof ItemCoveredFossil)
 						if (item.itemID == currentFossil)
-							return (ItemFossilUncovered) item;
+							return (ItemCoveredFossil) item;
 				}
 			}
 		} catch (Exception e) {

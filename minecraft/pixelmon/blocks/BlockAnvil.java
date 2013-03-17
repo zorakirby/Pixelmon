@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -46,6 +47,10 @@ public class BlockAnvil extends BlockContainer {
 		return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void func_94332_a(IconRegister par1IconRegister) {
+	}
+	
 	/**
 	 * Updates the blocks bounds based on its current state. Args: world, x, y,
 	 * z
@@ -89,10 +94,10 @@ public class BlockAnvil extends BlockContainer {
 			int itemId = ((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil;
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
 			if (item == null) {
-				if (itemId == PixelmonItems.aluminumPlate.itemID)
-					item = PixelmonItems.aluminumPlate;
-				else if (itemId == PixelmonItems.aluminumIngot.itemID)
-					item = PixelmonItems.aluminumIngot;
+				if (itemId == PixelmonItems.aluminiumPlate.itemID)
+					item = PixelmonItems.aluminiumPlate;
+				else if (itemId == PixelmonItems.aluminiumIngot.itemID)
+					item = PixelmonItems.aluminiumIngot;
 			}
 
 			if (item == null) {
@@ -110,7 +115,7 @@ public class BlockAnvil extends BlockContainer {
 		}
 		if (player.getCurrentEquippedItem() != null
 				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc || player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc || player
-						.getCurrentEquippedItem().getItem() == PixelmonItems.aluminumIngot)) {
+						.getCurrentEquippedItem().getItem() == PixelmonItems.aluminiumIngot)) {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
 			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);

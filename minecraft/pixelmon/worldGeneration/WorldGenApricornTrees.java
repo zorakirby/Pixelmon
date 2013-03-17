@@ -50,8 +50,7 @@ public class WorldGenApricornTrees implements IWorldGenerator {
 						newId = PixelmonBlocksApricornTrees.apricornTreeRed.blockID;
 						break;
 					}
-					world.setBlockWithNotify(x, y, z, newId);
-					world.setBlockMetadataWithNotify(x, y, z, BlockApricornTree.numStages - 1);
+					world.setBlockAndMetadataWithNotify(x, y, z, newId, BlockApricornTree.numStages - 1, 2);
 				}
 			}
 		}

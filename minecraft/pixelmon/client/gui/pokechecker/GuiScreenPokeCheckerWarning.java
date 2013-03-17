@@ -37,7 +37,7 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 
 	public void initGui() {
 		super.initGui();
-		controlList.clear();
+		buttonList.clear();
 	}
 
 	protected void mouseClicked(int mouseX, int mouseY, int par3) {

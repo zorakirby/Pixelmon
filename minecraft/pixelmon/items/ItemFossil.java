@@ -8,14 +8,14 @@ import pixelmon.Pixelmon;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.config.PixelmonCreativeTabs;
 
-public class ItemPokemonFossil extends PixelmonItem {
+public class ItemFossil extends PixelmonItem {
 
 	public String pokemon = "";
 	public ModelFossil model;
-	private String modelName;
+	public String modelName;
 
-	public ItemPokemonFossil(int Id, String pokemon, String modelName) {
-		super(Id);
+	public ItemFossil(int Id, String pokemon, String modelName) {
+		super(Id, "fossils/" + modelName.toLowerCase());
 		this.setCreativeTab(PixelmonCreativeTabs.natural);
 		this.pokemon = pokemon;
 		this.modelName = modelName;
@@ -28,13 +28,13 @@ public class ItemPokemonFossil extends PixelmonItem {
 	public String getPokemon() {
 		return this.pokemon;
 	}
-	
-	public String getModelName(){
+
+	public String getModelName() {
 		return this.modelName;
 	}
 
 	public ModelFossil getModel() {
-		if(model == null)
+		if (model == null)
 			return Pixelmon.proxy.loadFossilModel(modelName);
 		return model;
 	}

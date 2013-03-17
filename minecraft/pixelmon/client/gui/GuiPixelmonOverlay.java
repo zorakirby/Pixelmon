@@ -58,7 +58,7 @@ public class GuiPixelmonOverlay extends Gui {
 			var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlaySimple.png");
 		else
 			var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
-		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
 		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
 		if (isGuiMinimized)
 			this.drawTexturedModalRect(0, var7 / 6, 0, 0, 60, 182);
@@ -79,7 +79,7 @@ public class GuiPixelmonOverlay extends Gui {
 				i = p.order;
 				if (!isGuiMinimized) {
 					fontRenderer.drawString(displayName, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
-					Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+					GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
 					if (p.isMale)
 						this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
 					else
@@ -118,7 +118,7 @@ public class GuiPixelmonOverlay extends Gui {
 			i++;
 		}
 
-		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
 		this.drawTexturedModalRect(2, var7 / 6 + 4 + selectedPixelmon * 30, 45, 209, 28, 28);
 		fontRenderer.setUnicodeFlag(false);
 

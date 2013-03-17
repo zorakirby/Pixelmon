@@ -3,14 +3,12 @@ package pixelmon.enums.heldItems;
 import pixelmon.entities.pixelmon.stats.StatsType;
 
 public enum EnumEvAdjustingItems {
-	MachoBrace(StatsType.None, 3), PowerWeight(StatsType.HP, 4), PowerBracer(StatsType.Attack, 5), PowerBelt(StatsType.Defence, 6), PowerLens(StatsType.SpecialAttack, 7),
-	PowerBand(StatsType.SpecialDefence, 8), PowerAnklet(StatsType.Speed, 9);
+	MachoBrace(StatsType.None), PowerWeight(StatsType.HP), PowerBracer(StatsType.Attack), PowerBelt(StatsType.Defence), PowerLens(StatsType.SpecialAttack),
+	PowerBand(StatsType.SpecialDefence), PowerAnklet(StatsType.Speed);
 	
 	public StatsType statAffected;
-	public int iconRow;
-	private EnumEvAdjustingItems(StatsType statAffected, int iconRow){
+	private EnumEvAdjustingItems(StatsType statAffected){
 		this.statAffected = statAffected;
-		this.iconRow = iconRow;
 	}
 }
 

@@ -8,6 +8,6 @@ import pixelmon.items.ItemHeld;
 public class ItemExpShare extends ItemHeld {
 
 	public ItemExpShare(int id) {
-		super(id, EnumHeldItems.expShare);
+		super(id, EnumHeldItems.expShare, "expshare");
 	}
 }

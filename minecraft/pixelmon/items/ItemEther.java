@@ -9,11 +9,10 @@ public class ItemEther extends PixelmonItem {
 	public EnumEthers type;
 
 	public ItemEther(int par1, EnumEthers type) {
-		super(par1);
+		super(par1, "healingitems/" + type.getTexture());
 		SetUsableInBattle(true);
 		this.type = type;
 		setMaxStackSize(16);
-		setIconIndex(type.getIconIndex());
 		setCreativeTab(PixelmonCreativeTabs.restoration);
 	}
 

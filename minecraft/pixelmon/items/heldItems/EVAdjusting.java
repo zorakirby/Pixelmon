@@ -9,9 +9,7 @@ public class EVAdjusting extends ItemHeld {
 	public EnumEvAdjustingItems type;
 
 	public EVAdjusting(int id, EnumEvAdjustingItems type) {
-		super(id, EnumHeldItems.evAdjusting);
+		super(id, EnumHeldItems.evAdjusting, type.toString().toLowerCase());
 		this.type = type;
-
-		setIconCoord(12, type.iconRow);
 	}
 }

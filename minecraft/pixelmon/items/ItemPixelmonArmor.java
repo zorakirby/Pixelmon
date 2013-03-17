@@ -1,5 +1,8 @@
 package pixelmon.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
@@ -9,15 +12,24 @@ import pixelmon.config.PixelmonItems;
 
 public class ItemPixelmonArmor extends ItemArmor implements IArmorTextureProvider{
 
-    public ItemPixelmonArmor(int i, int index, EnumArmorMaterial enumArmorMaterial, int k, int l)
+    public ItemPixelmonArmor(int i, int index, EnumArmorMaterial enumArmorMaterial, int k, int l, String textureName)
     {
         super(i, enumArmorMaterial, k, l);
         this.setMaxDamage(enumArmorMaterial.getDurability(l));
         this.setCreativeTab(CreativeTabs.tabCombat);
+        this.textureName = textureName;
     }
 
+	String textureName;
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void func_94581_a(IconRegister par1IconRegister) {
+		this.iconIndex = par1IconRegister.func_94245_a(textureName);
+	}
+	
 	public String getArmorTextureFile(ItemStack itemstack) {
-		if(itemstack.getItem() == PixelmonItems.leggingsAluminum)
+		if(itemstack.getItem() == PixelmonItems.leggingsAluminium)
 		return "/pixelmon/armor/aluminum_2.png";
 		else return "/pixelmon/armor/aluminum_1.png";
 	}

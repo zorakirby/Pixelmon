@@ -40,9 +40,9 @@ public class GuiPC extends GuiContainer {
 
 	public void initGui() {
 		super.initGui();
-		controlList.clear();
-		controlList.add(new GuiButton(0, width / 2 - 131, height / 6 + 60, 20, 20, "<-"));
-		controlList.add(new GuiButton(1, width / 2 - 91 + 205, height / 6 + 60, 20, 20, "->"));
+		buttonList.clear();
+		buttonList.add(new GuiButton(0, width / 2 - 131, height / 6 + 60, 20, 20, "<-"));
+		buttonList.add(new GuiButton(1, width / 2 - 91 + 205, height / 6 + 60, 20, 20, "->"));
 		trashX = width / 2 - 91 + 202;
 		trashY = height / 6 + 150;
 		checkY = trashY;
@@ -218,11 +218,11 @@ public class GuiPC extends GuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		int partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcPartyBox.png");
-		Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, partyTexture);
 		drawTexturedModalRect(width / 2 - 91, height / 6 + 151, 0, 0, 182, 29);
 		int i = 0;
 		partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcBox.png");
-		Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, partyTexture);
 		drawTexturedModalRect(width / 2 - 91, height / 6, 0, 0, 182, 141);
 		drawTexturedModalRect(trashX, trashY, 0, 256 - 32, 32, 32);
 		drawImageQuad(Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pokechecker.png"), checkX, checkY, 32f, 32f, 0f, 0f, 1f, 1f);
@@ -295,7 +295,7 @@ public class GuiPC extends GuiContainer {
 			}
 			fontRenderer.drawString(p.nickname, mouseSlot.x + 30, mouseSlot.y + 10, 0xFFFFFF);
 			partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
-			Minecraft.getMinecraft().renderEngine.bindTexture(partyTexture);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, partyTexture);
 			if (p.isMale)
 				drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 208, 5, 9);
 			else

@@ -2,11 +2,9 @@ package pixelmon.enums;
 
 public enum EnumEvolutionStone {
 
-	Firestone(0), Thunderstone(3), Waterstone(4), Sunstone(-1), Leafstone(1), Dawnstone(-1), Duskstone(-1), Moonstone(2), Shinystone(-1);
-	public int textureIndex;
+	Firestone, Thunderstone, Waterstone, Sunstone, Leafstone, Dawnstone, Duskstone, Moonstone, Shinystone;
 
-	private EnumEvolutionStone(int textureIndex) {
-		this.textureIndex = textureIndex;
+	private EnumEvolutionStone() {
 	}
 
 	public static EnumEvolutionStone getEvolutionStone(String name) {

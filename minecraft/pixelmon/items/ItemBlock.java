@@ -9,15 +9,13 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import pixelmon.blocks.BlockPC;
 
-public class ItemBlock extends Item {
+public class ItemBlock extends PixelmonItem {
 	Block block;
 
-	public ItemBlock(int par1, Block block, int iconIndex) {
-		super(par1);
+	public ItemBlock(int par1, Block block, String textureName) {
+		super(par1, "blocks/" + textureName);
 		this.block = block;
 		setCreativeTab(CreativeTabs.tabMisc);
-		setIconIndex(iconIndex);
-		setTextureFile("/pixelmon/image/pitems.png");
 		setCreativeTab(CreativeTabs.tabDecorations);
 	}
 
@@ -51,13 +49,14 @@ public class ItemBlock extends Item {
 					var9 = 3;
 				}
 
-				if (world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z) && world.isBlockNormalCube(x, y - 1, z) && world.getBlockId(x, y - 1, z) != block.blockID) {
+				if (world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z) && world.isBlockNormalCube(x, y - 1, z)
+						&& world.getBlockId(x, y - 1, z) != block.blockID) {
 					if (block instanceof BlockPC && world.getBlockId(x, y + 2, z) == block.blockID) {
 						return false;
 					}
-					world.setBlockAndMetadataWithNotify(x, y, z, block.blockID, var9);
+					world.setBlockAndMetadataWithNotify(x, y, z, block.blockID, var9, 2);
 					if (world.getBlockId(x, y, z) == block.blockID && block instanceof BlockPC) {
-						world.setBlockAndMetadataWithNotify(x, y + 1, z, block.blockID, var9 - 6);
+						world.setBlockAndMetadataWithNotify(x, y + 1, z, block.blockID, var9 - 6, 2);
 					}
 					if (!player.capabilities.isCreativeMode) {
 						--stack.stackSize;

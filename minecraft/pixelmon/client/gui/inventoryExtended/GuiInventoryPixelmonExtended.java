@@ -96,7 +96,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 		int var4 = this.mc.renderEngine.getTexture("/gui/inventory.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.mc.renderEngine.bindTexture(var4);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/pixelmon/gui/pixelmonOverlayExtended2.png"));
@@ -140,11 +140,11 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 					ItemHeld heldItem = (ItemHeld) PixelmonItemsHeld.getHeldItem(p.heldItemId);
 					if (heldItem != null) {
 						spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pitems.png");
-						int iconIndex = heldItem.getIconIndex(new ItemStack(heldItem));
-						int yindex = (int) Math.floor(((double) iconIndex) / 16.0);
-						int xindex = iconIndex - yindex * 16;
-						drawImageQuad(spriteIndex, slot.heldItemX, slot.heldItemY, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f, (16f * (xindex + 1)) / 256f,
-								16f * (yindex + 1) / 256f);
+//						int iconIndex = heldItem.getIconIndex(new ItemStack(heldItem));
+//						int yindex = (int) Math.floor(((double) iconIndex) / 16.0);
+//						int xindex = iconIndex - yindex * 16;
+//						drawImageQuad(spriteIndex, slot.heldItemX, slot.heldItemY, 16f, 16f, 16f * xindex / 256f, 16f * yindex / 256f, (16f * (xindex + 1)) / 256f,
+//								16f * (yindex + 1) / 256f);
 					}
 				} else {
 					spriteIndex = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
@@ -177,7 +177,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		func_74223_a(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - this.xSize_lo, (float) (guiTop + 75 - 50) - this.ySize_lo);
+		
+		drawPlayerOnGui(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - this.xSize_lo, (float) (guiTop + 75 - 50) - this.ySize_lo);
 
 	}
 
@@ -202,7 +203,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			displayName = p.nickname;
 		int var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
 		fontRenderer.drawString(displayName, s.x - 82, s.y, 0xFFFFFF);
-		Minecraft.getMinecraft().renderEngine.bindTexture(var4);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
 		if (p.isMale)
 			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 208, 5, 9);
 		else
@@ -256,9 +257,9 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				mc.thePlayer.openGui(Pixelmon.instance, EnumGui.PokeCheckerStats.getIndex(), mc.theWorld, selected.pokemonID, 0, 0);
 			}
 			if (pixelmonMenuOpen) {
-				controlList.remove(pMenuButtonSumm);
-				controlList.remove(pMenuButtonMove);
-				controlList.remove(pMenuButtonStat);
+				buttonList.remove(pMenuButtonSumm);
+				buttonList.remove(pMenuButtonMove);
+				buttonList.remove(pMenuButtonStat);
 				pMenuButtonSumm = null;
 				pMenuButtonMove = null;
 				pMenuButtonStat = null;
@@ -271,9 +272,9 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				if (s.getBounds().contains(x, y)) { // click on a pokemon sprite
 					if (par3 == 1) {
 						if (pixelmonMenuOpen) {
-							controlList.remove(pMenuButtonSumm);
-							controlList.remove(pMenuButtonMove);
-							controlList.remove(pMenuButtonStat);
+							buttonList.remove(pMenuButtonSumm);
+							buttonList.remove(pMenuButtonMove);
+							buttonList.remove(pMenuButtonStat);
 							pMenuButtonSumm = null;
 							pMenuButtonMove = null;
 							pMenuButtonStat = null;
@@ -288,9 +289,9 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 						buttonBounds = new Rectangle(x - 63, y + 5, 47, 13);
 						buttonBoundsMoves = new Rectangle(x - 63, y + 24, 47, 13);
 						buttonBoundsStat = new Rectangle(x - 63, y + 43, 47, 13);
-						controlList.add(pMenuButtonSumm);
-						controlList.add(pMenuButtonMove);
-						controlList.add(pMenuButtonStat);
+						buttonList.add(pMenuButtonSumm);
+						buttonList.add(pMenuButtonMove);
+						buttonList.add(pMenuButtonStat);
 						pixelmonMenuOpen = true;
 						selected = s.pokemonData;
 						return;

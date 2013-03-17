@@ -13,14 +13,12 @@ public class ItemApricorn extends PixelmonItem {
 	public EnumApricorns apricorn;
 
 	public ItemApricorn(int id, EnumApricorns apricorn) {
-		super(id);
+		super(id, "apricorns/" + apricorn.toString().toLowerCase() + "apricorn");
 
 		this.apricorn = apricorn;
 		SetUsableInBattle(false);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);
-		setIconIndex(apricorn.iconIndex);
-		setTextureFile("/pixelmon/image/pitems2.png");
 		setCreativeTab(PixelmonCreativeTabs.natural);
 		if (apricorn == EnumApricorns.Black)
 			blockID = PixelmonBlocksApricornTrees.apricornTreeBlack.blockID;
@@ -42,7 +40,8 @@ public class ItemApricorn extends PixelmonItem {
 	private int blockID;
 
 	@Override
-	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
+	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8,
+			float par9, float par10) {
 		if (!PixelmonConfig.allowPlanting)
 			return false;
 		int var11 = par3World.getBlockId(par4, par5, par6);
@@ -56,13 +55,13 @@ public class ItemApricorn extends PixelmonItem {
 		if (par1ItemStack.stackSize == 0) {
 			return false;
 		} else {
-			if (par3World.canPlaceEntityOnSide(this.blockID, par4, par5, par6, false, par7, par2EntityPlayer)) {
+			if (par3World.canPlaceEntityOnSide(this.blockID, par4, par5, par6, false, par7, par2EntityPlayer, par1ItemStack)) {
 				Block var12 = Block.blocksList[this.blockID];
 				int var13 = this.getMetadata(par1ItemStack.getItemDamage());
 				int var14 = Block.blocksList[this.blockID].onBlockPlaced(par3World, par4, par5, par6, par7, par8, par9, par10, var13);
 				if (placeBlockAt(par1ItemStack, par2EntityPlayer, par3World, par4, par5, par6, par7, par8, par9, par10, var14)) {
-					par3World.playSoundEffect((double) ((float) par4 + 0.5F), (double) ((float) par5 + 0.5F), (double) ((float) par6 + 0.5F), var12.stepSound.getStepSound(),
-							(var12.stepSound.getVolume() + 1.0F) / 2.0F, var12.stepSound.getPitch() * 0.8F);
+					par3World.playSoundEffect((double) ((float) par4 + 0.5F), (double) ((float) par5 + 0.5F), (double) ((float) par6 + 0.5F),
+							var12.stepSound.getStepSound(), (var12.stepSound.getVolume() + 1.0F) / 2.0F, var12.stepSound.getPitch() * 0.8F);
 					--par1ItemStack.stackSize;
 				}
 			}
@@ -84,13 +83,14 @@ public class ItemApricorn extends PixelmonItem {
 	 * @param side
 	 *            The side the player (or machine) right-clicked on.
 	 */
-	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-		if (!world.setBlockAndMetadataWithNotify(x, y, z, this.blockID, metadata)) {
+	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ,
+			int metadata) {
+		if (!world.setBlockAndMetadataWithNotify(x, y, z, this.blockID, metadata, 2)) {
 			return false;
 		}
 
 		if (world.getBlockId(x, y, z) == this.blockID) {
-			Block.blocksList[this.blockID].onBlockPlacedBy(world, x, y, z, player);
+			Block.blocksList[this.blockID].onBlockPlacedBy(world, x, y, z, player, stack);
 			Block.blocksList[this.blockID].onPostBlockPlaced(world, x, y, z, metadata);
 		}
 

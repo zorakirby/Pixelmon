@@ -16,7 +16,7 @@ public class ApplyImmobilize extends StatusApplierBase {
 	boolean hasRange = false;
 
 	public ApplyImmobilize(Value... values) {
-		if (values[0].value != -1) {
+		if (values != null && values[0].value != -1) {
 			hasRange = true;
 			value1 = values[0].value;
 			value2 = values[1].value;

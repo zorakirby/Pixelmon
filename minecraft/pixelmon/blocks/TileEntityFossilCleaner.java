@@ -1,8 +1,8 @@
 package pixelmon.blocks;
 
 import pixelmon.config.PixelmonItemsFossils;
-import pixelmon.items.ItemFossilUncovered;
-import pixelmon.items.ItemPokemonFossil;
+import pixelmon.items.ItemCoveredFossil;
+import pixelmon.items.ItemFossil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
@@ -30,8 +30,8 @@ public class TileEntityFossilCleaner extends TileEntity {
 			if (timer > 0) {
 				timer--;
 			} else {
-				if (!itemClean && PixelmonItemsFossils.getItemFromIndex(itemInCleaner) instanceof ItemFossilUncovered) {
-					itemInCleaner = ((ItemFossilUncovered) PixelmonItemsFossils.getItemFromIndex(itemInCleaner)).cleanedFossil.itemID;
+				if (!itemClean && PixelmonItemsFossils.getItemFromIndex(itemInCleaner) instanceof ItemCoveredFossil) {
+					itemInCleaner = ((ItemCoveredFossil) PixelmonItemsFossils.getItemFromIndex(itemInCleaner)).cleanedFossil.itemID;
 					itemClean = true;
 					if (worldObj instanceof WorldServer)
 						((WorldServer) worldObj).getPlayerManager().flagChunkForUpdate(xCoord, yCoord, zCoord);
@@ -45,7 +45,7 @@ public class TileEntityFossilCleaner extends TileEntity {
 		super.updateEntity();
 	}
 
-	public ItemPokemonFossil getFinishedFossil() {
+	public ItemFossil getFinishedFossil() {
 		if (itemClean) {
 			int itemId = itemInCleaner;
 			itemInCleaner = -1;

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -26,13 +27,15 @@ public class BlockApricornTree extends BlockContainer {
 		super(id, Material.wood);
 		this.tree = tree;
 		setTickRandomly(true);
-		setTextureFile("/pixelmon/image/pitems2.png");
-		blockIndexInTexture = tree.apricorn.iconIndex;
 	}
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
 		return PixelmonItemsApricorns.getApricorn(tree.apricorn).itemID;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void func_94332_a(IconRegister par1IconRegister) {
 	}
 
 	@Override
@@ -111,7 +114,7 @@ public class BlockApricornTree extends BlockContainer {
 			var3.delayBeforeCanPickup = 10;
 
 			world.spawnEntityInWorld(var3);
-			world.setBlockMetadata(x, y, z, numStages - 3);
+			world.setBlockMetadataWithNotify(x, y, z, numStages - 3, 2);
 			return true;
 		}
 		return false;
@@ -130,7 +133,7 @@ public class BlockApricornTree extends BlockContainer {
 				float var7 = 10;
 
 				if (par5Random.nextInt(3) == 0) {
-					world.setBlockMetadata(x, y, z, stage + 1);
+					world.setBlockMetadataWithNotify(x, y, z, stage + 1, 2);
 					((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 				}
 			}

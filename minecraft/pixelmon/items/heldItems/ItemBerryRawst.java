@@ -9,7 +9,7 @@ import pixelmon.items.ItemHeld;
 public class ItemBerryRawst extends ItemHeld {
 
 	public ItemBerryRawst(int id) {
-		super(id, EnumHeldItems.rawst);
+		super(id, EnumHeldItems.rawst, "rawstberry");
 		SetUsableInBattle(true);
 	}
 

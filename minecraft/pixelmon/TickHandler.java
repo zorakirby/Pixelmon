@@ -16,17 +16,21 @@ import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class TickHandler implements ITickHandler {
-	int ticksSinceSentLogin=0;
+	int ticksSinceSentLogin = 0;
+	boolean checkedForUsername = false;
+
 	@Override
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {
 		for (TickType type : types) {
-			if (type == TickType.RENDER && !Minecraft.getMinecraft().session.username.equals("ASH") && !ObfuscationReflectionHelper.obfuscation) {
+			if (!checkedForUsername && type == TickType.RENDER && !Minecraft.getMinecraft().session.username.equals("ASH")
+					&& java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
 				Minecraft.getMinecraft().session.username = "ASH";
 			}
+			checkedForUsername = true;
 			if (type == TickType.RENDER) {
 				if (ServerStorageDisplay.count() == 0) {
 					ticksSinceSentLogin++;
-					if (ticksSinceSentLogin >=50){
+					if (ticksSinceSentLogin >= 50) {
 						ticksSinceSentLogin = 0;
 						Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.RequestUpdatedPokemonList, 0);
 						PacketDispatcher.sendPacketToServer(packet);

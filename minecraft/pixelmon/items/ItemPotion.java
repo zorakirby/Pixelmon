@@ -10,11 +10,10 @@ public class ItemPotion extends PixelmonItem {
 	public EnumPotions type;
 
 	public ItemPotion(int par1, EnumPotions type) {
-		super(par1);
+		super(par1, "healingitems/" + type.getTexture());
 		SetUsableInBattle(true);
 		this.type = type;
 		setMaxStackSize(16);
-		setIconIndex(type.getIconIndex());
 		setCreativeTab(PixelmonCreativeTabs.restoration);
 	}
 
@@ -31,8 +30,8 @@ public class ItemPotion extends PixelmonItem {
 	public void healPokemon(EntityPixelmon pxm) {
 		int newHP = pxm.getHealth() + healAmount(pxm);
 		pxm.setEntityHealth(newHP);
-		if (pxm.getOwner()!=null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)pxm.getOwner()).updateNBT(pxm);
+		if (pxm.getOwner() != null)
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pxm.getOwner()).updateNBT(pxm);
 	}
 
 	@Override

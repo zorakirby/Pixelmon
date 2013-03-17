@@ -100,25 +100,25 @@ public class PixelmonItemsHeld {
 		berryRawstID = cfg.get("berry", "RawstBerry", 12004).getInt();
 		berryLeppaID = cfg.get("berry", "LeppaBerry", 12005).getInt();
 
-		luckyEgg = new ItemLuckyEgg(luckyEggID).setItemName("Lucky Egg").setIconIndex(7);
-		expShare = new ItemExpShare(expShareID).setItemName("Exp Share").setIconIndex(23);
-		choiceBand = new ChoiceItem(choiceBandID, EnumChoiceItems.ChoiceBand).setItemName("Choice Band");
-		choiceScarf = new ChoiceItem(choiceScarfID, EnumChoiceItems.ChoiceScarf).setItemName("Choice Scarf");
-		choiceSpectacles = new ChoiceItem(choiceSpectaclesID, EnumChoiceItems.ChoiceSpecs).setItemName("Choice Spectacles");
+		luckyEgg = new ItemLuckyEgg(luckyEggID);
+		expShare = new ItemExpShare(expShareID);
+		choiceBand = new ChoiceItem(choiceBandID, EnumChoiceItems.ChoiceBand);
+		choiceScarf = new ChoiceItem(choiceScarfID, EnumChoiceItems.ChoiceScarf);
+		choiceSpectacles = new ChoiceItem(choiceSpectaclesID, EnumChoiceItems.ChoiceSpecs);
 
-		machoBrace = new EVAdjusting(machoBraceID, EnumEvAdjustingItems.MachoBrace).setItemName("Macho Brace");
-		powerWeight = new EVAdjusting(powerWeightID, EnumEvAdjustingItems.PowerWeight).setItemName("Power Weight");
-		powerBracer = new EVAdjusting(powerBracerID, EnumEvAdjustingItems.PowerBracer).setItemName("Power Bracer");
-		powerBelt = new EVAdjusting(powerBeltID, EnumEvAdjustingItems.PowerBelt).setItemName("Power Belt");
-		powerLens = new EVAdjusting(powerLensID, EnumEvAdjustingItems.PowerLens).setItemName("Power Lens");
-		powerBand = new EVAdjusting(powerBandID, EnumEvAdjustingItems.PowerBand).setItemName("Power Band");
-		powerAnklet = new EVAdjusting(powerAnkletID, EnumEvAdjustingItems.PowerAnklet).setItemName("Power Anklet");
+		machoBrace = new EVAdjusting(machoBraceID, EnumEvAdjustingItems.MachoBrace);
+		powerWeight = new EVAdjusting(powerWeightID, EnumEvAdjustingItems.PowerWeight);
+		powerBracer = new EVAdjusting(powerBracerID, EnumEvAdjustingItems.PowerBracer);
+		powerBelt = new EVAdjusting(powerBeltID, EnumEvAdjustingItems.PowerBelt);
+		powerLens = new EVAdjusting(powerLensID, EnumEvAdjustingItems.PowerLens);
+		powerBand = new EVAdjusting(powerBandID, EnumEvAdjustingItems.PowerBand);
+		powerAnklet = new EVAdjusting(powerAnkletID, EnumEvAdjustingItems.PowerAnklet);
 
-		berryOran = new ItemBerryOran(berryOranID).setItemName("OranBerry").setIconIndex(5);
-		berryLeppa = new ItemBerryLeppa(berryLeppaID).setItemName("LeppaBerry").setIconIndex(21);
-		berryRawst = new ItemBerryRawst(berryRawstID).setItemName("RawstBerry").setIconIndex(37);
+		berryOran = new ItemBerryOran(berryOranID);
+		berryLeppa = new ItemBerryLeppa(berryLeppaID);
+		berryRawst = new ItemBerryRawst(berryRawstID);
 
-		everStone = new ItemEverstone(everStoneID).setItemName("Everstone").setIconIndex(4 + 6 * 16);
+		everStone = new ItemEverstone(everStoneID);
 	}
 
 	public static void addNames() {

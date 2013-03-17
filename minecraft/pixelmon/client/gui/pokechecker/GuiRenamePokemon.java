@@ -31,10 +31,10 @@ public class GuiRenamePokemon extends GuiContainer {
 		super.initGui();
 		StringTranslate stringtranslate = StringTranslate.getInstance();
 		Keyboard.enableRepeatEvents(true);
-		controlList.clear();
-		controlList.add(new GuiRenameButtons(0, width / 2 - 98, height / 4 + 80, stringtranslate.translateKey("selectWorld.renameButton")));
-		controlList.add(new GuiRenameButtons(1, width / 2 + 48, height / 4 + 80, stringtranslate.translateKey("gui.cancel")));
-		controlList.add(new GuiRenameButtons(2, width / 2 - 25, height / 4 + 80, stringtranslate.translateKey("Reset")));
+		buttonList.clear();
+		buttonList.add(new GuiRenameButtons(0, width / 2 - 98, height / 4 + 80, stringtranslate.translateKey("selectWorld.renameButton")));
+		buttonList.add(new GuiRenameButtons(1, width / 2 + 48, height / 4 + 80, stringtranslate.translateKey("gui.cancel")));
+		buttonList.add(new GuiRenameButtons(2, width / 2 - 25, height / 4 + 80, stringtranslate.translateKey("Reset")));
 		theGuiTextField = new GuiTextFieldTransparent(fontRenderer, width / 2 - 68, height / 4 + 37, 140, 30);
 		theGuiTextField.setFocused(true);
 		theGuiTextField.setText(targetPacket.nickname);
@@ -71,10 +71,10 @@ public class GuiRenamePokemon extends GuiContainer {
 
 	protected void keyTyped(char par1, int par2) {
 		theGuiTextField.textboxKeyTyped(par1, par2);
-		((GuiButton) controlList.get(0)).enabled = theGuiTextField.getText().trim().length() > 0;
+		((GuiButton) buttonList.get(0)).enabled = theGuiTextField.getText().trim().length() > 0;
 
 		if (par1 == '\r') {
-			actionPerformed((GuiButton) controlList.get(0));
+			actionPerformed((GuiButton) buttonList.get(0));
 		}
 	}
 
@@ -87,7 +87,7 @@ public class GuiRenamePokemon extends GuiContainer {
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/rename.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture(bg);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, height / 4, 0, 0, 256, 114);
 		StringTranslate stringtranslate = StringTranslate.getInstance();
 		drawCenteredString(fontRenderer, stringtranslate.translateKey("Rename Pokemon"), width / 2, (height / 4 - 60) + 80, 0xffffff);

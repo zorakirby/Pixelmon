@@ -19,8 +19,8 @@ public abstract class ItemHeld extends PixelmonItem {
 	private boolean usableInBattle;
 	private boolean affectsBattles;
 
-	public ItemHeld(int id, EnumHeldItems heldItemType) {
-		super(id);
+	public ItemHeld(int id, EnumHeldItems heldItemType, String textureName) {
+		super(id, "helditems/" + textureName);
 		isEquippable = true;
 		this.heldItemType = heldItemType;
 		usableInBattle = heldItemType.getUsableInBattle();
@@ -35,11 +35,11 @@ public abstract class ItemHeld extends PixelmonItem {
 	public boolean usableInBattle() {
 		return usableInBattle;
 	}
-	
+
 	public boolean getAffectsBattle() {
 		return affectsBattles;
 	}
-	
+
 	public static void useItem(EntityPixelmon user, EntityPixelmon target, EnumHeldItems item) {
 		if (user.getHeldItem() != null && user.getHeldItem().getItem() != null && user.getHeldItem().getItem() instanceof ItemHeld) {
 			if (((ItemHeld) user.getHeldItem().getItem()).heldItemType == item && ((ItemHeld) user.getHeldItem().getItem()).effectEntity(user)) {
