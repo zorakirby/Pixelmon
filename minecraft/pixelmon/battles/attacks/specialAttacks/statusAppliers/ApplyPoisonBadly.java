@@ -23,7 +23,7 @@ public class ApplyPoisonBadly extends StatusApplierBase {
 					return;
 				}
 			target.status.add(new PoisonBadly());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has been badly poisoned!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has been badly poisoned!");
 		}
 	}
 }

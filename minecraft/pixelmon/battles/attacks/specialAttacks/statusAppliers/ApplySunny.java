@@ -27,10 +27,10 @@ public class ApplySunny extends StatusApplierBase {
 
 			target.status.add(new Sunny());
 			user.status.add(new Sunny());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " makes the sun shine more brightly!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " makes the sun shine more brightly!");
 
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " failed!");
 
 	}
 }

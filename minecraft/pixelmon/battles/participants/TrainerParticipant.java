@@ -123,7 +123,7 @@ public class TrainerParticipant extends BattleParticipant {
 
 	@Override
 	public String getFaintMessage() {
-		return trainer.info.name + "'s " + currentPokemon().getName() + " fainted!";
+		return trainer.info.name + "'s " + currentPokemon().getNickname() + " fainted!";
 	}
 
 }

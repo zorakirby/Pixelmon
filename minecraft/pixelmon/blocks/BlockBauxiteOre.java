@@ -27,4 +27,10 @@ public class BlockBauxiteOre extends Block {
 	public Icon getBlockTexture(IBlockAccess par1iBlockAccess, int par2, int par3, int par4, int par5) {
 		return icon;
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getBlockTextureFromSideAndMetadata(int par1, int par2) {
+		return icon;
+	}
 }

@@ -15,7 +15,7 @@ public class Protect extends StatusBase {
 
 	@Override
 	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) throws Exception {
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " protects itself!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " protects itself!");
 		return true;
 	}
 

@@ -100,7 +100,7 @@ public class Attack {
 		}
 
 		if (cantMiss || RandomHelper.getRandomNumberBetween(0, 100) <= accuracy) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " used " + baseAttack.attackName + " on " + target.getName() + "!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " used " + baseAttack.attackName + " on " + target.getNickname() + "!");
 			for (int j = 0; j < baseAttack.effects.size(); j++) {
 				EffectBase e = baseAttack.effects.get(j);
 				if (e instanceof StatsEffect) {
@@ -198,7 +198,7 @@ public class Attack {
 				}
 			}
 		} else {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " tried to use " + baseAttack.attackName + ", but it missed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " tried to use " + baseAttack.attackName + ", but it missed!");
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {

@@ -13,11 +13,11 @@ public class ApplyYawn extends StatusApplierBase {
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (!target.hasStatus(StatusType.Yawn) && !target.hasStatus(StatusType.Sleep)) {
 			target.status.add(new Yawn());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " became drowsy!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " became drowsy!");
 		} else if (target.hasStatus(StatusType.Sleep)) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already asleep!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already asleep!");
 		} else {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already drowsy!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already drowsy!");
 		}
 	}
 }

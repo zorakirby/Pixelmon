@@ -19,7 +19,7 @@ public class PetalDance extends MultiTurnSpecialAttackBase {
 		}
 		if (getTurnCount(user) == 0) {
 			setPersists(user, false);
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " became confused!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " became confused!");
 			user.status.add(new Confusion());
 		}
 		decrementTurnCount(user);

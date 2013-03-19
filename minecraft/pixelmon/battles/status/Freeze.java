@@ -19,11 +19,11 @@ public class Freeze extends StatusPersist {
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 20) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " breaks free from the ice!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " breaks free from the ice!");
 			user.status.remove(this);
 			return true;
 		} else {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is frozen solid!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is frozen solid!");
 			return false;
 		}
 	}

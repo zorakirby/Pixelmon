@@ -167,7 +167,7 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public String getFaintMessage() {
-		return player.username + "'s " + currentPokemon().getName() + " fainted!";
+		return player.username + "'s " + currentPokemon().getNickname() + " fainted!";
 	}
 
 }

@@ -21,7 +21,7 @@ public class SafeGuard extends StatusBase {
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (effectTurns == 0) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + "'s Safeguard wears off!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + "'s Safeguard wears off!");
 			user.status.remove(this);
 		}
 		effectTurns--;

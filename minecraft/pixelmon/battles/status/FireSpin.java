@@ -19,14 +19,14 @@ public class FireSpin extends StatusBase {
 
 	@Override
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is trapped in a vortex and takes damage!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is trapped in a vortex and takes damage!");
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 16));
 	}
 
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (effectTurns == 0) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " breaks free of the swirling vortex!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " breaks free of the swirling vortex!");
 			user.status.remove(this);
 		}
 		effectTurns--;

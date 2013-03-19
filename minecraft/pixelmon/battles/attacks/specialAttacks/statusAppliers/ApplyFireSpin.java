@@ -22,12 +22,12 @@ public class ApplyFireSpin extends StatusApplierBase {
 			}
 			for (StatusBase e : target.status)
 				if (e.type == StatusType.FireSpin) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already spinning in fire!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already spinning in fire!");
 					return;
 				}
 			target.status.add(new FireSpin());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is trapped in a vortex!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is trapped in a vortex!");
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " failed!");
 	}
 }

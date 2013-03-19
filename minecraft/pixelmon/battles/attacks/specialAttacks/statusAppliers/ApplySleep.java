@@ -16,15 +16,15 @@ public class ApplySleep extends StatusApplierBase {
 		if (checkChance()) {
 			for (StatusBase e : target.status)
 				if (e.type == StatusType.Sleep) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already asleep!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already asleep!");
 					return;
 				}
 
 			target.status.add(new Sleep());
 
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has fallen asleep!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has fallen asleep!");
 
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " did not fall asleep!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " did not fall asleep!");
 	}
 }

@@ -20,7 +20,7 @@ public class Fly extends MultiTurnSpecialAttackBase {
 		}
 		decrementTurnCount(user);
 		if (getTurnCount(user) == 1) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " Flies up in the air!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " Flies up in the air!");
 			user.status.add(new Flying());
 			return true;
 		} else {

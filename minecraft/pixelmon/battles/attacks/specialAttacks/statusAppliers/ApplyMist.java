@@ -15,13 +15,13 @@ public class ApplyMist extends StatusApplierBase {
 		if (checkChance()) {
 			for (StatusBase e : user.status)
 				if (e.type == StatusType.Paralysis) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is already surrounded by mist!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is already surrounded by mist!");
 					return;
 				}
 
 			user.status.add(new Mist());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " creates a cloud of mist!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " creates a cloud of mist!");
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " failed!");
 	}
 }

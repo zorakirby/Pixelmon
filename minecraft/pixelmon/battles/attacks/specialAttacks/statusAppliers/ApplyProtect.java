@@ -27,9 +27,9 @@ public class ApplyProtect extends StatusApplierBase {
 
 		if ((new Random()).nextInt(100) <= chance * 100) {
 			user.status.add(new Protect());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is readying itself!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is readying itself!");
 
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " failed!");
 	}
 }

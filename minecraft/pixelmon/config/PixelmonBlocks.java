@@ -23,6 +23,7 @@ import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.items.ItemBlock;
+import pixelmon.items.PixelmonItemBlock;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -99,7 +100,7 @@ public class PixelmonBlocks {
 
 	public static void registerBlocks() {
 		GameRegistry.registerBlock(healer, "PokeHealer");
-		GameRegistry.registerBlock(thunderStoneOre, "Thunderstone Ore");
+		GameRegistry.registerBlock(thunderStoneOre, PixelmonItemBlock.class, "Thunderstone Ore");
 		GameRegistry.registerBlock(leafStoneOre, "Leafstone Ore");
 		GameRegistry.registerBlock(waterStoneOre, "Waterstone Ore");
 		GameRegistry.registerBlock(fireStoneOre, "Firestone Ore");

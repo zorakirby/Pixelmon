@@ -23,7 +23,7 @@ public class Infatuated extends StatusBase {
 		}
 
 		if (RandomHelper.getRandomNumberBetween(0, 100) <= 50) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is in love!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is in love!");
 			return false;
 		} else {
 			return true;

@@ -13,12 +13,12 @@ public class ApplyLightScreen extends StatusApplierBase {
 	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception{
 		if (checkChance()) {
 			if (user.status.contains(this)) {
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " already has a lightscreen!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " already has a lightscreen!");
 				return;
 			}
 			user.status.add(new LightScreen());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " has put up a screen of shimmering light!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " has put up a screen of shimmering light!");
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " failed!");
 	}
 }

@@ -15,12 +15,12 @@ public class ApplyLeech extends StatusApplierBase {
 		if (checkChance()) {
 			for (StatusBase e : target.status)
 				if (e.type == StatusType.Leech) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already seeded!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already seeded!");
 					return;
 				}
 			target.status.add(new Leech());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " has planted a seed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " has planted a seed!");
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " failed!");
 	}
 }

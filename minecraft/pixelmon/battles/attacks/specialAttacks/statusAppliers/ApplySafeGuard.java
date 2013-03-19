@@ -15,13 +15,13 @@ public class ApplySafeGuard extends StatusApplierBase {
 		if (checkChance()) {
 			for (StatusBase e : user.status)
 				if (e.type == StatusType.SafeGuard) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " already has a safeguard!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " already has a safeguard!");
 					return;
 				}
 
 			user.status.add(new SafeGuard());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is looking a bit guarded!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is looking a bit guarded!");
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " failed!");
 	}
 }

@@ -20,7 +20,7 @@ public class ApplyParalysis extends StatusApplierBase {
 				}
 
 			target.status.add(new Paralysis(target));
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is paralyzed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is paralyzed!");
 		}
 
 	}

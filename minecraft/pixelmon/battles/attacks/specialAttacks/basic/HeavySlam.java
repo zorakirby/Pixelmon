@@ -16,7 +16,7 @@ public class HeavySlam extends SpecialAttackBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 
-		int i = (int) (DatabaseStats.getWeight(target.getName()) / DatabaseStats.getWeight(user.getName()));
+		int i = (int) (DatabaseStats.getWeight(target.getNickname()) / DatabaseStats.getWeight(user.getNickname()));
 
 		if (i <= 20)
 			a.baseAttack.basePower = 120;

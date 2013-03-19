@@ -25,7 +25,7 @@ public class Mist extends StatusBase {
 						if (m.type == ModifierType.User)
 							return false;
 					}
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is protected by the mist!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is protected by the mist!");
 					return true;
 				}
 			}

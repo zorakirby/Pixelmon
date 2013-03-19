@@ -21,7 +21,7 @@ public class SolarBeam extends MultiTurnSpecialAttackBase {
 			if (e.type == StatusType.Sunny)
 				decrementTurnCount(user);
 		if (getTurnCount(user) == 1) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is storing energy!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is storing energy!");
 			return true;
 		} else {
 			setPersists(user, false);

@@ -16,12 +16,12 @@ public class ApplyInfatuated extends StatusApplierBase {
 		if (checkChance()) {
 			for (StatusBase e : target.status)
 				if (e.type == StatusType.Infatuated) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already in love!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already in love!");
 					return;
 				}
 			target.status.add(new Infatuated(user));
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has fallen in love!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has fallen in love!");
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " failed!");
 	}
 }

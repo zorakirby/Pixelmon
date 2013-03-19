@@ -43,4 +43,9 @@ public class BlockFossil extends Block {
 		return PixelmonItemsFossils.getRandomFossilId();
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getBlockTextureFromSideAndMetadata(int par1, int par2) {
+		return icon;
+	}
 }

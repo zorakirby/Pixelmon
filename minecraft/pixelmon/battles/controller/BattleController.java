@@ -136,7 +136,7 @@ public class BattleController {
 		for (BattleParticipant p : participants) {
 			p.updatePokemon();
 			if (p.getIsFaintedOrDead()) {
-				String name = p.currentPokemon().getNickname().equals("") ? p.currentPokemon().getName() : p.currentPokemon().getNickname();
+				String name = p.currentPokemon().getNickname();
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player)
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
@@ -177,7 +177,7 @@ public class BattleController {
 		if (p.willTryFlee && !p.currentPokemon().isLockedInBattle) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
 		} else if (p.currentPokemon().isLockedInBattle)
-			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Cannot escape!");
+			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), " cannot escape!");
 		else if (p.isSwitching)
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
@@ -188,7 +188,7 @@ public class BattleController {
 
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {
 
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " tries to run away");
+		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getNickname() + " tries to run away");
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
 		if (B > 255)
@@ -199,13 +199,13 @@ public class BattleController {
 		if (F > 255 || new Random().nextInt(255) < F) {
 			if (!user.isLockedInBattle) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Running can escape");
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " escaped!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
 			} else {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Its locked in battle!");
 			}
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " couldn't escape!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " couldn't escape!");
 	}
 
 	public void setFlee(EntityPixelmon mypixelmon) {

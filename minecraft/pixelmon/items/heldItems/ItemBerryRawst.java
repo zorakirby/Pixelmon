@@ -15,7 +15,7 @@ public class ItemBerryRawst extends ItemHeld {
 
 	public boolean effectEntity(EntityPixelmon helper) {
 		if (helper.removeStatus(StatusType.Burn)) {
-			ChatHandler.sendChat(helper.getOwner(), helper.getName() + " just consumed a Rawst Berry and was healed of it's burn!");
+			ChatHandler.sendChat(helper.getOwner(), helper.getNickname() + " just consumed a Rawst Berry and was healed of it's burn!");
 			return true;
 		}
 		return false;
@@ -24,7 +24,7 @@ public class ItemBerryRawst extends ItemHeld {
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
 		if (userPokemon.removeStatus(StatusType.Burn)) {
-			ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getName() + " was healed of it's burn!");
+			ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getNickname() + " was healed of it's burn!");
 		}
 	}
 

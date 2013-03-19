@@ -16,19 +16,19 @@ public class ApplyPerish extends StatusApplierBase {
 		if (checkChance()) {
 			for (StatusBase a : target.status)
 				if (a.type == StatusType.Perish) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has already heard the song!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has already heard the song!");
 					return;
 				}
 			for (StatusBase b : user.status)
 				if (b.type == StatusType.Perish) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getOwner() + " has already heard the song!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " has already heard the song!");
 					return;
 				}
 
 			user.status.add(new Perish());
-			ChatHandler.sendBattleMessage(user.getOwner(), user.getName() + " heard the Perish Song!");
+			ChatHandler.sendBattleMessage(user.getOwner(), user.getNickname() + " heard the Perish Song!");
 			target.status.add(new Perish());
-			ChatHandler.sendBattleMessage(target.getOwner(), target.getName() + " heard the Perish Song!");
+			ChatHandler.sendBattleMessage(target.getOwner(), target.getNickname() + " heard the Perish Song!");
 		}
 
 	}

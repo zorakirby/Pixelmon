@@ -15,7 +15,6 @@ public class ItemBlock extends PixelmonItem {
 	public ItemBlock(int par1, Block block, String textureName, String name) {
 		super(par1, "blocks/" + textureName, name);
 		this.block = block;
-		setCreativeTab(CreativeTabs.tabMisc);
 		setCreativeTab(CreativeTabs.tabDecorations);
 	}
 

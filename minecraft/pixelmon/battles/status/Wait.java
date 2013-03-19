@@ -19,7 +19,7 @@ public class Wait extends StatusBase {
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is recharging!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is recharging!");
 		return false;
 	}
 

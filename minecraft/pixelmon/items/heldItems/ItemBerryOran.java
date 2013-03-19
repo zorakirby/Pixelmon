@@ -15,7 +15,7 @@ public class ItemBerryOran extends ItemHeld {
 	public boolean effectEntity(EntityPixelmon helper) {
 		if (helper.getHealth() < (int) ((float) helper.getMaxHealth() / .3f)) {
 			helper.setEntityHealth(helper.getHealth() + 10);
-			ChatHandler.sendChat(helper.getOwner(), helper.getName() + " just consumed an Oran Berry and gained 10 health!");
+			ChatHandler.sendChat(helper.getOwner(), helper.getNickname() + " just consumed an Oran Berry and gained 10 health!");
 			return true;
 		}
 		return false;
@@ -27,7 +27,7 @@ public class ItemBerryOran extends ItemHeld {
 			userPokemon.setEntityHealth(userPokemon.stats.HP);
 		else
 			userPokemon.setEntityHealth(userPokemon.getHealth() + 10);
-		ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getName() + " gained 10 health!");
+		ChatHandler.sendChat(userPokemon.getOwner(), userPokemon.getNickname() + " gained 10 health!");
 	}
 
 }

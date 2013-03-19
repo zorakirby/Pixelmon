@@ -25,10 +25,10 @@ public class Curse extends SpecialAttackBase {
 			for (StatusBase e : target.status) {
 
 				if (e.type == StatusType.Cursed) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " is already cursed!");
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already cursed!");
 				}
 			}
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " cut its own HP and laid a curse on the  " + target.getName() + "!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " cut its own HP and laid a curse on the  " + target.getNickname() + "!");
 			user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 2));
 			target.status.add(new Cursed());
 		} else {

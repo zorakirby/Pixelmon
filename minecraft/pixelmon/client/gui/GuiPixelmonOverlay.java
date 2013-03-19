@@ -40,7 +40,8 @@ public class GuiPixelmonOverlay extends Gui {
 		}
 		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null || !isVisible)
 			return;
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
+				Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -79,12 +80,19 @@ public class GuiPixelmonOverlay extends Gui {
 				i = p.order;
 				if (!isGuiMinimized) {
 					fontRenderer.drawString(displayName, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
+					fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
+					if (p.health <= 0) {
+						fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7
+								+ offset, 0xFFFFFF);
+					} else {
+						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 39 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30
+								+ fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
+					}
 					GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
 					if (p.isMale)
 						this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
 					else
 						this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 218, 5, 9);
-
 				}
 				String numString = "";
 				if (p.getNationalPokedexNumber() < 10)
@@ -104,15 +112,6 @@ public class GuiPixelmonOverlay extends Gui {
 				if (p.heldItemId != -1) {
 					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
 					drawImageQuad(var9, 18, var7 / 6 + i * 30 + 19 + offset, 6, 6, 0f, 0f, 1f, 1f);
-				}
-				if (!isGuiMinimized) {
-					fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-					if (p.health <= 0) {
-						fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-					} else {
-						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 39 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7
-								+ offset, 0xFFFFFF);
-					}
 				}
 			}
 			i++;

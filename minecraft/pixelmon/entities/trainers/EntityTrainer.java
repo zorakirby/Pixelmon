@@ -85,7 +85,7 @@ public class EntityTrainer extends EntityCreature {
 	}
 
 	public String getNickName() {
-		return dataWatcher.getWatchableObjectString(6);
+		return dataWatcher.getWatchableObjectString(26);
 	}
 
 	public void setName(String name) {

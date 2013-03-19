@@ -25,14 +25,14 @@ public class Sleep extends StatusPersist {
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " is still sleeping!");
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is still sleeping!");
 		return false;
 	}
 
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (effectTurns == 0) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " wakes up!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " wakes up!");
 			user.status.remove(this);
 		}
 		effectTurns--;

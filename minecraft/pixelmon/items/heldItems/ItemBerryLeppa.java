@@ -22,7 +22,7 @@ public class ItemBerryLeppa extends ItemHeld {
 			if (move.pp < move.ppBase - 10) {
 				move.pp += 10;
 				helper.setHeldItem(null);
-				ChatHandler.sendChat(helper.getOwner(), helper.getName() + " just consumed a Leppa Berry. " + move.baseAttack.attackName + " gained 10 pp!");
+				ChatHandler.sendChat(helper.getOwner(), helper.getNickname() + " just consumed a Leppa Berry. " + move.baseAttack.attackName + " gained 10 pp!");
 				return true;
 			}
 		}

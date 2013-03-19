@@ -24,7 +24,7 @@ public class ApplyFreeze extends StatusApplierBase {
 				return;
 			}
 			target.status.add(new Freeze());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has been frozen solid");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has been frozen solid");
 		}
 	}
 }

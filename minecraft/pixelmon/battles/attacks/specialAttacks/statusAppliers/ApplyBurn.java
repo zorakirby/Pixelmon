@@ -20,7 +20,7 @@ public class ApplyBurn extends StatusApplierBase {
 					return;
 				}
 			target.status.add(new Burn());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has been burnt!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has been burnt!");
 		}
 	}
 

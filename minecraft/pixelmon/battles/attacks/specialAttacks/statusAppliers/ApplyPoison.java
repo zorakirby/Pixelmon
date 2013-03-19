@@ -23,7 +23,7 @@ public class ApplyPoison extends StatusApplierBase {
 					return;
 				}
 			target.status.add(new Poison());
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has been poisoned!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has been poisoned!");
 		}
 	}
 

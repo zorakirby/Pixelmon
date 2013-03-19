@@ -24,7 +24,7 @@ public class LightScreen extends StatusBase {
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (user.battleVariables.get(type) == 0) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + "'s Lightscreen wears off!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + "'s Lightscreen wears off!");
 			user.status.remove(this);
 		}
 		user.battleVariables.decrement(type);

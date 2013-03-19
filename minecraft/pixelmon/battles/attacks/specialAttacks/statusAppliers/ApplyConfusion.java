@@ -23,7 +23,7 @@ public class ApplyConfusion extends StatusApplierBase {
 				}
 			target.status.add(new Confusion());
 			effectTurns = (new Random()).nextInt(4) + 1;
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getName() + " has become confused!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has become confused!");
 		}
 	}
 }
