@@ -15,10 +15,11 @@ public class ItemFossil extends PixelmonItem {
 	public String modelName;
 
 	public ItemFossil(int Id, String pokemon, String modelName) {
-		super(Id, "fossils/" + modelName.toLowerCase());
+		super(Id, "fossils/" + modelName.toLowerCase(), modelName);
 		this.setCreativeTab(PixelmonCreativeTabs.natural);
 		this.pokemon = pokemon;
 		this.modelName = modelName;
+		setUnlocalizedName(modelName);
 	}
 
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {

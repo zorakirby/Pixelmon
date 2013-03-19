@@ -8,8 +8,8 @@ import pixelmon.enums.EnumEthers;
 public class ItemEther extends PixelmonItem {
 	public EnumEthers type;
 
-	public ItemEther(int par1, EnumEthers type) {
-		super(par1, "healingitems/" + type.getTexture());
+	public ItemEther(int par1, EnumEthers type, String itemName) {
+		super(par1, "healingitems/" + type.getTexture(), itemName);
 		SetUsableInBattle(true);
 		this.type = type;
 		setMaxStackSize(16);

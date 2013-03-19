@@ -14,8 +14,8 @@ public class ItemEvolutionStone extends PixelmonItem {
 
 	private EnumEvolutionStone stoneType;
 
-	public ItemEvolutionStone(int id, EnumEvolutionStone stoneType, int i) {
-		super(id, "evolutionstones/" + stoneType.toString().toLowerCase());
+	public ItemEvolutionStone(int id, EnumEvolutionStone stoneType, String itemName) {
+		super(id, "evolutionstones/" + stoneType.toString().toLowerCase(), itemName);
 		this.stoneType = stoneType;
 		setCreativeTab(CreativeTabs.tabMisc);
 	}

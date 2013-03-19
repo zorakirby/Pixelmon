@@ -125,8 +125,8 @@ public class PixelmonItemsFossils {
 		coverFossilCoveredID = cfg.get("fossils", "PlumeFossilCovered", 21107).getInt();
 		plumeFossilCoveredID = cfg.get("fossils", "CoverFossilCovered", 21108).getInt();
 
-		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, "fossilmachine");
-		fossilCleanerItem = new ItemBlock(fossilCleanerItemID, PixelmonBlocks.fossilCleaner, "fossilcleaner");
+		fossilMachineItem = new ItemBlock(fossilMachineItemID, PixelmonBlocks.fossilMachine, "fossilmachine", "Fossil Machine");
+		fossilCleanerItem = new ItemBlock(fossilCleanerItemID, PixelmonBlocks.fossilCleaner, "fossilcleaner", "Fossil Cleaner");
 
 		helixFossil = new ItemFossil(helixFossilID, "Omanyte", "HelixFossil");
 		domeFossil = new ItemFossil(domeFossilID, "Kabuto", "DomeFossil");
@@ -138,10 +138,10 @@ public class PixelmonItemsFossils {
 		coverFossil = new ItemFossil(coverFossilID, "Tirtouga", "CoverFossil");
 		plumeFossil = new ItemFossil(plumeFossilID, "Archen", "PlumeFossil");
 
-		fossilMachineTank = new PixelmonItem(fossilMachineTankID, "blocks/fossilmachinetank").setCreativeTab(CreativeTabs.tabDecorations);
-		fossilMachineDisplay = new PixelmonItem(fossilMachineDisplayID, "blocks/fossilmachinedisplay").setCreativeTab(CreativeTabs.tabDecorations);
-		fossilMachineTop = new PixelmonItem(fossilMachineTopID, "blocks/fossilmachinetop").setCreativeTab(CreativeTabs.tabDecorations);
-		fossilMachineBase = new PixelmonItem(fossilMachineBaseID, "blocks/fossilmachinebase").setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineTank = new PixelmonItem(fossilMachineTankID, "blocks/fossilmachinetank", "Fossil Machine Tank").setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineDisplay = new PixelmonItem(fossilMachineDisplayID, "blocks/fossilmachinedisplay", "Fossil Machine Display").setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineTop = new PixelmonItem(fossilMachineTopID, "blocks/fossilmachinetop", "Fossil Machine Top").setCreativeTab(CreativeTabs.tabDecorations);
+		fossilMachineBase = new PixelmonItem(fossilMachineBaseID, "blocks/fossilmachinebase", "Fossil Machine Base").setCreativeTab(CreativeTabs.tabDecorations);
 
 		helixFossilCovered = new ItemCoveredFossil(helixFossilCoveredID, (ItemFossil) helixFossil).setCreativeTab(PixelmonCreativeTabs.natural);
 		domeFossilCovered = new ItemCoveredFossil(domeFossilCoveredID, (ItemFossil) domeFossil).setCreativeTab(PixelmonCreativeTabs.natural);

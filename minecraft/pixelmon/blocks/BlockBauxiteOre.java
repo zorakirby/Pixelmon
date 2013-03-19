@@ -12,6 +12,7 @@ public class BlockBauxiteOre extends Block {
 
 	public BlockBauxiteOre(int par1, Material par2Material) {
 		super(par1, par2Material);
+		setUnlocalizedName("Bauxite Ore");
 	}
 
 	Icon icon;

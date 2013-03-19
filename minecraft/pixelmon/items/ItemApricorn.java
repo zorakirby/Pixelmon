@@ -13,7 +13,7 @@ public class ItemApricorn extends PixelmonItem {
 	public EnumApricorns apricorn;
 
 	public ItemApricorn(int id, EnumApricorns apricorn) {
-		super(id, "apricorns/" + apricorn.toString().toLowerCase() + "apricorn");
+		super(id, "apricorns/" + apricorn.toString().toLowerCase() + "apricorn", apricorn.toString() + " Apricorn");
 
 		this.apricorn = apricorn;
 		SetUsableInBattle(false);

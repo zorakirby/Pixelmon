@@ -12,7 +12,7 @@ public class ItemTM extends PixelmonItem {
 	private EnumType type;
 
 	public ItemTM(int id, String attackName, int tmIndex, EnumType moveType, boolean isHM) {
-		super(id, "tms/tm" + moveType.toString().toLowerCase());
+		super(id, "tms/tm" + moveType.toString().toLowerCase(), getItemName(tmIndex, attackName));
 		this.tmIndex = tmIndex;
 		this.isHM = isHM;
 		this.attackName = attackName;
@@ -22,13 +22,11 @@ public class ItemTM extends PixelmonItem {
 		setCreativeTab(PixelmonCreativeTabs.tms);
 	}
 
-	public String getItemName() {
+	public static String getItemName(int tmIndex, String attackName) {
 		return "TM" + tmIndex + ": " + attackName;
 	}
 
-	@Override
-	public String getItemDisplayName(ItemStack par1ItemStack) {
-		return getItemName();
+	public String getItemName() {
+		return getItemName(tmIndex, attackName);
 	}
-
 }

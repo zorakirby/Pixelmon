@@ -102,17 +102,17 @@ public class PixelmonItemsHeld {
 
 		luckyEgg = new ItemLuckyEgg(luckyEggID);
 		expShare = new ItemExpShare(expShareID);
-		choiceBand = new ChoiceItem(choiceBandID, EnumChoiceItems.ChoiceBand);
-		choiceScarf = new ChoiceItem(choiceScarfID, EnumChoiceItems.ChoiceScarf);
-		choiceSpectacles = new ChoiceItem(choiceSpectaclesID, EnumChoiceItems.ChoiceSpecs);
+		choiceBand = new ChoiceItem(choiceBandID, EnumChoiceItems.ChoiceBand, "Choice Band");
+		choiceScarf = new ChoiceItem(choiceScarfID, EnumChoiceItems.ChoiceScarf, "Choice Scarf");
+		choiceSpectacles = new ChoiceItem(choiceSpectaclesID, EnumChoiceItems.ChoiceSpecs, "Choice Specs");
 
-		machoBrace = new EVAdjusting(machoBraceID, EnumEvAdjustingItems.MachoBrace);
-		powerWeight = new EVAdjusting(powerWeightID, EnumEvAdjustingItems.PowerWeight);
-		powerBracer = new EVAdjusting(powerBracerID, EnumEvAdjustingItems.PowerBracer);
-		powerBelt = new EVAdjusting(powerBeltID, EnumEvAdjustingItems.PowerBelt);
-		powerLens = new EVAdjusting(powerLensID, EnumEvAdjustingItems.PowerLens);
-		powerBand = new EVAdjusting(powerBandID, EnumEvAdjustingItems.PowerBand);
-		powerAnklet = new EVAdjusting(powerAnkletID, EnumEvAdjustingItems.PowerAnklet);
+		machoBrace = new EVAdjusting(machoBraceID, EnumEvAdjustingItems.MachoBrace, "Macho Brace");
+		powerWeight = new EVAdjusting(powerWeightID, EnumEvAdjustingItems.PowerWeight, "Power Weight");
+		powerBracer = new EVAdjusting(powerBracerID, EnumEvAdjustingItems.PowerBracer, "Power Bracer");
+		powerBelt = new EVAdjusting(powerBeltID, EnumEvAdjustingItems.PowerBelt, "Power Belt");
+		powerLens = new EVAdjusting(powerLensID, EnumEvAdjustingItems.PowerLens, "Power Lens");
+		powerBand = new EVAdjusting(powerBandID, EnumEvAdjustingItems.PowerBand, "Power Band");
+		powerAnklet = new EVAdjusting(powerAnkletID, EnumEvAdjustingItems.PowerAnklet, "Power Anklet");
 
 		berryOran = new ItemBerryOran(berryOranID);
 		berryLeppa = new ItemBerryLeppa(berryLeppaID);

@@ -12,8 +12,8 @@ import pixelmon.blocks.BlockPC;
 public class ItemBlock extends PixelmonItem {
 	Block block;
 
-	public ItemBlock(int par1, Block block, String textureName) {
-		super(par1, "blocks/" + textureName);
+	public ItemBlock(int par1, Block block, String textureName, String name) {
+		super(par1, "blocks/" + textureName, name);
 		this.block = block;
 		setCreativeTab(CreativeTabs.tabMisc);
 		setCreativeTab(CreativeTabs.tabDecorations);

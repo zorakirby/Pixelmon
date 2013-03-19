@@ -11,6 +11,7 @@ public class PixelmonItemHoe extends ItemHoe {
 	public PixelmonItemHoe(int par1, EnumToolMaterial par2EnumToolMaterial, String textureName) {
 		super(par1, par2EnumToolMaterial);
 		this.textureName = textureName;
+		setUnlocalizedName("Aluminium Hoe");
 	}
 
 	String textureName;

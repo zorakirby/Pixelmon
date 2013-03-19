@@ -17,7 +17,7 @@ public class ItemPokeBall extends PixelmonItem {
 	public static HashMap<EntityPlayer, Integer> playerTimers;
 
 	public ItemPokeBall(int i, EnumPokeballs type) {
-		super(i, "pokeballs/" + type.toString().toLowerCase());
+		super(i, "pokeballs/" + type.toString().toLowerCase(), type.toString().substring(0, type.toString().indexOf("Ball")) + " Ball");
 		SetUsableInBattle(true);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);

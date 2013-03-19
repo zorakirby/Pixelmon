@@ -20,7 +20,7 @@ public class BlockEvolutionStoneOre extends Block {
 	private EnumEvolutionStone type;
 	private Icon icon;
 
-	public BlockEvolutionStoneOre(int id, EnumEvolutionStone type, float hardness) {
+	public BlockEvolutionStoneOre(int id, EnumEvolutionStone type, float hardness, String itemName) {
 		super(id, Material.rock);
 		this.type = type;
 		setHardness(hardness);
@@ -28,6 +28,7 @@ public class BlockEvolutionStoneOre extends Block {
 		if (id == PixelmonBlocks.waterStoneOreId)
 			setLightValue(0.5f);
 		setCreativeTab(PixelmonCreativeTabs.natural);
+		setUnlocalizedName(itemName);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ public class PixelmonItemAxe extends ItemAxe {
 	public PixelmonItemAxe(int par1, EnumToolMaterial par2EnumToolMaterial, String textureName) {
 		super(par1, par2EnumToolMaterial);
 		this.textureName = textureName;
+		setUnlocalizedName("Aluminium Axe");
 	}
 
 	String textureName;

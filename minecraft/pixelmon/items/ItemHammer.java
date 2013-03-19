@@ -18,10 +18,11 @@ public class ItemHammer extends ItemTool {
 
 	String iconString;
 
-	public ItemHammer(int par1, EnumToolMaterial par3EnumToolMaterial, String iconString) {
+	public ItemHammer(int par1, EnumToolMaterial par3EnumToolMaterial, String iconString, String itemName) {
 		super(par1, 2, par3EnumToolMaterial, new Block[] { PixelmonBlocks.anvil });
 		setCreativeTab(CreativeTabs.tabTools);
 		this.iconString = iconString;
+		setUnlocalizedName(itemName);
 	}
 
 	@Override

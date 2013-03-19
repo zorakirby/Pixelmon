@@ -11,6 +11,7 @@ public class PixelmonItemSpade extends ItemSpade {
 	public PixelmonItemSpade(int par1, EnumToolMaterial par2EnumToolMaterial, String textureName) {
 		super(par1, par2EnumToolMaterial);
 		this.textureName = textureName;
+		setUnlocalizedName("Aluminium Spade");
 	}
 
 	String textureName;

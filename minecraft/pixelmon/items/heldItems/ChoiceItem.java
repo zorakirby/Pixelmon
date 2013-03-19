@@ -8,8 +8,8 @@ public class ChoiceItem extends ItemHeld {
 
 	private EnumChoiceItems choiceItemType;
 
-	public ChoiceItem(int id, EnumChoiceItems choiceItemType) {
-		super(id, EnumHeldItems.choiceItem, choiceItemType.toString().toLowerCase());
+	public ChoiceItem(int id, EnumChoiceItems choiceItemType, String itemName) {
+		super(id, EnumHeldItems.choiceItem, choiceItemType.toString().toLowerCase(), itemName);
 		this.choiceItemType = choiceItemType;
 	}
 

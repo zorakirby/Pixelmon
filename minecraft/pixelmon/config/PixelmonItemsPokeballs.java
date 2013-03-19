@@ -329,8 +329,8 @@ public class PixelmonItemsPokeballs {
 		duskBallDisc = new ItemPokeballDisc(duskBallDiscID, EnumPokeballs.DuskBall);
 		premierBallDisc = new ItemPokeballDisc(premierBallDiscID, EnumPokeballs.PremierBall);
 
-		ironBase = new PixelmonItem(ironBaseID, "pokeballs/ironbase").setCreativeTab(PixelmonCreativeTabs.pokeball);
-		ironDisc = new PixelmonItem(ironDiscID, "pokeballs/irondisc").setCreativeTab(PixelmonCreativeTabs.pokeball);
+		ironBase = new PixelmonItem(ironBaseID, "pokeballs/ironbase", "Iron Base").setCreativeTab(PixelmonCreativeTabs.pokeball);
+		ironDisc = new PixelmonItem(ironDiscID, "pokeballs/irondisc", "Iron Disc").setCreativeTab(PixelmonCreativeTabs.pokeball);
 	}
 
 	public static void addNames() {

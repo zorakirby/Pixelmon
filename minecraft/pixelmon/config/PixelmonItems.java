@@ -268,57 +268,57 @@ public class PixelmonItems {
 		bootsAluminiumID = cfg.get("item", "Aluminium Boots", 10131).getInt();
 
 		pokeDex = new ItemPokedex(pokeDexID).setMaxStackSize(1);
-		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rareCandy").setCreativeTab(PixelmonCreativeTabs.restoration);
-		potion = new ItemPotion(potionID, EnumPotions.Potion);
-		superPotion = new ItemPotion(superPotionID, EnumPotions.SuperPotion);
-		hyperPotion = new ItemPotion(hyperPotionID, EnumPotions.HyperPotion);
-		maxPotion = new ItemPotion(maxPotionID, EnumPotions.MaxPotion);
-		ether = new ItemEther(etherID, EnumEthers.Ether);
-		maxEther = new ItemEther(maxEtherID, EnumEthers.MaxEther);
-		elixir = new ItemEther(elixirID, EnumEthers.Elixir);
-		maxElixir = new ItemEther(maxElixirID, EnumEthers.MaxElixir);
-		fullRestore = new ItemStatusAilmentHealer(fullRestoreID, EnumStatusAilmentHealers.FullRestore);
-		antidote = new ItemStatusAilmentHealer(antidoteID, EnumStatusAilmentHealers.Antidote);
-		parlyzHeal = new ItemStatusAilmentHealer(parlyzHealID, EnumStatusAilmentHealers.ParlyzHeal);
-		awakening = new ItemStatusAilmentHealer(awakeningID, EnumStatusAilmentHealers.Awakening);
-		burnHeal = new ItemStatusAilmentHealer(burnHealID, EnumStatusAilmentHealers.BurnHeal);
-		iceHeal = new ItemStatusAilmentHealer(iceHealID, EnumStatusAilmentHealers.IceHeal);
-		fullHeal = new ItemStatusAilmentHealer(fullHealID, EnumStatusAilmentHealers.FullHeal);
-		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.Firestone, 3).setCreativeTab(PixelmonCreativeTabs.natural);
-		waterStone = new ItemEvolutionStone(waterStoneID, EnumEvolutionStone.Waterstone, 1).setCreativeTab(PixelmonCreativeTabs.natural);
-		moonStone = new ItemEvolutionStone(moonStoneID, EnumEvolutionStone.Moonstone, 4).setCreativeTab(PixelmonCreativeTabs.natural);
-		thunderStone = new ItemEvolutionStone(thunderStoneID, EnumEvolutionStone.Thunderstone, 0).setCreativeTab(PixelmonCreativeTabs.natural);
-		leafStone = new ItemEvolutionStone(leafStoneID, EnumEvolutionStone.Leafstone, 2).setCreativeTab(PixelmonCreativeTabs.natural);
-		pcItem = new ItemBlock(pcItemID, PixelmonBlocks.pc, "pc");
-		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, "healer");
-		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, "anvil");
-		tradeMachineItem = new ItemBlock(tradeMachineItemID, PixelmonBlocks.tradeMachine, "trademachine");
+		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rareCandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
+		potion = new ItemPotion(potionID, EnumPotions.Potion, "Potion");
+		superPotion = new ItemPotion(superPotionID, EnumPotions.SuperPotion, "Super Potion");
+		hyperPotion = new ItemPotion(hyperPotionID, EnumPotions.HyperPotion, "Hyper Potion");
+		maxPotion = new ItemPotion(maxPotionID, EnumPotions.MaxPotion, "Max Potion");
+		ether = new ItemEther(etherID, EnumEthers.Ether, "Ether");
+		maxEther = new ItemEther(maxEtherID, EnumEthers.MaxEther, "Max Ether");
+		elixir = new ItemEther(elixirID, EnumEthers.Elixir, "Elixir");
+		maxElixir = new ItemEther(maxElixirID, EnumEthers.MaxElixir, "Max Elixir");
+		fullRestore = new ItemStatusAilmentHealer(fullRestoreID, EnumStatusAilmentHealers.FullRestore, "Full Restore");
+		antidote = new ItemStatusAilmentHealer(antidoteID, EnumStatusAilmentHealers.Antidote, "Antidote");
+		parlyzHeal = new ItemStatusAilmentHealer(parlyzHealID, EnumStatusAilmentHealers.ParlyzHeal, "Paralyze Heal");
+		awakening = new ItemStatusAilmentHealer(awakeningID, EnumStatusAilmentHealers.Awakening, "Awakening");
+		burnHeal = new ItemStatusAilmentHealer(burnHealID, EnumStatusAilmentHealers.BurnHeal, "Burn Heal");
+		iceHeal = new ItemStatusAilmentHealer(iceHealID, EnumStatusAilmentHealers.IceHeal, "Ice Heal");
+		fullHeal = new ItemStatusAilmentHealer(fullHealID, EnumStatusAilmentHealers.FullHeal, "Full Heal");
+		fireStone = new ItemEvolutionStone(fireStoneID, EnumEvolutionStone.Firestone, "Fire Stone").setCreativeTab(PixelmonCreativeTabs.natural);
+		waterStone = new ItemEvolutionStone(waterStoneID, EnumEvolutionStone.Waterstone, "Water Stone").setCreativeTab(PixelmonCreativeTabs.natural);
+		moonStone = new ItemEvolutionStone(moonStoneID, EnumEvolutionStone.Moonstone, "Moon Stone").setCreativeTab(PixelmonCreativeTabs.natural);
+		thunderStone = new ItemEvolutionStone(thunderStoneID, EnumEvolutionStone.Thunderstone, "Thunder Stone").setCreativeTab(PixelmonCreativeTabs.natural);
+		leafStone = new ItemEvolutionStone(leafStoneID, EnumEvolutionStone.Leafstone, "Leaf Stone").setCreativeTab(PixelmonCreativeTabs.natural);
+		pcItem = new ItemBlock(pcItemID, PixelmonBlocks.pc, "pc", "PC");
+		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, "healer", "Healer");
+		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, "anvil", "Anvil");
+		tradeMachineItem = new ItemBlock(tradeMachineItemID, PixelmonBlocks.tradeMachine, "trademachine", "Trade Machine");
 
-		thunderStoneShard = new PixelmonItem(thunderStoneShardID, "evolutionstones/thunderstoneshard").setCreativeTab(PixelmonCreativeTabs.natural);
-		leafStoneShard = new PixelmonItem(leafStoneShardID, "evolutionstones/leafstoneshard").setCreativeTab(PixelmonCreativeTabs.natural);
-		waterStoneShard = new PixelmonItem(waterStoneShardID, "evolutionstones/waterstoneshard").setCreativeTab(PixelmonCreativeTabs.natural);
-		fireStoneShard = new PixelmonItem(fireStoneShardID, "evolutionstones/firestoneshard").setCreativeTab(PixelmonCreativeTabs.natural);
+		thunderStoneShard = new PixelmonItem(thunderStoneShardID, "evolutionstones/thunderstoneshard", "Thunder Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
+		leafStoneShard = new PixelmonItem(leafStoneShardID, "evolutionstones/leafstoneshard", "Leaf Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
+		waterStoneShard = new PixelmonItem(waterStoneShardID, "evolutionstones/waterstoneshard", "Water Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
+		fireStoneShard = new PixelmonItem(fireStoneShardID, "evolutionstones/firestoneshard", "Fire Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
 
-		aluminiumIngot = new PixelmonItem(aluminiumIngotID, "aluminiumingot").setCreativeTab(CreativeTabs.tabMaterials);
-		aluminiumPlate = new PixelmonItem(aluminiumPlateID, "aluminiumplate").setCreativeTab(CreativeTabs.tabMaterials);
+		aluminiumIngot = new PixelmonItem(aluminiumIngotID, "aluminiumingot", "Aluminium Ingot").setCreativeTab(CreativeTabs.tabMaterials);
+		aluminiumPlate = new PixelmonItem(aluminiumPlateID, "aluminiumplate", "Aluminium Plate").setCreativeTab(CreativeTabs.tabMaterials);
 
-		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, "hammerwood");
-		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, "hammerstone");
-		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, "hammeriron");
-		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, "hammergold");
-		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, "hammerdiamond");
-		hammerAluminium = new ItemHammer(hammerAluminiumID, Pixelmon.ALUMINIUM, "hammeraluminium");
+		hammerWood = new ItemHammer(hammerWoodID, EnumToolMaterial.WOOD, "hammerwood", "Wood Hammer");
+		hammerStone = new ItemHammer(hammerStoneID, EnumToolMaterial.STONE, "hammerstone", "Stone Hammer");
+		hammerIron = new ItemHammer(hammerIronID, EnumToolMaterial.IRON, "hammeriron", "Iron Hammer");
+		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, "hammergold", "Gold Hammer");
+		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, "hammerdiamond", "Diamond Hammer");
+		hammerAluminium = new ItemHammer(hammerAluminiumID, Pixelmon.ALUMINIUM, "hammeraluminium", "Aluminium Hammer");
 
-		swordAluminium = new PixelmonItemSword(swordAluminiumID, Pixelmon.ALUMINIUM, "aluminiumsword");
-		axeAluminium = new PixelmonItemAxe(axeAluminiumID, Pixelmon.ALUMINIUM, "aluminiumaxe");
-		spadeAluminium = new PixelmonItemSpade(shovelAluminiumID, Pixelmon.ALUMINIUM, "aluminiumspade");
-		pickaxeAluminium = new PixelmonItemPickAxe(pickaxeAluminiumID, Pixelmon.ALUMINIUM, "aluminiumpickaxe");
-		hoeAluminium = new PixelmonItemHoe(hoeAluminiumID, Pixelmon.ALUMINIUM, "aluminiumhoe");
+		swordAluminium = new PixelmonItemSword(swordAluminiumID, Pixelmon.ALUMINIUM, "pixelmon:aluminiumsword");
+		axeAluminium = new PixelmonItemAxe(axeAluminiumID, Pixelmon.ALUMINIUM, "pixelmon:aluminiumaxe");
+		spadeAluminium = new PixelmonItemSpade(shovelAluminiumID, Pixelmon.ALUMINIUM, "pixelmon:aluminiumspade");
+		pickaxeAluminium = new PixelmonItemPickAxe(pickaxeAluminiumID, Pixelmon.ALUMINIUM, "pixelmon:aluminiumpickaxe");
+		hoeAluminium = new PixelmonItemHoe(hoeAluminiumID, Pixelmon.ALUMINIUM, "pixelmon:aluminiumhoe");
 
-		helmetAluminium = new ItemPixelmonArmor(helmetAluminiumID, 14, Pixelmon.ALUMINIUMARMOR, 0, 0, "aluminiumhelmet");
-		torsoAluminium = new ItemPixelmonArmor(torsoAluminiumID, 8, Pixelmon.ALUMINIUMARMOR, 0, 1, "aluminiumtorso");
-		leggingsAluminium = new ItemPixelmonArmor(leggingsAluminiumID, 9, Pixelmon.ALUMINIUMARMOR, 0, 2, "aluminiumleggings");
-		bootsAluminium = new ItemPixelmonArmor(bootsAluminiumID, 7, Pixelmon.ALUMINIUMARMOR, 0, 3, "aluminiumboots");
+		helmetAluminium = new ItemPixelmonArmor(helmetAluminiumID, 14, Pixelmon.ALUMINIUMARMOR, 0, 0, "pixelmon:aluminiumhelmet", "Aluminium Helmet");
+		torsoAluminium = new ItemPixelmonArmor(torsoAluminiumID, 8, Pixelmon.ALUMINIUMARMOR, 0, 1, "pixelmon:aluminiumtorso", "Aluminium Torso");
+		leggingsAluminium = new ItemPixelmonArmor(leggingsAluminiumID, 9, Pixelmon.ALUMINIUMARMOR, 0, 2, "pixelmon:aluminiumleggings", "Aluminium Leggings");
+		bootsAluminium = new ItemPixelmonArmor(bootsAluminiumID, 7, Pixelmon.ALUMINIUMARMOR, 0, 3, "pixelmon:aluminiumboots", "Aluminium Boots");
 
 	}
 

@@ -9,8 +9,8 @@ import pixelmon.storage.PixelmonStorage;
 public class ItemPotion extends PixelmonItem {
 	public EnumPotions type;
 
-	public ItemPotion(int par1, EnumPotions type) {
-		super(par1, "healingitems/" + type.getTexture());
+	public ItemPotion(int par1, EnumPotions type, String itemName) {
+		super(par1, "healingitems/" + type.getTexture(), itemName);
 		SetUsableInBattle(true);
 		this.type = type;
 		setMaxStackSize(16);

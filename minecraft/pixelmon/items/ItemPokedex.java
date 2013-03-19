@@ -20,6 +20,7 @@ public class ItemPokedex extends Item {
 	public ItemPokedex(int par1) {
 		super(par1);
 		setCreativeTab(CreativeTabs.tabTools);
+		setUnlocalizedName("Pokedex");
 	}
 
 	@Override

@@ -12,12 +12,13 @@ import pixelmon.config.PixelmonItems;
 
 public class ItemPixelmonArmor extends ItemArmor implements IArmorTextureProvider{
 
-    public ItemPixelmonArmor(int i, int index, EnumArmorMaterial enumArmorMaterial, int k, int l, String textureName)
+    public ItemPixelmonArmor(int i, int index, EnumArmorMaterial enumArmorMaterial, int k, int l, String textureName, String itemName)
     {
         super(i, enumArmorMaterial, k, l);
         this.setMaxDamage(enumArmorMaterial.getDurability(l));
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.textureName = textureName;
+        setUnlocalizedName(itemName);
     }
 
 	String textureName;

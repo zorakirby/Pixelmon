@@ -7,7 +7,9 @@ public class ItemBadge extends PixelmonItem {
 	public EnumBadges badge;
 
 	public ItemBadge(int id, EnumBadges badges) {
-		super(id, "badges/" + badges.toString().toLowerCase());
+		super(id, "badges/" + badges.toString().toLowerCase(), badges.toString().substring(0, badges.toString().indexOf("badge")) + " Badge");
+		String badgeName = badges.toString();
+		badgeName = badgeName.substring(0, badgeName.indexOf("badge"));
 		this.badge = badges;
 		SetUsableInBattle(false);
 		maxStackSize = 1;

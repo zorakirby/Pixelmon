@@ -12,6 +12,7 @@ public class PixelmonItemSword extends ItemSword {
 	public PixelmonItemSword(int par1, EnumToolMaterial par2EnumToolMaterial, String textureName) {
 		super(par1, par2EnumToolMaterial);
 		this.textureName = textureName;
+		setUnlocalizedName("Aluminium Sword");
 	}
 	
 	@Override

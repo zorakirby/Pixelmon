@@ -8,7 +8,7 @@ import pixelmon.items.ItemHeld;
 public class ItemBerryOran extends ItemHeld {
 
 	public ItemBerryOran(int id) {
-		super(id, EnumHeldItems.oran, "oranberry");
+		super(id, EnumHeldItems.oran, "oranberry", "Oran Berry");
 		SetUsableInBattle(true);
 	}
 

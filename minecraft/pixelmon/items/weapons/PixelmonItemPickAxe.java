@@ -11,6 +11,7 @@ public class PixelmonItemPickAxe extends ItemPickaxe {
 	public PixelmonItemPickAxe(int par1, EnumToolMaterial par2EnumToolMaterial, String textureName) {
 		super(par1, par2EnumToolMaterial);
 		this.textureName = textureName;
+		setUnlocalizedName("Aluminium PickAxe");
 	}
 
 	String textureName;

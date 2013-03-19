@@ -42,7 +42,7 @@ public enum EnumPokeballs {
 
 	private double ballBonus;
 	private int index;
-	private String filenamePrefix;
+	String filenamePrefix;
 	private int iconIndex;
 	public int lidIconIndex;
 	public int discIconIndex;

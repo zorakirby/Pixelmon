@@ -15,10 +15,11 @@ public class PixelmonItem extends Item {
 	protected boolean isEquippable = false;
 	String iconString;
 
-	public PixelmonItem(int par1, String string) {
+	public PixelmonItem(int par1, String string, String name) {
 		super(par1);
 		setCreativeTab(CreativeTabs.tabMisc);
 		this.iconString = string;
+		setUnlocalizedName(name);
 	}
 
 	@Override

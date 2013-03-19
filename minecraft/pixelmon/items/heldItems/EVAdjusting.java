@@ -8,8 +8,8 @@ public class EVAdjusting extends ItemHeld {
 
 	public EnumEvAdjustingItems type;
 
-	public EVAdjusting(int id, EnumEvAdjustingItems type) {
-		super(id, EnumHeldItems.evAdjusting, type.toString().toLowerCase());
+	public EVAdjusting(int id, EnumEvAdjustingItems type, String itemName) {
+		super(id, EnumHeldItems.evAdjusting, type.toString().toLowerCase(), itemName);
 		this.type = type;
 	}
 }

@@ -18,10 +18,11 @@ public class BlockFossil extends Block {
 		super(id, Material.rock);
 		setStepSound(Block.soundStoneFootstep);
 		setCreativeTab(PixelmonCreativeTabs.natural);
+		setUnlocalizedName("Fossil Block");
 	}
 
 	Icon icon;
-
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void func_94332_a(IconRegister par1IconRegister) {

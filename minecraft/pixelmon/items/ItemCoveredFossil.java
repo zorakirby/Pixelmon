@@ -7,7 +7,7 @@ public class ItemCoveredFossil extends PixelmonItem {
 	public ItemFossil cleanedFossil;
 
 	public ItemCoveredFossil(int par1, ItemFossil cleanedFossil) {
-		super(par1, "fossils/covered" + cleanedFossil.modelName.toLowerCase());
+		super(par1, "fossils/covered" + cleanedFossil.modelName.toLowerCase(), "Covered Fossil");
 		this.cleanedFossil = cleanedFossil;
 	}
 
