@@ -40,8 +40,8 @@ public class GuiPixelmonOverlay extends Gui {
 		}
 		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null || !isVisible)
 			return;
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		Minecraft mc = Minecraft.getMinecraft();
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -54,13 +54,8 @@ public class GuiPixelmonOverlay extends Gui {
 			GL11.glEnable(GL11.GL_LIGHTING);
 		}
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
-		int var4;
-		if (isGuiMinimized)
-			var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlaySimple.png");
-		else
-			var4 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
 		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
+		bindOverlayTexture();
 		if (isGuiMinimized)
 			this.drawTexturedModalRect(0, var7 / 6, 0, 0, 60, 182);
 		else
@@ -80,19 +75,12 @@ public class GuiPixelmonOverlay extends Gui {
 				i = p.order;
 				if (!isGuiMinimized) {
 					fontRenderer.drawString(displayName, 32, var7 / 6 + i * 30 + 6, 0xFFFFFF);
-					fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-					if (p.health <= 0) {
-						fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7
-								+ offset, 0xFFFFFF);
-					} else {
-						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 39 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30
-								+ fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
-					}
-					GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
+					bindOverlayTexture();
 					if (p.isMale)
 						this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 208, 5, 9);
 					else
 						this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + 35, var7 / 6 + i * 30 + 6 + offset, 33, 218, 5, 9);
+
 				}
 				String numString = "";
 				if (p.getNationalPokedexNumber() < 10)
@@ -101,23 +89,31 @@ public class GuiPixelmonOverlay extends Gui {
 					numString = "0" + p.getNationalPokedexNumber();
 				else
 					numString = "" + p.getNationalPokedexNumber();
-				int var9;
 				if (p.outside)
 					drawTexturedModalRect(2, var7 / 6 + i * 30 + 3 + offset, 75, 209, 28, 28);
 				if (p.isShiny)
-					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+					mc.renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
 				else
-					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-				drawImageQuad(var9, 3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
+					Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+				drawImageQuad(3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItemId != -1) {
-					var9 = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/helditem.png");
-					drawImageQuad(var9, 18, var7 / 6 + i * 30 + 19 + offset, 6, 6, 0f, 0f, 1f, 1f);
+					Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/image/helditem.png");
+					drawImageQuad(18, var7 / 6 + i * 30 + 19 + offset, 6, 6, 0f, 0f, 1f, 1f);
+				}
+				if (!isGuiMinimized) {
+					fontRenderer.drawString("Lvl " + p.lvl, 32, var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
+					if (p.health <= 0) {
+						fontRenderer.drawString("Fainted", 33 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7 + offset, 0xFFFFFF);
+					} else {
+						fontRenderer.drawString("HP " + p.health + "/" + p.hp, 39 + fontRenderer.getStringWidth("Lvl " + p.lvl), var7 / 6 + i * 30 + fontRenderer.FONT_HEIGHT + 7
+								+ offset, 0xFFFFFF);
+					}
 				}
 			}
 			i++;
 		}
 
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
+		bindOverlayTexture();
 		this.drawTexturedModalRect(2, var7 / 6 + 4 + selectedPixelmon * 30, 45, 209, 28, 28);
 		fontRenderer.setUnicodeFlag(false);
 
@@ -127,6 +123,13 @@ public class GuiPixelmonOverlay extends Gui {
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 
+	}
+
+	private void bindOverlayTexture() {
+		if (isGuiMinimized)
+			Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/gui/pixelmonOverlaySimple.png");
+		else
+			Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/gui/pixelmonOverlay.png");
 	}
 
 	public boolean checkEntitysInWorld(World world) {
@@ -177,10 +180,8 @@ public class GuiPixelmonOverlay extends Gui {
 		}
 	}
 
-	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
+	private void drawImageQuad(int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureHandle);
-
 		Tessellator var9 = Tessellator.instance;
 		var9.startDrawingQuads();
 		var9.addVertexWithUV((double) (x + 0), (double) (y + h), (double) this.zLevel, (double) ((float) us), (double) ((float) ve));

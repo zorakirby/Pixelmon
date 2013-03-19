@@ -209,7 +209,7 @@ public class EntityTrainer extends EntityCreature {
 	}
 
 	public int getLvl() {
-		return dataWatcher.getWatchableObjectInt(5);
+		return dataWatcher.getWatchableObjectInt(25);
 	}
 
 	@Override

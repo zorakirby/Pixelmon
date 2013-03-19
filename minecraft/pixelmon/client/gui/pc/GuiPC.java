@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.opengl.GL11;
 
@@ -193,10 +194,8 @@ public class GuiPC extends GuiContainer {
 		return false;
 	}
 
-	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
+	private void drawImageQuad(int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureHandle);
-
 		float var7 = 0.00390625F;
 		float var8 = 0.00390625F;
 		Tessellator var9 = Tessellator.instance;
@@ -217,18 +216,16 @@ public class GuiPC extends GuiContainer {
 		RenderHelper.disableStandardItemLighting();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		int partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcPartyBox.png");
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, partyTexture);
+		
+		mc.renderEngine.func_98187_b("/pixelmon/gui/pcPartyBox.png");
 		drawTexturedModalRect(width / 2 - 91, height / 6 + 151, 0, 0, 182, 29);
 		int i = 0;
-		partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pcBox.png");
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, partyTexture);
+		mc.renderEngine.func_98187_b("/pixelmon/gui/pcBox.png");
 		drawTexturedModalRect(width / 2 - 91, height / 6, 0, 0, 182, 141);
 		drawTexturedModalRect(trashX, trashY, 0, 256 - 32, 32, 32);
-		drawImageQuad(Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/image/pokechecker.png"), checkX, checkY, 32f, 32f, 0f, 0f, 1f, 1f);
-		int image = 0;
+		mc.renderEngine.func_98187_b("/pixelmon/image/pokechecker.png");
+		drawImageQuad(checkX, checkY, 32f, 32f, 0f, 0f, 1f, 1f);
 		for (int a = 0; a < pcSlots[boxNumber].length; a++) {
-			image = 0;
 			SlotPCPC slot = pcSlots[boxNumber][a];
 			if (slot.pokemonData == null) {
 				continue;
@@ -241,16 +238,16 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
-				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
 			else
-				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-			drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+				mc.renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+			drawImageQuad(slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
-				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/helditem.png"), slot.x + 22, slot.y + 22, 8, 8, 0, 0, 1f, 1f);
+				mc.renderEngine.func_98187_b("/pixelmon/image/helditem.png");
+				drawImageQuad(slot.x + 22, slot.y + 22, 8, 8, 0, 0, 1f, 1f);
 			}
 		}
 		for (int a = 0; a < partySlots.length; a++) {
-			image = 0;
 			SlotPCParty slot = partySlots[a];
 			slot.setPokemon(ServerStorageDisplay.pokemon[a]);
 			if (slot.pokemonData == null) {
@@ -264,15 +261,15 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
-				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
 			else
-				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-			drawImageQuad(image, slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+				mc.renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+			drawImageQuad(slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
-				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/helditem.png"), slot.x + 18, slot.y + 22, 8, 8, 0, 0, 1f, 1f);
+				mc.renderEngine.func_98187_b("/pixelmon/image/helditem.png");
+				drawImageQuad(slot.x + 18, slot.y + 22, 8, 8, 0, 0, 1f, 1f);
 			}
 		}
-		image = 0;
 		if (mouseSlot.pokemonData != null) {
 			PixelmonDataPacket p = mouseSlot.pokemonData;
 			String numString = "";
@@ -283,19 +280,19 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
-				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
 			else
-				image = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-			drawImageQuad(image, mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
+				mc.renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+			drawImageQuad(mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (mouseSlot.pokemonData.heldItemId != -1) {
-				drawImageQuad(mc.renderEngine.getTexture("/pixelmon/image/pitems.png"), mouseSlot.x + 22, mouseSlot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
+				mc.renderEngine.func_98187_b("/pixelmon/image/pitems.png");
+				drawImageQuad(mouseSlot.x + 22, mouseSlot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
 			}
 			if (p.nickname == null || p.nickname.equalsIgnoreCase("")) {
 				p.nickname = p.name;
 			}
 			fontRenderer.drawString(p.nickname, mouseSlot.x + 30, mouseSlot.y + 10, 0xFFFFFF);
-			partyTexture = Minecraft.getMinecraft().renderEngine.getTexture("/pixelmon/gui/pixelmonOverlay.png");
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, partyTexture);
+			Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/gui/pixelmonOverlay.png");
 			if (p.isMale)
 				drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 208, 5, 9);
 			else
