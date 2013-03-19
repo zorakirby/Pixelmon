@@ -101,13 +101,13 @@ public class GuiPokeCheckerTabs extends GuiButton
     {
         if (this.drawButton)
         {
-            FontRenderer var4 = par1Minecraft.fontRenderer;
+            FontRenderer fontRenderer = par1Minecraft.fontRenderer;
             if(this.tabType <= 4)
-            	GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1Minecraft.renderEngine.getTexture("/pixelmon/gui/summarySummary.png"));
+            	par1Minecraft.renderEngine.func_98187_b("/pixelmon/gui/summarySummary.png");
             else if(this.tabType == 5)
-            	GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1Minecraft.renderEngine.getTexture("/pixelmon/gui/yesNo.png"));
+            	par1Minecraft.renderEngine.func_98187_b("/pixelmon/gui/yesNo.png");
             else if(this.tabType == 6)
-            	GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1Minecraft.renderEngine.getTexture("/pixelmon/gui/pokecheckerPopup.png"));
+            	par1Minecraft.renderEngine.func_98187_b("/pixelmon/gui/pokecheckerPopup.png");
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
             int var5 = this.getHoverState(this.field_82253_i);
@@ -143,7 +143,7 @@ public class GuiPokeCheckerTabs extends GuiButton
                 var6 = 16777120;
             }
 
-            this.drawCenteredString(var4, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, var6);
+            this.drawCenteredString(fontRenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, var6);
         }
     }
 

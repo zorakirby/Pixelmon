@@ -92,9 +92,9 @@ public class GuiPixelmonOverlay extends Gui {
 				if (p.outside)
 					drawTexturedModalRect(2, var7 / 6 + i * 30 + 3 + offset, 75, 209, 28, 28);
 				if (p.isShiny)
-					mc.renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
+					mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 				else
-					Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+					Minecraft.getMinecraft().renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 				drawImageQuad(3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItemId != -1) {
 					Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/image/helditem.png");
