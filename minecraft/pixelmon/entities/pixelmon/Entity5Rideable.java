@@ -179,7 +179,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				this.motionX *= (double) var3;
 				this.motionZ *= (double) var3;
 
-				this.prevLegYaw = this.legYaw;
+				this.prevLimbYaw = this.limbYaw;
 				var9 = this.posX - this.prevPosX;
 				double var12 = this.posZ - this.prevPosZ;
 				float var11 = MathHelper.sqrt_double(var9 * var9 + var12 * var12) * 4.0F;
@@ -188,8 +188,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 					var11 = 1.0F;
 				}
 
-				this.legYaw += (var11 - this.legYaw) * 0.4F;
-				this.legSwing += this.legYaw;
+				this.limbYaw += (var11 - this.limbYaw) * 0.4F;
+				this.limbSwing += this.limbYaw;
 				movementHandled = true;
 
 			}

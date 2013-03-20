@@ -1,5 +1,6 @@
 package pixelmon.client.render;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -28,13 +29,15 @@ public class RenderPokeball extends Render {
 		GL11.glTranslated(x, y, z);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(180, 1, 0, 1);
+		int tex;
 		if (pokeball.getIsCaptured()) {
-			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getCaptureTexture(), 0);
+			tex = Minecraft.getMinecraft().renderEngine.getTexture("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getCaptureTexture());
 		} else if (pokeball.flashRed) {
-			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getFlashRedTexture(), 0);
+			tex = Minecraft.getMinecraft().renderEngine.getTexture("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getFlashRedTexture());
 		} else {
-			ForgeHooksClient.bindTexture("/pixelmon/texture/pokeballs/" + pokeball.getType().getTexture(), 0);
+			tex = Minecraft.getMinecraft().renderEngine.getTexture("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getTexture());
 		}
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, tex);
 		RenderHelper.enableStandardItemLighting();
 		float factor = (float) (1.0 / 16.0);
 		GL11.glPushMatrix();

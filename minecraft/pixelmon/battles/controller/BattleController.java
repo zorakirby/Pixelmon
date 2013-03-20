@@ -4,27 +4,16 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import pixelmon.RandomHelper;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
-import pixelmon.battles.attacks.attackEffects.EffectBase;
-import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
-import pixelmon.battles.attacks.attackModifiers.PriorityAttackModifier;
-import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
-import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.heldItems.EnumHeldItems;
-import pixelmon.items.ItemHeld;
 import pixelmon.items.PixelmonItem;
-import pixelmon.storage.PixelmonStorage;
-import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.Player;
 
 public class BattleController {
@@ -35,7 +24,7 @@ public class BattleController {
 
 	private int battleTicks = 0;
 
-	public ArrayList<StatusEffectBase> battleStatusList = new ArrayList<StatusEffectBase>();
+	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
 
@@ -147,7 +136,7 @@ public class BattleController {
 		for (BattleParticipant p : participants) {
 			p.updatePokemon();
 			if (p.getIsFaintedOrDead()) {
-				String name = p.currentPokemon().getNickname().equals("") ? p.currentPokemon().getName() : p.currentPokemon().getNickname();
+				String name = p.currentPokemon().getNickname();
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player)
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
@@ -188,7 +177,7 @@ public class BattleController {
 		if (p.willTryFlee && !p.currentPokemon().isLockedInBattle) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
 		} else if (p.currentPokemon().isLockedInBattle)
-			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Cannot escape!");
+			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), " cannot escape!");
 		else if (p.isSwitching)
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
@@ -199,7 +188,7 @@ public class BattleController {
 
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {
 
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getName() + " tries to run away");
+		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getNickname() + " tries to run away");
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
 		if (B > 255)
@@ -210,13 +199,13 @@ public class BattleController {
 		if (F > 255 || new Random().nextInt(255) < F) {
 			if (!user.isLockedInBattle) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Running can escape");
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " escaped!");
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
 			} else {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Its locked in battle!");
 			}
 		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getName() + " couldn't escape!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " couldn't escape!");
 	}
 
 	public void setFlee(EntityPixelmon mypixelmon) {
@@ -280,6 +269,8 @@ public class BattleController {
 	}
 
 	boolean paused = false;
+
+	public int money;
 
 	public void pauseBattle() {
 		paused = true;

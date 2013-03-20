@@ -24,11 +24,11 @@ public class GuiPokemonFaintedChoice extends GuiContainer {
 	public void initGui() {
 		super.initGui();
 		Keyboard.enableRepeatEvents(true);
-		controlList.clear();
-		controlList.add(new GuiButton(10, width / 2 - 100, height / 2 - 20,
+		buttonList.clear();
+		buttonList.add(new GuiButton(10, width / 2 - 100, height / 2 - 20,
 				"Switch To Another Pokemon"));
 		if (!bc.isTrainerVsTrainer())
-			controlList.add(new GuiButton(10, width / 2 - 100, height / 2 + 20,
+			buttonList.add(new GuiButton(10, width / 2 - 100, height / 2 + 20,
 					"Run"));
 	}
 
@@ -56,7 +56,7 @@ public class GuiPokemonFaintedChoice extends GuiContainer {
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 
 		drawDefaultBackground();
-		drawCenteredString(fontRenderer, mypixelmon.getName()
+		drawCenteredString(fontRenderer, mypixelmon.getNickname()
 				+ "can no longer fight", width / 2, 10, 0xFFFFFF);
 	}
 }

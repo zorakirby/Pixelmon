@@ -19,8 +19,8 @@ public abstract class ItemHeld extends PixelmonItem {
 	private boolean usableInBattle;
 	private boolean affectsBattles;
 
-	public ItemHeld(int id, EnumHeldItems heldItemType) {
-		super(id);
+	public ItemHeld(int id, EnumHeldItems heldItemType, String textureName, String itemName) {
+		super(id, "helditems/" + textureName, itemName);
 		isEquippable = true;
 		this.heldItemType = heldItemType;
 		usableInBattle = heldItemType.getUsableInBattle();
@@ -35,7 +35,7 @@ public abstract class ItemHeld extends PixelmonItem {
 	public boolean usableInBattle() {
 		return usableInBattle;
 	}
-	
+
 	public boolean getAffectsBattle() {
 		return affectsBattles;
 	}

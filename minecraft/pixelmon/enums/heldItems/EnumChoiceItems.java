@@ -1,14 +1,15 @@
 package pixelmon.enums.heldItems;
 
-import pixelmon.battles.attacks.attackEffects.StatsEffectType;
+import pixelmon.entities.pixelmon.stats.StatsType;
+
 
 public enum EnumChoiceItems {
-	ChoiceBand(StatsEffectType.Attack),
-	ChoiceScarf(StatsEffectType.Speed),
-	ChoiceSpecs(StatsEffectType.SpecialAttack);
+	ChoiceBand(StatsType.Attack),
+	ChoiceScarf(StatsType.Speed),
+	ChoiceSpecs(StatsType.SpecialAttack);
 	
-	public StatsEffectType effectType;
-	private EnumChoiceItems(StatsEffectType type){
+	public StatsType effectType;
+	private EnumChoiceItems(StatsType type){
 		this.effectType = type;
 	}
 }

@@ -44,16 +44,11 @@ public class TileEntityAnvil extends TileEntity {
 		readFromNBT(pkt.customParam1);
 	}
 
-	@Override
-	public void receiveClientEvent(int par1, int par2) {
-		super.receiveClientEvent(par1, par2);
-	}
-
 	int count = 0;
 
 	public boolean blockHit(int f) {
 		boolean returnVal = false;
-		if (itemOnAnvil == PixelmonItems.aluminumIngot.itemID){
+		if (itemOnAnvil == PixelmonItems.aluminiumIngot.itemID){
 			count += f;
 			if (count >= 15) {
 				count = 0;
@@ -61,7 +56,7 @@ public class TileEntityAnvil extends TileEntity {
 				returnVal = true;
 				if (state == 3) {
 					state = 0;
-					itemOnAnvil = PixelmonItems.aluminumPlate.itemID;
+					itemOnAnvil = PixelmonItems.aluminiumPlate.itemID;
 				}
 			}
 		}

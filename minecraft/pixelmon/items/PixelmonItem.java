@@ -1,5 +1,8 @@
 package pixelmon.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,11 +13,19 @@ public class PixelmonItem extends Item {
 	private boolean isUsableInBattle = false;
 	private boolean isUsableOutsideBattle = false;
 	protected boolean isEquippable = false;
+	String iconString;
 
-	public PixelmonItem(int par1) {
+	public PixelmonItem(int par1, String string, String name) {
 		super(par1);
-		setTextureFile("/pixelmon/image/pitems.png");
 		setCreativeTab(CreativeTabs.tabMisc);
+		this.iconString = string;
+		setUnlocalizedName(name);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void func_94581_a(IconRegister par1IconRegister) {
+		this.iconIndex = par1IconRegister.func_94245_a("pixelmon:" + iconString);
 	}
 
 	protected void SetUsableInBattle(boolean isUsable) {

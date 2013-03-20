@@ -154,7 +154,7 @@ public class Level {
 		setExp(getExp() + i);
 		if ((pixelmon.getOwner() != null) && getLevel() != 100)
 			if (pixelmon.getOwner() != null)
-				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getName() + " gained " + i + " EXP!");
+				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getNickname() + " gained " + i + " EXP!");
 		if (!canLevelUp() || getExpToNextLevel() == -1) {
 			setExp(0);
 			return;
@@ -201,7 +201,7 @@ public class Level {
 								pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
 					} else {
 						pixelmon.moveset.add(a);
-						ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
+						ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
 					}
 				}
 			}

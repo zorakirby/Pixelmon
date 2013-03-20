@@ -37,20 +37,20 @@ public class PixelmonBlocksApricornTrees {
 	public static Block apricornTreeRed;
 	
 	public static void load(Configuration configuration) {
-		apTreeBlackId = Integer.parseInt(configuration.getBlock("ApricornTreeBlack", 208).value);
-		apTreeWhiteId = Integer.parseInt(configuration.getBlock("ApricornTreeWhite", 209).value);
-		apTreeOrangeId = Integer.parseInt(configuration.getBlock("ApricornTreeOrange", 210).value);
-		apTreeGreenId = Integer.parseInt(configuration.getBlock("ApricornTreeGreen", 211).value);
-		apTreeBlueId = Integer.parseInt(configuration.getBlock("ApricornTreeBlue", 212).value);
-		apTreeYellowId = Integer.parseInt(configuration.getBlock("ApricornTreeYellow", 213).value);
-		apTreeRedId = Integer.parseInt(configuration.getBlock("ApricornTreeRed", 214).value);
-		apricornTreeBlack = new BlockApricornTree(apTreeBlackId, EnumApricornTrees.Black).setBlockName("Black Apricorn Tree");
-		apricornTreeWhite = new BlockApricornTree(apTreeWhiteId, EnumApricornTrees.White).setBlockName("White Apricorn Tree");
-		apricornTreePink = new BlockApricornTree(apTreeOrangeId, EnumApricornTrees.Pink).setBlockName("Pink Apricorn Tree");
-		apricornTreeGreen = new BlockApricornTree(apTreeGreenId, EnumApricornTrees.Green).setBlockName("Green Apricorn Tree");
-		apricornTreeBlue = new BlockApricornTree(apTreeBlueId, EnumApricornTrees.Blue).setBlockName("Blue Apricorn Tree");
-		apricornTreeYellow = new BlockApricornTree(apTreeYellowId, EnumApricornTrees.Yellow).setBlockName("Yellow Apricorn Tree");
-		apricornTreeRed = new BlockApricornTree(apTreeRedId, EnumApricornTrees.Red).setBlockName("Red Apricorn Tree");
+		apTreeBlackId = configuration.getBlock("ApricornTreeBlack", 208).getInt(208);
+		apTreeWhiteId = configuration.getBlock("ApricornTreeWhite", 209).getInt(209);
+		apTreeOrangeId = configuration.getBlock("ApricornTreeOrange", 210).getInt(210);
+		apTreeGreenId = configuration.getBlock("ApricornTreeGreen", 211).getInt(211);
+		apTreeBlueId = configuration.getBlock("ApricornTreeBlue", 212).getInt(212);
+		apTreeYellowId = configuration.getBlock("ApricornTreeYellow", 213).getInt(213);
+		apTreeRedId = configuration.getBlock("ApricornTreeRed", 214).getInt(214);
+		apricornTreeBlack = new BlockApricornTree(apTreeBlackId, EnumApricornTrees.Black);
+		apricornTreeWhite = new BlockApricornTree(apTreeWhiteId, EnumApricornTrees.White);
+		apricornTreePink = new BlockApricornTree(apTreeOrangeId, EnumApricornTrees.Pink);
+		apricornTreeGreen = new BlockApricornTree(apTreeGreenId, EnumApricornTrees.Green);
+		apricornTreeBlue = new BlockApricornTree(apTreeBlueId, EnumApricornTrees.Blue);
+		apricornTreeYellow = new BlockApricornTree(apTreeYellowId, EnumApricornTrees.Yellow);
+		apricornTreeRed = new BlockApricornTree(apTreeRedId, EnumApricornTrees.Red);
 	}
 
 	public static void addNames() {
@@ -72,13 +72,13 @@ public class PixelmonBlocksApricornTrees {
 	}
 
 	public static void registerBlocks() {
-		GameRegistry.registerBlock(apricornTreeBlack);
-		GameRegistry.registerBlock(apricornTreeWhite);
-		GameRegistry.registerBlock(apricornTreePink);
-		GameRegistry.registerBlock(apricornTreeGreen);
-		GameRegistry.registerBlock(apricornTreeBlue);
-		GameRegistry.registerBlock(apricornTreeYellow);
-		GameRegistry.registerBlock(apricornTreeRed);
+		GameRegistry.registerBlock(apricornTreeBlack, "Black Apricorn Tree");
+		GameRegistry.registerBlock(apricornTreeWhite, "White Apricorn Tree");
+		GameRegistry.registerBlock(apricornTreePink, "Pink Apricorn Tree");
+		GameRegistry.registerBlock(apricornTreeGreen, "Green Apricorn Tree");
+		GameRegistry.registerBlock(apricornTreeBlue, "Blue Apricorn Tree");
+		GameRegistry.registerBlock(apricornTreeYellow, "Yellow Apricorn Tree");
+		GameRegistry.registerBlock(apricornTreeRed, "Red Apricorn Tree");
 		
 		GameRegistry.registerTileEntity(TileEntityApricornTree.class, "Apricorn Tree");
 	}

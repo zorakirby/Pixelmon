@@ -51,8 +51,9 @@ public class WorldGenBauxiteOre extends WorldGenerator implements IWorldGenerato
 								double var45 = ((double) var44 + 0.5D - var24) / (var28 / 2.0D);
 
 								Block block = Block.blocksList[par1World.getBlockId(var38, var41, var44)];
-								if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && (block != null && block.isGenMineableReplaceable(par1World, var38, var41, var44))) {
-									par1World.setBlock(var38, var41, var44, PixelmonBlocks.bauxite.blockID);
+								if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D
+										&& (block != null && block.isBlockReplaceable(par1World, var38, var41, var44))) {
+									par1World.setBlockAndMetadataWithNotify(var38, var41, var44, PixelmonBlocks.bauxite.blockID, 0, 0);
 								}
 							}
 						}

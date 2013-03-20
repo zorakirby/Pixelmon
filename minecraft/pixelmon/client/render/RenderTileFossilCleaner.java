@@ -94,13 +94,13 @@ public class RenderTileFossilCleaner extends TileEntitySpecialRenderer {
 				GL11.glTranslatef(0, 2.23F, 0);
 				if (PixelmonItemsFossils.getFossilFromIndex(tile.itemInCleaner).getModel() != null)
 					PixelmonItemsFossils.getFossilFromIndex(tile.itemInCleaner).getModel().renderModel(f);
-			} else if (PixelmonItemsFossils.getUncoveredFossilFromIndex(tile.itemInCleaner) != null) {
+			} else if (PixelmonItemsFossils.getCoveredFossilFromIndex(tile.itemInCleaner) != null) {
 				if (uncoveredEntity != null)
-					if (uncoveredEntity.func_92014_d().itemID != tile.itemInCleaner)
+					if (uncoveredEntity.getEntityItem().itemID != tile.itemInCleaner)
 						uncoveredEntity = null;
 				if (uncoveredEntity == null) {
 					uncoveredEntity = new EntityItem(tile.worldObj, tile.xCoord, tile.yCoord, tile.zCoord, new ItemStack(
-							PixelmonItemsFossils.getUncoveredFossilFromIndex(tile.itemInCleaner)));
+							PixelmonItemsFossils.getCoveredFossilFromIndex(tile.itemInCleaner)));
 				}
 				GL11.glTranslatef(0, 0.15F, 0);
 				GL11.glRotatef(-1*tile.timer/1.5f * 57.296f, 0.0F, 1.0F, 0.0F);

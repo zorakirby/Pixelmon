@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -23,7 +24,7 @@ import pixelmon.entities.pokeballs.PokeballTypeHelper;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 import pixelmon.items.ItemPokeBall;
-import pixelmon.items.ItemPokemonFossil;
+import pixelmon.items.ItemFossil;
 import pixelmon.storage.PixelmonStorage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -47,7 +48,11 @@ public class BlockFossilMachine extends BlockContainer {
 		this.setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
 		return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
 	}
-
+	
+	@SideOnly(Side.CLIENT)
+	public void func_94332_a(IconRegister par1IconRegister) {
+	}
+	
 	@SideOnly(Side.CLIENT)
 	/**
 	 * Returns the bounding box of the wired rectangular prism to render.
@@ -102,7 +107,7 @@ public class BlockFossilMachine extends BlockContainer {
 		if (world.isRemote)
 			return false;
 		// Item Retrieval
-		if (tile.currentPokeball != -1 && player.getCurrentEquippedItem() != null && !(player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil)) {
+		if (tile.currentPokeball != -1 && player.getCurrentEquippedItem() != null && !(player.getCurrentEquippedItem().getItem() instanceof ItemFossil)) {
 			int itemId = tile.currentPokeball;
 			Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
 			if (item == null) {
@@ -145,9 +150,9 @@ public class BlockFossilMachine extends BlockContainer {
 			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 			return true;
 		}
-		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil
-				&& EnumPokemon.hasPokemon(((ItemPokemonFossil) player.getCurrentEquippedItem().getItem()).pokemon))
-			if ((player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil) && tile.currentFossil == -1 && !tile.pokemonOccupied) {
+		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemFossil
+				&& EnumPokemon.hasPokemon(((ItemFossil) player.getCurrentEquippedItem().getItem()).pokemon))
+			if ((player.getCurrentEquippedItem().getItem() instanceof ItemFossil) && tile.currentFossil == -1 && !tile.pokemonOccupied) {
 				tile.currentFossil = player.getCurrentEquippedItem().itemID;
 				player.getCurrentEquippedItem().stackSize--;
 				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
@@ -166,7 +171,7 @@ public class BlockFossilMachine extends BlockContainer {
 			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 		}
 		if (!tile.pokemonOccupied && player.getCurrentEquippedItem() != null
-				&& !(player.getCurrentEquippedItem().getItem() instanceof ItemPokemonFossil && !(player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall))) {
+				&& !(player.getCurrentEquippedItem().getItem() instanceof ItemFossil && !(player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall))) {
 			tile.pokemonOccupied = false;
 			tile.fossilProgress = 0.0f;
 			tile.pokemonProgress = 0.0f;

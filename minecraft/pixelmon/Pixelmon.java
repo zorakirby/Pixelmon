@@ -57,8 +57,8 @@ import cpw.mods.fml.relauncher.Side;
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
-	public static EnumToolMaterial ALUMINUM = EnumHelper.addToolMaterial("ALUMINUM", 2, 200, 6.5F, 2, 14);
-	public static EnumArmorMaterial ALUMINUMARMOR = EnumHelper.addArmorMaterial("ALUMINUM", 15, new int[] { 2, 6, 5, 2 }, 8);
+	public static EnumToolMaterial ALUMINIUM = EnumHelper.addToolMaterial("ALUMINUM", 2, 200, 6.5F, 2, 14);
+	public static EnumArmorMaterial ALUMINIUMARMOR = EnumHelper.addArmorMaterial("ALUMINUM", 15, new int[] { 2, 6, 5, 2 }, 8);
 
 	@Instance("Pixelmon")
 	public static Pixelmon instance;
@@ -91,7 +91,7 @@ public class Pixelmon {
 	@Init
 	public void load(FMLInitializationEvent event) {
 		Random rand = new Random();
-
+		
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();

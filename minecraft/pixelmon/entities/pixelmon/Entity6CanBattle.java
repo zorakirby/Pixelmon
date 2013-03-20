@@ -10,13 +10,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
 import pixelmon.battles.attacks.Attack;
-import pixelmon.battles.attacks.attackEffects.EffectBase;
-import pixelmon.battles.attacks.attackEffects.EffectParser;
-import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
-import pixelmon.battles.attacks.statusEffects.StatusEffectType;
+import pixelmon.battles.attacks.EffectParser;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.battles.status.StatusBase;
+import pixelmon.battles.status.StatusPersist;
+import pixelmon.battles.status.StatusType;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.helpers.BattleVariables;
 import pixelmon.entities.pixelmon.stats.BattleStats;
@@ -28,12 +28,11 @@ import pixelmon.storage.PixelmonStorage;
 
 public abstract class Entity6CanBattle extends Entity5Rideable {
 	public BattleStats battleStats = new BattleStats(this);
-	public ArrayList<StatusEffectBase> status = new ArrayList<StatusEffectBase>();
+	public ArrayList<StatusBase> status = new ArrayList<StatusBase>();
 	public Moveset moveset = new Moveset();
 	public BattleController battleController;
 	protected EntityTrainer trainer;
 	public boolean isLockedInBattle = false;
-	public EntityPixelmon locker = null;
 
 	public BattleVariables battleVariables = new BattleVariables();
 
@@ -94,8 +93,8 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 			if (par1DamageSource.damageType == "player" || par1DamageSource == DamageSource.cactus || par1DamageSource.damageType == "arrow")
 				return false;
 			if (battleController != null) {
-				if (par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.explosion
-						|| par1DamageSource == DamageSource.fall || par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall
+				if (par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.fall 
+						|| par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall
 						|| par1DamageSource == DamageSource.lava || par1DamageSource == DamageSource.onFire)
 					return false;
 			}
@@ -142,9 +141,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		return entity instanceof EntityPixelmon;
 	}
 
-	public boolean removeStatus(StatusEffectType s) {
+	public boolean removeStatus(StatusType s) {
 		for (int i = 0; i < status.size(); i++) {
-			StatusEffectBase base = status.get(i);
+			StatusBase base = status.get(i);
 			if (base.type == s) {
 				status.remove(i);
 				return true;
@@ -153,9 +152,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		return false;
 	}
 
-	public boolean hasStatus(StatusEffectType s) {
+	public boolean hasStatus(StatusType s) {
 		for (int i = 0; i < status.size(); i++) {
-			StatusEffectBase base = status.get(i);
+			StatusBase base = status.get(i);
 			if (base.type == s) {
 				return true;
 			}
@@ -169,7 +168,8 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		moveset.writeToNBT(nbt);
 		for (int i = 0; i < status.size(); i++) {
 			try {
-				status.get(i).writeToNBT(i, nbt);
+				if (status.get(i) instanceof StatusPersist)
+					((StatusPersist) status.get(i)).writeToNBT(i, nbt);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -185,10 +185,8 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		statusCount = nbt.getShort("EffectCount");
 		EffectParser e = new EffectParser();
 		for (int i = 0; i < statusCount; i++) {
-			StatusEffectType t = StatusEffectType.getEffect(nbt.getInteger("Effect" + i));
-			EffectBase effect = e.ParseEffect(t.toString());
-			if (effect instanceof StatusEffectBase)
-				status.add((StatusEffectBase) effect);
+			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Effect" + i));
+			status.add(s.restoreFromNBT(nbt));
 		}
 	}
 }

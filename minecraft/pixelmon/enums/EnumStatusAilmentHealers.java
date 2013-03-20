@@ -1,37 +1,36 @@
 package pixelmon.enums;
 
 import net.minecraft.item.Item;
-import pixelmon.battles.attacks.statusEffects.StatusEffectType;
+import pixelmon.battles.status.StatusType;
 import pixelmon.config.PixelmonItems;
 
 public enum EnumStatusAilmentHealers {
-	FullRestore(66, "all", true, "fullrestore", 64), Antidote(82, "Poison", false, "antidote", 80), ParlyzHeal(98, "Paralysis", false, "parlyzheal", 96), Awakening(114, "Sleep", false, "awakening",
-			112), BurnHeal(130, "Burn", false, "burn", 128), IceHeal(146, "Freeze", false, "iceheal", 144), FullHeal(162, "all", false, "fullheal", 160);
+	FullRestore(66, "all", true, "fullrestore"), Antidote(82, "Poison", false, "antidote"), ParlyzHeal(98, "Paralysis", false, "parlyzheal"), 
+	Awakening(114, "Sleep", false, "awakening"), BurnHeal(130, "Burn", false, "burn"), IceHeal(146, "Freeze", false, "iceheal"), 
+	FullHeal(162, "all", false, "fullheal");
 
-	private EnumStatusAilmentHealers(int index, String status, boolean healsHP, String filenamePrefix, int iconIndex) {
-		StatusEffectType[] statuses = {};
+	private EnumStatusAilmentHealers(int index, String status, boolean healsHP, String filenamePrefix) {
+		StatusType[] statuses = {};
 		if (status.equalsIgnoreCase("all")) {
-			statuses = new StatusEffectType[] { StatusEffectType.Burn, StatusEffectType.Confusion, StatusEffectType.Freeze, StatusEffectType.Paralysis, StatusEffectType.Poison,
-					StatusEffectType.PoisonBadly, StatusEffectType.Sleep };
+			statuses = new StatusType[] { StatusType.Burn, StatusType.Confusion, StatusType.Freeze, StatusType.Paralysis, StatusType.Poison,
+					StatusType.PoisonBadly, StatusType.Sleep };
 		} else if (status.equalsIgnoreCase("Poison")) {
-			statuses = new StatusEffectType[] { StatusEffectType.Poison, StatusEffectType.PoisonBadly };
+			statuses = new StatusType[] { StatusType.Poison, StatusType.PoisonBadly };
 		} else {
-			statuses = new StatusEffectType[] { StatusEffectType.getStatusEffect(status) };
+			statuses = new StatusType[] { StatusType.getStatusEffect(status) };
 		}
 		this.index = index;
 		this.filenamePrefix = filenamePrefix;
-		this.iconIndex = iconIndex;
 		this.statuses = statuses;
 		this.healsHP = healsHP;
 	}
 
-	private StatusEffectType[] statuses;
+	private StatusType[] statuses;
 	private boolean healsHP;
 	private int index;
 	private String filenamePrefix;
-	private int iconIndex;
 
-	public StatusEffectType[] statusesHealed() {
+	public StatusType[] statusesHealed() {
 		return statuses;
 	}
 
@@ -41,10 +40,6 @@ public enum EnumStatusAilmentHealers {
 
 	public int getIndex() {
 		return index;
-	}
-
-	public int getIconIndex() {
-		return iconIndex;
 	}
 
 	public Item getItem() {
@@ -66,7 +61,7 @@ public enum EnumStatusAilmentHealers {
 	}
 
 	public String getTexture() {
-		return filenamePrefix + ".png";
+		return filenamePrefix;
 	}
 
 	public static EnumStatusAilmentHealers getFromIndex(int index) {

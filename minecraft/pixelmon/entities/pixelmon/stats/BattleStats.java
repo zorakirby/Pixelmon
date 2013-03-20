@@ -45,7 +45,8 @@ public class BattleStats {
 	public double getSpeedModifier() {
 		if (ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.choiceItem)) {
 			return ((ChoiceItem) pixelmon.getHeldItem().getItem()).affectSpeed(SpeedModifier);
-		}
+		} else if (ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.evAdjusting))
+			return SpeedModifier / 2;
 		return SpeedModifier;
 	}
 

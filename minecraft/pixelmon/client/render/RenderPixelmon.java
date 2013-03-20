@@ -93,8 +93,8 @@ public class RenderPixelmon extends RenderLiving {
 			GL11.glScalef(-1.0F, -1.0F, 1.0F);
 			this.preRenderCallback(pixelmon, par9);
 			GL11.glTranslatef(0.0F, -24.0F * var14 - 0.0078125F, 0.0F);
-			float var15 = pixelmon.prevLegYaw + (pixelmon.legYaw - pixelmon.prevLegYaw) * par9;
-			float var16 = pixelmon.legSwing - pixelmon.legYaw * (1.0F - par9);
+			float var15 = pixelmon.prevLimbYaw + (pixelmon.limbYaw - pixelmon.prevLimbYaw) * par9;
+			float var16 = pixelmon.limbSwing - pixelmon.limbYaw * (1.0F - par9);
 
 			if (pixelmon.isChild()) {
 				var16 *= 3.0F;

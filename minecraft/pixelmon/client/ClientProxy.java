@@ -64,9 +64,9 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers() {
 		for (EnumPokeballs p : EnumPokeballs.values()) {
-			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getTexture());
-			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getFlashRedTexture());
-			MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokeballs/" + p.getCaptureTexture());
+			MinecraftForgeClient.preloadTexture("/pixelmon/textures/pokeballs/" + p.getTexture());
+			MinecraftForgeClient.preloadTexture("/pixelmon/textures/pokeballs/" + p.getFlashRedTexture());
+			MinecraftForgeClient.preloadTexture("/pixelmon/textures/pokeballs/" + p.getCaptureTexture());
 		}
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
@@ -76,9 +76,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilMachine.class, new RenderTileFossilMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
-		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems.png");
-		MinecraftForgeClient.preloadTexture("/pixelmon/image/pitems2.png");
-		MinecraftForgeClient.preloadTexture("/pixelmon/block/blocks.png");
+		
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 	}

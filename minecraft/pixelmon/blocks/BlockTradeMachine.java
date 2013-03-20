@@ -2,10 +2,14 @@ package pixelmon.blocks;
 
 import java.util.Random;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,6 +37,10 @@ public class BlockTradeMachine extends BlockContainer {
 		return 0;
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void func_94332_a(IconRegister par1IconRegister) {
+	}
+	
 	@Override
 	public boolean isOpaqueCube() {
 		return false;

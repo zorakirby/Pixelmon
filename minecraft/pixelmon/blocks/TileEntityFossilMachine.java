@@ -37,9 +37,7 @@ public class TileEntityFossilMachine extends TileEntity {
 	}
 
 	public boolean anyPlayerInRange() {
-		return this.worldObj.getClosestPlayer((double) this.xCoord + 0.5D,
-				(double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D,
-				(double) 16) != null;
+		return this.worldObj.getClosestPlayer((double) this.xCoord + 0.5D, (double) this.yCoord + 0.5D, (double) this.zCoord + 0.5D, (double) 16) != null;
 	}
 
 	public void updateEntity() {
@@ -99,8 +97,7 @@ public class TileEntityFossilMachine extends TileEntity {
 	}
 
 	public void swapFossilForPokemon() {
-		currentPokemon = PixelmonItemsFossils.getFossilFromIndex(currentFossil)
-				.getPokemon();	
+		currentPokemon = PixelmonItemsFossils.getFossilFromIndex(currentFossil).getPokemon();
 		this.pokemonOccupied = true;
 		this.currentFossil = -1;
 	}
@@ -135,18 +132,12 @@ public class TileEntityFossilMachine extends TileEntity {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound var1 = new NBTTagCompound();
 		this.writeToNBT(var1);
-		return new Packet132TileEntityData(this.xCoord, this.yCoord,
-				this.zCoord, 1, var1);
+		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, var1);
 	}
 
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
 		readFromNBT(pkt.customParam1);
-	}
-
-	@Override
-	public void receiveClientEvent(int par1, int par2) {
-		super.receiveClientEvent(par1, par2);
 	}
 
 	public World getWorldObj() {

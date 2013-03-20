@@ -28,9 +28,9 @@ public class GuiPokedexOptions extends GuiContainer {
 	@SuppressWarnings("unchecked")
 	public void initGui() {
 		super.initGui();
-		controlList.clear();
-		controlList.add(new GuiButton(0, width / 2 - 100, height - 25, "Done"));
-		controlList.addAll(buttonList);
+		buttonList.clear();
+		buttonList.add(new GuiButton(0, width / 2 - 100, height - 25, "Done"));
+		buttonList.addAll(buttonList);
 	}
 
 	public void drawGuiContainerBackgroundLayer(float f, int x, int y) {

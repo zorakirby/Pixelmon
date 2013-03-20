@@ -4,23 +4,20 @@ import net.minecraft.item.Item;
 import pixelmon.config.PixelmonItems;
 
 public enum EnumPotions {
-	Potion(2, 20, 0, "potion", 0), SuperPotion(18, 50, 0, "superpotion", 16),
-	HyperPotion(34, 200, 0, "hyperpotion", 32), MaxPotion(50, 0, 100, "maxpotion", 48);
+	Potion(2, 20, 0, "potion"), SuperPotion(18, 50, 0, "superpotion"),
+	HyperPotion(34, 200, 0, "hyperpotion"), MaxPotion(50, 0, 100, "maxpotion");
 
-	private EnumPotions(int index, int healAmount, int healPercent, String filenamePrefix,
-			int iconIndex) {
+	private EnumPotions(int index, int healAmount, int healPercent, String filenamePrefix) {
 		this.healAmount = healAmount;
 		this.healPercent = healPercent;
 		this.index = index;
 		this.filenamePrefix = filenamePrefix;
-		this.iconIndex = iconIndex;
 	}
 
 	private int healAmount;
 	private int healPercent;
 	private int index;
 	private String filenamePrefix;
-	private int iconIndex;
 
 	public int getHealAmount() {
 		return healAmount;
@@ -32,10 +29,6 @@ public enum EnumPotions {
 
 	public int getIndex() {
 		return index;
-	}
-
-	public int getIconIndex() {
-		return iconIndex;
 	}
 
 	public Item getItem() {
@@ -51,7 +44,7 @@ public enum EnumPotions {
 	}
 
 	public String getTexture() {
-		return filenamePrefix + ".png";
+		return filenamePrefix;
 	}
 
 	public static EnumPotions getFromIndex(int index) {

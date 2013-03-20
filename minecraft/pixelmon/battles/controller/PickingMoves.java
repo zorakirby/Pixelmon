@@ -3,11 +3,11 @@ package pixelmon.battles.controller;
 import java.util.ArrayList;
 
 import pixelmon.RandomHelper;
-import pixelmon.battles.attacks.attackEffects.EffectBase;
-import pixelmon.battles.attacks.attackEffects.EffectBase.ApplyStage;
-import pixelmon.battles.attacks.attackModifiers.PriorityAttackModifier;
-import pixelmon.battles.attacks.statusEffects.StatusEffectBase;
+import pixelmon.battles.attacks.EffectBase;
+import pixelmon.battles.attacks.EffectBase.ApplyStage;
+import pixelmon.battles.attacks.specialAttacks.attackModifiers.Priority;
 import pixelmon.battles.participants.BattleParticipant;
+import pixelmon.battles.status.StatusBase;
 
 public class PickingMoves {
 
@@ -20,7 +20,7 @@ public class PickingMoves {
 			p.isSwitching = false;
 			BattleParticipant foe = bc.otherParticipant(p);
 			for (int i = 0; i < p.currentPokemon().status.size(); i++) {
-				StatusEffectBase e = p.currentPokemon().status.get(i);
+				StatusBase e = p.currentPokemon().status.get(i);
 				try {
 					if (!e.canAttackThisTurn(p.currentPokemon(), foe.currentPokemon())) {
 						p.canAttack = false;
@@ -56,8 +56,8 @@ public class PickingMoves {
 		}
 
 		boolean hasPriorityEffect = false;
-		for (StatusEffectBase e : bc.battleStatusList) {
-			if (e.applyStage == ApplyStage.Priority) {
+		for (StatusBase e : bc.battleStatusList) {
+			if (e.hasPriorityEffect()) {
 				hasPriorityEffect = true;
 			}
 		}
@@ -66,7 +66,7 @@ public class PickingMoves {
 			if (p.attack != null) {
 				for (EffectBase e : p.attack.baseAttack.effects) {
 					if (e.applyStage == ApplyStage.Priority) {
-						p.priority = ((PriorityAttackModifier) e).value;
+						p.priority = ((Priority) e).value;
 					}
 				}
 			}

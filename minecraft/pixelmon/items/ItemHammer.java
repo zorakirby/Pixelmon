@@ -1,6 +1,9 @@
 package pixelmon.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,11 +16,19 @@ import pixelmon.config.PixelmonBlocks;
 
 public class ItemHammer extends ItemTool {
 
-	public ItemHammer(int par1, EnumToolMaterial par3EnumToolMaterial, int i) {
+	String iconString;
+
+	public ItemHammer(int par1, EnumToolMaterial par3EnumToolMaterial, String iconString, String itemName) {
 		super(par1, 2, par3EnumToolMaterial, new Block[] { PixelmonBlocks.anvil });
-		this.setIconIndex(i);
-		setTextureFile("/pixelmon/image/pitems.png");
 		setCreativeTab(CreativeTabs.tabTools);
+		this.iconString = iconString;
+		setUnlocalizedName(itemName);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void func_94581_a(IconRegister par1IconRegister) {
+		this.iconIndex = par1IconRegister.func_94245_a("pixelmon:" + iconString);
 	}
 
 	/**
@@ -35,15 +46,13 @@ public class ItemHammer extends ItemTool {
 		return true;
 	}
 
-	
-	
 	@Override
 	public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player) {
 		if (player.worldObj.getBlockId(X, Y, Z) == PixelmonBlocks.anvilId) {
-			if (((TileEntityAnvil) player.worldObj.getBlockTileEntity(X, Y, Z)).blockHit((int)getStrVsBlock(null, PixelmonBlocks.anvil))){
+			if (((TileEntityAnvil) player.worldObj.getBlockTileEntity(X, Y, Z)).blockHit((int) getStrVsBlock(null, PixelmonBlocks.anvil))) {
 				itemstack.damageItem(1, player);
 			}
-				
+
 			return true;
 		}
 		return super.onBlockStartBreak(itemstack, X, Y, Z, player);
@@ -54,7 +63,7 @@ public class ItemHammer extends ItemTool {
 	 * (Quality+1)*2 if correct blocktype, 1.5F if sword
 	 */
 	public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block) {
-		if (par2Block == PixelmonBlocks.anvil){
+		if (par2Block == PixelmonBlocks.anvil) {
 			if (toolMaterial == EnumToolMaterial.WOOD)
 				return 1;
 			else if (toolMaterial == EnumToolMaterial.STONE)
@@ -65,8 +74,7 @@ public class ItemHammer extends ItemTool {
 				return 4;
 			else if (toolMaterial == EnumToolMaterial.EMERALD)
 				return 5;
-			
- 
+
 		}
 		return 1;
 	}

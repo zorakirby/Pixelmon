@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import pixelmon.blocks.BlockAnvil;
+import pixelmon.blocks.BlockBauxiteOre;
 import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockFossil;
 import pixelmon.blocks.BlockFossilCleaner;
@@ -22,6 +23,7 @@ import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.items.ItemBlock;
+import pixelmon.items.PixelmonItemBlock;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -67,39 +69,38 @@ public class PixelmonBlocks {
 	public static Block fossilCleaner;
 
 	public static void load(Configuration configuration) {
-		pokemonHealerActiveId = Integer.parseInt(configuration.getBlock("PokemonHealerActive", 300).value);
-		pokemonHealerIdleId = Integer.parseInt(configuration.getBlock("PokemonHealerIdle", 301).value);
-		thunderStoneOreId = Integer.parseInt(configuration.getBlock("ThunderStoneOre", 221).value);
-		leafStoneOreId = Integer.parseInt(configuration.getBlock("LeafStoneOre", 222).value);
-		waterStoneOreId = Integer.parseInt(configuration.getBlock("WaterStoneOre", 223).value);
-		fireStoneOreId = Integer.parseInt(configuration.getBlock("FireStoneOre", 224).value);
-		bauxiteId = Integer.parseInt(configuration.getBlock("Bauxite Ore", 220).value);
-		pcId = Integer.parseInt(configuration.getBlock("PC", 307).value);
-		anvilId = Integer.parseInt(configuration.getBlock("Anvil", 308).value);
-		fossilMachineId = Integer.parseInt(configuration.getBlock("Fossil Machine", 309).value);
-		fossilId = Integer.parseInt(configuration.getBlock("Fossil", 225).value);
-		tradeMachineId = Integer.parseInt(configuration.getBlock("Trade Machine", 311).value);
-		fossilCleanerId = Integer.parseInt(configuration.getBlock("Fossil Cleaner", 312).value);
+		pokemonHealerActiveId = configuration.getBlock("PokemonHealerActive", 300).getInt(300);
+		pokemonHealerIdleId = configuration.getBlock("PokemonHealerIdle", 301).getInt(301);
+		thunderStoneOreId = configuration.getBlock("ThunderStoneOre", 221).getInt(221);
+		leafStoneOreId = configuration.getBlock("LeafStoneOre", 222).getInt(222);
+		waterStoneOreId = configuration.getBlock("WaterStoneOre", 223).getInt(223);
+		fireStoneOreId = configuration.getBlock("FireStoneOre", 224).getInt(224);
+		bauxiteId = configuration.getBlock("Bauxite Ore", 220).getInt(220);
+		pcId = configuration.getBlock("PC", 307).getInt(307);
+		anvilId = configuration.getBlock("Anvil", 308).getInt(308);
+		fossilMachineId = configuration.getBlock("Fossil Machine", 309).getInt(309);
+		fossilId = configuration.getBlock("Fossil", 225).getInt(225);
+		tradeMachineId = configuration.getBlock("Trade Machine", 311).getInt(311);
+		fossilCleanerId = configuration.getBlock("Fossil Cleaner", 312).getInt(312);
 
-		healer = new BlockHealer(pokemonHealerIdleId).setBlockName("PokeHealer");
-		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f).setBlockName("ThunderStoneOre");
-		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f).setBlockName("LeafStoneOre");
-		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, EnumEvolutionStone.Waterstone, 3.0f).setBlockName("WaterStoneOre");
-		fireStoneOre = new BlockEvolutionStoneOre(fireStoneOreId, EnumEvolutionStone.Firestone, 3.0f).setBlockName("FireStoneOre");
-		pc = new BlockPC(pcId, 0).setBlockName("pc");
-		anvil = new BlockAnvil(anvilId).setBlockName("Anvil");
-		fossilMachine = new BlockFossilMachine(fossilMachineId).setBlockName("Fossil Machine");
-		bauxite = new Block(bauxiteId, 6, Material.rock).setBlockName("Bauxite Ore").setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural)
-				.setTextureFile("/pixelmon/block/blocks.png");
-		fossil = new BlockFossil(fossilId).setBlockName("Fossil").setHardness(5f);
-		tradeMachine = new BlockTradeMachine(tradeMachineId).setBlockName("Trade Machine");
-		fossilCleaner = new BlockFossilCleaner(fossilCleanerId).setBlockName("Fossil Cleaner");
+		healer = new BlockHealer(pokemonHealerIdleId);
+		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f, "Thunder Stone Ore");
+		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f, "Leaf Stone Ore");
+		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, EnumEvolutionStone.Waterstone, 3.0f, "Water Stone Ore");
+		fireStoneOre = new BlockEvolutionStoneOre(fireStoneOreId, EnumEvolutionStone.Firestone, 3.0f, "Fire Stone Ore");
+		pc = new BlockPC(pcId, 0);
+		anvil = new BlockAnvil(anvilId);
+		fossilMachine = new BlockFossilMachine(fossilMachineId);
+		bauxite = new BlockBauxiteOre(bauxiteId, Material.rock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
+		fossil = new BlockFossil(fossilId).setHardness(5f);
+		tradeMachine = new BlockTradeMachine(tradeMachineId);
+		fossilCleaner = new BlockFossilCleaner(fossilCleanerId);
 		PixelmonBlocksApricornTrees.load(configuration);
 	}
 
 	public static void registerBlocks() {
 		GameRegistry.registerBlock(healer, "PokeHealer");
-		GameRegistry.registerBlock(thunderStoneOre, "Thunderstone Ore");
+		GameRegistry.registerBlock(thunderStoneOre, PixelmonItemBlock.class, "Thunderstone Ore");
 		GameRegistry.registerBlock(leafStoneOre, "Leafstone Ore");
 		GameRegistry.registerBlock(waterStoneOre, "Waterstone Ore");
 		GameRegistry.registerBlock(fireStoneOre, "Firestone Ore");

@@ -2,13 +2,16 @@ package pixelmon.blocks;
 
 import java.util.Random;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import pixelmon.Pixelmon;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonItemsFossils;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.enums.EnumGui;
-import pixelmon.items.ItemFossilUncovered;
+import pixelmon.items.ItemCoveredFossil;
 import pixelmon.items.ItemPokeballDisc;
 import pixelmon.storage.ComputerBox;
 import pixelmon.storage.PixelmonStorage;
@@ -17,6 +20,7 @@ import pixelmon.storage.PlayerComputerStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -34,16 +38,20 @@ public class BlockFossilCleaner extends BlockContainer {
 		super(i, Material.iron);
 		setHardness(1f);
 	}
-	
+
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
 		return PixelmonItemsFossils.fossilCleanerItem.itemID;
 	}
-	
+
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 		return new ItemStack(PixelmonItemsFossils.fossilCleanerItem, 1);
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void func_94332_a(IconRegister par1IconRegister) {
+	}
+	
 	@Override
 	public TileEntity createNewTileEntity(World var1) {
 		return new TileEntityFossilCleaner();
@@ -88,7 +96,7 @@ public class BlockFossilCleaner extends BlockContainer {
 				((TileEntityFossilCleaner) world.getBlockTileEntity(x, y, z)).itemInCleaner = -1;
 				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
 			}
-			if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemFossilUncovered)) {
+			if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemCoveredFossil)) {
 				((TileEntityFossilCleaner) world.getBlockTileEntity(x, y, z)).setItemInCleaner(player.getCurrentEquippedItem().itemID);
 				player.getCurrentEquippedItem().stackSize--;
 				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);

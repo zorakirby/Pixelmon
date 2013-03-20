@@ -1,5 +1,8 @@
 package pixelmon.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,11 +19,16 @@ public class ItemPokedex extends Item {
 
 	public ItemPokedex(int par1) {
 		super(par1);
-		setIconIndex(22);
-		setTextureFile("/pixelmon/image/pitems.png");
 		setCreativeTab(CreativeTabs.tabTools);
+		setUnlocalizedName("Pokedex");
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void func_94581_a(IconRegister par1IconRegister) {
+		this.iconIndex = par1IconRegister.func_94245_a("pixelmon:pokedex");
+	}
+	
 	public ItemStack onItemRightClick(ItemStack i, World world, EntityPlayer player) {
 		if (!world.isRemote)
 			openPokedexGui(1, player, world);

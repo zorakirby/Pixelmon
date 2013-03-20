@@ -71,20 +71,20 @@ public class PixelmonItemsApricorns {
 		apricornYellowCookedID = cfg.get("itemApricorn", "Cooked Yellow Apricorn", 10117).getInt();
 		apricornRedCookedID = cfg.get("itemApricorn", "Cooked Red Apricorn", 10118).getInt();
 
-		apricornBlack = new ItemApricorn(apricornBlackID, EnumApricorns.Black).setItemName("Black Apricorn");
-		apricornWhite = new ItemApricorn(apricornWhiteID, EnumApricorns.White).setItemName("White Apricorn");
-		apricornPink = new ItemApricorn(apricornPinkID, EnumApricorns.Pink).setItemName("Pink Apricorn");
-		apricornGreen = new ItemApricorn(apricornGreenID, EnumApricorns.Green).setItemName("Green Apricorn");
-		apricornBlue = new ItemApricorn(apricornBlueID, EnumApricorns.Blue).setItemName("Blue Apricorn");
-		apricornYellow = new ItemApricorn(apricornYellowID, EnumApricorns.Yellow).setItemName("Yellow Apricorn");
-		apricornRed = new ItemApricorn(apricornRedID, EnumApricorns.Red).setItemName("Red Apricorn");
-		apricornBlackCooked = new ItemApricornCooked(apricornBlackCookedID, EnumApricorns.Black).setItemName("Cooked Black Apricorn");
-		apricornWhiteCooked = new ItemApricornCooked(apricornWhiteCookedID, EnumApricorns.White).setItemName("Cooked White Apricorn");
-		apricornPinkCooked = new ItemApricornCooked(apricornPinkCookedID, EnumApricorns.Pink).setItemName("Cooked Pink Apricorn");
-		apricornGreenCooked = new ItemApricornCooked(apricornGreenCookedID, EnumApricorns.Green).setItemName("Cooked Green Apricorn");
-		apricornBlueCooked = new ItemApricornCooked(apricornBlueCookedID, EnumApricorns.Blue).setItemName("Cooked Blue Apricorn");
-		apricornYellowCooked = new ItemApricornCooked(apricornYellowCookedID, EnumApricorns.Yellow).setItemName("Cooked Yellow Apricorn");
-		apricornRedCooked = new ItemApricornCooked(apricornRedCookedID, EnumApricorns.Red).setItemName("Cooked Red Apricorn");
+		apricornBlack = new ItemApricorn(apricornBlackID, EnumApricorns.Black);
+		apricornWhite = new ItemApricorn(apricornWhiteID, EnumApricorns.White);
+		apricornPink = new ItemApricorn(apricornPinkID, EnumApricorns.Pink);
+		apricornGreen = new ItemApricorn(apricornGreenID, EnumApricorns.Green);
+		apricornBlue = new ItemApricorn(apricornBlueID, EnumApricorns.Blue);
+		apricornYellow = new ItemApricorn(apricornYellowID, EnumApricorns.Yellow);
+		apricornRed = new ItemApricorn(apricornRedID, EnumApricorns.Red);
+		apricornBlackCooked = new ItemApricornCooked(apricornBlackCookedID, EnumApricorns.Black);
+		apricornWhiteCooked = new ItemApricornCooked(apricornWhiteCookedID, EnumApricorns.White);
+		apricornPinkCooked = new ItemApricornCooked(apricornPinkCookedID, EnumApricorns.Pink);
+		apricornGreenCooked = new ItemApricornCooked(apricornGreenCookedID, EnumApricorns.Green);
+		apricornBlueCooked = new ItemApricornCooked(apricornBlueCookedID, EnumApricorns.Blue);
+		apricornYellowCooked = new ItemApricornCooked(apricornYellowCookedID, EnumApricorns.Yellow);
+		apricornRedCooked = new ItemApricornCooked(apricornRedCookedID, EnumApricorns.Red);
 	}
 
 	public static void addNames() {

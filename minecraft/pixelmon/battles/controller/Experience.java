@@ -7,11 +7,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.config.PixelmonConfig;
-import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pixelmon.stats.EVsStore;
+import pixelmon.entities.pixelmon.stats.StatsType;
 import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
+import pixelmon.items.heldItems.EVAdjusting;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerStorage;
 
@@ -111,7 +113,15 @@ public class Experience {
 			} else
 				pix = storage.sendOut(userIndex, p.currentPokemon().getOwner().worldObj);
 			pix.getLvl().awardEXP((int) exp);
-			pix.stats.EVs.gainEV(faintedPokemon.baseStats.evGain);
+			EVsStore evStore = faintedPokemon.baseStats.evGain.cloneEVs();
+			if (ItemHeld.isItemOfType(pix.getHeldItem(), EnumHeldItems.evAdjusting)) {
+				EVAdjusting item = (EVAdjusting) pix.getHeldItem().getItem();
+				if (item.type.statAffected == StatsType.None)
+					evStore.doubleValues();
+				else
+					evStore.addEVs(4, item.type.statAffected);
+			}
+			pix.stats.EVs.gainEV(evStore);
 			if (!wasAlreadyOut)
 				storage.retrieve(pix);
 		}

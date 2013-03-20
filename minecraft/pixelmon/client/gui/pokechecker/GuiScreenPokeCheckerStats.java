@@ -35,12 +35,12 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 
 	public void initGui() {
 		super.initGui();
-		controlList.clear();
+		buttonList.clear();
 
-		controlList.add(new GuiPokeCheckerTabs(3, 0, width / 2 + 107, (int) height / 2 + 80, 17, 15, ""));
-		controlList.add(new GuiPokeCheckerTabs(0, 1, width / 2 - 127, (int) height / 2 + 80, 90, 15, "Summary"));
-		controlList.add(new GuiPokeCheckerTabs(1, 2, width / 2 - 34, (int) height / 2 + 80, 69, 15, "Moves"));
-		controlList.add(new GuiPokeCheckerTabs(4, 4, width / 2 - 44, (int) height / 2 - 107, 9, 9, "", targetPacket));
+		buttonList.add(new GuiPokeCheckerTabs(3, 0, width / 2 + 107, (int) height / 2 + 80, 17, 15, ""));
+		buttonList.add(new GuiPokeCheckerTabs(0, 1, width / 2 - 127, (int) height / 2 + 80, 90, 15, "Summary"));
+		buttonList.add(new GuiPokeCheckerTabs(1, 2, width / 2 - 34, (int) height / 2 + 80, 69, 15, "Moves"));
+		buttonList.add(new GuiPokeCheckerTabs(4, 4, width / 2 - 44, (int) height / 2 - 107, 9, 9, "", targetPacket));
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -77,15 +77,15 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		if (x > var6 / 2 - 125 && x < var6 / 2 - 40 && y > var7 / 2 - 15 && y < var7 / 2 + 5) {
 			if (par3 == 1 && !renameButton) {
 				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
-				controlList.add(nameButton);
+				buttonList.add(nameButton);
 				renameButton = true;
 			} else if (par3 != 1 && renameButton) {
-				controlList.remove(nameButton);
+				buttonList.remove(nameButton);
 				renameButton = false;
 			} else if (par3 == 1 && renameButton) {
-				controlList.remove(nameButton);
+				buttonList.remove(nameButton);
 				nameButton = new GuiButton(3, x, y, 50, 20, "Rename");
-				controlList.add(nameButton);
+				buttonList.add(nameButton);
 			}
 		}
 	}
@@ -133,7 +133,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 
 		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryStats.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture(bg);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 
 		int pimg;

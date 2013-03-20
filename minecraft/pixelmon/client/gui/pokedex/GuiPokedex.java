@@ -53,7 +53,7 @@ public class GuiPokedex extends GuiContainer {
 		super.initGui();
 		left = (width - xSize) / 2;
 		top = (height - ySize) / 2;
-		controlList.clear();
+		buttonList.clear();
 		if (scrollPane == null)
 			scrollPane = new GuiPokedexSlot(this);
 		// scrollPane.elementClicked(0, false);
@@ -76,7 +76,7 @@ public class GuiPokedex extends GuiContainer {
 		RenderHelper.disableStandardItemLighting();
 		int i = mc.renderEngine.getTexture("/pixelmon/gui/pokedex.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture(i);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, i);
 		drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
 		fontRenderer.drawString("Pokedex", left + 6, top + 5, 0xFFFFFF);
 		String s = selectedEntry.getPokedexDisplayNumber() + " "

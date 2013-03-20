@@ -16,7 +16,7 @@ public class WorldGenFossils extends WorldGenerator implements IWorldGenerator {
 		int waterY = rand.nextInt(4);
 		if ((world.getBlockId(x, y + waterY, z) == Block.waterStill.blockID)
 				&& (world.getBlockId(x, y + 1, z) != Block.waterStill.blockID && WorldHelper.getWaterDepth(x, y + waterY, z, world) > 4)) {
-			world.setBlockWithNotify(x, y, z, PixelmonBlocks.fossil.blockID);
+			world.setBlockAndMetadataWithNotify(x, y, z, PixelmonBlocks.fossil.blockID, 0, 0);
 			return true;
 		}
 		return false;

@@ -2,9 +2,13 @@ package pixelmon.blocks;
 
 import java.util.Random;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -15,8 +19,7 @@ public class BlockHealer extends BlockContainer {
 	public BlockHealer(int par1) {
 		super(par1, Material.rock);
 		setHardness(3.5f);
-		setStepSound(Block.soundStoneFootstep);
-		setRequiresSelfNotify();
+		setStepSound(Block.soundStoneFootstep);		
 	}
 
 	@Override
@@ -24,6 +27,10 @@ public class BlockHealer extends BlockContainer {
 		return -1;
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void func_94332_a(IconRegister par1IconRegister) {
+	}
+	
 	@Override
 	public int quantityDropped(Random random) {
 		return 0;

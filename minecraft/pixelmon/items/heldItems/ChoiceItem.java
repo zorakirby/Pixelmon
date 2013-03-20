@@ -8,8 +8,8 @@ public class ChoiceItem extends ItemHeld {
 
 	private EnumChoiceItems choiceItemType;
 
-	public ChoiceItem(int id, EnumChoiceItems choiceItemType) {
-		super(id, EnumHeldItems.choiceItem);
+	public ChoiceItem(int id, EnumChoiceItems choiceItemType, String itemName) {
+		super(id, EnumHeldItems.choiceItem, choiceItemType.toString().toLowerCase(), itemName);
 		this.choiceItemType = choiceItemType;
 	}
 
@@ -18,7 +18,6 @@ public class ChoiceItem extends ItemHeld {
 			attack *= 1.5;
 		return attack;
 	}
-
 
 	public double affectSpecialAttack(double attack) {
 		if (choiceItemType == EnumChoiceItems.ChoiceSpecs)

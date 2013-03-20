@@ -7,14 +7,12 @@ public class ItemPokeballDisc extends PixelmonItem {
 
 	public EnumPokeballs pokeball;
 
-	public ItemPokeballDisc(int id, EnumPokeballs pokeball) {
-		super(id);
-		this.pokeball = pokeball;
+	public ItemPokeballDisc(int id, EnumPokeballs type) {
+		super(id, "pokeballs/" + type.toString().toLowerCase() + "disc", type.toString().substring(0, type.toString().indexOf("Ball")) + " Ball Disc");
+		this.pokeball = type;
 		SetUsableInBattle(false);
 		maxStackSize = 64;
 		setMaxDamage(0xf4240);
-		setIconIndex(pokeball.discIconIndex);
-		setTextureFile("/pixelmon/image/pitems2.png");
 		setCreativeTab(PixelmonCreativeTabs.pokeball);
 	}
 
