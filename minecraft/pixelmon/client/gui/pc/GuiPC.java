@@ -238,9 +238,9 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
-				mc.renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 			else
-				mc.renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 			drawImageQuad(slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
 				mc.renderEngine.func_98187_b("/pixelmon/image/helditem.png");
@@ -261,9 +261,9 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
-				mc.renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 			else
-				mc.renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 			drawImageQuad(slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
 				mc.renderEngine.func_98187_b("/pixelmon/image/helditem.png");
@@ -280,9 +280,9 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
-				mc.renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 			else
-				mc.renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 			drawImageQuad(mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (mouseSlot.pokemonData.heldItemId != -1) {
 				mc.renderEngine.func_98187_b("/pixelmon/image/pitems.png");
