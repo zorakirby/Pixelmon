@@ -200,7 +200,7 @@ public class PixelmonSpawner implements ITickHandler {
 										world.spawnEntityInWorld(pokemon);
 
 										if (maxInChunk == -1) {
-											if (world.rand.nextInt(1000) == 0 && pokemon instanceof EntityPixelmon) {
+											if (world.rand.nextInt(300) == 0 && pokemon instanceof EntityPixelmon) {
 												EntityPixelmon pixelmon = (EntityPixelmon) pokemon;
 												preEvolutions = pixelmon.getPreEvolutions();
 												preEvolutions.add(pokemonName);
