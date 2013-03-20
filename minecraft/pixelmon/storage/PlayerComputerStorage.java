@@ -122,4 +122,27 @@ public class PlayerComputerStorage {
 		return false;
 	}
 
+	public boolean contains(int pokemonID) {
+		for (ComputerBox b : storageBoxes) {
+			if (b.contains(pokemonID))
+				return true;
+		}
+		return false;
+	}
+
+	public EntityPixelmon getPokemonEntity(int pokemonID) {
+		for (ComputerBox b : storageBoxes) {
+			if (b.contains(pokemonID))
+				return b.getPokemonEntity(pokemonID);
+		}
+		return null;
+	}
+
+	public void updatePokemonEntry(EntityPixelmon p) {
+		for (ComputerBox b : storageBoxes) {
+			if (b.contains(p.getPokemonId()))
+				b.updatePokemonEntry(p);
+		}
+	}
+
 }

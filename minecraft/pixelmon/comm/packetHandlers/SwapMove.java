@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerComputerStorage;
 import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.Player;
 
@@ -23,13 +24,20 @@ public class SwapMove extends PacketHandlerBase {
 		int clicked = dataStream.readInt();
 
 		EntityPlayerMP player = (EntityPlayerMP) pl;
-		PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
-		EntityPixelmon p;
-		if (storage.EntityAlreadyExists(pokemonID, player.worldObj))
-			p = storage.getAlreadyExists(pokemonID, player.worldObj);
-		else
-			p = storage.sendOut(pokemonID, player.worldObj);
-		p.moveset.swap(selected, clicked);
-		storage.updateNBT(p);
+		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).contains(pokemonID)) {
+			PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
+			EntityPixelmon p;
+			if (storage.EntityAlreadyExists(pokemonID, player.worldObj))
+				p = storage.getAlreadyExists(pokemonID, player.worldObj);
+			else
+				p = storage.sendOut(pokemonID, player.worldObj);
+			p.moveset.swap(selected, clicked);
+			storage.updateNBT(p);
+		}else if (PixelmonStorage.ComputerManager.getPlayerStorage(player).contains(pokemonID)){
+			PlayerComputerStorage compStore = PixelmonStorage.ComputerManager.getPlayerStorage(player);
+			EntityPixelmon p = compStore.getPokemonEntity(pokemonID);
+			p.moveset.swap(selected, clicked);
+			compStore.updatePokemonEntry(p);
+		}
 	}
 }
