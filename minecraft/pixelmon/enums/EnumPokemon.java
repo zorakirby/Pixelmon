@@ -11,6 +11,7 @@ public enum EnumPokemon {
 	Arcanine("Arcanine"),
 	Archen("Archen"),
 	Archeops("Archeops"),
+	Armaldo("Armaldo"),
 	Beedrill("Beedrill"),
 	Bellsprout("Bellsprout"),
 	Blastoise("Blastoise"),
