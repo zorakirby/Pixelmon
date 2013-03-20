@@ -41,6 +41,7 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		buttonList.add(new GuiPokeCheckerTabs(0, 1, width / 2 - 127, (int) height / 2 + 80, 90, 15, "Summary"));
 		buttonList.add(new GuiPokeCheckerTabs(1, 2, width / 2 - 34, (int) height / 2 + 80, 69, 15, "Moves"));
 		buttonList.add(new GuiPokeCheckerTabs(4, 4, width / 2 - 44, (int) height / 2 - 107, 9, 9, "", targetPacket));
+		buttonList.add(new GuiPokeCheckerTabs(7, 5, width / 2 - 44, (int) height / 2 - 14, 9, 8, "", targetPacket));
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -64,6 +65,9 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 			break;
 		case 4:
 			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 0));
+			break;
+		case 5:
+			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
 			break;
 		}
 
@@ -131,17 +135,15 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		else
 			numString = "" + targetPacket.getNationalPokedexNumber();
 
-		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summaryStats.png");
+		mc.renderEngine.func_98187_b("/pixelmon/gui/summaryStats.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 
-		int pimg;
 		if (targetPacket.isShiny)
-			pimg = mc.renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+			mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 		else
-			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
+			mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+		drawImageQuad(width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.getType1().getColor());
 		else {
@@ -224,9 +226,8 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		par1FontRenderer.drawString(par2Str, par3 - par1FontRenderer.getStringWidth(par2Str) / 2, par4, par5);
 	}
 
-	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
+	private void drawImageQuad(int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureHandle);
 
 		float var7 = 0.00390625F;
 		float var8 = 0.00390625F;

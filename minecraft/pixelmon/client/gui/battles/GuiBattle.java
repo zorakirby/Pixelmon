@@ -537,9 +537,9 @@ public class GuiBattle extends GuiContainer {
 		else
 			numString = "" + p.getNationalPokedexNumber();
 		if (p.isShiny)
-			Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
+			Minecraft.getMinecraft().renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 		else
-			Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+			Minecraft.getMinecraft().renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 		drawImageQuad(width / 2 - 121, height - 176, 24f, 24f, 0f, 0f, 1f, 1f);		
 		drawHealthBar(width / 2 - 85, height - 135, 56, 9, p);
 		mc.renderEngine.func_98187_b("/pixelmon/gui/choosePokemon.png");
@@ -574,9 +574,9 @@ public class GuiBattle extends GuiContainer {
 					else
 						numString = "" + pdata.getNationalPokedexNumber();
 					if (pdata.isShiny)
-						Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/shinysprites/" + numString + ".png");
+						Minecraft.getMinecraft().renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 					else
-						Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/sprites/" + numString + ".png");
+						Minecraft.getMinecraft().renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 					drawImageQuad(width / 2 - 23, height - 192 + pos * 30, 24f, 24f, 0f, 0f, 1f, 1f);
 					drawHealthBar(width / 2 + 65, height - 192 + pos * 30, 56, 9, pdata);
 					mc.renderEngine.func_98187_b("/pixelmon/gui/choosePokemon.png");

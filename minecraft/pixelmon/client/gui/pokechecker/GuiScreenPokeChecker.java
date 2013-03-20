@@ -43,6 +43,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		buttonList.add(new GuiPokeCheckerTabs(1, 1, width / 2 - 34, (int) height / 2 + 80, 69, 15, "Moves"));
 		buttonList.add(new GuiPokeCheckerTabs(2, 2, width / 2 + 36, (int) height / 2 + 80, 69, 15, "Stats"));
 		buttonList.add(new GuiPokeCheckerTabs(4, 4, width / 2 - 44, (int) height / 2 - 107, 9, 9, "", targetPacket));
+		buttonList.add(new GuiPokeCheckerTabs(7, 5, width / 2 - 44, (int) height / 2 - 14, 9, 8, "", targetPacket));
 	}
 
 	public void actionPerformed(GuiButton button) {
@@ -66,6 +67,9 @@ public class GuiScreenPokeChecker extends GuiContainer {
 			break;
 		case 4:
 			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 0));
+			break;
+		case 5:
+			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
 			break;
 		}
 
@@ -129,10 +133,10 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		float x1 = targetPacket.getType2().textureX;
 		float y1 = targetPacket.getType2().textureY;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		typeImg = mc.renderEngine.getTexture("/pixelmon/gui/types.png");
-		drawImageQuad(typeImg, 60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
+		mc.renderEngine.func_98187_b("/pixelmon/gui/types.png");
+		drawImageQuad(60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
 		if ((targetPacket.getType2() != EnumType.Mystery))
-			drawImageQuad(typeImg, 100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
+			drawImageQuad(100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
 
 	}
 
@@ -148,9 +152,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		else
 			numString = "" + targetPacket.getNationalPokedexNumber();
 
-		int bg = mc.renderEngine.getTexture("/pixelmon/gui/summarySummary.png");
+		mc.renderEngine.func_98187_b("/pixelmon/gui/summarySummary.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 		drawTexturedModalRect((width - xSize) / 2 - 15, (height - ySize) / 2 + 120, 23, 225, 44, 28);
 		drawHealthBar((width - xSize) / 2 + 59, (height - ySize) / 2 - 15, 154, 14, targetPacket);
@@ -158,12 +161,12 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		drawExpBar((width - xSize) / 2 + 86, (height - ySize) / 2 + 145, 122, 14, targetPacket);
 		drawTexturedModalRect((width - xSize) / 2 + 59, (height - ySize) / 2 + 145, 104, 239, 150, 16);
 
-		int pimg;
+		
 		if (targetPacket.isShiny)
-			pimg = mc.renderEngine.getTexture("/pixelmon/shinysprites/" + numString + ".png");
+			mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 		else
-			pimg = mc.renderEngine.getTexture("/pixelmon/sprites/" + numString + ".png");
-		drawImageQuad(pimg, width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
+			mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+		drawImageQuad(width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.getType1().getColor());
 		else {
@@ -231,9 +234,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		par1FontRenderer.drawString(par2Str, par3 - par1FontRenderer.getStringWidth(par2Str) / 2, par4, par5);
 	}
 
-	private void drawImageQuad(int textureHandle, int x, int y, float w, float h, float us, float vs, float ue, float ve) {
+	private void drawImageQuad(int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureHandle);
 
 		float var7 = 0.00390625F;
 		float var8 = 0.00390625F;

@@ -85,9 +85,8 @@ public class GuiRenamePokemon extends GuiContainer {
 
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
-		int bg = mc.renderEngine.getTexture("/pixelmon/gui/rename.png");
+		mc.renderEngine.func_98187_b("/pixelmon/gui/rename.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, bg);
 		drawTexturedModalRect((width - xSize) / 2 - 40, height / 4, 0, 0, 256, 114);
 		StringTranslate stringtranslate = StringTranslate.getInstance();
 		drawCenteredString(fontRenderer, stringtranslate.translateKey("Rename Pokemon"), width / 2, (height / 4 - 60) + 80, 0xffffff);
