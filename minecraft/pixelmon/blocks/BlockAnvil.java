@@ -8,6 +8,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.StepSound;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import pixelmon.config.PixelmonItems;
@@ -50,7 +53,7 @@ public class BlockAnvil extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void func_94332_a(IconRegister par1IconRegister) {
 	}
-	
+
 	/**
 	 * Updates the blocks bounds based on its current state. Args: world, x, y,
 	 * z
@@ -64,6 +67,28 @@ public class BlockAnvil extends BlockContainer {
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
 		return PixelmonItems.anvilItem.itemID;
+	}
+
+	@Override
+	public boolean removeBlockByPlayer(World world, EntityPlayer player, int x, int y, int z) {
+		onBlockDestroyed(world, x, y, z);
+		return super.removeBlockByPlayer(world, player, x, y, z);
+	}
+	
+	private void onBlockDestroyed(World world, int x, int y, int z) {
+		if (!world.isRemote) {
+			if (((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil != -1) {
+				int itemId = ((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil;
+				Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
+				if (item != null) {
+
+					EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
+
+					var3.delayBeforeCanPickup = 10;
+					world.spawnEntityInWorld(var3);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -114,8 +139,8 @@ public class BlockAnvil extends BlockContainer {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).state = 0;
 		}
 		if (player.getCurrentEquippedItem() != null
-				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc || player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc || player
-						.getCurrentEquippedItem().getItem() == PixelmonItems.aluminiumIngot)) {
+				&& (player.getCurrentEquippedItem().getItem() instanceof ItemPokeballDisc
+						|| player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc || player.getCurrentEquippedItem().getItem() == PixelmonItems.aluminiumIngot)) {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
 			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);

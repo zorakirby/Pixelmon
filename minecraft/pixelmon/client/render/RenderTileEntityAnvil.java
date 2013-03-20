@@ -95,9 +95,9 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 				}
 			if (itemToRender instanceof ItemPokeballDisc || itemToRender == PixelmonItemsPokeballs.ironDisc) {
 				if (itemToRender == PixelmonItemsPokeballs.ironDisc)
-					bindTextureByName("/pixelmon/texture/pokeballs/irondisc.png");
+					bindTextureByName("/mods/pixelmon/textures/pokeballs/irondisc.png");
 				else
-					bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture());
+					bindTextureByName("/mods/pixelmon/textures/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture());
 				if (tile.state == 0)
 					modelDiscFlat.renderModel(0.0625f);
 				else if (tile.state == 1)
@@ -107,8 +107,8 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 				}
 				else if (itemToRender instanceof ItemPokeballLid || itemToRender == PixelmonItemsPokeballs.ironBase) {
 				if (itemToRender == PixelmonItemsPokeballs.ironBase)
-					bindTextureByName("/pixelmon/texture/pokeballs/irondisc.png");
-				else bindTextureByName("/pixelmon/texture/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
+					bindTextureByName("/mods/pixelmon/textures/pokeballs/irondisc.png");
+				else bindTextureByName("/mods/pixelmon/textures/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
 				modelDiscHemiSphere.renderModel(0.0625f);
 			}
 		}
