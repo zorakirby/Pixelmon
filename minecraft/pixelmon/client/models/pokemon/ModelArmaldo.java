@@ -68,7 +68,7 @@ public class ModelArmaldo extends PixelmonModelBase
       neck_fin_3_L.mirror = true;
       setRotation(neck_fin_3_L, 0F, -0.0872665F, -0.0349066F);
       PixelmonModelRenderer   neck_fin_1_R = new PixelmonModelRenderer(this, 0, 0);
-      neck_fin_1_R.addBox(-6.5F, -51.266667F, 0F, 7, 3, 0);
+      neck_fin_1_R.addBox(-6.5F, -15.266667F, 0F, 7, 3, 0);
       neck_fin_1_R.setRotationPoint(-3F, 0.5F, 0F);
       neck_fin_1_R.setTextureSize(128, 64);
       neck_fin_1_R.mirror = true;
@@ -161,7 +161,7 @@ public class ModelArmaldo extends PixelmonModelBase
       
       
       PixelmonModelRenderer Tail = new PixelmonModelRenderer(this, "Tail");
-      Tail.setRotationPoint(0, 14, 0);
+      Tail.setRotationPoint(0, 0, 0);
       PixelmonModelRenderer  tail_base = new PixelmonModelRenderer(this, 102, 54);
       tail_base.addBox(-3.5F, 2F, -3.666667F, 7, 4, 6);
       tail_base.setTextureSize(128, 64);
@@ -169,43 +169,43 @@ public class ModelArmaldo extends PixelmonModelBase
       setRotation(tail_base, 0.7330383F, 0F, 0F);
       PixelmonModelRenderer   tail_1 = new PixelmonModelRenderer(this, 106, 43);
       tail_1.addBox(-3F, -1F, -3.333333F, 6, 5, 5);
-      tail_1.setRotationPoint(0F, 4F, -4F);
+      tail_1.setRotationPoint(0F, 4F, 4F);
       tail_1.setTextureSize(128, 64);
       tail_1.mirror = true;
       setRotation(tail_1, 0.9948377F, 0F, 0F);
       PixelmonModelRenderer   tail_2 = new PixelmonModelRenderer(this, 110, 33);
       tail_2.addBox(-2.5F, -0.6F, -1.8F, 5, 5, 4);
-      tail_2.setRotationPoint(0F, 7F, -6.6F);
+      tail_2.setRotationPoint(0F, 7F, 6.6F);
       tail_2.setTextureSize(128, 64);
       tail_2.mirror = true;
       setRotation(tail_2, 1.413717F, 0F, 0F);
       PixelmonModelRenderer   tail_3 = new PixelmonModelRenderer(this, 114, 24);
       tail_3.addBox(-2F, -0.8666667F, -1.4F, 4, 5, 3);
-      tail_3.setRotationPoint(0F, 7.33333F, -11F);
+      tail_3.setRotationPoint(0F, 7.33333F, 11F);
       tail_3.setTextureSize(128, 64);
       tail_3.mirror = true;
       setRotation(tail_3, 1.605703F, 0F, 0F);
       PixelmonModelRenderer   tail_4 = new PixelmonModelRenderer(this, 118, 3);
       tail_4.addBox(-1.5F, -0.8666667F, -0.6F, 3, 5, 2);
-      tail_4.setRotationPoint(0F, 7.26667F, -15F);
+      tail_4.setRotationPoint(0F, 7.26667F, 15F);
       tail_4.setTextureSize(128, 64);
       tail_4.mirror = true;
       setRotation(tail_4, 1.710423F, 0F, 0F);
       PixelmonModelRenderer   tail_5 = new PixelmonModelRenderer(this, 122, 10);
       tail_5.addBox(-1F, -0.8666667F, -0.4F, 2, 4, 1);
-      tail_5.setRotationPoint(0F, 6.26667F, -19F);
+      tail_5.setRotationPoint(0F, 6.26667F, 19F);
       tail_5.setTextureSize(128, 64);
       tail_5.mirror = true;
       setRotation(tail_5, 1.872157F, 0F, 0F);
       PixelmonModelRenderer   tail_fin_L = new PixelmonModelRenderer(this, 107, 15);
       tail_fin_L.addBox(-1F, -0.8666667F, 0.06666667F, 9, 8, 0);
-      tail_fin_L.setRotationPoint(0F, 6.26667F, -19F);
+      tail_fin_L.setRotationPoint(0F, 6.26667F, 19F);
       tail_fin_L.setTextureSize(128, 64);
       tail_fin_L.mirror = true;
       setRotation(tail_fin_L, 1.867502F, 0F, -0.7330383F);
       PixelmonModelRenderer   tail_fin_R = new PixelmonModelRenderer(this, 99, 15);
       tail_fin_R.addBox(-8F, -0.8666667F, 0.06666667F, 9, 8, 0);
-      tail_fin_R.setRotationPoint(0F, 6.26667F, -19F);
+      tail_fin_R.setRotationPoint(0F, 6.26667F, 19F);
       tail_fin_R.setTextureSize(128, 64);
       tail_fin_R.mirror = true;
       setRotation(tail_fin_R, 1.867502F, 0F, 0.7330383F);
@@ -350,7 +350,11 @@ public class ModelArmaldo extends PixelmonModelBase
       toe_2_R.setTextureSize(128, 64);
       toe_2_R.mirror = true;
       setRotation(toe_2_R, 0F, 0.4014257F, 0F);
-      
+      RightLeg.addChild(leg_1_R);
+      RightLeg.addChild(leg_3_R);
+      RightLeg.addChild(leg_2_R);
+      RightLeg.addChild(toe_1_R);
+      RightLeg.addChild(toe_2_R);
       
       PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this, "Left Leg");
       LeftLeg.setRotationPoint(4, 4, 0);
@@ -379,7 +383,11 @@ public class ModelArmaldo extends PixelmonModelBase
       toe_1_L.setTextureSize(128, 64);
       toe_1_L.mirror = true;
       setRotation(toe_1_L, 0F, -0.4014257F, 0F);
-      
+      LeftLeg.addChild(leg_1_L);
+      LeftLeg.addChild(leg_3_L);
+      LeftLeg.addChild(leg_2_L);
+      LeftLeg.addChild(toe_2_L);
+      LeftLeg.addChild(toe_1_L);
       
       PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this, "Left Arm");
       LeftArm.setRotationPoint(2, -5, -3);
@@ -418,12 +426,17 @@ public class ModelArmaldo extends PixelmonModelBase
       claw_L_2.setTextureSize(128, 64);
       claw_L_2.mirror = true;
       setRotation(claw_L_2, -0.0698132F, -0.4712389F, 0F);
+      LeftArm.addChild(arm_1_L);
+      LeftArm.addChild(arm_2_L);
+      LeftArm.addChild(arm_3_L);
+      LeftArm.addChild(arm_4_L);
+      LeftArm.addChild(claw_L);
+      LeftArm.addChild(claw_L_2);
       
       PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this, "Right Arm");
       RightArm.setRotationPoint(-2, -5, -3);
       PixelmonModelRenderer   arm_1_R = new PixelmonModelRenderer(this, 81, 3);
       arm_1_R.addBox(-2F, 0F, -0.6666667F, 2, 2, 2);
-      arm_1_R.setRotationPoint(-2F, 9F, -3F);
       arm_1_R.setTextureSize(128, 64);
       arm_1_R.mirror = true;
       setRotation(arm_1_R, 0F, 0.1919862F, 0F);
@@ -457,6 +470,20 @@ public class ModelArmaldo extends PixelmonModelBase
       claw_R_2.setTextureSize(128, 64);
       claw_R_2.mirror = true;
       setRotation(claw_R_2, -0.0698132F, 0.4712389F, 0F);
+      RightArm.addChild(arm_1_R);
+      RightArm.addChild(arm_2_R);
+      RightArm.addChild(arm_3_R);
+      RightArm.addChild(arm_4_R);
+      RightArm.addChild(claw_R);
+      RightArm.addChild(claw_R_2);
+      
+      Body.addChild(Head);
+      Body.addChild(Tail);
+      Body.addChild(LeftArm);
+      Body.addChild(RightArm);
+      Body.addChild(LeftLeg);
+      Body.addChild(RightLeg);
+      
       
       
       ModuleHead headModule = new ModuleHead(Head);
