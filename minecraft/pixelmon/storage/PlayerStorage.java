@@ -103,6 +103,7 @@ public class PlayerStorage {
 			p.setOwner(player.username);
 		else if (mode == PokeballManagerMode.Trainer)
 			p.setTrainer(trainer);
+		p.setBoss(EnumBossMode.Normal);
 		NBTTagCompound n = new NBTTagCompound();
 		int id = 0;
 		if (mode == PokeballManagerMode.Player)
