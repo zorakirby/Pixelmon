@@ -154,7 +154,7 @@ public class GuiBattle extends GuiContainer {
 			String targetName = targetPokemon.nickname.equals("") ? targetPokemon.name : targetPokemon.nickname;
 			drawImageQuad(0, 0, 119, 34, 0, 0, 119f / 128f, 34f / 64f);
 			drawString(fontRenderer, targetName, 8, 8, 0xFFFFFF);
-			mc.renderEngine.func_98187_b("/pixelmon/gui/pokemonInfoP1.png");
+			mc.renderEngine.func_98187_b("/pixelmon/gui/pokemonInforP2.png");
 			drawHealthBar(18, 19, 56, 6, targetPokemon);
 			drawImageQuad(8, 18, 62, 9, 1f / 128f, 43f / 64f, 63f / 128f, 53f / 64f);
 			if (targetPokemon.isMale)

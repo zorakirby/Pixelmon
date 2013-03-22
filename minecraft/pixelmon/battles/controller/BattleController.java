@@ -182,8 +182,24 @@ public class BattleController {
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
 			useItem(p);
-		else
-			p.attack.use(p.currentPokemon(), otherParticipant(p).currentPokemon(), p.attackList, otherParticipant(p).attackList);
+		else {
+			for (int i = 0; i < p.currentPokemon().status.size(); i++) {
+				StatusBase e = p.currentPokemon().status.get(i);
+				try {
+					if (!e.canAttackThisTurn(p.currentPokemon(), otherParticipant(p).currentPokemon())) {
+						p.canAttack = false;
+						p.attackList.add("None");
+						break;
+					}
+				} catch (Exception exc) {
+					System.out.println("Error calculating canAttackThisTurn for " + e.type.toString());
+					System.out.println(exc.getStackTrace());
+				}
+			}
+			
+			if (p.canAttack)
+				p.attack.use(p.currentPokemon(), otherParticipant(p).currentPokemon(), p.attackList, otherParticipant(p).attackList);
+		}
 	}
 
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {

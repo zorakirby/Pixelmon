@@ -63,11 +63,6 @@ import cpw.mods.fml.relauncher.Side;
 public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers() {
-		for (EnumPokeballs p : EnumPokeballs.values()) {
-			MinecraftForgeClient.preloadTexture("/pixelmon/textures/pokeballs/" + p.getTexture());
-			MinecraftForgeClient.preloadTexture("/pixelmon/textures/pokeballs/" + p.getFlashRedTexture());
-			MinecraftForgeClient.preloadTexture("/pixelmon/textures/pokeballs/" + p.getCaptureTexture());
-		}
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());

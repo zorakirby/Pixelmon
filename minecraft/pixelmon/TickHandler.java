@@ -24,6 +24,7 @@ public class TickHandler implements ITickHandler {
 	int ticksSinceSentLogin = 0;
 	boolean checkedForUsername = false;
 	boolean musicCleared = false;
+	boolean foundSounds = false;
 
 	@Override
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {
@@ -42,13 +43,18 @@ public class TickHandler implements ITickHandler {
 						PacketDispatcher.sendPacketToServer(packet);
 					}
 				}
+				if (!foundSounds) {
+					foundSounds = true;
+					Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(
+							"Couldn't find music at " + Minecraft.getMinecraftDir() + "/resources/music/pixelmon");
+				}
 			}
 			if (!musicCleared) {
 				ArrayList l = ObfuscationReflectionHelper.getPrivateValue(SoundPool.class, Minecraft.getMinecraft().sndManager.soundPoolMusic, 2);
 				if (l.size() != 0) {
 					if (PixelmonConfig.removeVanillaMusic)
 						l.clear();
-					Sounds.installMusic();
+					foundSounds = Sounds.installMusic();
 					musicCleared = true;
 				}
 			}

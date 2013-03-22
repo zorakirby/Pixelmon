@@ -182,6 +182,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 		aggression = Aggression.passive;
 		worldObj.spawnEntityInWorld(this);
 		isInBall = false;
+		worldObj.playSoundAtEntity(this, getLivingSound(), this.getSoundVolume(), this.getSoundPitch());
 	}
 
 	public void clearAttackTarget() {

@@ -14,24 +14,28 @@ public class Sounds {
 
 	@SideOnly(Side.CLIENT)
 	public static void installSounds() {
+		System.out.println("Checking for sounds in " + Minecraft.getMinecraftDir() + "/resources/newsound/pixelmon");
 		for (EnumPokemon p : EnumPokemon.values()) {
-			installSound("resources/newsound/pixelmon/", p.name.toLowerCase(), "pixelmon/");
+			installSound(Minecraft.getMinecraftDir() + "/resources/newsound/pixelmon/", p.name.toLowerCase(), "pixelmon/");
 		}
 
-		installSound("resources/newsound/pixelmon/", "anvilHits", "pixelmon/");
+		installSound(Minecraft.getMinecraftDir() + "/resources/newsound/pixelmon/", "anvilHits", "pixelmon/");
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static void installMusic() {
+	public static boolean installMusic() {
+		System.out.println("Checking for music in " + Minecraft.getMinecraftDir() + "/resources/music/pixelmon");
 		File musicDir = new File("./resources/music/pixelmon");
 		File[] musicFiles = musicDir.listFiles();
 		if (musicFiles == null || musicFiles.length == 0) {
 			System.out.println("No Music Files found!");
+			return false;
 		} else {
 			for (File f : musicFiles) {
 				Minecraft.getMinecraft().sndManager.addMusic(f.getName(), new File(Minecraft.getMinecraftDir() + "/resources/music/pixelmon/" + f.getName()));
 			}
 		}
+		return true;
 	}
 
 	@SideOnly(Side.CLIENT)
