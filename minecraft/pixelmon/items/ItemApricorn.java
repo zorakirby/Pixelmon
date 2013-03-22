@@ -85,7 +85,7 @@ public class ItemApricorn extends PixelmonItem {
 	 */
 	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ,
 			int metadata) {
-		if (!world.setBlockAndMetadataWithNotify(x, y, z, this.blockID, metadata, 2)) {
+		if (!world.setBlock(x, y, z, this.blockID, metadata, 2)) {
 			return false;
 		}
 

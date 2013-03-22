@@ -49,7 +49,7 @@ public class BlockFossilCleaner extends BlockContainer {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void func_94332_a(IconRegister par1IconRegister) {
+	public void registerIcons(IconRegister par1IconRegister) {
 	}
 	
 	@Override

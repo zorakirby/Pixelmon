@@ -6,8 +6,15 @@ import net.minecraft.block.BlockTrapDoor;
 public class BlockRotation {
 
 	public static int setBlockRotation(int coordBaseMode, int par1, int par2) {
-		if (par1 == Block.stairCompactCobblestone.blockID || par1 == Block.stairCompactPlanks.blockID || par1 == Block.stairsNetherBrick.blockID
-				|| par1 == Block.stairsStoneBrickSmooth.blockID || par1 == Block.stairsSandStone.blockID) {
+		if (par1 == Block.stairCompactNetherQuartz.blockID || 
+				par1 == Block.stairsCobblestone.blockID || 
+				par1 == Block.stairsNetherBrick.blockID ||
+				par1 == Block.stairsSandStone.blockID ||
+				par1 == Block.stairsStoneBrick.blockID ||
+				par1 == Block.stairsWoodBirch.blockID ||
+				par1 == Block.stairsWoodJungle.blockID ||
+				par1 == Block.stairsWoodOak.blockID ||
+				par1 == Block.stairsWoodSpruce.blockID) {
 			return rotateStairs(coordBaseMode, par1, par2);
 		}
 		if (par1 == Block.pistonBase.blockID || par1 == Block.pistonStickyBase.blockID || par1 == Block.lever.blockID || par1 == Block.dispenser.blockID) {

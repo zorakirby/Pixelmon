@@ -53,9 +53,9 @@ public class ItemBlock extends PixelmonItem {
 					if (block instanceof BlockPC && world.getBlockId(x, y + 2, z) == block.blockID) {
 						return false;
 					}
-					world.setBlockAndMetadataWithNotify(x, y, z, block.blockID, var9, 2);
+					world.setBlock(x, y, z, block.blockID, var9, 2);
 					if (world.getBlockId(x, y, z) == block.blockID && block instanceof BlockPC) {
-						world.setBlockAndMetadataWithNotify(x, y + 1, z, block.blockID, var9 - 6, 2);
+						world.setBlock(x, y + 1, z, block.blockID, var9 - 6, 2);
 					}
 					if (!player.capabilities.isCreativeMode) {
 						--stack.stackSize;

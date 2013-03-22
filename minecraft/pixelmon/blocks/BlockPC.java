@@ -40,7 +40,7 @@ public class BlockPC extends BlockContainer {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void func_94332_a(IconRegister par1IconRegister) {
+	public void registerIcons(IconRegister par1IconRegister) {
 	}
 	
 	@Override
@@ -60,10 +60,10 @@ public class BlockPC extends BlockContainer {
 
 	public void onBlockDestroyedByPlayer(World var1, int var2, int var3, int var4, int var5) {
 		if (var1.getBlockId(var2, var3 + 1, var4) == blockID) {
-			var1.setBlockAndMetadataWithNotify(var2, var3 + 1, var4, 0, 0, 2);
+			var1.setBlock(var2, var3 + 1, var4, 0, 0, 2);
 		}
 		if (var1.getBlockId(var2, var3 - 1, var4) == blockID) {
-			var1.setBlockAndMetadataWithNotify(var2, var3 - 1, var4, 0, 0, 2);
+			var1.setBlock(var2, var3 - 1, var4, 0, 0, 2);
 		}
 	}
 

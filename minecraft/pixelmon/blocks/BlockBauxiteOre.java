@@ -18,8 +18,8 @@ public class BlockBauxiteOre extends Block {
 	Icon icon;
 
 	@SideOnly(Side.CLIENT)
-	public void func_94332_a(IconRegister par1IconRegister) {
-		icon = par1IconRegister.func_94245_a("pixelmon:" + "bauxiteore");
+	public void registerIcons(IconRegister par1IconRegister) {
+		icon = par1IconRegister.registerIcon("pixelmon:" + "bauxiteore");
 	}
 
 	@Override

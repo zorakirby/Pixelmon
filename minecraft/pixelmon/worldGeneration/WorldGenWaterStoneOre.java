@@ -15,7 +15,7 @@ public class WorldGenWaterStoneOre extends WorldGenerator implements IWorldGener
 	public boolean generate(World world, Random rand, int x, int y, int z) {
 		if ((world.getBlockId(x, y + 1, z) == Block.waterStill.blockID)
 				&& (world.getBlockId(x, y - 1, z) != Block.waterStill.blockID && WorldHelper.getWaterDepth(x, y + 1, z, world) > 4)) {
-			world.setBlockAndMetadataWithNotify(x, y, z, PixelmonBlocks.waterStoneOre.blockID, 0, 0);
+			world.setBlock(x, y, z, PixelmonBlocks.waterStoneOre.blockID, 0, 0);
 			return true;
 		}
 		return false;

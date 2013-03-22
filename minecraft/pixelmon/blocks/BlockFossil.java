@@ -25,8 +25,8 @@ public class BlockFossil extends Block {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void func_94332_a(IconRegister par1IconRegister) {
-		icon = par1IconRegister.func_94245_a("pixelmon:fossiloreblock");
+	public void registerIcons(IconRegister par1IconRegister) {
+		icon = par1IconRegister.registerIcon("pixelmon:fossiloreblock");
 	}
 
 	@Override

@@ -74,7 +74,7 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 	}
 	
 	public void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
-		mc.renderEngine.func_98187_b("/pixelmon/gui/yesNo.png");
+		mc.renderEngine.bindTexture("/pixelmon/gui/yesNo.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(width / 2 - 256 / 2, height / 2 - 50, 256, 100, 0, 0, 1, 100f / 128f);
 		
