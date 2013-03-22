@@ -7,6 +7,7 @@ import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.sounds.Sounds;
 
 import net.minecraft.client.Minecraft;
@@ -45,7 +46,8 @@ public class TickHandler implements ITickHandler {
 			if (!musicCleared) {
 				ArrayList l = ObfuscationReflectionHelper.getPrivateValue(SoundPool.class, Minecraft.getMinecraft().sndManager.soundPoolMusic, 2);
 				if (l.size() != 0) {
-					l.clear();
+					if (PixelmonConfig.removeVanillaMusic)
+						l.clear();
 					Sounds.installMusic();
 					musicCleared = true;
 				}

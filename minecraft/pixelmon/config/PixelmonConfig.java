@@ -34,13 +34,14 @@ public class PixelmonConfig {
 	public static boolean allowRiding = true;
 	public static boolean allowPlanting = true;
 
+	public static boolean removeVanillaMusic = true;
+
 	public static int idTrainers = 199;
 	public static int idPixelmon = 200;
 	public static int idPokeball = 201;
 	public static int idCamera = 202;
 
 	public static boolean allowPVPExperience = true;
-
 
 	public static void loadConfig(Configuration configuration) {
 		config = configuration;
@@ -56,6 +57,7 @@ public class PixelmonConfig {
 		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
 		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled", true).getBoolean(true);
 		checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
+		removeVanillaMusic = config.get("general", "Remove Minecraft Music", true).getBoolean(true);
 		allowRiding = config.get("general", "Allow Riding", true).getBoolean(true);
 		allowPlanting = config.get("general", "Allow Planting", true).getBoolean(true);
 		allowPVPExperience = config.get("general", "Allow PVP Experience", true).getBoolean(true);
