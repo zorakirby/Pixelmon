@@ -148,7 +148,7 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, "Lv. " + userPokemon.lvl, width - 10 - fontRenderer.getStringWidth("Lv. " + userPokemon.lvl), height - (guiHeight + 37), 0xFFFFFF);
 		mc.renderEngine.func_98187_b("/pixelmon/gui/pokemonInfoP1.png");
 		
-		mc.renderEngine.getTexture("/pixelmon/gui/pokemonInforP2.png");
+		mc.renderEngine.func_98187_b("/pixelmon/gui/pokemonInforP2.png");
 		PixelmonDataPacket targetPokemon = ClientBattleManager.getOpponent();
 		if (targetPokemon != null) {
 			String targetName = targetPokemon.nickname.equals("") ? targetPokemon.name : targetPokemon.nickname;
