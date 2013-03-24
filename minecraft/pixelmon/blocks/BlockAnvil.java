@@ -52,6 +52,7 @@ public class BlockAnvil extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
+		this.blockIcon = par1IconRegister.registerIcon("anvil_base");
 	}
 
 	/**
