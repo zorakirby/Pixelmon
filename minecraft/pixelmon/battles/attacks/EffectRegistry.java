@@ -57,6 +57,7 @@ public class EffectRegistry {
 		effectMap.put("echoedvoice", EchoedVoice.class);
 		effectMap.put("eruption", Eruption.class);
 		effectMap.put("facade", Acrobatics.class);
+		effectMap.put("falseswipe", FalseSwipe.class);
 		effectMap.put("frustration", Frustration.class);
 		effectMap.put("guillotine", Guillotine.class);
 		effectMap.put("gyroball", GyroBall.class);
