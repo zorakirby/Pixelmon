@@ -223,7 +223,7 @@ public class GuiPC extends GuiContainer {
 		mc.renderEngine.bindTexture("/pixelmon/gui/pcBox.png");
 		drawTexturedModalRect(width / 2 - 91, height / 6, 0, 0, 182, 141);
 		drawTexturedModalRect(trashX, trashY, 0, 256 - 32, 32, 32);
-		mc.renderEngine.bindTexture("/pixelmon/image/pokechecker.png");
+		mc.renderEngine.bindTexture("/mods/pixelmon/textures/items/pokechecker.png");
 		drawImageQuad(checkX, checkY, 32f, 32f, 0f, 0f, 1f, 1f);
 		for (int a = 0; a < pcSlots[boxNumber].length; a++) {
 			SlotPCPC slot = pcSlots[boxNumber][a];
