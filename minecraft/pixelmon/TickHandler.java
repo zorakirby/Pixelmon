@@ -1,13 +1,18 @@
 package pixelmon;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 
 import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
+import pixelmon.config.PixelmonConfig;
+import pixelmon.sounds.Sounds;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundPool;
+import net.minecraft.client.audio.SoundPoolEntry;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import cpw.mods.fml.common.ITickHandler;
@@ -18,6 +23,8 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class TickHandler implements ITickHandler {
 	int ticksSinceSentLogin = 0;
 	boolean checkedForUsername = false;
+	boolean musicCleared = false;
+	boolean foundSounds = false;
 
 	@Override
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {
@@ -35,6 +42,20 @@ public class TickHandler implements ITickHandler {
 						Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.RequestUpdatedPokemonList, 0);
 						PacketDispatcher.sendPacketToServer(packet);
 					}
+				}
+				if (!musicCleared) {
+					ArrayList l = ObfuscationReflectionHelper.getPrivateValue(SoundPool.class, Minecraft.getMinecraft().sndManager.soundPoolMusic, 2);
+					if (l.size() != 0) {
+						if (PixelmonConfig.removeVanillaMusic)
+							l.clear();
+						foundSounds = Sounds.installMusic();
+						musicCleared = true;
+					}
+				}
+				if (musicCleared && !foundSounds) {
+					foundSounds = true;
+					Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(
+							"Couldn't find music at " + Minecraft.getMinecraftDir() + "/resources/music/pixelmon");
 				}
 			}
 		}

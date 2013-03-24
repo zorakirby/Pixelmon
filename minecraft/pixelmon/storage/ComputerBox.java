@@ -4,11 +4,14 @@ import java.util.Iterator;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.packetHandlers.PC.PCData;
+import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
 public class ComputerBox {
 	public boolean hasChanged = false;
@@ -131,7 +134,59 @@ public class ComputerBox {
 				PixelmonDataPacket p = new PixelmonDataPacket(storedPokemon[pos], EnumPackets.AddToTempStore);
 				((EntityPlayerMP) parentStorage.player).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 			} else {
-				((EntityPlayerMP) parentStorage.player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.RemoveFromTempStore, position, pos));
+				((EntityPlayerMP) parentStorage.player).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.RemoveFromTempStore,
+						position, pos));
+			}
+		}
+	}
+
+	public boolean contains(int pokemonID) {
+		for (NBTTagCompound n : storedPokemon) {
+			if (n != null)
+				if (n.getInteger("pixelmonID") == pokemonID)
+					return true;
+		}
+		return false;
+	}
+
+	public EntityPixelmon getPokemonEntity(int pokemonID) {
+		for (NBTTagCompound n : storedPokemon) {
+			if (n != null) {
+				if (n.getInteger("pixelmonID") == pokemonID) {
+					n.setFloat("FallDistance", 0);
+					n.setBoolean("IsInBall", false);
+					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, parentStorage.player.worldObj);
+					e.setOwner(parentStorage.player.username);
+					e.playerOwned = true;
+					e.motionX = e.motionY = e.motionZ = 0;
+					e.isDead = false;
+					return e;
+				}
+			}
+		}
+		return null;
+	}
+
+	public void updatePokemonEntry(EntityPixelmon p) {
+		for (int i = 0; i < storedPokemon.length; i++) {
+			NBTTagCompound nbt = storedPokemon[i];
+			if (nbt != null) {
+				if (nbt.getInteger("pixelmonID") == p.getPokemonId()) {
+					NBTTagCompound n = new NBTTagCompound();
+					p.writeEntityToNBT(n);
+					p.writeToNBT(n);
+					n.setString("id", p.getName());
+					n.setName(p.getName());
+					n.setBoolean("IsInBall", true);
+					n.setBoolean("IsShiny", p.getIsShiny());
+					int pos = getNextSpace();
+					n.setInteger("PixelmonOrder", pos);
+					n.setInteger("BoxNumber", position);
+					if (n.getShort("Health") > 0)
+						n.setBoolean("IsFainted", false);
+					storedPokemon[i] = n;
+					hasChanged = true;
+				}
 			}
 		}
 	}

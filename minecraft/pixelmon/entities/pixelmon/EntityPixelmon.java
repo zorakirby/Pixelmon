@@ -141,10 +141,14 @@ public class EntityPixelmon extends Entity9HasSounds {
 					if (itemstack.getItem() instanceof ItemTM) {
 						if (DatabaseMoves.CanLearnAttack(getName(), ((ItemTM) itemstack.getItem()).attackName)) {
 							Attack a = DatabaseMoves.getAttack(((ItemTM) itemstack.getItem()).attackName);
+							if (a == null) {
+								ChatHandler.sendChat(getOwner(), ((ItemTM) itemstack.getItem()).attackName + " is corrupted");
+								return true;
+							}
 							a.STAB = DatabaseMoves.hasSTAB(getName(), ((ItemTM) itemstack.getItem()).attackName);
 							if (moveset.size() >= 4) {
-								((EntityPlayerMP) getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace, getPokemonId(),
-										a.baseAttack.attackIndex, level.getLevel()));
+								((EntityPlayerMP) getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
+										EnumPackets.ChooseMoveToReplace, getPokemonId(), a.baseAttack.attackIndex, level.getLevel()));
 							} else {
 								moveset.add(a);
 								ChatHandler.sendChat(getOwner(), getName() + " just learnt " + a.baseAttack.attackName + "!");
@@ -160,8 +164,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 				}
 				if (itemstack.getItem() instanceof ItemPokedex) {
 					ItemPokedex pokedex = (ItemPokedex) itemstack.getItem();
-					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(Pokedex.nameToID(getName()),
-							DexRegisterStatus.seen);
+					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(
+							Pokedex.nameToID(getName()), DexRegisterStatus.seen);
 					pokedex.openPokedexGui(Pokedex.nameToID(getName()), player, worldObj);
 				}
 
@@ -182,6 +186,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 		aggression = Aggression.passive;
 		worldObj.spawnEntityInWorld(this);
 		isInBall = false;
+		worldObj.playSoundAtEntity(this, getLivingSound(), this.getSoundVolume(), this.getSoundPitch());
 	}
 
 	public void clearAttackTarget() {
@@ -204,7 +209,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 				return true;
 			else {
 				double y = posY
-						- (baseStats.swimmingParameters.depthRangeStart + rand.nextInt(baseStats.swimmingParameters.depthRangeEnd - baseStats.swimmingParameters.depthRangeStart));
+						- (baseStats.swimmingParameters.depthRangeStart + rand.nextInt(baseStats.swimmingParameters.depthRangeEnd
+								- baseStats.swimmingParameters.depthRangeStart));
 				wdepth = WorldHelper.getWaterDepth((int) posX, (int) y, (int) posZ, worldObj);
 				if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 					return false;
@@ -246,7 +252,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
 				if (worldObj.getWorldTime() < 12000
-						&& this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)))
+						&& this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY),
+								MathHelper.floor_double(this.posZ)))
 					setDead();
 			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight && !worldObj.isDaytime())
 				setDead();

@@ -18,6 +18,6 @@ public class CaptureFriendBall extends CaptureBase {
 
 	@Override
 	public void doAfterEffect(EnumPokeballs type, EntityPixelmon p) {
-		p.friendship.friendship = 200;		
+		p.friendship.setFriendship(200);		
 	}
 }

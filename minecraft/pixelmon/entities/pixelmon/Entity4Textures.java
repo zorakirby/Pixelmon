@@ -1,8 +1,10 @@
 package pixelmon.entities.pixelmon;
 
+import java.io.File;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.texturepacks.TexturePackDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -42,19 +44,27 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		return super.attackEntityFrom(par1DamageSource, par2);
 	}
 
+	boolean hasRoastedTexture = false;
+	boolean checkedForRoastedTexture = false;
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
 		try {
+			if (dataWatcher.getWatchableObjectShort(26) == (short) 1 && !checkedForRoastedTexture || hasRoastedTexture) {
+				if (!checkedForRoastedTexture) {
+					if (TexturePackDefault.class.getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
+						hasRoastedTexture = true;
+					checkedForRoastedTexture = true;
+				}
+			}
 			if (getIsShiny()
 					&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream(
 							"/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
 				return "/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
-			else if (dataWatcher.getWatchableObjectShort(26) == (short) 1
-					&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream(
-							"/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
+			else if (dataWatcher.getWatchableObjectShort(26) == (short) 1 && hasRoastedTexture) {
 				return "/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";
-			else
+			} else
 				return "/pixelmon/texture/pokemon/" + getName().toLowerCase() + ".png";
 		} catch (Exception e) {
 			return "";

@@ -144,7 +144,7 @@ public class ModelMagikarp extends ModelBase {
 	private void setRotationAnglesOutOfWater(float f, float f1, float f2, float f3, float f4, float f5) {
 		BodyBase.rotateAngleZ = 1.5F;
 		BodyBase.rotationPointY = 22F;
-
+		Rearfin.rotateAngleY = 0F;
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
@@ -155,6 +155,8 @@ public class ModelMagikarp extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		Rearfin.rotateAngleY = MathHelper.cos(f * 0.785398163F) * 2F * f1;
+		BodyBase.rotateAngleZ = 0F;
+		BodyBase.rotationPointY = 17.5F;
 	}
 
 }

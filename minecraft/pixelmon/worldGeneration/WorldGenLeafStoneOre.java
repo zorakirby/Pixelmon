@@ -17,7 +17,7 @@ public class WorldGenLeafStoneOre extends WorldGenerator implements IWorldGenera
 		if (world.getBlockId(x, y, z) != leaf) {
 			return false;
 		}
-		world.setBlockAndMetadataWithNotify(x, y, z, PixelmonBlocks.leafStoneOre.blockID, 0, 0);
+		world.setBlock(x, y, z, PixelmonBlocks.leafStoneOre.blockID, 0, 0);
 		return true;
 	}
 

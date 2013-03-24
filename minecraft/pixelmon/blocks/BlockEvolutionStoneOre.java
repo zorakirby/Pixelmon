@@ -33,8 +33,8 @@ public class BlockEvolutionStoneOre extends Block {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void func_94332_a(IconRegister par1IconRegister) {
-		icon = par1IconRegister.func_94245_a("pixelmon:" + type.toString().toLowerCase());
+	public void registerIcons(IconRegister par1IconRegister) {
+		icon = par1IconRegister.registerIcon("pixelmon:" + type.toString().toLowerCase());
 	}
 
 	@Override

@@ -217,13 +217,13 @@ public class GuiPC extends GuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		
-		mc.renderEngine.func_98187_b("/pixelmon/gui/pcPartyBox.png");
+		mc.renderEngine.bindTexture("/pixelmon/gui/pcPartyBox.png");
 		drawTexturedModalRect(width / 2 - 91, height / 6 + 151, 0, 0, 182, 29);
 		int i = 0;
-		mc.renderEngine.func_98187_b("/pixelmon/gui/pcBox.png");
+		mc.renderEngine.bindTexture("/pixelmon/gui/pcBox.png");
 		drawTexturedModalRect(width / 2 - 91, height / 6, 0, 0, 182, 141);
 		drawTexturedModalRect(trashX, trashY, 0, 256 - 32, 32, 32);
-		mc.renderEngine.func_98187_b("/pixelmon/image/pokechecker.png");
+		mc.renderEngine.bindTexture("/mods/pixelmon/textures/items/pokechecker.png");
 		drawImageQuad(checkX, checkY, 32f, 32f, 0f, 0f, 1f, 1f);
 		for (int a = 0; a < pcSlots[boxNumber].length; a++) {
 			SlotPCPC slot = pcSlots[boxNumber][a];
@@ -238,12 +238,12 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
-				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+				mc.renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 			else
-				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+				mc.renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 			drawImageQuad(slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
-				mc.renderEngine.func_98187_b("/pixelmon/image/helditem.png");
+				mc.renderEngine.bindTexture("/pixelmon/image/helditem.png");
 				drawImageQuad(slot.x + 22, slot.y + 22, 8, 8, 0, 0, 1f, 1f);
 			}
 		}
@@ -261,12 +261,12 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
-				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+				mc.renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 			else
-				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+				mc.renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 			drawImageQuad(slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
-				mc.renderEngine.func_98187_b("/pixelmon/image/helditem.png");
+				mc.renderEngine.bindTexture("/pixelmon/image/helditem.png");
 				drawImageQuad(slot.x + 18, slot.y + 22, 8, 8, 0, 0, 1f, 1f);
 			}
 		}
@@ -280,19 +280,19 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
-				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+				mc.renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 			else
-				mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+				mc.renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 			drawImageQuad(mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (mouseSlot.pokemonData.heldItemId != -1) {
-				mc.renderEngine.func_98187_b("/pixelmon/image/pitems.png");
+				mc.renderEngine.bindTexture("/pixelmon/image/pitems.png");
 				drawImageQuad(mouseSlot.x + 22, mouseSlot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
 			}
 			if (p.nickname == null || p.nickname.equalsIgnoreCase("")) {
 				p.nickname = p.name;
 			}
 			fontRenderer.drawString(p.nickname, mouseSlot.x + 30, mouseSlot.y + 10, 0xFFFFFF);
-			Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/gui/pixelmonOverlay.png");
+			Minecraft.getMinecraft().renderEngine.bindTexture("/pixelmon/gui/pixelmonOverlay.png");
 			if (p.isMale)
 				drawTexturedModalRect(fontRenderer.getStringWidth(p.nickname) + mouseSlot.x + 32, mouseSlot.y + 10, 33, 208, 5, 9);
 			else

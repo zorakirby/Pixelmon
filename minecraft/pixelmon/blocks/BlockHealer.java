@@ -28,7 +28,8 @@ public class BlockHealer extends BlockContainer {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void func_94332_a(IconRegister par1IconRegister) {
+	public void registerIcons(IconRegister par1IconRegister) {
+		blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
 	}
 	
 	@Override

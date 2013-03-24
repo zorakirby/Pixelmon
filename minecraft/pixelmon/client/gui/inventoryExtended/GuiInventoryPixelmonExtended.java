@@ -89,18 +89,18 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 	public void drawButtonContainer() {
 		if (pixelmonMenuOpen) {
-			mc.renderEngine.func_98187_b("/pixelmon/gui/pokecheckerPopup.png");
+			mc.renderEngine.bindTexture("/pixelmon/gui/pokecheckerPopup.png");
 			this.drawTexturedModalRect(menuX - 73, menuY - 10, 0, 0, 67, 76);
 		}
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
-		this.mc.renderEngine.func_98187_b("/gui/inventory.png");
+		this.mc.renderEngine.bindTexture("/gui/inventory.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		this.mc.renderEngine.func_98187_b("/pixelmon/gui/pixelmonOverlayExtended2.png");
+		this.mc.renderEngine.bindTexture("/pixelmon/gui/pixelmonOverlayExtended2.png");
 		this.drawTexturedModalRect(width / 2 - 130, height / 2 - 83, 0, 0, 46, 167);
 
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
@@ -132,20 +132,20 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 					numString = "" + p.getNationalPokedexNumber();
 
 				if (p.isShiny)
-					mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+					mc.renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 				else
-					mc.renderEngine.func_98187_b("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+					mc.renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 				drawImageQuad(slot.x, slot.y, 16f, 16f, 0f, 0f, 1f, 1f);
 
 				if (p.heldItemId != -1) {
 					ItemHeld heldItem = (ItemHeld) PixelmonItemsHeld.getHeldItem(p.heldItemId);
 					if (heldItem != null) {
 						Icon icon = heldItem.getIconIndex(new ItemStack(heldItem));
-						mc.renderEngine.func_98187_b("/gui/items.png");
+						mc.renderEngine.bindTexture("/gui/items.png");
 						drawIcon(slot.heldItemX, slot.heldItemY, icon, 16, 16);
 					}
 				} else {
-					Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/image/helditem.png");
+					Minecraft.getMinecraft().renderEngine.bindTexture("/pixelmon/image/helditem.png");
 					drawImageQuad(slot.heldItemX + 3, slot.heldItemY + 3, 10f, 10f, 0f, 0f, 1f, 1f);
 				}
 			}
@@ -161,7 +161,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 						drawPokemonInfo(mouseX, mouseY, s);
 					}
 					if (s.getHeldItemBounds().contains(mouseX, mouseY) && heldItemQualifies(s)) {
-						mc.renderEngine.func_98187_b("/pixelmon/gui/pixelmonOverlayExtended2.png");
+						mc.renderEngine.bindTexture("/pixelmon/gui/pixelmonOverlayExtended2.png");
 						drawImageQuad(s.heldItemX - 2, s.heldItemY - 2, 20, 20, 58f / 256f, 185f / 256f, 78f / 256f, 205f / 256f);
 					}
 				}
@@ -183,14 +183,14 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	public void drawIcon(int x, int y, Icon par3Icon, int width, int height) {
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV((double) (x + 0), (double) (y + height), (double) this.zLevel, (double) par3Icon.func_94209_e(),
-				(double) par3Icon.func_94210_h());
-		tessellator.addVertexWithUV((double) (x + width), (double) (y + height), (double) this.zLevel, (double) par3Icon.func_94212_f(),
-				(double) par3Icon.func_94210_h());
-		tessellator.addVertexWithUV((double) (x + width), (double) (y + 0), (double) this.zLevel, (double) par3Icon.func_94212_f(),
-				(double) par3Icon.func_94206_g());
-		tessellator.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) this.zLevel, (double) par3Icon.func_94209_e(),
-				(double) par3Icon.func_94206_g());
+		tessellator.addVertexWithUV((double) (x + 0), (double) (y + height), (double) this.zLevel, (double) par3Icon.getMinU(),
+				(double) par3Icon.getMaxV());
+		tessellator.addVertexWithUV((double) (x + width), (double) (y + height), (double) this.zLevel, (double) par3Icon.getMaxU(),
+				(double) par3Icon.getMaxV());
+		tessellator.addVertexWithUV((double) (x + width), (double) (y + 0), (double) this.zLevel, (double) par3Icon.getMaxU(),
+				(double) par3Icon.getMinV());
+		tessellator.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) this.zLevel, (double) par3Icon.getMinU(),
+				(double) par3Icon.getMinV());
 		tessellator.draw();
 	}
 
@@ -214,7 +214,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		if (!p.nickname.equals(""))
 			displayName = p.nickname;
 		fontRenderer.drawString(displayName, s.x - 82, s.y, 0xFFFFFF);
-		Minecraft.getMinecraft().renderEngine.func_98187_b("/pixelmon/gui/pixelmonOverlay.png");
+		Minecraft.getMinecraft().renderEngine.bindTexture("/pixelmon/gui/pixelmonOverlay.png");
 		if (p.isMale)
 			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 208, 5, 9);
 		else

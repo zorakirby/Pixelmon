@@ -268,7 +268,7 @@ public class PixelmonItems {
 		bootsAluminiumID = cfg.get("item", "Aluminium Boots", 10131).getInt();
 
 		pokeDex = new ItemPokedex(pokeDexID).setMaxStackSize(1);
-		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rareCandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
+		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rarecandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
 		potion = new ItemPotion(potionID, EnumPotions.Potion, "Potion");
 		superPotion = new ItemPotion(superPotionID, EnumPotions.SuperPotion, "Super Potion");
 		hyperPotion = new ItemPotion(hyperPotionID, EnumPotions.HyperPotion, "Hyper Potion");

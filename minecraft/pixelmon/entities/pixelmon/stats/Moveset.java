@@ -8,124 +8,123 @@ import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.database.DatabaseMoves;
 
-public class Moveset extends AbstractList<Attack>
-implements List<Attack>, RandomAccess, Cloneable
-{
+public class Moveset extends AbstractList<Attack> implements List<Attack>,
+		RandomAccess, Cloneable {
 	private Attack[] attacks = new Attack[4];
-	
-	public Moveset() {}
-	
-	public Moveset(int index, Attack a)
-	{
+
+	public Moveset() {
+	}
+
+	public Moveset(int index, Attack a) {
 		attacks[0] = a;
 	}
-	
-	public Attack get(int index) 
-	{
-		if (index < 0 || index > 3) return null;
+
+	public Attack get(int index) {
+		if (index < 0 || index > 3)
+			return null;
 		return attacks[index];
 	}
 
-	public boolean add(Attack a)
-	{
-		if (size() >= 4) return false;
+	public boolean add(Attack a) {
+		if (size() >= 4)
+			return false;
 		attacks[size()] = a;
 		return true;
 	}
-	
-	public Attack set(int index, Attack a)
-	{
+
+	public Attack set(int index, Attack a) {
 		Attack retval = attacks[index];
 		attacks[index] = a;
 		return retval;
 	}
-	
-	public void swap(int index, int index2)
-	{
+
+	public void swap(int index, int index2) {
 		Attack a = attacks[index];
 		attacks[index] = attacks[index2];
 		attacks[index2] = a;
 	}
-	
-	public Attack remove(int index)
-	{
+
+	public Attack remove(int index) {
 		Attack a = get(index);
 		set(index, null);
 		return a;
 	}
-	
-	public boolean remove(Object o)
-	{
-		if(!(o instanceof Attack))
+
+	public boolean remove(Object o) {
+		if (!(o instanceof Attack))
 			return false;
-		for (int i = 0; i < this.size(); i++){
-			if (attacks[i] == (Attack)o) {
+		for (int i = 0; i < this.size(); i++) {
+			if (attacks[i] == (Attack) o) {
 				attacks[i] = null;
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public int size() 
-	{
+
+	public int size() {
 		int count = 0;
-		for (int i = 0; i < 4; i++){
-			if(attacks[i] != null) count++;
+		for (int i = 0; i < 4; i++) {
+			if (attacks[i] != null)
+				count++;
 		}
 		return count;
 	}
-	
-	public boolean isEmpty()
-	{
+
+	public boolean isEmpty() {
 		return size() == 0;
 	}
-	
-	public boolean isAt(int index, Attack a)
-	{
-		if (isEmpty()) return false;
-		if (!contains(a)) return false;
+
+	public boolean isAt(int index, Attack a) {
+		if (isEmpty())
+			return false;
+		if (!contains(a))
+			return false;
 		return attacks[index] == a;
 	}
-	
-	public boolean contains(Object o)
-	{
-		if (isEmpty()) return false;
-		if (o instanceof Attack){
-			for (int i = 0; i < this.size(); i ++){
-				if (attacks[i] == (Attack)o) return true;
+
+	public boolean contains(Object o) {
+		if (isEmpty())
+			return false;
+		if (o instanceof Attack) {
+			for (int i = 0; i < this.size(); i++) {
+				if (attacks[i] == (Attack) o)
+					return true;
 			}
 		}
 		return false;
 	}
-	
-	public void clear()
-	{
+
+	public void clear() {
 		attacks = new Attack[4];
 	}
 
 	public void writeToNBT(NBTTagCompound var1) {
 		var1.setInteger("PixelmonNumberMoves", size());
-		for (int i =0; i < size(); i++){
-			var1.setString("PixelmonMoveName" + i,get(i).baseAttack.attackName);
-			var1.setInteger("PixelmonMoveType" + i,get(i).baseAttack.attackType.getIndex());
-			var1.setBoolean("PixelmonMoveSTAB" + i,get(i).STAB);
-			var1.setInteger("PixelmonMovePP" + i,get(i).pp);
-			var1.setInteger("PixelmonMovePPBase" + i,get(i).ppBase);
-			var1.setInteger("PixelmonMovePPMax" + i,get(i).baseAttack.ppMax);
+		for (int i = 0; i < size(); i++) {
+			var1.setString("PixelmonMoveName" + i, get(i).baseAttack.attackName);
+			var1.setInteger("PixelmonMoveType" + i,
+					get(i).baseAttack.attackType.getIndex());
+			var1.setBoolean("PixelmonMoveSTAB" + i, get(i).STAB);
+			var1.setInteger("PixelmonMovePP" + i, get(i).pp);
+			var1.setInteger("PixelmonMovePPBase" + i, get(i).ppBase);
+			var1.setInteger("PixelmonMovePPMax" + i, get(i).baseAttack.ppMax);
 		}
 	}
 
 	public void readFromNBT(NBTTagCompound var1) {
 		clear();
 		int numMoves = var1.getInteger("PixelmonNumberMoves");
-		for (int i=0; i < numMoves; i++){
-			Attack a = DatabaseMoves.getAttack(var1.getString("PixelmonMoveName" + i));
-			a.STAB = var1.getBoolean("PixelmonMoveSTAB" + i);
-			a.pp = var1.getInteger("PixelmonMovePP" + i);
-			a.ppBase = var1.getInteger("PixelmonMovePPBase" + i);
+		for (int i = 0; i < numMoves; i++) {
+			Attack a = DatabaseMoves.getAttack(var1
+					.getString("PixelmonMoveName" + i));
+			if (var1.hasKey("PixelmonMoveSTAB" + i))
+				a.STAB = var1.getBoolean("PixelmonMoveSTAB" + i);
+			if (var1.hasKey("PixelmonMovePP" + i))
+				a.pp = var1.getInteger("PixelmonMovePP" + i);
+			if (var1.hasKey("PixelmonMovePPBase" + i))
+				a.ppBase = var1.getInteger("PixelmonMovePPBase" + i);
 			add(a);
 		}
 	}
 }
-	

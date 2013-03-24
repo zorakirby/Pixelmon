@@ -2,12 +2,15 @@ package pixelmon.entities.pixelmon.stats;
 
 import java.util.Random;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
 import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class FriendShip {
 	private static final int maxFriendship = 255;
-	public int friendship = 0;
+	private static final int minFriendship = 0;
+	private int friendship = 0;
 	private EntityPixelmon pixelmon;
 	private Random rand = new Random();
 	boolean luxuryBall = false;
@@ -18,6 +21,22 @@ public class FriendShip {
 
 	public void initFromCapture() {
 		friendship = pixelmon.baseStats.baseFriendship;
+	}
+
+	public void increaseFriendship(int amount) {
+		friendship += amount;
+		if (friendship > maxFriendship)
+			friendship = maxFriendship;
+	}
+
+	public void decreaseFriendship(int amount) {
+		friendship -= amount;
+		if (friendship < minFriendship)
+			friendship = minFriendship;
+	}
+
+	public int getFriendship() {
+		return friendship;
 	}
 
 	public void initFromEgg() {
@@ -62,18 +81,22 @@ public class FriendShip {
 	}
 
 	public void hurtByOwner() {
-		friendship -= 20;
+		decreaseFriendship(20);
 	}
 
 	public void onLevelUp() {
-		friendship += rand.nextInt(2) + 5 + luxuryBonus();
+		increaseFriendship(rand.nextInt(2) + 5 + luxuryBonus());
 	}
 
 	public void onFaint() {
-		friendship -= 2;
+		decreaseFriendship(2);
 	}
 
 	public void captureLuxuryBall() {
 		this.luxuryBall = true;
+	}
+
+	public void setFriendship(int i) {
+		friendship = i;
 	}
 }

@@ -14,7 +14,7 @@ public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenera
 	public boolean generate(World world, Random rand, int x, int y, int z) {
 		if (world.getBlockId(x, y + 1, z) == Block.lavaStill.blockID) {
 			if (world.getBlockId(x, y, z) != Block.lavaStill.blockID) {
-				world.setBlockAndMetadataWithNotify(x, y, z, PixelmonBlocks.fireStoneOre.blockID, 0, 0);
+				world.setBlock(x, y, z, PixelmonBlocks.fireStoneOre.blockID, 0, 0);
 				return true;
 			}
 		}

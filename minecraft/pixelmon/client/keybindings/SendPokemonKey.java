@@ -18,7 +18,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class SendPokemonKey extends KeyHandler {
 
 	public SendPokemonKey() {
-		super(new KeyBinding[] { new KeyBinding("Send/Recieve Pixelmon", Keyboard.KEY_P) }, new boolean[] { false });
+		super(new KeyBinding[] { new KeyBinding("Send/Recieve Pixelmon", Keyboard.KEY_R) }, new boolean[] { false });
 	}
 
 	@Override

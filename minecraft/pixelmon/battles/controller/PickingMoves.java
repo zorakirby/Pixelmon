@@ -19,19 +19,6 @@ public class PickingMoves {
 			p.willTryFlee = false;
 			p.isSwitching = false;
 			BattleParticipant foe = bc.otherParticipant(p);
-			for (int i = 0; i < p.currentPokemon().status.size(); i++) {
-				StatusBase e = p.currentPokemon().status.get(i);
-				try {
-					if (!e.canAttackThisTurn(p.currentPokemon(), foe.currentPokemon())) {
-						p.canAttack = false;
-						p.attackList.add("None");
-						break;
-					}
-				} catch (Exception exc) {
-					System.out.println("Error calculating canAttackThisTurn for " + e.type.toString());
-					System.out.println(exc.getStackTrace());
-				}
-			}
 			if (p.canAttack && (p.attack == null || !p.attack.doesPersist(p.currentPokemon()))) {
 				p.attack = p.getMove();
 				if (p.attack != null)
