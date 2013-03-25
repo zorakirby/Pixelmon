@@ -1,6 +1,7 @@
 package pixelmon.blocks.apricornTrees;
 
 import net.minecraft.world.World;
+import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import pixelmon.config.PixelmonBlocksApricornTrees;
@@ -20,7 +21,7 @@ public class ApricornBonemealEvent {
 				|| Id == trees.apricornTreeRed.blockID) {
 			if (!world.isRemote && world.getBlockMetadata(event.X, event.Y, event.Z) != BlockApricornTree.numStages - 1) {
 				world.setBlockMetadataWithNotify(event.X, event.Y, event.Z, world.getBlockMetadata(event.X, event.Y, event.Z) + 1, 2);
-				event.entityPlayer.inventory.getCurrentItem().stackSize--;
+				event.setResult(Result.ALLOW);
 			}
 		}
 	}
