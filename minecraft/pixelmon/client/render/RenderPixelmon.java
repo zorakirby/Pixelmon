@@ -360,12 +360,21 @@ public class RenderPixelmon extends RenderLiving {
 			float f5 = ((EntityPixelmon) entityLiving).getHealth();
 			float f6 = ((EntityPixelmon) entityLiving).getMaxHealth();
 			float f8 = 50F * (f5 / f6);
-			tessellator.setColorRGBA_F(1.0F, 0.0F, 0.0F, 1.0F);
+			
+			
+			tessellator.setColorRGBA_F(0.5F, 0.5F, 0.5F, 1.0F);
 			tessellator.addVertex(-25F + f8, -7 + byte0, 0.0D);
 			tessellator.addVertex(-25F + f8, -6 + byte0, 0.0D);
 			tessellator.addVertex(25D, -6 + byte0, 0.0D);
 			tessellator.addVertex(25D, -7 + byte0, 0.0D);
-			tessellator.setColorRGBA_F(0.0F, 1.0F, 0.0F, 1.0F);
+			
+			if(f5 <= (f6 / 5))
+				tessellator.setColorRGBA_F(0.8F, 0.0F, 0.0F, 1.0F);
+			else if(f5 <= (f6 / 2))
+				tessellator.setColorRGBA_F(1.0F, 1.0F, 0.2F, 1.0F);
+			else
+				tessellator.setColorRGBA_F(0.2F, 1F, 0.2F, 1.0F);
+			
 			tessellator.addVertex(-25D, -7 + byte0, 0.0D);
 			tessellator.addVertex(-25D, -6 + byte0, 0.0D);
 			tessellator.addVertex(f8 - 25F, -6 + byte0, 0.0D);
