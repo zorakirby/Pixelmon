@@ -119,6 +119,7 @@ public enum EnumPokemon {
 	Starmie("Starmie"),
 	Swinub("Swinub"),
 	Tangela("Tangela"),
+	Tauros("Tauros"),
 	Tentacool("Tentacool"),
 	Tentacruel("Tentacruel"),
 	Trapinch("Trapinch"),
