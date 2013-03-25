@@ -614,7 +614,7 @@ public class GuiBattle extends GuiContainer {
 		tessellator.startDrawingQuads();
 
 		int barWidth = width - 6;
-		tessellator.setColorRGBA_F(1.0F, 0.2F, 0.2F, 1.0F);
+		tessellator.setColorRGBA_F(0.4F, 0.4F, 0.4F, 1.0F);
 		tessellator.addVertex(x, y, 0.0);
 		tessellator.addVertex(x, y + height, 0.0);
 		tessellator.addVertex(x + barWidth, y + height, 0.0);
@@ -626,7 +626,13 @@ public class GuiBattle extends GuiContainer {
 			// Set Width of bar
 		int CurWidth = (int)(fWidth) - 6;
 		
-		tessellator.setColorRGBA_F(0.2F, 1F, 0.2F, 1.0F);
+		if(p.health <= (p.hp / 5))
+			tessellator.setColorRGBA_F(0.8F, 0.0F, 0.0F, 1.0F);
+		else if(p.health <= (p.hp / 2))
+			tessellator.setColorRGBA_F(1.0F, 1.0F, 0.4F, 1.0F);
+		else
+			tessellator.setColorRGBA_F(0.2F, 1F, 0.2F, 1.0F);
+		
 		tessellator.addVertex(x, y, 0.0);
 		tessellator.addVertex(x, y + height, 0.0);
 		tessellator.addVertex(x + CurWidth, y + height, 0.0);
