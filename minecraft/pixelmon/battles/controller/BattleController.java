@@ -86,6 +86,12 @@ public class BattleController {
 
 	public void update() {
 		try {
+			if (isPvP()) {
+				for (BattleParticipant p : participants) {
+					if (((PlayerParticipant) p).player == null)
+						endBattleWithoutXP();
+				}
+			}
 			if (isWaiting() || paused)
 				return;
 			int tickTop;
@@ -130,6 +136,13 @@ public class BattleController {
 			System.out.println("Caught error in battle.  Continuing...");
 			e.printStackTrace();
 		}
+	}
+
+	private boolean isPvP() {
+		for (BattleParticipant p : participants)
+			if (!(p instanceof PlayerParticipant))
+				return false;
+		return true;
 	}
 
 	private void checkAndReplaceFaintedPokemon() {
@@ -196,7 +209,7 @@ public class BattleController {
 					System.out.println(exc.getStackTrace());
 				}
 			}
-			
+
 			if (p.canAttack)
 				p.attack.use(p.currentPokemon(), otherParticipant(p).currentPokemon(), p.attackList, otherParticipant(p).attackList);
 		}
