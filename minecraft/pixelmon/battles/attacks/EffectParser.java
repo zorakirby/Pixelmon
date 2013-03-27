@@ -60,10 +60,10 @@ public class EffectParser {
 
 		if (StatsType.isStatsEffect(effectTypeString))
 			effect = new StatsEffect(StatsType.getStatsEffect(effectTypeString), values[0].value, modifierStoreContains(ModifierType.User));
-		if (effectTypeString.equalsIgnoreCase("remove"))
+		else if (effectTypeString.equalsIgnoreCase("remove"))
 			effect = new RemoveEffect(StatusType.getStatusEffect(ValueString));
-
-		effect = EffectRegistry.getEffect(effectTypeString, values);
+		else
+			effect = EffectRegistry.getEffect(effectTypeString, values);
 
 		// if (SpecialAttackType.getSpecialAttackType(effectTypeString) ==
 		// SpecialAttackType.MilkDrink)
