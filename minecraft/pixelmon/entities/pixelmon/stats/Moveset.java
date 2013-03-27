@@ -8,8 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.database.DatabaseMoves;
 
-public class Moveset extends AbstractList<Attack> implements List<Attack>,
-		RandomAccess, Cloneable {
+public class Moveset extends AbstractList<Attack> implements List<Attack>, RandomAccess, Cloneable {
 	private Attack[] attacks = new Attack[4];
 
 	public Moveset() {
@@ -103,8 +102,7 @@ public class Moveset extends AbstractList<Attack> implements List<Attack>,
 		var1.setInteger("PixelmonNumberMoves", size());
 		for (int i = 0; i < size(); i++) {
 			var1.setString("PixelmonMoveName" + i, get(i).baseAttack.attackName);
-			var1.setInteger("PixelmonMoveType" + i,
-					get(i).baseAttack.attackType.getIndex());
+			var1.setInteger("PixelmonMoveType" + i, get(i).baseAttack.attackType.getIndex());
 			var1.setBoolean("PixelmonMoveSTAB" + i, get(i).STAB);
 			var1.setInteger("PixelmonMovePP" + i, get(i).pp);
 			var1.setInteger("PixelmonMovePPBase" + i, get(i).ppBase);
@@ -116,15 +114,16 @@ public class Moveset extends AbstractList<Attack> implements List<Attack>,
 		clear();
 		int numMoves = var1.getInteger("PixelmonNumberMoves");
 		for (int i = 0; i < numMoves; i++) {
-			Attack a = DatabaseMoves.getAttack(var1
-					.getString("PixelmonMoveName" + i));
-			if (var1.hasKey("PixelmonMoveSTAB" + i))
-				a.STAB = var1.getBoolean("PixelmonMoveSTAB" + i);
-			if (var1.hasKey("PixelmonMovePP" + i))
-				a.pp = var1.getInteger("PixelmonMovePP" + i);
-			if (var1.hasKey("PixelmonMovePPBase" + i))
-				a.ppBase = var1.getInteger("PixelmonMovePPBase" + i);
-			add(a);
+			Attack a = DatabaseMoves.getAttack(var1.getString("PixelmonMoveName" + i));
+			if (a != null) {
+				if (var1.hasKey("PixelmonMoveSTAB" + i))
+					a.STAB = var1.getBoolean("PixelmonMoveSTAB" + i);
+				if (var1.hasKey("PixelmonMovePP" + i))
+					a.pp = var1.getInteger("PixelmonMovePP" + i);
+				if (var1.hasKey("PixelmonMovePPBase" + i))
+					a.ppBase = var1.getInteger("PixelmonMovePPBase" + i);
+				add(a);
+			}
 		}
 	}
 }

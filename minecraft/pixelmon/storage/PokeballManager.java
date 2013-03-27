@@ -32,13 +32,14 @@ public class PokeballManager {
 	}
 
 	public PlayerStorage getPlayerStorage(EntityPlayerMP owner) {
-
 		for (PlayerStorage p : playerPokemonList) {
 			if (p.player != null && owner != null && p.player.username.equals(owner.username))
 				return p;
 		}
-		loadPlayer(owner);
-		return getPlayerStorage(owner);
+		if (loadPlayer(owner))
+			return getPlayerStorage(owner);
+		else
+			return null;
 	}
 
 	public EntityPlayerMP getPlayerFromName(String name) {
@@ -49,9 +50,9 @@ public class PokeballManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void loadPlayer(EntityPlayerMP player) {
+	public boolean loadPlayer(EntityPlayerMP player) {
 		if (player == null)
-			return;
+			return false;
 		File saveDirPath = new File(getSaveFolder(player));
 		if (!saveDirPath.exists())
 			saveDirPath.mkdirs();
@@ -62,14 +63,17 @@ public class PokeballManager {
 				p.readFromNBT(CompressedStreamTools.read(new DataInputStream(new FileInputStream(playerFile))));
 			} catch (FileNotFoundException e) {
 				System.out.println("Couldn't read player data file for " + player.username);
+				return false;
 			} catch (IOException e) {
 				System.out.println("Couldn't read player data file for " + player.username);
+				return false;
 			}
 			playerPokemonList.add(p);
 		} else {
 			PlayerStorage p = new PlayerStorage(player);
 			playerPokemonList.add(p);
 		}
+		return true;
 	}
 
 	public void save() {
