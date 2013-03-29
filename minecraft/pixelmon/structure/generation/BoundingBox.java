@@ -1,4 +1,4 @@
-package pixelmon.structure;
+package pixelmon.structure.generation;
 
 public class BoundingBox
 {

@@ -2,6 +2,7 @@ package pixelmon.battles.attacks.specialAttacks;
 
 import java.util.ArrayList;
 
+import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.EffectBase;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusType;
@@ -17,7 +18,7 @@ public class RemoveEffect extends EffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(Attack attack, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		for (StatusBase e : target.status) {
 			if (e.type == removeType) {
 				target.status.remove(e);

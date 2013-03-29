@@ -11,11 +11,11 @@ public class SchematicImporter {
 	/**
 	 * Blocks
 	 */
-	int[][][] blocks;
+	public int[][][] blocks;
 	/**
 	 * Blocks metadata
 	 */
-	int[][][] blockData;
+	public int[][][] blockData;
 	/**
 	 * Paintings, Containers, etc
 	 */

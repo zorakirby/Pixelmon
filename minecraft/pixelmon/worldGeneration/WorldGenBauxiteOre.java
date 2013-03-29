@@ -13,10 +13,10 @@ import pixelmon.config.PixelmonConfig;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenBauxiteOre extends WorldGenerator implements IWorldGenerator {
-	WorldGenMinable bauxiteGen = new WorldGenMinable(PixelmonBlocks.bauxite.blockID, 10);
+	WorldGenMinable bauxiteGen = new WorldGenMinable(PixelmonBlocks.bauxite.blockID, 8);
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 5; i++) {
 			int xPos = random.nextInt(2) + chunkX * 16;
 			int zPos = random.nextInt(4) + chunkZ * 16;
 			int yPos = random.nextInt(30) + 30;

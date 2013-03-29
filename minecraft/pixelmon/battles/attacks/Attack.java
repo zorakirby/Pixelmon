@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
- 
+
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
@@ -105,7 +105,7 @@ public class Attack {
 				EffectBase e = baseAttack.effects.get(j);
 				if (e instanceof StatsEffect) {
 					try {
-						e.ApplyEffect(user, target, attackList);
+						e.ApplyEffect(this, user, target, attackList);
 					} catch (Exception exc) {
 						System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
 						System.out.println(exc.getStackTrace());
@@ -116,7 +116,7 @@ public class Attack {
 							StatusBase et = target.status.get(i);
 							try {
 								if (!et.stopsStatusChange())
-									e.ApplyEffect(user, target, attackList);
+									e.ApplyEffect(this, user, target, attackList);
 							} catch (Exception exc) {
 								System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
 								System.out.println(exc.getStackTrace());
@@ -124,7 +124,7 @@ public class Attack {
 						}
 					} else {
 						try {
-							e.ApplyEffect(user, target, attackList);
+							e.ApplyEffect(this, user, target, attackList);
 						} catch (Exception exc) {
 							System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
 							System.out.println(exc.getStackTrace());
@@ -190,7 +190,7 @@ public class Attack {
 							if (e instanceof Flinch)
 								flinched = ((Flinch) e).ApplyEffect(user, target, this);
 						} else if (e instanceof RemoveEffect)
-							e.ApplyEffect(user, target, attackList);
+							e.ApplyEffect(this, user, target, attackList);
 					}
 				} catch (Exception exc) {
 					System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);

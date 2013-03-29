@@ -1,4 +1,4 @@
-package pixelmon.structure;
+package pixelmon.structure.generation;
 
 import java.util.Random;
 
@@ -8,13 +8,13 @@ import net.minecraft.world.gen.structure.StructureComponent;
 
 abstract class StructureScattered extends StructureComponent {
 	/** The size of the bounding box for this feature in the X axis */
-	protected final int scatteredFeatureSizeX;
+	public final int scatteredFeatureSizeX;
 
 	/** The size of the bounding box for this feature in the Y axis */
-	protected final int scatteredFeatureSizeY;
+	public final int scatteredFeatureSizeY;
 
 	/** The size of the bounding box for this feature in the Z axis */
-	protected final int scatteredFeatureSizeZ;
+	public final int scatteredFeatureSizeZ;
 	protected int field_74936_d = -1;
 
 	protected StructureScattered(Random par1Random, int x, int y, int z, int width, int height, int length) {
@@ -58,5 +58,13 @@ abstract class StructureScattered extends StructureComponent {
 				return true;
 			}
 		}
+	}
+
+	public void setBoundingBoxBase(int newHeight) {
+		int displacementAmount = newHeight - boundingBox.minY;
+		if (displacementAmount == 0)
+			return;
+		boundingBox.minY = newHeight;
+		boundingBox.maxY -= displacementAmount;
 	}
 }

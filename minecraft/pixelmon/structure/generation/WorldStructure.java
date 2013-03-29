@@ -1,4 +1,4 @@
-package pixelmon.structure;
+package pixelmon.structure.generation;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;

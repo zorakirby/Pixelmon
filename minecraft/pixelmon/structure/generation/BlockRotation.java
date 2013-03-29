@@ -1,4 +1,4 @@
-package pixelmon.structure;
+package pixelmon.structure.generation;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTrapDoor;

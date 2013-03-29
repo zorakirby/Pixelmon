@@ -13,6 +13,7 @@ public abstract class EffectBase {
 	public ArrayList<ModifierBase> modifiers = new ArrayList<ModifierBase>();
 	private boolean persists;
 	public int value = -1, value2 = -1;
+	public Attack parent;
 
 	public EffectBase(ApplyStage applyStage, boolean persists, int... values) {
 		this.applyStage = applyStage;
@@ -23,7 +24,7 @@ public abstract class EffectBase {
 		modifiers.add(modifier);
 	}
 
-	public abstract void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception;
+	public abstract void ApplyEffect(Attack a, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception;
 
 	public enum ApplyStage {
 		Start, During, End, Priority

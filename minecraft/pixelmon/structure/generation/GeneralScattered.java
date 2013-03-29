@@ -1,6 +1,8 @@
-package pixelmon.structure;
+package pixelmon.structure.generation;
 
 import java.util.Random;
+
+import pixelmon.structure.SchematicImporter;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.Facing;

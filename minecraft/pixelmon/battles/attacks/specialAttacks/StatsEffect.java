@@ -2,6 +2,7 @@ package pixelmon.battles.attacks.specialAttacks;
 
 import java.util.ArrayList;
 
+import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.EffectBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -20,7 +21,7 @@ public class StatsEffect extends EffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		EntityPixelmon effected = target;
 		if (isUser)
 			effected = user;

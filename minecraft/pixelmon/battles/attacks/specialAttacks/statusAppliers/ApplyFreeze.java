@@ -2,7 +2,6 @@ package pixelmon.battles.attacks.specialAttacks.statusAppliers;
 
 import java.util.ArrayList;
 
-import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.status.Freeze;
 import pixelmon.battles.status.StatusBase;
@@ -14,7 +13,7 @@ import pixelmon.enums.EnumType;
 public class ApplyFreeze extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			for (StatusBase e : target.status)
 				if (e.type == StatusType.Freeze) {

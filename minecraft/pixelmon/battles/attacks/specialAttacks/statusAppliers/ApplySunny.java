@@ -8,12 +8,11 @@ import pixelmon.battles.status.StatusType;
 import pixelmon.battles.status.Sunny;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumType;
 
 public class ApplySunny extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			if (!user.getOwner().worldObj.isDaytime()) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "There's no sun at night!");

@@ -6,7 +6,6 @@ import pixelmon.battles.attacks.specialAttacks.ChanceModifier;
 import pixelmon.battles.attacks.specialAttacks.ModifierType;
 import pixelmon.battles.attacks.specialAttacks.RemoveEffect;
 import pixelmon.battles.attacks.specialAttacks.StatsEffect;
-import pixelmon.battles.attacks.specialAttacks.basic.Restore;
 import pixelmon.battles.status.StatusType;
 import pixelmon.entities.pixelmon.stats.StatsType;
 
