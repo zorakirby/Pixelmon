@@ -11,7 +11,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public class ApplyYawn extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(Attack attack, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (!target.hasStatus(StatusType.Yawn) && !target.hasStatus(StatusType.Sleep)) {
 			target.status.add(new Yawn());
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " became drowsy!");

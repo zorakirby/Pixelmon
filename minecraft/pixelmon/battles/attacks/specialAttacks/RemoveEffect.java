@@ -18,7 +18,7 @@ public class RemoveEffect extends EffectBase {
 	}
 
 	@Override
-	public void ApplyEffect(Attack attack, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
 		for (StatusBase e : target.status) {
 			if (e.type == removeType) {
 				target.status.remove(e);

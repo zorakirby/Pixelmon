@@ -13,7 +13,7 @@ import pixelmon.enums.EnumType;
 public class ApplyPoisonBadly extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(Attack attack, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		if (checkChance()) {
 			if (target.type.contains(EnumType.Poison)) {
 				return;

@@ -11,7 +11,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public class ApplyTrickRoom extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(Attack attack, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
 		for (int i = 0; i < user.battleController.battleStatusList.size(); i++) {
 			if (user.battleController.battleStatusList.get(i).type == StatusType.TrickRoom) {
 				user.battleController.battleStatusList.remove(i);
