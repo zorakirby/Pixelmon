@@ -25,7 +25,7 @@ public class Sounds {
 	@SideOnly(Side.CLIENT)
 	public static boolean installMusic() {
 		System.out.println("Checking for music in " + Minecraft.getMinecraftDir() + "/resources/music/pixelmon");
-		File musicDir = new File("./resources/music/pixelmon");
+		File musicDir = new File(Minecraft.getMinecraftDir() + "/resources/music/pixelmon");
 		File[] musicFiles = musicDir.listFiles();
 		if (musicFiles == null || musicFiles.length == 0) {
 			System.out.println("No Music Files found!");

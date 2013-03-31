@@ -249,6 +249,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public void onUpdate() {
 		if (Pixelmon.freeze)
 			return;
+		if (posX > 1e20 || posX < -1e20 || posZ >1e20 || posZ < -1e20)
+			unloadEntity();
 		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
 				if (worldObj.getWorldTime() < 12000

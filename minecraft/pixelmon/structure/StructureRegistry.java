@@ -1,7 +1,5 @@
 package pixelmon.structure;
 
-import galileo.collada.nodes.newparam;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;

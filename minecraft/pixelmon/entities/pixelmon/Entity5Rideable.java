@@ -111,7 +111,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				this.motionZ *= 0.900000011920929D;
 				// this.motionY -= 0.02D;
 
-				if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
+				if (this.isCollidedHorizontally
+						&& this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
 					this.motionY = 0.30000001192092896D;
 				}
 
@@ -125,7 +126,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 				if (this.onGround) {
 					var3 = 0.54600006F;
-					int var4 = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+					int var4 = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1,
+							MathHelper.floor_double(this.posZ));
 
 					if (var4 > 0) {
 						var3 = Block.blocksList[var4].slipperiness * 0.91F;
@@ -155,7 +157,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 				if (this.onGround) {
 					var3 = 0.54600006F;
-					int var6 = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1, MathHelper.floor_double(this.posZ));
+					int var6 = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1,
+							MathHelper.floor_double(this.posZ));
 
 					if (var6 > 0) {
 						var3 = Block.blocksList[var6].slipperiness * 0.91F;
@@ -165,7 +168,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
 				if (this.worldObj.isRemote
-						&& (!this.worldObj.blockExists((int) this.posX, 0, (int) this.posZ) || !this.worldObj.getChunkFromBlockCoords((int) this.posX, (int) this.posZ).isChunkLoaded)) {
+						&& (!this.worldObj.blockExists((int) this.posX, 0, (int) this.posZ) || !this.worldObj.getChunkFromBlockCoords((int) this.posX,
+								(int) this.posZ).isChunkLoaded)) {
 					if (this.posY > 0.0D) {
 						this.motionY -= 0.01D;
 					} else {
@@ -218,12 +222,12 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			if (playerRiding != null) {
 				if (isFlying) {
 					moveForward += 5 * (float) playerRiding.acceleration * 500f / (float) stats.Speed;
-				}else if (isInWater() && baseStats.canSurf){
+				} else if (isInWater() && baseStats.canSurf) {
 					moveForward += 30 * (float) playerRiding.acceleration * 500f / (float) stats.Speed;
 				} else {
 					moveForward += playerRiding.acceleration;
 				}
-				rotationYaw += (float)playerRiding.rotation* 1.25f;
+				rotationYaw += (float) playerRiding.rotation * 1.25f;
 				playerRiding.rotation = 0;
 				playerRiding.acceleration = 0;
 				if (!isInWater() && playerRiding.jump > 0) {
@@ -235,13 +239,13 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						isFlying = true;
 					}
 				} else if (isInWater()) {
-					if (playerRiding.jump > 0){
+					if (playerRiding.jump > 0) {
 						if (baseStats.canSurf)
 							motionY += 0.03f;
 						else
-							motionY+=0.1f;
+							motionY += 0.1f;
 					}
-						
+
 					else if (playerRiding.jump < 0)
 						motionY -= 0.03f;
 				}
@@ -271,7 +275,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	@Override
 	public void updateRidden() {
 		super.updateRidden();
-		if (ridingHelper!=null)
+		if (ridingHelper != null)
 			ridingHelper.updateRidden();
 	}
 
@@ -287,24 +291,28 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		debugOffsetY = 0f;
 		debugOffsetZ = -0f;
 		if (this.riddenByEntity != null) {
-			Vec3 vec = Vec3.createVectorHelper(debugOffsetX + baseStats.ridingOffsetX, 0, debugOffsetZ + baseStats.ridingOffsetZ);
-			vec.rotateAroundY(-(this.renderYawOffset) * (float)Math.PI / 180.0f);
-			//System.out.println(rotationYaw +" " + renderYawOffset);
-			double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
-			double var3 = Math.sin((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
-			if (ep == null)
-				ep = EnumPokemon.get(getName());
-			this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY + this.getMountedYOffset() + baseStats.ridingOffsetY + height + debugOffsetY,
-					this.posZ + var3 + vec.zCoord);
+			try {
+				Vec3 vec = Vec3.createVectorHelper(debugOffsetX + baseStats.ridingOffsetX, 0, debugOffsetZ + baseStats.ridingOffsetZ);
+				vec.rotateAroundY(-(this.renderYawOffset) * (float) Math.PI / 180.0f);
+				// System.out.println(rotationYaw +" " + renderYawOffset);
+				double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
+				double var3 = Math.sin((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
+				if (ep == null)
+					ep = EnumPokemon.get(getName());
+				this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY + this.getMountedYOffset() + baseStats.ridingOffsetY + height
+						+ debugOffsetY, this.posZ + var3 + vec.zCoord);
+			} catch (Exception e) {
+				riddenByEntity.mountEntity(this);
+			}
 		}
 	}
 
 	public void doMoveEntity(double motionX, double motionY, double motionZ) {
 		super.moveEntity(motionX, motionY, motionZ);
 	}
-	
-	public void unloadEntity(){
-		if (riddenByEntity !=null){
+
+	public void unloadEntity() {
+		if (riddenByEntity != null) {
 			riddenByEntity.mountEntity(this);
 			((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
 		}
