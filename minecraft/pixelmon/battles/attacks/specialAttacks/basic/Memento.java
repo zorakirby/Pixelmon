@@ -16,8 +16,12 @@ public class Memento extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+			
+			target.battleStats.DecreaseAttack(2);
+			target.battleStats.DecreaseSpecialAttack(2);
+			user.setEntityHealth(0);
+		
+			return false;
 	}
 
 }
