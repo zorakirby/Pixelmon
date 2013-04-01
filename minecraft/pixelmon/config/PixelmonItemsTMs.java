@@ -24,7 +24,6 @@ public class PixelmonItemsTMs {
 			Connection conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select * from Moves where TMIndex!=-1 ORDER BY TMIndex");
-			ArrayList<Move> moves = new ArrayList<Move>();
 			while (rs.next()) {
 				try {
 					ItemTM item = new ItemTM(startId++, rs.getString("Name"), rs.getInt("TMIndex"), EnumType.parseType(rs.getString("Type")), false);

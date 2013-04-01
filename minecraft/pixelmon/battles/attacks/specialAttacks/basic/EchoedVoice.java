@@ -13,10 +13,11 @@ public class EchoedVoice extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList,
+			ArrayList<String> targetAttackList) throws Exception {
 		int power = 40;
 		for (int i = attackList.size() - 2; i >= 0; i--) {
-			if (attackList.get(i) == a.baseAttack.attackName)
+			if (attackList.get(i).equalsIgnoreCase(a.baseAttack.attackName))
 				power += 40;
 			else
 				break;

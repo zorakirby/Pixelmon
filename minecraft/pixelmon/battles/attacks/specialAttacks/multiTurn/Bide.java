@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public class Bide extends MultiTurnSpecialAttackBase {
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		int endHealth;
 		if (!doesPersist(user)) {
 			setPersists(user, true);

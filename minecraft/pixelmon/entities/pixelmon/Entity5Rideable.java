@@ -292,15 +292,17 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		debugOffsetZ = -0f;
 		if (this.riddenByEntity != null) {
 			try {
-				Vec3 vec = Vec3.createVectorHelper(debugOffsetX + baseStats.ridingOffsetX, 0, debugOffsetZ + baseStats.ridingOffsetZ);
+				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsetX) * getScale() * getScaleFactor(), 0,
+						(debugOffsetZ + baseStats.ridingOffsetZ) * getScale() * getScaleFactor());
 				vec.rotateAroundY(-(this.renderYawOffset) * (float) Math.PI / 180.0f);
 				// System.out.println(rotationYaw +" " + renderYawOffset);
 				double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
 				double var3 = Math.sin((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
 				if (ep == null)
 					ep = EnumPokemon.get(getName());
-				this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY + this.getMountedYOffset() + baseStats.ridingOffsetY + height
-						+ debugOffsetY, this.posZ + var3 + vec.zCoord);
+				this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY
+						+ (this.getMountedYOffset() + baseStats.ridingOffsetY + height + debugOffsetY) * getScale() * getScaleFactor(), this.posZ + var3
+						+ vec.zCoord);
 			} catch (Exception e) {
 				riddenByEntity.mountEntity(this);
 			}

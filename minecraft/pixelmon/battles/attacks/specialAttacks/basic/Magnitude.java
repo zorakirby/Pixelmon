@@ -15,10 +15,9 @@ public class Magnitude extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
-
-		RandomHelper random = new RandomHelper();
-		int i = random.getRandomNumberBetween(1, 100);
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList,
+			ArrayList<String> targetAttackList) throws Exception {
+		int i = RandomHelper.getRandomNumberBetween(1, 100);
 		if (i <= 5) {
 			a.baseAttack.basePower = 10;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Magnitude 4!");

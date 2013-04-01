@@ -76,7 +76,6 @@ public class PixelmonConfig {
 
 	public static void removeSpawns() {
 		if (!allowNonPixelmonMobs) {
-			ArrayList list = new ArrayList();
 			Iterator it = EntityList.IDtoClassMapping.keySet().iterator();
 			while (it.hasNext()) {
 				Integer i = (Integer) it.next();

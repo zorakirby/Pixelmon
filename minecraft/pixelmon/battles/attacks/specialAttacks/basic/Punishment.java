@@ -13,7 +13,7 @@ public class Punishment extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		int DamageMultiplier = (int) (user.battleStats.getSum());
 
 		a.baseAttack.basePower = 60 + (20 * DamageMultiplier);

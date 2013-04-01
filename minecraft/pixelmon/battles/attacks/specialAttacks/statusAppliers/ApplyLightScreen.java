@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.status.LightScreen;
+import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -12,7 +13,7 @@ public class ApplyLightScreen extends StatusApplierBase {
 	@Override
 	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception{
 		if (checkChance()) {
-			if (user.status.contains(this)) {
+			if (user.hasStatus(StatusType.LightScreen)) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " already has a lightscreen!");
 				return;
 			}

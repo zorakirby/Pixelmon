@@ -15,9 +15,8 @@ public class Psywave extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
-		RandomHelper generator = new RandomHelper();
-		target.attackEntityFrom(DamageSource.causeMobDamage(user), (generator.getRandomNumberBetween(1, 10) + 5) * (user.getLvl().getLevel() / 10));
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+		target.attackEntityFrom(DamageSource.causeMobDamage(user), (RandomHelper.getRandomNumberBetween(1, 10) + 5) * (user.getLvl().getLevel() / 10));
 
 		return true;
 	}

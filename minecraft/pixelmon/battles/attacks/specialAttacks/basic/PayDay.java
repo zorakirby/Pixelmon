@@ -13,7 +13,7 @@ public class PayDay extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		user.battleController.money += user.getLvl().getLevel() * 5;
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Coins are scattered all around");
 		return false;

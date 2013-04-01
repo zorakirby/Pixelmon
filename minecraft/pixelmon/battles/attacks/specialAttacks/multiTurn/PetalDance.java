@@ -12,7 +12,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public class PetalDance extends MultiTurnSpecialAttackBase {
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (!doesPersist(user)) {
 			setPersists(user, true);
 			setTurnCount(user, (new Random()).nextInt(2) + 2);

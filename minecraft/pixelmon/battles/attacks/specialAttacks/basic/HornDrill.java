@@ -14,7 +14,7 @@ public class HornDrill extends SpecialAttackBase {
 		super(ApplyStage.During, false);
 	}
 
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
 		target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth());
 		return true;

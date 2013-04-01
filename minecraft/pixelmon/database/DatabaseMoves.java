@@ -175,7 +175,6 @@ public class DatabaseMoves {
 			Connection conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select CanLearn from Pixelmon where Name='" + pokemonName + "'");
-			ArrayList<Move> moves = new ArrayList<Move>();
 			while (rs.next()) {
 				String movesString = rs.getString("CanLearn");
 				String[] splits = movesString.split(";");
@@ -201,7 +200,6 @@ public class DatabaseMoves {
 			Connection conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select CanLearn from Pixelmon where Name='" + pokemonName + "'");
-			ArrayList<Move> moves = new ArrayList<Move>();
 			while (rs.next()) {
 				String movesString = rs.getString("CanLearn");
 				String[] splits = movesString.split(";");

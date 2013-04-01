@@ -17,7 +17,7 @@ import pixelmon.enums.EnumEvolutionStone;
 
 public class BlockEvolutionStoneOre extends Block {
 
-	private EnumEvolutionStone type;
+	private EnumEvolutionStone type = null;
 	private Icon icon;
 
 	public BlockEvolutionStoneOre(int id, EnumEvolutionStone type, float hardness, String itemName) {

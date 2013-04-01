@@ -19,7 +19,7 @@ public class Curse extends SpecialAttackBase {
 
 	}
 
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (user.type.contains(EnumType.Ghost)) {
 
 			for (StatusBase e : target.status) {
