@@ -13,6 +13,7 @@ import pixelmon.battles.attacks.specialAttacks.attackModifiers.Recoil;
 import pixelmon.battles.attacks.specialAttacks.basic.Acrobatics;
 import pixelmon.battles.attacks.specialAttacks.basic.Acupressure;
 import pixelmon.battles.attacks.specialAttacks.basic.Curse;
+import pixelmon.battles.attacks.specialAttacks.basic.DoSetDamage;
 import pixelmon.battles.attacks.specialAttacks.basic.Drain;
 import pixelmon.battles.attacks.specialAttacks.basic.EchoedVoice;
 import pixelmon.battles.attacks.specialAttacks.basic.Eruption;
@@ -109,6 +110,7 @@ public class EffectRegistry {
 		effectMap.put("acrobatics", Acrobatics.class);
 		effectMap.put("acupressure", Acupressure.class);
 		effectMap.put("curse", Curse.class);
+		effectMap.put("dosetdamage", DoSetDamage.class);
 		effectMap.put("drain", Drain.class);
 		effectMap.put("echoedvoice", EchoedVoice.class);
 		effectMap.put("eruption", Eruption.class);
