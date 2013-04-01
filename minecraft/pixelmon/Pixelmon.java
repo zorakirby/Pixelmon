@@ -108,7 +108,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 
-		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);

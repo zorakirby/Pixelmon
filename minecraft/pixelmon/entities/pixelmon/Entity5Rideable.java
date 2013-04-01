@@ -209,6 +209,11 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		//
 		// else
 		if (riddenByEntity != null) {
+			if (ridingHelper == null) {
+				riddenByEntity.mountEntity(this);
+				super.onLivingUpdate();
+				return;
+			}
 			ridingHelper.onLivingUpdate();
 			moveForward *= 0.4f;
 			if (moveForward > -0.1 && moveForward < 0.1)
@@ -263,7 +268,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		// ((Entity)this).onEntityUpdate();
 		// else
 		super.onUpdate();
-		if (riddenByEntity != null)
+		if (riddenByEntity != null && ridingHelper != null)
 			ridingHelper.onUpdate();
 	}
 
