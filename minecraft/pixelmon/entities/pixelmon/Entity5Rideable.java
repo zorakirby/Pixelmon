@@ -287,9 +287,9 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	@Override
 	public void updateRiderPosition() {
-		debugOffsetX = -0f;
+		debugOffsetX = 0f;
 		debugOffsetY = 0f;
-		debugOffsetZ = -0f;
+		debugOffsetZ = 0f;
 		if (this.riddenByEntity != null) {
 			try {
 				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsetX) * getScale() * getScaleFactor(), 0,
