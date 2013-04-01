@@ -13,6 +13,7 @@ import pixelmon.battles.attacks.specialAttacks.attackModifiers.Recoil;
 import pixelmon.battles.attacks.specialAttacks.basic.Acrobatics;
 import pixelmon.battles.attacks.specialAttacks.basic.Acupressure;
 import pixelmon.battles.attacks.specialAttacks.basic.Curse;
+import pixelmon.battles.attacks.specialAttacks.basic.Drain;
 import pixelmon.battles.attacks.specialAttacks.basic.EchoedVoice;
 import pixelmon.battles.attacks.specialAttacks.basic.Eruption;
 import pixelmon.battles.attacks.specialAttacks.basic.FalseSwipe;
@@ -24,6 +25,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.HiddenPower;
 import pixelmon.battles.attacks.specialAttacks.basic.HornDrill;
 import pixelmon.battles.attacks.specialAttacks.basic.JumpKick;
 import pixelmon.battles.attacks.specialAttacks.basic.Magnitude;
+import pixelmon.battles.attacks.specialAttacks.basic.Memento;
 import pixelmon.battles.attacks.specialAttacks.basic.NightShade;
 import pixelmon.battles.attacks.specialAttacks.basic.PainSplit;
 import pixelmon.battles.attacks.specialAttacks.basic.PayDay;
@@ -36,6 +38,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Return;
 import pixelmon.battles.attacks.specialAttacks.basic.Reversal;
 import pixelmon.battles.attacks.specialAttacks.basic.SeismicToss;
 import pixelmon.battles.attacks.specialAttacks.basic.SmackDown;
+import pixelmon.battles.attacks.specialAttacks.basic.Suicide;
 import pixelmon.battles.attacks.specialAttacks.basic.Venoshock;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Bide;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Fly;
@@ -106,6 +109,7 @@ public class EffectRegistry {
 		effectMap.put("acrobatics", Acrobatics.class);
 		effectMap.put("acupressure", Acupressure.class);
 		effectMap.put("curse", Curse.class);
+		effectMap.put("drain", Drain.class);
 		effectMap.put("echoedvoice", EchoedVoice.class);
 		effectMap.put("eruption", Eruption.class);
 		effectMap.put("facade", Acrobatics.class);
@@ -118,6 +122,7 @@ public class EffectRegistry {
 		effectMap.put("horndrill", HornDrill.class);
 		effectMap.put("jumpkick", JumpKick.class);
 		effectMap.put("magnitude", Magnitude.class);
+		effectMap.put("memento", Memento.class);
 		effectMap.put("nightshade", NightShade.class);
 		effectMap.put("painsplit", PainSplit.class);
 		effectMap.put("payday", PayDay.class);
@@ -130,6 +135,7 @@ public class EffectRegistry {
 		effectMap.put("reversal", Reversal.class);
 		effectMap.put("seismictoss", SeismicToss.class);
 		effectMap.put("smackdown", SmackDown.class);
+		effectMap.put("suicide", Suicide.class);
 		effectMap.put("venoshock", Venoshock.class);
 
 		// Multi-Turn Attacks
