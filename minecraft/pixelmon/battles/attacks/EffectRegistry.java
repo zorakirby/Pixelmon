@@ -15,6 +15,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Acupressure;
 import pixelmon.battles.attacks.specialAttacks.basic.Curse;
 import pixelmon.battles.attacks.specialAttacks.basic.DoSetDamage;
 import pixelmon.battles.attacks.specialAttacks.basic.Drain;
+import pixelmon.battles.attacks.specialAttacks.basic.DreamEater;
 import pixelmon.battles.attacks.specialAttacks.basic.EchoedVoice;
 import pixelmon.battles.attacks.specialAttacks.basic.Eruption;
 import pixelmon.battles.attacks.specialAttacks.basic.FalseSwipe;
@@ -112,6 +113,7 @@ public class EffectRegistry {
 		effectMap.put("curse", Curse.class);
 		effectMap.put("dosetdamage", DoSetDamage.class);
 		effectMap.put("drain", Drain.class);
+		effectMap.put("dreameater", DreamEater.class);
 		effectMap.put("echoedvoice", EchoedVoice.class);
 		effectMap.put("eruption", Eruption.class);
 		effectMap.put("facade", Acrobatics.class);
