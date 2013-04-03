@@ -227,7 +227,6 @@ public class BattleController {
 
 		if (F > 255 || new Random().nextInt(255) < F) {
 			if (!user.isLockedInBattle) {
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Running can escape");
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
 			} else {
