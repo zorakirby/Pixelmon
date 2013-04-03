@@ -2,6 +2,8 @@ package pixelmon.battles.attacks.specialAttacks.basic;
 
 import java.util.ArrayList;
 
+import net.minecraft.util.DamageSource;
+
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.Value;
 import pixelmon.comm.ChatHandler;
@@ -22,11 +24,11 @@ public class DoSetDamage extends SpecialAttackBase {
 		
 		
 		System.out.println(damage);
-		target.setEntityHealth(target.getHealth()-damage);
-
+		target.attackEntityFrom(DamageSource.causeMobDamage(user), damage);
 		
 		if(name.contains("super fang"))
-			target.setEntityHealth(target.getHealth()/2);
+			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth()/2);
+			
 		
 		return false;
 	}
