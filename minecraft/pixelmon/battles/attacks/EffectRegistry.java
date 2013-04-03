@@ -19,6 +19,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.DreamEater;
 import pixelmon.battles.attacks.specialAttacks.basic.EchoedVoice;
 import pixelmon.battles.attacks.specialAttacks.basic.Eruption;
 import pixelmon.battles.attacks.specialAttacks.basic.FalseSwipe;
+import pixelmon.battles.attacks.specialAttacks.basic.Flail;
 import pixelmon.battles.attacks.specialAttacks.basic.Frustration;
 import pixelmon.battles.attacks.specialAttacks.basic.Guillotine;
 import pixelmon.battles.attacks.specialAttacks.basic.GyroBall;
@@ -118,6 +119,7 @@ public class EffectRegistry {
 		effectMap.put("eruption", Eruption.class);
 		effectMap.put("facade", Acrobatics.class);
 		effectMap.put("falseswipe", FalseSwipe.class);
+		effectMap.put("flail", Flail.class);
 		effectMap.put("frustration", Frustration.class);
 		effectMap.put("guillotine", Guillotine.class);
 		effectMap.put("gyroball", GyroBall.class);
