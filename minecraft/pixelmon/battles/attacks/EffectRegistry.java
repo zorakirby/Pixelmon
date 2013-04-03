@@ -24,6 +24,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Frustration;
 import pixelmon.battles.attacks.specialAttacks.basic.Guillotine;
 import pixelmon.battles.attacks.specialAttacks.basic.GyroBall;
 import pixelmon.battles.attacks.specialAttacks.basic.Heal;
+import pixelmon.battles.attacks.specialAttacks.basic.HealOther;
 import pixelmon.battles.attacks.specialAttacks.basic.HeavySlam;
 import pixelmon.battles.attacks.specialAttacks.basic.HiddenPower;
 import pixelmon.battles.attacks.specialAttacks.basic.HornDrill;
@@ -51,6 +52,7 @@ import pixelmon.battles.attacks.specialAttacks.multiTurn.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.SolarBeam;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyBurn;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyConfusion;
+import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyDisable;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyFireSpin;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyFlee;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyFreeze;
@@ -79,6 +81,7 @@ public class EffectRegistry {
 		// Status Appliers
 		effectMap.put("burn", ApplyBurn.class);
 		effectMap.put("confusion", ApplyConfusion.class);
+		effectMap.put("disable", ApplyDisable.class);
 		effectMap.put("firespin", ApplyFireSpin.class);
 		effectMap.put("flee", ApplyFlee.class);
 		effectMap.put("freeze", ApplyFreeze.class);
@@ -125,6 +128,7 @@ public class EffectRegistry {
 		effectMap.put("guillotine", Guillotine.class);
 		effectMap.put("gyroball", GyroBall.class);
 		effectMap.put("heal", Heal.class);
+		effectMap.put("healother", HealOther.class);
 		effectMap.put("heavyslam", HeavySlam.class);
 		effectMap.put("hiddenpower", HiddenPower.class);
 		effectMap.put("horndrill", HornDrill.class);
