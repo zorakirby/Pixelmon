@@ -8,8 +8,10 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class DoSetDamage extends SpecialAttackBase {
+	int damage;
 	public DoSetDamage(Value... values) {
 		super(ApplyStage.During, false);
+		damage = values[0].value;
 	}
 
 	@Override
@@ -17,20 +19,10 @@ public class DoSetDamage extends SpecialAttackBase {
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 		String name = a.baseAttack.attackName.toLowerCase();			
-		System.out.println(name);
 		
-		int healthDecrement = 0;					//Note: I cannot seem to get the parameter of the effect column
-													//      passed in, and that is why I'm checking for the attack name	
-		if(name.contains("sonicboom"))				//		here. In case you are wondering :)
-			healthDecrement = 20;
 		
-		else if(name.contains("dragon rage"))
-		{
-			System.out.println("dahell");
-			healthDecrement = 40;
-		}
-
-		target.setEntityHealth(target.getHealth()-healthDecrement);
+		System.out.println(damage);
+		target.setEntityHealth(target.getHealth()-damage);
 
 		
 		if(name.contains("super fang"))
