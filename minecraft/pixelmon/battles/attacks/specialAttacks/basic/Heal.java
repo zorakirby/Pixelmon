@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.attacks.Value;
+import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Heal extends SpecialAttackBase {
@@ -21,6 +22,7 @@ public class Heal extends SpecialAttackBase {
 
 		double healAmount = (double)increment/100*(double)user.getMaxHealth();
 		user.heal((int)Math.ceil(healAmount));
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " was healed!");
 	
 		return false;
 	}
