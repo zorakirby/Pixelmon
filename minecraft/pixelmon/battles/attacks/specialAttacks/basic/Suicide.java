@@ -2,6 +2,8 @@ package pixelmon.battles.attacks.specialAttacks.basic;
 
 import java.util.ArrayList;
 
+import net.minecraft.util.DamageSource;
+
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -18,7 +20,7 @@ public class Suicide extends SpecialAttackBase {
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 	
-		user.setEntityHealth(0);
+		user.attackEntityFrom(DamageSource.causeMobDamage(user), user.getHealth());
 		ChatHandler.sendBattleMessage(user.getOwner(),target.getOwner(), user.getNickname() + " blew itself up!");
 		
 		return false;
