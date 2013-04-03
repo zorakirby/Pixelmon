@@ -21,7 +21,7 @@ public class DreamEater extends SpecialAttackBase {
 			ArrayList<String> targetAttackList) throws Exception {
 
 			boolean hasIt = false;
-			int restoration =0;
+			int restoration = 0;
 		
 			for (StatusBase e : target.status){
 				if (e.type == StatusType.Sleep) {
