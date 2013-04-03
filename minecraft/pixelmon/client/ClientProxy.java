@@ -1,6 +1,9 @@
 package pixelmon.client;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -36,6 +39,7 @@ import pixelmon.client.keybindings.MovementHandler;
 import pixelmon.client.keybindings.NextPokemonKey;
 import pixelmon.client.keybindings.PreviousPokemonKey;
 import pixelmon.client.keybindings.SendPokemonKey;
+import pixelmon.client.models.Object3D;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
@@ -102,6 +106,16 @@ public class ClientProxy extends CommonProxy {
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
+	
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(""));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Object3D obj = new Object3D(reader, false);
+	
 	}
 
 	public ModelBase loadModel(String name) {
@@ -118,6 +132,11 @@ public class ClientProxy extends CommonProxy {
 		if (model == null)
 			System.out.println("Can't find Model for " + name);
 		return model;
+		
+		
+
+
+		
 	}
 
 	@Override
