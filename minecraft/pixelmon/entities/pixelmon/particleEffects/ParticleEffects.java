@@ -24,7 +24,12 @@ public abstract class ParticleEffects {
 			return new DiglettParticles(pixelmon);
 		else if (pixelmon.getName().equalsIgnoreCase("Gastly"))
 			return new GastlyParticles(pixelmon);
-		
+		else if (pixelmon.getName().equalsIgnoreCase("Charmander"))
+			return new FlameParticles(pixelmon, 0.55F, 0.52F);
+		else if (pixelmon.getName().equalsIgnoreCase("Charmeleon"))
+			return new FlameParticles(pixelmon, 0.95F, 1.2F);
+		else if (pixelmon.getName().equalsIgnoreCase("Charizard"))
+			return new FlameParticles(pixelmon, 4.35F, 1.55F);
 		return null;
 	}
 }

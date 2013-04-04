@@ -1,5 +1,6 @@
 package pixelmon.enums;
 
+import net.minecraft.client.particle.EntityFlameFX;
 import pixelmon.battles.animations.particles.EntityGastlyParticle;
 import pixelmon.battles.animations.particles.EntityKoffingParticle;
 
@@ -9,7 +10,8 @@ import pixelmon.battles.animations.particles.EntityKoffingParticle;
  * 
  */
 public enum EnumPixelmonParticles {
-	gastly(EntityGastlyParticle.class), koffing(EntityKoffingParticle.class);
+	gastly(EntityGastlyParticle.class), koffing(EntityKoffingParticle.class),
+	flame(EntityFlameFX.class);
 	
 	public Class particleClass;
 	
