@@ -39,8 +39,8 @@ import pixelmon.client.keybindings.MovementHandler;
 import pixelmon.client.keybindings.NextPokemonKey;
 import pixelmon.client.keybindings.PreviousPokemonKey;
 import pixelmon.client.keybindings.SendPokemonKey;
-import pixelmon.client.models.Object3D;
 import pixelmon.client.models.fossils.ModelFossil;
+import pixelmon.client.models.objHandling.Object3D;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
 import pixelmon.client.render.RenderTileEntityAnvil;
@@ -106,16 +106,6 @@ public class ClientProxy extends CommonProxy {
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
-	
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader(""));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Object3D obj = new Object3D(reader, false);
-	
 	}
 
 	public ModelBase loadModel(String name) {
@@ -131,12 +121,7 @@ public class ClientProxy extends CommonProxy {
 		}
 		if (model == null)
 			System.out.println("Can't find Model for " + name);
-		return model;
-		
-		
-
-
-		
+		return model;		
 	}
 
 	@Override
@@ -241,10 +226,10 @@ public class ClientProxy extends CommonProxy {
 		TickRegistry.registerTickHandler(new InventoryDetectionTickHandler(), Side.CLIENT);
 	}
 
-	public ModelBase[] models = new ModelBase[650];
+	public Object[] models = new Object[650];
 
 	@Override
-	public ModelBase[] getModels() {
+	public Object[] getModels() {
 		return models;
 	}
 }

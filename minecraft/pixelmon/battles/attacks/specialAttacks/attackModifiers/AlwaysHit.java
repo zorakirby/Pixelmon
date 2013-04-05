@@ -6,7 +6,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class AlwaysHit extends AttackModifierBase {
 
-	public AlwaysHit(Value... values) {
+	public AlwaysHit() {
 		super(ApplyStage.Start, false);
 	}
 

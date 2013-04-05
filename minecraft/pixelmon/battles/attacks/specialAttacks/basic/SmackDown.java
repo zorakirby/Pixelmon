@@ -12,7 +12,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class SmackDown extends SpecialAttackBase {
 
-	public SmackDown(Value... values) {
+	public SmackDown() {
 		super(ApplyStage.During, false);
 	}
 

@@ -8,7 +8,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class EchoedVoice extends SpecialAttackBase {
 
-	public EchoedVoice(Value... values) {
+	public EchoedVoice() {
 		super(ApplyStage.During, false);
 	}
 

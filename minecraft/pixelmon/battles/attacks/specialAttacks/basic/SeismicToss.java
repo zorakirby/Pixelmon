@@ -9,7 +9,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class SeismicToss extends SpecialAttackBase {
 
-	public SeismicToss(Value... values) {
+	public SeismicToss() {
 		super(ApplyStage.During, false);
 	}
 

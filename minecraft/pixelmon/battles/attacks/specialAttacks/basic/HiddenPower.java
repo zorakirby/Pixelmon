@@ -9,7 +9,7 @@ import pixelmon.enums.EnumType;
 
 public class HiddenPower extends SpecialAttackBase {
 
-	public HiddenPower(Value... values) {
+	public HiddenPower() {
 		super(ApplyStage.During, false);
 	}
 

@@ -9,7 +9,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class HeavySlam extends SpecialAttackBase {
 
-	public HeavySlam(Value... values) {
+	public HeavySlam() {
 		super(ApplyStage.During, false);
 	}
 

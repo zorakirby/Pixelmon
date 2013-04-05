@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Venoshock extends SpecialAttackBase {
 
-	public Venoshock(Value... values) {
+	public Venoshock() {
 		super(ApplyStage.During, false);
 	}
 
@@ -26,5 +26,4 @@ public class Venoshock extends SpecialAttackBase {
 			a.baseAttack.basePower = 130;
 		return false;
 	}
-
 }

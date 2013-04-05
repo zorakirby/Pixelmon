@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Facade extends SpecialAttackBase {
 
-	public Facade(Value... values) {
+	public Facade() {
 		super(ApplyStage.During, false);
 	}
 

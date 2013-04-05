@@ -89,8 +89,10 @@ public class GuiPixelmonOverlay extends Gui {
 					numString = "0" + p.getNationalPokedexNumber();
 				else
 					numString = "" + p.getNationalPokedexNumber();
-				if (p.outside)
+				if (p.outside){
+					bindOverlayTexture();
 					drawTexturedModalRect(2, var7 / 6 + i * 30 + 3 + offset, 75, 209, 28, 28);
+				}
 				if (p.isShiny)
 					mc.renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
 				else

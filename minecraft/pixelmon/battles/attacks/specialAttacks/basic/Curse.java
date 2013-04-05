@@ -14,9 +14,8 @@ import pixelmon.enums.EnumType;
 
 public class Curse extends SpecialAttackBase {
 
-	public Curse(Value... values) {
+	public Curse() {
 		super(ApplyStage.During, false);
-
 	}
 
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {

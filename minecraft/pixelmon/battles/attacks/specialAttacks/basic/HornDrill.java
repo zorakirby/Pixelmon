@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class HornDrill extends SpecialAttackBase {
 
-	public HornDrill(Value... values) {
+	public HornDrill() {
 		super(ApplyStage.During, false);
 	}
 

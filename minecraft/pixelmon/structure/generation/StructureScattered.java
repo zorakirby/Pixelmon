@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 
-abstract class StructureScattered extends StructureComponent {
+public abstract class StructureScattered extends StructureComponent {
 	/** The size of the bounding box for this feature in the X axis */
 	public final int scatteredFeatureSizeX;
 

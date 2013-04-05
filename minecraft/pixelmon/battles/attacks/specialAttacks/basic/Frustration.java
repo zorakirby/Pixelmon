@@ -8,7 +8,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Frustration extends SpecialAttackBase {
 
-	public Frustration(Value... values) {
+	public Frustration() {
 		super(ApplyStage.During, false);
 	}
 

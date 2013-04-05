@@ -24,8 +24,9 @@ import pixelmon.pokedex.Pokedex;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.structure.SchematicImporter;
+import pixelmon.structure.StructureRegistry;
 import pixelmon.structure.generation.GeneralScattered;
-import pixelmon.structure.generation.WorldGenScatteredFeature;
+import pixelmon.structure.worldGen.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
@@ -108,7 +109,9 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 
-		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		StructureRegistry.loadStructures();
+		
+		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);

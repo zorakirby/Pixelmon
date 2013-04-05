@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Acupressure extends SpecialAttackBase {
 
-	public Acupressure(Value... values) {
+	public Acupressure() {
 		super(ApplyStage.During, false);
 	}
 

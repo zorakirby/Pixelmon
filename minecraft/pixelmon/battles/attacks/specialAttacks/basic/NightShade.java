@@ -9,7 +9,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class NightShade extends SpecialAttackBase {
 
-	public NightShade(Value... values) {
+	public NightShade() {
 		super(ApplyStage.During, false);
 	}
 

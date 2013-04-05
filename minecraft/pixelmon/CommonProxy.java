@@ -64,10 +64,8 @@ public class CommonProxy implements IGuiHandler {
 	public void loadEvents() {
 	}
 
-	private ModelBase[] models = new ModelBase[0];
-
-	public ModelBase[] getModels() {
-		return models;
+	public Object[] getModels() {
+		return null;
 	}
 
 	public ModelFossil loadFossilModel(String modelName) {
