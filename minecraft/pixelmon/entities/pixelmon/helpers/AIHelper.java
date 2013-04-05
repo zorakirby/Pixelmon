@@ -14,6 +14,7 @@ import pixelmon.AI.AIIsInBattle;
 import pixelmon.AI.AIMoveTowardsTarget;
 import pixelmon.AI.AIStartBattle;
 import pixelmon.AI.AISwimming;
+import pixelmon.AI.AIFlying;
 import pixelmon.AI.AITargetNearest;
 import pixelmon.AI.AITeleportAway;
 import pixelmon.config.PixelmonItems;
@@ -47,7 +48,8 @@ public class AIHelper {
 	private void initFlyingAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
 		tasks.addTask(i++, new EntityAITempt(entity, entity.getMoveSpeed(), PixelmonItems.rareCandy.itemID, false));
 		tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
-		tasks.addTask(i++, new EntityAILookIdle(entity));
+		tasks.addTask(i++, new EntityAIWander(entity, entity.getMoveSpeed()));
+		tasks.addTask(i++, new AIFlying(entity));
 	}
 
 	private void initBaseAI(Entity7HasAI entity, EntityAITasks tasks) {
