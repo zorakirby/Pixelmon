@@ -27,6 +27,7 @@ public class BattleController {
 	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
+	private Attack lastMoveUsed;
 
 	public BattleController(BattleParticipant participant1, BattleParticipant participant2) throws Exception {
 		participant1.startedBattle = true;
@@ -179,9 +180,15 @@ public class BattleController {
 	public void setAttack(EntityPixelmon mypixelmon, Attack a) {
 		for (BattleParticipant p : participants)
 			if (p.currentPokemon() == mypixelmon) {
+				if(p.currentPokemon().disabledMove != a){
 				p.attack = a;
 				p.wait = false;
+				mypixelmon.lastMoveUsed = a;
 				p.attackList.add(a.baseAttack.attackName);
+				return;
+				}
+				else {
+				}
 				return;
 			}
 	}
@@ -315,4 +322,7 @@ public class BattleController {
 		paused = false;
 	}
 
+	public Attack getLastMoveUsed(){
+		return lastMoveUsed;
+	}
 }

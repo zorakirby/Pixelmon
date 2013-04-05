@@ -33,6 +33,8 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	public BattleController battleController;
 	protected EntityTrainer trainer;
 	public boolean isLockedInBattle = false;
+	public Attack lastMoveUsed;
+	public Attack disabledMove;
 
 	public BattleVariables battleVariables = new BattleVariables();
 
@@ -72,7 +74,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public void EndBattle() {
 		// pixelmon.isSwimming = true;
+		this.wipeLastMoveUsed();
 		battleController = null;
+		
 	}
 
 	public void setTrainer(EntityTrainer trainer) {
@@ -188,5 +192,13 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Effect" + i));
 			status.add(s.restoreFromNBT(nbt));
 		}
+	}
+	public Attack getLastMoveUsed(){
+
+		return lastMoveUsed;
+	}
+	
+	public void wipeLastMoveUsed(){
+		lastMoveUsed = null;
 	}
 }

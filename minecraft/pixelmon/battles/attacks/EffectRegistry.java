@@ -26,6 +26,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.GyroBall;
 import pixelmon.battles.attacks.specialAttacks.basic.Heal;
 import pixelmon.battles.attacks.specialAttacks.basic.HealOther;
 import pixelmon.battles.attacks.specialAttacks.basic.HeavySlam;
+import pixelmon.battles.attacks.specialAttacks.basic.Hex;
 import pixelmon.battles.attacks.specialAttacks.basic.HiddenPower;
 import pixelmon.battles.attacks.specialAttacks.basic.HornDrill;
 import pixelmon.battles.attacks.specialAttacks.basic.JumpKick;
@@ -130,6 +131,7 @@ public class EffectRegistry {
 		effectMap.put("heal", Heal.class);
 		effectMap.put("healother", HealOther.class);
 		effectMap.put("heavyslam", HeavySlam.class);
+		effectMap.put("hex", Hex.class);
 		effectMap.put("hiddenpower", HiddenPower.class);
 		effectMap.put("horndrill", HornDrill.class);
 		effectMap.put("jumpkick", JumpKick.class);

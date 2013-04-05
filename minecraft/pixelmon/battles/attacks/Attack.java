@@ -42,6 +42,7 @@ public class Attack {
 	public int pp;
 	public int ppBase;
 	public boolean STAB;
+	public boolean disabled;
 
 	public Attack(int attackIndex, String moveName, ResultSet rs) throws SQLException {
 		if (fullAttackList[attackIndex] == null) {
