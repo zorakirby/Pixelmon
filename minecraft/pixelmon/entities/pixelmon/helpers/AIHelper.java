@@ -49,7 +49,7 @@ public class AIHelper {
 		tasks.addTask(i++, new EntityAITempt(entity, entity.getMoveSpeed(), PixelmonItems.rareCandy.itemID, false));
 		tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
 		tasks.addTask(i++, new EntityAIWander(entity, entity.getMoveSpeed()));
-		tasks.addTask(i++, new AIFlying(entity));
+		//tasks.addTask(i++, new AIFlying(entity));
 	}
 
 	private void initBaseAI(Entity7HasAI entity, EntityAITasks tasks) {
