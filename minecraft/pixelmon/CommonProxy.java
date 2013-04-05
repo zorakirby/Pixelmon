@@ -4,8 +4,11 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import pixelmon.api.PixelmonApi;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
+import pixelmon.entities.pixelmon.interactions.InteractionPokedex;
+import pixelmon.entities.pixelmon.interactions.InteractionTM;
 import pixelmon.gui.GuiHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -75,5 +78,9 @@ public class CommonProxy implements IGuiHandler {
 	public void registerBossDropItem(Item item){
 		DropItemHelper.bossDropItems.add(item);
 	}
-
+	
+	public void registerInteractions(){
+		PixelmonApi.addInteraction(new InteractionPokedex());
+		PixelmonApi.addInteraction(new InteractionTM());
+	}
 }

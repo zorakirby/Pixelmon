@@ -1,4 +1,4 @@
-package pixelmon.entities.pixelmon.interactions;
+package pixelmon.entities.pixelmon.interactions.custom;
 
 import java.util.ArrayList;
 import java.util.HashMap;

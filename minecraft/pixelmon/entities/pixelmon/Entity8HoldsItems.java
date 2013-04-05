@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
-import pixelmon.entities.pixelmon.interactions.PixelmonInteraction;
+import pixelmon.entities.pixelmon.interactions.custom.PixelmonInteraction;
 
 public abstract class Entity8HoldsItems extends Entity7HasAI {
 	public ItemStack heldItem;

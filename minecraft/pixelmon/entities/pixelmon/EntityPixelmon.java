@@ -16,6 +16,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
 import pixelmon.WorldHelper;
+import pixelmon.api.interactions.IInteraction;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
@@ -70,11 +71,16 @@ public class EntityPixelmon extends Entity9HasSounds {
 		}
 	}
 
+	public static ArrayList<IInteraction> interactionList = new ArrayList<IInteraction>();
+	
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 
 			if (itemstack != null) {
+				for (IInteraction i: interactionList){
+					if (i.interact(this, player)) return true;
+				}
 				if (getOwner() == player) {
 					if (itemstack.itemID == PixelmonItems.rareCandy.itemID) {
 						getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
@@ -138,37 +144,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 						return true;
 					}
 
-					if (itemstack.getItem() instanceof ItemTM) {
-						if (DatabaseMoves.CanLearnAttack(getName(), ((ItemTM) itemstack.getItem()).attackName)) {
-							Attack a = DatabaseMoves.getAttack(((ItemTM) itemstack.getItem()).attackName);
-							if (a == null) {
-								ChatHandler.sendChat(getOwner(), ((ItemTM) itemstack.getItem()).attackName + " is corrupted");
-								return true;
-							}
-							a.STAB = DatabaseMoves.hasSTAB(getName(), ((ItemTM) itemstack.getItem()).attackName);
-							if (moveset.size() >= 4) {
-								((EntityPlayerMP) getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
-										EnumPackets.ChooseMoveToReplace, getPokemonId(), a.baseAttack.attackIndex, level.getLevel()));
-							} else {
-								moveset.add(a);
-								ChatHandler.sendChat(getOwner(), getName() + " just learnt " + a.baseAttack.attackName + "!");
-							}
-							PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).updateNBT(this);
-							if (!player.capabilities.isCreativeMode)
-								player.inventory.consumeInventoryItem(itemstack.itemID);
-						} else {
-							ChatHandler.sendChat(getOwner(), getName() + " can't learn " + ((ItemTM) itemstack.getItem()).attackName + "!");
-						}
-						return true;
-					}
+					
 				}
-				if (itemstack.getItem() instanceof ItemPokedex) {
-					ItemPokedex pokedex = (ItemPokedex) itemstack.getItem();
-					PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(
-							Pokedex.nameToID(getName()), DexRegisterStatus.seen);
-					pokedex.openPokedexGui(Pokedex.nameToID(getName()), player, worldObj);
-				}
-
 			}
 		}
 
