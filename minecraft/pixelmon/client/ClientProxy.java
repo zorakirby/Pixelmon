@@ -106,16 +106,16 @@ public class ClientProxy extends CommonProxy {
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
-	
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader(""));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Object3D obj = new Object3D(reader, false);
-	
+		/*
+			BufferedReader reader = null;
+			try {
+				reader = new BufferedReader(new FileReader(""));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Object3D obj = new Object3D(reader, false);
+			*/
 	}
 
 	public ModelBase loadModel(String name) {

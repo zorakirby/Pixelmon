@@ -462,12 +462,6 @@ public class ModelCharizard extends PixelmonModelBase {
 
 		PixelmonModelRenderer Tail = new PixelmonModelRenderer(this, "Tail");
 		Tail.setRotationPoint(0F, 10F, 9.7F);
-		PixelmonModelRenderer flame_tale = new PixelmonModelRenderer(this, 84, 32);
-		flame_tale.addBox(0F, 36.9F, 6F, 0, 19, 21);
-		flame_tale.setTextureSize(256, 256);
-		flame_tale.mirror = true;
-		setRotation(flame_tale, 1.448623F, 0F, 0F);
-		Tail.addChild(flame_tale);
 		PixelmonModelRenderer tail = new PixelmonModelRenderer(this, 0, 122);
 		tail.addBox(-6F, -3F, -8F, 12, 13, 14);
 		tail.setTextureSize(256, 256);

@@ -20,7 +20,6 @@ public class ModelCharmeleon extends ModelBase {
 	ModelRenderer leftleg;
 	ModelRenderer Tail1;
 	ModelRenderer Tail2;
-	ModelRenderer flame;
 
 	public ModelCharmeleon() {
 		textureWidth = 64;
@@ -104,12 +103,6 @@ public class ModelCharmeleon extends ModelBase {
 		Tail2.setTextureSize(64, 64);
 		Tail2.mirror = true;
 		setRotation(Tail2, 0.9773844F, 0F, 0F);
-		flame = new ModelRenderer(this, 0, 29);
-		flame.addBox(0F, 3F, 13F, 0, 5, 4);
-		flame.setRotationPoint(0F, 1.75F, -1.5F);
-		flame.setTextureSize(64, 64);
-		flame.mirror = true;
-		setRotation(flame, 0F, 0F, 0F);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,
@@ -129,7 +122,6 @@ public class ModelCharmeleon extends ModelBase {
 		leftleg.render(f5);
 		Tail1.render(f5);
 		Tail2.render(f5);
-		flame.render(f5);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
