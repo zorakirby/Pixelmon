@@ -12,7 +12,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public class ApplyProtect extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (user.hasStatus(StatusType.Protect))
 			return;
 		float chance = 1f;

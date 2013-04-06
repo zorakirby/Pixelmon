@@ -2,6 +2,8 @@ package pixelmon.client.models.objHandling;
 
 import java.util.ArrayList;
 
+import pixelmon.entities.pixelmon.EntityPixelmon;
+
 public class ModelObj {
 	ArrayList<Object3D> objectParts = new ArrayList<Object3D>();
 
@@ -15,7 +17,7 @@ public class ModelObj {
 
 	}
 
-	public void renderModel() {
+	public void renderModel(EntityPixelmon pixelmon, float var16, float var15, float var13, float f, float var12, float var14) {
 		for (Object3D o : objectParts) {
 			o.opengldraw();
 		}

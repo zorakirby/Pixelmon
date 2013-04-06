@@ -37,7 +37,7 @@ public abstract class MultiTurnSpecialAttackBase extends EffectBase {
 	public abstract boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception;
 
 	@Override
-	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
 	}
 
 	public abstract boolean cantMiss(EntityPixelmon user) throws Exception;
