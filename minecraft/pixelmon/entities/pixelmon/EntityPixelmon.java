@@ -72,79 +72,14 @@ public class EntityPixelmon extends Entity9HasSounds {
 	}
 
 	public static ArrayList<IInteraction> interactionList = new ArrayList<IInteraction>();
-	
+
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
-
 			if (itemstack != null) {
-				for (IInteraction i: interactionList){
-					if (i.interact(this, player)) return true;
-				}
-				if (getOwner() == player) {
-					if (itemstack.itemID == PixelmonItems.rareCandy.itemID) {
-						getLvl().awardEXP(getLvl().getExpToNextLevel() - getLvl().getExp());
-						if (!player.capabilities.isCreativeMode)
-							player.inventory.consumeInventoryItem(itemstack.itemID);
+				for (IInteraction i : interactionList) {
+					if (i.interact(this, player))
 						return true;
-					}
-
-					if (itemstack.getItem() instanceof ItemPotion) {
-						if (getHealth() < stats.HP) {
-							((ItemPotion) itemstack.getItem()).healPokemon(this);
-							if (!player.capabilities.isCreativeMode)
-								player.inventory.consumeInventoryItem(itemstack.itemID);
-							return true;
-						}
-					}
-					if (itemstack.getItem() instanceof ItemStatusAilmentHealer) {
-						if (((ItemStatusAilmentHealer) itemstack.getItem()).healPokemon(this)) {
-							if (!player.capabilities.isCreativeMode)
-								player.inventory.consumeInventoryItem(itemstack.itemID);
-							return true;
-						}
-					}
-					if (itemstack.getItem() instanceof ItemEther) {
-						boolean canUseEther = false;
-						for (int i = 0; i < moveset.size(); i++) {
-							Attack a = moveset.get(i);
-							if (a.pp < a.ppBase) {
-								canUseEther = true;
-								break;
-							}
-						}
-						if (canUseEther) {
-							ItemEther ether = (ItemEther) itemstack.getItem();
-							if (ether.type.restoresAllMoves()) {
-								ether.restoreAllMoves(this);
-								if (!player.capabilities.isCreativeMode)
-									player.inventory.consumeInventoryItem(itemstack.itemID);
-								return true;
-							} else {
-
-							}
-						}
-					}
-					if (itemstack.getItem() instanceof ItemEvolutionStone) {
-						ItemEvolutionStone i = (ItemEvolutionStone) itemstack.getItem();
-						return i.useOnEntity(itemstack, this, player);
-					}
-					if (itemstack.getItem() instanceof ItemHeld) {
-						if (getHeldItem() != null) {
-							if (!worldObj.isRemote) {
-								entityDropItem(heldItem.copy(), 1f);
-							}
-							setHeldItem(null);
-						}
-						ItemStack itemstack1 = itemstack.copy();
-						itemstack1.stackSize = 1;
-						player.inventory.consumeInventoryItem(itemstack.itemID);
-						this.setHeldItem(itemstack1);
-						PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
-						return true;
-					}
-
-					
 				}
 			}
 		}
@@ -226,7 +161,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public void onUpdate() {
 		if (Pixelmon.freeze)
 			return;
-		if (posX > 1e20 || posX < -1e20 || posZ >1e20 || posZ < -1e20)
+		if (posX > 1e20 || posX < -1e20 || posZ > 1e20 || posZ < -1e20)
 			unloadEntity();
 		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)

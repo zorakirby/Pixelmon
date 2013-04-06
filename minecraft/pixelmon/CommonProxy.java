@@ -7,7 +7,13 @@ import net.minecraft.world.World;
 import pixelmon.api.PixelmonApi;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
+import pixelmon.entities.pixelmon.interactions.InteractionEther;
+import pixelmon.entities.pixelmon.interactions.InteractionEvolutionStone;
+import pixelmon.entities.pixelmon.interactions.InteractionHeldItem;
 import pixelmon.entities.pixelmon.interactions.InteractionPokedex;
+import pixelmon.entities.pixelmon.interactions.InteractionPotion;
+import pixelmon.entities.pixelmon.interactions.InteractionRareCandy;
+import pixelmon.entities.pixelmon.interactions.InteractionStatusAilment;
 import pixelmon.entities.pixelmon.interactions.InteractionTM;
 import pixelmon.gui.GuiHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -82,5 +88,11 @@ public class CommonProxy implements IGuiHandler {
 	public void registerInteractions(){
 		PixelmonApi.addInteraction(new InteractionPokedex());
 		PixelmonApi.addInteraction(new InteractionTM());
+		PixelmonApi.addInteraction(new InteractionEther());
+		PixelmonApi.addInteraction(new InteractionEvolutionStone());
+		PixelmonApi.addInteraction(new InteractionHeldItem());
+		PixelmonApi.addInteraction(new InteractionPotion());
+		PixelmonApi.addInteraction(new InteractionRareCandy());
+		PixelmonApi.addInteraction(new InteractionStatusAilment());
 	}
 }
