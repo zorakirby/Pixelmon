@@ -1,4 +1,4 @@
-package pixelmon.entities.pixelmon.interactions;
+package pixelmon.entities.pixelmon.interactions.custom;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

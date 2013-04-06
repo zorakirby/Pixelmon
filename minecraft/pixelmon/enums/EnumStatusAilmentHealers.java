@@ -10,7 +10,6 @@ public enum EnumStatusAilmentHealers {
 	FullHeal(162, "all", false, "fullheal");
 
 	private EnumStatusAilmentHealers(int index, String status, boolean healsHP, String filenamePrefix) {
-		StatusType[] statuses = {};
 		if (status.equalsIgnoreCase("all")) {
 			statuses = new StatusType[] { StatusType.Burn, StatusType.Confusion, StatusType.Freeze, StatusType.Paralysis, StatusType.Poison,
 					StatusType.PoisonBadly, StatusType.Sleep };
@@ -21,7 +20,6 @@ public enum EnumStatusAilmentHealers {
 		}
 		this.index = index;
 		this.filenamePrefix = filenamePrefix;
-		this.statuses = statuses;
 		this.healsHP = healsHP;
 	}
 
