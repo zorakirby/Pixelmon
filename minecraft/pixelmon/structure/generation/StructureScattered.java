@@ -65,6 +65,6 @@ public abstract class StructureScattered extends StructureComponent {
 		if (displacementAmount == 0)
 			return;
 		boundingBox.minY = newHeight;
-		boundingBox.maxY -= displacementAmount;
+		boundingBox.maxY += displacementAmount;
 	}
 }

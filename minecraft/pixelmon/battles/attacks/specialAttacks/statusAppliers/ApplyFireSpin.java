@@ -13,7 +13,7 @@ import pixelmon.enums.EnumType;
 public class ApplyFireSpin extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (checkChance()) {
 			if (target.type.contains(EnumType.Fire)) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "no effect!");

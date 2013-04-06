@@ -54,6 +54,8 @@ public class StructureRegistry {
 				} else if (line.startsWith("hasPokemon")) {
 					if (line.split(":")[1].equalsIgnoreCase("true"))
 						data.hasPokemon = true;
+				} else if (line.startsWith("depth")) {
+					data.depth = Integer.parseInt(line.split(":")[1]);
 				}
 				line = br.readLine();
 			}

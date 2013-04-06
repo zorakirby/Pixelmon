@@ -23,7 +23,7 @@ public class ApplyImmobilize extends StatusApplierBase {
 	}
 
 	@Override
-	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		for (StatusBase e : target.status)
 			if (e.type == StatusType.Immobilize) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " already cannot escape!");

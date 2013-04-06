@@ -12,7 +12,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public class ApplyMist extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (checkChance()) {
 			if (user.hasStatus(StatusType.Paralysis)) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is already surrounded by mist!");

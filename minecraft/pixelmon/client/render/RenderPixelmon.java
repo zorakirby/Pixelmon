@@ -30,9 +30,9 @@ public class RenderPixelmon extends RenderLiving {
 			pixelmon.loadModel();
 		}
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
-		if (pixelmon.model!=null)
+		if (pixelmon.model != null)
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
-		else if (pixelmon.objModel!=null)
+		else if (pixelmon.objModel != null)
 			renderPixelmonObj(pixelmon, d, d1, d2, f, f1);
 		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
 
@@ -233,11 +233,9 @@ public class RenderPixelmon extends RenderLiving {
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_CULL_FACE);
 
-		if (this.renderPassModel != null) {
-			this.renderPassModel.onGround = this.renderSwingProgress(pixelmon, par9);
-			this.renderPassModel.isRiding = pixelmon.isRiding();
-			this.renderPassModel.isChild = pixelmon.isChild();
-		}
+		float onGround = this.renderSwingProgress(pixelmon, par9);
+		boolean isRiding = pixelmon.isRiding();
+		boolean isChild = pixelmon.isChild();
 
 		try {
 			float var10 = this.func_77034_a(pixelmon.prevRenderYawOffset, pixelmon.renderYawOffset, par9);
@@ -263,7 +261,7 @@ public class RenderPixelmon extends RenderLiving {
 			}
 
 			GL11.glEnable(GL11.GL_ALPHA_TEST);
-			//this.mainModel.setLivingAnimations(pixelmon, var16, var15, par9);
+			// this.mainModel.setLivingAnimations(pixelmon, var16, var15, par9);
 			if (!pixelmon.getIsRed())
 				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
 			else {
@@ -274,55 +272,6 @@ public class RenderPixelmon extends RenderLiving {
 			int var18;
 			float var20;
 			float var22;
-
-			for (int var17 = 0; var17 < 4; ++var17) {
-				var18 = this.shouldRenderPass(pixelmon, var17, par9);
-
-				if (var18 > 0) {
-					this.renderPassModel.setLivingAnimations(pixelmon, var16, var15, par9);
-					if (!pixelmon.getIsRed())
-						this.renderPassModel.render(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
-
-					if (var18 == 15) {
-						var19 = (float) pixelmon.ticksExisted + par9;
-						this.loadTexture("%blur%/misc/glint.png");
-						GL11.glEnable(GL11.GL_BLEND);
-						var20 = 0.5F;
-						GL11.glColor4f(var20, var20, var20, 1.0F);
-						GL11.glDepthFunc(GL11.GL_EQUAL);
-						GL11.glDepthMask(false);
-
-						for (int var21 = 0; var21 < 2; ++var21) {
-							GL11.glDisable(GL11.GL_LIGHTING);
-							var22 = 0.76F;
-							GL11.glColor4f(0.5F * var22, 0.25F * var22, 0.8F * var22, 1.0F);
-							GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
-							GL11.glMatrixMode(GL11.GL_TEXTURE);
-							GL11.glLoadIdentity();
-							float var23 = var19 * (0.001F + (float) var21 * 0.003F) * 20.0F;
-							float var24 = 0.33333334F;
-							GL11.glScalef(var24, var24, var24);
-							GL11.glRotatef(30.0F - (float) var21 * 60.0F, 0.0F, 0.0F, 1.0F);
-							GL11.glTranslatef(0.0F, var23, 0.0F);
-							GL11.glMatrixMode(GL11.GL_MODELVIEW);
-							if (!pixelmon.getIsRed())
-								this.renderPassModel.render(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
-						}
-
-						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-						GL11.glMatrixMode(GL11.GL_TEXTURE);
-						GL11.glDepthMask(true);
-						GL11.glLoadIdentity();
-						GL11.glMatrixMode(GL11.GL_MODELVIEW);
-						GL11.glEnable(GL11.GL_LIGHTING);
-						GL11.glDisable(GL11.GL_BLEND);
-						GL11.glDepthFunc(GL11.GL_LEQUAL);
-					}
-
-					GL11.glDisable(GL11.GL_BLEND);
-					GL11.glEnable(GL11.GL_ALPHA_TEST);
-				}
-			}
 
 			this.renderEquippedItems(pixelmon, par9);
 			float var26 = pixelmon.getBrightness(par9);
@@ -340,14 +289,7 @@ public class RenderPixelmon extends RenderLiving {
 
 				if (pixelmon.hurtTime > 0 || pixelmon.deathTime > 0 || pixelmon.getIsRed()) {
 					GL11.glColor4f(var26, 0.0F, 0.0F, 0.4F);
-					this.mainModel.render(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
-
-					for (int var27 = 0; var27 < 4; ++var27) {
-						if (this.inheritRenderPass(pixelmon, var27, par9) >= 0) {
-							GL11.glColor4f(var26, 0.0F, 0.0F, 0.4F);
-							this.renderPassModel.render(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
-						}
-					}
+					pixelmon.objModel.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
 				}
 
 				if ((var18 >> 24 & 255) > 0) {
@@ -356,14 +298,7 @@ public class RenderPixelmon extends RenderLiving {
 					float var29 = (float) (var18 & 255) / 255.0F;
 					var22 = (float) (var18 >> 24 & 255) / 255.0F;
 					GL11.glColor4f(var19, var20, var29, var22);
-					this.mainModel.render(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
-
-					for (int var28 = 0; var28 < 4; ++var28) {
-						if (this.inheritRenderPass(pixelmon, var28, par9) >= 0) {
-							GL11.glColor4f(var19, var20, var29, var22);
-							this.renderPassModel.render(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
-						}
-					}
+					pixelmon.objModel.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
 				}
 
 				GL11.glDepthFunc(GL11.GL_LEQUAL);
@@ -385,7 +320,6 @@ public class RenderPixelmon extends RenderLiving {
 		this.passSpecialRender(pixelmon, par2, par4, par6);
 	}
 
-	
 	public void drawNameTag(EntityPixelmon entitypixelmon, double par2, double par4, double par6, boolean owned) {
 		if (Minecraft.isGuiEnabled()) {
 			String s = " Lv: " + entitypixelmon.getLvl().getLevel() + " ";

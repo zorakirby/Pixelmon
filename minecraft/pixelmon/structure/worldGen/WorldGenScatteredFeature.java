@@ -44,7 +44,7 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 		SchematicImporter s = new SchematicImporter(structure.path);
 		s.readSchematic();
 		GeneralScattered g = new GeneralScattered(random, xPos, yPos, zPos, s);
-		if (canSpawnStructureAtCoords(world, g, xPos, zPos)) {
+		if (canSpawnStructureAtCoords(world, g, structure, xPos, zPos)) {
 			g.generate(world, random);
 			if (structure.hasPokemon) {
 			}
@@ -52,17 +52,17 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 		}
 	}
 
-	protected boolean canSpawnStructureAtCoords(World world, StructureScattered s, int par1, int par2) {
+	protected boolean canSpawnStructureAtCoords(World world, StructureScattered s, StructureData structureData, int par1, int par2) {
 		if (RandomHelper.getRandomNumberBetween(0, 40) == 0)
-			return canStructureFitAtCoords(world, s, par1, par2);
+			return canStructureFitAtCoords(world, s, structureData, par1, par2);
 		return false;
 	}
 
-	private boolean canStructureFitAtCoords(World world, StructureScattered s, int x, int z) {
+	private boolean canStructureFitAtCoords(World world, StructureScattered s, StructureData structureData, int x, int z) {
 		int maxHeight = -1, minHeight = -1;
 		for (int ix = s.getBoundingBox().minX; ix <= s.getBoundingBox().maxX; ix++) {
 			for (int iz = s.getBoundingBox().minZ; iz <= s.getBoundingBox().maxZ; iz++) {
-				int blockHeight = getTopSolidOrLiquidBlock(world, ix, iz);
+				int blockHeight = getTopSolidBlock(world, ix, iz);
 				if (maxHeight == -1 || blockHeight > maxHeight)
 					maxHeight = blockHeight;
 				else if (minHeight == -1 || blockHeight < minHeight)
@@ -73,11 +73,11 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 		if (maxHeight - minHeight > 8)
 			return false;
 
-		s.setBoundingBoxBase(minHeight);
+		s.setBoundingBoxBase(minHeight - structureData.depth - 2);
 		return true;
 	}
 
-	public int getTopSolidOrLiquidBlock(World world, int par1, int par2) {
+	public int getTopSolidBlock(World world, int par1, int par2) {
 		Chunk chunk = world.getChunkFromBlockCoords(par1, par2);
 		int k = chunk.getTopFilledSegment() + 15;
 		par1 &= 15;
@@ -87,7 +87,7 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 
 			if (l != 0 && Block.blocksList[l].blockMaterial.blocksMovement() && Block.blocksList[l].blockMaterial != Material.leaves
 					&& Block.blocksList[l].blockMaterial != Material.wood && !Block.blocksList[l].isBlockFoliage(world, par1, k, par2)) {
-				return k + 1;
+				return k;
 			}
 		}
 

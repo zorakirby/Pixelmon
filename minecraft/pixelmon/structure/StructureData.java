@@ -7,4 +7,5 @@ public class StructureData {
 	public int xSize, ySize, zSize;
 	public boolean hasPokemon = false;
 	public BiomeGenBase[] biomes;
+	public int depth = 0;
 }
