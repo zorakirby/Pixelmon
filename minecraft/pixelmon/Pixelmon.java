@@ -96,6 +96,7 @@ public class Pixelmon {
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
 		proxy.preloadTextures();
+		proxy.registerInteractions();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
 
