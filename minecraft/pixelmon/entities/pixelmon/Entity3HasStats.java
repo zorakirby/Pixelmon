@@ -3,11 +3,8 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.config.PixelmonConfig;
@@ -19,6 +16,8 @@ import pixelmon.entities.pixelmon.stats.IVStore;
 import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.pixelmon.stats.Stats;
 import pixelmon.enums.EnumType;
+import pixelmon.pokedex.Pokedex;
+import pixelmon.pokedex.Pokedex.DexRegisterStatus;
 import pixelmon.storage.PixelmonStorage;
 
 public abstract class Entity3HasStats extends Entity2HasModel {
@@ -158,6 +157,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		type.clear();
 		setType();
 		updateStats();
+		
+		Pokedex pokedex = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).pokedex;
+
+		pokedex.set(Pokedex.nameToID(this.getName()), DexRegisterStatus.caught);
+		pokedex.sendToPlayer((EntityPlayerMP) pokedex.owner);
+
 
 		if (getOwner() != null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
