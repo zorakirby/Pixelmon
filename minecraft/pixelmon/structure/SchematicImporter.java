@@ -29,6 +29,16 @@ public class SchematicImporter {
 		this.filename = filename;
 	}
 
+	public void readHeader(){
+		NBTTagCompound n = getNBTTag();
+		if (n == null)
+			return;
+
+		width = n.getShort("Width");
+		height = n.getShort("Height");
+		length = n.getShort("Length");
+	}
+	
 	public void readSchematic() {
 		NBTTagCompound n = getNBTTag();
 		if (n == null)

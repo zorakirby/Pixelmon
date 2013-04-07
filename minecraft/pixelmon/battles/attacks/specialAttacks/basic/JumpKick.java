@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class JumpKick extends SpecialAttackBase {
 
-	public JumpKick(Value... values) {
+	public JumpKick() {
 		super(ApplyStage.During, false);
 	}
 

@@ -9,7 +9,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class PsychUp extends SpecialAttackBase {
 
-	public PsychUp(Value... values) {
+	public PsychUp() {
 		super(ApplyStage.During, false);
 	}
 

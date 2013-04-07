@@ -205,9 +205,6 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	@Override
 	public void onLivingUpdate() {
-		// if (baseStats != null && baseStats.canFly)
-		//
-		// else
 		if (riddenByEntity != null) {
 			if (ridingHelper == null) {
 				riddenByEntity.mountEntity(this);

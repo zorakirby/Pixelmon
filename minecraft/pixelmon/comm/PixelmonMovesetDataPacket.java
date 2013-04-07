@@ -14,6 +14,7 @@ public class PixelmonMovesetDataPacket {
 	public EnumType type;
 	public int pp;
 	public int ppBase;
+	public boolean disabled = false;
 
 	public static PixelmonMovesetDataPacket createPacket(Moveset moveset, int i) {
 		if (moveset.size() <= i)
@@ -23,6 +24,7 @@ public class PixelmonMovesetDataPacket {
 		p.pp = moveset.get(i).pp;
 		p.ppBase = moveset.get(i).ppBase;
 		p.type = moveset.get(i).baseAttack.attackType;
+		p.disabled = moveset.get(i).disabled;
 		return p;
 	}
 
@@ -42,6 +44,7 @@ public class PixelmonMovesetDataPacket {
 		data.writeShort(type.getIndex());
 		data.writeShort(pp);
 		data.writeShort(ppBase);
+		data.writeBoolean(disabled);
 	}
 	
 	public void readData(DataInputStream data) throws IOException {
@@ -49,6 +52,7 @@ public class PixelmonMovesetDataPacket {
 		type = EnumType.parseType(data.readShort());
 		pp = data.readShort();
 		ppBase = data.readShort();
+		disabled = data.readBoolean();
 	}
 
 }

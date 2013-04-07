@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -39,8 +40,8 @@ import pixelmon.client.keybindings.MovementHandler;
 import pixelmon.client.keybindings.NextPokemonKey;
 import pixelmon.client.keybindings.PreviousPokemonKey;
 import pixelmon.client.keybindings.SendPokemonKey;
-import pixelmon.client.models.Object3D;
 import pixelmon.client.models.fossils.ModelFossil;
+import pixelmon.client.models.objHandling.Object3D;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
 import pixelmon.client.render.RenderTileEntityAnvil;
@@ -75,7 +76,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilMachine.class, new RenderTileFossilMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
-		
+
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 	}
@@ -106,6 +107,7 @@ public class ClientProxy extends CommonProxy {
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
+<<<<<<< HEAD
 		/*
 			BufferedReader reader = null;
 			try {
@@ -116,27 +118,37 @@ public class ClientProxy extends CommonProxy {
 			}
 			Object3D obj = new Object3D(reader, false);
 			*/
+=======
+	}
+
+	public static ArrayList<String> modelPaths = new ArrayList<String>();
+	static {
+		modelPaths.add("pixelmon.client.models.pokemon");
+>>>>>>> remotes/main/master
 	}
 
 	public ModelBase loadModel(String name) {
 		ModelBase model = null;
-		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models.pokemon.Model" + name);
-			if (var3 != null) {
-				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
+		for (String path : modelPaths) {
+			try {
+				Class<?> var3 = (Class<?>) Class.forName(path + ".Model" + name);
+				try {
+					if (var3 != null) {
+						model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
+						break;
+					}
+				} catch (Exception e) {
+					System.out.println("Failed to construct model for " + name);
+					e.printStackTrace();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+
 		if (model == null)
-			System.out.println("Can't find Model for " + name);
+			System.out.println("Can't find model for " + name);
 		return model;
-		
-		
-
-
-		
 	}
 
 	@Override
@@ -218,8 +230,8 @@ public class ClientProxy extends CommonProxy {
 			if (particle.particleClass == EntityGastlyParticle.class)
 				fx = new EntityGastlyParticle(worldObj, posX, posY, posZ, 0, 0, 0, isShiny);
 			else
-				fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class).newInstance(
-						worldObj, posX, posY, posZ, 0d, 0d, 0d);
+				fx = (EntityFX) particle.particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class,
+						double.class).newInstance(worldObj, posX, posY, posZ, 0d, 0d, 0d);
 			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -241,10 +253,10 @@ public class ClientProxy extends CommonProxy {
 		TickRegistry.registerTickHandler(new InventoryDetectionTickHandler(), Side.CLIENT);
 	}
 
-	public ModelBase[] models = new ModelBase[650];
+	public Object[] models = new Object[650];
 
 	@Override
-	public ModelBase[] getModels() {
+	public Object[] getModels() {
 		return models;
 	}
 }

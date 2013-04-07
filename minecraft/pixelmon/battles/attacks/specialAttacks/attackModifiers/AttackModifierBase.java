@@ -18,7 +18,7 @@ public abstract class AttackModifierBase extends EffectBase {
 	public abstract boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) throws Exception;
 
 	@Override
-	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 	}
 
 	public boolean cantMiss(EntityPixelmon user) throws Exception {

@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Guillotine extends SpecialAttackBase {
 
-	public Guillotine(Value... values) {
+	public Guillotine() {
 		super(ApplyStage.During, false);
 	}
 

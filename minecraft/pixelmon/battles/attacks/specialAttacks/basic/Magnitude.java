@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Magnitude extends SpecialAttackBase {
 
-	public Magnitude(Value... values) {
+	public Magnitude() {
 		super(ApplyStage.During, false);
 	}
 

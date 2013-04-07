@@ -11,10 +11,9 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class FalseSwipe extends SpecialAttackBase {
 	
-	public FalseSwipe(Value... values) {
+	public FalseSwipe() {
 		super(ApplyStage.During, false);
 	}
-
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {

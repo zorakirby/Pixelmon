@@ -1,15 +1,24 @@
 package pixelmon.entities.pixelmon;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStream;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
+import pixelmon.client.models.objHandling.ModelObj;
+import pixelmon.client.models.objHandling.Object3D;
 import pixelmon.enums.EnumPokemon;
 
 public abstract class Entity2HasModel extends Entity1Base {
 
 	public ModelBase model;
+	public ModelObj objModel;
 	public float animationNum1 = 0f;
-	
+
 	public int animationCounter = 0;
 	public int animationCounter2 = 0;
 
@@ -33,11 +42,30 @@ public abstract class Entity2HasModel extends Entity1Base {
 			return;
 		int n = ((Entity3HasStats) this).baseStats.nationalPokedexNumber;
 		if (Pixelmon.proxy.getModels()[n] != null) {
-			model = Pixelmon.proxy.getModels()[n];
+			Object mod = Pixelmon.proxy.getModels()[n];
+			if (mod instanceof ModelBase)
+				model = (ModelBase) mod;
+			else if (mod instanceof ModelObj)
+				objModel = (ModelObj) mod;
 		} else {
-			ModelBase m = Pixelmon.proxy.loadModel(getName());
-			Pixelmon.proxy.getModels()[n] = m;
-			model = m;
+			File newFile = new File(Minecraft.getMinecraftDir() + "/resources/pixelmon/models/" + getName().toLowerCase());
+			if (!newFile.exists() || !newFile.isDirectory()) {
+				ModelBase m = Pixelmon.proxy.loadModel(getName());
+				Pixelmon.proxy.getModels()[n] = m;
+				model = m;
+			} else {
+				Object3D[] objects = new Object3D[newFile.listFiles().length];
+				int i = 0;
+				for (File f : newFile.listFiles()) {
+					try {
+						Object3D obj = new Object3D(new BufferedReader(new FileReader(f)), false);
+						objects[i++] = obj;
+					} catch (Exception e) {
+
+					}
+				}
+				ModelObj model = new ModelObj(objects);
+			}
 		}
 	}
 
@@ -55,12 +83,11 @@ public abstract class Entity2HasModel extends Entity1Base {
 			((Entity3HasStats) this).getBaseStats(getName());
 			loadModel();
 			oldName = getName();
-					}
+		}
 		if (worldObj.isRemote)
-			  animationCounter = animationCounter + 2;
+			animationCounter = animationCounter + 2;
 		if (worldObj.isRemote)
-			  animationCounter2 = animationCounter2 + 3;
+			animationCounter2 = animationCounter2 + 3;
 
-		
 	}
 }

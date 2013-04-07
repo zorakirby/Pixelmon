@@ -8,7 +8,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 public class Flinch extends AttackModifierBase {
 
-	public Flinch(Value... values) {
+	public Flinch() {
 		super(ApplyStage.End, false);
 	}
 

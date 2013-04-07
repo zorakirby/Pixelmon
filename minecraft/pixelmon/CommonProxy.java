@@ -4,8 +4,17 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import pixelmon.api.PixelmonApi;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
+import pixelmon.entities.pixelmon.interactions.InteractionEther;
+import pixelmon.entities.pixelmon.interactions.InteractionEvolutionStone;
+import pixelmon.entities.pixelmon.interactions.InteractionHeldItem;
+import pixelmon.entities.pixelmon.interactions.InteractionPokedex;
+import pixelmon.entities.pixelmon.interactions.InteractionPotion;
+import pixelmon.entities.pixelmon.interactions.InteractionRareCandy;
+import pixelmon.entities.pixelmon.interactions.InteractionStatusAilment;
+import pixelmon.entities.pixelmon.interactions.InteractionTM;
 import pixelmon.gui.GuiHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -64,10 +73,8 @@ public class CommonProxy implements IGuiHandler {
 	public void loadEvents() {
 	}
 
-	private ModelBase[] models = new ModelBase[0];
-
-	public ModelBase[] getModels() {
-		return models;
+	public Object[] getModels() {
+		return null;
 	}
 
 	public ModelFossil loadFossilModel(String modelName) {
@@ -77,5 +84,15 @@ public class CommonProxy implements IGuiHandler {
 	public void registerBossDropItem(Item item){
 		DropItemHelper.bossDropItems.add(item);
 	}
-
+	
+	public void registerInteractions(){
+		PixelmonApi.addInteraction(new InteractionPokedex());
+		PixelmonApi.addInteraction(new InteractionTM());
+		PixelmonApi.addInteraction(new InteractionEther());
+		PixelmonApi.addInteraction(new InteractionEvolutionStone());
+		PixelmonApi.addInteraction(new InteractionHeldItem());
+		PixelmonApi.addInteraction(new InteractionPotion());
+		PixelmonApi.addInteraction(new InteractionRareCandy());
+		PixelmonApi.addInteraction(new InteractionStatusAilment());
+	}
 }

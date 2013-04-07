@@ -16,7 +16,6 @@ public class WorldGenFossils extends WorldGenerator implements IWorldGenerator {
 		int waterY = rand.nextInt(4);
 		if (world.getBlockId(x, y, z) == Block.gravel.blockID) {
 			world.setBlock(x, y, z, PixelmonBlocks.fossil.blockID, 0, 0);
-			System.out.println("Fossil spawned at " + x + " " + y + " " + z + " ");
 			return true;
 		}
 		return false;

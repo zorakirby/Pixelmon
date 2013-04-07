@@ -8,7 +8,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Punishment extends SpecialAttackBase {
 
-	public Punishment(Value... values) {
+	public Punishment() {
 		super(ApplyStage.During, false);
 	}
 

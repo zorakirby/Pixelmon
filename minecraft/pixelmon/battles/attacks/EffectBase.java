@@ -24,7 +24,7 @@ public abstract class EffectBase {
 		modifiers.add(modifier);
 	}
 
-	public abstract void ApplyEffect(Attack a, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception;
+	public abstract void ApplyEffect(Attack a, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception;
 
 	public enum ApplyStage {
 		Start, During, End, Priority
