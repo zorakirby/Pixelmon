@@ -20,7 +20,9 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public float animationNum1 = 0f;
 
 	public int animationCounter = 0;
+	public int animationLimit = 360;
 	public int animationCounter2 = 0;
+	public int animationLimit2 = 360;
 
 	public Entity2HasModel(World par1World) {
 		super(par1World);
@@ -84,10 +86,14 @@ public abstract class Entity2HasModel extends Entity1Base {
 			loadModel();
 			oldName = getName();
 		}
-		if (worldObj.isRemote)
+		if (worldObj.isRemote) {
 			animationCounter = animationCounter + 2;
-		if (worldObj.isRemote)
+			if (animationCounter >= animationLimit)
+				animationCounter = 0;
 			animationCounter2 = animationCounter2 + 3;
+			if (animationCounter2 >= animationLimit2)
+				animationCounter2 = 0;
+		}
 
 	}
 }

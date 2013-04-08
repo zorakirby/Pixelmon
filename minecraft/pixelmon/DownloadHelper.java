@@ -1,6 +1,5 @@
 package pixelmon;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -8,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.Adler32;
@@ -17,8 +15,6 @@ import java.util.zip.CheckedInputStream;
 import javax.swing.text.Document;
 import javax.swing.text.rtf.RTFEditorKit;
 
-import net.minecraft.server.MinecraftServer;
-import pixelmon.client.ClientProxy;
 import pixelmon.database.DatabaseHelper;
 
 public class DownloadHelper {
