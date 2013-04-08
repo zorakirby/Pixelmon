@@ -9,27 +9,44 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ApplyDisable extends StatusApplierBase {
-
+	Random rand = new Random();
 	@Override
 	public void ApplyEffect(Attack a, double crit, EntityPixelmon user,
-			EntityPixelmon target, ArrayList<String> attackList)
-			throws Exception {
+			EntityPixelmon target, ArrayList<String> attackList,
+			ArrayList<String> targetAttackList) throws Exception {
+		if (targetAttackList.size() - 1 == 0) {
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
+					target.getNickname() + " hasn't used a move yet!");
+		}
 
-			if(target.getLastMoveUsed() == null){
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + 
-																				  " hasn't used a move yet!");
-			}
+		else {
 			
-			else{
-				Random rand = new Random();
-				int effectiveTurns = rand.nextInt(4)+4;
-				for(int i = 1; i > 4; i++){
-					if(target.moveset.get(i) == target.getLastMoveUsed());
-					target.moveset.remove(i);
+			
+			int effectiveTurns = rand.nextInt(4) + 4;
+			int i = -1;
+			for(Attack atk: target.moveset){
+				i++;
+				System.out.println(targetAttackList.size()-1);
+				System.out.println(targetAttackList.get(targetAttackList.size()-1));
+				System.out.println(target.moveset.get(i).baseAttack.attackName);
+				if (target.moveset.get(i).baseAttack.attackName.equalsIgnoreCase(targetAttackList.get(targetAttackList.size()-1))/*&& !target.moveset.get(i).disabled*/) {
+
+					
+					target.moveset.get(i).disabled = true;
+					
+					ChatHandler.sendBattleMessage(user.getOwner(),target.getOwner(),target.moveset.get(i).baseAttack.attackName);
+					target.status.add(new Disable(target.moveset.get(i),
+							effectiveTurns));
+					System.out.println("Applied disable");
 				}
-				target.status.add(new Disable(target.getLastMoveUsed(), effectiveTurns));
+				else if(target.moveset.get(i).baseAttack.attackName.equalsIgnoreCase(targetAttackList.get(targetAttackList.size()))&& target.moveset.get(i).disabled){
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "That move is already disabled!");
+				}
 			}
+
+		}
 		
+
 	}
 
 }

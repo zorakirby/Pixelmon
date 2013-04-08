@@ -33,6 +33,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.JumpKick;
 import pixelmon.battles.attacks.specialAttacks.basic.Magnitude;
 import pixelmon.battles.attacks.specialAttacks.basic.Memento;
 import pixelmon.battles.attacks.specialAttacks.basic.NightShade;
+import pixelmon.battles.attacks.specialAttacks.basic.OHKO;
 import pixelmon.battles.attacks.specialAttacks.basic.PainSplit;
 import pixelmon.battles.attacks.specialAttacks.basic.PayDay;
 import pixelmon.battles.attacks.specialAttacks.basic.PsychUp;
@@ -138,6 +139,7 @@ public class EffectRegistry {
 		effectMap.put("magnitude", Magnitude.class);
 		effectMap.put("memento", Memento.class);
 		effectMap.put("nightshade", NightShade.class);
+		effectMap.put("ohko", OHKO.class);
 		effectMap.put("painsplit", PainSplit.class);
 		effectMap.put("payday", PayDay.class);
 		effectMap.put("psychup", PsychUp.class);

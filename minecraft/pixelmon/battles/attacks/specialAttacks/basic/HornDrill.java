@@ -13,7 +13,8 @@ public class HornDrill extends SpecialAttackBase {
 	public HornDrill() {
 		super(ApplyStage.During, false);
 	}
-
+	
+	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
 		target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth());

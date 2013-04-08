@@ -180,15 +180,9 @@ public class BattleController {
 	public void setAttack(EntityPixelmon mypixelmon, Attack a) {
 		for (BattleParticipant p : participants)
 			if (p.currentPokemon() == mypixelmon) {
-				if(p.currentPokemon().disabledMove != a){
 				p.attack = a;
 				p.wait = false;
-				mypixelmon.lastMoveUsed = a;
 				p.attackList.add(a.baseAttack.attackName);
-				return;
-				}
-				else {
-				}
 				return;
 			}
 	}

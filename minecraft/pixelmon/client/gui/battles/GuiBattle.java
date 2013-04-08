@@ -788,22 +788,22 @@ public class GuiBattle extends GuiContainer {
 		int w = 87, h = 20;
 		PixelmonMovesetDataPacket[] moveset = ClientBattleManager.getUserPokemonPacket().moveset;
 		int numMoves = ClientBattleManager.getUserPokemonPacket().numMoves;
-		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h && numMoves > 0 && moveset[0].pp > 0) {
+		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h && numMoves > 0 && moveset[0].pp > 0 && !moveset[0].disabled) {
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
-		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h && numMoves > 1 && moveset[1].pp > 0) {
+		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h && numMoves > 1 && moveset[1].pp > 0 && !moveset[1].disabled) {
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
-		} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h && numMoves > 2 && moveset[2].pp > 0) {
+		} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h && numMoves > 2 && moveset[2].pp > 0 && !moveset[2].disabled) {
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
 			return;
-		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h && numMoves > 3 && moveset[3].pp > 0) {
+		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h && numMoves > 3 && moveset[3].pp > 0 && !moveset[3].disabled) {
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
