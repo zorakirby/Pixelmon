@@ -30,7 +30,8 @@ public class ModuleHead extends Module {
 	}
 
 	@Override
-	public void fly(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
+	public void fly(EntityPixelmon entity, float f, float f1, float f2,
+			float f3, float f4) {
 		walk(entity, f, f1, f2, f3, f4);
 	}
 

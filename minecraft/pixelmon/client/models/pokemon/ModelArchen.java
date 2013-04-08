@@ -10,6 +10,8 @@ import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.Bird.EnumWing;
+import pixelmon.client.models.animations.Bird.ModuleWing;
 import pixelmon.client.models.animations.Bird.SkeletonBird;
 
 public class ModelArchen extends PixelmonModelBase {
@@ -248,7 +250,11 @@ public class ModelArchen extends PixelmonModelBase {
 		Body.addChild(RightWing);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBird(Body, headModule, LeftWing, RightWing, LeftLeg, RightLeg);
+		
+		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right, EnumWing.Verticle, 0.1F, 1.3F);
+		ModuleWing leftWingModule = new ModuleWing(LeftWing,  EnumWing.Left, EnumWing.Verticle,  0.1F, 1.3F);
+		
+		skeleton = new SkeletonBird(Body, headModule, leftWingModule, rightWingModule, LeftLeg, RightLeg);
 
 	}
 

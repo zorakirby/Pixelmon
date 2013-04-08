@@ -9,7 +9,12 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumArm;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.Biped.SkeletonBiped;
 
 public class ModelRaticate extends PixelmonModelBase {
@@ -99,13 +104,15 @@ public class ModelRaticate extends PixelmonModelBase {
 		teeth_.mirror = true;
 		setRotation(teeth_, 0.5061455F, 0F, 0F);
 		Head.addChild(teeth_);
-		PixelmonModelRenderer mouth_inside = new PixelmonModelRenderer(this, 54, 9);
+		PixelmonModelRenderer mouth_inside = new PixelmonModelRenderer(this,
+				54, 9);
 		mouth_inside.addBox(-1.533333F, -1.066667F, -4.266667F, 3, 3, 1);
 		mouth_inside.setTextureSize(128, 64);
 		mouth_inside.mirror = true;
 		setRotation(mouth_inside, 0.3490659F, 0F, 0F);
 		Head.addChild(mouth_inside);
-		PixelmonModelRenderer fur_tufts_1 = new PixelmonModelRenderer(this, 23, 0);
+		PixelmonModelRenderer fur_tufts_1 = new PixelmonModelRenderer(this, 23,
+				0);
 		fur_tufts_1.addBox(-2F, -3.6F, -0.4666667F, 4, 0, 3);
 		fur_tufts_1.setTextureSize(128, 64);
 		fur_tufts_1.mirror = true;
@@ -123,7 +130,8 @@ public class ModelRaticate extends PixelmonModelBase {
 		R_ear.mirror = true;
 		setRotation(R_ear, 0.7330383F, -0.7853982F, 0F);
 		Head.addChild(R_ear);
-		PixelmonModelRenderer whisker_L = new PixelmonModelRenderer(this, -5, 15);
+		PixelmonModelRenderer whisker_L = new PixelmonModelRenderer(this, -5,
+				15);
 		whisker_L.addBox(1F, -2.666667F, -4.733333F, 5, 5, 0);
 		whisker_L.setTextureSize(128, 64);
 		whisker_L.mirror = true;
@@ -189,7 +197,8 @@ public class ModelRaticate extends PixelmonModelBase {
 		Tail.addChild(tail_8);
 		Body.addChild(Tail);
 
-		PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this, "Left Arm");
+		PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this,
+				"Left Arm");
 		LeftArm.setRotationPoint(3, 2, -2);
 		PixelmonModelRenderer L_hand = new PixelmonModelRenderer(this, 28, 35);
 		L_hand.addBox(0.3333333F, 0F, -1F, 1, 2, 2);
@@ -197,19 +206,22 @@ public class ModelRaticate extends PixelmonModelBase {
 		L_hand.mirror = true;
 		setRotation(L_hand, 0F, 0.5759587F, 0.7330383F);
 		LeftArm.addChild(L_hand);
-		PixelmonModelRenderer L_finger_1 = new PixelmonModelRenderer(this, 33, 33);
+		PixelmonModelRenderer L_finger_1 = new PixelmonModelRenderer(this, 33,
+				33);
 		L_finger_1.addBox(0.3333333F, -1.333333F, -1F, 1, 2, 1);
 		L_finger_1.setTextureSize(128, 64);
 		L_finger_1.mirror = true;
 		setRotation(L_finger_1, 0.4014257F, 0.4886922F, 0.9773844F);
 		LeftArm.addChild(L_finger_1);
-		PixelmonModelRenderer L_finger_2 = new PixelmonModelRenderer(this, 33, 33);
+		PixelmonModelRenderer L_finger_2 = new PixelmonModelRenderer(this, 33,
+				33);
 		L_finger_2.addBox(0.3333333F, -1.333333F, -0.2666667F, 1, 2, 1);
 		L_finger_2.setTextureSize(128, 64);
 		L_finger_2.mirror = true;
 		setRotation(L_finger_2, 0.0523599F, 0.4014257F, 0.9075712F);
 		LeftArm.addChild(L_finger_2);
-		PixelmonModelRenderer L_finger_3 = new PixelmonModelRenderer(this, 33, 33);
+		PixelmonModelRenderer L_finger_3 = new PixelmonModelRenderer(this, 33,
+				33);
 		L_finger_3.addBox(0.4F, -2.066667F, 0.4666667F, 1, 2, 1);
 		L_finger_3.setTextureSize(128, 64);
 		L_finger_3.mirror = true;
@@ -217,7 +229,8 @@ public class ModelRaticate extends PixelmonModelBase {
 		LeftArm.addChild(L_finger_3);
 		Body.addChild(LeftArm);
 
-		PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this, "Right Arm");
+		PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this,
+				"Right Arm");
 		RightArm.setRotationPoint(-3, 2, -2);
 		PixelmonModelRenderer R_hand = new PixelmonModelRenderer(this, 28, 35);
 		R_hand.addBox(-1.333333F, 0F, -1F, 1, 2, 2);
@@ -225,19 +238,22 @@ public class ModelRaticate extends PixelmonModelBase {
 		R_hand.mirror = true;
 		setRotation(R_hand, 0F, -0.5759587F, -0.7330383F);
 		RightArm.addChild(R_hand);
-		PixelmonModelRenderer R_finger_1 = new PixelmonModelRenderer(this, 33, 33);
+		PixelmonModelRenderer R_finger_1 = new PixelmonModelRenderer(this, 33,
+				33);
 		R_finger_1.addBox(-1.3F, -1.333333F, -1F, 1, 2, 1);
 		R_finger_1.setTextureSize(128, 64);
 		R_finger_1.mirror = true;
 		setRotation(R_finger_1, 0.4014257F, -0.4886922F, -0.9773844F);
 		RightArm.addChild(R_finger_1);
-		PixelmonModelRenderer R_finger_2 = new PixelmonModelRenderer(this, 33, 33);
+		PixelmonModelRenderer R_finger_2 = new PixelmonModelRenderer(this, 33,
+				33);
 		R_finger_2.addBox(-1.3F, -1.333333F, -0.2666667F, 1, 2, 1);
 		R_finger_2.setTextureSize(128, 64);
 		R_finger_2.mirror = true;
 		setRotation(R_finger_2, 0.0523599F, -0.4014257F, -0.9075712F);
 		RightArm.addChild(R_finger_2);
-		PixelmonModelRenderer R_finger_3 = new PixelmonModelRenderer(this, 33, 33);
+		PixelmonModelRenderer R_finger_3 = new PixelmonModelRenderer(this, 33,
+				33);
 		R_finger_3.addBox(-1.4F, -2.066667F, 0.4666667F, 1, 2, 1);
 		R_finger_3.setTextureSize(128, 64);
 		R_finger_3.mirror = true;
@@ -245,7 +261,8 @@ public class ModelRaticate extends PixelmonModelBase {
 		RightArm.addChild(R_finger_3);
 		Body.addChild(RightArm);
 
-		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this, "Left Leg");
+		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this,
+				"Left Leg");
 		LeftLeg.setRotationPoint(3, 6, 0);
 		PixelmonModelRenderer L_foot = new PixelmonModelRenderer(this, 33, 44);
 		L_foot.addBox(-2F, 0F, -2F, 3, 1, 4);
@@ -273,7 +290,8 @@ public class ModelRaticate extends PixelmonModelBase {
 		LeftLeg.addChild(L_toe_3);
 		Body.addChild(LeftLeg);
 
-		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this, "Right Leg");
+		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this,
+				"Right Leg");
 		RightLeg.setRotationPoint(-3, 6, 0);
 		PixelmonModelRenderer R_foot = new PixelmonModelRenderer(this, 33, 44);
 		R_foot.addBox(-1F, 0F, -2F, 3, 1, 4);
@@ -302,17 +320,32 @@ public class ModelRaticate extends PixelmonModelBase {
 		Body.addChild(RightLeg);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBiped(Body, headModule, LeftArm, RightArm, LeftLeg, RightLeg);
+
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+
+		float legspeed = 0.65F;
+		float legRotationLimit = 1.4F;
+
+		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+
+		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
+				rightArmModule, leftLegModule, rightLegModule);
 
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

@@ -104,6 +104,7 @@ public class ModelAbra extends ModelBase {
 		lefteye.mirror = true;
 		setRotation(lefteye, 0.7853982F, 0F, 0.0872665F);
 		BaseHead.addChild(lefteye);
+		
 		neck = new ModelRenderer(this, 40, 8);
 		neck.addBox(-1F, 0F, -1F, 2, 1, 2);
 		neck.setRotationPoint(0F, 16F, 3F);

@@ -9,8 +9,11 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
+import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.Quadruped.SkeletonQuadruped;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ModelMareep extends PixelmonModelBase {
@@ -95,7 +98,8 @@ public class ModelMareep extends PixelmonModelBase {
 		head_3.mirror = true;
 		setRotation(head_3, 1.064651F, 0F, -0.122173F);
 		Head.addChild(head_3);
-		PixelmonModelRenderer head_fluff = new PixelmonModelRenderer(this, 116, 33);
+		PixelmonModelRenderer head_fluff = new PixelmonModelRenderer(this, 116,
+				33);
 		head_fluff.addBox(-1.7F, -2.7F, 0.8F, 3, 3, 3);
 		head_fluff.setTextureSize(128, 64);
 		head_fluff.mirror = true;
@@ -202,11 +206,26 @@ public class ModelMareep extends PixelmonModelBase {
 		Body.addChild(BLLeg);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonQuadruped(Body, headModule, FLLeg, FRLeg, BLLeg, BRLeg, 1.1f, 1.1f, 0.8f);
+
+		float legspeed = 0.8F;
+		float legRotationLimit = 1.1F;
+
+		ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+
+		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule,
+				frontlegRModule, backlegLModule, backlegRModule);
 
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 		if (((EntityPixelmon) entity).getNumInteractions() == 0)
@@ -215,7 +234,8 @@ public class ModelMareep extends PixelmonModelBase {
 			Wool.isHidden = false;
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

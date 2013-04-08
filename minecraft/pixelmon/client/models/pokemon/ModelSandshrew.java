@@ -8,7 +8,12 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumArm;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.Biped.SkeletonBiped;
 
 public class ModelSandshrew extends PixelmonModelBase {
@@ -79,7 +84,8 @@ public class ModelSandshrew extends PixelmonModelBase {
 		Head.addChild(R_ear);
 		Body.addChild(Head);
 
-		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this, "Left Leg");
+		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this,
+				"Left Leg");
 		LeftLeg.setRotationPoint(3, 2.53333f, 0);
 		PixelmonModelRenderer leg_L = new PixelmonModelRenderer(this, 12, 14);
 		leg_L.addBox(-1F, -0.9333333F, -1.466667F, 3, 4, 4);
@@ -96,7 +102,8 @@ public class ModelSandshrew extends PixelmonModelBase {
 		LeftLeg.addChild(foot_L);
 		Body.addChild(LeftLeg);
 
-		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this, "Right Leg");
+		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this,
+				"Right Leg");
 		RightLeg.setRotationPoint(-3, 2.53333f, 0);
 		PixelmonModelRenderer leg_R = new PixelmonModelRenderer(this, 12, 14);
 		leg_R.addBox(-2F, -0.9333333F, -1.466667F, 3, 4, 4);
@@ -145,7 +152,8 @@ public class ModelSandshrew extends PixelmonModelBase {
 		Tail.addChild(tail_4);
 		Body.addChild(Tail);
 
-		PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this, "Right Arm");
+		PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this,
+				"Right Arm");
 		RightArm.setRotationPoint(-3, -1.46667f, 0);
 		PixelmonModelRenderer arm_R_1 = new PixelmonModelRenderer(this, 0, 26);
 		arm_R_1.addBox(-2F, 0F, -2F, 3, 3, 3);
@@ -174,7 +182,8 @@ public class ModelSandshrew extends PixelmonModelBase {
 		RightArm.addChild(R_claw_2);
 		Body.addChild(RightArm);
 
-		PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this, "Left Arm");
+		PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this,
+				"Left Arm");
 		LeftArm.setRotationPoint(3, -1.46667f, 0);
 		PixelmonModelRenderer arm_L_1 = new PixelmonModelRenderer(this, 0, 26);
 		arm_L_1.addBox(-1F, 0F, -2F, 3, 3, 3);
@@ -204,15 +213,30 @@ public class ModelSandshrew extends PixelmonModelBase {
 		Body.addChild(LeftArm);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBiped(Body, headModule, LeftArm, RightArm, LeftLeg, RightLeg);
+
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+
+		float legspeed = 0.65F;
+		float legRotationLimit = 1.4F;
+
+		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+
+		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
+				rightArmModule, leftLegModule, rightLegModule);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

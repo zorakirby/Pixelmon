@@ -2,9 +2,12 @@ package pixelmon.client.models.pokemon;
 
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.SkeletonBase;
-import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
+import pixelmon.client.models.animations.Quadruped.SkeletonQuadruped;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
@@ -97,7 +100,21 @@ public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 		BodyPiece.addChild(legFL);
 
 		ModuleHead headModule = new ModuleHead(HeadPiece);
-		skeleton = new SkeletonQuadruped(BodyPiece, headModule, legFL, legFR, legRL, legRR, 1.4F, 1.4F, 0.6F);
+		float legspeed = 0.6F;
+		float legRotationLimit = 1.4F;
+		
+		ModuleLeg frontlegLModule = new ModuleLeg(legFL, EnumLeg.FrontLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg frontlegRModule = new ModuleLeg(legFR,
+				EnumLeg.FrontRight, EnumPhase.OutPhase, legRotationLimit,
+				legspeed);
+		ModuleLeg backlegLModule = new ModuleLeg(legRL, EnumLeg.BackLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegRModule = new ModuleLeg(legRR, EnumLeg.BackRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		
+		skeleton = new SkeletonQuadruped(body, headModule, frontlegLModule,
+				frontlegRModule, backlegLModule, backlegRModule);
 	}
 
 	public void render(Entity var1, float f, float f1, float f2, float f3, float f4, float f5) {
