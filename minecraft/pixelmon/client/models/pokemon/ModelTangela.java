@@ -1,8 +1,8 @@
 package pixelmon.client.models.pokemon;
 
 import net.minecraft.client.model.ModelBase;
-import pixelmon.client.models.PixelmonModelRenderer;
 import net.minecraft.entity.Entity;
+import pixelmon.client.models.PixelmonModelRenderer;
 
 public class ModelTangela extends ModelBase
 {

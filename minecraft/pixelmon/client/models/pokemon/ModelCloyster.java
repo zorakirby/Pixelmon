@@ -12,11 +12,10 @@
 package pixelmon.client.models.pokemon;
 
 
-import pixelmon.client.models.PixelmonModelRenderer;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
+import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.Serpent.SkeletonSerpent;
 
 public class ModelCloyster extends PixelmonModelBase

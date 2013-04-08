@@ -1,9 +1,9 @@
 package pixelmon.client.models.pokemon;
 
-import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ModelGolbat extends ModelBase {
 	// fields

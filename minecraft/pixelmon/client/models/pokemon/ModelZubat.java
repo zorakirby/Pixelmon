@@ -9,14 +9,12 @@ package pixelmon.client.models.pokemon;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.Bird.ModuleWing;
 import pixelmon.client.models.animations.Bird.EnumWing;
+import pixelmon.client.models.animations.Bird.ModuleWing;
 import pixelmon.client.models.animations.Bird.SkeletonBird;
-import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ModelZubat extends PixelmonModelBase {
 	// fields

@@ -1,16 +1,13 @@
 package pixelmon.client.models.pokemon;
 
+import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
-import pixelmon.client.models.animations.SkeletonBase;
-import pixelmon.client.models.animations.Quadruped.SkeletonQuadruped;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
+import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
 
 public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 {

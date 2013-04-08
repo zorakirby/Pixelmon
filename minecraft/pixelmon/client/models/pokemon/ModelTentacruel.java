@@ -12,12 +12,11 @@
 package pixelmon.client.models.pokemon;
 
 
-import pixelmon.client.models.PixelmonModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import pixelmon.client.models.PixelmonModelBase;
+import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.SkeletonBase;
-import pixelmon.client.models.animations.Biped.SkeletonBiped;
 
 
 public class ModelTentacruel extends PixelmonModelBase
