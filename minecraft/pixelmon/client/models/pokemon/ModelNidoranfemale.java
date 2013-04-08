@@ -9,8 +9,11 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
+import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.Quadruped.SkeletonQuadruped;
 
 public class ModelNidoranfemale extends PixelmonModelBase {
 	// fields
@@ -55,13 +58,15 @@ public class ModelNidoranfemale extends PixelmonModelBase {
 		Leg_1.mirror = true;
 		setRotation(Leg_1, 0F, 0F, 0F);
 		FRLeg.addChild(Leg_1);
-		PixelmonModelRenderer Toe_Claw_1 = new PixelmonModelRenderer(this, 16, 43);
+		PixelmonModelRenderer Toe_Claw_1 = new PixelmonModelRenderer(this, 16,
+				43);
 		Toe_Claw_1.addBox(0.5F, 4F, -2.5F, 1, 1, 1);
 		Toe_Claw_1.setTextureSize(128, 64);
 		Toe_Claw_1.mirror = true;
 		setRotation(Toe_Claw_1, 0F, 0.7853982F, 0F);
 		FRLeg.addChild(Toe_Claw_1);
-		PixelmonModelRenderer Toe_Claw_11 = new PixelmonModelRenderer(this, 16, 43);
+		PixelmonModelRenderer Toe_Claw_11 = new PixelmonModelRenderer(this, 16,
+				43);
 		Toe_Claw_11.addBox(2F, 4F, -1F, 1, 1, 1);
 		Toe_Claw_11.setTextureSize(128, 64);
 		Toe_Claw_11.mirror = true;
@@ -77,13 +82,15 @@ public class ModelNidoranfemale extends PixelmonModelBase {
 		Leg_2.mirror = true;
 		setRotation(Leg_2, 0F, 0F, 0F);
 		FLLeg.addChild(Leg_2);
-		PixelmonModelRenderer Toe_Claw_2 = new PixelmonModelRenderer(this, 16, 43);
+		PixelmonModelRenderer Toe_Claw_2 = new PixelmonModelRenderer(this, 16,
+				43);
 		Toe_Claw_2.addBox(0F, 4F, -3F, 1, 1, 1);
 		Toe_Claw_2.setTextureSize(128, 64);
 		Toe_Claw_2.mirror = true;
 		setRotation(Toe_Claw_2, 0F, 0.7853982F, 0F);
 		FLLeg.addChild(Toe_Claw_2);
-		PixelmonModelRenderer Toe_Claw_21 = new PixelmonModelRenderer(this, 16, 43);
+		PixelmonModelRenderer Toe_Claw_21 = new PixelmonModelRenderer(this, 16,
+				43);
 		Toe_Claw_21.addBox(1.5F, 4F, -1.5F, 1, 1, 1);
 		Toe_Claw_21.setTextureSize(128, 64);
 		Toe_Claw_21.mirror = true;
@@ -99,13 +106,15 @@ public class ModelNidoranfemale extends PixelmonModelBase {
 		Leg_3.mirror = true;
 		setRotation(Leg_3, 0F, 0F, 0F);
 		BLLeg.addChild(Leg_3);
-		PixelmonModelRenderer Toe_Claw_3 = new PixelmonModelRenderer(this, 16, 43);
+		PixelmonModelRenderer Toe_Claw_3 = new PixelmonModelRenderer(this, 16,
+				43);
 		Toe_Claw_3.addBox(0F, 4F, -3.7F, 1, 1, 1);
 		Toe_Claw_3.setTextureSize(128, 64);
 		Toe_Claw_3.mirror = true;
 		setRotation(Toe_Claw_3, 0F, 0.7853982F, 0F);
 		BLLeg.addChild(Toe_Claw_3);
-		PixelmonModelRenderer Toe_Claw_31 = new PixelmonModelRenderer(this, 16, 43);
+		PixelmonModelRenderer Toe_Claw_31 = new PixelmonModelRenderer(this, 16,
+				43);
 		Toe_Claw_31.addBox(1.5F, 4F, -3.3F, 1, 1, 1);
 		Toe_Claw_31.setTextureSize(128, 64);
 		Toe_Claw_31.mirror = true;
@@ -121,13 +130,15 @@ public class ModelNidoranfemale extends PixelmonModelBase {
 		Leg_4.mirror = true;
 		setRotation(Leg_4, 0F, 0F, 0F);
 		BRLeg.addChild(Leg_4);
-		PixelmonModelRenderer Toe_Claw_4 = new PixelmonModelRenderer(this, 16, 43);
+		PixelmonModelRenderer Toe_Claw_4 = new PixelmonModelRenderer(this, 16,
+				43);
 		Toe_Claw_4.addBox(0.5F, 4F, -3.2F, 1, 1, 1);
 		Toe_Claw_4.setTextureSize(128, 64);
 		Toe_Claw_4.mirror = true;
 		setRotation(Toe_Claw_4, 0F, 0.7853982F, 0F);
 		BRLeg.addChild(Toe_Claw_4);
-		PixelmonModelRenderer Toe_Claw_41 = new PixelmonModelRenderer(this, 16, 43);
+		PixelmonModelRenderer Toe_Claw_41 = new PixelmonModelRenderer(this, 16,
+				43);
 		Toe_Claw_41.addBox(1.8F, 4F, -1.8F, 1, 1, 1);
 		Toe_Claw_41.setTextureSize(128, 64);
 		Toe_Claw_41.mirror = true;
@@ -254,15 +265,30 @@ public class ModelNidoranfemale extends PixelmonModelBase {
 		Body.addChild(Head);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonQuadruped(Body, headModule, FLLeg, FRLeg, BLLeg, BRLeg, 1.1f, 1.1f, 0.8f);
+		float legspeed = 0.8F;
+		float legRotationLimit = 1.1F;
+
+		ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+
+		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule,
+				frontlegRModule, backlegLModule, backlegRModule);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

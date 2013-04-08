@@ -9,8 +9,11 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
+import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.Quadruped.SkeletonQuadruped;
 
 public class ModelShieldon extends PixelmonModelBase {
 	// fields
@@ -28,7 +31,8 @@ public class ModelShieldon extends PixelmonModelBase {
 		main_body.mirror = true;
 		setRotation(main_body, 0.1047198F, 0F, 0F);
 		Body.addChild(main_body);
-		PixelmonModelRenderer main_body_bottom = new PixelmonModelRenderer(this, 0, 46);
+		PixelmonModelRenderer main_body_bottom = new PixelmonModelRenderer(
+				this, 0, 46);
 		main_body_bottom.addBox(-1.5F, 2.533333F, 0F, 3, 2, 5);
 		main_body_bottom.setTextureSize(128, 64);
 		main_body_bottom.mirror = true;
@@ -40,19 +44,22 @@ public class ModelShieldon extends PixelmonModelBase {
 		body_2.mirror = true;
 		setRotation(body_2, -0.2617994F, 0F, 0F);
 		Body.addChild(body_2);
-		PixelmonModelRenderer body_2_top = new PixelmonModelRenderer(this, 0, 33);
+		PixelmonModelRenderer body_2_top = new PixelmonModelRenderer(this, 0,
+				33);
 		body_2_top.addBox(-2F, -3.1F, 4F, 4, 2, 2);
 		body_2_top.setTextureSize(128, 64);
 		body_2_top.mirror = true;
 		setRotation(body_2_top, -0.4014257F, 0F, 0F);
 		Body.addChild(body_2_top);
-		PixelmonModelRenderer back_spike = new PixelmonModelRenderer(this, 0, 29);
+		PixelmonModelRenderer back_spike = new PixelmonModelRenderer(this, 0,
+				29);
 		back_spike.addBox(-1F, -1F, 2F, 2, 1, 2);
 		back_spike.setTextureSize(128, 64);
 		back_spike.mirror = true;
 		setRotation(back_spike, 0.2443461F, 0F, 0F);
 		Body.addChild(back_spike);
-		PixelmonModelRenderer back_spike_2 = new PixelmonModelRenderer(this, 0, 29);
+		PixelmonModelRenderer back_spike_2 = new PixelmonModelRenderer(this, 0,
+				29);
 		back_spike_2.addBox(-1F, -3.6F, 2F, 2, 1, 2);
 		back_spike_2.setTextureSize(128, 64);
 		back_spike_2.mirror = true;
@@ -80,80 +87,93 @@ public class ModelShieldon extends PixelmonModelBase {
 		head_top.mirror = true;
 		setRotation(head_top, 0.1396263F, 0F, 0F);
 		Head.addChild(head_top);
-		PixelmonModelRenderer mouth_bottom = new PixelmonModelRenderer(this, 15, 23);
+		PixelmonModelRenderer mouth_bottom = new PixelmonModelRenderer(this,
+				15, 23);
 		mouth_bottom.addBox(-1F, -1.333333F, -4.466667F, 2, 1, 2);
 		mouth_bottom.setTextureSize(128, 64);
 		mouth_bottom.mirror = true;
 		setRotation(mouth_bottom, 0.8901179F, 0F, 0F);
 		Head.addChild(mouth_bottom);
-		PixelmonModelRenderer mouth_top = new PixelmonModelRenderer(this, 14, 27);
+		PixelmonModelRenderer mouth_top = new PixelmonModelRenderer(this, 14,
+				27);
 		mouth_top.addBox(-1.5F, -2.6F, -4.8F, 3, 2, 2);
 		mouth_top.setTextureSize(128, 64);
 		mouth_top.mirror = true;
 		setRotation(mouth_top, 0.8901179F, 0F, 0F);
 		Head.addChild(mouth_top);
-		PixelmonModelRenderer head_front = new PixelmonModelRenderer(this, 15, 16);
+		PixelmonModelRenderer head_front = new PixelmonModelRenderer(this, 15,
+				16);
 		head_front.addBox(-1.5F, -3.066667F, -2.933333F, 3, 2, 3);
 		head_front.setTextureSize(128, 64);
 		head_front.mirror = true;
 		setRotation(head_front, 1.291544F, 0F, 0F);
 		Head.addChild(head_front);
-		PixelmonModelRenderer head_sheild_main = new PixelmonModelRenderer(this, 21, 55);
+		PixelmonModelRenderer head_sheild_main = new PixelmonModelRenderer(
+				this, 21, 55);
 		head_sheild_main.addBox(-3F, -2.866667F, -3.266667F, 6, 1, 8);
 		head_sheild_main.setTextureSize(128, 64);
 		head_sheild_main.mirror = true;
 		setRotation(head_sheild_main, 1.239184F, 0F, 0F);
 		Head.addChild(head_sheild_main);
-		PixelmonModelRenderer head_sheild_side_L = new PixelmonModelRenderer(this, 25, 45);
+		PixelmonModelRenderer head_sheild_side_L = new PixelmonModelRenderer(
+				this, 25, 45);
 		head_sheild_side_L.addBox(2.533333F, -2.866667F, -1.933333F, 1, 1, 5);
 		head_sheild_side_L.setTextureSize(128, 64);
 		head_sheild_side_L.mirror = true;
 		setRotation(head_sheild_side_L, 1.239184F, 0F, -0.0523599F);
 		Head.addChild(head_sheild_side_L);
-		PixelmonModelRenderer head_sheild_side_R = new PixelmonModelRenderer(this, 25, 45);
+		PixelmonModelRenderer head_sheild_side_R = new PixelmonModelRenderer(
+				this, 25, 45);
 		head_sheild_side_R.addBox(-3.466667F, -2.866667F, -1.933333F, 1, 1, 5);
 		head_sheild_side_R.setTextureSize(128, 64);
 		head_sheild_side_R.mirror = true;
 		setRotation(head_sheild_side_R, 1.239184F, 0F, 0.0523599F);
 		Head.addChild(head_sheild_side_R);
-		PixelmonModelRenderer head_sheild_top = new PixelmonModelRenderer(this, 23, 52);
+		PixelmonModelRenderer head_sheild_top = new PixelmonModelRenderer(this,
+				23, 52);
 		head_sheild_top.addBox(-2F, -2.866667F, 4.733333F, 4, 1, 1);
 		head_sheild_top.setTextureSize(128, 64);
 		head_sheild_top.mirror = true;
 		setRotation(head_sheild_top, 1.239184F, 0F, 0F);
 		Head.addChild(head_sheild_top);
-		PixelmonModelRenderer head_sheild_center_ = new PixelmonModelRenderer(this, 25, 39);
+		PixelmonModelRenderer head_sheild_center_ = new PixelmonModelRenderer(
+				this, 25, 39);
 		head_sheild_center_.addBox(-2F, -3.6F, -0.8F, 4, 1, 4);
 		head_sheild_center_.setTextureSize(128, 64);
 		head_sheild_center_.mirror = true;
 		setRotation(head_sheild_center_, 1.151917F, 0F, 0F);
 		Head.addChild(head_sheild_center_);
-		PixelmonModelRenderer head_sheild_center_top = new PixelmonModelRenderer(this, 29, 34);
+		PixelmonModelRenderer head_sheild_center_top = new PixelmonModelRenderer(
+				this, 29, 34);
 		head_sheild_center_top.addBox(-1.5F, -4.066667F, -0.4F, 3, 1, 3);
 		head_sheild_center_top.setTextureSize(128, 64);
 		head_sheild_center_top.mirror = true;
 		setRotation(head_sheild_center_top, 1.099557F, 0F, 0F);
 		Head.addChild(head_sheild_center_top);
-		PixelmonModelRenderer head_sheild_bar_upper = new PixelmonModelRenderer(this, 30, 31);
+		PixelmonModelRenderer head_sheild_bar_upper = new PixelmonModelRenderer(
+				this, 30, 31);
 		head_sheild_bar_upper.addBox(-2.5F, -3.933333F, -1.2F, 5, 1, 1);
 		head_sheild_bar_upper.setTextureSize(128, 64);
 		head_sheild_bar_upper.mirror = true;
 		setRotation(head_sheild_bar_upper, 1.169371F, 0F, 0F);
 		Head.addChild(head_sheild_bar_upper);
-		PixelmonModelRenderer head_sheild_bar_lower = new PixelmonModelRenderer(this, 30, 28);
+		PixelmonModelRenderer head_sheild_bar_lower = new PixelmonModelRenderer(
+				this, 30, 28);
 		head_sheild_bar_lower.addBox(-1.966667F, -4.2F, -2.133333F, 4, 1, 1);
 		head_sheild_bar_lower.setTextureSize(128, 64);
 		head_sheild_bar_lower.mirror = true;
 		setRotation(head_sheild_bar_lower, 1.48353F, 0F, 0F);
 		Head.addChild(head_sheild_bar_lower);
-		PixelmonModelRenderer head_sheild_bar_upper_R = new PixelmonModelRenderer(this, 30, 31);
+		PixelmonModelRenderer head_sheild_bar_upper_R = new PixelmonModelRenderer(
+				this, 30, 31);
 		head_sheild_bar_upper_R.addBox(-0.8F, -4.5F, -1.4F, 1, 1, 1);
 		head_sheild_bar_upper_R.setRotationPoint(0F, -0.5F, 0F);
 		head_sheild_bar_upper_R.setTextureSize(128, 64);
 		head_sheild_bar_upper_R.mirror = true;
 		setRotation(head_sheild_bar_upper_R, 1.186824F, 0.5410521F, -0.2792527F);
 		Head.addChild(head_sheild_bar_upper_R);
-		PixelmonModelRenderer head_sheild_bar_upper_L = new PixelmonModelRenderer(this, 30, 31);
+		PixelmonModelRenderer head_sheild_bar_upper_L = new PixelmonModelRenderer(
+				this, 30, 31);
 		head_sheild_bar_upper_L.addBox(-0.2F, -4.5F, -1.4F, 1, 1, 1);
 		head_sheild_bar_upper_L.setRotationPoint(0F, -0.5F, 0F);
 		head_sheild_bar_upper_L.setTextureSize(128, 64);
@@ -194,13 +214,15 @@ public class ModelShieldon extends PixelmonModelBase {
 
 		PixelmonModelRenderer FLLeg = new PixelmonModelRenderer(this, "FLLeg");
 		FLLeg.setRotationPoint(2, 2, 1);
-		PixelmonModelRenderer L_front_leg = new PixelmonModelRenderer(this, 10, 0);
+		PixelmonModelRenderer L_front_leg = new PixelmonModelRenderer(this, 10,
+				0);
 		L_front_leg.addBox(-0.7333333F, 0F, -1F, 2, 4, 2);
 		L_front_leg.setTextureSize(128, 64);
 		L_front_leg.mirror = true;
 		setRotation(L_front_leg, -0.0872665F, 0F, 0F);
 		FLLeg.addChild(L_front_leg);
-		PixelmonModelRenderer L_front_toe = new PixelmonModelRenderer(this, 0, 0);
+		PixelmonModelRenderer L_front_toe = new PixelmonModelRenderer(this, 0,
+				0);
 		L_front_toe.addBox(-0.2666667F, 3.133333F, -1.6F, 1, 1, 1);
 		L_front_toe.setTextureSize(128, 64);
 		L_front_toe.mirror = true;
@@ -210,13 +232,15 @@ public class ModelShieldon extends PixelmonModelBase {
 
 		PixelmonModelRenderer FRLeg = new PixelmonModelRenderer(this, "FRLeg");
 		FRLeg.setRotationPoint(-2, 2, 1);
-		PixelmonModelRenderer R_front_leg = new PixelmonModelRenderer(this, 10, 0);
+		PixelmonModelRenderer R_front_leg = new PixelmonModelRenderer(this, 10,
+				0);
 		R_front_leg.addBox(-1.066667F, 0F, -1F, 2, 4, 2);
 		R_front_leg.setTextureSize(128, 64);
 		R_front_leg.mirror = true;
 		setRotation(R_front_leg, -0.0872665F, 0F, 0F);
 		FRLeg.addChild(R_front_leg);
-		PixelmonModelRenderer R_front_toe = new PixelmonModelRenderer(this, 0, 0);
+		PixelmonModelRenderer R_front_toe = new PixelmonModelRenderer(this, 0,
+				0);
 		R_front_toe.addBox(-0.6666667F, 3.133333F, -1.6F, 1, 1, 1);
 		R_front_toe.setTextureSize(128, 64);
 		R_front_toe.mirror = true;
@@ -226,7 +250,8 @@ public class ModelShieldon extends PixelmonModelBase {
 
 		PixelmonModelRenderer BLLeg = new PixelmonModelRenderer(this, "BLLeg");
 		BLLeg.setRotationPoint(2, 2, 5);
-		PixelmonModelRenderer L_back_leg = new PixelmonModelRenderer(this, 10, 0);
+		PixelmonModelRenderer L_back_leg = new PixelmonModelRenderer(this, 10,
+				0);
 		L_back_leg.addBox(-1.066667F, 0F, -1F, 2, 4, 2);
 		L_back_leg.setTextureSize(128, 64);
 		L_back_leg.mirror = true;
@@ -242,7 +267,8 @@ public class ModelShieldon extends PixelmonModelBase {
 
 		PixelmonModelRenderer BRLeg = new PixelmonModelRenderer(this, "BRLeg");
 		BRLeg.setRotationPoint(-2, 2, 5);
-		PixelmonModelRenderer R_back_leg = new PixelmonModelRenderer(this, 10, 0);
+		PixelmonModelRenderer R_back_leg = new PixelmonModelRenderer(this, 10,
+				0);
 		R_back_leg.addBox(-1.066667F, 0F, -1F, 2, 4, 2);
 		R_back_leg.setTextureSize(128, 64);
 		R_back_leg.mirror = true;
@@ -257,16 +283,32 @@ public class ModelShieldon extends PixelmonModelBase {
 		Body.addChild(BRLeg);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonQuadruped(Body, headModule, FLLeg, FRLeg, BLLeg, BRLeg, 1.1f, 1.1f, 0.8f);
+
+		float legspeed = 0.8F;
+		float legRotationLimit = 1.1F;
+
+		ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+
+		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule,
+				frontlegRModule, backlegLModule, backlegRModule);
 
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

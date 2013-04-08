@@ -13,6 +13,8 @@ import net.minecraft.util.MathHelper;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.Bird.ModuleWing;
+import pixelmon.client.models.animations.Bird.EnumWing;
 import pixelmon.client.models.animations.Bird.SkeletonBird;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -79,7 +81,8 @@ public class ModelZubat extends PixelmonModelBase {
 		Head.addChild(Right_Ear1);
 		Body.addChild(Head);
 
-		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this, "Right leg");
+		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this,
+				"Right leg");
 		RightLeg.setRotationPoint(-0.5F, 2, 1);
 		Right_Leg = new PixelmonModelRenderer(this, 6, 17);
 		Right_Leg.addBox(-1F, 0F, 0F, 1, 5, 1);
@@ -89,7 +92,8 @@ public class ModelZubat extends PixelmonModelBase {
 		RightLeg.addChild(Right_Leg);
 		Body.addChild(RightLeg);
 
-		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this, "Left Leg");
+		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this,
+				"Left Leg");
 		LeftLeg.setRotationPoint(0.5F, 2, 1);
 		Left_Leg = new PixelmonModelRenderer(this, 8, 16);
 		Left_Leg.addBox(0F, 0F, 0F, 1, 5, 1);
@@ -190,17 +194,25 @@ public class ModelZubat extends PixelmonModelBase {
 		Body.addChild(LeftWing);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBird(Body, headModule, LeftWing, RightWing, LeftLeg, RightLeg);
+		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
+				EnumWing.Horizontal, 0.25F, 1.3F);
+		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
+				EnumWing.Horizontal, 0.25F, 1.3F);
+
+		skeleton = new SkeletonBird(Body, headModule, leftWingModule,
+				rightWingModule, LeftLeg, RightLeg);
 
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(entity, f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
@@ -208,17 +220,17 @@ public class ModelZubat extends PixelmonModelBase {
 
 	Random randomGenerator = new Random();
 	int[] count = { 0, 0 };
-	boolean[] Headisrotating = { false, false, false, false, false, false, false };
-  
+	boolean[] Headisrotating = { false, false, false, false, false, false,
+			false };
 
-	public void setRotationAngles(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void setRotationAngles(Entity entity, float f, float f1, float f2,
+			float f3, float f4, float f5) {
 
-		this.Body.rotateAngleX = ((float)Math.PI / 4F) - 0.25F;
-	       this.Body.rotateAngleY = 0.0F;
-	       this.RightWing.rotateAngleY = MathHelper.cos(f2 * 1.3F) * (float)Math.PI * 0.25F;
-	       this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
-		
+		this.Body.rotateAngleX = ((float) Math.PI / 4F) - 0.25F;
+		this.Body.rotateAngleY = 0.0F;
+		// this.RightWing.rotateAngleY = MathHelper.cos(f2 * 1.3F) *
+		// (float)Math.PI * 0.25F;
+		// this.LeftWing.rotateAngleY = -this.RightWing.rotateAngleY;
+
 	}
 }
-
-

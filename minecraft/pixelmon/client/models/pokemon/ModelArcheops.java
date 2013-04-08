@@ -14,6 +14,8 @@ import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.Bird.EnumWing;
+import pixelmon.client.models.animations.Bird.ModuleWing;
 import pixelmon.client.models.animations.Bird.SkeletonBird;
 
 public class ModelArcheops extends PixelmonModelBase
@@ -490,7 +492,10 @@ public class ModelArcheops extends PixelmonModelBase
       
       
       ModuleHead headModule = new ModuleHead(Head);
-      skeleton = new SkeletonBird(Body, headModule, LeftWing, RightWing, LeftLeg, RightLeg);
+      ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right, EnumWing.Verticle, 0.25F, 1.3F);
+      ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left, EnumWing.Verticle,  0.25F, 1.3F);
+		
+      skeleton = new SkeletonBird(Body, headModule, leftWingModule, rightWingModule, LeftLeg, RightLeg);
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
