@@ -136,6 +136,7 @@ public class Pixelmon {
 	public void onServerStart(FMLServerStartingEvent event) {
 		if (MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager) {
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandStruc());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandFreeze());
 		}
 	}

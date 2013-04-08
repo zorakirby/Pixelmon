@@ -15,6 +15,7 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonStatsPacket;
+import pixelmon.comm.packetHandlers.PC.PCData;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.database.EvolutionInfo.InfoMode;
@@ -81,6 +82,12 @@ public class TileEntityTradeMachine extends TileEntity {
 		pos1 = pos;
 		PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player1);
 		NBTTagCompound n = s.getNBT(s.getIDFromPosition(pos));
+		if (n != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player1).EntityAlreadyExists(n.getInteger("pixelmonID"), player1.worldObj)) {
+			EntityPixelmon pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player1).getAlreadyExists(n.getInteger("pixelmonID"), player1.worldObj);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player1).retrieve(pixelmon);
+			pixelmon.catchInPokeball();
+		}
+
 		((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(new PixelmonStatsPacket(n, EnumPackets.SetSelectedStats).getPacket());
 		if (player2 == null)
 			return;
@@ -92,6 +99,12 @@ public class TileEntityTradeMachine extends TileEntity {
 		pos2 = pos;
 		PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player2);
 		NBTTagCompound n = s.getNBT(s.getIDFromPosition(pos));
+		if (n != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player2).EntityAlreadyExists(n.getInteger("pixelmonID"), player2.worldObj)) {
+			EntityPixelmon pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player2).getAlreadyExists(n.getInteger("pixelmonID"), player2.worldObj);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player2).retrieve(pixelmon);
+			pixelmon.catchInPokeball();
+		}
+
 		((EntityPlayerMP) player2).playerNetServerHandler.sendPacketToPlayer(new PixelmonStatsPacket(n, EnumPackets.SetSelectedStats).getPacket());
 		if (player1 == null)
 			return;

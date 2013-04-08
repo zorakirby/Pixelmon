@@ -85,12 +85,14 @@ public class GuiScreenPokeCheckerWarning extends GuiContainer {
 			drawString(fontRenderer, "No", width / 2 + 80, height / 2 + 15, 0xFFFFFF);
 		}
 		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 - 33 && mouseY < height / 2 - 7){
+			mc.renderEngine.bindTexture("/pixelmon/gui/yesNo.png");
 			drawImageQuad(width / 2 + 63, height / 2 - 33, 45, 26, 154f / 256f, 101f / 128f, 199f / 256f, 127f / 128f);
 			drawString(fontRenderer, "Yes", width / 2 + 76, height / 2 - 23, 16777120);
 			overY = true;
 			overN = false;
 		}
 		if (mouseX > width / 2 + 63 && mouseX < width / 2 + 108 && mouseY > height / 2 + 5 && mouseY < height / 2 + 31){
+			mc.renderEngine.bindTexture("/pixelmon/gui/yesNo.png");
 			drawImageQuad(width / 2 + 63, height / 2 + 5, 45, 26, 154f / 256f, 101f / 128f, 199f / 256f, 127f / 128f);		
 			drawString(fontRenderer, "No", width / 2 + 80, height / 2 + 15, 16777120);
 			overY = false;
