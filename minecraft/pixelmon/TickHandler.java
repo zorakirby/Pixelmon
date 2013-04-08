@@ -3,7 +3,6 @@ package pixelmon;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -12,8 +11,6 @@ import pixelmon.sounds.Sounds;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
-import net.minecraft.client.audio.SoundPoolEntry;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;

@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class RaiseStats extends SpecialAttackBase {
 
-	public RaiseStats(Value... values) {
+	public RaiseStats() {
 		super(ApplyStage.During, false);
 	}
 

@@ -37,6 +37,7 @@ public class Attack {
 	public static final int ATTACK_PHYSICAL = 0, ATTACK_SPECIAL = 1, ATTACK_STATUS = 2;
 
 	private static AttackBase[] fullAttackList = new AttackBase[600];
+	public static boolean disabled = false;
 	public AttackBase baseAttack;
 	public int pp;
 	public int ppBase;
@@ -105,7 +106,7 @@ public class Attack {
 				EffectBase e = baseAttack.effects.get(j);
 				if (e instanceof StatsEffect) {
 					try {
-						e.ApplyEffect(this, crit, user, target, attackList);
+						e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 					} catch (Exception exc) {
 						System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
 						System.out.println(exc.getStackTrace());
@@ -116,7 +117,7 @@ public class Attack {
 							StatusBase et = target.status.get(i);
 							try {
 								if (!et.stopsStatusChange())
-									e.ApplyEffect(this, crit, user, target, attackList);
+									e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 							} catch (Exception exc) {
 								System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
 								System.out.println(exc.getStackTrace());
@@ -124,7 +125,7 @@ public class Attack {
 						}
 					} else {
 						try {
-							e.ApplyEffect(this, crit, user, target, attackList);
+							e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 						} catch (Exception exc) {
 							System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
 							System.out.println(exc.getStackTrace());
@@ -190,7 +191,7 @@ public class Attack {
 							if (e instanceof Flinch)
 								flinched = ((Flinch) e).ApplyEffect(user, target, this);
 						} else if (e instanceof RemoveEffect)
-							e.ApplyEffect(this, crit, user, target, attackList);
+							e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 					}
 				} catch (Exception exc) {
 					System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);

@@ -8,7 +8,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Return extends SpecialAttackBase {
 
-	public Return(Value... values) {
+	public Return() {
 		super(ApplyStage.During, false);
 	}
 

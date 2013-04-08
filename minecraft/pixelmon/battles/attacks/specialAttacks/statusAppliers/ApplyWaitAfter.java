@@ -9,7 +9,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public class ApplyWaitAfter extends StatusApplierBase {
 
 	@Override
-	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		user.status.add(new Wait(1));
 	}
 }

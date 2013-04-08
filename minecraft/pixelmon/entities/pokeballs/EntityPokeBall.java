@@ -419,6 +419,7 @@ public class EntityPokeBall extends EntityThrowable {
 		}
 		if (getIsCaptured()) {
 			if (waitTime > 20) {
+				try{
 				p.setTamed(true);
 				p.setOwner(((EntityPlayer) thrower).username);
 				p.caughtBall = getType();
@@ -429,6 +430,9 @@ public class EntityPokeBall extends EntityThrowable {
 				p.friendship.initFromCapture();
 				if (mode == Mode.battle) {
 					battleController.endBattleWithoutXP();
+				}
+				}catch(Exception e){
+					
 				}
 				setIsWaiting(false);
 				setDead();

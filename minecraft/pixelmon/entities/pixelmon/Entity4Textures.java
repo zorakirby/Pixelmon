@@ -28,7 +28,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	protected void init(String name) {
 		super.init(name);
 		if (!worldObj.isRemote) {
-			if ((new Random()).nextFloat() < 1 / 8192f) {
+			if (rand.nextFloat() < 1 / 8192f) {
 				dataWatcher.updateObject(25, (short) 1);
 			}
 		}

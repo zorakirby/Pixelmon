@@ -11,7 +11,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ApplyLeech extends StatusApplierBase {
 	@Override
-	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList) throws Exception {
+	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (checkChance()) {
 			for (StatusBase e : target.status)
 				if (e.type == StatusType.Leech) {

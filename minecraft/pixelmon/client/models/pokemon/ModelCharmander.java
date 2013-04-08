@@ -17,7 +17,6 @@ public class ModelCharmander extends ModelBase {
 	ModelRenderer ArmLeft;
 	ModelRenderer TailBase;
 	ModelRenderer TailEnd;
-	ModelRenderer Flame;
 
 	public ModelCharmander() {
 		textureWidth = 64;
@@ -85,12 +84,6 @@ public class ModelCharmander extends ModelBase {
 		TailEnd.setTextureSize(64, 32);
 		TailEnd.mirror = true;
 		setRotation(TailEnd, 2.146755F, 0F, 0F);
-		Flame = new ModelRenderer(this, 0, 5);
-		Flame.addBox(0F, -5F, 0F, 0, 5, 4);
-		Flame.setRotationPoint(0F, 19.5F, 6.5F);
-		Flame.setTextureSize(64, 32);
-		Flame.mirror = true;
-		setRotation(Flame, 0.0523599F, 0F, 0F);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,
@@ -107,7 +100,6 @@ public class ModelCharmander extends ModelBase {
 		ArmLeft.render(f5);
 		TailBase.render(f5);
 		TailEnd.render(f5);
-		Flame.render(f5);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {

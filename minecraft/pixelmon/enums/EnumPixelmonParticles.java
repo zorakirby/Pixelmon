@@ -1,7 +1,6 @@
 package pixelmon.enums;
 
-import pixelmon.battles.animations.particles.EntityGastlyParticle;
-import pixelmon.battles.animations.particles.EntityKoffingParticle;
+import pixelmon.battles.animations.particles.*;
 
 /**
  * Each particle class must have a constructor with the parems {World, double, double, double, double, double, double} to prevent errors!
@@ -9,7 +8,8 @@ import pixelmon.battles.animations.particles.EntityKoffingParticle;
  * 
  */
 public enum EnumPixelmonParticles {
-	gastly(EntityGastlyParticle.class), koffing(EntityKoffingParticle.class);
+	gastly(EntityGastlyParticle.class), koffing(EntityKoffingParticle.class),
+	flame(EntityFlameParticle.class), smoke(EntitySmokeParticle.class);
 	
 	public Class particleClass;
 	

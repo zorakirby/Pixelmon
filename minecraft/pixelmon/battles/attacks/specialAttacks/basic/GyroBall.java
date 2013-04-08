@@ -8,9 +8,8 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class GyroBall extends SpecialAttackBase {
 
-	public GyroBall(Value... values) {
+	public GyroBall() {
 		super(ApplyStage.During, false);
-
 	}
 
 	@Override

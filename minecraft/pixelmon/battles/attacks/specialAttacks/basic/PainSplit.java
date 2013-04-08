@@ -10,7 +10,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class PainSplit extends SpecialAttackBase {
 
-	public PainSplit(Value... values) {
+	public PainSplit() {
 		super(ApplyStage.During, false);
 	}
 

@@ -150,7 +150,7 @@ public abstract class EntityFlyingPixelmon extends EntityPixelmon {
 					double var15 = this.targetedEntity.posZ - this.posZ;
 					this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(var11, var15)) * 180.0F / (float) Math.PI;
 
-					
+
 				} else {
 					this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(this.motionX, this.motionZ)) * 180.0F / (float) Math.PI;
 
@@ -461,5 +461,28 @@ public abstract class EntityFlyingPixelmon extends EntityPixelmon {
 	public World getWorldObj() {
 		return worldObj;
 	}
+
+	    /**
+	     * Returns true if the newer Entity AI code should be run
+	     */
+	    protected boolean isAIEnabled()
+	    {
+	        return true;
+	    }
+
+	    @Override
+	    public void onUpdate()
+	    {
+	        super.onUpdate();
+    }
+
+	    @Override
+	    protected void updateAITasks()
+	    {
+	    	super.updateAITasks();
+	    }
+	 
+	 
+
 
 }

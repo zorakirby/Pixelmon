@@ -20,12 +20,10 @@ import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
-import pixelmon.pokedex.Pokedex;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
-import pixelmon.structure.SchematicImporter;
-import pixelmon.structure.generation.GeneralScattered;
-import pixelmon.structure.generation.WorldGenScatteredFeature;
+import pixelmon.structure.StructureRegistry;
+import pixelmon.structure.worldGen.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
@@ -95,6 +93,7 @@ public class Pixelmon {
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
 		proxy.preloadTextures();
+		proxy.registerInteractions();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
 
@@ -108,7 +107,9 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 
-		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		StructureRegistry.loadStructures();
+		
+		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
@@ -132,6 +133,7 @@ public class Pixelmon {
 	public void onServerStart(FMLServerStartingEvent event) {
 		if (MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager) {
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandStruc());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandFreeze());
 		}
 	}

@@ -8,7 +8,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Reversal extends SpecialAttackBase {
 
-	public Reversal(Value... values) {
+	public Reversal() {
 		super(ApplyStage.During, false);
 	}
 
