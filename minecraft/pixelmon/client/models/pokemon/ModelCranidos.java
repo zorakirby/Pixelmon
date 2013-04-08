@@ -9,7 +9,12 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumArm;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.Biped.SkeletonBiped;
 
 public class ModelCranidos extends PixelmonModelBase {
@@ -310,7 +315,19 @@ public class ModelCranidos extends PixelmonModelBase {
 		Body.addChild(RightArm);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBiped(Body, headModule, LeftArm, RightArm, LeftLeg, RightLeg);
+		ModuleArm leftArmModule = new ModuleArm(L_arm, EnumArm.Left);
+		ModuleArm rightArmModule = new ModuleArm(R_arm, EnumArm.Right);
+		
+		float legspeed = 0.65F;
+		float legRotationLimit = 1.4F;
+
+		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+		
+		skeleton = new SkeletonBiped(Body, headModule, rightArmModule,
+				leftArmModule, leftLegModule, rightLegModule);
 
 	}
 

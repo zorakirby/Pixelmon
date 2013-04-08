@@ -20,12 +20,9 @@ import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
-import pixelmon.pokedex.Pokedex;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
-import pixelmon.structure.SchematicImporter;
 import pixelmon.structure.StructureRegistry;
-import pixelmon.structure.generation.GeneralScattered;
 import pixelmon.structure.worldGen.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
@@ -136,6 +133,7 @@ public class Pixelmon {
 	public void onServerStart(FMLServerStartingEvent event) {
 		if (MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager) {
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandStruc());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandFreeze());
 		}
 	}

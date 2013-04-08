@@ -3,6 +3,7 @@ package pixelmon.structure.generation;
 import java.util.Random;
 
 import pixelmon.structure.SchematicImporter;
+import pixelmon.structure.StructureData;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.Facing;
@@ -11,18 +12,20 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 public class GeneralScattered extends StructureScattered {
 
-	private static SchematicImporter s;
+	private SchematicImporter s;
+	private StructureData sd;
 
 	// TODO implement a system in which we can have special pokemon spawn at
 	// special coordinates.
 
-	public GeneralScattered(Random par1Random, int par2, int par3, int par4, SchematicImporter schematic) {
+	public GeneralScattered(Random par1Random, int par2, int par3, int par4, SchematicImporter schematic, StructureData structureData) {
 		super(par1Random, par2, par3, par4, schematic.width, schematic.height, schematic.length);
 		s = schematic;
+		sd = structureData;
 	}
 
 	public boolean addComponentParts(World world, Random par2Random, StructureBoundingBox bb) {
-		if (!this.func_74935_a(world, bb, 0)) {
+		if (!this.canStructureFitAtCoords(world, bb, sd)) {
 			return false;
 		} else {
 			for (int x = 0; x < s.width; x++)

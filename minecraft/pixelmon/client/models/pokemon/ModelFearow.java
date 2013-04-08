@@ -9,6 +9,8 @@ import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.Bird.EnumWing;
+import pixelmon.client.models.animations.Bird.ModuleWing;
 import pixelmon.client.models.animations.Bird.SkeletonBird;
 
 public class ModelFearow extends PixelmonModelBase {
@@ -34,7 +36,8 @@ public class ModelFearow extends PixelmonModelBase {
 		body_2.mirror = true;
 		setRotation(body_2, -0.2792527F, 0F, 0F);
 		Body.addChild(body_2);
-		PixelmonModelRenderer neck_base = new PixelmonModelRenderer(this, 63, 38);
+		PixelmonModelRenderer neck_base = new PixelmonModelRenderer(this, 63,
+				38);
 		neck_base.addBox(-3F, -2.4F, -0.1333333F, 6, 4, 6);
 		neck_base.setTextureSize(128, 64);
 		neck_base.mirror = true;
@@ -52,42 +55,48 @@ public class ModelFearow extends PixelmonModelBase {
 		neck_2.mirror = true;
 		setRotation(neck_2, 0.8726646F, 0F, 0F);
 		Body.addChild(neck_2);
-		PixelmonModelRenderer neck_feathers = new PixelmonModelRenderer(this, 0, 52);
+		PixelmonModelRenderer neck_feathers = new PixelmonModelRenderer(this,
+				0, 52);
 		neck_feathers.addBox(-3F, 0F, -0.5333334F, 6, 5, 0);
 		neck_feathers.setRotationPoint(3F, -1F, 2F);
 		neck_feathers.setTextureSize(128, 64);
 		neck_feathers.mirror = true;
 		setRotation(neck_feathers, -0.9599311F, -1.291544F, -0.2792527F);
 		Body.addChild(neck_feathers);
-		PixelmonModelRenderer neck_feathers_2 = new PixelmonModelRenderer(this, 0, 59);
+		PixelmonModelRenderer neck_feathers_2 = new PixelmonModelRenderer(this,
+				0, 59);
 		neck_feathers_2.addBox(-5F, -0.4F, -0.6F, 10, 5, 0);
 		neck_feathers_2.setRotationPoint(0F, 0F, 0F);
 		neck_feathers_2.setTextureSize(128, 64);
 		neck_feathers_2.mirror = true;
 		setRotation(neck_feathers_2, -0.9075712F, 0F, 0F);
 		Body.addChild(neck_feathers_2);
-		PixelmonModelRenderer neck_feathers_3 = new PixelmonModelRenderer(this, 0, 52);
+		PixelmonModelRenderer neck_feathers_3 = new PixelmonModelRenderer(this,
+				0, 52);
 		neck_feathers_3.addBox(-3F, 0F, -0.5333334F, 6, 5, 0);
 		neck_feathers_3.setRotationPoint(-3F, -1F, 2F);
 		neck_feathers_3.setTextureSize(128, 64);
 		neck_feathers_3.mirror = true;
 		setRotation(neck_feathers_3, -0.9599311F, 1.291544F, 0.2792527F);
 		Body.addChild(neck_feathers_3);
-		PixelmonModelRenderer back_feathers_1 = new PixelmonModelRenderer(this, 18, 48);
+		PixelmonModelRenderer back_feathers_1 = new PixelmonModelRenderer(this,
+				18, 48);
 		back_feathers_1.addBox(-4F, 0F, 0.06666667F, 8, 10, 0);
 		back_feathers_1.setRotationPoint(0F, -3F, 5F);
 		back_feathers_1.setTextureSize(128, 64);
 		back_feathers_1.mirror = true;
 		setRotation(back_feathers_1, 0.6806784F, 0F, 0F);
 		Body.addChild(back_feathers_1);
-		PixelmonModelRenderer back_feathers_2 = new PixelmonModelRenderer(this, 16, 42);
+		PixelmonModelRenderer back_feathers_2 = new PixelmonModelRenderer(this,
+				16, 42);
 		back_feathers_2.addBox(-6.5F, 0F, 0.06666667F, 13, 4, 0);
 		back_feathers_2.setRotationPoint(0F, -3F, 5F);
 		back_feathers_2.setTextureSize(128, 64);
 		back_feathers_2.mirror = true;
 		setRotation(back_feathers_2, 0.5759587F, 0F, 0F);
 		Body.addChild(back_feathers_2);
-		PixelmonModelRenderer back_feathers_3 = new PixelmonModelRenderer(this, 21, 60);
+		PixelmonModelRenderer back_feathers_3 = new PixelmonModelRenderer(this,
+				21, 60);
 		back_feathers_3.addBox(-3.5F, 0F, 0.06666667F, 7, 4, 0);
 		back_feathers_3.setRotationPoint(0F, -3F, 5F);
 		back_feathers_3.setTextureSize(128, 64);
@@ -111,14 +120,16 @@ public class ModelFearow extends PixelmonModelBase {
 		head_2.mirror = true;
 		setRotation(head_2, 0.8901179F, 0F, 0F);
 		Head.addChild(head_2);
-		PixelmonModelRenderer upper_beak = new PixelmonModelRenderer(this, 17, 32);
+		PixelmonModelRenderer upper_beak = new PixelmonModelRenderer(this, 17,
+				32);
 		upper_beak.addBox(-1F, -0.6666667F, -9F, 2, 1, 8);
 		upper_beak.setRotationPoint(0F, 2F, -1F);
 		upper_beak.setTextureSize(128, 64);
 		upper_beak.mirror = true;
 		setRotation(upper_beak, 0.6981317F, 0F, 0F);
 		Head.addChild(upper_beak);
-		PixelmonModelRenderer lower_beak = new PixelmonModelRenderer(this, 17, 25);
+		PixelmonModelRenderer lower_beak = new PixelmonModelRenderer(this, 17,
+				25);
 		lower_beak.addBox(-0.5F, 0.3333333F, -6F, 1, 1, 5);
 		lower_beak.setRotationPoint(0F, 2F, -1F);
 		lower_beak.setTextureSize(128, 64);
@@ -132,7 +143,8 @@ public class ModelFearow extends PixelmonModelBase {
 		crest.mirror = true;
 		setRotation(crest, 0.7330383F, 0F, 0F);
 		Head.addChild(crest);
-		PixelmonModelRenderer crest_base = new PixelmonModelRenderer(this, 40, 49);
+		PixelmonModelRenderer crest_base = new PixelmonModelRenderer(this, 40,
+				49);
 		crest_base.addBox(-1F, -2.666667F, -1.666667F, 2, 2, 5);
 		crest_base.setRotationPoint(0F, 2F, -1F);
 		crest_base.setTextureSize(128, 64);
@@ -143,14 +155,16 @@ public class ModelFearow extends PixelmonModelBase {
 
 		PixelmonModelRenderer Tail = new PixelmonModelRenderer(this, "Tail");
 		Tail.setRotationPoint(0, 9, 5);
-		PixelmonModelRenderer tail_base = new PixelmonModelRenderer(this, 45, 23);
+		PixelmonModelRenderer tail_base = new PixelmonModelRenderer(this, 45,
+				23);
 		tail_base.addBox(-2F, 0.5F, 0F, 4, 3, 3);
 		// tail_base.setRotationPoint(0F, 14F, 5F);
 		tail_base.setTextureSize(128, 64);
 		tail_base.mirror = true;
 		setRotation(tail_base, 1.012291F, 0F, 0F);
 		Tail.addChild(tail_base);
-		PixelmonModelRenderer tail_base_2 = new PixelmonModelRenderer(this, 60, 26);
+		PixelmonModelRenderer tail_base_2 = new PixelmonModelRenderer(this, 60,
+				26);
 		tail_base_2.addBox(-1F, 2.5F, 1F, 2, 2, 2);
 		tail_base_2.setRotationPoint(0F, 0, 0F);
 		tail_base_2.setTextureSize(128, 64);
@@ -166,9 +180,11 @@ public class ModelFearow extends PixelmonModelBase {
 		Tail.addChild(tail);
 		Body.addChild(Tail);
 
-		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this, "Left Leg");
+		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this,
+				"Left Leg");
 		LeftLeg.setRotationPoint(2, 8, 0);
-		PixelmonModelRenderer leg_base_L = new PixelmonModelRenderer(this, 0, 14);
+		PixelmonModelRenderer leg_base_L = new PixelmonModelRenderer(this, 0,
+				14);
 		leg_base_L.addBox(0F, 0F, -1F, 3, 4, 4);
 		// leg_base_L.setRotationPoint(2F, 13F, 0F);
 		leg_base_L.setTextureSize(128, 64);
@@ -212,9 +228,11 @@ public class ModelFearow extends PixelmonModelBase {
 		LeftLeg.addChild(toe_4_L);
 		Body.addChild(LeftLeg);
 
-		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this, "Right Leg");
+		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this,
+				"Right Leg");
 		RightLeg.setRotationPoint(-4, 8, 0);
-		PixelmonModelRenderer leg_base_R = new PixelmonModelRenderer(this, 0, 14);
+		PixelmonModelRenderer leg_base_R = new PixelmonModelRenderer(this, 0,
+				14);
 		leg_base_R.addBox(-3F, 0F, -1F, 3, 4, 4);
 		// leg_base_R.setRotationPoint(-4F, 13F, 0F);
 		leg_base_R.setTextureSize(128, 64);
@@ -258,52 +276,67 @@ public class ModelFearow extends PixelmonModelBase {
 		RightLeg.addChild(toe_1_R);
 		Body.addChild(RightLeg);
 
-		PixelmonModelRenderer LeftWing = new PixelmonModelRenderer(this, "Left Wing");
+		PixelmonModelRenderer LeftWing = new PixelmonModelRenderer(this,
+				"Left Wing");
 		LeftWing.setRotationPoint(4, -1, 3);
-		PixelmonModelRenderer wing_base_1_L = new PixelmonModelRenderer(this, 98, 45);
+		PixelmonModelRenderer wing_base_1_L = new PixelmonModelRenderer(this,
+				98, 45);
 		wing_base_1_L.addBox(-1F, -1F, 0F, 14, 2, 1);
 		// wing_base_1_L.setRotationPoint(4F, 4F, 3F);
 		wing_base_1_L.setTextureSize(128, 64);
 		wing_base_1_L.mirror = false;
 		setRotation(wing_base_1_L, 0F, 0.2617994F, -0.715585F);
 		LeftWing.addChild(wing_base_1_L);
-		PixelmonModelRenderer wing_L = new PixelmonModelRenderer(this, 64, 49);
-		wing_L.addBox(-27F, -1.8F, 0.5F, 32, 15, 0);
-		wing_L.setRotationPoint(-8F, 2F, 0F);
+		PixelmonModelRenderer wing_L = new PixelmonModelRenderer(this, 31, 0);
+		wing_L.addBox(-4F, -1.8F, 0.5F, 32, 15, 0);
+		wing_L.setRotationPoint(0, 2F, 0F);
 		wing_L.setTextureSize(128, 64);
 		wing_L.mirror = false;
-		setRotation(wing_L, 0F, -0.2617994F, 0.715585F);
+		setRotation(wing_L, 0F, 0.2617994F, -0.715585F);
 		LeftWing.addChild(wing_L);
 		Body.addChild(LeftWing);
 
-		PixelmonModelRenderer RightWing = new PixelmonModelRenderer(this, "Right Wing");
+		PixelmonModelRenderer RightWing = new PixelmonModelRenderer(this,
+				"Right Wing");
 		RightWing.setRotationPoint(-4, -1, 3);
-		PixelmonModelRenderer wing_base_1_R = new PixelmonModelRenderer(this, 98, 45);
+		PixelmonModelRenderer wing_base_1_R = new PixelmonModelRenderer(this,
+				98, 45);
 		wing_base_1_R.addBox(-13F, -1F, 0F, 14, 2, 1);
 		// wing_base_1_R.setRotationPoint(-4F, 4F, 3F);
 		wing_base_1_R.setTextureSize(128, 64);
 		wing_base_1_R.mirror = false;
 		setRotation(wing_base_1_R, 0F, -0.2617994F, 0.715585F);
 		RightWing.addChild(wing_base_1_R);
-		PixelmonModelRenderer wing_R = new PixelmonModelRenderer(this, 31, 0);
-		wing_R.addBox(-4F, -1.8F, 0.5F, 32, 15, 0);
-		wing_R.setRotationPoint(8F, 2F, 0F);
+		PixelmonModelRenderer wing_R = new PixelmonModelRenderer(this, 64, 49);
+		wing_R.addBox(-27F, -1.8F, 0.5F, 32, 15, 0);
+		wing_R.setRotationPoint(0, 2F, 0F);
 		wing_R.setTextureSize(128, 64);
 		wing_R.mirror = false;
-		setRotation(wing_R, 0F, 0.2617994F, -0.715585F);
+		setRotation(wing_R, 0F, -0.2617994F, 0.715585F);
 		RightWing.addChild(wing_R);
 		Body.addChild(RightWing);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBird(Body, headModule, LeftWing, RightWing, LeftLeg, RightLeg);
+
+		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
+				EnumWing.Horizontal, 0.25F, 1F);
+		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
+				EnumWing.Horizontal, 0.25F, 1F);
+
+		skeleton = new SkeletonBird(Body, headModule, leftWingModule,
+				rightWingModule, LeftLeg, RightLeg);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
+		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

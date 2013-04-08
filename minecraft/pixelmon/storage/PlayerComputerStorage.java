@@ -145,4 +145,19 @@ public class PlayerComputerStorage {
 		}
 	}
 
+	public NBTTagCompound getPokemonNBT(int id) {
+		for (ComputerBox b : storageBoxes) {
+			if (b.contains(id))
+				return b.getPokemonNBT(id);
+		}
+		return null;
+	}
+
+	public void updatePokemonNBT(int id, NBTTagCompound nbt) {
+		for (ComputerBox b : storageBoxes) {
+			if (b.contains(id))
+				b.updatePokemonNBT(id, nbt);
+		}
+	}
+
 }

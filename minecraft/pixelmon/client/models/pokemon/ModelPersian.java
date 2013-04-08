@@ -9,8 +9,11 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
+import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.Quadruped.SkeletonQuadruped;
 
 public class ModelPersian extends PixelmonModelBase {
 	// fields
@@ -41,7 +44,8 @@ public class ModelPersian extends PixelmonModelBase {
 		tail_base.mirror = true;
 		setRotation(tail_base, -0.122173F, 0F, 0F);
 		Body.addChild(tail_base);
-		PixelmonModelRenderer neck_base = new PixelmonModelRenderer(this, 116, 46);
+		PixelmonModelRenderer neck_base = new PixelmonModelRenderer(this, 116,
+				46);
 		neck_base.addBox(-2F, 0.2F, 0.9333333F, 4, 5, 2);
 		neck_base.setTextureSize(128, 64);
 		neck_base.mirror = true;
@@ -250,13 +254,15 @@ public class ModelPersian extends PixelmonModelBase {
 		head_3.mirror = true;
 		setRotation(head_3, 0.3839724F, 0.2094395F, 0.1047198F);
 		Head.addChild(head_3);
-		PixelmonModelRenderer L_whiskers = new PixelmonModelRenderer(this, 30, 40);
+		PixelmonModelRenderer L_whiskers = new PixelmonModelRenderer(this, 30,
+				40);
 		L_whiskers.addBox(0.9666666F, -0.6F, -3.733333F, 5, 4, 0);
 		L_whiskers.setTextureSize(128, 64);
 		L_whiskers.mirror = true;
 		setRotation(L_whiskers, 0.3490659F, 0F, 0.0872665F);
 		Head.addChild(L_whiskers);
-		PixelmonModelRenderer R_whiskers = new PixelmonModelRenderer(this, 35, 40);
+		PixelmonModelRenderer R_whiskers = new PixelmonModelRenderer(this, 35,
+				40);
 		R_whiskers.addBox(-6.033333F, -0.6F, -3.733333F, 5, 4, 0);
 		R_whiskers.setTextureSize(128, 64);
 		R_whiskers.mirror = true;
@@ -265,17 +271,33 @@ public class ModelPersian extends PixelmonModelBase {
 		Body.addChild(Head);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonQuadruped(Body, headModule, FLLeg, FRLeg, BLLeg, BRLeg, 1.1f, 1.1f, 0.8f);
+
+		float legspeed = 0.8F;
+		float legRotationLimit = 1.1F;
+
+		ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight,
+				EnumPhase.OutPhase, legRotationLimit, legspeed);
+
+		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule,
+				frontlegRModule, backlegLModule, backlegRModule);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 
 		Body.render(f5);
 
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

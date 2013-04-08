@@ -3,7 +3,12 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumArm;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.Biped.SkeletonBiped;
 
 public class ModelCharizard extends PixelmonModelBase {
@@ -462,12 +467,6 @@ public class ModelCharizard extends PixelmonModelBase {
 
 		PixelmonModelRenderer Tail = new PixelmonModelRenderer(this, "Tail");
 		Tail.setRotationPoint(0F, 10F, 9.7F);
-		PixelmonModelRenderer flame_tale = new PixelmonModelRenderer(this, 84, 32);
-		flame_tale.addBox(0F, 36.9F, 6F, 0, 19, 21);
-		flame_tale.setTextureSize(256, 256);
-		flame_tale.mirror = true;
-		setRotation(flame_tale, 1.448623F, 0F, 0F);
-		Tail.addChild(flame_tale);
 		PixelmonModelRenderer tail = new PixelmonModelRenderer(this, 0, 122);
 		tail.addBox(-6F, -3F, -8F, 12, 13, 14);
 		tail.setTextureSize(256, 256);
@@ -852,7 +851,19 @@ public class ModelCharizard extends PixelmonModelBase {
 		Body.addChild(RightLeg);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBiped(Body, headModule, LeftArm, RightArm, LeftLeg, RightLeg);
+		
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+
+		float legspeed = 0.65F;
+		float legRotationLimit = 1.4F;
+
+		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,	EnumPhase.InPhase, legRotationLimit, legspeed);
+
+		skeleton = new SkeletonBiped(Body, headModule, rightArmModule,
+				leftArmModule, leftLegModule, rightLegModule);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

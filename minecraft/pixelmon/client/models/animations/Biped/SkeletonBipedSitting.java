@@ -1,13 +1,18 @@
 package pixelmon.client.models.animations.Biped;
 
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelRenderer;
 
-public class SkeletonBipedSitting extends SkeletonBiped {
+public class SkeletonBipedSitting extends SkeletonBase {
+	ModelRenderer LeftArm, RightArm;
 
-	public SkeletonBipedSitting(ModelRenderer body, ModuleHead headModule, ModelRenderer leftArm, ModelRenderer rightArm, ModelRenderer leftLeg, ModelRenderer rightLeg) {
-		super(body, headModule, leftArm, rightArm, leftLeg, rightLeg);
+	public SkeletonBipedSitting(ModelRenderer body, ModuleHead headModule, ModelRenderer LeftArm, ModelRenderer RightArm, ModelRenderer leftLeg, ModelRenderer rightLeg) {
+		super(body);
+		modules.add(headModule);
+		this.LeftArm = LeftArm;
+		this.RightArm = RightArm;
 	}
 
 	@Override

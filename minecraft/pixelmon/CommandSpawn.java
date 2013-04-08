@@ -9,7 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 
@@ -52,6 +51,7 @@ public class CommandSpawn extends CommandBase {
 		}
 	}
 
+	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] par2ArrayOfStr) {
 		ArrayList<String> pokemon = new ArrayList<String>();
 		for (EnumPokemon p : EnumPokemon.values())

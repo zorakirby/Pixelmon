@@ -49,6 +49,9 @@ public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 		case 4:
 			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 0));
 			break;
+		case 5:
+			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			break;
 		}
 	}
 

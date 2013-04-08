@@ -3,7 +3,12 @@ package pixelmon.client.models.pokemon;
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumArm;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.Biped.SkeletonBiped;
 
 public class ModelGolem extends PixelmonModelBase {
@@ -16,15 +21,19 @@ public class ModelGolem extends PixelmonModelBase {
 
 		Body = new PixelmonModelRenderer(this, "Body");
 		Body.setRotationPoint(-1, -1, -1);
-		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this, "Left Leg");
+		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this,
+				"Left Leg");
 		LeftLeg.setRotationPoint(15F, 15F, 5F);
-		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this, "Right Leg");
+		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this,
+				"Right Leg");
 		RightLeg.setRotationPoint(-5F, 15F, 5F);
 		PixelmonModelRenderer Head = new PixelmonModelRenderer(this, "Head");
 		Head.setRotationPoint(5, 2, -10);
-		PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this, "Left Arm");
+		PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this,
+				"Left Arm");
 		LeftArm.setRotationPoint(20, 3, 5);
-		PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this, "Right Arm");
+		PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this,
+				"Right Arm");
 		RightArm.setRotationPoint(-10, 3, 5);
 
 		PixelmonModelRenderer leftleg1 = new PixelmonModelRenderer(this, 0, 43);
@@ -42,37 +51,44 @@ public class ModelGolem extends PixelmonModelBase {
 		leftleg3.setTextureSize(128, 64);
 		leftleg3.mirror = true;
 		setRotation(leftleg3, 0F, 0F, 0F);
-		PixelmonModelRenderer leftleg4 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer leftleg4 = new PixelmonModelRenderer(this, 122,
+				60);
 		leftleg4.addBox(1.6F, 8F, -5.5F, 1, 1, 2);
 		leftleg4.setTextureSize(128, 64);
 		leftleg4.mirror = true;
 		setRotation(leftleg4, 0F, 0F, 0F);
-		PixelmonModelRenderer leftleg5 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer leftleg5 = new PixelmonModelRenderer(this, 122,
+				60);
 		leftleg5.addBox(-0.6F, 8F, -5.5F, 1, 1, 2);
 		leftleg5.setTextureSize(128, 64);
 		leftleg5.mirror = true;
 		setRotation(leftleg5, 0F, 0F, 0F);
-		PixelmonModelRenderer leftleg6 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer leftleg6 = new PixelmonModelRenderer(this, 122,
+				60);
 		leftleg6.addBox(1F, 8F, -6.5F, 1, 1, 2);
 		leftleg6.setTextureSize(128, 64);
 		leftleg6.mirror = true;
 		setRotation(leftleg6, 0F, -0.5235988F, 0F);
-		PixelmonModelRenderer leftleg7 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer leftleg7 = new PixelmonModelRenderer(this, 122,
+				60);
 		leftleg7.addBox(-0.5F, 8F, -5.5F, 1, 1, 2);
 		leftleg7.setTextureSize(128, 64);
 		leftleg7.mirror = true;
 		setRotation(leftleg7, 0F, 0.5235988F, 0F);
-		PixelmonModelRenderer leftleg8 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer leftleg8 = new PixelmonModelRenderer(this, 122,
+				60);
 		leftleg8.addBox(0.5F, 8F, 2F, 1, 1, 2);
 		leftleg8.setTextureSize(128, 64);
 		leftleg8.mirror = true;
 		setRotation(leftleg8, 0F, 0F, 0F);
-		PixelmonModelRenderer leftleg9 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer leftleg9 = new PixelmonModelRenderer(this, 122,
+				60);
 		leftleg9.addBox(1.6F, 4.2F, -8.7F, 1, 1, 2);
 		leftleg9.setTextureSize(128, 64);
 		leftleg9.mirror = true;
 		setRotation(leftleg9, 0.5235988F, 0F, 0F);
-		PixelmonModelRenderer leftleg10 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer leftleg10 = new PixelmonModelRenderer(this, 122,
+				60);
 		leftleg10.addBox(-0.6F, 4.2F, -8.7F, 1, 1, 2);
 		leftleg10.setTextureSize(128, 64);
 		leftleg10.mirror = true;
@@ -82,17 +98,20 @@ public class ModelGolem extends PixelmonModelBase {
 		leftleg11.setTextureSize(128, 64);
 		leftleg11.mirror = true;
 		setRotation(leftleg11, 0.3490659F, 0F, 0F);
-		PixelmonModelRenderer leftleg12 = new PixelmonModelRenderer(this, 121, 60);
+		PixelmonModelRenderer leftleg12 = new PixelmonModelRenderer(this, 121,
+				60);
 		leftleg12.addBox(-0.5F, 4.2F, -8.7F, 1, 1, 3);
 		leftleg12.setTextureSize(128, 64);
 		leftleg12.mirror = true;
 		setRotation(leftleg12, 0.5235988F, 0.5235988F, 0F);
-		PixelmonModelRenderer leftleg13 = new PixelmonModelRenderer(this, 120, 60);
+		PixelmonModelRenderer leftleg13 = new PixelmonModelRenderer(this, 120,
+				60);
 		leftleg13.addBox(1F, 3.7F, -9.6F, 1, 1, 3);
 		leftleg13.setTextureSize(128, 64);
 		leftleg13.mirror = true;
 		setRotation(leftleg13, 0.5235988F, -0.5235988F, 0F);
-		PixelmonModelRenderer leftleg14 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer leftleg14 = new PixelmonModelRenderer(this, 122,
+				60);
 		leftleg14.addBox(0.5F, 4.9F, 5.4F, 1, 1, 2);
 		leftleg14.setTextureSize(128, 64);
 		leftleg14.mirror = true;
@@ -117,52 +136,62 @@ public class ModelGolem extends PixelmonModelBase {
 		rightleg4.setTextureSize(128, 64);
 		rightleg4.mirror = true;
 		setRotation(rightleg4, 0.3490659F, 0F, 0F);
-		PixelmonModelRenderer rightleg5 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer rightleg5 = new PixelmonModelRenderer(this, 122,
+				60);
 		rightleg5.addBox(-2.6F, 8F, -5.5F, 1, 1, 2);
 		rightleg5.setTextureSize(128, 64);
 		rightleg5.mirror = true;
 		setRotation(rightleg5, 0F, 0F, 0F);
-		PixelmonModelRenderer rightleg6 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer rightleg6 = new PixelmonModelRenderer(this, 122,
+				60);
 		rightleg6.addBox(-0.6F, 8F, -5.5F, 1, 1, 2);
 		rightleg6.setTextureSize(128, 64);
 		rightleg6.mirror = true;
 		setRotation(rightleg6, 0F, 0F, 0F);
-		PixelmonModelRenderer rightleg7 = new PixelmonModelRenderer(this, 121, 60);
+		PixelmonModelRenderer rightleg7 = new PixelmonModelRenderer(this, 121,
+				60);
 		rightleg7.addBox(-2F, 8F, -6.5F, 1, 1, 2);
 		rightleg7.setTextureSize(128, 64);
 		rightleg7.mirror = true;
 		setRotation(rightleg7, 0F, 0.5235988F, 0F);
-		PixelmonModelRenderer rightleg8 = new PixelmonModelRenderer(this, 121, 60);
+		PixelmonModelRenderer rightleg8 = new PixelmonModelRenderer(this, 121,
+				60);
 		rightleg8.addBox(-1F, 8F, -5.5F, 1, 1, 2);
 		rightleg8.setTextureSize(128, 64);
 		rightleg8.mirror = true;
 		setRotation(rightleg8, 0F, -0.5235988F, 0F);
-		PixelmonModelRenderer rightleg9 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer rightleg9 = new PixelmonModelRenderer(this, 122,
+				60);
 		rightleg9.addBox(-1.5F, 8F, 2F, 1, 1, 2);
 		rightleg9.setTextureSize(128, 64);
 		rightleg9.mirror = true;
 		setRotation(rightleg9, 0F, 0F, 0F);
-		PixelmonModelRenderer rightleg10 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer rightleg10 = new PixelmonModelRenderer(this, 122,
+				60);
 		rightleg10.addBox(-2.6F, 4.2F, -8.7F, 1, 1, 2);
 		rightleg10.setTextureSize(128, 64);
 		rightleg10.mirror = true;
 		setRotation(rightleg10, 0.5235988F, 0F, 0F);
-		PixelmonModelRenderer rightleg11 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer rightleg11 = new PixelmonModelRenderer(this, 122,
+				60);
 		rightleg11.addBox(-0.6F, 4.2F, -8.7F, 1, 1, 2);
 		rightleg11.setTextureSize(128, 64);
 		rightleg11.mirror = true;
 		setRotation(rightleg11, 0.5235988F, 0F, 0F);
-		PixelmonModelRenderer rightleg12 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer rightleg12 = new PixelmonModelRenderer(this, 122,
+				60);
 		rightleg12.addBox(-2F, 3.7F, -9.6F, 1, 1, 3);
 		rightleg12.setTextureSize(128, 64);
 		rightleg12.mirror = true;
 		setRotation(rightleg12, 0.5235988F, 0.5235988F, 0F);
-		PixelmonModelRenderer rightleg13 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer rightleg13 = new PixelmonModelRenderer(this, 122,
+				60);
 		rightleg13.addBox(-1F, 4.2F, -8.7F, 1, 1, 3);
 		rightleg13.setTextureSize(128, 64);
 		rightleg13.mirror = true;
 		setRotation(rightleg13, 0.5235988F, -0.5235988F, 0F);
-		PixelmonModelRenderer rightleg14 = new PixelmonModelRenderer(this, 122, 60);
+		PixelmonModelRenderer rightleg14 = new PixelmonModelRenderer(this, 122,
+				60);
 		rightleg14.addBox(-1.5F, 4.9F, 5.4F, 1, 1, 2);
 		rightleg14.setTextureSize(128, 64);
 		rightleg14.mirror = true;
@@ -197,7 +226,8 @@ public class ModelGolem extends PixelmonModelBase {
 		leftarm6.setTextureSize(128, 64);
 		leftarm6.mirror = true;
 		setRotation(leftarm6, 0F, 0F, 0F);
-		PixelmonModelRenderer leftarm7 = new PixelmonModelRenderer(this, 123, 59);
+		PixelmonModelRenderer leftarm7 = new PixelmonModelRenderer(this, 123,
+				59);
 		leftarm7.addBox(6.5F, 2F, -12.3F, 1, 1, 1);
 		leftarm7.setTextureSize(128, 64);
 		leftarm7.mirror = true;
@@ -212,12 +242,14 @@ public class ModelGolem extends PixelmonModelBase {
 		leftarm9.setTextureSize(128, 64);
 		leftarm9.mirror = true;
 		setRotation(leftarm9, 0F, -0.5235988F, 0F);
-		PixelmonModelRenderer leftarm10 = new PixelmonModelRenderer(this, 122, 61);
+		PixelmonModelRenderer leftarm10 = new PixelmonModelRenderer(this, 122,
+				61);
 		leftarm10.addBox(2F, -0.3F, -14.5F, 1, 1, 1);
 		leftarm10.setTextureSize(128, 64);
 		leftarm10.mirror = true;
 		setRotation(leftarm10, 0F, -0.2617994F, 0F);
-		PixelmonModelRenderer leftarm11 = new PixelmonModelRenderer(this, 122, 61);
+		PixelmonModelRenderer leftarm11 = new PixelmonModelRenderer(this, 122,
+				61);
 		leftarm11.addBox(-2.5F, 2F, -13.5F, 1, 1, 1);
 		leftarm11.setTextureSize(128, 64);
 		leftarm11.mirror = true;
@@ -252,7 +284,8 @@ public class ModelGolem extends PixelmonModelBase {
 		rightarm6.setTextureSize(128, 64);
 		rightarm6.mirror = true;
 		setRotation(rightarm6, 0F, 0.2617994F, 0F);
-		PixelmonModelRenderer rightarm7 = new PixelmonModelRenderer(this, 121, 60);
+		PixelmonModelRenderer rightarm7 = new PixelmonModelRenderer(this, 121,
+				60);
 		rightarm7.addBox(-3F, -0.3F, -14.5F, 1, 1, 1);
 		rightarm7.setTextureSize(128, 64);
 		rightarm7.mirror = true;
@@ -267,12 +300,14 @@ public class ModelGolem extends PixelmonModelBase {
 		rightarm9.setTextureSize(128, 64);
 		rightarm9.mirror = true;
 		setRotation(rightarm9, 0F, 0.5235988F, 0F);
-		PixelmonModelRenderer rightarm10 = new PixelmonModelRenderer(this, 120, 60);
+		PixelmonModelRenderer rightarm10 = new PixelmonModelRenderer(this, 120,
+				60);
 		rightarm10.addBox(2F, 2F, -14F, 1, 1, 1);
 		rightarm10.setTextureSize(128, 64);
 		rightarm10.mirror = true;
 		setRotation(rightarm10, 0F, 0.5235988F, 0F);
-		PixelmonModelRenderer rightarm11 = new PixelmonModelRenderer(this, 120, 60);
+		PixelmonModelRenderer rightarm11 = new PixelmonModelRenderer(this, 120,
+				60);
 		rightarm11.addBox(-7.5F, 2F, -13F, 1, 1, 1);
 		rightarm11.setTextureSize(128, 64);
 		rightarm11.mirror = true;
@@ -749,15 +784,30 @@ public class ModelGolem extends PixelmonModelBase {
 		Body.addChild(Head);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBiped(Body, headModule, LeftArm, RightArm, LeftLeg, RightLeg);
+
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+
+		float legspeed = 0.65F;
+		float legRotationLimit = 1.4F;
+
+		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
+				EnumPhase.InPhase, legRotationLimit, legspeed);
+
+		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
+				rightArmModule, leftLegModule, rightLegModule);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;

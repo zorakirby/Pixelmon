@@ -50,7 +50,8 @@ public class Experience {
 						if (nbt.hasKey("HeldItem")) {
 							int itemId = nbt.getInteger("HeldItem");
 							if (itemId != -1) {
-								if (PixelmonItemsHeld.getHeldItem(itemId) != null && PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
+								if (PixelmonItemsHeld.getHeldItem(itemId) != null && PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare 
+										&& !nbt.getBoolean("IsFainted") && nbt.getShort("Health") > 0) {
 									expShareCount++;
 								}
 							}
@@ -63,7 +64,8 @@ public class Experience {
 						if (nbt.hasKey("HeldItem")) {
 							int itemId = nbt.getInteger("HeldItem");
 							if (itemId != -1) {
-								if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare) {
+								if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare
+										&& !nbt.getBoolean("IsFainted") && nbt.getShort("Health") > 0) {
 									calcExp(storage, p, faintedPokemon, nbt.getInteger("pixelmonID"), true, 0.5 * 1 / (double) expShareCount);
 								}
 							}

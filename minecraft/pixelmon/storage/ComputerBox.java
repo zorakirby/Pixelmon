@@ -190,4 +190,24 @@ public class ComputerBox {
 			}
 		}
 	}
+
+	public NBTTagCompound getPokemonNBT(int id) {
+		for (NBTTagCompound n : storedPokemon)
+			if (n != null)
+				if (n.getInteger("pixelmonID") == id)
+					return n;
+
+		return null;
+	}
+
+	public void updatePokemonNBT(int id, NBTTagCompound nbt) {
+		for (int i = 0; i < storedPokemon.length; i++) {
+			NBTTagCompound n = storedPokemon[i];
+			if (n != null)
+				if (n.getInteger("pixelmonID") == id){
+					storedPokemon[i] = nbt;
+					hasChanged = true;
+				}
+		}
+	}
 }
