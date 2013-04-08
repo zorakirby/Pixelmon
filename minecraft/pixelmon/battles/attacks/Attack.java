@@ -37,7 +37,7 @@ public class Attack {
 	public static final int ATTACK_PHYSICAL = 0, ATTACK_SPECIAL = 1, ATTACK_STATUS = 2;
 
 	private static AttackBase[] fullAttackList = new AttackBase[600];
-	public static boolean disabled = false;
+	public boolean disabled = false;
 	public AttackBase baseAttack;
 	public int pp;
 	public int ppBase;
