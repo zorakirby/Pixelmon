@@ -7,11 +7,8 @@ import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
-<<<<<<< HEAD
 import pixelmon.client.models.animations.Quadruped.SkeletonQuadruped;
-=======
-import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
->>>>>>> remotes/origin/master
+
 
 public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 {
