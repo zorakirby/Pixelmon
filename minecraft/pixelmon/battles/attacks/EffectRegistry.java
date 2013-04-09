@@ -40,7 +40,6 @@ import pixelmon.battles.attacks.specialAttacks.basic.PsychUp;
 import pixelmon.battles.attacks.specialAttacks.basic.Psywave;
 import pixelmon.battles.attacks.specialAttacks.basic.Punishment;
 import pixelmon.battles.attacks.specialAttacks.basic.RaiseStats;
-import pixelmon.battles.attacks.specialAttacks.basic.Restore;
 import pixelmon.battles.attacks.specialAttacks.basic.Return;
 import pixelmon.battles.attacks.specialAttacks.basic.Reversal;
 import pixelmon.battles.attacks.specialAttacks.basic.SeismicToss;
@@ -146,7 +145,6 @@ public class EffectRegistry {
 		effectMap.put("psywave", Psywave.class);
 		effectMap.put("punishment", Punishment.class);
 		effectMap.put("raisestats", RaiseStats.class);
-		effectMap.put("restore", Restore.class);
 		effectMap.put("return", Return.class);
 		effectMap.put("reversal", Reversal.class);
 		effectMap.put("seismictoss", SeismicToss.class);
