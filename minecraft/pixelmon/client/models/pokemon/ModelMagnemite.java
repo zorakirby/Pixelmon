@@ -12,11 +12,11 @@
 package pixelmon.client.models.pokemon;
 
 import java.util.Random;
+
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import pixelmon.client.models.PixelmonModelBase;
-import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.SkeletonBase;
 
 public class ModelMagnemite extends PixelmonModelBase

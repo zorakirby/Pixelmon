@@ -6,11 +6,9 @@
 package pixelmon.client.models.pokemon;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.client.model.ModelRenderer;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.client.models.animations.Bird.EnumWing;
 import pixelmon.client.models.animations.Bird.ModuleWing;
 import pixelmon.client.models.animations.Bird.SkeletonBird;

@@ -1,22 +1,16 @@
 package pixelmon.client.models.pokemon;
 
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
-import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
-
-import pixelmon.client.models.PixelmonModelBase;
-import pixelmon.client.models.PixelmonModelRenderer;
-import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.Biped.SkeletonBiped;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.MathHelper;
 
 
 public class ModelSquirtle extends PixelmonModelBase {
