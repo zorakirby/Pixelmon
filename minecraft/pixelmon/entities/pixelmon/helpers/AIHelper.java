@@ -46,6 +46,7 @@ public class AIHelper {
 	}
 
 	private void initFlyingAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
+		tasks.addTask(i++, new EntityAISwimming(entity));
 		tasks.addTask(i++, new EntityAITempt(entity, entity.getMoveSpeed(), PixelmonItems.rareCandy.itemID, false));
 		tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
 		tasks.addTask(i++, new EntityAIWander(entity, entity.getMoveSpeed()));
@@ -69,6 +70,7 @@ public class AIHelper {
 		if (Name.equalsIgnoreCase("Abra")) {
 			tasks.addTask(i++, new AITeleportAway(entity));
 		} else {
+			tasks.addTask(i++, new EntityAISwimming(entity));
 			tasks.addTask(i++, new EntityAIFollowOwner(entity, 0.3F, 10.0F, 4.0F));
 			tasks.addTask(i++, new EntityAITempt(entity, entity.getMoveSpeed(), PixelmonItems.rareCandy.itemID, false));
 			tasks.addTask(i++, new EntityAIWander(entity, entity.getMoveSpeed()));
