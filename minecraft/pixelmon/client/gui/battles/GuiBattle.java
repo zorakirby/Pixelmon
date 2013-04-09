@@ -789,6 +789,7 @@ public class GuiBattle extends GuiContainer {
 		PixelmonMovesetDataPacket[] moveset = ClientBattleManager.getUserPokemonPacket().moveset;
 		int numMoves = ClientBattleManager.getUserPokemonPacket().numMoves;
 		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h && numMoves > 0 && moveset[0].pp > 0 && !moveset[0].disabled) {
+			System.out.println(moveset[0].disabled);
 			PacketDispatcher
 					.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex, ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;

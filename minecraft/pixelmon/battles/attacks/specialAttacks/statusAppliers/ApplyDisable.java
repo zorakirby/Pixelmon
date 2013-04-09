@@ -14,6 +14,7 @@ public class ApplyDisable extends StatusApplierBase {
 	public void ApplyEffect(Attack a, double crit, EntityPixelmon user,
 			EntityPixelmon target, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
+		String lastUsedMove = targetAttackList.get(targetAttackList.size()-1);
 		if (targetAttackList.size() - 1 == 0) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
 					target.getNickname() + " hasn't used a move yet!");
@@ -23,24 +24,25 @@ public class ApplyDisable extends StatusApplierBase {
 			
 			
 			int effectiveTurns = rand.nextInt(4) + 4;
-			int i = -1;
 			for(Attack atk: target.moveset){
-				i++;
+				
 				System.out.println(targetAttackList.size()-1);
-				System.out.println(targetAttackList.get(targetAttackList.size()-1));
-				System.out.println(target.moveset.get(i).baseAttack.attackName);
-				if (target.moveset.get(i).baseAttack.attackName.equalsIgnoreCase(targetAttackList.get(targetAttackList.size()-1))/*&& !target.moveset.get(i).disabled*/) {
-
+				System.out.println(lastUsedMove);
+				System.out.println(atk.baseAttack.attackName);
+				
+				if (atk.baseAttack.attackName.equalsIgnoreCase(lastUsedMove) && !atk.disabled) {
 					
-					target.moveset.get(i).disabled = true;
-					
-					ChatHandler.sendBattleMessage(user.getOwner(),target.getOwner(),target.moveset.get(i).baseAttack.attackName);
-					target.status.add(new Disable(target.moveset.get(i),
-							effectiveTurns));
+					atk.disabled = true;
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), atk.baseAttack.attackName);
+					target.status.add(new Disable(atk, effectiveTurns));
 					System.out.println("Applied disable");
+					
 				}
-				else if(target.moveset.get(i).baseAttack.attackName.equalsIgnoreCase(targetAttackList.get(targetAttackList.size()))&& target.moveset.get(i).disabled){
+				else if(atk.baseAttack.attackName.equalsIgnoreCase(lastUsedMove)&& atk.disabled)
+				{
+					
 					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "That move is already disabled!");
+					
 				}
 			}
 
