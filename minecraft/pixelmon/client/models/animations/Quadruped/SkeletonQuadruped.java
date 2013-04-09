@@ -1,4 +1,4 @@
-package pixelmon.client.models.animations.quadruped;
+package pixelmon.client.models.animations.Quadruped;
 
 import pixelmon.client.models.animations.Module;
 import pixelmon.client.models.animations.SkeletonBase;
