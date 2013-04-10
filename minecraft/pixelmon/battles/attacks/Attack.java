@@ -23,6 +23,9 @@ import pixelmon.battles.attacks.specialAttacks.statusAppliers.StatusApplierBase;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
+import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 import pixelmon.enums.heldItems.EnumHeldItems;
@@ -32,12 +35,13 @@ import pixelmon.storage.PixelmonStorage;
 
 public class Attack {
 	public static final float EFFECTIVE_NORMAL = 1, EFFECTIVE_SUPER = 2, EFFECTIVE_MAX = 4, EFFECTIVE_NOT = 0.5F, EFFECTIVE_BARELY = 0.25F, EFFECTIVE_NONE = 0;
-	public static final int TYPE_NORMAL = 0, TYPE_FIRE = 1, TYPE_WATER = 2, TYPE_ELECTRIC = 3, TYPE_GRASS = 4, TYPE_ICE = 5, TYPE_FIGHT = 6, TYPE_POISON = 7, TYPE_GROUND = 8,
-			TYPE_FLYING = 9, TYPE_PSYCHIC = 10, TYPE_BUG = 11, TYPE_ROCK = 12, TYPE_GHOST = 13, TYPE_DRAGON = 14, TYPE_DARK = 15, TYPE_STEEL = 16;
+	public static final int TYPE_NORMAL = 0, TYPE_FIRE = 1, TYPE_WATER = 2, TYPE_ELECTRIC = 3, TYPE_GRASS = 4, TYPE_ICE = 5, TYPE_FIGHT = 6, TYPE_POISON = 7,
+			TYPE_GROUND = 8, TYPE_FLYING = 9, TYPE_PSYCHIC = 10, TYPE_BUG = 11, TYPE_ROCK = 12, TYPE_GHOST = 13, TYPE_DRAGON = 14, TYPE_DARK = 15,
+			TYPE_STEEL = 16;
 	public static final int ATTACK_PHYSICAL = 0, ATTACK_SPECIAL = 1, ATTACK_STATUS = 2;
 
 	private static AttackBase[] fullAttackList = new AttackBase[600];
-	public boolean disabled = false;
+	private boolean disabled = false;
 	public AttackBase baseAttack;
 	public int pp;
 	public int ppBase;
@@ -101,7 +105,8 @@ public class Attack {
 		}
 
 		if (cantMiss || RandomHelper.getRandomNumberBetween(0, 100) <= accuracy) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " used " + baseAttack.attackName + " on " + target.getNickname() + "!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
+					user.getNickname() + " used " + baseAttack.attackName + " on " + target.getNickname() + "!");
 			for (int j = 0; j < baseAttack.effects.size(); j++) {
 				EffectBase e = baseAttack.effects.get(j);
 				if (e instanceof StatsEffect) {
@@ -199,7 +204,8 @@ public class Attack {
 				}
 			}
 		} else {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " tried to use " + baseAttack.attackName + ", but it missed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " tried to use " + baseAttack.attackName
+					+ ", but it missed!");
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
@@ -234,9 +240,11 @@ public class Attack {
 			stab = 1.5;
 		double type = EnumType.getTotalEffectiveness(target.type, baseAttack.attackType);
 		double critical = crit;
-		double rand = ((((double) RandomHelper.getRandomNumberBetween(1, 128))%16) + 85) * 0.01;
-		double modifier = stab * type * critical; // Add in Type/Weakness/Resistance in again.
-		double attack = 0, defense = 0, Level = (double)(user.getLvl().getLevel());
+		double rand = ((((double) RandomHelper.getRandomNumberBetween(1, 128)) % 16) + 85) * 0.01;
+		double modifier = stab * type * critical; // Add in
+													// Type/Weakness/Resistance
+													// in again.
+		double attack = 0, defense = 0, Level = (double) (user.getLvl().getLevel());
 		if (baseAttack.attackCategory == ATTACK_PHYSICAL) {
 			attack = ((double) user.stats.Attack) * ((double) user.battleStats.getAttackModifier()) * 0.01;
 			defense = ((double) target.stats.Defence) * ((double) target.battleStats.getDefenceModifier()) * 0.01;
@@ -250,14 +258,15 @@ public class Attack {
 				attack = ((ChoiceItem) user.getHeldItem().getItem()).affectSpecialAttack(attack);
 			}
 		}
-		
-		//  double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250 * (attack / defense)
-		//  * baseAttack.basePower + 2) * modifier;
-		
+
+		// double Damage = ((2 * ((float) user.getLvl().getLevel()) + 10) / 250
+		// * (attack / defense)
+		// * baseAttack.basePower + 2) * modifier;
+
 		double DmgRand = ((15 * rand) + 85) * 0.01;
 		double DamageBase = (((((((2 * Level) / 5) + 2) * attack * baseAttack.basePower) * 0.02) / defense) + 2);
-		
-		//Split up so they can be monitored while debugging.
+
+		// Split up so they can be monitored while debugging.
 		double Damage = DamageBase * modifier * DmgRand * 0.85;
 
 		for (int i = 0; i < target.status.size(); i++) {
@@ -270,6 +279,18 @@ public class Attack {
 			}
 		}
 		return (int) (Damage);
+	}
+
+	public void setDisabled(boolean value, EntityPixelmon pixelmon) {
+		disabled = value;
+		if (pixelmon.battleController != null && pixelmon.getOwner() != null) {
+			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(pixelmon, EnumPackets.UpdateStorage)
+					.getPacket());
+		}
+	}
+	
+	public boolean getDisabled(){
+		return disabled;
 	}
 
 	public double calcCriticalHit(EffectBase e) {

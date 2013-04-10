@@ -24,7 +24,7 @@ public class PixelmonMovesetDataPacket {
 		p.pp = moveset.get(i).pp;
 		p.ppBase = moveset.get(i).ppBase;
 		p.type = moveset.get(i).baseAttack.attackType;
-		p.disabled = moveset.get(i).disabled;
+		p.disabled = moveset.get(i).getDisabled();
 		return p;
 	}
 
