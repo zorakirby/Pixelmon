@@ -11,6 +11,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.Bird.EnumWing;
 import pixelmon.client.models.animations.Bird.ModuleWing;
+import pixelmon.client.models.animations.Bird.ModuleWingComplex;
 import pixelmon.client.models.animations.Bird.SkeletonBird;
 
 public class ModelAerodactyl extends PixelmonModelBase {
@@ -596,11 +597,17 @@ public class ModelAerodactyl extends PixelmonModelBase {
 		ModuleHead headModule = new ModuleHead(Head);
 
 		float WingSpeed = 0.5F;
+		float WingRotationLimit = 0.25F;
 
-		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
-				EnumWing.Verticle, 0.25F, WingSpeed);
-		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
-				EnumWing.Verticle, 0.25F, WingSpeed);
+//		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
+//				EnumWing.Verticle, WingRotationLimit, WingSpeed);
+//		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
+//				EnumWing.Verticle, WingRotationLimit, WingSpeed);
+		
+		ModuleWingComplex rightWingModule = new ModuleWingComplex(RightWing, EnumWing.Right,
+		WingRotationLimit, WingSpeed);
+		ModuleWingComplex leftWingModule = new ModuleWingComplex(LeftWing, EnumWing.Left,
+			 WingRotationLimit, WingSpeed);
 
 		skeleton = new SkeletonBird(Body, headModule, leftWingModule,
 				rightWingModule, LeftLeg, RightLeg);
