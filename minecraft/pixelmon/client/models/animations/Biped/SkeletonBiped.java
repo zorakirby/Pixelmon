@@ -10,14 +10,17 @@ import net.minecraft.util.MathHelper;
 
 public class SkeletonBiped extends SkeletonBase {
 
-	public SkeletonBiped(ModelRenderer body, ModuleHead headModule,
-			ModuleArm leftArm, ModuleArm rightArm, ModuleLeg leftLeg,
-			ModuleLeg rightLeg) {
+	public SkeletonBiped(ModelRenderer body, ModuleHead headModule, ModuleArm leftArm, ModuleArm rightArm, ModuleLeg leftLeg, ModuleLeg rightLeg) {
 		super(body);
-		modules.add(headModule);
-		modules.add(leftLeg);
-		modules.add(rightLeg);
-		modules.add(rightArm);
-		modules.add(leftArm);
+		if (headModule != null)
+			modules.add(headModule);
+		if (leftLeg != null)
+			modules.add(leftLeg);
+		if (rightLeg != null)
+			modules.add(rightLeg);
+		if (rightArm != null)
+			modules.add(rightArm);
+		if (leftArm != null)
+			modules.add(leftArm);
 	}
 }
