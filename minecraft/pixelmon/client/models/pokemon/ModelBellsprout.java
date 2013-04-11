@@ -7,7 +7,7 @@ import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
-import pixelmon.client.models.animations.Biped.SkeletonBiped;
+import pixelmon.client.models.animations.biped.SkeletonBiped;
 
 public class ModelBellsprout extends PixelmonModelBase {
 	PixelmonModelRenderer Body;

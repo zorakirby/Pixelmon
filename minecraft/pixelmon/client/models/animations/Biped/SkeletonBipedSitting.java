@@ -1,4 +1,4 @@
-package pixelmon.client.models.animations.Biped;
+package pixelmon.client.models.animations.biped;
 
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.SkeletonBase;

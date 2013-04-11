@@ -1,9 +1,9 @@
-package pixelmon.client.models.animations.Bird;
+package pixelmon.client.models.animations.bird;
 
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.SkeletonBase;
 import net.minecraft.client.model.ModelRenderer;
-import pixelmon.client.models.animations.Bird.ModuleWing;
+import pixelmon.client.models.animations.bird.ModuleWing;
 
 public class SkeletonBird extends SkeletonBase {
 	private ModelRenderer LeftWing, RightWing, LeftLeg, RightLeg;
