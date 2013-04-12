@@ -42,6 +42,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Return;
 import pixelmon.battles.attacks.specialAttacks.basic.Reversal;
 import pixelmon.battles.attacks.specialAttacks.basic.SeismicToss;
 import pixelmon.battles.attacks.specialAttacks.basic.SmackDown;
+import pixelmon.battles.attacks.specialAttacks.basic.Struggle;
 import pixelmon.battles.attacks.specialAttacks.basic.Suicide;
 import pixelmon.battles.attacks.specialAttacks.basic.Venoshock;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Bide;
@@ -145,6 +146,7 @@ public class EffectRegistry {
 		effectMap.put("reversal", Reversal.class);
 		effectMap.put("seismictoss", SeismicToss.class);
 		effectMap.put("smackdown", SmackDown.class);
+		effectMap.put("struggle", Struggle.class);
 		effectMap.put("suicide", Suicide.class);
 		effectMap.put("venoshock", Venoshock.class);
 

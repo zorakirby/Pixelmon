@@ -15,7 +15,7 @@ public class ApplyDisable extends StatusApplierBase {
 			EntityPixelmon target, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 		String lastUsedMove = targetAttackList.get(targetAttackList.size()-1);
-		if (targetAttackList.size() - 1 == 0) {
+		if (targetAttackList.size() - 1 == -1) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
 					target.getNickname() + " hasn't used a move yet!");
 		}
@@ -25,24 +25,15 @@ public class ApplyDisable extends StatusApplierBase {
 			
 			int effectiveTurns = rand.nextInt(4) + 4;
 			for(Attack atk: target.moveset){
-				
-				System.out.println(targetAttackList.size()-1);
-				System.out.println(lastUsedMove);
-				System.out.println(atk.baseAttack.attackName);
-				
-				if (atk.baseAttack.attackName.equalsIgnoreCase(lastUsedMove) && !atk.disabled) {
+				if (atk.baseAttack.attackName.equalsIgnoreCase(lastUsedMove) && !atk.getDisabled()) {
 					
-					atk.disabled = true;
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), atk.baseAttack.attackName);
+					atk.setDisabled(true, target);
 					target.status.add(new Disable(atk, effectiveTurns));
-					System.out.println("Applied disable");
-					
 				}
-				else if(atk.baseAttack.attackName.equalsIgnoreCase(lastUsedMove)&& atk.disabled)
-				{
-					
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "That move is already disabled!");
-					
+				
+				else if(atk.baseAttack.attackName.equalsIgnoreCase(lastUsedMove)&& atk.getDisabled())
+				{	
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), atk.baseAttack.attackName + " is already disabled!");	
 				}
 			}
 

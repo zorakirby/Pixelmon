@@ -23,7 +23,7 @@ public class Disable extends StatusBase {
 																			  " was enabled again!");
 			for(int i = 0; i < 4; i++){
 				if (target.moveset.get(i) == disabledMove){
-					target.moveset.get(i).disabled = false;
+					target.moveset.get(i).setDisabled(false, target);
 				}
 			}			
 			target.status.remove(this);
