@@ -10,8 +10,8 @@ import net.minecraft.util.MathHelper;
 public class ModuleWingComplex extends ModuleWing {
 
 	public ModuleWingComplex(ModelRenderer wing, EnumWing WingVariable,
-			float WingRotationLimit, float WingSpeed) {
-		super(wing, WingVariable, null, WingRotationLimit, WingSpeed);
+			float WingOrientation, float WingRotationLimit) {
+		super(wing, WingVariable, WingOrientation, WingRotationLimit, 0);
 	}
 
 	@Override
@@ -19,41 +19,75 @@ public class ModuleWingComplex extends ModuleWing {
 			float f3, float f4) {
 
 		entity.animationLimit = 90;
-		entity.animationIncrement = 4;
+		entity.animationIncrement = 6;
 
 		if (WingVariable == EnumWing.Left) {
 
-			System.out.println(entity.animationCounter);
-
 			if (entity.animationCounter < 45) {
-				wing.rotateAngleZ = (float) (1.0091F - 1.009F * Math.exp(-Math
-						.toRadians(entity.animationCounter) * 6))
-						* (float) Math.PI
-						* 2
-						* WingRotationLimit
-						- (float) Math.PI * WingRotationLimit;
+				wing.rotateAngleY = MathHelper.cos((float) Math
+						.toRadians(WingOrientation))
+						* ((float) (1.0091F - 1.009F * Math.exp(-Math
+								.toRadians(entity.animationCounter) * 6))
+								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
+								* WingRotationLimit);
+
+				wing.rotateAngleZ = MathHelper.sin((float) Math
+						.toRadians(WingOrientation))
+						* ((float) (1.0091F - 1.009F * Math.exp(-Math
+								.toRadians(entity.animationCounter) * 6))
+								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
+								* WingRotationLimit);
 
 			} else {
-				wing.rotateAngleZ = (float) (0.5F - 0.5F
-						* Math.cos(Math.toRadians(entity.animationCounter) * 4)
-						* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
-						* WingRotationLimit);
+				wing.rotateAngleY = MathHelper.cos((float) Math
+						.toRadians(WingOrientation))
+						* ((float) (0.5F
+								- 0.5F
+								* Math.cos(Math
+										.toRadians(entity.animationCounter) * 4)
+								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
+								* WingRotationLimit));
+
+				wing.rotateAngleZ = MathHelper.sin((float) Math
+						.toRadians(WingOrientation))
+						* ((float) (0.5F
+								- 0.5F
+								* Math.cos(Math
+										.toRadians(entity.animationCounter) * 4)
+								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
+								* WingRotationLimit));
 
 			}
 		} else {
 			if (entity.animationCounter < 45) {
-				wing.rotateAngleZ = (float) (Math.exp(-Math
-						.toRadians(entity.animationCounter) * 6))
-						* (float) Math.PI
-						* 2
-						* WingRotationLimit
-						- (float) Math.PI * WingRotationLimit;
+				wing.rotateAngleY = MathHelper.cos((float) Math
+						.toRadians(WingOrientation))
+						* ((float) (Math.exp(-Math
+								.toRadians(entity.animationCounter) * 6))
+								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
+								* WingRotationLimit);
+
+				wing.rotateAngleZ = MathHelper.sin((float) Math
+						.toRadians(WingOrientation))
+						* ((float) (Math.exp(-Math
+								.toRadians(entity.animationCounter) * 6))
+								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
+								* WingRotationLimit);
 
 			} else {
-				wing.rotateAngleZ = (float) ((0.5F * Math.cos(Math
-						.toRadians(entity.animationCounter) * 4) - 0.5F)
-						* (float) Math.PI * 2 * WingRotationLimit + (float) Math.PI
-						* WingRotationLimit);
+				wing.rotateAngleY = MathHelper.cos((float) Math
+						.toRadians(WingOrientation))
+						* ((float) ((0.5F * Math.cos(Math
+								.toRadians(entity.animationCounter) * 4) - 0.5F)
+								* (float) Math.PI * 2 * WingRotationLimit + (float) Math.PI
+								* WingRotationLimit));
+
+				wing.rotateAngleZ = MathHelper.sin((float) Math
+						.toRadians(WingOrientation))
+						* ((float) (0.5F * Math.cos(Math
+								.toRadians(entity.animationCounter) * 4) - 0.5F)
+								* (float) Math.PI * 2 * WingRotationLimit + (float) Math.PI
+								* WingRotationLimit);
 			}
 		}
 	}

@@ -598,15 +598,16 @@ public class ModelAerodactyl extends PixelmonModelBase {
 		float WingSpeed = 0.5F;
 		float WingRotationLimit = 0.25F;
 
-//		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
-//				EnumWing.Verticle, WingRotationLimit, WingSpeed);
-//		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
-//				EnumWing.Verticle, WingRotationLimit, WingSpeed);
-		
-		ModuleWingComplex rightWingModule = new ModuleWingComplex(RightWing, EnumWing.Right,
-		WingRotationLimit, WingSpeed);
-		ModuleWingComplex leftWingModule = new ModuleWingComplex(LeftWing, EnumWing.Left,
-			 WingRotationLimit, WingSpeed);
+		// ModuleWing rightWingModule = new ModuleWing(RightWing,
+		// EnumWing.Right,
+		// EnumWing.Verticle, WingRotationLimit, WingSpeed);
+		// ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
+		// EnumWing.Verticle, WingRotationLimit, WingSpeed);
+
+		ModuleWingComplex rightWingModule = new ModuleWingComplex(RightWing,
+				EnumWing.Right, 90, WingRotationLimit);
+		ModuleWingComplex leftWingModule = new ModuleWingComplex(LeftWing,
+				EnumWing.Left, 90, WingRotationLimit);
 
 		skeleton = new SkeletonBird(Body, headModule, leftWingModule,
 				rightWingModule, LeftLeg, RightLeg);

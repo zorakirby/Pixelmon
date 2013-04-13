@@ -251,8 +251,8 @@ public class ModelArchen extends PixelmonModelBase {
 
 		ModuleHead headModule = new ModuleHead(Head);
 		
-		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right, EnumWing.Verticle, 0.1F, 1.3F);
-		ModuleWing leftWingModule = new ModuleWing(LeftWing,  EnumWing.Left, EnumWing.Verticle,  0.1F, 1.3F);
+		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right, 90, 0.1F, 1.3F);
+		ModuleWing leftWingModule = new ModuleWing(LeftWing,  EnumWing.Left, 90, 0.1F, 1.3F);
 		
 		skeleton = new SkeletonBird(Body, headModule, leftWingModule, rightWingModule, LeftLeg, RightLeg);
 
