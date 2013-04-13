@@ -17,9 +17,7 @@ public class Struggle extends SpecialAttackBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
-			ArrayList<String> targetAttackList) throws Exception {
-		
-			
+			ArrayList<String> targetAttackList) throws Exception {			
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " struggled!");
 			target.attackEntityFrom(DamageSource.causeMobDamage(user), a.doDamageCalc(user, target, crit));
 			user.attackEntityFrom(DamageSource.causeMobDamage(user), user.getMaxHealth()/4);
