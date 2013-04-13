@@ -16,10 +16,12 @@ public class ModuleWing extends Module {
 	float WingInitY;
 	float WingInitZ;
 	float WingDirection;
-	EnumWing WingOrientation;
+	float WingOrientation;
+	// EnumWing WingOrientation;
 	EnumWing WingVariable;
 
-	public ModuleWing(ModelRenderer wing, EnumWing WingVariable, EnumWing WingOrientation, float WingRotationLimit, float WingSpeed) {
+	public ModuleWing(ModelRenderer wing, EnumWing WingVariable,
+			float WingOrientation, float WingRotationLimit, float WingSpeed) {
 		this.wing = wing;
 		this.WingSpeed = WingSpeed;
 		this.WingRotationLimit = WingRotationLimit;
@@ -36,18 +38,28 @@ public class ModuleWing extends Module {
 	}
 
 	@Override
-	public void walk(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
+	public void walk(EntityPixelmon entity, float f, float f1, float f2,
+			float f3, float f4) {
 
-		if (WingOrientation == EnumWing.Horizontal) {
-
-			wing.rotateAngleY = WingDirection * MathHelper.cos(f2 * WingSpeed) * (float) Math.PI * WingRotationLimit;
-		} else
-			wing.rotateAngleZ = WingDirection * MathHelper.cos(f2 * WingSpeed) * (float) Math.PI * WingRotationLimit;
+		wing.rotateAngleY = MathHelper.cos((float) Math
+				.toRadians(WingOrientation))
+				* WingDirection
+				* MathHelper.cos(f2 * WingSpeed)
+				* (float) Math.PI
+				* WingRotationLimit;
+		
+		wing.rotateAngleZ = MathHelper.sin((float) Math
+				.toRadians(WingOrientation))
+				* WingDirection
+				* MathHelper.cos(f2 * WingSpeed)
+				* (float) Math.PI
+				* WingRotationLimit;
 
 	}
 
 	@Override
-	public void fly(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
+	public void fly(EntityPixelmon entity, float f, float f1, float f2,
+			float f3, float f4) {
 
 	}
 

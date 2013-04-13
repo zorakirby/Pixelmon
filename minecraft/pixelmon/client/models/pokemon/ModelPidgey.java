@@ -570,9 +570,9 @@ public class ModelPidgey extends PixelmonModelBase {
 		ModuleHead headModule = new ModuleHead(Head);
 
 		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
-				EnumWing.Verticle, 0.25F, 1.3F);
+				90, 0.25F, 1.3F);
 		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
-				EnumWing.Verticle, 0.25F, 1.3F);
+				90, 0.25F, 1.3F);
 
 		skeleton = new SkeletonBird(Body, headModule, leftWingModule,
 				rightWingModule, LeftLeg, RightLeg);
