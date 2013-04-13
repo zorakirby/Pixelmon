@@ -8,7 +8,9 @@ public enum EnumTrainers {
 	Ornithologist,
 	Swimmer,
 	FireBreather,
+	//FemaleScientist,
 	BugManiac;
+
 	
 	public static boolean has(String creatureName) {
 		for (EnumTrainers trainer : values())

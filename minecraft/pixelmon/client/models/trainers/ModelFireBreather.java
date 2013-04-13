@@ -51,9 +51,8 @@ public class ModelFireBreather extends ModelBase
   
   public ModelFireBreather()
   {
-		System.out.println("Finds the class");
-    textureWidth = 128;
-    textureHeight = 64;
+	  textureWidth = 128;
+	  textureHeight = 64;
     
 
       Body = new ModelRenderer(this, "Body");
