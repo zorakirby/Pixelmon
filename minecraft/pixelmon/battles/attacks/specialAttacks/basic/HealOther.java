@@ -7,24 +7,24 @@ import pixelmon.battles.attacks.Value;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
-public class Heal extends SpecialAttackBase {
-	int increment = 0;
-	public Heal(Value... values) {
+public class HealOther extends SpecialAttackBase {
+	int increment;
+	public HealOther(Value... values) {
 		super(ApplyStage.During, false);
 		increment = values[0].value;
-
 	}
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-
-		double healAmount = (double)increment/100*(double)user.getMaxHealth();
-		user.heal((int)Math.ceil(healAmount));
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " was healed!");
-	
-		return false;
+			
+			double restoration = target.getHealth()*(double)(increment/100);
+			target.heal((int)Math.ceil(restoration));
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " healed " +
+																			  target.getNickname() + "!");
+			return false;
+			
 	}
 
 }

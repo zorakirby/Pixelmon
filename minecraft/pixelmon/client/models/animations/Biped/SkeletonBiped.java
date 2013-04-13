@@ -1,12 +1,10 @@
-package pixelmon.client.models.animations.biped;
+package pixelmon.client.models.animations.Biped;
 
+import net.minecraft.client.model.ModelRenderer;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.SkeletonBase;
-import pixelmon.entities.pixelmon.EntityPixelmon;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.util.MathHelper;
 
 public class SkeletonBiped extends SkeletonBase {
 

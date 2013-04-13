@@ -24,8 +24,8 @@ import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
-import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 import pixelmon.enums.heldItems.EnumHeldItems;
@@ -46,7 +46,6 @@ public class Attack {
 	public int pp;
 	public int ppBase;
 	public boolean STAB;
-
 	public Attack(int attackIndex, String moveName, ResultSet rs) throws SQLException {
 		if (fullAttackList[attackIndex] == null) {
 			AttackBase a = new AttackBase(attackIndex, moveName, rs);
@@ -347,10 +346,21 @@ public class Attack {
 	}
 
 	public static Attack getWhichMoveIsBest(List<Attack> moves, ArrayList<EnumType> types, EntityPixelmon releasedPokemon, EntityPixelmon entityPixelmon) {
+		List<Attack> usableMoves = new ArrayList<Attack>();
+		for(Attack a : moves){
+			if(!a.getDisabled() && a.pp > 0)
+				usableMoves.add(a);
+		}
+		if(usableMoves.size() == 0)
+		{
+			return DatabaseMoves.getAttack("Struggle");
+		}
+		else{
 		int i1 = 0;
 		Random r = new Random();
-		i1 = r.nextInt(moves.size());
-		return moves.get(i1);
+		i1 = RandomHelper.getRandomNumberBetween(0, usableMoves.size()-1);
+		return usableMoves.get(i1);
+		}
 	}
 
 	public void setSTAB(boolean STAB) {

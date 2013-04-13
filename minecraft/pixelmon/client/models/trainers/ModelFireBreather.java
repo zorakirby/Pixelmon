@@ -18,6 +18,7 @@ import net.minecraft.util.*;
 
 public class ModelFireBreather extends ModelBase
 {
+
   //fields
     ModelRenderer bodymain;
     ModelRenderer lowerbody;
@@ -50,13 +51,13 @@ public class ModelFireBreather extends ModelBase
   
   public ModelFireBreather()
   {
-    textureWidth = 128;
-    textureHeight = 64;
+	  textureWidth = 128;
+	  textureHeight = 64;
     
 
       Body = new ModelRenderer(this, "Body");
       Body.setRotationPoint(0, 0, 0);
-   	  Head = new ModelRenderer(this, "Head");
+      Head = new ModelRenderer(this, "Head");
       Head.setRotationPoint(0F, 3.5F, 0F);
       LeftArm = new ModelRenderer(this, "Left Arm");
       LeftArm.setRotationPoint(5F, 6F, 1F);
@@ -146,7 +147,7 @@ public class ModelFireBreather extends ModelBase
       head.addBox(-2.5F, -5F, -2.5F, 5, 5, 5);
       head.setTextureSize(128, 64);
       head.mirror = true;
-      setRotation(head, 0F, 0F, 0F);
+      setRotation(head, 0F, 0F, 0F); 
       leftHair = new ModelRenderer(this, 0, 37);
       leftHair.addBox(0F, 0F, 0F, 2, 2, 2);
       leftHair.setRotationPoint(1F, -6.7F, -1F);
@@ -222,6 +223,7 @@ public class ModelFireBreather extends ModelBase
       Body.addChild(LeftLeg);
       Body.addChild(RightLeg);
       
+      
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
@@ -240,6 +242,7 @@ public class ModelFireBreather extends ModelBase
   
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
   {
+	  
 	  	Head.rotateAngleY = f3 / (180F / (float) Math.PI);
 		Head.rotateAngleX = f4 / (180F / (float) Math.PI);
 		RightLeg.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;

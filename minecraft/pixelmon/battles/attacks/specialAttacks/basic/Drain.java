@@ -20,18 +20,17 @@ public class Drain extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-			int restoration;
+			double restoration;
 			int damage = a.doDamageCalc(user, target, crit);
 			if(damage >= target.getHealth())
 			{
-				//restoration = target.getHealth()*(drainPercent/100);
-				restoration = target.getHealth()/2;
+				restoration = (double)target.getHealth()*((double)(double)drainPercent/100);
 			}
 			else
-				//restoration = damage*(drainPercent/100);
-				restoration = damage/2;
+				restoration = (double)(damage*((double)(double)drainPercent/100));
+				
 			
-			user.heal(restoration);
+			user.heal((int)Math.ceil(restoration));
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " regained energy!");
 			return false;
 	}

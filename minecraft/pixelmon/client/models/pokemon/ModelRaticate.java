@@ -15,7 +15,7 @@ import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
-import pixelmon.client.models.animations.biped.SkeletonBiped;
+import pixelmon.client.models.animations.Biped.SkeletonBiped;
 
 public class ModelRaticate extends PixelmonModelBase {
 	// fields

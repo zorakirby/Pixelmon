@@ -1,4 +1,4 @@
-package pixelmon.client.models.animations.serpent;
+package pixelmon.client.models.animations.Serpent;
 
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.SkeletonBase;

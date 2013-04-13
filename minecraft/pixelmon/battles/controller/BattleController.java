@@ -27,6 +27,7 @@ public class BattleController {
 	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
+	private Attack lastMoveUsed;
 
 	public BattleController(BattleParticipant participant1, BattleParticipant participant2) throws Exception {
 		participant1.startedBattle = true;
@@ -315,4 +316,7 @@ public class BattleController {
 		paused = false;
 	}
 
+	public Attack getLastMoveUsed(){
+		return lastMoveUsed;
+	}
 }
