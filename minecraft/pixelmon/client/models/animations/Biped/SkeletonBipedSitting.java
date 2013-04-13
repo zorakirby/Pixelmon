@@ -1,9 +1,9 @@
-package pixelmon.client.models.animations.biped;
+package pixelmon.client.models.animations.Biped;
 
+import net.minecraft.client.model.ModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import net.minecraft.client.model.ModelRenderer;
 
 public class SkeletonBipedSitting extends SkeletonBase {
 	ModelRenderer LeftArm, RightArm;

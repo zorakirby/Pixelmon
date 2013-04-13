@@ -1,4 +1,4 @@
-package pixelmon.client.models.animations.bird;
+package pixelmon.client.models.animations.Bird;
 
 import java.util.ArrayList;
 import pixelmon.client.models.PixelmonModelRenderer;
