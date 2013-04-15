@@ -1,4 +1,4 @@
-package pixelmon.client.models.animations.Bird;
+package pixelmon.client.models.animations.bird;
 
 import net.minecraft.client.model.ModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;

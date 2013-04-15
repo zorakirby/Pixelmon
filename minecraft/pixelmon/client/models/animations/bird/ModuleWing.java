@@ -1,11 +1,9 @@
-package pixelmon.client.models.animations.Bird;
+package pixelmon.client.models.animations.bird;
 
-import java.util.ArrayList;
-import pixelmon.client.models.PixelmonModelRenderer;
-import pixelmon.client.models.animations.Module;
-import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.MathHelper;
+import pixelmon.client.models.animations.Module;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ModuleWing extends Module {
 
