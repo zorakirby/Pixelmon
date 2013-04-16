@@ -72,7 +72,6 @@ import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySafeGuard;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySleep;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySunny;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyTrickRoom;
-import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyWaitAfter;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyYawn;
 
 public class EffectRegistry {
@@ -102,7 +101,6 @@ public class EffectRegistry {
 		effectMap.put("sleep", ApplySleep.class);
 		effectMap.put("sunny", ApplySunny.class);
 		effectMap.put("trickroom", ApplyTrickRoom.class);
-		effectMap.put("waitafter", ApplyWaitAfter.class);
 		effectMap.put("yawn", ApplyYawn.class);
 
 		// Attack Modifiers
