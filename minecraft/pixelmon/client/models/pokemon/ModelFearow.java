@@ -9,9 +9,9 @@ import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.Bird.EnumWing;
-import pixelmon.client.models.animations.Bird.ModuleWing;
-import pixelmon.client.models.animations.Bird.SkeletonBird;
+import pixelmon.client.models.animations.bird.EnumWing;
+import pixelmon.client.models.animations.bird.ModuleWing;
+import pixelmon.client.models.animations.bird.SkeletonBird;
 
 public class ModelFearow extends PixelmonModelBase {
 	// fields
@@ -285,14 +285,16 @@ public class ModelFearow extends PixelmonModelBase {
 		// wing_base_1_L.setRotationPoint(4F, 4F, 3F);
 		wing_base_1_L.setTextureSize(128, 64);
 		wing_base_1_L.mirror = false;
-		setRotation(wing_base_1_L, 0F, 0.2617994F, -0.715585F);
+		//setRotation(wing_base_1_L, 0F, 0.2617994F, -0.715585F);
+		setRotation(wing_base_1_L, 0F, 0.5F, -0.715585F);
 		LeftWing.addChild(wing_base_1_L);
 		PixelmonModelRenderer wing_L = new PixelmonModelRenderer(this, 31, 0);
 		wing_L.addBox(-4F, -1.8F, 0.5F, 32, 15, 0);
 		wing_L.setRotationPoint(0, 2F, 0F);
 		wing_L.setTextureSize(128, 64);
 		wing_L.mirror = false;
-		setRotation(wing_L, 0F, 0.2617994F, -0.715585F);
+		//setRotation(wing_L, 0F, 0.2617994F, -0.715585F);
+		setRotation(wing_L, 0F, 0.5F, -0.715585F);
 		LeftWing.addChild(wing_L);
 		Body.addChild(LeftWing);
 
@@ -305,23 +307,25 @@ public class ModelFearow extends PixelmonModelBase {
 		// wing_base_1_R.setRotationPoint(-4F, 4F, 3F);
 		wing_base_1_R.setTextureSize(128, 64);
 		wing_base_1_R.mirror = false;
-		setRotation(wing_base_1_R, 0F, -0.2617994F, 0.715585F);
+		//setRotation(wing_base_1_R, 0F, -0.2617994F, 0.715585F);
+		setRotation(wing_base_1_R, 0F, -.5F, 0.715585F);
 		RightWing.addChild(wing_base_1_R);
 		PixelmonModelRenderer wing_R = new PixelmonModelRenderer(this, 64, 49);
 		wing_R.addBox(-27F, -1.8F, 0.5F, 32, 15, 0);
 		wing_R.setRotationPoint(0, 2F, 0F);
 		wing_R.setTextureSize(128, 64);
 		wing_R.mirror = false;
-		setRotation(wing_R, 0F, -0.2617994F, 0.715585F);
+		//setRotation(wing_R, 0F, -0.2617994F, 0.715585F);
+		setRotation(wing_R, 0F, -0.5F, 0.715585F);
 		RightWing.addChild(wing_R);
 		Body.addChild(RightWing);
 
 		ModuleHead headModule = new ModuleHead(Head);
 
 		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
-				EnumWing.Horizontal, 0.25F, 1F);
+				35, 0.25F, 1F);
 		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
-				EnumWing.Horizontal, 0.25F, 1F);
+				35, 0.25F, 1F);
 
 		skeleton = new SkeletonBird(Body, headModule, leftWingModule,
 				rightWingModule, LeftLeg, RightLeg);

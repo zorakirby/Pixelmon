@@ -12,6 +12,7 @@ public enum EnumPokemon {
 	Archen("Archen"),
 	Archeops("Archeops"),
 	Armaldo("Armaldo"),
+	Bastiodon("Bastiodon"),
 	Beedrill("Beedrill"),
 	Bellsprout("Bellsprout"),
 	Blastoise("Blastoise"),
@@ -57,7 +58,9 @@ public enum EnumPokemon {
 	Growlithe("Growlithe"),
 	Gyarados("Gyarados"),
 	Haunter("Haunter"),
+	Hitmonchan("Hitmonchan"),
 	Horsea("Horsea"),
+	Hypno("Hypno"),
 	Ivysaur("Ivysaur"),
 	Jigglypuff("Jigglypuff"),
 	Jolteon("Jolteon"),
@@ -100,8 +103,9 @@ public enum EnumPokemon {
 	Porygon("Porygon"),
 	Primeape("Primeape"),
 	Psyduck("Psyduck"),
-	Rapidash("Rapidash"),
 	Raichu("Raichu"),
+	Rampardos("Rampardos"),
+	Rapidash("Rapidash"),
 	Raticate("Raticate"),
 	Rattata("Rattata"),
 	Sandile("Sandile"),
@@ -138,6 +142,7 @@ public enum EnumPokemon {
 	Weedle("Weedle"),
 	Weezing("Weezing"),
 	Wigglytuff("Wigglytuff"),
+	Zapdos("Zapdos"),
 	Zubat("Zubat");
 
 	private EnumPokemon(String name){
