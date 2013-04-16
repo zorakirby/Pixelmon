@@ -12,7 +12,7 @@ public class ItemBadge extends PixelmonItem {
 		badgeName = badgeName.substring(0, badgeName.indexOf("badge"));
 		this.badge = badges;
 		SetUsableInBattle(false);
-		maxStackSize = 1;
+		maxStackSize = 64;
 		setMaxDamage(0xf4240);
 		setCreativeTab(PixelmonCreativeTabs.badges);
 	}
