@@ -4,20 +4,15 @@
 // Keep in mind that you still need to fill in some blanks
 // - ZeuX
 
-
-
-
-
-
 package pixelmon.client.models.pokemon;
 
 import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.Bird.EnumWing;
-import pixelmon.client.models.animations.Bird.ModuleWing;
-import pixelmon.client.models.animations.Bird.SkeletonBird;
+import pixelmon.client.models.animations.bird.EnumWing;
+import pixelmon.client.models.animations.bird.ModuleWing;
+import pixelmon.client.models.animations.bird.SkeletonBird;
 
 public class ModelZapdos extends PixelmonModelBase
 {

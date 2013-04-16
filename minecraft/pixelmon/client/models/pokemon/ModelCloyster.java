@@ -16,7 +16,7 @@ import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.Serpent.SkeletonSerpent;
+import pixelmon.client.models.animations.serpent.SkeletonSerpent;
 
 public class ModelCloyster extends PixelmonModelBase
 {

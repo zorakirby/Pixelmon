@@ -1,4 +1,4 @@
-package pixelmon.client.models.animations.Biped;
+package pixelmon.client.models.animations.biped;
 
 import net.minecraft.client.model.ModelRenderer;
 import pixelmon.client.models.animations.ModuleArm;
