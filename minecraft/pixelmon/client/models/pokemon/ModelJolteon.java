@@ -16,7 +16,7 @@ import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
-import pixelmon.client.models.animations.Quadruped.SkeletonQuadruped;
+import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
 
 public class ModelJolteon extends PixelmonModelBase
 {

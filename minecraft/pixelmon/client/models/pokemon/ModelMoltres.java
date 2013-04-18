@@ -12,9 +12,9 @@ import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
-import pixelmon.client.models.animations.Bird.EnumWing;
-import pixelmon.client.models.animations.Bird.ModuleWing;
-import pixelmon.client.models.animations.Bird.SkeletonBird;
+import pixelmon.client.models.animations.bird.EnumWing;
+import pixelmon.client.models.animations.bird.ModuleWing;
+import pixelmon.client.models.animations.bird.SkeletonBird;
 
 public class ModelMoltres extends PixelmonModelBase
 {
