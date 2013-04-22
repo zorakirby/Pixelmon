@@ -12,12 +12,18 @@ import cpw.mods.fml.common.IWorldGenerator;
 public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenerator {
 
 	public boolean generate(World world, Random rand, int x, int y, int z) {
-		if (world.getBlockId(x, y + 1, z) == Block.lavaStill.blockID) {
-			if (world.getBlockId(x, y, z) != Block.lavaStill.blockID) {
+		if (world.getBlockId(x, y, z) != Block.lavaStill.blockID) {
+
+			if (world.getBlockId(x + 1, y, z) == Block.lavaStill.blockID || world.getBlockId(x - 1, y, z) == Block.lavaStill.blockID
+					|| world.getBlockId(x, y, z + 1) == Block.lavaStill.blockID || world.getBlockId(x, y, z - 1) == Block.lavaStill.blockID
+					|| world.getBlockId(x - 2, y, z) == Block.lavaStill.blockID || world.getBlockId(x + 2, y, z) == Block.lavaStill.blockID
+					|| world.getBlockId(x, y, z + 2) == Block.lavaStill.blockID || world.getBlockId(x, y, z - 2) == Block.lavaStill.blockID) {
+
 				world.setBlock(x, y, z, PixelmonBlocks.fireStoneOre.blockID, 0, 0);
 				return true;
 			}
 		}
+
 		return false;
 	}
 
