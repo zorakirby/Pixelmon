@@ -31,7 +31,6 @@ public class ModelMrMime extends PixelmonModelBase
       Body.setRotationPoint(0, 2, -1);
       PixelmonModelRenderer Body_Middle = new PixelmonModelRenderer(this, 0, 0);
       Body_Middle.addBox(-5F, 0F, -3F, 10, 8, 6);
-      Body_Middle.setRotationPoint(0F, 2F, -1F);
       Body_Middle.setTextureSize(128, 64);
       Body_Middle.mirror = true;
       setRotation(Body_Middle, 0F, 0F, 0F);
@@ -140,43 +139,43 @@ public class ModelMrMime extends PixelmonModelBase
       setRotation(Ear_Base_Left, 0F, 0F, 0.3490659F);
       PixelmonModelRenderer  Ear_Tip_Left = new PixelmonModelRenderer(this, 28, 21);
       Ear_Tip_Left.addBox(-3F, -0.5F, -0.5F, 4, 1, 1);
-      Ear_Tip_Left.setRotationPoint(-6.3F, -7.8F, -2F);
+      Ear_Tip_Left.setRotationPoint(-6.3F, -7.8F, 0F);
       Ear_Tip_Left.setTextureSize(128, 64);
       Ear_Tip_Left.mirror = true;
       setRotation(Ear_Tip_Left, 0F, 0F, -0.2617994F);
       PixelmonModelRenderer  Ear_Spike_1st_Left = new PixelmonModelRenderer(this, 22, 23);
       Ear_Spike_1st_Left.addBox(-0.5F, 0F, -1F, 1, 2, 2);
-      Ear_Spike_1st_Left.setRotationPoint(-6F, -7.5F, -2F);
+      Ear_Spike_1st_Left.setRotationPoint(-6F, -7.5F, 0F);
       Ear_Spike_1st_Left.setTextureSize(128, 64);
       Ear_Spike_1st_Left.mirror = true;
       setRotation(Ear_Spike_1st_Left, 0F, 0F, 0.3490659F);
       PixelmonModelRenderer  Ear_Spike_2nd_Left = new PixelmonModelRenderer(this, 22, 23);
       Ear_Spike_2nd_Left.addBox(-0.5F, 0F, -1F, 1, 2, 2);
-      Ear_Spike_2nd_Left.setRotationPoint(-4F, -7F, -2F);
+      Ear_Spike_2nd_Left.setRotationPoint(-4F, -7F, 0F);
       Ear_Spike_2nd_Left.setTextureSize(128, 64);
       Ear_Spike_2nd_Left.mirror = true;
       setRotation(Ear_Spike_2nd_Left, 0F, 0F, 0.3490659F);
       PixelmonModelRenderer  Ear_Base_Right = new PixelmonModelRenderer(this, 28, 23);
       Ear_Base_Right.addBox(-4F, -1F, -1F, 4, 2, 2);
-      Ear_Base_Right.setRotationPoint(2F, -6.5F, -2F);
+      Ear_Base_Right.setRotationPoint(2F, -6.5F, 0F);
       Ear_Base_Right.setTextureSize(128, 64);
       Ear_Base_Right.mirror = true;
       setRotation(Ear_Base_Right, 0F, 0F, 2.792527F);
       PixelmonModelRenderer  Ear_Tip_Right = new PixelmonModelRenderer(this, 28, 21);
       Ear_Tip_Right.addBox(-3F, -0.5F, -0.5F, 4, 1, 1);
-      Ear_Tip_Right.setRotationPoint(6.3F, -7.8F, -2F);
+      Ear_Tip_Right.setRotationPoint(6.3F, -7.8F, 0F);
       Ear_Tip_Right.setTextureSize(128, 64);
       Ear_Tip_Right.mirror = true;
       setRotation(Ear_Tip_Right, 0F, 0F, -2.879793F);
       PixelmonModelRenderer  Ear_Spike_1st_Right = new PixelmonModelRenderer(this, 22, 23);
       Ear_Spike_1st_Right.addBox(-0.5F, -2F, -1F, 1, 2, 2);
-      Ear_Spike_1st_Right.setRotationPoint(6F, -7.5F, -2F);
+      Ear_Spike_1st_Right.setRotationPoint(6F, -7.5F, 0F);
       Ear_Spike_1st_Right.setTextureSize(128, 64);
       Ear_Spike_1st_Right.mirror = true;
       setRotation(Ear_Spike_1st_Right, 0F, 0F, 2.792527F);
       PixelmonModelRenderer  Ear_Spike_2nd_Right = new PixelmonModelRenderer(this, 22, 23);
       Ear_Spike_2nd_Right.addBox(-0.5F, -2F, -1F, 1, 2, 2);
-      Ear_Spike_2nd_Right.setRotationPoint(4F, -7F, -2F);
+      Ear_Spike_2nd_Right.setRotationPoint(4F, -7F, 0F);
       Ear_Spike_2nd_Right.setTextureSize(128, 64);
       Ear_Spike_2nd_Right.mirror = true;
       setRotation(Ear_Spike_2nd_Right, 0F, 0F, 2.792527F);
@@ -201,7 +200,6 @@ public class ModelMrMime extends PixelmonModelBase
       LeftArm.setRotationPoint(-6.5F, -0.5F, -0.5F);
       PixelmonModelRenderer  Shoulder_Left = new PixelmonModelRenderer(this, 60, 0);
       Shoulder_Left.addBox(-1.5F, -2.5F, -1.5F, 3, 5, 3);
-      Shoulder_Left.setRotationPoint(-6.5F, 1.5F, -1.5F);
       Shoulder_Left.setTextureSize(128, 64);
       Shoulder_Left.mirror = true;
       setRotation(Shoulder_Left, 0F, 0F, 0F);
@@ -386,6 +384,7 @@ public class ModelMrMime extends PixelmonModelBase
       RightArm.addChild(Finger_3rd_Right);
       RightArm.addChild(Finger_4th_Right);
       RightArm.addChild(Finger_5th_Right);
+      Body.addChild(RightArm);
     
 
       
@@ -474,6 +473,7 @@ public class ModelMrMime extends PixelmonModelBase
       LeftLeg.addChild(Feet_Left_Front);
       LeftLeg.addChild(Feet_Left_Top);
       LeftLeg.addChild(Feet_Left_Inner);
+      Body.addChild(LeftLeg);
     
       
 
@@ -563,6 +563,7 @@ public class ModelMrMime extends PixelmonModelBase
       RightLeg.addChild(Leg_Right_Bottom);
       RightLeg.addChild(Leg_Right_Joint);
       RightLeg.addChild(Leg_Right_Top);
+      Body.addChild(RightLeg);
       
       
       ModuleHead headModule = new ModuleHead(Head);
