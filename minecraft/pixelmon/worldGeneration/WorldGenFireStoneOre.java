@@ -20,6 +20,7 @@ public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenera
 					|| world.getBlockId(x, y, z + 2) == Block.lavaStill.blockID || world.getBlockId(x, y, z - 2) == Block.lavaStill.blockID) {
 
 				world.setBlock(x, y, z, PixelmonBlocks.fireStoneOre.blockID, 0, 0);
+				System.out.println("firestonespawned");
 				return true;
 			}
 		}
@@ -30,8 +31,8 @@ public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenera
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		for (int i = 0; i < 50; i++) {
-			int xPos = random.nextInt(16) + chunkX * 16;
-			int zPos = random.nextInt(16) + chunkZ * 16;
+			int xPos = random.nextInt(12) + 2 + chunkX * 16;
+			int zPos = random.nextInt(12) + 2 + chunkZ * 16;
 			int yPos = random.nextInt(30);
 			generate(world, random, xPos, yPos, zPos);
 		}
