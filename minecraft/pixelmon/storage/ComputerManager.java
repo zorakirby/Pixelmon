@@ -98,7 +98,7 @@ public class ComputerManager{
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
-		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/";
+		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
 	}
 
 	

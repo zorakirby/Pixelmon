@@ -91,9 +91,9 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
     
     public void updateOwnerCoords()
     {
-        lastOwnerX = (int) (getOwner().posX+0.5D);
-        lastOwnerY = (int) (getOwner().posY+0.5D);
-        lastOwnerZ = (int) (getOwner().posZ+0.5D);
+        lastOwnerX = (int) (trainer.posX+0.5D);
+        lastOwnerY = (int) (trainer.posY+0.5D);
+        lastOwnerZ = (int) (trainer.posZ+0.5D);
     }
     
     public int getLastOwnerX()

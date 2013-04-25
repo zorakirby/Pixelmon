@@ -6,7 +6,7 @@ import net.minecraft.block.BlockTrapDoor;
 public class BlockRotation {
 
 	public static int setBlockRotation(int coordBaseMode, int par1, int par2) {
-		if (par1 == Block.stairsNetherQuartz.blockID || 
+		if (par1 == Block.stairCompactNetherQuartz.blockID || 
 				par1 == Block.stairsCobblestone.blockID || 
 				par1 == Block.stairsNetherBrick.blockID ||
 				par1 == Block.stairsSandStone.blockID ||

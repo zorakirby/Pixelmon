@@ -18,7 +18,7 @@ public class PixelmonItemPickAxe extends ItemPickaxe {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon(textureName);
+	public void updateIcons(IconRegister par1IconRegister) {
+		this.iconIndex = par1IconRegister.registerIcon(textureName);
 	}
 }

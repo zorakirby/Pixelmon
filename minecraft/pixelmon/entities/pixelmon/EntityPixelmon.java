@@ -59,9 +59,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public void onDeath(DamageSource damagesource) {
 		if (!worldObj.isRemote) {
 			super.onDeath(damagesource);
-			if (getOwner() != null
-					&& PixelmonStorage.PokeballManager.getPlayerStorage(
-							(EntityPlayerMP) getOwner()).isIn(this)) {
+			if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).isIn(this)) {
 				String s = "Your " + getName() + " fainted!";
 				ChatHandler.sendChat(getOwner(), s);
 				isFainted = true;
@@ -77,8 +75,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public boolean interact(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
-			ItemStack itemstack = ((EntityPlayer) player)
-					.getCurrentEquippedItem();
+			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 			if (itemstack != null) {
 				for (IInteraction i : interactionList) {
 					if (i.interact(this, player))
@@ -92,8 +89,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void catchInPokeball() {
 		if (getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage(
-					(EntityPlayerMP) getOwner()).updateNBT(this);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
 		isInBall = true;
 		unloadEntity();
 	}
@@ -102,8 +98,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 		aggression = Aggression.passive;
 		worldObj.spawnEntityInWorld(this);
 		isInBall = false;
-		worldObj.playSoundAtEntity(this, getLivingSound(),
-				this.getSoundVolume(), this.getSoundPitch());
+		worldObj.playSoundAtEntity(this, getLivingSound(), this.getSoundVolume(), this.getSoundPitch());
 	}
 
 	public void clearAttackTarget() {
@@ -121,20 +116,15 @@ public class EntityPixelmon extends Entity9HasSounds {
 		if (pokemonLocation == SpawnLocation.Water) {
 			if (baseStats.swimmingParameters == null)
 				return false;
-			int wdepth = WorldHelper.getWaterDepth((int) posX, (int) posY,
-					(int) posZ, worldObj);
-			if (wdepth > baseStats.swimmingParameters.depthRangeStart
-					&& wdepth < baseStats.swimmingParameters.depthRangeEnd)
+			int wdepth = WorldHelper.getWaterDepth((int) posX, (int) posY, (int) posZ, worldObj);
+			if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 				return true;
 			else {
 				double y = posY
-						- (baseStats.swimmingParameters.depthRangeStart + rand
-								.nextInt(baseStats.swimmingParameters.depthRangeEnd
-										- baseStats.swimmingParameters.depthRangeStart));
-				wdepth = WorldHelper.getWaterDepth((int) posX, (int) y,
-						(int) posZ, worldObj);
-				if (wdepth > baseStats.swimmingParameters.depthRangeStart
-						&& wdepth < baseStats.swimmingParameters.depthRangeEnd)
+						- (baseStats.swimmingParameters.depthRangeStart + rand.nextInt(baseStats.swimmingParameters.depthRangeEnd
+								- baseStats.swimmingParameters.depthRangeStart));
+				wdepth = WorldHelper.getWaterDepth((int) posX, (int) y, (int) posZ, worldObj);
+				if (wdepth > baseStats.swimmingParameters.depthRangeStart && wdepth < baseStats.swimmingParameters.depthRangeEnd)
 					return false;
 				else {
 					posY = y;
@@ -151,9 +141,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
 		boolean[] conds = { true, true };
-		if (baseStats.spawnConditions.length == 0)
-			if (blockId != Block.grass.blockID)
-				return false;
 		for (SpawnConditions s : baseStats.spawnConditions) {
 			if (s == SpawnConditions.Grass && blockId != Block.grass.blockID)
 				conds[s.index] = false;
@@ -162,9 +149,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 			if (s == SpawnConditions.Sand && blockId != Block.sand.blockID)
 				conds[s.index] = false;
 			if (s == SpawnConditions.Darkness)
-				if (lightLevel > 11
-						&& !(var2 < 60 && !this.worldObj.canBlockSeeTheSky(
-								var1, var2, var3)))
+				if (lightLevel > 11 && !(var2 < 60 && !this.worldObj.canBlockSeeTheSky(var1, var2, var3)))
 					conds[s.index] = false;
 			if (s == SpawnConditions.DayLight && lightLevel < 11)
 				conds[s.index] = false;
@@ -178,18 +163,13 @@ public class EntityPixelmon extends Entity9HasSounds {
 			return;
 		if (posX > 1e20 || posX < -1e20 || posZ > 1e20 || posZ < -1e20)
 			unloadEntity();
-		if (getOwner() == null && baseStats != null
-				&& baseStats.spawnConditions != null
-				&& baseStats.spawnConditions.length > 0) {
+		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
 				if (worldObj.getWorldTime() < 12000
-						&& this.worldObj.canBlockSeeTheSky(
-								MathHelper.floor_double(this.posX),
-								MathHelper.floor_double(this.posY),
+						&& this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY),
 								MathHelper.floor_double(this.posZ)))
 					setDead();
-			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight
-					&& !worldObj.isDaytime())
+			if (baseStats.spawnConditions[0] == SpawnConditions.DayLight && !worldObj.isDaytime())
 				setDead();
 		}
 		if (playerOwned && getOwner() == null)
@@ -232,8 +212,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 		setEntityHealth(h);
 
 		if (nbt.hasKey("pixelmonType"))
-			pokemonLocation = SpawnLocation.getFromIndex(nbt
-					.getInteger("pixelmonType"));
+			pokemonLocation = SpawnLocation.getFromIndex(nbt.getInteger("pixelmonType"));
 		else if (baseStats.spawnLocations[0] == SpawnLocation.Land)
 			pokemonLocation = SpawnLocation.Land;
 		else

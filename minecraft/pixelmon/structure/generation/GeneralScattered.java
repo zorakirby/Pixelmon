@@ -32,7 +32,7 @@ public class GeneralScattered extends StructureScattered {
 				for (int z = 0; z < s.length; z++)
 					for (int y = 0; y < s.height; y++) {
 						try {
-							this.placeBlockAtCurrentPosition(world, Math.abs(s.blocks[x][y][z]), this.getMetadataWithOffset(s.blocks[x][y][z], s.blockData[x][y][z]), x, y, z, bb);
+							this.placeBlockAtCurrentPosition(world, s.blocks[x][y][z], this.getMetadataWithOffset(s.blocks[x][y][z], s.blockData[x][y][z]), x, y, z, bb);
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
 						}

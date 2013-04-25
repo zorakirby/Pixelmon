@@ -25,8 +25,8 @@ public class ItemPixelmonArmor extends ItemArmor implements IArmorTextureProvide
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon(textureName);
+	public void updateIcons(IconRegister par1IconRegister) {
+		this.iconIndex = par1IconRegister.registerIcon(textureName);
 	}
 	
 	public String getArmorTextureFile(ItemStack itemstack) {

@@ -27,8 +27,8 @@ public class ItemHammer extends ItemTool {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("pixelmon:" + iconString);
+	public void updateIcons(IconRegister par1IconRegister) {
+		this.iconIndex = par1IconRegister.registerIcon("pixelmon:" + iconString);
 	}
 
 	/**

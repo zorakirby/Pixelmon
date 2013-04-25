@@ -39,7 +39,7 @@ public class PlayerStorage {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
 		this.userName = player.username;
-		this.saveFile = DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
+		this.saveFile = DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/" + player.username + ".pk";
 		pokedex = new Pokedex(player);
 	}
 
