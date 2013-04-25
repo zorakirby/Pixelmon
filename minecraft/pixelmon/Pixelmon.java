@@ -102,7 +102,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
-		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
+	//	GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
