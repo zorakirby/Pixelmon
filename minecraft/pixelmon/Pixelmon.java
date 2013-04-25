@@ -18,6 +18,7 @@ import pixelmon.comm.PacketHandler;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
+import pixelmon.entities.EntitySpawning;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
 import pixelmon.spawning.PixelmonSpawner;
@@ -114,6 +115,7 @@ public class Pixelmon {
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
+		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
 
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
 		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
