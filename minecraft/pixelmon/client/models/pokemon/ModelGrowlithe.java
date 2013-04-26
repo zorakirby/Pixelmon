@@ -285,7 +285,7 @@ public class ModelGrowlithe extends PixelmonModelBase {
 				EnumPhase.OutPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonQuadruped(Body, head, frontlegLModule,
-				frontlegRModule, backlegLModule, backlegRModule);
+				frontlegRModule, backlegLModule, backlegRModule, null);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,

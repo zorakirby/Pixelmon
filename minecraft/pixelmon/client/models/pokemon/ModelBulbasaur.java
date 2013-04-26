@@ -113,7 +113,7 @@ public class ModelBulbasaur extends PixelmonModelBase// Quadruped
 				EnumPhase.OutPhase, legRotationLimit, legspeed);
 		
 		skeleton = new SkeletonQuadruped(body, headModule, frontlegLModule,
-				frontlegRModule, backlegLModule, backlegRModule);
+				frontlegRModule, backlegLModule, backlegRModule, null);
 	}
 
 	public void render(Entity var1, float f, float f1, float f2, float f3, float f4, float f5) {
