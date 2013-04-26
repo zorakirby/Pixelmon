@@ -24,8 +24,8 @@ public class PixelmonItem extends Item {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void updateIcons(IconRegister par1IconRegister) {
-		this.iconIndex = par1IconRegister.registerIcon("pixelmon:" + iconString);
+	public void registerIcons(IconRegister par1IconRegister) {
+		this.itemIcon = par1IconRegister.registerIcon("pixelmon:" + iconString);
 	}
 
 	protected void SetUsableInBattle(boolean isUsable) {
