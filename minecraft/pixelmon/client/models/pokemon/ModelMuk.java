@@ -528,7 +528,7 @@ public class ModelMuk extends PixelmonModelBase
 		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
 
 		skeleton = new SkeletonBiped(Body, null, leftArmModule,
-				rightArmModule, null, null);
+				rightArmModule, null, null, null);
       
       
   }

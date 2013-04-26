@@ -354,7 +354,7 @@ public class ModelSeel extends PixelmonModelBase
 		ModuleHead headModule = new ModuleHead(Head);
 		
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,
-				null, null);
+				null, null, null);
       
   }
   

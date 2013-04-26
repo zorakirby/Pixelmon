@@ -4031,7 +4031,7 @@ public class ModelGengar extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule);
+				leftLegModule, rightLegModule, null);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,

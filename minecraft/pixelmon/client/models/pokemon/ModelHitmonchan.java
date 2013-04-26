@@ -438,7 +438,7 @@ public class ModelHitmonchan extends PixelmonModelBase
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(ModelBody, headModule, leftArmModule,
-				rightArmModule, leftLegModule, rightLegModule);
+				rightArmModule, leftLegModule, rightLegModule, null);
       
       
   }

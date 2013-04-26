@@ -2568,7 +2568,7 @@ public class ModelGraveler extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule);
+				leftLegModule, rightLegModule, null);
 
 	}
 

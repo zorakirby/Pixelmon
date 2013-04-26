@@ -476,7 +476,7 @@ public class ModelHitmonlee extends PixelmonModelBase
 		
 		
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule);
+				leftLegModule, rightLegModule, null);
       
       
       

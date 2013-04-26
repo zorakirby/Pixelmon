@@ -777,7 +777,7 @@ public class ModelMachoke extends PixelmonModelBase
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
-				rightArmModule, leftLegModule, rightLegModule);
+				rightArmModule, leftLegModule, rightLegModule, null);
 		
 		
   }

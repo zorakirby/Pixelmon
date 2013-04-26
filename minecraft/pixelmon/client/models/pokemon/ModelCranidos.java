@@ -327,7 +327,7 @@ public class ModelCranidos extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		
 		skeleton = new SkeletonBiped(Body, headModule, rightArmModule,
-				leftArmModule, leftLegModule, rightLegModule);
+				leftArmModule, leftLegModule, rightLegModule, null);
 
 	}
 

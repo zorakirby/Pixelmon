@@ -212,7 +212,7 @@ public class ModelGrimer extends PixelmonModelBase {
 		Body.addChild(Head);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonBiped(Body, headModule, null, null, null, null);
+		skeleton = new SkeletonBiped(Body, headModule, null, null, null, null, null);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

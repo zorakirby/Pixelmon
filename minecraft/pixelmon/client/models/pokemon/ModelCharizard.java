@@ -2096,7 +2096,7 @@ public class ModelCharizard extends PixelmonModelBase
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule);
+				leftLegModule, rightLegModule, null);
 		
   }
   

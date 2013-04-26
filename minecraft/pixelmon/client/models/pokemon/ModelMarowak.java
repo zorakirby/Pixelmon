@@ -396,7 +396,7 @@ public class ModelMarowak extends PixelmonModelBase
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
-				rightArmModule, leftLegModule, rightLegModule);
+				rightArmModule, leftLegModule, rightLegModule, null);
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
