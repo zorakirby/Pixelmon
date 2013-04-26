@@ -100,7 +100,7 @@ public class PokeballManager {
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
-		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getSaveDirectoryName() + "/pokemon/";
+		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/";
 	}
 
 	@ForgeSubscribe

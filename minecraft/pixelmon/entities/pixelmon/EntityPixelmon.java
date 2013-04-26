@@ -141,6 +141,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
 		boolean[] conds = { true, true };
+		 if (baseStats.spawnConditions.length == 0)
+			       if (blockId != Block.grass.blockID)
+			        return false;
 		for (SpawnConditions s : baseStats.spawnConditions) {
 			if (s == SpawnConditions.Grass && blockId != Block.grass.blockID)
 				conds[s.index] = false;
