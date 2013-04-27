@@ -18,6 +18,7 @@ import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
 public class ModelMarowak extends PixelmonModelBase
@@ -377,15 +378,15 @@ public class ModelMarowak extends PixelmonModelBase
       Tail_Part_4.setTextureSize(64, 32);
       Tail_Part_4.mirror = true;
       setRotation(Tail_Part_4, 0.418879F, 0F, 0F);
-      Body.addChild(Tail_Part_1);
-      Body.addChild(Tail_Part_2);
-      Body.addChild(Tail_Part_3);
+      Body.addChild(Tail_Part_1); //not right, unable to animate tail with all tail parts being independent parts that are a piece of the body
+      Body.addChild(Tail_Part_2); // Should be Body.addChild(Tail_Part_1); Tail_Part_1.addChild(Tail_Part_2); etc.
+      Body.addChild(Tail_Part_3); // Doing this also requires that all the child pieces have to have new locations relative to the parent
       Body.addChild(Tail_Part_4);
       
       ModuleHead headModule = new ModuleHead(Head);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
 
 		float legspeed = 0.65F;
 		float legRotationLimit = 0.6F;

@@ -1517,8 +1517,8 @@ public class ModelJynx extends PixelmonModelBase
       
       ModuleHead headModule = new ModuleHead(Head);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
 				rightArmModule, null, null, null);

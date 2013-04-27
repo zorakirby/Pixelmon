@@ -14,6 +14,7 @@ import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
 public class ModelSandshrew extends PixelmonModelBase {
@@ -214,8 +215,8 @@ public class ModelSandshrew extends PixelmonModelBase {
 
 		ModuleHead headModule = new ModuleHead(Head);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
 
 		float legspeed = 0.65F;
 		float legRotationLimit = 1.4F;
@@ -224,9 +225,10 @@ public class ModelSandshrew extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .1F, .05F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
-				rightArmModule, leftLegModule, rightLegModule, null);
+				rightArmModule, leftLegModule, rightLegModule, tailModule);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,

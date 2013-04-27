@@ -13,6 +13,7 @@ import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -218,9 +219,10 @@ public class ModelMareep extends PixelmonModelBase {
 				EnumPhase.OutPhase, legRotationLimit, legspeed);
 		ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight,
 				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .2F, .05F, legspeed);
 
 		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule,
-				frontlegRModule, backlegLModule, backlegRModule, null);
+				frontlegRModule, backlegLModule, backlegRModule, tailModule);
 
 	}
 

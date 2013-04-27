@@ -16,6 +16,7 @@ import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
 public class ModelCharizard extends PixelmonModelBase
@@ -2082,8 +2083,7 @@ public class ModelCharizard extends PixelmonModelBase
       
       
       
-      ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+		
 
 		ModuleHead headModule = new ModuleHead(Head);
 		
@@ -2094,9 +2094,14 @@ public class ModelCharizard extends PixelmonModelBase
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
+		
+		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .15F, .025F, legspeed);
+		
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 5F, legspeed);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 5F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule, null);
+				leftLegModule, rightLegModule, tailModule);
 		
   }
   

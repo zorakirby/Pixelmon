@@ -29,12 +29,12 @@ public class ModuleTailBasic extends ModuleTail {
 
 	@Override
 	public void walk(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
-		tail.rotateAngleY =  MathHelper.cos(f2 * TailSpeed)
+		tail.rotateAngleY =  MathHelper.cos(f * TailSpeed)
 				* (float) Math.PI
 				* f1
 				* TailRotationLimitY;
 		
-		tail.rotateAngleX = MathHelper.cos(f2 * TailSpeed * 2)
+		tail.rotateAngleX = MathHelper.cos(f * TailSpeed * 2)
 				* (float) Math.PI
 				* f1
 				* TailRotationLimitZ;
