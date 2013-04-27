@@ -251,8 +251,8 @@ public class ModelClefable extends PixelmonModelBase {
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.y, .5F, legspeed);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.y, .5F, legspeed);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 90, .5F, legspeed);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 90, .5F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
 				leftLegModule, rightLegModule, null);

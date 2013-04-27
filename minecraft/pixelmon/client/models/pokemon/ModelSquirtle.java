@@ -118,8 +118,8 @@ public class ModelSquirtle extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		
 
-		ModuleArm leftArmModule = new ModuleArm(Arm_Left, null, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(Arm_Right, null, 0, 0);
+		ModuleArm leftArmModule = new ModuleArm(Arm_Left, EnumArm.Left, 0, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(Arm_Right, EnumArm.Right, 0, 0, 0);
 
 
 		skeleton = new SkeletonBiped(Body, headModule, rightArmModule,

@@ -2097,8 +2097,8 @@ public class ModelCharizard extends PixelmonModelBase
 		
 		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .15F, .025F, legspeed);
 		
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.x, 1F, legspeed);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.x, 1F, legspeed);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 1F, legspeed);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 1F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,
 				leftLegModule, rightLegModule, tailModule);
