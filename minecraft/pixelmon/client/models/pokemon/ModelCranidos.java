@@ -315,8 +315,8 @@ public class ModelCranidos extends PixelmonModelBase {
 		Body.addChild(RightArm);
 
 		ModuleHead headModule = new ModuleHead(Head);
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm,null, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, null, 0, 0);
 		
 		float legspeed = 0.65F;
 		float legRotationLimit = 1.4F;

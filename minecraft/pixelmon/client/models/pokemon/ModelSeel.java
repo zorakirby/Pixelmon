@@ -348,8 +348,8 @@ public class ModelSeel extends PixelmonModelBase
       RightArm.addChild(Fin_Tip_Back_Right);
       Body.addChild(RightArm);
       
-      ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
+      ModuleArm leftArmModule = new ModuleArm(LeftArm, null, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, null, 0, 0);
 
 		ModuleHead headModule = new ModuleHead(Head);
 		

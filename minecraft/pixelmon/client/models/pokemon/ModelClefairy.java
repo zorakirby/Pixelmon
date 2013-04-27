@@ -247,8 +247,8 @@ public class ModelClefairy extends PixelmonModelBase {
 		RightArm.addChild(R_finger_2);
 		Body.addChild(RightArm);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.y, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.y, 0, 0);
 
 		float legspeed = 0.65F;
 		float legRotationLimit = 1.4F;
