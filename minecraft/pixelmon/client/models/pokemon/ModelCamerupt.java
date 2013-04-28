@@ -673,7 +673,7 @@ public class ModelCamerupt extends PixelmonModelBase {
 
 		skeleton = new SkeletonQuadruped(BODYPIECE, headModule,
 				frontlegLModule, frontlegRModule, backlegLModule,
-				backlegRModule);
+				backlegRModule, null);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,

@@ -273,7 +273,7 @@ public class ModelBellsprout extends PixelmonModelBase {
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		
-		skeleton = new SkeletonBiped(Body, headModule, null, null, leftLegModule, rightLegModule);
+		skeleton = new SkeletonBiped(Body, headModule, null, null, leftLegModule, rightLegModule, null);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

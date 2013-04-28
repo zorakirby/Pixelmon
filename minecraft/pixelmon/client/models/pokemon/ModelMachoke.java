@@ -765,8 +765,8 @@ public class ModelMachoke extends PixelmonModelBase
       
       ModuleHead headModule = new ModuleHead(Head);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
 
 		float legspeed = 0.35F;
 		float legRotationLimit = 0.7F;
@@ -777,7 +777,7 @@ public class ModelMachoke extends PixelmonModelBase
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
-				rightArmModule, leftLegModule, rightLegModule);
+				rightArmModule, leftLegModule, rightLegModule, null);
 		
 		
   }

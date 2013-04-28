@@ -1,6 +1,7 @@
 package pixelmon.client.models.animations.quadruped;
 
 import pixelmon.client.models.animations.Module;
+import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -12,12 +13,13 @@ public class SkeletonQuadruped extends SkeletonBase {
 
 	public SkeletonQuadruped(ModelRenderer body, Module headModule,
 			ModuleLeg frontLeftLeg, ModuleLeg frontRightLeg,
-			ModuleLeg backLeftLeg, ModuleLeg backRightLeg) {
+			ModuleLeg backLeftLeg, ModuleLeg backRightLeg, ModuleTailBasic tail) {
 		super(body);
 		modules.add(headModule);
 		modules.add(frontLeftLeg);
 		modules.add(frontRightLeg);
 		modules.add(backLeftLeg);
 		modules.add(backRightLeg);
+		modules.add(tail);
 	}
 }

@@ -512,8 +512,8 @@ public class ModelArmaldo extends PixelmonModelBase {
 		Body.addChild(LeftLeg);
 		Body.addChild(RightLeg);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
 
 		ModuleHead headModule = new ModuleHead(Head);
 		
@@ -526,7 +526,7 @@ public class ModelArmaldo extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule);
+				leftLegModule, rightLegModule, null);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,

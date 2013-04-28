@@ -608,7 +608,7 @@ public class ModelBastiodon extends PixelmonModelBase
       
       
       ModuleHead headModule = new ModuleHead(Head);
-		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule, frontlegRModule, backlegLModule, backlegRModule);
+		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule, frontlegRModule, backlegLModule, backlegRModule, null);
 	
       
   }

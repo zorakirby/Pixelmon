@@ -8,6 +8,7 @@ import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
 
 public class ModelArcanine extends PixelmonModelBase {
@@ -663,9 +664,10 @@ public class ModelArcanine extends PixelmonModelBase {
 				EnumPhase.OutPhase, legRotationLimit, legspeed);
 		ModuleLeg backlegRModule = new ModuleLeg(backlegR, EnumLeg.BackRight,
 				EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleTailBasic tailModule = new ModuleTailBasic(tail, .2F, .05F, legspeed);
 		
 		skeleton = new SkeletonQuadruped(body, headModule, frontlegLModule,
-				frontlegRModule, backlegLModule, backlegRModule);
+				frontlegRModule, backlegLModule, backlegRModule, tailModule);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,

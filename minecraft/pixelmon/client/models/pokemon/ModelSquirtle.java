@@ -84,7 +84,7 @@ public class ModelSquirtle extends PixelmonModelBase {
 		ModelRenderer Tail_Base = new ModelRenderer(this, 0, 12);
 		Tail_Base.addBox(-1F, 0F, -1F, 2, 2, 1, 0F);
 		// Tail_Base.setRotationPoint(0F, 20F, 1F);
-		Tail_Base.rotateAngleX = 0.9424778F;
+		Tail_Base.rotateAngleX = 5.5F;  //.9424778F
 		Tail_Base.rotateAngleY = 0.02094395F;
 		Tail_Base.rotateAngleZ = 0F;
 		Tail_Base.mirror = false;
@@ -109,9 +109,6 @@ public class ModelSquirtle extends PixelmonModelBase {
 
 		ModuleHead headModule = new ModuleHead(HeadPiece);
 
-		ModuleArm leftArmModule = new ModuleArm(Arm_Left, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(Arm_Right, EnumArm.Right);
-
 		float legspeed = 0.65F;
 		float legRotationLimit = 1.4F;
 
@@ -119,9 +116,14 @@ public class ModelSquirtle extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(Leg_Right, EnumLeg.FrontRight,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
+		
+
+		ModuleArm leftArmModule = new ModuleArm(Arm_Left, EnumArm.Left, 0, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(Arm_Right, EnumArm.Right, 0, 0, 0);
+
 
 		skeleton = new SkeletonBiped(Body, headModule, rightArmModule,
-				leftArmModule, leftLegModule, rightLegModule);
+				leftArmModule, leftLegModule, rightLegModule, null);
 
 	}
 

@@ -1603,7 +1603,7 @@ public class ModelRhyhorn extends PixelmonModelBase
 				EnumPhase.OutPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule,
-				frontlegRModule, backlegLModule, backlegRModule);
+				frontlegRModule, backlegLModule, backlegRModule, null);
       
       
   }

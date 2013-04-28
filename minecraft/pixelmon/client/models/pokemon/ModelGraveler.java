@@ -2556,8 +2556,8 @@ public class ModelGraveler extends PixelmonModelBase {
 		RightArm.addChild(BigRightArmForeTopPad3);
 		Body.addChild(RightArm);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
 
 		float legspeed = 0.65F;
 		float legRotationLimit = 1.4F;
@@ -2568,7 +2568,7 @@ public class ModelGraveler extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule);
+				leftLegModule, rightLegModule, null);
 
 	}
 

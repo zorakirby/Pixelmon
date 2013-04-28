@@ -247,9 +247,6 @@ public class ModelClefairy extends PixelmonModelBase {
 		RightArm.addChild(R_finger_2);
 		Body.addChild(RightArm);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right);
-
 		float legspeed = 0.65F;
 		float legRotationLimit = 1.4F;
 
@@ -257,9 +254,12 @@ public class ModelClefairy extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
+		
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 90, .5F, legspeed);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 90, .5F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule);
+				leftLegModule, rightLegModule, null);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,
