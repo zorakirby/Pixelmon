@@ -9,17 +9,23 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import pixelmon.config.PixelmonBlocks;
 import cpw.mods.fml.common.IWorldGenerator;
 
-public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenerator {
+public class WorldGenFireStoneOre extends WorldGenerator implements
+		IWorldGenerator {
 
 	public boolean generate(World world, Random rand, int x, int y, int z) {
 		if (world.getBlockId(x, y, z) != Block.lavaStill.blockID) {
 
-			if (world.getBlockId(x + 1, y, z) == Block.lavaStill.blockID || world.getBlockId(x - 1, y, z) == Block.lavaStill.blockID
-					|| world.getBlockId(x, y, z + 1) == Block.lavaStill.blockID || world.getBlockId(x, y, z - 1) == Block.lavaStill.blockID
-					|| world.getBlockId(x - 2, y, z) == Block.lavaStill.blockID || world.getBlockId(x + 2, y, z) == Block.lavaStill.blockID
-					|| world.getBlockId(x, y, z + 2) == Block.lavaStill.blockID || world.getBlockId(x, y, z - 2) == Block.lavaStill.blockID) {
+			if (world.getBlockId(x + 1, y, z) == Block.lavaStill.blockID
+					|| world.getBlockId(x - 1, y, z) == Block.lavaStill.blockID
+					|| world.getBlockId(x, y, z + 1) == Block.lavaStill.blockID
+					|| world.getBlockId(x, y, z - 1) == Block.lavaStill.blockID
+					|| world.getBlockId(x - 2, y, z) == Block.lavaStill.blockID
+					|| world.getBlockId(x + 2, y, z) == Block.lavaStill.blockID
+					|| world.getBlockId(x, y, z + 2) == Block.lavaStill.blockID
+					|| world.getBlockId(x, y, z - 2) == Block.lavaStill.blockID) {
 
-				world.setBlock(x, y, z, PixelmonBlocks.fireStoneOre.blockID, 0, 0);
+				world.setBlock(x, y, z, PixelmonBlocks.fireStoneOre.blockID, 0,
+						0);
 				return true;
 			}
 		}
@@ -28,13 +34,23 @@ public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenera
 	}
 
 	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for (int i = 0; i < 50; i++) {
+	public void generate(Random random, int chunkX, int chunkZ, World world,
+			IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+		for (int i = 0; i < 10; i++) {
 			int xPos = random.nextInt(16) + chunkX * 16;
 			int zPos = random.nextInt(16) + chunkZ * 16;
 			int yPos = random.nextInt(30);
-			generate(world, random, xPos, yPos, zPos);
+			if (hasLava(world, xPos, zPos))
+				generate(world, random, xPos, yPos, zPos);
 		}
+	}
+
+	private boolean hasLava(World world, int xPos, int zPos) {
+		for (int i = 0; i < 30; i++) {
+			if (world.getBlockId(xPos, i, zPos) == Block.lavaStill.blockID)
+				return true;
+		}
+		return false;
 	}
 
 }

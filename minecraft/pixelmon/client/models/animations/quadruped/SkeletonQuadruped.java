@@ -11,15 +11,20 @@ import net.minecraft.util.MathHelper;
 
 public class SkeletonQuadruped extends SkeletonBase {
 
-	public SkeletonQuadruped(ModelRenderer body, Module headModule,
-			ModuleLeg frontLeftLeg, ModuleLeg frontRightLeg,
-			ModuleLeg backLeftLeg, ModuleLeg backRightLeg, ModuleTailBasic tail) {
+	public SkeletonQuadruped(ModelRenderer body, Module headModule, ModuleLeg frontLeftLeg, ModuleLeg frontRightLeg, ModuleLeg backLeftLeg,
+			ModuleLeg backRightLeg, ModuleTailBasic tail) {
 		super(body);
-		modules.add(headModule);
-		modules.add(frontLeftLeg);
-		modules.add(frontRightLeg);
-		modules.add(backLeftLeg);
-		modules.add(backRightLeg);
-		modules.add(tail);
+		if (headModule != null)
+			modules.add(headModule);
+		if (frontLeftLeg != null)
+			modules.add(frontLeftLeg);
+		if (frontRightLeg != null)
+			modules.add(frontRightLeg);
+		if (backLeftLeg != null)
+			modules.add(backLeftLeg);
+		if (backRightLeg != null)
+			modules.add(backRightLeg);
+		if (tail != null)
+			modules.add(tail);
 	}
 }

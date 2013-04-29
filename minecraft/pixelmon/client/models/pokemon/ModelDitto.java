@@ -4,10 +4,6 @@
 // Keep in mind that you still need to fill in some blanks
 // - ZeuX
 
-
-
-
-
 package pixelmon.client.models.pokemon;
 
 import net.minecraft.entity.Entity;
@@ -902,7 +898,7 @@ public class ModelDitto extends PixelmonModelBase {
       
       
       
-		skeleton = new SkeletonBiped(Body, null, null, null, null, null);
+		skeleton = new SkeletonBiped(Body, null, null, null, null, null, null);
       
   }
   
