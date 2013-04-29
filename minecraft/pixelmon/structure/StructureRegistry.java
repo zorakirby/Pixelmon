@@ -1,4 +1,4 @@
-package pixelmon.structure;
+package 	pixelmon.structure;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,17 +7,19 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 
+import cpw.mods.fml.relauncher.Side;
+
 import pixelmon.RandomHelper;
 import pixelmon.enums.EnumBiomes;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class StructureRegistry {
 	public static ArrayList<StructureData> scatteredStructures = new ArrayList<StructureData>();
 
 	public static void loadStructures() {
-		File f = new File(Minecraft.getMinecraftDir() + "/resources/pixelmon/structures/standAlone");
+		File f = new File(MinecraftServer.getServer().getFolderName() + "/resources/pixelmon/structures/standAlone");
 		if (!f.isDirectory()) {
 			System.out.println("Standalone structures directory is corrupted");
 			return;

@@ -108,7 +108,8 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 
-		StructureRegistry.loadStructures();
+		if (event.getSide().isServer())
+			StructureRegistry.loadStructures();
 		
 		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
