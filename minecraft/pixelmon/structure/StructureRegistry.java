@@ -1,4 +1,4 @@
-package 	pixelmon.structure;
+package pixelmon.structure;
 
 import java.io.BufferedReader;
 import java.io.File;
