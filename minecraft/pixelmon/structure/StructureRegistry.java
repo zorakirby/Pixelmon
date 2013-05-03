@@ -12,14 +12,19 @@ import cpw.mods.fml.relauncher.Side;
 import pixelmon.RandomHelper;
 import pixelmon.enums.EnumBiomes;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class StructureRegistry {
 	public static ArrayList<StructureData> scatteredStructures = new ArrayList<StructureData>();
 
-	public static void loadStructures() {
-		File f = new File(MinecraftServer.getServer().getFolderName() + "/resources/pixelmon/structures/standAlone");
+	public static void loadStructures(Side side) {
+		File f = null;
+		if (side == Side.CLIENT)
+			f = new File(Minecraft.getMinecraftDir() + "/resources/pixelmon/structures/standAlone");
+		else if (side == Side.SERVER)
+			f = new File(MinecraftServer.getServer().getFolderName() + "/resources/pixelmon/structures/standAlone");
 		if (!f.isDirectory()) {
 			System.out.println("Standalone structures directory is corrupted");
 			return;

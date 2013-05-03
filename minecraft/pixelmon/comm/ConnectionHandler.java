@@ -1,8 +1,11 @@
 package pixelmon.comm;
 
+import java.lang.reflect.Field;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.NetLoginHandler;
+import net.minecraft.network.TcpConnection;
 import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.server.MinecraftServer;
@@ -38,8 +41,21 @@ public class ConnectionHandler implements IConnectionHandler {
 
 	}
 
+	// Need to update this if the field position of theNetHandler changes inside
+	// of TcpConnection
 	@Override
 	public void connectionClosed(INetworkManager manager) {
+		if (manager instanceof TcpConnection) {
+			TcpConnection tcpConnection = (TcpConnection) manager;
+			Field f = tcpConnection.getClass().getFields()[13];
+			NetHandler netHandler = null;
+			try {
+				netHandler = (NetHandler) f.get(tcpConnection);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			PixelmonStorage.onPlayerDC(netHandler.getPlayer());
+		}
 	}
 
 	@Override

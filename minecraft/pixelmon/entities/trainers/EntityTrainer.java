@@ -14,6 +14,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
 import pixelmon.AI.AITrainerInBattle;
+import pixelmon.api.events.EventType;
+import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseTrainers;
@@ -137,7 +139,10 @@ public class EntityTrainer extends EntityCreature {
 	}
 
 	public void loseBattle(EntityLiving entityLiving) {
-		ChatHandler.sendBattleMessage(entityLiving, info.loseMessage);
+		if (entityLiving instanceof EntityPlayer){
+			ChatHandler.sendBattleMessage(entityLiving, info.loseMessage);
+			PixelmonEventHandler.fireEvent(EventType.BeatTrainer);
+		}
 	}
 
 	public void winBattle(EntityLiving entityLiving) {

@@ -10,6 +10,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.packetHandlers.PC.PCData;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerComputerStorage;
+import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.Player;
 
 public class RenamePokemon extends PacketHandlerBase {
@@ -23,14 +24,15 @@ public class RenamePokemon extends PacketHandlerBase {
 		EntityPlayerMP player = (EntityPlayerMP) pl;
 		int id = dataStream.readInt();
 		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(id, player.worldObj)) {
-			PixelmonStorage.PokeballManager.getPlayerStorage(player).getAlreadyExists(id, player.worldObj).setNickname(Packet.readString(dataStream, 64));
-			PixelmonStorage.PokeballManager.save();
+			PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
+			storage.getAlreadyExists(id, player.worldObj).setNickname(Packet.readString(dataStream, 64));
+			PixelmonStorage.PokeballManager.savePlayer(storage);
 		} else if (PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(id) != null) {
 			NBTTagCompound nbt = PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(id);
 			if (nbt != null) {
 				nbt.setString("Nickname", Packet.readString(dataStream, 64));
 			}
-			PixelmonStorage.PokeballManager.save();
+			PixelmonStorage.PokeballManager.savePlayer(PixelmonStorage.PokeballManager.getPlayerStorage(player));
 		} else if (PixelmonStorage.ComputerManager.getPlayerStorage(player).contains(id)){
 			PlayerComputerStorage comp = PixelmonStorage.ComputerManager.getPlayerStorage(player);
 

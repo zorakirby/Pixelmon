@@ -18,15 +18,15 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 
-public class ComputerManager{
+public class ComputerManager {
 	private File workingDir;
-	private ArrayList<PlayerComputerStorage> playerComputerList = new ArrayList<PlayerComputerStorage>(); 
-	
+	private ArrayList<PlayerComputerStorage> playerComputerList = new ArrayList<PlayerComputerStorage>();
+
 	public ComputerManager() {
 	}
-	
-	public PlayerComputerStorage getPlayerStorage(EntityPlayer owner){
-		for (PlayerComputerStorage p: playerComputerList){
+
+	public PlayerComputerStorage getPlayerStorage(EntityPlayer owner) {
+		for (PlayerComputerStorage p : playerComputerList) {
 			if (p.player.username.equals(owner.username))
 				return p;
 		}
@@ -39,47 +39,42 @@ public class ComputerManager{
 		File saveDirPath = new File(getSaveFolder(player));
 		if (!saveDirPath.exists())
 			saveDirPath.mkdirs();
-		File playerFile = new File(getSaveFolder(player)+player.username +".comp");
-		if (playerFile.exists()){
+		File playerFile = new File(getSaveFolder(player) + player.username + ".comp");
+		if (playerFile.exists()) {
 			PlayerComputerStorage p = new PlayerComputerStorage(player);
-			try{
+			try {
 				p.readFromNBT(CompressedStreamTools.read(new DataInputStream(new FileInputStream(playerFile))));
-			}catch (FileNotFoundException e) {
+			} catch (FileNotFoundException e) {
 				System.out.println("Couldn't read player data file for " + player.username);
 			} catch (IOException e) {
 				System.out.println("Couldn't read player data file for " + player.username);
 			}
 			playerComputerList.add(p);
-		}else{
+		} else {
 			PlayerComputerStorage p = new PlayerComputerStorage(player);
 			playerComputerList.add(p);
 		}
-		
+
 	}
 
-	public void save() {
-		try {
-			for (int i = 0; i < playerComputerList.size(); i++) {
-				EntityPlayer player = playerComputerList.get(i).player;
-				boolean playerConnected = false;
-				for (String playerName : MinecraftServer.getServer().getAllUsernames())
-					if (player.username.equals(playerName)) {
-						playerConnected = true;
-						break;
-					}
+	public void saveAll() {
+		for (int i = 0; i < playerComputerList.size(); i++) {
+			savePlayer(playerComputerList.get(i));
+		}
+	}
 
-				if (playerConnected) {
-					File playerSaveFile = new File(getSaveFolder(player) + player.username + ".comp");
-					if (getPlayerStorage(player).hasChanges()){
-						FileOutputStream f = new FileOutputStream(playerSaveFile);
-						DataOutputStream s = new DataOutputStream(f);
-						CompressedStreamTools.write(getData(player), s);
-						s.close();
-						f.close();
-					}
-				} else {
-					playerComputerList.remove(i);
-					i--;
+	public void savePlayer(PlayerComputerStorage storage) {
+		try {
+			EntityPlayer player = storage.player;
+			boolean playerConnected = false;
+			for (String playerName : MinecraftServer.getServer().getAllUsernames()) {
+				File playerSaveFile = new File(getSaveFolder(player) + player.username + ".comp");
+				if (getPlayerStorage(player).hasChanges()) {
+					FileOutputStream f = new FileOutputStream(playerSaveFile);
+					DataOutputStream s = new DataOutputStream(f);
+					CompressedStreamTools.write(getData(player), s);
+					s.close();
+					f.close();
 				}
 			}
 		} catch (Exception e) {
@@ -101,7 +96,6 @@ public class ComputerManager{
 		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/";
 	}
 
-	
 	@ForgeSubscribe
 	public void onWorldLoad(WorldEvent.Load event) {
 		playerComputerList.clear();
@@ -109,6 +103,16 @@ public class ComputerManager{
 
 	@ForgeSubscribe
 	public void onWorldSave(WorldEvent.Save event) {
-		save();
+		saveAll();
+	}
+
+	public void onPlayerDC(EntityPlayer player) {
+		for (int i = 0; i < playerComputerList.size(); i++) {
+			if (playerComputerList.get(i).player == player) {
+				savePlayer(playerComputerList.get(i));
+				playerComputerList.remove(i);
+				break;
+			}
+		}
 	}
 }

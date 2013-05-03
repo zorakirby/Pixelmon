@@ -7,6 +7,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import pixelmon.api.events.EventType;
+import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.SpawnLocation;
@@ -121,8 +123,10 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
-		if (getOwner() != null)
+		if (getOwner() != null) {
 			friendship.onFaint();
+			PixelmonEventHandler.fireEvent(EventType.PokemonFaint);
+		}
 		super.onDeath(par1DamageSource);
 	}
 
@@ -157,12 +161,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		type.clear();
 		setType();
 		updateStats();
-		
-		Pokedex pokedex = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)getOwner()).pokedex;
+
+		Pokedex pokedex = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).pokedex;
 
 		pokedex.set(Pokedex.nameToID(this.getName()), DexRegisterStatus.caught);
 		pokedex.sendToPlayer((EntityPlayerMP) pokedex.owner);
-
 
 		if (getOwner() != null)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
@@ -250,11 +253,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		float halfWidth = this.width * scale / 2.0F;
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5 + (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
+					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5
+					+ (double) halfLength);
 		else
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1 + (double) halfWidth, par3
-					- (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
+					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
 	}
 
 	public void updateStats() {

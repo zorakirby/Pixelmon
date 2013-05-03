@@ -36,10 +36,7 @@ public class PokeballManager {
 			if (p.player != null && owner != null && p.player.username.equals(owner.username))
 				return p;
 		}
-		if (loadPlayer(owner))
-			return getPlayerStorage(owner);
-		else
-			return null;
+		return loadPlayer(owner);
 	}
 
 	public EntityPlayerMP getPlayerFromName(String name) {
@@ -50,33 +47,41 @@ public class PokeballManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public boolean loadPlayer(EntityPlayerMP player) {
+	public PlayerStorage loadPlayer(EntityPlayerMP player) {
 		if (player == null)
-			return false;
+			return null;
 		File saveDirPath = new File(getSaveFolder(player));
 		if (!saveDirPath.exists())
 			saveDirPath.mkdirs();
 		File playerFile = new File(getSaveFolder(player) + player.username + ".pk");
+		PlayerStorage p;
 		if (playerFile.exists()) {
-			PlayerStorage p = new PlayerStorage(player);
+			p = new PlayerStorage(player);
 			try {
 				p.readFromNBT(CompressedStreamTools.read(new DataInputStream(new FileInputStream(playerFile))));
 			} catch (FileNotFoundException e) {
 				System.out.println("Couldn't read player data file for " + player.username);
-				return false;
+				return null;
 			} catch (IOException e) {
 				System.out.println("Couldn't read player data file for " + player.username);
-				return false;
+				return null;
 			}
 			playerPokemonList.add(p);
+
 		} else {
-			PlayerStorage p = new PlayerStorage(player);
+			p = new PlayerStorage(player);
 			playerPokemonList.add(p);
 		}
-		return true;
+		return p;
 	}
 
-	public void save() {
+	public void saveAll() {
+		for (int i = 0; i < playerPokemonList.size(); i++) {
+			savePlayer(playerPokemonList.get(i));
+		}
+	}
+
+	public void savePlayer(PlayerStorage p) {
 		try {
 			for (int i = 0; i < playerPokemonList.size(); i++) {
 				String userName = playerPokemonList.get(i).userName;
@@ -88,11 +93,6 @@ public class PokeballManager {
 				CompressedStreamTools.write(nbt, s);
 				s.close();
 				f.close();
-				if (playerPokemonList.get(i).player == null || playerPokemonList.get(i).player.playerNetServerHandler.connectionClosed) {
-					playerPokemonList.remove(i);
-					System.out.println("Saved dc'd player's data - " + userName);
-					i--;
-				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -117,7 +117,7 @@ public class PokeballManager {
 
 	@ForgeSubscribe
 	public void onWorldSave(WorldEvent.Save event) {
-		save();
+		saveAll();
 	}
 
 	public boolean hasPlayerFile(Player player) {
@@ -125,7 +125,13 @@ public class PokeballManager {
 		return playerSaveFile.exists();
 	}
 
-	public void unloadDCPlayers() {
-		save();
+	public void onPlayerDC(EntityPlayer player) {
+		for (int i = 0; i < playerPokemonList.size(); i++) {
+			if (playerPokemonList.get(i).userName == player.username) {
+				savePlayer(playerPokemonList.get(i));
+				playerPokemonList.remove(i);
+				break;
+			}
+		}
 	}
 }
