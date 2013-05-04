@@ -34,7 +34,8 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		}
 		alreadyInitialised = true;
 
-		particleEffects = ParticleEffects.getParticleEffects(this);
+		if (worldObj.isRemote)
+			particleEffects = ParticleEffects.getParticleEffects(this);
 	}
 
 	@Override

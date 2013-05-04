@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import pixelmon.Pixelmon;
 import pixelmon.enums.EnumGui;
@@ -69,16 +70,18 @@ public class TileEntityHealer extends TileEntity {
 					allPlaced = true;
 				}
 				tickCount = 0;
-				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(getDescriptionPacket());
+				MinecraftServer.getServer().getConfigurationManager().sendToAllNear(xCoord, yCoord, zCoord, 10, 0, getDescriptionPacket());
+				
+//				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(getDescriptionPacket());
 			}
 			if (tickCount == ticksToHeal - 30) {
 				stayDark = true;
-				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(getDescriptionPacket());
+				MinecraftServer.getServer().getConfigurationManager().sendToAllNear(xCoord, yCoord, zCoord, 10, 0, getDescriptionPacket());
 			}
 			if (tickCount == ticksToHeal) {
 				storage.healAllPokemon();
 				beingUsed = false;
-				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(getDescriptionPacket());
+				MinecraftServer.getServer().getConfigurationManager().sendToAllNear(xCoord, yCoord, zCoord, 10, 0, getDescriptionPacket());
 				player.closeScreen();
 			}
 		}

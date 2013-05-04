@@ -3,7 +3,7 @@ package pixelmon.api.events;
 import java.util.ArrayList;
 
 public class PixelmonEventHandler {
-	private static ArrayList<IPixelmonEventHandler> eventHandlers;
+	private static ArrayList<IPixelmonEventHandler> eventHandlers = new ArrayList<IPixelmonEventHandler>();
 	
 	public static void registerEventHandler(IPixelmonEventHandler e){
 		eventHandlers.add(e);

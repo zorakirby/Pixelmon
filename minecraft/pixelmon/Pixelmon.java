@@ -52,7 +52,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "2.1.2")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "2.1.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
@@ -79,7 +79,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "2.1.2";
+		event.getModMetadata().version = "2.1.3";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
@@ -88,8 +88,6 @@ public class Pixelmon {
 
 	@Init
 	public void load(FMLInitializationEvent event) {
-		Random rand = new Random();
-		
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
