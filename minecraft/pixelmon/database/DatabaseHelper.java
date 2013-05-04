@@ -30,8 +30,9 @@ public class DatabaseHelper {
 
 	public static boolean checkForDatabaseUpdates = true;
 
-	public static boolean has() {
+	public static boolean has(boolean checkForUpdates) {
 		try {
+			checkForDatabaseUpdates = checkForUpdates;
 			File databaseDir = new File(DownloadHelper.getDir(), "database");
 			if (!databaseDir.exists()) {
 				databaseDir.mkdir();

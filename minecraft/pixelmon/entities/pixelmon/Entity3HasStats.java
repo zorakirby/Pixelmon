@@ -29,8 +29,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public BaseStats baseStats;
 	public FriendShip friendship;
 	public ArrayList<EnumType> type = new ArrayList<EnumType>();
-	public boolean doesHover = false;
-	public float hoverHeight = 0f;
 	public float length;
 	public boolean doesLevel = true;
 	private static BaseStats[] baseStatsStore = new BaseStats[650];
@@ -76,7 +74,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		getBaseStats(name);
 
 		stats.IVs = IVStore.CreateNewIVs();
-		setSize(baseStats.width, baseStats.height + hoverHeight);
+		setSize(baseStats.width, baseStats.height + baseStats.hoverHeight);
 		setType();
 		length = baseStats.length;
 
@@ -218,7 +216,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		if (health < 0)
 			health = 0;
 		dataWatcher.updateObject(7, (short) health);
-		if (getOwner() != null)
+		if (getOwner() != null && worldObj.isRemote)
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
 	}
 
@@ -254,7 +252,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
-					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale + hoverHeight, par5
+					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale + baseStats.hoverHeight, par5
 					+ (double) halfLength);
 		else
 			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1

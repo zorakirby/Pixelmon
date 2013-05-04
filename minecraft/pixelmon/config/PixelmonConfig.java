@@ -30,7 +30,6 @@ public class PixelmonConfig {
 
 	public static boolean scaleModelsUp;
 	public static boolean pokemonDropsEnabled = true;
-	public static boolean checkForDatabaseUpdates = true;
 	public static boolean allowRiding = true;
 	public static boolean allowPlanting = true;
 
@@ -45,7 +44,6 @@ public class PixelmonConfig {
 
 	public static void loadConfig(Configuration configuration) {
 		config = configuration;
-		config.load();
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
 		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs", false).getBoolean(false);
@@ -56,7 +54,6 @@ public class PixelmonConfig {
 		trainerRarityModifier = config.get("general", "Trainer Rarity (percentage 0-200)", 100).getInt(100);
 		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
 		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled", true).getBoolean(true);
-		checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
 		removeVanillaMusic = config.get("general", "Remove Minecraft Music", true).getBoolean(true);
 		allowRiding = config.get("general", "Allow Riding", true).getBoolean(true);
 		allowPlanting = config.get("general", "Allow Planting", true).getBoolean(true);

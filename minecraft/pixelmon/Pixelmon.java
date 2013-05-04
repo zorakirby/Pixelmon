@@ -72,8 +72,11 @@ public class Pixelmon {
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
+		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+		config.load();
+		boolean checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
 		modDirectory = new File(event.getModConfigurationDirectory().getParent());
-		if (!DatabaseHelper.has()) {
+		if (!DatabaseHelper.has(checkForDatabaseUpdates)) {
 			throw new RuntimeException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!");
 		}
 		if (Loader.isModLoaded("Pokemobs"))
@@ -83,7 +86,7 @@ public class Pixelmon {
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
-		PixelmonConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
+		PixelmonConfig.loadConfig(config);
 	}
 
 	@Init

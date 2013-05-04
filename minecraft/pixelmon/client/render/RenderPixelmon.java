@@ -488,8 +488,8 @@ public class RenderPixelmon extends RenderLiving {
 		scaleFactor *= entity.getScaleFactor();
 		GL11.glScalef(scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor
 				* entity.getScale() * entity.baseStats.giScale);
-		if (entity.doesHover) {
-			GL11.glTranslatef(0, -1 * entity.hoverHeight, 0);
+		if (entity.baseStats.doesHover) {
+			GL11.glTranslatef(0, -1 * entity.baseStats.hoverHeight, 0);
 		}
 	}
 

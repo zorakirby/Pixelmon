@@ -46,6 +46,8 @@ public class BaseStats {
 	public int maxGroupSize;
 	public SpawnLocation[] spawnLocations;
 	public int minGroupSize;
+	public float hoverHeight = 0;
+	public boolean doesHover = false;
 
 	public int get(StatsType stat) {
 		if (stat == StatsType.Attack)

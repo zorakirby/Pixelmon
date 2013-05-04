@@ -80,6 +80,11 @@ public class DatabaseStats {
 				store.canFly = rs.getInt("CanFly") == 1;
 				if (rs.wasNull())
 					System.out.println("Error in CanFly" + " For Pokemon : " + name);
+				store.doesHover = rs.getBoolean("DoesHover");
+				if (rs.wasNull())
+					System.out.println("Error in DoesHover" + " For Pokemon : " + name);
+				if (store.doesHover)
+					store.hoverHeight = 1;
 				store.height = rs.getFloat("Height");
 				if (rs.wasNull())
 					System.out.println("Error in Height" + " For Pokemon : " + name);
