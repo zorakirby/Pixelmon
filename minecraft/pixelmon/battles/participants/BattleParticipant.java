@@ -76,6 +76,8 @@ public abstract class BattleParticipant {
 	public abstract String getFaintMessage();
 
 	public void turnTick() {
+		if (currentPokemon() == null)
+			return;
 		for (int i = 0; i < currentPokemon().status.size(); i++) {
 			StatusBase s = currentPokemon().status.get(i);
 			try {
