@@ -3,6 +3,8 @@ package pixelmon.entities.pixelmon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -10,6 +12,9 @@ import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumNature;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
+import pixelmon.storage.PlayerStorage;
 
 public abstract class Entity1Base extends EntityTameable {
 	public EnumPokeballs caughtBall;
@@ -173,5 +178,24 @@ public abstract class Entity1Base extends EntityTameable {
 
 	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
 		return null;
+	}
+	
+	public boolean belongsTo(EntityPlayer player) {
+		if (getOwner() == player)
+			return true;
+
+		return false;
+	}
+
+	public void updateNBT() {
+		try {
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon)this);
+		} catch (PlayerNotLoadedException e) {
+
+		}
+	}
+	
+	public PlayerStorage getStorage() throws PlayerNotLoadedException{
+		return PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner());
 	}
 }

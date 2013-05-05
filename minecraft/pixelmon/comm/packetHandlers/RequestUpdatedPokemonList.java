@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 import pixelmon.comm.EnumPackets;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PokeballManager;
 
 import cpw.mods.fml.common.network.Player;
@@ -19,7 +20,10 @@ public class RequestUpdatedPokemonList extends PacketHandlerBase {
 
 	@Override
 	public void handlePacket(int index, Player player, DataInputStream dataStream) throws IOException {
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).sendUpdatedList();
+		try {
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).sendUpdatedList();
+		} catch (PlayerNotLoadedException e) {
+		}
 	}
 
 }

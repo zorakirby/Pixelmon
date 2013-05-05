@@ -8,6 +8,7 @@ import pixelmon.items.ItemPokedex;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.pokedex.Pokedex.DexRegisterStatus;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 
 public class InteractionPokedex implements IInteraction {
 
@@ -16,9 +17,12 @@ public class InteractionPokedex implements IInteraction {
 		ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 		if (itemstack.getItem() instanceof ItemPokedex) {
 			ItemPokedex pokedex = (ItemPokedex) itemstack.getItem();
-			PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(
-					Pokedex.nameToID(entityPixelmon.getName()), DexRegisterStatus.seen);
-			pokedex.openPokedexGui(Pokedex.nameToID(entityPixelmon.getName()), player, entityPixelmon.worldObj);
+			try {
+				PixelmonStorage.PokeballManager.getPlayerStorage(PixelmonStorage.PokeballManager.getPlayerFromName(player.username)).pokedex.set(
+						Pokedex.nameToID(entityPixelmon.getName()), DexRegisterStatus.seen);
+				pokedex.openPokedexGui(Pokedex.nameToID(entityPixelmon.getName()), player, entityPixelmon.worldObj);
+			} catch (PlayerNotLoadedException e) {
+			}
 			return true;
 		}
 		return false;

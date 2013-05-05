@@ -21,6 +21,7 @@ import pixelmon.enums.EnumType;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.pokedex.Pokedex.DexRegisterStatus;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 
 public abstract class Entity3HasStats extends Entity2HasModel {
 
@@ -72,7 +73,10 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	protected void init(String name) {
 		super.init(name);
 		getBaseStats(name);
-
+		if (baseStats == null){
+			setDead();
+			return;
+		}
 		stats.IVs = IVStore.CreateNewIVs();
 		setSize(baseStats.width, baseStats.height + baseStats.hoverHeight);
 		setType();
@@ -159,14 +163,15 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		type.clear();
 		setType();
 		updateStats();
+		try {
+			Pokedex pokedex = getStorage().pokedex;
 
-		Pokedex pokedex = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).pokedex;
-
-		pokedex.set(Pokedex.nameToID(this.getName()), DexRegisterStatus.caught);
-		pokedex.sendToPlayer((EntityPlayerMP) pokedex.owner);
-
+			pokedex.set(Pokedex.nameToID(this.getName()), DexRegisterStatus.caught);
+			pokedex.sendToPlayer((EntityPlayerMP) pokedex.owner);
+		} catch (PlayerNotLoadedException e) {
+		}
 		if (getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
+			updateNBT();
 	}
 
 	@Override
@@ -217,7 +222,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			health = 0;
 		dataWatcher.updateObject(7, (short) health);
 		if (getOwner() != null && worldObj.isRemote)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
+			updateNBT();
 	}
 
 	public void setScale(float scale) {

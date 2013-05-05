@@ -10,6 +10,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.Player;
 
@@ -27,14 +28,18 @@ public class ReplaceMove extends PacketHandlerBase {
 
 		EntityPlayerMP player = (EntityPlayerMP) pl;
 		Attack a = DatabaseMoves.getAttack(moveToLearnIndex);
-		PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
-		EntityPixelmon p;
-		if (storage.EntityAlreadyExists(pokemonID, player.worldObj))
-			p = storage.getAlreadyExists(pokemonID, player.worldObj);
-		else
-			p = storage.sendOut(pokemonID, player.worldObj);
-		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(replaceIndex).baseAttack.attackName + ", and learned " + a.baseAttack.attackName);
-		p.moveset.set(replaceIndex, a);
-		storage.updateNBT(p);
+		try {
+			PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
+			EntityPixelmon p;
+			if (storage.EntityAlreadyExists(pokemonID, player.worldObj))
+				p = storage.getAlreadyExists(pokemonID, player.worldObj);
+			else
+				p = storage.sendOut(pokemonID, player.worldObj);
+			ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(replaceIndex).baseAttack.attackName + ", and learned "
+					+ a.baseAttack.attackName);
+			p.moveset.set(replaceIndex, a);
+			storage.updateNBT(p);
+		} catch (PlayerNotLoadedException e) {
+		}
 	}
 }

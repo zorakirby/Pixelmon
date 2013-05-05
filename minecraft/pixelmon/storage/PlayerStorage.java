@@ -473,7 +473,11 @@ public class PlayerStorage {
 			if (partyPokemon[i] != null) {
 				if (EntityAlreadyExists(partyPokemon[i].getInteger("pixelmonID"), player.worldObj)) {
 					EntityPixelmon p = getAlreadyExists(partyPokemon[i].getInteger("pixelmonID"), player.worldObj);
-					PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve(p);
+					try {
+						PixelmonStorage.PokeballManager.getPlayerStorage(player).retrieve(p);
+					} catch (PlayerNotLoadedException e) {
+						e.printStackTrace();
+					}
 					updateNBT(p);
 					p.isInBall = true;
 					p.unloadEntity();

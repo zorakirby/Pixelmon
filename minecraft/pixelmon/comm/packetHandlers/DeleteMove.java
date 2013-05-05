@@ -8,6 +8,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.Player;
 
@@ -23,14 +24,17 @@ public class DeleteMove extends PacketHandlerBase {
 		int removeIndex = dataStream.readInt();
 
 		EntityPlayerMP player = (EntityPlayerMP) pl;
-		PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
-		EntityPixelmon p;
-		if (storage.EntityAlreadyExists(pokemonID, player.worldObj))
-			p = storage.getAlreadyExists(pokemonID, player.worldObj);
-		else
-			p = storage.sendOut(pokemonID, player.worldObj);
-		ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(removeIndex).baseAttack.attackName + "!");
-		p.moveset.remove(removeIndex);
-		storage.updateNBT(p);
+		try {
+			PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
+			EntityPixelmon p;
+			if (storage.EntityAlreadyExists(pokemonID, player.worldObj))
+				p = storage.getAlreadyExists(pokemonID, player.worldObj);
+			else
+				p = storage.sendOut(pokemonID, player.worldObj);
+			ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.moveset.get(removeIndex).baseAttack.attackName + "!");
+			p.moveset.remove(removeIndex);
+			storage.updateNBT(p);
+		} catch (PlayerNotLoadedException e) {
+		}
 	}
 }

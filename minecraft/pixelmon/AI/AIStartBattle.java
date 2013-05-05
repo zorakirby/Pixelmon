@@ -33,17 +33,21 @@ public class AIStartBattle extends EntityAIBase {
 				if (BattleRegistry.getBattle((EntityPlayer) theEntity.getAttackTarget()) != null)
 					return false;
 				EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
-				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).isIn((EntityPixelmon) theEntity))
+				if (((EntityPixelmon) theEntity).belongsTo(player))
 					return false;
-				if (PixelmonStorage.PokeballManager.getPlayerStorage(player).countAblePokemon() == 0)
+				try {
+					if (PixelmonStorage.PokeballManager.getPlayerStorage(player).countAblePokemon() == 0)
+						return false;
+					EntityPixelmon firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getFirstAblePokemon(player.worldObj);
+					if (!PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(firstPokemon.getPokemonId(), theEntity.worldObj)) {
+						firstPokemon.releaseFromPokeball();
+						firstPokemon.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
+					}
+					theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon) theEntity), new PlayerParticipant(player, firstPokemon));
+					return true;
+				} catch (Exception e) {
 					return false;
-				EntityPixelmon firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getFirstAblePokemon(player.worldObj);
-				if (!PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(firstPokemon.getPokemonId(), theEntity.worldObj)) {
-					firstPokemon.releaseFromPokeball();
-					firstPokemon.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
 				}
-				theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon) theEntity), new PlayerParticipant(player, firstPokemon));
-				return true;
 			}
 			if (!(theEntity.getAttackTarget() instanceof EntityPixelmon))
 				return false;

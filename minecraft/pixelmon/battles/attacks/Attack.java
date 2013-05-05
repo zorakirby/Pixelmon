@@ -216,9 +216,9 @@ public class Attack {
 			}
 		}
 		if (user.getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) user.getOwner()).updateNBT(user);
+			user.updateNBT();
 		if (target.getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) target.getOwner()).updateNBT(target);
+			target.updateNBT();
 		if (user.getTrainer() != null)
 			user.getTrainer().pokemonStorage.updateNBT(user);
 		if (target.getTrainer() != null)

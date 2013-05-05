@@ -38,6 +38,8 @@ import pixelmon.items.ItemTM;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.pokedex.Pokedex.DexRegisterStatus;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
+import pixelmon.storage.PlayerStorage;
 
 public class EntityPixelmon extends Entity9HasSounds {
 
@@ -59,7 +61,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public void onDeath(DamageSource damagesource) {
 		if (!worldObj.isRemote) {
 			super.onDeath(damagesource);
-			if (getOwner() != null && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).isIn(this)) {
+			if (getOwner() != null) {
 				String s = "Your " + getName() + " fainted!";
 				ChatHandler.sendChat(getOwner(), s);
 				isFainted = true;
@@ -89,7 +91,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void catchInPokeball() {
 		if (getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT(this);
+			updateNBT();
 		isInBall = true;
 		unloadEntity();
 	}
@@ -141,9 +143,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
 		boolean[] conds = { true, true };
-		 if (baseStats.spawnConditions.length == 0)
-			       if (blockId != Block.grass.blockID)
-			        return false;
+		if (baseStats.spawnConditions.length == 0)
+			if (blockId != Block.grass.blockID)
+				return false;
 		for (SpawnConditions s : baseStats.spawnConditions) {
 			if (s == SpawnConditions.Grass && blockId != Block.grass.blockID)
 				conds[s.index] = false;
@@ -243,5 +245,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public ArrayList<String> getPreEvolutions() {
 		return DatabaseStats.getPreEvolutions(getName());
 	}
+	
 
 }

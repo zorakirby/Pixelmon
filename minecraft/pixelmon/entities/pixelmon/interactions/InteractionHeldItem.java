@@ -26,7 +26,7 @@ public class InteractionHeldItem implements IInteraction {
 					itemstack1.stackSize = 1;
 					player.inventory.consumeInventoryItem(itemstack.itemID);
 					entityPixelmon.setHeldItem(itemstack1);
-					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityPixelmon.getOwner()).updateNBT(entityPixelmon);
+					entityPixelmon.updateNBT();
 					return true;
 				}
 			}

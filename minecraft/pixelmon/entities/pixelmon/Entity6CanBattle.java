@@ -115,7 +115,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 			Entity entity = par1DamageSource.getEntity();
 			if (getOwner() != null)
-				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon) this);
+				updateNBT();
 			if (isValidTarget(entity)) {
 				setAttackTarget((EntityLiving) entity);
 				setTarget(entity);

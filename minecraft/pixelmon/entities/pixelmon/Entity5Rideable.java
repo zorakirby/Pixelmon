@@ -64,7 +64,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			if (PixelmonConfig.allowRiding) {
 				ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 				if (itemstack == null) {
-					if (baseStats.isRideable && PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).isIn((EntityPixelmon) this)) {
+					if (baseStats.isRideable && belongsTo(player)) {
 						if (ridingHelper == null)
 							ridingHelper = new RidingHelper((EntityPixelmon) this, worldObj);
 						if (riddenByEntity != null) {

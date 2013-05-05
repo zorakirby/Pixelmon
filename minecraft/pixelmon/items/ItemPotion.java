@@ -31,7 +31,7 @@ public class ItemPotion extends PixelmonItem {
 		int newHP = pxm.getHealth() + healAmount(pxm);
 		pxm.setEntityHealth(newHP);
 		if (pxm.getOwner() != null)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pxm.getOwner()).updateNBT(pxm);
+			pxm.updateNBT();
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
 
 public class PlayerParticipant extends BattleParticipant {
@@ -21,7 +22,7 @@ public class PlayerParticipant extends BattleParticipant {
 	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
 
-	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) {
+	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) throws PlayerNotLoadedException {
 		player = p;
 		currentPixelmon = firstPixelmon;
 		storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
@@ -51,7 +52,7 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public void StartBattle(BattleController bc, BattleParticipant opponent) {
-		super.StartBattle(bc,opponent);
+		super.StartBattle(bc, opponent);
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetOpponentType, opponent.getType().index));
 		player.openGui(Pixelmon.instance, EnumGui.Battle.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), 0, 0);

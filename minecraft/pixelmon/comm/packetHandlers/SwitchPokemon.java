@@ -10,6 +10,7 @@ import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.comm.EnumPackets;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import cpw.mods.fml.common.network.Player;
 
 public class SwitchPokemon extends PacketHandlerBase {
@@ -23,12 +24,16 @@ public class SwitchPokemon extends PacketHandlerBase {
 		EntityPlayerMP player = (EntityPlayerMP) pl;
 		int pos = dataStream.readInt();
 		BattleController bc = BattleRegistry.getBattle(dataStream.readInt());
+		try{
 		for (BattleParticipant p : bc.participants)
 			if (p instanceof PlayerParticipant) {
 				if (((PlayerParticipant) p).player == player) {
 					bc.SwitchPokemon(p.currentPokemon(), PixelmonStorage.PokeballManager.getPlayerStorage(player).getIDFromPosition(pos));
 				}
 			}
+		}catch(PlayerNotLoadedException e) {
+			bc.endBattle();
+		}
 	}
 
 }

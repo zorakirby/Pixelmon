@@ -8,6 +8,7 @@ import pixelmon.Pixelmon;
 import pixelmon.comm.EnumPackets;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import cpw.mods.fml.common.network.Player;
 
 public class RegisterPlayer extends PacketHandlerBase {
@@ -18,9 +19,12 @@ public class RegisterPlayer extends PacketHandlerBase {
 
 	@Override
 	public void handlePacket(int index, Player pl, DataInputStream dataStream) throws IOException {
-		EntityPlayerMP player = (EntityPlayerMP)pl;
-		if (PixelmonStorage.PokeballManager.getPlayerStorage(player).count() == 0) {
-			player.openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), player.worldObj, 0, 0, 0);
+		EntityPlayerMP player = (EntityPlayerMP) pl;
+		try {
+			if (PixelmonStorage.PokeballManager.getPlayerStorage(player).count() == 0) {
+				player.openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), player.worldObj, 0, 0, 0);
+			}
+		} catch (PlayerNotLoadedException e) {
 		}
 	}
 

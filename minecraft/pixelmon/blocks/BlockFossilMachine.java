@@ -48,12 +48,12 @@ public class BlockFossilMachine extends BlockContainer {
 		this.setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
 		return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	/**
 	 * Returns the bounding box of the wired rectangular prism to render.
@@ -73,11 +73,12 @@ public class BlockFossilMachine extends BlockContainer {
 
 		if (tile.fossilProgress > 0 || tile.pokemonProgress > 0)
 			for (int i = 50; i > ((int) (((tile.fossilProgress + tile.pokemonProgress) * 2) / 96) / 2); i--)
-				par1World.spawnParticle("reddust", var7 + par5Random.nextFloat(), var9 + par5Random.nextFloat() + par5Random.nextFloat(), var11 + par5Random.nextFloat(), -255D,
-						1.0D, 255.0D);
+				par1World.spawnParticle("reddust", var7 + par5Random.nextFloat(), var9 + par5Random.nextFloat() + par5Random.nextFloat(),
+						var11 + par5Random.nextFloat(), -255D, 1.0D, 255.0D);
 
 		if (tile.fossilProgress > 1 && tile.pokemonProgress < tile.pokemonMaxProgress) {
-			par1World.playSound((double) par2 + 0.5D, (double) par3 + 0.5D, (double) par4 + 0.5D, "portal.portal", 0.01F, par5Random.nextFloat() * 0.4F + 0.8F, true);
+			par1World.playSound((double) par2 + 0.5D, (double) par3 + 0.5D, (double) par4 + 0.5D, "portal.portal", 0.01F, par5Random.nextFloat() * 0.4F + 0.8F,
+					true);
 		}
 	}
 
@@ -94,7 +95,10 @@ public class BlockFossilMachine extends BlockContainer {
 				if (tile.isShiny)
 					p.setIsShiny(true);
 				PokeballTypeHelper.doAfterEffect((((ItemPokeBall) PixelmonItemsPokeballs.getItemFromID(tile.currentPokeball)).type), p);
-				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).addToParty(p);
+				try {
+					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).addToParty(p);
+				} catch (Exception e) {
+				}
 				world.spawnEntityInWorld(p);
 				p.catchInPokeball();
 				p.friendship.initFromCapture();

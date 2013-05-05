@@ -27,16 +27,20 @@ public class TileEntityHealer extends TileEntity {
 	private int pokemonLastPlaced = -1;
 
 	public void use(EntityPlayer player) {
-		this.player = player;
-		beingUsed = true;
-		player.openGui(Pixelmon.instance, EnumGui.Healer.getIndex(), player.worldObj, 0, 0, 0);
-		tickCount = 0;
-		allPlaced = false;
-		storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
-		pokemonLastPlaced = -1;
-		for (int i = 0; i < pokeballType.length; i++)
-			pokeballType[i] = null;
-		stayDark = false;
+		try {
+			storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
+			this.player = player;
+			beingUsed = true;
+			player.openGui(Pixelmon.instance, EnumGui.Healer.getIndex(), player.worldObj, 0, 0, 0);
+			tickCount = 0;
+			allPlaced = false;
+
+			pokemonLastPlaced = -1;
+			for (int i = 0; i < pokeballType.length; i++)
+				pokeballType[i] = null;
+			stayDark = false;
+		} catch (Exception e) {
+		}
 	}
 
 	private int tickCount = 0;
@@ -71,8 +75,9 @@ public class TileEntityHealer extends TileEntity {
 				}
 				tickCount = 0;
 				MinecraftServer.getServer().getConfigurationManager().sendToAllNear(xCoord, yCoord, zCoord, 10, 0, getDescriptionPacket());
-				
-//				((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(getDescriptionPacket());
+
+				// ((EntityPlayerMP)
+				// player).playerNetServerHandler.sendPacketToPlayer(getDescriptionPacket());
 			}
 			if (tickCount == ticksToHeal - 30) {
 				stayDark = true;

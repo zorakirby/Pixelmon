@@ -11,6 +11,8 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
+import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.Player;
 
 public class ChooseStarter extends PacketHandlerBase {
@@ -21,15 +23,19 @@ public class ChooseStarter extends PacketHandlerBase {
 
 	@Override
 	public void handlePacket(int index, Player play, DataInputStream dataStream) throws IOException {
-		EntityPlayer player = (EntityPlayer)play;
-		int pokemonIndex = dataStream.readInt();
-		EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(StarterList.getStarterStringList()[pokemonIndex], player.worldObj);
-		p.getLvl().setLevel(5);
-		p.setEntityHealth(p.stats.HP);
-		p.loadMoveset();
-		p.caughtBall = EnumPokeballs.PokeBall;
-		p.friendship.initFromCapture();
-		PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).addToParty(p);
+		try {
+			EntityPlayer player = (EntityPlayer) play;
+			PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
+			int pokemonIndex = dataStream.readInt();
+			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(StarterList.getStarterStringList()[pokemonIndex], player.worldObj);
+			p.getLvl().setLevel(5);
+			p.setEntityHealth(p.stats.HP);
+			p.loadMoveset();
+			p.caughtBall = EnumPokeballs.PokeBall;
+			p.friendship.initFromCapture();
+			s.addToParty(p);
+		} catch (PlayerNotLoadedException e) {
+		}
 	}
 
 }

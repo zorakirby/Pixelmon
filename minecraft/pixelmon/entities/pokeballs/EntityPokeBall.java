@@ -26,6 +26,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 
 public class EntityPokeBall extends EntityThrowable {
 	public enum Mode {
@@ -195,50 +196,61 @@ public class EntityPokeBall extends EntityThrowable {
 				if (pixelmon != null) {
 					if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
 						if (movingobjectposition.sideHit == 0)// Bottom
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY - 1, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY - 1,
+									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 1)// Top
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY + 1, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY + 1,
+									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 2)// East
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5 - 1, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY,
+									movingobjectposition.blockZ + 0.5 - 1, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 3)// West
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5 + 1, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY,
+									movingobjectposition.blockZ + 0.5 + 1, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 4)// North
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 - 1, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 - 1, movingobjectposition.blockY,
+									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
 						if (movingobjectposition.sideHit == 5)// South
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 + 1, movingobjectposition.blockY, movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 + 1, movingobjectposition.blockY,
+									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
 					} else {
 						pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
 					}
 					pixelmon.motionX = pixelmon.motionY = pixelmon.motionZ = 0;
 					pixelmon.releaseFromPokeball();
-					if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)
-							&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn((EntityPixelmon) movingobjectposition.entityHit)) {
-						if (((EntityPixelmon) movingobjectposition.entityHit).battleController != null) {
-							setDead();
-							return;
+					try {
+						if (movingobjectposition.entityHit != null
+								&& (movingobjectposition.entityHit instanceof EntityPixelmon)
+								&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn(
+										(EntityPixelmon) movingobjectposition.entityHit)) {
+							if (((EntityPixelmon) movingobjectposition.entityHit).battleController != null) {
+								setDead();
+								return;
+							}
+							BattleParticipant part;
+							if (((EntityPixelmon) movingobjectposition.entityHit).getOwner() != null)
+								part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
+										(EntityPixelmon) movingobjectposition.entityHit);
+							else
+								part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
+
+							pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
+
+						} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
+							if (((EntityTrainer) movingobjectposition.entityHit).releasedPokemon != null
+									&& ((EntityTrainer) movingobjectposition.entityHit).releasedPokemon.battleController != null) {
+								setDead();
+								return;
+							}
+
+							TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
+							pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), trainer);
+						} else
+							pixelmon.clearAttackTarget();
+						if (thrower instanceof EntityPlayer) {
+
 						}
-						BattleParticipant part;
-						if (((EntityPixelmon) movingobjectposition.entityHit).getOwner() != null)
-							part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
-									(EntityPixelmon) movingobjectposition.entityHit);
-						else
-							part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
-
-						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
-
-					} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
-						if (((EntityTrainer) movingobjectposition.entityHit).releasedPokemon != null
-								&& ((EntityTrainer) movingobjectposition.entityHit).releasedPokemon.battleController != null) {
-							setDead();
-							return;
-						}
-
-						TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
-						pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), trainer);
-					} else
-						pixelmon.clearAttackTarget();
-					if (thrower instanceof EntityPlayer) {
-
+					} catch (PlayerNotLoadedException e) {
 					}
 					// spawnCaptureParticles();
 				}
@@ -419,20 +431,20 @@ public class EntityPokeBall extends EntityThrowable {
 		}
 		if (getIsCaptured()) {
 			if (waitTime > 20) {
-				try{
-				p.setTamed(true);
-				p.setOwner(((EntityPlayer) thrower).username);
-				p.caughtBall = getType();
-				p.clearAttackTarget();
-				PokeballTypeHelper.doAfterEffect(getType(), p);
-				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).addToParty(p);
-				p.catchInPokeball();
-				p.friendship.initFromCapture();
-				if (mode == Mode.battle) {
-					battleController.endBattleWithoutXP();
-				}
-				}catch(Exception e){
-					
+				try {
+					p.setTamed(true);
+					p.setOwner(((EntityPlayer) thrower).username);
+					p.caughtBall = getType();
+					p.clearAttackTarget();
+					PokeballTypeHelper.doAfterEffect(getType(), p);
+					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).addToParty(p);
+					p.catchInPokeball();
+					p.friendship.initFromCapture();
+					if (mode == Mode.battle) {
+						battleController.endBattleWithoutXP();
+					}
+				} catch (Exception e) {
+
 				}
 				setIsWaiting(false);
 				setDead();

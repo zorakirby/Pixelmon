@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import pixelmon.comm.EnumPackets;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import cpw.mods.fml.common.network.Player;
 
 public class HealPokemon extends PacketHandlerBase {
@@ -17,12 +18,14 @@ public class HealPokemon extends PacketHandlerBase {
 
 	@Override
 	public void handlePacket(int index, Player pl, DataInputStream dataStream) throws IOException {
-		EntityPlayer player = (EntityPlayer)pl;
+		EntityPlayer player = (EntityPlayer) pl;
 		int ind = dataStream.readInt();
-		if (ind == -1)
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).healAllPokemon();
-		else
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP)player).heal(ind);
+		try {
+			if (ind == -1)
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).healAllPokemon();
+			else
+				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).heal(ind);
+		} catch (PlayerNotLoadedException e) {
+		}
 	}
-
 }

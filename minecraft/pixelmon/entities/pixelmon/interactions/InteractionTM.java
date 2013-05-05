@@ -34,7 +34,7 @@ public class InteractionTM implements IInteraction {
 						entityPixelmon.moveset.add(a);
 						ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
 					}
-					PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).updateNBT(entityPixelmon);
+					entityPixelmon.updateNBT();
 					if (!player.capabilities.isCreativeMode)
 						player.inventory.consumeInventoryItem(itemstack.itemID);
 				} else {

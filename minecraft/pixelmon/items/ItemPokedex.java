@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import pixelmon.Pixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PokeballManager;
 
 public class ItemPokedex extends Item {
@@ -28,7 +29,7 @@ public class ItemPokedex extends Item {
 	public void registerIcons(IconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("pixelmon:pokedex");
 	}
-	
+
 	public ItemStack onItemRightClick(ItemStack i, World world, EntityPlayer player) {
 		if (!world.isRemote)
 			openPokedexGui(1, player, world);
@@ -41,8 +42,11 @@ public class ItemPokedex extends Item {
 
 	public void openPokedexGui(int i, EntityPlayer player, World world) {
 		PokeballManager pm = PixelmonStorage.PokeballManager;
-		EntityPlayerMP e = (EntityPlayerMP)player;
-		pm.getPlayerStorage(e).pokedex.sendToPlayer(e);
-		player.openGui(Pixelmon.instance, EnumGui.Pokedex.getIndex(), world, i, 0, 0);
+		EntityPlayerMP e = (EntityPlayerMP) player;
+		try {
+			pm.getPlayerStorage(e).pokedex.sendToPlayer(e);
+			player.openGui(Pixelmon.instance, EnumGui.Pokedex.getIndex(), world, i, 0, 0);
+		} catch (PlayerNotLoadedException ex) {
+		}
 	}
 }

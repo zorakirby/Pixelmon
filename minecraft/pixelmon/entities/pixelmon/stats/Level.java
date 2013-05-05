@@ -136,7 +136,7 @@ public class Level {
 			PixelmonStatsPacket stats2 = PixelmonStatsPacket.createPacket(pixelmon);
 			PixelmonLevelUpPacket p = new PixelmonLevelUpPacket(pixelmon, getLevel(), stats, stats2, EnumPackets.LevelUp);
 			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) pixelmon.getOwner()).updateNBT(pixelmon);
+			pixelmon.updateNBT();
 		}
 
 		if (pixelmon.getOwner() != null)

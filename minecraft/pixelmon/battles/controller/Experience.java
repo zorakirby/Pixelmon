@@ -15,6 +15,7 @@ import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.heldItems.EVAdjusting;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
 
 public class Experience {
@@ -29,57 +30,63 @@ public class Experience {
 			if (allPlayers)
 				return;
 		}
-		for (BattleParticipant p : participants) {
-			if (p.team != faintedParticipant.team && p.getType() == ParticipantType.Player) {
-				PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) p.currentPokemon().getOwner());
+		try {
 
-				ArrayList<Integer> doneUsers = new ArrayList<Integer>();
-				if (!p.attackersList.contains(p.currentPokemon().getPokemonId()))
-					p.attackersList.add(p.currentPokemon().getPokemonId());
-				for (int i = 0; i < p.attackersList.size(); i++) {
-					if (p.currentPokemon().getOwner() != null) {
-						if (storage.isFainted(p.attackersList.get(i))) {
-							p.attackersList.remove(i);
-							i--;
+			for (BattleParticipant p : participants) {
+				if (p.team != faintedParticipant.team && p.getType() == ParticipantType.Player) {
+					PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) p.currentPokemon().getOwner());
+
+					ArrayList<Integer> doneUsers = new ArrayList<Integer>();
+					if (!p.attackersList.contains(p.currentPokemon().getPokemonId()))
+						p.attackersList.add(p.currentPokemon().getPokemonId());
+					for (int i = 0; i < p.attackersList.size(); i++) {
+						if (p.currentPokemon().getOwner() != null) {
+							if (storage.isFainted(p.attackersList.get(i))) {
+								p.attackersList.remove(i);
+								i--;
+							}
 						}
 					}
-				}
-				int expShareCount = 0;
-				for (NBTTagCompound nbt : storage.partyPokemon) {
-					if (nbt != null) {
-						if (nbt.hasKey("HeldItem")) {
-							int itemId = nbt.getInteger("HeldItem");
-							if (itemId != -1) {
-								if (PixelmonItemsHeld.getHeldItem(itemId) != null && PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare 
-										&& !nbt.getBoolean("IsFainted") && nbt.getShort("Health") > 0) {
-									expShareCount++;
+					int expShareCount = 0;
+					for (NBTTagCompound nbt : storage.partyPokemon) {
+						if (nbt != null) {
+							if (nbt.hasKey("HeldItem")) {
+								int itemId = nbt.getInteger("HeldItem");
+								if (itemId != -1) {
+									if (PixelmonItemsHeld.getHeldItem(itemId) != null
+											&& PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare
+											&& !nbt.getBoolean("IsFainted") && nbt.getShort("Health") > 0) {
+										expShareCount++;
+									}
 								}
 							}
 						}
 					}
-				}
 
-				for (NBTTagCompound nbt : storage.partyPokemon) {
-					if (nbt != null) {
-						if (nbt.hasKey("HeldItem")) {
-							int itemId = nbt.getInteger("HeldItem");
-							if (itemId != -1) {
-								if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare
-										&& !nbt.getBoolean("IsFainted") && nbt.getShort("Health") > 0) {
-									calcExp(storage, p, faintedPokemon, nbt.getInteger("pixelmonID"), true, 0.5 * 1 / (double) expShareCount);
+					for (NBTTagCompound nbt : storage.partyPokemon) {
+						if (nbt != null) {
+							if (nbt.hasKey("HeldItem")) {
+								int itemId = nbt.getInteger("HeldItem");
+								if (itemId != -1) {
+									if (PixelmonItemsHeld.getHeldItem(itemId).getHeldItemType() == EnumHeldItems.expShare && !nbt.getBoolean("IsFainted")
+											&& nbt.getShort("Health") > 0) {
+										calcExp(storage, p, faintedPokemon, nbt.getInteger("pixelmonID"), true, 0.5 * 1 / (double) expShareCount);
+									}
 								}
 							}
 						}
 					}
-				}
 
-				for (int userIndex : p.attackersList) {
-					if (!doneUsers.contains(userIndex)) {
-						calcExp(storage, p, faintedPokemon, userIndex, false, expShareCount > 0 ? 0.5 : 1);
-						doneUsers.add(userIndex);
+					for (int userIndex : p.attackersList) {
+						if (!doneUsers.contains(userIndex)) {
+							calcExp(storage, p, faintedPokemon, userIndex, false, expShareCount > 0 ? 0.5 : 1);
+							doneUsers.add(userIndex);
+						}
 					}
 				}
 			}
+		} catch (PlayerNotLoadedException e) {
+
 		}
 	}
 

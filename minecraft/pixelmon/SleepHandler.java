@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerNotLoadedException;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -18,7 +19,10 @@ public class SleepHandler implements ITickHandler {
 			if (world != null) {
 				if (world.areAllPlayersAsleep()) {
 					for (int j = 0; j < world.playerEntities.size(); j++) {
-						PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) world.playerEntities.get(j)).healAllPokemon();
+						try {
+							PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) world.playerEntities.get(j)).healAllPokemon();
+						} catch (PlayerNotLoadedException e) {
+						}
 					}
 				}
 			}
