@@ -15,6 +15,8 @@ public class ModuleTailBasic extends ModuleTail {
 	float TailInitY;
 	float TailInitZ;
 	float TailOrientation;
+	float TurningSpeed;
+	float TurningAngle;
 	
 	public ModuleTailBasic(ModelRenderer tail, float TailRotationLimitY, float TailRotationLimitZ, float TailSpeed) {
 		this.tail = tail;
@@ -29,15 +31,29 @@ public class ModuleTailBasic extends ModuleTail {
 
 	@Override
 	public void walk(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
+		TurningSpeed = Math.abs(entity.rotationYaw - entity.prevRotationYaw);
+		
+		if(entity.rotationYaw > entity.prevRotationYaw){  //finds out if the pokemon is turning
+			TurningAngle = 2 * TailRotationLimitY;
+			}  
+		else if(entity.rotationYaw < entity.prevRotationYaw){
+			TurningAngle = 2 * TailRotationLimitY * -1;
+			}
+		else{
+			TurningAngle = 0;
+			}
+		
 		tail.rotateAngleY =  MathHelper.cos(f * TailSpeed)
 				* (float) Math.PI
 				* f1
-				* TailRotationLimitY;
+				* TailRotationLimitY + TurningAngle;
 		
 		tail.rotateAngleX = MathHelper.cos(f * TailSpeed * 2)
 				* (float) Math.PI
 				* f1
 				* TailRotationLimitZ;
+		
+		
 	}
 
 	@Override
