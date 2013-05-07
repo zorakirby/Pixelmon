@@ -104,7 +104,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		for (int i = 0; i < baseStatsStore.length; i++) {
 			if (baseStatsStore[i] == null)
 				break;
-			if (baseStatsStore[i].pixelmonName == name) {
+			if (baseStatsStore[i].pixelmonName.equals(name)) {
 				has = true;
 				baseStats = baseStatsStore[i];
 				break;

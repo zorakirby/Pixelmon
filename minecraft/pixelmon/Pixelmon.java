@@ -7,6 +7,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -124,6 +125,8 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
 		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
 		proxy.registerTickHandlers();
+		
+		//AdvancedModelLoader.loadModel("/pixelmon/models/porygon/PorygonBody.obj");
 	}
 
 	@PostInit
