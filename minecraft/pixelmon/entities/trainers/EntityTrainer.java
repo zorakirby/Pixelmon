@@ -55,7 +55,7 @@ public class EntityTrainer extends EntityCreature {
 			return;
 		}
 		dataWatcher.updateObject(25, info.level);
-		if (dataWatcher.getWatchableObjectString(4) == "")
+		if (dataWatcher.getWatchableObjectString(4).equals(""))
 			dataWatcher.updateObject(4, info.model);
 		dataWatcher.updateObject(26, info.name);
 		health = 100;

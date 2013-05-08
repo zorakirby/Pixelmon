@@ -130,8 +130,10 @@ public class PokeballManager {
 	}
 
 	public void onPlayerDC(EntityPlayer player) {
+		if (player == null)
+			return;
 		for (int i = 0; i < playerPokemonList.size(); i++) {
-			if (playerPokemonList.get(i).userName == player.username) {
+			if (playerPokemonList.get(i).userName.equals(player.username)) {
 				savePlayer(playerPokemonList.get(i));
 				playerPokemonList.remove(i);
 				break;

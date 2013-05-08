@@ -107,6 +107,8 @@ public class ComputerManager {
 	}
 
 	public void onPlayerDC(EntityPlayer player) {
+		if (player == null)
+			return;
 		for (int i = 0; i < playerComputerList.size(); i++) {
 			if (playerComputerList.get(i).player == player) {
 				savePlayer(playerComputerList.get(i));

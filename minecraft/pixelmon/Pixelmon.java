@@ -1,13 +1,11 @@
 package pixelmon;
 
 import java.io.File;
-import java.util.Random;
 
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,8 +22,6 @@ import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
-import pixelmon.structure.StructureRegistry;
-import pixelmon.structure.worldGen.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
@@ -53,7 +49,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "2.1.3")
+@Mod(modid = "Pixelmon", name = "Pixelmon", version = "2.2.0.0")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
@@ -83,7 +79,7 @@ public class Pixelmon {
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
 
-		event.getModMetadata().version = "2.1.3";
+		event.getModMetadata().version = "2.2.0.0";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
@@ -110,9 +106,9 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 
-		StructureRegistry.loadStructures(event.getSide());
+		//StructureRegistry.loadStructures(event.getSide());
 		
-		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);

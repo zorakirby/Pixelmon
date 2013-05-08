@@ -158,7 +158,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 				}
 			}
 		}
-		fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency() + ""), -29, 154, 0xFFFFFF);
+		//fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency() + ""), -29, 154, 0xFFFFFF);
 
 		fontRenderer.setUnicodeFlag(false);
 		RenderHelper.disableStandardItemLighting();

@@ -20,7 +20,6 @@ import pixelmon.database.DatabaseHelper;
 public class DownloadHelper {
 
 	public static String readFile(String url) {
-		StringBuffer val = new StringBuffer();
 		try {
 			byte[] array = new byte[4096];
 			RTFEditorKit rtfParser = new RTFEditorKit();

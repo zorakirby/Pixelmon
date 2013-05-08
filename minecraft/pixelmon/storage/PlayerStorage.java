@@ -25,7 +25,7 @@ import pixelmon.storage.PokeballManager.PokeballManagerMode;
 
 public class PlayerStorage {
 	public NBTTagCompound[] partyPokemon = new NBTTagCompound[6];
-	private static int pokeDollars = 0;
+	private int pokeDollars = 0;
 	private static final int carryLimit = 6;
 	public EntityPlayerMP player;
 	public EntityTrainer trainer;
@@ -48,11 +48,11 @@ public class PlayerStorage {
 		this.trainer = trainer;
 	}
 
-	public static int getCurrency() {
+	public int getCurrency() {
 		return pokeDollars;
 	}
 
-	public static void setCurrency(int par1) {
+	public void setCurrency(int par1) {
 		pokeDollars = par1;
 		if (pokeDollars >= 999999) {
 			pokeDollars = 999999;

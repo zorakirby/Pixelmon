@@ -134,12 +134,12 @@ public class TileEntityTradeMachine extends TileEntity {
 	}
 
 	public void removePlayer(Player player) {
-		if (player1 == player) {
+		if (player1 == (EntityPlayer) player) {
 			player1 = player2;
 			player2 = null;
 			playerCount--;
 			pos2 = -1;
-		} else if (player2 == player) {
+		} else if (player2 == (EntityPlayer) player) {
 			player2 = null;
 			playerCount--;
 			pos2 = -1;
@@ -188,5 +188,26 @@ public class TileEntityTradeMachine extends TileEntity {
 			}
 		} catch (Exception e) {
 		}
+	}
+
+	@Override
+	public void updateEntity() {
+		super.updateEntity();
+		boolean playerRemoved = false;
+		int count = 0;
+
+		if (player1 == null && playerCount > 0) {
+			player1 = player2;
+			player2 = null;
+			playerCount--;
+			pos2 = -1;
+		} else if (player2 == null && playerCount > 1) {
+			playerCount--;
+			pos2 = -1;
+		}
+
+		if (playerCount == 1)
+			((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createStringPacket(EnumPackets.RegisterTrader, ""));
+
 	}
 }
