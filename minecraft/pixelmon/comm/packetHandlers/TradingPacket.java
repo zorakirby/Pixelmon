@@ -29,9 +29,9 @@ public class TradingPacket extends PacketHandlerBase {
 			int pos = dataStream.readInt();
 
 			TileEntityTradeMachine te = TradingRegistry.getTileEntity((EntityPlayer) player);
-			if (te.player1 == player) {
+			if (te.player1 == (EntityPlayer)player) {
 				te.setPos1(pos);
-			} else if (te.player2 == player) {
+			} else if (te.player2 == (EntityPlayer)player) {
 				te.setPos2(pos);
 			}
 		} else if (index == EnumPackets.DeRegisterTrader.getIndex()) {

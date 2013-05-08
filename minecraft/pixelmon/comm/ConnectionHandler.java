@@ -52,14 +52,15 @@ public class ConnectionHandler implements IConnectionHandler {
 	public void connectionClosed(INetworkManager manager) {
 		if (manager instanceof TcpConnection) {
 			TcpConnection tcpConnection = (TcpConnection) manager;
-			Field f = tcpConnection.getClass().getFields()[13];
+			Field f = tcpConnection.getClass().getDeclaredFields()[13];
+			f.setAccessible(true);
 			NetHandler netHandler = null;
 			try {
 				netHandler = (NetHandler) f.get(tcpConnection);
+				PixelmonStorage.onPlayerDC(netHandler.getPlayer());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			PixelmonStorage.onPlayerDC(netHandler.getPlayer());
 		}
 	}
 

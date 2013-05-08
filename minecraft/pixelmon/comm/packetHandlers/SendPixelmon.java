@@ -20,10 +20,9 @@ import pixelmon.storage.PlayerNotLoadedException;
 import cpw.mods.fml.common.network.Player;
 
 public class SendPixelmon extends PacketHandlerBase {
-	public static HashMap<EntityPlayer, EntityPokeBall> playerPokeballs;
+	public static HashMap<EntityPlayer, EntityPokeBall> playerPokeballs = new HashMap<EntityPlayer, EntityPokeBall>();
 
 	public SendPixelmon() {
-		playerPokeballs = new HashMap<EntityPlayer, EntityPokeBall>();
 		packetsHandled.add(EnumPackets.SendPokemon);
 	}
 
@@ -48,7 +47,7 @@ public class SendPixelmon extends PacketHandlerBase {
 				boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
 				ChatHandler.sendChat(player, "You sent out " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");
 
-				player.worldObj.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / ((new Random()).nextFloat() * 0.4F + 0.8F));
+				player.worldObj.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (pokemon.worldObj.rand.nextFloat() * 0.4F + 0.8F));
 				player.worldObj.spawnEntityInWorld(pokeball);
 			} else if (PixelmonStorage.PokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
 				boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();

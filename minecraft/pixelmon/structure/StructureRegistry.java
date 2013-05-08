@@ -25,7 +25,7 @@ public class StructureRegistry {
 			f = new File(Minecraft.getMinecraftDir() + "/resources/pixelmon/structures/standAlone");
 		else if (side == Side.SERVER)
 			f = new File(MinecraftServer.getServer().getFolderName() + "/resources/pixelmon/structures/standAlone");
-		if (!f.isDirectory()) {
+		if (f!=null && !f.isDirectory()) {
 			System.out.println("Standalone structures directory is corrupted");
 			return;
 		}

@@ -167,7 +167,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				}
 			}
 		}
-		this.fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency() + ""), -29, 154, 0xFFFFFF);
+		//this.fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency() + ""), -29, 154, 0xFFFFFF);
 
 		fontRenderer.setUnicodeFlag(false);
 		RenderHelper.disableStandardItemLighting();

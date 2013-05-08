@@ -21,7 +21,7 @@ public class ItemPotion extends PixelmonItem {
 		if (this.type.getHealAmount() != 0) {
 			return this.type.getHealAmount();
 		} else if (this.type.getHealPercent() != 0) {
-			return (int) Math.ceil(userPokemon.stats.HP * this.type.getHealPercent() / 100);
+			return (int) Math.ceil(((double)userPokemon.stats.HP) * this.type.getHealPercent() / 100);
 		} else {
 			return 0;
 		}

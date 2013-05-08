@@ -1,13 +1,11 @@
 package pixelmon;
 
 import java.io.File;
-import java.util.Random;
 
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,8 +22,6 @@ import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
-import pixelmon.structure.StructureRegistry;
-import pixelmon.structure.worldGen.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;

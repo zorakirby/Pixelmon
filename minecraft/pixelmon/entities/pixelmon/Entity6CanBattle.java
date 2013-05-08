@@ -187,7 +187,6 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		moveset.readFromNBT(nbt);
 		int statusCount = 0;
 		statusCount = nbt.getShort("EffectCount");
-		EffectParser e = new EffectParser();
 		for (int i = 0; i < statusCount; i++) {
 			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Effect" + i));
 			status.add(s.restoreFromNBT(nbt));

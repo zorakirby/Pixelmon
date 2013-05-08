@@ -35,7 +35,7 @@ public class GuiChooseStarter extends GuiContainer {
 		String pixelmonName = starterList[button.id];
 		Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, button.id);
 		PacketDispatcher.sendPacketToServer(packet);
-		PlayerStorage.setCurrency(3000);
+		//PlayerStorage.setCurrency(3000);
 		mc.thePlayer.closeScreen();
 	}
 

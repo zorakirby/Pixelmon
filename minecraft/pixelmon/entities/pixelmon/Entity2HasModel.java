@@ -68,7 +68,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 
 					}
 				}
-				ModelObj model = new ModelObj(objects);
+				//ModelObj model = new ModelObj(objects);
 			}
 		}
 	}
