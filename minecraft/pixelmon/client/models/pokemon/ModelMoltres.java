@@ -532,11 +532,11 @@ public class ModelMoltres extends PixelmonModelBase
       wr3s3.mirror = true;
       setRotation(wr3s3, -0.0698132F, 0F, 0F);
       PixelmonModelRenderer  wr4s3 = new PixelmonModelRenderer(this, 19, 49);
-      wr4s3.addBox(-15F, 0F, -0.5F, 15, 0, 15);
+      wr4s3.addBox(0F, 0F, -0.5F, 15, 0, 15);
       wr4s3.setRotationPoint(-35.9F, 0.1F, -3F);
       wr4s3.setTextureSize(64, 64);
       wr4s3.mirror = true;
-      setRotation(wr4s3, -0.0698132F, 0F, 0F);
+      setRotation(wr4s3, 0.0698132F, 0F, 3.14159265F);
       RightWing.addChild(wr1s1);
       RightWing.addChild(wr2s1);
       RightWing.addChild(wr3s1);
