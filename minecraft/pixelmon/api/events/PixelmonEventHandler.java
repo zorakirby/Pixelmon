@@ -2,6 +2,8 @@ package pixelmon.api.events;
 
 import java.util.ArrayList;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 public class PixelmonEventHandler {
 	private static ArrayList<IPixelmonEventHandler> eventHandlers = new ArrayList<IPixelmonEventHandler>();
 	
@@ -13,9 +15,9 @@ public class PixelmonEventHandler {
 		eventHandlers.remove(e);
 	}
 
-	public static void fireEvent(EventType e){
+	public static void fireEvent(EventType e, EntityPlayer player){
 		for (int i =0; i < eventHandlers.size(); i++){
-			eventHandlers.get(i).eventFired(e);
+			eventHandlers.get(i).eventFired(e, player);
 		}
 	}
 }

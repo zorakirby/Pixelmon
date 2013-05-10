@@ -141,7 +141,7 @@ public class EntityTrainer extends EntityCreature {
 	public void loseBattle(EntityLiving entityLiving) {
 		if (entityLiving instanceof EntityPlayer){
 			ChatHandler.sendBattleMessage(entityLiving, info.loseMessage);
-			PixelmonEventHandler.fireEvent(EventType.BeatTrainer);
+			PixelmonEventHandler.fireEvent(EventType.BeatTrainer, (EntityPlayer)entityLiving);
 		}
 	}
 
