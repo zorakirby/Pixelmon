@@ -606,8 +606,8 @@ public class ModelPinsir extends PixelmonModelBase {
 		LeftArm.addChild(leftclaw1);
 		Body.addChild(LeftArm);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 90, 90, 1);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 90, 90, 1);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 1, 1);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 1, 1);
 
 		float legspeed = 0.5F;
 		float legRotationLimit = 1.4F;
