@@ -588,8 +588,8 @@ public class ModelGolduck extends PixelmonModelBase {
 
 		ModuleHead headModule = new ModuleHead(Head);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 90, 90, 1);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 90, 90, 1);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 90, 1, 1);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 90, 1, 1);
 
 		float legspeed = 0.35F;
 		float legRotationLimit = 0.7F;
