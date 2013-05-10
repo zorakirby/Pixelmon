@@ -854,7 +854,7 @@ public class ModelMoltres extends PixelmonModelBase
       ModuleHead headModule = new ModuleHead(Head);
 
 	    ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
-				90, 0.25F, 0.1F);
+				90, 0.13F, 0.1F);
 		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
 				90, 0.13F, 0.1F);
 
