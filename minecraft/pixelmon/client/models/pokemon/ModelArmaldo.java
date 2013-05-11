@@ -15,6 +15,7 @@ import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
 public class ModelArmaldo extends PixelmonModelBase {
@@ -524,9 +525,10 @@ public class ModelArmaldo extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
-
+		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .2F, .05F, legspeed);
+		
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,
-				leftLegModule, rightLegModule, null);
+				leftLegModule, rightLegModule, tailModule);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,
