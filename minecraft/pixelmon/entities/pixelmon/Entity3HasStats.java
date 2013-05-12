@@ -3,7 +3,6 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -128,7 +127,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void onDeath(DamageSource par1DamageSource) {
 		if (getOwner() != null) {
 			friendship.onFaint();
-			PixelmonEventHandler.fireEvent(EventType.PokemonFaint, (EntityPlayer)getOwner());
+			PixelmonEventHandler.fireEvent(EventType.PokemonFaint);
 		}
 		super.onDeath(par1DamageSource);
 	}

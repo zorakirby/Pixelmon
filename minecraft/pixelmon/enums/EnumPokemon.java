@@ -102,6 +102,7 @@ public enum EnumPokemon {
 	Nidoking("Nidoking"),
 	Nidoranfemale("Nidoranfemale"),
 	//NidoranMale("NidoranMale"),
+	Nidorina("Nidorina"),
 	Nidorino("Nidorino"),
 	Ninetales("Ninetales"),
 	Numel("Numel"),

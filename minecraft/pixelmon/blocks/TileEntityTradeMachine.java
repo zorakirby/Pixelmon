@@ -22,10 +22,7 @@ import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPokemon;
-import pixelmon.pokedex.Pokedex;
-import pixelmon.pokedex.Pokedex.DexRegisterStatus;
 import pixelmon.storage.PixelmonStorage;
-import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
 
 public class TileEntityTradeMachine extends TileEntity {
@@ -165,12 +162,6 @@ public class TileEntityTradeMachine extends TileEntity {
 			NBTTagCompound pokemon2 = storage2.getNBT(storage2.getIDFromPosition(pos2));
 			storage1.changePokemon(pos1, pokemon2);
 			storage2.changePokemon(pos2, pokemon1);
-			Pokedex pokedex1 = storage1.pokedex;
-			Pokedex pokedex2 = storage2.pokedex;
-			pokedex1.set(Pokedex.nameToID(pokemon1.getName()), DexRegisterStatus.caught);
-			pokedex1.sendToPlayer((EntityPlayerMP) pokedex1.owner);
-			pokedex2.set(Pokedex.nameToID(pokemon2.getName()), DexRegisterStatus.caught);
-			pokedex2.sendToPlayer((EntityPlayerMP) pokedex2.owner);
 			player1.closeScreen();
 			player2.closeScreen();
 			playerCount = 0;
