@@ -128,6 +128,7 @@ public class GuiBattle extends GuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawImageQuad(width - 120, height - (guiHeight + 45), 120, 45, 0, 0, 120f / 128f, 45f / 64f);
 		PixelmonDataPacket userPokemon = ClientBattleManager.getUserPokemonPacket();
+		if (userPokemon==null) return;
 		String name = userPokemon.nickname.equals("") ? userPokemon.name : userPokemon.nickname;
 		drawString(fontRenderer, name, width - 113, height - (guiHeight + 37), 0xFFFFFF);
 		mc.renderEngine.bindTexture("/pixelmon/gui/pokemonInfoP1.png");
