@@ -15,6 +15,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import pixelmon.api.events.EventType;
+import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
@@ -479,7 +481,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private void catchPokemon() {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-
+			PixelmonEventHandler.fireEvent(EventType.CapturePokemon);
 			spawnCaptureParticles();
 			setIsCaptured(true);
 			waitTime = 0;

@@ -5,11 +5,14 @@ import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import pixelmon.api.events.EventType;
+import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -150,6 +153,8 @@ public class BattleController {
 		for (BattleParticipant p : participants) {
 			p.updatePokemon();
 			if (p.getIsFaintedOrDead()) {
+				if (p instanceof WildPixelmonParticipant && otherParticipant(p) instanceof PlayerParticipant)
+					PixelmonEventHandler.fireEvent(EventType.BeatWildPokemon);
 				String name = p.currentPokemon().getNickname();
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player)
@@ -316,7 +321,7 @@ public class BattleController {
 		paused = false;
 	}
 
-	public Attack getLastMoveUsed(){
+	public Attack getLastMoveUsed() {
 		return lastMoveUsed;
 	}
 }

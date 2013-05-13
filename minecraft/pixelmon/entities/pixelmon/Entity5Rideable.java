@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import pixelmon.api.events.EventType;
+import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
@@ -74,6 +76,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 							player.mountEntity(this);
 							tasks.taskEntries.clear();
 						}
+						PixelmonEventHandler.fireEvent(EventType.RidePokemon);
 						return true;
 					}
 					return false;

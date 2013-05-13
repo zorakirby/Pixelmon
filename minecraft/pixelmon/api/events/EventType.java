@@ -1,5 +1,5 @@
 package pixelmon.api.events;
 
 public enum EventType {
-	PokemonFaint, BeatTrainer;
+	PokemonFaint, BeatTrainer, BeatWildPokemon, CapturePokemon, RidePokemon;
 }
