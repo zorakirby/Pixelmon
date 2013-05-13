@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import pixelmon.DownloadHelper;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -112,6 +113,17 @@ public class ComputerManager {
 		for (int i = 0; i < playerComputerList.size(); i++) {
 			if (playerComputerList.get(i).player == player) {
 				savePlayer(playerComputerList.get(i));
+				playerComputerList.remove(i);
+				break;
+			}
+		}
+	}
+
+	public void playerLoggedIn(EntityPlayerMP player) {
+		if (player == null)
+			return;
+		for (int i = 0; i < playerComputerList.size(); i++) {
+			if (playerComputerList.get(i).player == player) {
 				playerComputerList.remove(i);
 				break;
 			}

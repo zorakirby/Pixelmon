@@ -26,6 +26,8 @@ public class ConnectionHandler implements IConnectionHandler {
 				((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
 		} catch (PlayerNotLoadedException e) {
 		}
+		
+		PixelmonStorage.playerLoggedIn((EntityPlayerMP)player);
 	}
 
 	@Override

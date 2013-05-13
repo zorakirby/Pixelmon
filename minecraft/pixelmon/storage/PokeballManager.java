@@ -140,4 +140,15 @@ public class PokeballManager {
 			}
 		}
 	}
+
+	public void playerLoggedIn(EntityPlayerMP player) {
+		if (player == null)
+			return;
+		for (int i = 0; i < playerPokemonList.size(); i++) {
+			if (playerPokemonList.get(i).userName.equals(player.username)) {
+				playerPokemonList.remove(i);
+				break;
+			}
+		}
+	}
 }
