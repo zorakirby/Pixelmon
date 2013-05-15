@@ -11,6 +11,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
@@ -69,8 +70,10 @@ public class PlayerParticipant extends BattleParticipant {
 					i--;
 				}
 			} catch (Exception exc) {
-				System.out.println("Error in clearsOnBattleEnd for " + currentPixelmon.status.get(i).type.toString());
-				System.out.println(exc.getStackTrace());
+				if (PixelmonConfig.printErrors) {
+					System.out.println("Error in clearsOnBattleEnd for " + currentPixelmon.status.get(i).type.toString());
+					System.out.println(exc.getStackTrace());
+				}
 			}
 		}
 		currentPixelmon.EndBattle();

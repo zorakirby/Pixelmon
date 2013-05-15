@@ -15,6 +15,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.items.PixelmonItem;
 import cpw.mods.fml.common.network.Player;
@@ -211,8 +212,10 @@ public class BattleController {
 						break;
 					}
 				} catch (Exception exc) {
+					if (PixelmonConfig.printErrors){
 					System.out.println("Error calculating canAttackThisTurn for " + e.type.toString());
 					System.out.println(exc.getStackTrace());
+					}
 				}
 			}
 

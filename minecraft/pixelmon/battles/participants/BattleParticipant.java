@@ -8,6 +8,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class BattleParticipant {
@@ -84,8 +85,10 @@ public abstract class BattleParticipant {
 				s.applyRepeatedEffect(currentPokemon(), opponent.currentPokemon());
 				s.turnTick(currentPokemon(), opponent.currentPokemon());
 			} catch (Exception e) {
-				System.out.println("Error calculating turnTick for " + s.type.toString());
-				System.out.println(e.getStackTrace());
+				if (PixelmonConfig.printErrors) {
+					System.out.println("Error calculating turnTick for " + s.type.toString());
+					System.out.println(e.getStackTrace());
+				}
 			}
 		}
 	}

@@ -25,6 +25,7 @@ import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
@@ -46,6 +47,7 @@ public class Attack {
 	public int pp;
 	public int ppBase;
 	public boolean STAB;
+
 	public Attack(int attackIndex, String moveName, ResultSet rs) throws SQLException {
 		if (fullAttackList[attackIndex] == null) {
 			AttackBase a = new AttackBase(attackIndex, moveName, rs);
@@ -74,8 +76,10 @@ public class Attack {
 				if (e.stopsIncomingAttack(user, target, this))
 					return;
 			} catch (Exception exc) {
-				System.out.println("Error calculating stopsIncomingAttack for " + e.type.toString() + " for attack " + baseAttack.attackName);
-				System.out.println(exc.getStackTrace());
+				if (PixelmonConfig.printErrors) {
+					System.out.println("Error calculating stopsIncomingAttack for " + e.type.toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
+				}
 			}
 
 		}
@@ -85,8 +89,10 @@ public class Attack {
 				if (!e.canAttackThisTurn(user, target))
 					return;
 			} catch (Exception exc) {
-				System.out.println("Error calculating canAttackThisTurn for " + e.type.toString() + " for attack " + baseAttack.attackName);
-				System.out.println(exc.getStackTrace());
+				if (PixelmonConfig.printErrors) {
+					System.out.println("Error calculating canAttackThisTurn for " + e.type.toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
+				}
 			}
 		}
 
@@ -98,8 +104,10 @@ public class Attack {
 				if (e.hasSpecialAccuracyEffect())
 					accuracy = e.getAccuracy(user, target);
 			} catch (Exception exc) {
-				System.out.println("Error calculating hasSpecialAccuracyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-				System.out.println(exc.getStackTrace());
+				if (PixelmonConfig.printErrors) {
+					System.out.println("Error calculating hasSpecialAccuracyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
+				}
 			}
 		}
 
@@ -112,8 +120,10 @@ public class Attack {
 					try {
 						e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 					} catch (Exception exc) {
-						System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-						System.out.println(exc.getStackTrace());
+						if (PixelmonConfig.printErrors) {
+							System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+							System.out.println(exc.getStackTrace());
+						}
 					}
 				} else if (e instanceof StatusApplierBase) {
 					if (target.status.size() > 0) {
@@ -123,16 +133,20 @@ public class Attack {
 								if (!et.stopsStatusChange())
 									e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 							} catch (Exception exc) {
-								System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-								System.out.println(exc.getStackTrace());
+								if (PixelmonConfig.printErrors) {
+									System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+									System.out.println(exc.getStackTrace());
+								}
 							}
 						}
 					} else {
 						try {
 							e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 						} catch (Exception exc) {
-							System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-							System.out.println(exc.getStackTrace());
+							if (PixelmonConfig.printErrors) {
+								System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+								System.out.println(exc.getStackTrace());
+							}
 						}
 					}
 				}
@@ -198,8 +212,10 @@ public class Attack {
 							e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 					}
 				} catch (Exception exc) {
-					System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-					System.out.println(exc.getStackTrace());
+					if (PixelmonConfig.printErrors) {
+						System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+						System.out.println(exc.getStackTrace());
+					}
 				}
 			}
 		} else {
@@ -210,8 +226,10 @@ public class Attack {
 				try {
 					e.ApplyMissEffect(user, target);
 				} catch (Exception exc) {
-					System.out.println("Error in applyMissEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-					System.out.println(exc.getStackTrace());
+					if (PixelmonConfig.printErrors) {
+						System.out.println("Error in applyMissEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+						System.out.println(exc.getStackTrace());
+					}
 				}
 			}
 		}
@@ -273,8 +291,10 @@ public class Attack {
 			try {
 				Damage = e.adjustDamage(this, Damage, user, target, crit);
 			} catch (Exception exc) {
-				System.out.println("Error in adjustDamage for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-				System.out.println(exc.getStackTrace());
+				if (PixelmonConfig.printErrors) {
+					System.out.println("Error in adjustDamage for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
+				}
 			}
 		}
 		return (int) (Damage);
@@ -287,8 +307,8 @@ public class Attack {
 					.getPacket());
 		}
 	}
-	
-	public boolean getDisabled(){
+
+	public boolean getDisabled() {
 		return disabled;
 	}
 
@@ -347,19 +367,17 @@ public class Attack {
 
 	public static Attack getWhichMoveIsBest(List<Attack> moves, ArrayList<EnumType> types, EntityPixelmon releasedPokemon, EntityPixelmon entityPixelmon) {
 		List<Attack> usableMoves = new ArrayList<Attack>();
-		for(Attack a : moves){
-			if(!a.getDisabled() && a.pp > 0)
+		for (Attack a : moves) {
+			if (!a.getDisabled() && a.pp > 0)
 				usableMoves.add(a);
 		}
-		if(usableMoves.size() == 0)
-		{
+		if (usableMoves.size() == 0) {
 			return DatabaseMoves.getAttack("Struggle");
-		}
-		else{
-		int i1 = 0;
-		Random r = new Random();
-		i1 = RandomHelper.getRandomNumberBetween(0, usableMoves.size()-1);
-		return usableMoves.get(i1);
+		} else {
+			int i1 = 0;
+			Random r = new Random();
+			i1 = RandomHelper.getRandomNumberBetween(0, usableMoves.size() - 1);
+			return usableMoves.get(i1);
 		}
 	}
 
@@ -375,7 +393,9 @@ public class Attack {
 		else if (categoryString.equalsIgnoreCase("Status"))
 			return ATTACK_STATUS;
 		else {
-			System.out.println("Unknown Attack Category: " + categoryString);
+			if (PixelmonConfig.printErrors) {
+				System.out.println("Unknown Attack Category: " + categoryString);
+			}
 			return -1;
 		}
 	}
@@ -395,8 +415,10 @@ public class Attack {
 				if (e.doesPersist(entityPixelmon))
 					return true;
 			} catch (Exception exc) {
-				System.out.println("Error in doesPersist for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-				System.out.println(exc.getStackTrace());
+				if (PixelmonConfig.printErrors) {
+					System.out.println("Error in doesPersist for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
+				}
 			}
 
 		}
@@ -411,8 +433,10 @@ public class Attack {
 					if (((MultiTurnSpecialAttackBase) e).cantMiss(user))
 						return true;
 			} catch (Exception exc) {
-				System.out.println("Error in cantMiss for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-				System.out.println(exc.getStackTrace());
+				if (PixelmonConfig.printErrors) {
+					System.out.println("Error in cantMiss for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+					System.out.println(exc.getStackTrace());
+				}
 			}
 		}
 		return false;

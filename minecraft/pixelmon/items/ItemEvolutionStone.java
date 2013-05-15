@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.database.EvolutionInfo.InfoMode;
@@ -31,7 +32,8 @@ public class ItemEvolutionStone extends PixelmonItem {
 				if (e.evolutionStone == i.getType()) {
 					String evolveTo = e.pokemonName;
 					if (evolveTo == null) {
-						System.out.println(e.pokemonName + " isn't coded yet");
+						if (PixelmonConfig.printErrors)
+							System.out.println(e.pokemonName + " isn't coded yet");
 						return false;
 					}
 					pixelmon.evolve(evolveTo);

@@ -3,6 +3,7 @@ package pixelmon.battles.participants;
 import net.minecraft.entity.EntityLiving;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.controller.BattleController;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class WildPixelmonParticipant extends BattleParticipant {
@@ -78,7 +79,8 @@ public class WildPixelmonParticipant extends BattleParticipant {
 		if (pixelmon.moveset.size() == 0) {
 			pixelmon.loadMoveset();
 			if (pixelmon.moveset.size() == 0) {
-				System.out.println("Couldn't load " + pixelmon.getName() + "'s moves");
+				if (PixelmonConfig.printErrors)
+					System.out.println("Couldn't load " + pixelmon.getName() + "'s moves");
 				return false;
 			}
 		}

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import pixelmon.DownloadHelper;
+import pixelmon.config.PixelmonConfig;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -46,9 +47,11 @@ public class ComputerManager {
 			try {
 				p.readFromNBT(CompressedStreamTools.read(new DataInputStream(new FileInputStream(playerFile))));
 			} catch (FileNotFoundException e) {
-				System.out.println("Couldn't read player data file for " + player.username);
+				if (PixelmonConfig.printErrors)
+					System.out.println("Couldn't read player data file for " + player.username);
 			} catch (IOException e) {
-				System.out.println("Couldn't read player data file for " + player.username);
+				if (PixelmonConfig.printErrors)
+					System.out.println("Couldn't read player data file for " + player.username);
 			}
 			playerComputerList.add(p);
 		} else {

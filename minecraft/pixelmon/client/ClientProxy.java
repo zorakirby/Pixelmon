@@ -52,6 +52,7 @@ import pixelmon.client.render.RenderTileEntityTradingMachine;
 import pixelmon.client.render.RenderTileFossilCleaner;
 import pixelmon.client.render.RenderTileFossilMachine;
 import pixelmon.client.render.RenderTrainer;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.trainers.EntityTrainer;
@@ -125,16 +126,21 @@ public class ClientProxy extends CommonProxy {
 						break;
 					}
 				} catch (Exception e) {
-					System.out.println("Failed to construct model for " + name);
-					e.printStackTrace();
+					if (PixelmonConfig.printErrors) {
+						System.out.println("Failed to construct model for " + name);
+						e.printStackTrace();
+					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				if (PixelmonConfig.printErrors) {
+					e.printStackTrace();
+				}
 			}
 		}
 
 		if (model == null)
-			System.out.println("Can't find model for " + name);
+			if (PixelmonConfig.printErrors)
+				System.out.println("Can't find model for " + name);
 		return model;
 	}
 
@@ -148,10 +154,12 @@ public class ClientProxy extends CommonProxy {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Can't find Model for " + name);
+			if (PixelmonConfig.printErrors)
+				System.out.println("Can't find Model for " + name);
 		}
 		if (model == null)
-			System.out.println("Can't find Model for " + name);
+			if (PixelmonConfig.printErrors)
+				System.out.println("Can't find Model for " + name);
 		return model;
 	}
 
@@ -164,12 +172,15 @@ public class ClientProxy extends CommonProxy {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Error in Model for " + name);
-			System.out.println(e.getMessage());
+			if (PixelmonConfig.printErrors) {
+				System.out.println("Error in Model for " + name);
+				System.out.println(e.getMessage());
+			}
 			return null;
 		}
 		if (model == null)
-			System.out.println("Can't find Model for " + name);
+			if (PixelmonConfig.printErrors)
+				System.out.println("Can't find Model for " + name);
 		return model;
 	}
 

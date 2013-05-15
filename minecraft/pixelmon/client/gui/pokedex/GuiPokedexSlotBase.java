@@ -237,7 +237,6 @@ public abstract class GuiPokedexSlotBase
     	//ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
         this.mouseX = mousePosX;
         this.mouseY = mousePosY;
-        //System.out.println(mouseX + ", " + mouseY);
         //this.drawBackground();
         int length = this.getSize();
         int posScrollBar = left + this.width;

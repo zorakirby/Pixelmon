@@ -10,7 +10,6 @@ public class Disable extends StatusBase {
 	int elapsedTurns = -1;
 	public Disable(Attack attack, int turns) {
 		super(StatusType.Disable, true, false, false);
-		System.out.println("running constructor");
 		disabledMove = attack;	
 		effectiveTurns = turns;
 	}

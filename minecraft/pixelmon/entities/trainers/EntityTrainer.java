@@ -17,6 +17,7 @@ import pixelmon.AI.AITrainerInBattle;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.SpawnLocation;
@@ -50,7 +51,8 @@ public class EntityTrainer extends EntityCreature {
 		pokemonStorage = new PlayerStorage(this);
 		info = DatabaseTrainers.GetTrainerInfo(name);
 		if (info == null) {
-			System.out.println("Database entry error/missing for trainer " + name);
+			if (PixelmonConfig.printErrors)
+				System.out.println("Database entry error/missing for trainer " + name);
 			setDead();
 			return;
 		}
@@ -139,9 +141,9 @@ public class EntityTrainer extends EntityCreature {
 	}
 
 	public void loseBattle(EntityLiving entityLiving) {
-		if (entityLiving instanceof EntityPlayer){
+		if (entityLiving instanceof EntityPlayer) {
 			ChatHandler.sendBattleMessage(entityLiving, info.loseMessage);
-			PixelmonEventHandler.fireEvent(EventType.BeatTrainer, (EntityPlayer)entityLiving);
+			PixelmonEventHandler.fireEvent(EventType.BeatTrainer, (EntityPlayer) entityLiving);
 		}
 	}
 

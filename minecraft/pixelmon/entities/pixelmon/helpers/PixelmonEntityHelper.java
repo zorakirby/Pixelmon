@@ -334,7 +334,6 @@
 //					if (e.evolutionStone == i.getType()) {
 //						EntityPixelmon evolveTo = (EntityPixelmon) PixelmonEntityList.createEntityByName(e.pokemonName, getOwner().worldObj);
 //						if (evolveTo == null) {
-//							System.out.println(e.pokemonName + " isn't coded yet");
 //							break;
 //						}
 //						evolve(evolveTo.helper);

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import cpw.mods.fml.relauncher.Side;
 
 import pixelmon.RandomHelper;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.enums.EnumBiomes;
 
 import net.minecraft.client.Minecraft;
@@ -25,7 +26,7 @@ public class StructureRegistry {
 			f = new File(Minecraft.getMinecraftDir() + "/resources/pixelmon/structures/standAlone");
 		else if (side == Side.SERVER)
 			f = new File(MinecraftServer.getServer().getFolderName() + "/resources/pixelmon/structures/standAlone");
-		if (f!=null && !f.isDirectory()) {
+		if (f != null && !f.isDirectory()) {
 			System.out.println("Standalone structures directory is corrupted");
 			return;
 		}
