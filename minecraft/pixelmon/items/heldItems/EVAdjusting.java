@@ -1,5 +1,6 @@
 package pixelmon.items.heldItems;
 
+import pixelmon.entities.pixelmon.stats.EVsStore;
 import pixelmon.enums.heldItems.EnumEvAdjustingItems;
 import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
