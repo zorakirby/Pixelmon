@@ -154,7 +154,7 @@ public class BattleController {
 			p.updatePokemon();
 			if (p.getIsFaintedOrDead()) {
 				if (p instanceof WildPixelmonParticipant && otherParticipant(p) instanceof PlayerParticipant)
-					PixelmonEventHandler.fireEvent(EventType.BeatWildPokemon);
+					PixelmonEventHandler.fireEvent(EventType.BeatWildPokemon, ((PlayerParticipant)otherParticipant(p)).player);
 				String name = p.currentPokemon().getNickname();
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player)

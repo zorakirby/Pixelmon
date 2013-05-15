@@ -76,7 +76,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 							player.mountEntity(this);
 							tasks.taskEntries.clear();
 						}
-						PixelmonEventHandler.fireEvent(EventType.RidePokemon);
+						PixelmonEventHandler.fireEvent(EventType.RidePokemon, player);
 						return true;
 					}
 					return false;

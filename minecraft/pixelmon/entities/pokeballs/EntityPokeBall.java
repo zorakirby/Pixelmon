@@ -481,7 +481,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private void catchPokemon() {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-			PixelmonEventHandler.fireEvent(EventType.CapturePokemon);
+			PixelmonEventHandler.fireEvent(EventType.CapturePokemon, (EntityPlayer)thrower);
 			spawnCaptureParticles();
 			setIsCaptured(true);
 			waitTime = 0;
