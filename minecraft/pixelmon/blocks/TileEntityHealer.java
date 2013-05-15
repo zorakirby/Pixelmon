@@ -9,6 +9,7 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import pixelmon.Pixelmon;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
@@ -28,6 +29,7 @@ public class TileEntityHealer extends TileEntity {
 
 	public void use(EntityPlayer player) {
 		try {
+
 			storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
 			this.player = player;
 			beingUsed = true;
@@ -67,6 +69,16 @@ public class TileEntityHealer extends TileEntity {
 						pokemonLastPlaced = i;
 						hasNextPokemon = true;
 						pokeballType[i] = EnumPokeballs.getFromIndex(storage.partyPokemon[i].getInteger("CaughtBall"));
+						try {
+							if (PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).EntityAlreadyExists(
+									storage.partyPokemon[i].getInteger("pixelmonID"), player.worldObj)) {
+								EntityPixelmon pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).getAlreadyExists(
+										storage.partyPokemon[i].getInteger("pixelmonID"), player.worldObj);
+								PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).retrieve(pixelmon);
+								pixelmon.catchInPokeball();
+							}
+						} catch (Exception e) {
+						}
 						break;
 					}
 				}
