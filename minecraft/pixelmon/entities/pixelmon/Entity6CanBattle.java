@@ -173,7 +173,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		for (int i = 0; i < status.size(); i++) {
 			try {
 				if (status.get(i) instanceof StatusPersist)
-					((StatusPersist) status.get(i)).writeToNBT(i, nbt);
+					((StatusPersist) status.get(i)).writeToNBT(status.get(i).type.index, nbt);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
