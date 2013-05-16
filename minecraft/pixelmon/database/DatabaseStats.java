@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.database.EvolutionInfo.InfoMode;
 import pixelmon.entities.pixelmon.stats.Aggression;
 import pixelmon.entities.pixelmon.stats.BaseStats;
@@ -63,55 +64,70 @@ public class DatabaseStats {
 					hasError = true;
 				}
 				if (hasError) {
-					System.out.println("Error in BaseStats " + "[" + error + "]" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in BaseStats " + "[" + error + "]" + " For Pokemon : " + name);
 				}
 				store.catchRate = rs.getInt("CatchRate");
 				if (rs.wasNull())
-					System.out.println("Error in CatchRate" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in CatchRate" + " For Pokemon : " + name);
 
 				store.malePercent = rs.getInt("MalePercent");
 				if (rs.wasNull())
-					System.out.println("Error in MalePercent" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in MalePercent" + " For Pokemon : " + name);
 
 				store.evolveLevel = rs.getInt("EvolveLevel");
 				if (rs.wasNull())
-					System.out.println("Error in EvolveLevel" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in EvolveLevel" + " For Pokemon : " + name);
 				store.evolveInto = EnumPokemon.get(rs.getString("EvolveInto"));
 				store.canFly = rs.getInt("CanFly") == 1;
 				if (rs.wasNull())
-					System.out.println("Error in CanFly" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in CanFly" + " For Pokemon : " + name);
 				store.doesHover = rs.getBoolean("DoesHover");
 				if (rs.wasNull())
-					System.out.println("Error in DoesHover" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in DoesHover" + " For Pokemon : " + name);
 				if (store.doesHover)
 					store.hoverHeight = 1;
 				store.height = rs.getFloat("Height");
 				if (rs.wasNull())
-					System.out.println("Error in Height" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in Height" + " For Pokemon : " + name);
 				store.width = rs.getFloat("Width");
 				if (rs.wasNull())
-					System.out.println("Error in Width" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in Width" + " For Pokemon : " + name);
 				store.length = rs.getFloat("Length");
 				if (rs.wasNull())
-					System.out.println("Error in Length" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in Length" + " For Pokemon : " + name);
 				store.type1 = EnumType.parseType(rs.getString("Type1"));
 				if (rs.wasNull())
-					System.out.println("Error in Type" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in Type" + " For Pokemon : " + name);
 				store.baseExp = rs.getInt("BaseExp");
 				if (rs.wasNull())
-					System.out.println("Error in BaseExp" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in BaseExp" + " For Pokemon : " + name);
 				store.experienceGroup = ExperienceGroup.getExperienceGroup(rs.getString("ExperienceGroup"));
 				if (rs.wasNull() || store.experienceGroup == null)
-					System.out.println("Error in ExperienceGroup" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in ExperienceGroup" + " For Pokemon : " + name);
 				store.nationalPokedexNumber = rs.getInt("NationalPokedexNumber");
 				if (rs.wasNull())
-					System.out.println("Error in NationalPokedexNumber" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in NationalPokedexNumber" + " For Pokemon : " + name);
 				store.spawnLevel = rs.getInt("SpawnLevel");
 				if (rs.wasNull())
-					System.out.println("Error in SpawnLevel" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in SpawnLevel" + " For Pokemon : " + name);
 				store.spawnLevelRange = rs.getInt("SpawnLevelRange");
 				if (rs.wasNull())
-					System.out.println("Error in SpawnLevelRange" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in SpawnLevelRange" + " For Pokemon : " + name);
 				store.isRideable = rs.getBoolean("IsRideable");
 				store.giScale = rs.getFloat("GIScale");
 				rs.getString("Type2");
@@ -119,7 +135,8 @@ public class DatabaseStats {
 					store.type2 = EnumType.parseType(rs.getString("Type2"));
 				store.aggression = new Aggression(rs.getString("Aggression"), name);
 				if (rs.wasNull())
-					System.out.println("Error in Aggression" + " For Pokemon : " + name);
+					if (PixelmonConfig.printErrors)
+						System.out.println("Error in Aggression" + " For Pokemon : " + name);
 				store.droppedItem = rs.getString("DroppedItem");
 				store.spawnConditions = SpawnConditions.ParseSpawnConditions(rs.getString("SpawnConditions"));
 				store.baseFriendship = rs.getInt("BaseFriendship");

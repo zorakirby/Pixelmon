@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import pixelmon.DownloadHelper;
+import pixelmon.config.PixelmonConfig;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -60,9 +61,11 @@ public class PokeballManager {
 			try {
 				p.readFromNBT(CompressedStreamTools.read(new DataInputStream(new FileInputStream(playerFile))));
 			} catch (FileNotFoundException e) {
+				if (PixelmonConfig.printErrors)
 				System.out.println("Couldn't read player data file for " + player.username);
 				throw new PlayerNotLoadedException();
 			} catch (IOException e) {
+				if (PixelmonConfig.printErrors)
 				System.out.println("Couldn't read player data file for " + player.username);
 				throw new PlayerNotLoadedException();
 			}
@@ -114,7 +117,8 @@ public class PokeballManager {
 			try {
 				loadPlayer(player);
 			} catch (Exception e) {
-				System.out.println("Failed to load player " + player.username);
+				if (PixelmonConfig.printErrors)
+					System.out.println("Failed to load player " + player.username);
 			}
 		}
 	}
@@ -135,6 +139,17 @@ public class PokeballManager {
 		for (int i = 0; i < playerPokemonList.size(); i++) {
 			if (playerPokemonList.get(i).userName.equals(player.username)) {
 				savePlayer(playerPokemonList.get(i));
+				playerPokemonList.remove(i);
+				break;
+			}
+		}
+	}
+
+	public void playerLoggedIn(EntityPlayerMP player) {
+		if (player == null)
+			return;
+		for (int i = 0; i < playerPokemonList.size(); i++) {
+			if (playerPokemonList.get(i).userName.equals(player.username)) {
 				playerPokemonList.remove(i);
 				break;
 			}

@@ -1,5 +1,7 @@
 package pixelmon.entities.pixelmon.stats;
 
+import pixelmon.config.PixelmonConfig;
+
 public class SwimmingParameters {
 	public int depthRangeStart;
 	public int depthRangeEnd;
@@ -10,7 +12,8 @@ public class SwimmingParameters {
 	public SwimmingParameters(String parameterString, String pokemonName) {
 		String[] splits = parameterString.split(";");
 		if (splits.length != 5)
-			System.out.println("[ERROR] SwimmingParameter Error for " + pokemonName);
+			if (PixelmonConfig.printErrors)
+				System.out.println("[ERROR] SwimmingParameter Error for " + pokemonName);
 		try {
 			depthRangeStart = Integer.parseInt(splits[0]);
 			depthRangeEnd = Integer.parseInt(splits[1]);
@@ -18,7 +21,8 @@ public class SwimmingParameters {
 			decayRate = Float.parseFloat(splits[3]);
 			refreshRate = Integer.parseInt(splits[4]);
 		} catch (Exception e) {
-			System.out.println("[ERROR] SwimmingParameter Error2 for " + pokemonName);
+			if (PixelmonConfig.printErrors)
+				System.out.println("[ERROR] SwimmingParameter Error2 for " + pokemonName);
 		}
 	}
 }

@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EnumCreatureType;
@@ -14,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import pixelmon.Pixelmon;
 import pixelmon.WorldHelper;
 import pixelmon.api.interactions.IInteraction;
@@ -143,8 +145,10 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
 		boolean[] conds = { true, true };
+		BiomeGenBase biome = worldObj.getBiomeGenForCoords(var1, var3);
 		if (baseStats.spawnConditions.length == 0)
-			if (blockId != Block.grass.blockID)
+			if (blockId != Block.grass.blockID || (biome == BiomeGenBase.jungle || biome == BiomeGenBase.jungleHills)
+					&& worldObj.getBlockMaterial(var1, var2, var3) != Material.leaves)
 				return false;
 		for (SpawnConditions s : baseStats.spawnConditions) {
 			if (s == SpawnConditions.Grass && blockId != Block.grass.blockID)
@@ -245,6 +249,5 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public ArrayList<String> getPreEvolutions() {
 		return DatabaseStats.getPreEvolutions(getName());
 	}
-	
 
 }

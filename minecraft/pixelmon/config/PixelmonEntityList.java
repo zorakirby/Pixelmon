@@ -61,7 +61,8 @@ public class PixelmonEntityList {
 		if (var2 != null) {
 			var2.readFromNBT(par0NBTTagCompound);
 		} else {
-			System.out.println("Skipping Entity with id " + par0NBTTagCompound.getString("id"));
+			if (PixelmonConfig.printErrors)
+				System.out.println("Skipping Entity with id " + par0NBTTagCompound.getString("id"));
 		}
 
 		return var2;
@@ -85,8 +86,8 @@ public class PixelmonEntityList {
 		for (EnumTrainers trainer : EnumTrainers.values()) {
 			String name = trainer.toString();
 			int rarity = DatabaseTrainers.getRarity(name);
-			double rardbl = (double)rarity;
-			rardbl *= ((double)PixelmonConfig.trainerRarityModifier)/100.0;
+			double rardbl = (double) rarity;
+			rardbl *= ((double) PixelmonConfig.trainerRarityModifier) / 100.0;
 			rarity = (int) rardbl;
 			if (rarity > 0)
 				SpawnRegistry.addSpawn(name, rarity, ClassType.Trainer);

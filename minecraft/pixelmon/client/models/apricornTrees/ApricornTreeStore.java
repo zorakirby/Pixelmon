@@ -2,14 +2,16 @@ package pixelmon.client.models.apricornTrees;
 
 import java.util.ArrayList;
 
+import pixelmon.config.PixelmonConfig;
 import pixelmon.enums.EnumApricornTrees;
 
 public class ApricornTreeStore {
 
 	private static ArrayList<ModelStageEnum> treeModels = new ArrayList<ModelStageEnum>();
 
-	private static final String[] modelList=new String[]{"ModelApricornTreeSprout", "ModelApricornTreeStage1", "ModelApricornTreeMiddle", "ModelApricornTreeStage2", "ModelApricornTreeStage3", "ModelApricornTreeFinal" };
-	
+	private static final String[] modelList = new String[] { "ModelApricornTreeSprout", "ModelApricornTreeStage1", "ModelApricornTreeMiddle",
+			"ModelApricornTreeStage2", "ModelApricornTreeStage3", "ModelApricornTreeFinal" };
+
 	public static ModelApricornTreeBase getModel(int stage) {
 		for (int i = 0; i < treeModels.size(); i++) {
 			if (treeModels.get(i).stage == stage) {
@@ -24,14 +26,15 @@ public class ApricornTreeStore {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Can't find Model for apricorn tree stage " + stage);
+			if (PixelmonConfig.printErrors)
+				System.out.println("Can't find Model for apricorn tree stage " + stage);
 		}
 		treeModels.add(new ModelStageEnum(stage, model));
 		return model;
 	}
 
 	public static String getTexture(EnumApricornTrees tree, int i) {
-		return "/pixelmon/texture/apricornTrees/apricornTree" + tree.toString()+"/" + modelList[i] + ".png";
+		return "/pixelmon/texture/apricornTrees/apricornTree" + tree.toString() + "/" + modelList[i] + ".png";
 	}
 
 }

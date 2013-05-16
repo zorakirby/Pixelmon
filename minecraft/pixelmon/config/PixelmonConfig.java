@@ -41,6 +41,7 @@ public class PixelmonConfig {
 	public static int idCamera = 202;
 
 	public static boolean allowPVPExperience = true;
+	public static boolean printErrors = false;
 
 	public static void loadConfig(Configuration configuration) {
 		config = configuration;
@@ -55,6 +56,7 @@ public class PixelmonConfig {
 		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
 		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled", true).getBoolean(true);
 		removeVanillaMusic = config.get("general", "Remove Minecraft Music", true).getBoolean(true);
+		printErrors = config.get("general", "Print Errors", false).getBoolean(false);
 		allowRiding = config.get("general", "Allow Riding", true).getBoolean(true);
 		allowPlanting = config.get("general", "Allow Planting", true).getBoolean(true);
 		allowPVPExperience = config.get("general", "Allow PVP Experience", true).getBoolean(true);

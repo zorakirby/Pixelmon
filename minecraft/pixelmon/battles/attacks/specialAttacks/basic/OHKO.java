@@ -28,9 +28,6 @@ public class OHKO extends SpecialAttackBase {
 		Random rand = new Random();
 		int x = rand.nextInt(100)+1;
 		
-		//System.out.println(x);
-		//System.out.println(chance);
-		
 		if(x < chance){
 		target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth());
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");

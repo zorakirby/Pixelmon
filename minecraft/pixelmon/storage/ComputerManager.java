@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import pixelmon.DownloadHelper;
+import pixelmon.config.PixelmonConfig;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -45,9 +47,11 @@ public class ComputerManager {
 			try {
 				p.readFromNBT(CompressedStreamTools.read(new DataInputStream(new FileInputStream(playerFile))));
 			} catch (FileNotFoundException e) {
-				System.out.println("Couldn't read player data file for " + player.username);
+				if (PixelmonConfig.printErrors)
+					System.out.println("Couldn't read player data file for " + player.username);
 			} catch (IOException e) {
-				System.out.println("Couldn't read player data file for " + player.username);
+				if (PixelmonConfig.printErrors)
+					System.out.println("Couldn't read player data file for " + player.username);
 			}
 			playerComputerList.add(p);
 		} else {
@@ -112,6 +116,17 @@ public class ComputerManager {
 		for (int i = 0; i < playerComputerList.size(); i++) {
 			if (playerComputerList.get(i).player == player) {
 				savePlayer(playerComputerList.get(i));
+				playerComputerList.remove(i);
+				break;
+			}
+		}
+	}
+
+	public void playerLoggedIn(EntityPlayerMP player) {
+		if (player == null)
+			return;
+		for (int i = 0; i < playerComputerList.size(); i++) {
+			if (playerComputerList.get(i).player == player) {
 				playerComputerList.remove(i);
 				break;
 			}

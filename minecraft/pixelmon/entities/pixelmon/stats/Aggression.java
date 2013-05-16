@@ -1,5 +1,7 @@
 package pixelmon.entities.pixelmon.stats;
 
+import pixelmon.config.PixelmonConfig;
+
 public class Aggression {
 	public int timid;
 	public int passive;
@@ -11,7 +13,8 @@ public class Aggression {
 		}
 		String[] splits = aggressionString.split(";");
 		if (splits.length != 3) {
-			System.out.println("Error in Aggression" + " For Pokemon : " + pixelmonName);
+			if (PixelmonConfig.printErrors)
+				System.out.println("Error in Aggression" + " For Pokemon : " + pixelmonName);
 			return;
 		}
 		timid = Integer.parseInt(splits[0]);

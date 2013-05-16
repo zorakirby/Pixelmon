@@ -1,6 +1,7 @@
 package pixelmon.storage;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class PixelmonStorage {
 	public static PokeballManager PokeballManager = new PokeballManager();
@@ -12,4 +13,10 @@ public class PixelmonStorage {
 		PokeballManager.onPlayerDC(player);
 		ComputerManager.onPlayerDC(player);
 	}
+
+	public static void playerLoggedIn(EntityPlayerMP player) {
+		PokeballManager.playerLoggedIn(player);
+		ComputerManager.playerLoggedIn(player);
+	}
 }
+
