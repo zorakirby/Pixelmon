@@ -5,7 +5,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.MathHelper;
 
-public class ModuleTailBasic extends ModuleTail {
+public class ModuleTailBasic extends Module {
 	
 	ModelRenderer tail;
 
