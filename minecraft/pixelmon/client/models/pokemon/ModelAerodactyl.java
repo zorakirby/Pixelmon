@@ -17,6 +17,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.bird.EnumWing;
 import pixelmon.client.models.animations.bird.ModuleWing;
+import pixelmon.client.models.animations.bird.ModuleWingComplex;
 import pixelmon.client.models.animations.bird.SkeletonBird;
 
 public class ModelAerodactyl extends PixelmonModelBase
@@ -619,10 +620,10 @@ public class ModelAerodactyl extends PixelmonModelBase
       
       ModuleHead headModule = new ModuleHead(HEAD);
 
-		ModuleWing rightWingModule = new ModuleWing(WINGR, EnumWing.Right,
-				90, 0.25F, 0.3F);
-		ModuleWing leftWingModule = new ModuleWing(WINGL, EnumWing.Left,
-				90, 0.25F, 0.3F);
+		ModuleWingComplex rightWingModule = new ModuleWingComplex(WINGR, EnumWing.Right,
+				90, 0.25F);
+		ModuleWingComplex leftWingModule = new ModuleWingComplex(WINGL, EnumWing.Left,
+				90, 0.25F);
 
 		skeleton = new SkeletonBird(BODY, headModule, leftWingModule,
 				rightWingModule, LEGL, LEGR);

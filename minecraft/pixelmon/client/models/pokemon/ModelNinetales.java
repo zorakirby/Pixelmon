@@ -719,15 +719,15 @@ public class ModelNinetales extends PixelmonModelBase
       ModuleHead headModule = new ModuleHead(Head);
 
 		float legspeed = 0.8F;
-		float legRotationLimit = 1.1F;
+		float legRotationLimit = 0.5F;
 		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .2F, .05F, legspeed);
 
-		//ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft, EnumPhase.OutPhase, legRotationLimit, legspeed);
-		//ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight, EnumPhase.OutPhase, legRotationLimit, legspeed);
-		//ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft, EnumPhase.OutPhase, legRotationLimit, legspeed);
-		//ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight, EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft, EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight, EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft, EnumPhase.OutPhase, legRotationLimit, legspeed);
+		ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight, EnumPhase.OutPhase, legRotationLimit, legspeed);
 
-		skeleton = new SkeletonQuadruped(Body, headModule, null, null, null, null, tailModule);
+		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule, frontlegRModule, backlegLModule, backlegRModule, tailModule);
 		
 		
   }

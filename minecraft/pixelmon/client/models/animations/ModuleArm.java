@@ -17,16 +17,16 @@ public class ModuleArm extends Module {
 	float ArmInitY;
 	float ArmInitZ;
 	float ArmDirection;
-	float ArmOrientation;
+	float ArmAxisRotation; //either 0 or 90
 	EnumArm ArmVariable;
 
-	public ModuleArm(ModelRenderer arm, EnumArm ArmVariable, float ArmOrientation, float ArmRotationLimit, float ArmSpeed) {
+	public ModuleArm(ModelRenderer arm, EnumArm ArmVariable, float ArmAxisRotation, float ArmRotationLimit, float ArmSpeed) {
 		this.arm = arm;
 		this.ArmSpeed = ArmSpeed;
 		this.ArmRotationLimit = ArmRotationLimit;
 		ArmInitY = arm.rotateAngleY;
 		ArmInitZ = arm.rotateAngleZ;
-		this.ArmOrientation = ArmOrientation;
+		this.ArmAxisRotation = ArmAxisRotation;
 		this.ArmVariable = ArmVariable;
 		if (ArmVariable == EnumArm.Right) {
 			ArmDirection = 1;
@@ -40,7 +40,7 @@ public class ModuleArm extends Module {
 	public void walk(EntityPixelmon entity, float f, float f1, float f2,
 			float f3, float f4) {
 		
-		if (ArmOrientation == 90) {
+		if (ArmAxisRotation == 90) {
 			arm.rotateAngleY = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
 					* ArmRotationLimit
 					* f1;
