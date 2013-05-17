@@ -35,6 +35,15 @@ public class WildPixelmonParticipant extends BattleParticipant {
 	}
 
 	@Override
+	public void StartBattle(BattleController bc, BattleParticipant opponent) {
+		super.StartBattle(bc, opponent);
+		for (int i = 0; i < 4; i++) {
+			if (pixelmon.moveset.get(i) != null)
+				pixelmon.moveset.get(i).setDisabled(false, pixelmon);
+		}
+	}
+	
+	@Override
 	public void EndBattle() {
 		pixelmon.EndBattle();
 		if (currentPokemon().isFainted || currentPokemon().isDead)
