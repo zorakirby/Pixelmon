@@ -225,8 +225,6 @@ public class BattleController {
 	}
 
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {
-
-		ChatHandler.sendChat(user.getOwner(), target.getOwner(), user.getNickname() + " tries to run away");
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
 		if (B > 255)

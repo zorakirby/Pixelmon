@@ -1,4 +1,4 @@
-package pixelmon.client.render;
+package pixelmon.client.render.tileEntities;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;

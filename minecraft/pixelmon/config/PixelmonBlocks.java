@@ -8,6 +8,7 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import pixelmon.blocks.BlockAnvil;
 import pixelmon.blocks.BlockBauxiteOre;
+import pixelmon.blocks.BlockEvolutionRock;
 import pixelmon.blocks.BlockEvolutionStoneOre;
 import pixelmon.blocks.BlockFossil;
 import pixelmon.blocks.BlockFossilCleaner;
@@ -21,6 +22,7 @@ import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
+import pixelmon.enums.EnumEvolutionRock;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.PixelmonItemBlock;
@@ -42,6 +44,8 @@ public class PixelmonBlocks {
 	public static int bauxiteId;
 	public static int tradeMachineId;
 	public static int fossilCleanerId;
+	public static int mossyRockId;
+	public static int icyRockId;
 
 	@Mod.Block(name = "Thunderstone Ore")
 	public static Block thunderStoneOre;
@@ -67,6 +71,11 @@ public class PixelmonBlocks {
 	public static Block tradeMachine;
 	@Mod.Block(name = "Fossil Cleaner", itemTypeClass = ItemBlock.class)
 	public static Block fossilCleaner;
+	@Mod.Block(name = "Mossy Rock", itemTypeClass = ItemBlock.class)
+	public static Block mossyRock;
+	@Mod.Block(name = "Icy Rock", itemTypeClass = ItemBlock.class)
+	public static Block icyRock;
+	
 
 	public static void load(Configuration configuration) {
 		pokemonHealerActiveId = configuration.getBlock("PokemonHealerActive", 300).getInt(300);
@@ -82,6 +91,11 @@ public class PixelmonBlocks {
 		fossilId = configuration.getBlock("Fossil", 225).getInt(225);
 		tradeMachineId = configuration.getBlock("Trade Machine", 311).getInt(311);
 		fossilCleanerId = configuration.getBlock("Fossil Cleaner", 312).getInt(312);
+		
+		PixelmonBlocksApricornTrees.load(configuration);
+
+		mossyRockId = configuration.getBlock("Mossy Rock", 318).getInt(318);
+		icyRockId = configuration.getBlock("Icy Rock", 319).getInt(319);
 
 		healer = new BlockHealer(pokemonHealerIdleId);
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f, "Thunder Stone Ore");
@@ -95,7 +109,8 @@ public class PixelmonBlocks {
 		fossil = new BlockFossil(fossilId).setHardness(5f);
 		tradeMachine = new BlockTradeMachine(tradeMachineId);
 		fossilCleaner = new BlockFossilCleaner(fossilCleanerId);
-		PixelmonBlocksApricornTrees.load(configuration);
+		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock);
+		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock);
 	}
 
 	public static void registerBlocks() {

@@ -13,7 +13,7 @@ public class CaptureNestBall extends CaptureBase {
 
 	@Override
 	public double getBallBonus(EnumPokeballs type, EntityPlayer thrower, EntityPixelmon p2, Mode mode) {
-		int lvl = p2.getLvl().getLevel();
-		return (40-lvl)/10;
+		float lvl = p2.getLvl().getLevel();
+		return (40f-lvl)/10f;
 	}
 }
