@@ -639,8 +639,8 @@ public class ModelMachop extends PixelmonModelBase
       Tail.addChild(tailtipright);
       Body.addChild(Tail);
       
-      ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
+      ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0.8F, .5F);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, .8F, .5F);
 
 		ModuleHead headModule = new ModuleHead(Head);
 		

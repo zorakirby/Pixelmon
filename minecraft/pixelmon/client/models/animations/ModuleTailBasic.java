@@ -5,7 +5,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.MathHelper;
 
-public class ModuleTailBasic extends ModuleTail {
+public class ModuleTailBasic extends Module {
 	
 	ModelRenderer tail;
 
@@ -15,6 +15,8 @@ public class ModuleTailBasic extends ModuleTail {
 	float TailInitY;
 	float TailInitZ;
 	float TailOrientation;
+	float TurningSpeed;
+	float TurningAngle;
 	
 	public ModuleTailBasic(ModelRenderer tail, float TailRotationLimitY, float TailRotationLimitZ, float TailSpeed) {
 		this.tail = tail;
@@ -29,15 +31,20 @@ public class ModuleTailBasic extends ModuleTail {
 
 	@Override
 	public void walk(EntityPixelmon entity, float f, float f1, float f2, float f3, float f4) {
+		TurningSpeed = Math.abs(entity.rotationYaw - entity.prevRotationYaw);
+		
+	
 		tail.rotateAngleY =  MathHelper.cos(f * TailSpeed)
 				* (float) Math.PI
 				* f1
-				* TailRotationLimitY;
+				* TailRotationLimitY + TurningAngle;
 		
 		tail.rotateAngleX = MathHelper.cos(f * TailSpeed * 2)
 				* (float) Math.PI
 				* f1
 				* TailRotationLimitZ;
+		
+		
 	}
 
 	@Override

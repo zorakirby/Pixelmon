@@ -11,6 +11,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.bird.EnumWing;
 import pixelmon.client.models.animations.bird.ModuleWing;
+import pixelmon.client.models.animations.bird.ModuleWingComplex;
 import pixelmon.client.models.animations.bird.SkeletonBird;
 
 public class ModelMoltres extends PixelmonModelBase
@@ -853,10 +854,10 @@ public class ModelMoltres extends PixelmonModelBase
       
       ModuleHead headModule = new ModuleHead(Head);
 
-	    ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
-				90, 0.13F, 0.1F);
-		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
-				90, 0.13F, 0.1F);
+	    ModuleWingComplex rightWingModule = new ModuleWingComplex(RightWing, EnumWing.Right,
+				90, 0.13F);
+		ModuleWingComplex leftWingModule = new ModuleWingComplex(LeftWing, EnumWing.Left,
+				90, 0.13F);
 
 		skeleton = new SkeletonBird(Body, headModule, leftWingModule, 
 				rightWingModule, LeftLeg, RightLeg);

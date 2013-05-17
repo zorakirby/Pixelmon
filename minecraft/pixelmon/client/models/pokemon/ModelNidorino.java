@@ -426,7 +426,7 @@ public class ModelNidorino extends PixelmonModelBase {
 		ModuleHead headModule = new ModuleHead(Head);
 
 		float legspeed = 0.8F;
-		float legRotationLimit = 1.1F;
+		float legRotationLimit = .8F;
 
 		ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft, EnumPhase.OutPhase, legRotationLimit, legspeed);
 		ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight, EnumPhase.OutPhase, legRotationLimit, legspeed);
