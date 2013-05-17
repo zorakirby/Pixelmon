@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import pixelmon.DownloadHelper;
+import pixelmon.Pixelmon;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.enums.EnumGui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -70,10 +72,13 @@ public class PokeballManager {
 				throw new PlayerNotLoadedException();
 			}
 			playerPokemonList.add(p);
+			if (p.count()==0)
+				((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
 
 		} else {
 			p = new PlayerStorage(player);
 			playerPokemonList.add(p);
+			((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
 		}
 		return p;
 	}

@@ -20,32 +20,25 @@ public class ConnectionHandler implements IConnectionHandler {
 
 	@Override
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
-		try {
-			if (!PixelmonStorage.PokeballManager.hasPlayerFile(player)
-					|| PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).count() == 0)
-				((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
-		} catch (PlayerNotLoadedException e) {
-		}
-		
 		PixelmonStorage.playerLoggedIn((EntityPlayerMP)player);
+		try {
+			PixelmonStorage.PokeballManager.loadPlayer((EntityPlayerMP)player);
+		} catch (PlayerNotLoadedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager) {
-		// TODO Auto-generated method stub
-
 	}
 
 	// Need to update this if the field position of theNetHandler changes inside

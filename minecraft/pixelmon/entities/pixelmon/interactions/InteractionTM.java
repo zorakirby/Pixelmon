@@ -20,6 +20,8 @@ public class InteractionTM implements IInteraction {
 		if (player instanceof EntityPlayerMP) {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 			if (itemstack.getItem() instanceof ItemTM) {
+				if (player != entityPixelmon.getOwner())
+					return true;
 				if (DatabaseMoves.CanLearnAttack(entityPixelmon.getName(), ((ItemTM) itemstack.getItem()).attackName)) {
 					Attack a = DatabaseMoves.getAttack(((ItemTM) itemstack.getItem()).attackName);
 					if (a == null) {
@@ -28,8 +30,8 @@ public class InteractionTM implements IInteraction {
 					}
 					a.STAB = DatabaseMoves.hasSTAB(entityPixelmon.getName(), ((ItemTM) itemstack.getItem()).attackName);
 					if (entityPixelmon.moveset.size() >= 4) {
-						((EntityPlayerMP) entityPixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace,
-								entityPixelmon.getPokemonId(), a.baseAttack.attackIndex, entityPixelmon.getLvl().getLevel()));
+						((EntityPlayerMP) entityPixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
+								EnumPackets.ChooseMoveToReplace, entityPixelmon.getPokemonId(), a.baseAttack.attackIndex, entityPixelmon.getLvl().getLevel()));
 					} else {
 						entityPixelmon.moveset.add(a);
 						ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
@@ -38,7 +40,8 @@ public class InteractionTM implements IInteraction {
 					if (!player.capabilities.isCreativeMode)
 						player.inventory.consumeInventoryItem(itemstack.itemID);
 				} else {
-					ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " can't learn " + ((ItemTM) itemstack.getItem()).attackName + "!");
+					ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " can't learn " + ((ItemTM) itemstack.getItem()).attackName
+							+ "!");
 				}
 				return true;
 			}

@@ -50,7 +50,7 @@ public class ItemHammer extends ItemTool {
 	public boolean onBlockStartBreak(ItemStack itemstack, int X, int Y, int Z, EntityPlayer player) {
 		if (player.worldObj.getBlockId(X, Y, Z) == PixelmonBlocks.anvilId) {
 			if (((TileEntityAnvil) player.worldObj.getBlockTileEntity(X, Y, Z)).blockHit((int) getStrVsBlock(null, PixelmonBlocks.anvil))) {
-				itemstack.damageItem(1, player);
+				itemstack.damageItem(3, player);
 			}
 
 			return true;
