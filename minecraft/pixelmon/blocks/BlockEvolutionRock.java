@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class BlockEvolutionRock extends BlockContainer {
 
-	EnumEvolutionRock rockType;
+	public EnumEvolutionRock rockType;
 	
 	public BlockEvolutionRock(int par1, Material par2Material, EnumEvolutionRock rockType) {
 		super(par1, par2Material);		
@@ -53,7 +53,7 @@ public class BlockEvolutionRock extends BlockContainer {
 	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
-		return new TileEntityEvolutionRock(rockType);
+		return new TileEntityEvolutionRock();
 	}
 
 }

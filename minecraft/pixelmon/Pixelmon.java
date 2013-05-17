@@ -24,6 +24,7 @@ import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
+import pixelmon.worldGeneration.WorldGenEvolutionRock;
 import pixelmon.worldGeneration.WorldGenFireStoneOre;
 import pixelmon.worldGeneration.WorldGenFossils;
 import pixelmon.worldGeneration.WorldGenLeafStoneOre;
@@ -105,6 +106,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
+		GameRegistry.registerWorldGenerator(new WorldGenEvolutionRock());
 
 		//StructureRegistry.loadStructures(event.getSide());
 		

@@ -2,6 +2,7 @@ package pixelmon.client;
 
 import org.lwjgl.opengl.GL11;
 
+import pixelmon.blocks.BlockEvolutionRock;
 import pixelmon.blocks.TileEntityEvolutionRock;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.enums.EnumEvolutionRock;
@@ -24,16 +25,17 @@ public class RenderTileEntityEvolutionRock extends TileEntitySpecialRenderer {
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double d, double d1, double d2, float f) {
 		if (Minecraft.getMinecraft().theWorld.getBlockId(tile.xCoord, tile.yCoord-1, tile.zCoord) == PixelmonBlocks.pc.blockID) return;
-
+		BlockEvolutionRock block = (BlockEvolutionRock)((TileEntityEvolutionRock)tile).blockType;
 		GL11.glPushMatrix(); // start
-		GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F); // size
-
+		GL11.glTranslatef((float) d + 0.5F, (float) d1+0.04f, (float) d2 + 0.5F); // size
+		GL11.glRotatef(180, 1, 0, 0);
 		GL11.glScalef(1.0F, -1F, -1F); // if you read this comment out this line
 		
-		if (((TileEntityEvolutionRock)tile).rockType == EnumEvolutionRock.MossyRock){
-			bindTextureByName("/pixelmon/models/icyrock/icyrocktex.png"); 
+		if (block.rockType == EnumEvolutionRock.MossyRock){
+			bindTextureByName("/pixelmon/models/mossyrock/mossrocktex.png"); 
 			mossyRockModel.renderAll();
-		}else if (((TileEntityEvolutionRock)tile).rockType == EnumEvolutionRock.IcyRock){
+		}else if (block.rockType == EnumEvolutionRock.IcyRock){
+			bindTextureByName("/pixelmon/models/icyrock/icyrocktex.png"); 
 			icyRockModel.renderAll();
 		}
 		GL11.glPopMatrix(); // end

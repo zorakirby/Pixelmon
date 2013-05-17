@@ -15,6 +15,7 @@ import pixelmon.entities.pixelmon.stats.BaseStats;
 import pixelmon.entities.pixelmon.stats.EVsStore;
 import pixelmon.entities.pixelmon.stats.SwimmingParameters;
 import pixelmon.enums.EnumBiomes;
+import pixelmon.enums.EnumEvolutionRock;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumType;
@@ -304,6 +305,9 @@ public class DatabaseStats {
 					if (EnumEvolutionStone.isEvolutionStone(sSplit[0])) {
 						i.mode = InfoMode.stone;
 						i.evolutionStone = EnumEvolutionStone.getEvolutionStone(sSplit[0]);
+					}else if (EnumEvolutionRock.isEvolutionRock(sSplit[0])){
+						i.mode= InfoMode.evolutionRock;
+						i.evolutionRock = EnumEvolutionRock.getEvolutionRock(sSplit[0]);
 					} else if (sSplit[0].equalsIgnoreCase("Friendship")) {
 						i.mode = InfoMode.friendship;
 						if (sSplit.length > 1)

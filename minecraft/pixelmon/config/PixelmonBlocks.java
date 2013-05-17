@@ -17,6 +17,7 @@ import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
 import pixelmon.blocks.BlockTradeMachine;
 import pixelmon.blocks.TileEntityAnvil;
+import pixelmon.blocks.TileEntityEvolutionRock;
 import pixelmon.blocks.TileEntityFossilCleaner;
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
@@ -135,6 +136,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerTileEntity(TileEntityFossilMachine.class, "Fossil Machine");
 		GameRegistry.registerTileEntity(TileEntityTradeMachine.class, "Trade Machine");
 		GameRegistry.registerTileEntity(TileEntityFossilCleaner.class, "Fossil Cleaner");
+		GameRegistry.registerTileEntity(TileEntityEvolutionRock.class, "Evolution Rock");
 
 		PixelmonBlocksApricornTrees.registerBlocks();
 	}

@@ -2,9 +2,12 @@ package pixelmon.entities.pixelmon.stats;
 
 import java.util.ArrayList;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.blocks.BlockEvolutionRock;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -183,12 +186,31 @@ public class Level {
 							else if (e.extraParam.equalsIgnoreCase("night") && pixelmon.worldObj.isDaytime())
 								evolves = false;
 						}
-						if (evolves)
+						if (evolves) {
 							pixelmon.evolve(e.pokemonName);
+							break;
+						}
 					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.biome) {
-						if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome())
+						if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome()) {
 							pixelmon.evolve(e.pokemonName);
-
+							break;
+						}
+					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.evolutionRock) {
+						boolean evolves = false;
+						EntityPlayer player = (EntityPlayer) pixelmon.getOwner();
+						for (int j = 0; j < pixelmon.worldObj.loadedTileEntityList.size(); j++) {
+							TileEntity t = (TileEntity) pixelmon.worldObj.loadedTileEntityList.get(j);
+							if (t.getBlockType() instanceof BlockEvolutionRock && ((BlockEvolutionRock) t.getBlockType()).rockType == e.evolutionRock) {
+								if (t.getDistanceFrom(player.posX, player.posY, player.posZ) < 100) {
+									evolves = true;
+									break;
+								}
+							}
+						}
+						if (evolves) {
+							pixelmon.evolve(e.pokemonName);
+							break;
+						}
 					}
 				}
 			}
@@ -197,8 +219,8 @@ public class Level {
 				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
 				for (Attack a : newAttacks) {
 					if (pixelmon.moveset.size() >= 4) {
-						((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ChooseMoveToReplace,
-								pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
+						((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
+								EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
 					} else {
 						pixelmon.moveset.add(a);
 						ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
