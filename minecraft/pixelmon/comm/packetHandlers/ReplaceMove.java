@@ -15,6 +15,7 @@ import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.Player;
 
 public class ReplaceMove extends PacketHandlerBase {
+	public static int tmID = -1;
 
 	public ReplaceMove() {
 		packetsHandled.add(EnumPackets.ReplaceMove);
@@ -39,6 +40,10 @@ public class ReplaceMove extends PacketHandlerBase {
 					+ a.baseAttack.attackName);
 			p.moveset.set(replaceIndex, a);
 			storage.updateNBT(p);
+			if (tmID != -1) {
+				if (!player.capabilities.isCreativeMode)
+					player.inventory.consumeInventoryItem(tmID);
+			}
 		} catch (PlayerNotLoadedException e) {
 		}
 	}

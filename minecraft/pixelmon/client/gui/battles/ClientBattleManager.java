@@ -70,6 +70,8 @@ public class ClientBattleManager {
 	static int oldId = -1;
 	static EntityPixelmon oldPixelmon;
 
+	public static boolean isTM = false;
+
 	public static EntityPixelmon getUserPokemon() {
 		if (pokemonId != -1) {
 			if (oldId == pokemonId)

@@ -13,6 +13,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonStatsPacket;
+import pixelmon.comm.packetHandlers.ReplaceMove;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
@@ -219,6 +220,7 @@ public class Level {
 				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
 				for (Attack a : newAttacks) {
 					if (pixelmon.moveset.size() >= 4) {
+						ReplaceMove.tmID = -1;
 						((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
 								EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
 					} else {

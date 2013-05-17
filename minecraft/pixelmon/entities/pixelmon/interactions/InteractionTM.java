@@ -8,6 +8,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
+import pixelmon.comm.packetHandlers.ReplaceMove;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.items.ItemTM;
@@ -30,15 +31,16 @@ public class InteractionTM implements IInteraction {
 					}
 					a.STAB = DatabaseMoves.hasSTAB(entityPixelmon.getName(), ((ItemTM) itemstack.getItem()).attackName);
 					if (entityPixelmon.moveset.size() >= 4) {
+						ReplaceMove.tmID = itemstack.itemID;
 						((EntityPlayerMP) entityPixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
 								EnumPackets.ChooseMoveToReplace, entityPixelmon.getPokemonId(), a.baseAttack.attackIndex, entityPixelmon.getLvl().getLevel()));
 					} else {
 						entityPixelmon.moveset.add(a);
 						ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
+						if (!player.capabilities.isCreativeMode)
+							player.inventory.consumeInventoryItem(itemstack.itemID);
 					}
 					entityPixelmon.updateNBT();
-					if (!player.capabilities.isCreativeMode)
-						player.inventory.consumeInventoryItem(itemstack.itemID);
 				} else {
 					ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " can't learn " + ((ItemTM) itemstack.getItem()).attackName
 							+ "!");
