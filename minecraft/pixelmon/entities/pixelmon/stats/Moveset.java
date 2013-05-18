@@ -9,7 +9,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.database.DatabaseMoves;
 
 public class Moveset extends AbstractList<Attack> implements List<Attack>, RandomAccess, Cloneable {
-	private Attack[] attacks = new Attack[4];
+	public Attack[] attacks = new Attack[4];
 
 	public Moveset() {
 	}

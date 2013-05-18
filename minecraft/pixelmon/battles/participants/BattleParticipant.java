@@ -14,7 +14,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 public abstract class BattleParticipant {
 	public boolean startedBattle = false;
 	BattleParticipant opponent;
-	BattleController bc;
+	public BattleController bc;
 	public ArrayList<Integer> attackersList = new ArrayList<Integer>();
 	public ArrayList<String> attackList = new ArrayList<String>();
 	public Attack attack;

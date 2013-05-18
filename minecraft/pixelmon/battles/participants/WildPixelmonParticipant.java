@@ -38,11 +38,11 @@ public class WildPixelmonParticipant extends BattleParticipant {
 	public void StartBattle(BattleController bc, BattleParticipant opponent) {
 		super.StartBattle(bc, opponent);
 		for (int i = 0; i < 4; i++) {
-			if (pixelmon.moveset.get(i) != null)
-				pixelmon.moveset.get(i).setDisabled(false, pixelmon);
+			if (pixelmon.moveset.attacks[i] != null)
+				pixelmon.moveset.attacks[i].setDisabled(false, pixelmon);
 		}
 	}
-	
+
 	@Override
 	public void EndBattle() {
 		pixelmon.EndBattle();
@@ -72,8 +72,10 @@ public class WildPixelmonParticipant extends BattleParticipant {
 
 	@Override
 	public Attack getMove() {
-		if (pixelmon.moveset.size() > 0)
+		if (pixelmon.moveset.size() > 0 && opponent != null)
 			return Attack.getWhichMoveIsBest(pixelmon.moveset, opponent.currentPokemon().type, pixelmon, opponent.currentPokemon());
+		if (bc == null)
+			return null;
 		bc.setFlee(pixelmon);
 		return null;
 	}

@@ -155,7 +155,7 @@ public class BattleController {
 			p.updatePokemon();
 			if (p.getIsFaintedOrDead()) {
 				if (p instanceof WildPixelmonParticipant && otherParticipant(p) instanceof PlayerParticipant)
-					PixelmonEventHandler.fireEvent(EventType.BeatWildPokemon, ((PlayerParticipant)otherParticipant(p)).player);
+					PixelmonEventHandler.fireEvent(EventType.BeatWildPokemon, ((PlayerParticipant) otherParticipant(p)).player);
 				String name = p.currentPokemon().getNickname();
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player)
@@ -212,13 +212,17 @@ public class BattleController {
 						break;
 					}
 				} catch (Exception exc) {
-					if (PixelmonConfig.printErrors){
-					System.out.println("Error calculating canAttackThisTurn for " + e.type.toString());
-					System.out.println(exc.getStackTrace());
+					if (PixelmonConfig.printErrors) {
+						System.out.println("Error calculating canAttackThisTurn for " + e.type.toString());
+						System.out.println(exc.getStackTrace());
 					}
 				}
 			}
 
+			if (p.bc == null || otherParticipant(p).bc == null) {
+				endBattle();
+				return;
+			}
 			if (p.canAttack)
 				p.attack.use(p.currentPokemon(), otherParticipant(p).currentPokemon(), p.attackList, otherParticipant(p).attackList);
 		}
