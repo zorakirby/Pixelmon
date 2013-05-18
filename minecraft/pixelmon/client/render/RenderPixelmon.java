@@ -322,14 +322,18 @@ public class RenderPixelmon extends RenderLiving {
 
 	public void drawNameTag(EntityPixelmon entitypixelmon, double par2, double par4, double par6, boolean owned) {
 		if (Minecraft.isGuiEnabled()) {
-			String s = " Lv: " + entitypixelmon.getLvl().getLevel() + " ";
+			String s = "";
+			if (entitypixelmon.getBossMode() == EnumBossMode.Normal)
+				s += " Lv: " + entitypixelmon.getLvl().getLevel() + " ";
 			s += entitypixelmon.getNickname();
-			if (entitypixelmon.getOwner() != null) {
-				s += " (" + ((EntityPlayer) entitypixelmon.getOwner()).username + ")";
-			} else if (!entitypixelmon.getTrainerName().equals("")) {
-				s += " (" + entitypixelmon.getTrainerName() + ")";
-			} else
-				s += " (Wild)";
+			if (entitypixelmon.getBossMode() == EnumBossMode.Normal) {
+				if (entitypixelmon.getOwner() != null) {
+					s += " (" + ((EntityPlayer) entitypixelmon.getOwner()).username + ")";
+				} else if (!entitypixelmon.getTrainerName().equals("")) {
+					s += " (" + entitypixelmon.getTrainerName() + ")";
+				} else
+					s += " (Wild)";
+			}
 			if (!entitypixelmon.isSneaking()) {
 				renderLivingLabel(entitypixelmon, s, par2, par4, par6, owned);
 			}

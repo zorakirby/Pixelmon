@@ -183,4 +183,14 @@ public class PlayerParticipant extends BattleParticipant {
 		return player.username + "'s " + currentPokemon().getNickname() + " fainted!";
 	}
 
+	public int getHighestLevel() {
+		int lvl = -1;
+		for (NBTTagCompound nbt : storage.partyPokemon) {
+			if (nbt != null)
+				if (nbt.getInteger("Level") > lvl)
+					lvl = nbt.getInteger("Level");
+		}
+		return lvl;
+	}
+
 }

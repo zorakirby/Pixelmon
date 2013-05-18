@@ -51,6 +51,8 @@ public class BattleController {
 		BattleRegistry.registerBattle(this);
 		for (BattleParticipant p : participants) {
 			p.StartBattle(this, otherParticipant(p));
+		}
+		for (BattleParticipant p: participants){
 			p.updateOpponent();
 			if (p.canGainXP())
 				p.addToAttackersList();

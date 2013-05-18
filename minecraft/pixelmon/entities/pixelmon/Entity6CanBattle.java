@@ -50,9 +50,6 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	@Override
 	public void setBoss(EnumBossMode mode) {
 		super.setBoss(mode);
-		if (mode != EnumBossMode.Normal) {
-			getLvl().setLevel(getLvl().getLevel() + mode.extraLevels);
-		}
 	}
 
 	public void StartBattle(BattleParticipant p1, BattleParticipant p2) {

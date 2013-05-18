@@ -18,6 +18,7 @@ import pixelmon.entities.pixelmon.stats.FriendShip;
 import pixelmon.entities.pixelmon.stats.IVStore;
 import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.pixelmon.stats.Stats;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumType;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.pokedex.Pokedex.DexRegisterStatus;

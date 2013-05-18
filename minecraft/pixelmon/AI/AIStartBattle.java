@@ -10,6 +10,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.storage.PixelmonStorage;
 
 public class AIStartBattle extends EntityAIBase {
@@ -52,6 +53,8 @@ public class AIStartBattle extends EntityAIBase {
 			if (!(theEntity.getAttackTarget() instanceof EntityPixelmon))
 				return false;
 			EntityPixelmon target = (EntityPixelmon) theEntity.getAttackTarget();
+			if (target.getBossMode() != EnumBossMode.Normal || theEntity.getBossMode() != EnumBossMode.Normal)
+				return false;
 			if (target.hitByPokeball)
 				return false;
 			if (target.battleController != null)

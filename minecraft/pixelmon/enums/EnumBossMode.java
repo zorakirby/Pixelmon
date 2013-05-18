@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.util.Random;
 
 public enum EnumBossMode {
-	Normal(0, -1, Color.WHITE, 1, 0, 1, 0), Uncommon(1, 60, Color.CYAN, 1.2f, 5, 0.75f, 1), Rare(2, 30, Color.RED, 1.4f, 10, 0.5f, 3), Legendary(3, 10, Color.YELLOW, 1.6f, 20,
-			0.2f, 5);
+	Normal(0, -1, Color.WHITE, 1, 0, 1, 0), 
+	Uncommon(1, 60, Color.CYAN, 1.2f, 5, 0.75f, 1), 
+	Rare(2, 30, Color.RED, 1.4f, 10, 0.5f, 3), 
+	Legendary(3, 10, Color.YELLOW, 1.6f, 20, 0.2f, 5);
 
 	public int index;
 	public int rarity;

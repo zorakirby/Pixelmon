@@ -5,6 +5,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 
 public class WildPixelmonParticipant extends BattleParticipant {
 
@@ -37,6 +38,15 @@ public class WildPixelmonParticipant extends BattleParticipant {
 	@Override
 	public void StartBattle(BattleController bc, BattleParticipant opponent) {
 		super.StartBattle(bc, opponent);
+		if (opponent.getType() == ParticipantType.Player && pixelmon.getBossMode() != EnumBossMode.Normal) {
+			int lvl = ((PlayerParticipant) opponent).getHighestLevel() + pixelmon.getBossMode().extraLevels;
+			if (lvl > 100)
+				lvl = 100;
+			pixelmon.getLvl().setLevel(lvl);
+			pixelmon.loadMoveset();
+			return;
+		}
+
 		for (int i = 0; i < 4; i++) {
 			if (pixelmon.moveset.attacks[i] != null)
 				pixelmon.moveset.attacks[i].setDisabled(false, pixelmon);
