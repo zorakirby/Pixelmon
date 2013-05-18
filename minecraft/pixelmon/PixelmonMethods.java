@@ -23,7 +23,6 @@ public class PixelmonMethods {
 			}
 		} catch (PlayerNotLoadedException e) {
 		}
-
 		return list;
 	}
 }
