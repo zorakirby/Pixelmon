@@ -15,6 +15,7 @@ import pixelmon.client.models.animations.EnumPhase;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
 public class ModelFlaaffy extends PixelmonModelBase {
@@ -348,8 +349,8 @@ public class ModelFlaaffy extends PixelmonModelBase {
 
 		ModuleHead headModule = new ModuleHead(Head);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 1, 0.5F);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 1, 0.5F);
 
 		float legspeed = 0.65F;
 		float legRotationLimit = 1.4F;
@@ -358,6 +359,7 @@ public class ModelFlaaffy extends PixelmonModelBase {
 				EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .2F, .05F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule,
 				rightArmModule, leftLegModule, rightLegModule, null);
