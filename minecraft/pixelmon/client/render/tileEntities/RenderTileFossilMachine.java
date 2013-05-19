@@ -16,6 +16,7 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItemsFossils;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 
@@ -132,8 +133,11 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		if (!EnumPokemon.hasPokemon(tile.currentPokemon)) {
 			return;
 		}
-		if (pokemon == null || (pokemon != null && pokemon.getName() != tile.currentPokemon))
+		if (pokemon == null || (pokemon != null && pokemon.getName() != tile.currentPokemon)){
 			pokemon = ((EntityPixelmon) PixelmonEntityList.createEntityByName(tile.currentPokemon, tile.getWorldObj()));
+			pokemon.setGrowth(EnumGrowth.Small);
+			pokemon.getLvl().setLevel(1);
+		}
 
 		// Pokemon Rendering
 

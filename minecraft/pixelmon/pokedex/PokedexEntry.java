@@ -2,6 +2,7 @@ package pixelmon.pokedex;
 
 import net.minecraft.world.World;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumPokemon;
 
 public class PokedexEntry {
@@ -47,6 +48,8 @@ public class PokedexEntry {
 		if (name != null && !name.equals("???") && EnumPokemon.hasPokemon(name)) {
 			renderTarget = new EntityPixelmon(w);
 			renderTarget.init(name);
+			renderTarget.getLvl().setLevel(50);
+			renderTarget.setGrowth(EnumGrowth.Ordinary);
 		} else
 			return null;
 		return renderTarget;
