@@ -285,8 +285,8 @@ public class GuiPC extends GuiContainer {
 				mc.renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
 			drawImageQuad(mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (mouseSlot.pokemonData.heldItemId != -1) {
-				mc.renderEngine.bindTexture("/pixelmon/image/pitems.png");
-				drawImageQuad(mouseSlot.x + 22, mouseSlot.y + 22, 8, 8, 0, 0, 16f / 256f, 16f / 256f);
+				mc.renderEngine.bindTexture("/pixelmon/image/helditem.png");
+				drawImageQuad(mouseSlot.x + 22, mouseSlot.y + 22, 8, 8, 0, 0, 1f, 1f);
 			}
 			if (p.nickname == null || p.nickname.equalsIgnoreCase("")) {
 				p.nickname = p.name;

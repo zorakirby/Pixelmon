@@ -623,7 +623,8 @@ public class GuiBattle extends GuiContainer {
 		
 			// Get value as percent.
 			// Get Width of bar
-		float Percent = ((float)(p.health)) / ((float) p.hp), fWidth = Percent * (float)(width);
+		float Percent = ((float)(p.health)) / ((float) p.hp);
+		float fWidth = Percent * (float)(width);
 			// Set Width of bar
 		int CurWidth = (int)(fWidth) - 6;
 		
