@@ -513,8 +513,8 @@ public class ModelArmaldo extends PixelmonModelBase {
 		Body.addChild(LeftLeg);
 		Body.addChild(RightLeg);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 1, 0.5F);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 1, 0.5F);
 
 		ModuleHead headModule = new ModuleHead(Head);
 		
