@@ -34,7 +34,7 @@ public class WorldGenEvolutionRock implements IWorldGenerator {
 							for (int ix = -1; ix < 2; ix++)
 								for (int iz = -1; iz < 2; iz++) {
 									int bid = world.getBlockId(xPos + ix, yPos - 1, zPos + iz);
-									if (bid != Block.grass.blockID && bid != Block.dirt.blockID) {
+									if (!(bid == Block.grass.blockID || bid == Block.dirt.blockID)) {
 										canSpawn = false;
 									}
 								}

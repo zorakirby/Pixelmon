@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
@@ -84,6 +85,14 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 
 	}
 
+	@Override
+	public void onDeath(DamageSource par1DamageSource) {
+		if (!par1DamageSource.damageType.equalsIgnoreCase("mob"))
+			dropItems = false;
+		super.onDeath(par1DamageSource);
+	}
+	
+	boolean dropItems = true;
 	@Override
 	protected int getDropItemId() {
 		return dropItemHelper.getDropItemID();

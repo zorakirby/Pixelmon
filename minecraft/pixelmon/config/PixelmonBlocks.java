@@ -110,8 +110,8 @@ public class PixelmonBlocks {
 		fossil = new BlockFossil(fossilId).setHardness(5f);
 		tradeMachine = new BlockTradeMachine(tradeMachineId);
 		fossilCleaner = new BlockFossilCleaner(fossilCleanerId);
-		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock);
-		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock);
+		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
+		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
 	}
 
 	public static void registerBlocks() {
