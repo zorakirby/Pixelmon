@@ -459,7 +459,6 @@ public class ModelTirtouga extends PixelmonModelBase
       
       PixelmonModelRenderer  tail = new PixelmonModelRenderer(this, 0, 0);
       tail.addBox(-0.5F, -1.4F, 7.8F, 1, 1, 4);
-      tail.setRotationPoint(0F, 23F, 0F);
       tail.setTextureSize(128, 64);
       tail.mirror = true;
       setRotation(tail, -0.0872665F, 0F, 0F);
