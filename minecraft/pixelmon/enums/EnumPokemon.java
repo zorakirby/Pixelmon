@@ -42,6 +42,7 @@ public enum EnumPokemon {
 	Dugtrio("Dugtrio"),
 	Eevee("Eevee"),
 	Ekans("Ekans"),
+	Electabuzz("Electabuzz"),
 	Electrode("Electrode"),
 	Espeon("Espeon"),
 	Exeggcute("Exeggcute"),
