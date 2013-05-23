@@ -377,7 +377,7 @@ public class ModelNidoranmale extends PixelmonModelBase
       
       
       PixelmonModelRenderer BLLeg = new PixelmonModelRenderer(this, "Back Left Leg");
-      BLLeg.setRotationPoint(2.6F, 3, 0);
+      BLLeg.setRotationPoint(2.6F, 3, 6);
       PixelmonModelRenderer   left_hind_leg = new PixelmonModelRenderer(this, 18, 22);
       left_hind_leg.addBox(0F, -0.8F, 0.7F, 2, 4, 2);
       left_hind_leg.setTextureSize(64, 32);
@@ -412,7 +412,7 @@ public class ModelNidoranmale extends PixelmonModelBase
       
       
       PixelmonModelRenderer BRLeg = new PixelmonModelRenderer(this, "Back Right leg");
-      BRLeg.setRotationPoint(-2.4F, 3, 0);
+      BRLeg.setRotationPoint(-2.4F, 3, 6);
       PixelmonModelRenderer   right_thigh_1 = new PixelmonModelRenderer(this, 15, 16);
       right_thigh_1.addBox(-2F, -1.466667F, -1F, 3, 4, 4);
       right_thigh_1.setTextureSize(64, 32);
