@@ -101,6 +101,9 @@ public class PixelmonItems {
 	public static int aluminiumIngotID;
 	public static int aluminiumPlateID;
 
+	public static int mossyRockID;
+	public static int icyRockID;
+	
 	@Mod.Item(name = "Pokedex", typeClass = "pixelmon.items.ItemPokedex")
 	public static Item pokeDex;
 
@@ -205,6 +208,12 @@ public class PixelmonItems {
 	@Mod.Item(name = "Aluminium Boots", typeClass = "pixelmon.items.ItemPixelmonArmor")
 	public static Item bootsAluminium;
 
+	@Mod.Item(name = "Mossy Rock", typeClass = "pixelmon.items.ItemBlock")
+	public static Item mossyRock;
+	@Mod.Item(name = "Icy Rock", typeClass = "pixelmon.items.ItemBlock")
+	public static Item icyRock;
+
+	
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
 		PixelmonItemsApricorns.load(cfg);
@@ -266,6 +275,9 @@ public class PixelmonItems {
 		torsoAluminiumID = cfg.get("item", "Aluminium Chestplate", 10129).getInt();
 		leggingsAluminiumID = cfg.get("item", "Aluminium Leggings", 10130).getInt();
 		bootsAluminiumID = cfg.get("item", "Aluminium Boots", 10131).getInt();
+		
+		mossyRockID = cfg.get("item", "Mossy Rock", 10132).getInt();
+		icyRockID = cfg.get("item", "Icy Rock", 10133).getInt();
 
 		pokeDex = new ItemPokedex(pokeDexID).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rarecandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
@@ -320,6 +332,10 @@ public class PixelmonItems {
 		leggingsAluminium = new ItemPixelmonArmor(leggingsAluminiumID, 9, Pixelmon.ALUMINIUMARMOR, 0, 2, "pixelmon:aluminiumleggings", "Aluminium Leggings");
 		bootsAluminium = new ItemPixelmonArmor(bootsAluminiumID, 7, Pixelmon.ALUMINIUMARMOR, 0, 3, "pixelmon:aluminiumboots", "Aluminium Boots");
 
+		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "anvil", "Mossy Rock");
+		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
+		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "anvil", "Icy Rock");
+		icyRock.setCreativeTab(PixelmonCreativeTabs.natural);
 	}
 
 	public static void addNames() {

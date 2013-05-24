@@ -202,7 +202,7 @@ public class Level {
 						for (int j = 0; j < pixelmon.worldObj.loadedTileEntityList.size(); j++) {
 							TileEntity t = (TileEntity) pixelmon.worldObj.loadedTileEntityList.get(j);
 							if (t.getBlockType() instanceof BlockEvolutionRock && ((BlockEvolutionRock) t.getBlockType()).rockType == e.evolutionRock) {
-								if (t.getDistanceFrom(player.posX, player.posY, player.posZ) < 100) {
+								if (getDistanceFrom(t, player.posX, player.posY, player.posZ) < 100) {
 									evolves = true;
 									break;
 								}
@@ -230,6 +230,13 @@ public class Level {
 				}
 			}
 		}
+	}
+
+	public double getDistanceFrom(TileEntity te, double par1, double par3, double par5) {
+		double d3 = (double) te.xCoord + 0.5D - par1;
+		double d4 = (double) te.yCoord + 0.5D - par3;
+		double d5 = (double) te.zCoord + 0.5D - par5;
+		return d3 * d3 + d4 * d4 + d5 * d5;
 	}
 
 	private void setScale() {

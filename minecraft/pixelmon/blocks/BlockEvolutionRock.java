@@ -4,6 +4,7 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.config.PixelmonItems;
 import pixelmon.enums.EnumEvolutionRock;
 import net.minecraft.block.BlockContainer;

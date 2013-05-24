@@ -132,7 +132,14 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = p.getIsShiny();
 		nature = p.getNature();
 		growth = p.getGrowth();
-		order = 0;
+		if (p.getOwner() != null) {
+			try {
+				order = p.getStorage().getPosition(pokemonID);
+			} catch (Exception e) {
+				order = 0;
+			}
+		} else
+			order = 0;
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
 		numMoves = p.moveset.size();

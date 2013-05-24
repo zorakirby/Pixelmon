@@ -226,7 +226,8 @@ public class PlayerStorage {
 	public void changePokemon(int pos, NBTTagCompound n) {
 		if (partyPokemon[pos] != null) {
 			if (mode == PokeballManagerMode.Player)
-				player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.RemoveFromStorage, partyPokemon[pos].getInteger("pixelmonID")));
+				player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.RemoveFromStorage,
+						partyPokemon[pos].getInteger("pixelmonID")));
 		}
 		if (n != null) {
 			n.setInteger("PixelmonOrder", pos);
@@ -484,6 +485,17 @@ public class PlayerStorage {
 				}
 			}
 		}
+	}
+
+	public int getPosition(int pokemonID) {
+		for (int i = 0; i < partyPokemon.length; i++) {
+			NBTTagCompound n = partyPokemon[i];
+			if (n != null) {
+				if (n.getInteger("pixelmonID") == pokemonID)
+					return n.getInteger("PixelmonOrder");
+			}
+		}
+		return -1;
 	}
 
 }
