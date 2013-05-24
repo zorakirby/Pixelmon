@@ -114,22 +114,22 @@ public class ModelSquirtle extends PixelmonModelBase
       
       
       
-      PixelmonModelRenderer   LeftLeg = new PixelmonModelRenderer(this, 54, 0);
+      PixelmonModelRenderer   LeftLeg = new PixelmonModelRenderer(this, 51, 0);
       LeftLeg.addBox(-1.5F, 0F, -1.5F, 3, 4, 3);
       LeftLeg.setRotationPoint(-3F, 18F, 3F);
       LeftLeg.setTextureSize(512, 512);
       LeftLeg.mirror = true;
-      setRotation(LeftLeg, 0.0872665F, -1.989675F, -0.0523599F);
+      setRotation(LeftLeg, 0F, 0F, -0.0872665F);
       Body.addChild(LeftLeg);
       
       
       
-      PixelmonModelRenderer   RightLeg = new PixelmonModelRenderer(this, 54, 0);
+      PixelmonModelRenderer   RightLeg = new PixelmonModelRenderer(this, 51, 0);
       RightLeg.addBox(-1.5F, 0F, -1.5F, 3, 4, 3);
       RightLeg.setRotationPoint(3F, 18F, 3F);
       RightLeg.setTextureSize(512, 512);
       RightLeg.mirror = true;
-      setRotation(RightLeg, -0.0523599F, -0.9948377F, -0.0872665F);
+      setRotation(RightLeg, 0F, 0F, -0.0872665F);
       Body.addChild(RightLeg);
       
       
