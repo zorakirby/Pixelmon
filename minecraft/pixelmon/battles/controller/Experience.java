@@ -172,9 +172,6 @@ public final class Experience {
 		exp = exp * scaleFactor;
 		if (expReceiverIndex == battlingPokemon.getPokemonId()) {
 			// Begin EXP award to the currently battling pokemon.
-			/**
-			 * NOTE: This logic is missing EV training item gains.
-			 */
 			battlingPokemon.getLvl().awardEXP((int) exp);
 			if (battlingPokemon.getLvl().canLevelUp()) {
 				EVsStore evStore = faintedPokemon.baseStats.evGain.cloneEVs();
@@ -187,6 +184,7 @@ public final class Experience {
 					}
 				}
 			}
+			battlingPokemon.stats.EVs.gainEV(evStore);
 			storage.updateNBT(battlingPokemon);
 		} else {
 			// Begin EXP award to a stored party pokemon.
