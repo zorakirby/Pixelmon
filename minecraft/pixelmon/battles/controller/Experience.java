@@ -173,8 +173,8 @@ public final class Experience {
 		if (expReceiverIndex == battlingPokemon.getPokemonId()) {
 			// Begin EXP award to the currently battling pokemon.
 			battlingPokemon.getLvl().awardEXP((int) exp);
+			EVsStore evStore = faintedPokemon.baseStats.evGain.cloneEVs();
 			if (battlingPokemon.getLvl().canLevelUp()) {
-				EVsStore evStore = faintedPokemon.baseStats.evGain.cloneEVs();
 				if (ItemHeld.isItemOfType(battlingPokemon.getHeldItem(), EnumHeldItems.evAdjusting)) {
 					EVAdjusting item = (EVAdjusting) battlingPokemon.getHeldItem().getItem();
 					if (item.type.statAffected == StatsType.None) {
