@@ -1,5 +1,7 @@
 package pixelmon.client.models;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
@@ -9,11 +11,14 @@ import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraftforge.client.model.IModelCustom;
 
 public class PixelmonModelRenderer extends ModelRenderer {
 	/** The GL display list rendered by the Tessellator for this model */
 	private int displayList;
 	private boolean compiled = false;
+	private ArrayList<ModelOBJWrapper> objs = new ArrayList();
+	
 
 	public PixelmonModelRenderer(ModelBase par1ModelBase, String par2Str) {
 		super(par1ModelBase, par2Str);
@@ -26,6 +31,11 @@ public class PixelmonModelRenderer extends ModelRenderer {
 	public PixelmonModelRenderer(ModelBase par1ModelBase, int par2, int par3) {
 		super(par1ModelBase, par2, par3);
 	}
+	
+	public void addOBJModel(ModelOBJWrapper model){
+		this.objs.add(model);
+	}
+	
 
 	 @SideOnly(Side.CLIENT)
 	    public void render(float par1)
@@ -121,6 +131,10 @@ public class PixelmonModelRenderer extends ModelRenderer {
 
 		for (int var3 = 0; var3 < this.cubeList.size(); ++var3) {
 			((ModelBox) this.cubeList.get(var3)).render(var2, par1);
+		}
+
+		for(int i = 0; i < this.objs.size(); i++){
+			this.objs.get(i).render(par1);
 		}
 
 		GL11.glEndList();
