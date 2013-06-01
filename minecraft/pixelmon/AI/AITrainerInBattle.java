@@ -1,7 +1,7 @@
 package pixelmon.AI;
 
 import net.minecraft.entity.ai.EntityAIBase;
-import pixelmon.entities.trainers.EntityTrainer;
+import pixelmon.entities.npcs.EntityTrainer;
 
 public class AITrainerInBattle extends EntityAIBase {
 	EntityTrainer trainer;

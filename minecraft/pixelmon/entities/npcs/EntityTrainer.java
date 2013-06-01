@@ -1,4 +1,4 @@
-package pixelmon.entities.trainers;
+package pixelmon.entities.npcs;
 
 import java.util.Random;
 
@@ -27,27 +27,22 @@ import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityTrainer extends EntityCreature {
+public class EntityTrainer extends EntityNPC {
 
 	public PlayerStorage pokemonStorage = new PlayerStorage(this);
 	public EntityPixelmon releasedPokemon;
 	public TrainerInfo info;
-	private ModelBase model = null;
-	public SpawnLocation trainerLocation;
 
 	public EntityTrainer(World par1World) {
-		super(par1World);
-		dataWatcher.addObject(3, ""); // Name
-		dataWatcher.addObject(4, "");// Model
+		super(par1World, NPCType.Trainer);
 		dataWatcher.addObject(25, (int) 0);
-		dataWatcher.addObject(26, ""); // Nickname
 		tasks.addTask(0, new EntityAISwimming(this));
 		tasks.addTask(1, new AITrainerInBattle(this));
 		tasks.addTask(2, new EntityAIWander(this, moveSpeed));
 	}
 
 	public void init(String name) {
-		setName(name);
+		super.init(name);
 		pokemonStorage = new PlayerStorage(this);
 		info = DatabaseTrainers.GetTrainerInfo(name);
 		if (info == null) {
@@ -60,45 +55,11 @@ public class EntityTrainer extends EntityCreature {
 		if (dataWatcher.getWatchableObjectString(4).equals(""))
 			dataWatcher.updateObject(4, info.model);
 		dataWatcher.updateObject(26, info.name);
-		health = 100;
 	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public String getTexture() {
-		return "/pixelmon/texture/trainers/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
-	}
-
-	public int getAge() {
-		return 0;
-	};
 
 	@Override
 	protected boolean canDespawn() {
 		return true;
-	}
-
-	public ModelBase getModel() {
-		if (model == null)
-			model = Pixelmon.proxy.getTrainerModel(dataWatcher.getWatchableObjectString(4));
-		return model;
-	}
-
-	public String getName() {
-		return dataWatcher.getWatchableObjectString(3);
-	}
-
-	public String getNickName() {
-		return dataWatcher.getWatchableObjectString(26);
-	}
-
-	public void setName(String name) {
-		dataWatcher.updateObject(3, name);
-	}
-
-	@Override
-	public int getMaxHealth() {
-		return 100;
 	}
 
 	public void releasePokemon() {
@@ -175,41 +136,6 @@ public class EntityTrainer extends EntityCreature {
 		}
 	}
 
-	@Override
-	public boolean getCanSpawnHere() {
-		int var1 = MathHelper.floor_double(this.posX);
-		int var2 = MathHelper.floor_double(this.boundingBox.minY);
-		int var3 = MathHelper.floor_double(this.posZ);
-
-		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
-		return blockId == Block.grass.blockID || blockId == Block.sand.blockID;
-
-	}
-
-	@Override
-	public void writeEntityToNBT(NBTTagCompound nbt) {
-		super.writeEntityToNBT(nbt);
-		nbt.setString("Name", getName());
-		nbt.setString("Model", dataWatcher.getWatchableObjectString(4));
-		if (trainerLocation == null)
-			trainerLocation = SpawnLocation.Land;
-		nbt.setInteger("trainerLocation", trainerLocation.index);
-	}
-
-	@Override
-	public void readEntityFromNBT(NBTTagCompound nbt) {
-		super.readEntityFromNBT(nbt);
-		setName(nbt.getString("Name"));
-		if (nbt.hasKey("Model")) {
-			dataWatcher.updateObject(4, nbt.getString("Model"));
-		}
-		if (nbt.hasKey("trainerLocation"))
-			trainerLocation = SpawnLocation.getFromIndex(nbt.getInteger("trainerLocation"));
-		else
-			trainerLocation = SpawnLocation.Land;
-		init(getName());
-	}
-
 	public int getNextPokemonID() {
 		EntityPixelmon p = pokemonStorage.getFirstAblePokemon(worldObj);
 		return p.getPokemonId();
@@ -223,4 +149,10 @@ public class EntityTrainer extends EntityCreature {
 	public int getMaxSpawnedInChunk() {
 		return 1;
 	}
+
+	@Override
+	public boolean interactWithNPC(EntityPlayer player) {
+		return false;
+	}
+
 }

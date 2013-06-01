@@ -16,13 +16,14 @@ public enum EnumGui {
 	LevelUp(11),
 	PokeCheckerStats(12),
 	PokeCheckerMoves(13), 
-	Trading(14);
+	Trading(14), 
+	Doctor(15);
 	
 	private int index;
 	
 	private EnumGui(int i)
 	{
-		index=i;
+		index = i;
 	}
 	
 	public Integer getIndex()

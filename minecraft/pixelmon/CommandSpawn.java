@@ -11,6 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.WorldServer;
 import pixelmon.config.PixelmonEntityList;
+import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
@@ -21,7 +22,7 @@ public class CommandSpawn extends CommandBase {
 	public String getCommandName() {
 		return "pokespawn";
 	}
-	
+
 	@Override
 	public int getRequiredPermissionLevel() {
 		return 2;
@@ -37,13 +38,18 @@ public class CommandSpawn extends CommandBase {
 			if (EnumPokemon.hasPokemon(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
-				if (var2.length>1) if (var2[1].equalsIgnoreCase("s"))
-					((EntityPixelmon)var6).setIsShiny(true);
+				if (var2.length > 1)
+					if (var2[1].equalsIgnoreCase("s"))
+						((EntityPixelmon) var6).setIsShiny(true);
 				world.spawnEntityInWorld(var6);
-			}else if(EnumTrainers.has(var5)){	
+			} else if (EnumTrainers.has(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
+			} else if (NPCType.has(var5)) {
+				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
+				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
+				world.spawnEntityInWorld(var6);				
 			} else {
 				var1.sendChatToPlayer(var5 + " is not in game!");
 			}

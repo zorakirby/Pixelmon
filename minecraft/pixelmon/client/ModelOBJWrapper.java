@@ -1,4 +1,4 @@
-package pixelmon.client.models;
+package pixelmon.client;
 
 import org.lwjgl.opengl.GL11;
 

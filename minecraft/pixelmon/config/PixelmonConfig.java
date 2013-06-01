@@ -9,8 +9,8 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.Configuration;
+import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.trainers.EntityTrainer;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class PixelmonConfig {

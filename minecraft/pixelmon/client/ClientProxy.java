@@ -26,38 +26,23 @@ import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
-import pixelmon.client.gui.GuiChooseStarter;
-import pixelmon.client.gui.GuiHealer;
-import pixelmon.client.gui.GuiPixelmonOverlay;
-import pixelmon.client.gui.GuiTrading;
+import pixelmon.client.gui.*;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.inventoryExtended.InventoryDetectionTickHandler;
 import pixelmon.client.gui.pc.GuiPC;
-import pixelmon.client.gui.pokechecker.GuiScreenPokeChecker;
-import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerMoves;
-import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerStats;
+import pixelmon.client.gui.pokechecker.*;
 import pixelmon.client.gui.pokedex.GuiPokedex;
-import pixelmon.client.keybindings.MinimizeMaximizeOverlayKey;
-import pixelmon.client.keybindings.MovementHandler;
-import pixelmon.client.keybindings.NextPokemonKey;
-import pixelmon.client.keybindings.PreviousPokemonKey;
-import pixelmon.client.keybindings.SendPokemonKey;
+import pixelmon.client.keybindings.*;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.client.models.objHandling.Object3D;
-import pixelmon.client.render.RenderPixelmon;
-import pixelmon.client.render.RenderPokeball;
-import pixelmon.client.render.RenderTrainer;
-import pixelmon.client.render.tileEntities.RenderTileEntityAnvil;
-import pixelmon.client.render.tileEntities.RenderTileEntityApricornTrees;
-import pixelmon.client.render.tileEntities.RenderTileEntityHealer;
-import pixelmon.client.render.tileEntities.RenderTileEntityPC;
-import pixelmon.client.render.tileEntities.RenderTileEntityTradingMachine;
-import pixelmon.client.render.tileEntities.RenderTileFossilCleaner;
-import pixelmon.client.render.tileEntities.RenderTileFossilMachine;
+import pixelmon.client.render.*;
+import pixelmon.client.render.tileEntities.*;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.entities.npcs.EntityDoctor;
+import pixelmon.entities.npcs.EntityTrainer;
+import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
 import pixelmon.enums.EnumPokeballs;
@@ -89,14 +74,7 @@ public class ClientProxy extends CommonProxy {
 	public World GetClientWorld() {
 		return Minecraft.getMinecraft().theWorld;
 	}
-
-	@Override
-	public void preloadTextures() {
-		// for (EnumPokemon pokemon : EnumPokemon.values())
-		// MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" +
-		// pokemon.name.toLowerCase() + ".png");
-	}
-
+	
 	@Override
 	public void registerKeyBindings() {
 		MinecraftForge.EVENT_BUS.register(this);
@@ -111,6 +89,7 @@ public class ClientProxy extends CommonProxy {
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDoctor.class, new RenderDoctor(0.5f));
 	}
 
 	public static ArrayList<String> modelPaths = new ArrayList<String>();
@@ -166,10 +145,10 @@ public class ClientProxy extends CommonProxy {
 		return model;
 	}
 
-	public ModelBase getTrainerModel(String name) {
+	public ModelBase getNPCModel(NPCType type, String name) {
 		ModelBase model = null;
 		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models.trainers.Model" + name);
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models." + type.textureDirectory + ".Model" + name);
 			if (var3 != null) {
 				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
@@ -211,6 +190,9 @@ public class ClientProxy extends CommonProxy {
 			return new GuiScreenPokeCheckerMoves(ServerStorageDisplay.get(x), false);
 		else if (ID == EnumGui.Trading.getIndex())
 			return new GuiTrading(x);
+		else if (ID == EnumGui.Doctor.getIndex())
+			return new GuiDoctor();
+
 
 		return null;
 	}
@@ -237,11 +219,6 @@ public class ClientProxy extends CommonProxy {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public int getTexture(String string, String string2) {
-		return RenderingRegistry.addTextureOverride(string, string2);
 	}
 
 	@Override

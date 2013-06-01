@@ -16,7 +16,6 @@ import pixelmon.enums.EnumPokemon;
 public abstract class Entity2HasModel extends Entity1Base {
 
 	public ModelBase model;
-	public ModelObj objModel;
 	public float animationNum1 = 0f;
 
 	public int animationCounter = 0;
@@ -49,27 +48,10 @@ public abstract class Entity2HasModel extends Entity1Base {
 			Object mod = Pixelmon.proxy.getModels()[n];
 			if (mod instanceof ModelBase)
 				model = (ModelBase) mod;
-			else if (mod instanceof ModelObj)
-				objModel = (ModelObj) mod;
 		} else {
-			File newFile = new File(Minecraft.getMinecraftDir() + "/resources/pixelmon/models/" + getName().toLowerCase());
-			if (!newFile.exists() || !newFile.isDirectory()) {
-				ModelBase m = Pixelmon.proxy.loadModel(getName());
-				Pixelmon.proxy.getModels()[n] = m;
-				model = m;
-			} else {
-				Object3D[] objects = new Object3D[newFile.listFiles().length];
-				int i = 0;
-				for (File f : newFile.listFiles()) {
-					try {
-						Object3D obj = new Object3D(new BufferedReader(new FileReader(f)), false);
-						objects[i++] = obj;
-					} catch (Exception e) {
-
-					}
-				}
-				//ModelObj model = new ModelObj(objects);
-			}
+			ModelBase m = Pixelmon.proxy.loadModel(getName());
+			Pixelmon.proxy.getModels()[n] = m;
+			model = m;
 		}
 	}
 

@@ -7,8 +7,10 @@ import net.minecraft.world.World;
 import pixelmon.Pixelmon;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
+import pixelmon.entities.npcs.EntityDoctor;
+import pixelmon.entities.npcs.EntityTrainer;
+import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 import pixelmon.spawning.SpawnRegistry;
@@ -30,9 +32,13 @@ public class PixelmonEntityList {
 			if (type == ClassType.Pixelmon) {
 				var2 = new EntityPixelmon(par1World);
 				((EntityPixelmon) var2).init(par0Str);
-			} else {
+			} else if (EnumTrainers.has(par0Str)) {
 				var2 = new EntityTrainer(par1World);
 				((EntityTrainer) var2).init(par0Str);
+			}else {
+				NPCType npcType = NPCType.get(par0Str);
+				if (npcType == NPCType.Doctor)
+					var2 = new EntityDoctor(par1World);
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();
