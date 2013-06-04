@@ -20,6 +20,7 @@ public class PixelmonConfig {
 	public static Configuration config;
 
 	public static boolean allowNonPixelmonMobs;
+	public static boolean allowCapturingOutsideBattle = true;
 
 	public static int maxNumLandPokemon;
 	public static int maxNumWaterPokemon;
@@ -48,6 +49,7 @@ public class PixelmonConfig {
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
 		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs", false).getBoolean(false);
+		allowCapturingOutsideBattle = config.get("general", "Allow Capturing Outside of Battle", true).getBoolean(true);
 		maxNumLandPokemon = config.get("general", "Max number of Land Pokemon (at one time)", 40).getInt(40);
 		maxNumUndergroundPokemon = config.get("general", "Max number of Underground Pokemon (at one time)", 60).getInt(60);
 		maxNumWaterPokemon = config.get("general", "Max number of Water Pokemon (at one time)", 20).getInt(20);
