@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import pixelmon.config.PixelmonConfig;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -17,6 +18,13 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBossMode;
 
 public class RenderPixelmon extends RenderLiving {
+
+	private int defaultNameRenderDistance = 8;
+	private int defaultBossNameRenderDistanceExtension = 8; //kept as an additive bonus to avoid scaling issues
+	private int configNameRenderMultiplier = (int) max(1, min(PixelmonConfig.nameplateRangeModifier, 3)); //keeps in bounds [1, 3], forces to int type
+	private int nameRenderDistanceNormal = defaultNameRenderDistance * configNameRenderMultiplier;
+	private int nameRenderDistanceBoss = nameRenderDistanceNormal + defaultBossNameRenderDistanceExtension;
+
 	public RenderPixelmon(float par2) { // par2 = shadow size
 		super(null, par2);
 	}
@@ -33,7 +41,7 @@ public class RenderPixelmon extends RenderLiving {
 		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
 
 		float var10 = pixelmon.getDistanceToEntity(this.renderManager.livingPlayer);
-		int renderdistance = pixelmon.getBossMode() != EnumBossMode.Normal ? 16 : 8;
+		float renderdistance = pixelmon.getBossMode() != EnumBossMode.Normal ? nameRenderDistanceBoss : nameRenderDistanceNormal;
 		if (var10 <= renderdistance || owned) {
 			drawHealthBar(pixelmon, d, d1, d2, f, f1, owned);
 			if (ServerStorageDisplay.contains(pixelmon.getPokemonId()))

@@ -6,6 +6,11 @@ import net.minecraft.entity.EntityLiving;
 import pixelmon.entities.npcs.EntityTrainer;
 
 public class RenderTrainer extends RenderLiving {
+
+	private int defaultNameRenderDistance = 8;
+	private int configNameRenderMultiplier = (int) max(1, min(PixelmonConfig.nameplateRangeModifier, 3)); //keeps in bounds [1, 3], forces to int type
+	private int nameRenderDistanceNormal = defaultNameRenderDistance * configNameRenderMultiplier;
+
 	public RenderTrainer(float par2) {
 		super(null, par2);
 	}
@@ -16,7 +21,7 @@ public class RenderTrainer extends RenderLiving {
 		if (mainModel == null)
 			return;
 		float var10 = entityLiving.getDistanceToEntity(this.renderManager.livingPlayer);
-		if (var10 <= (float) 8) {
+		if (var10 <= (float) nameRenderDistanceNormal) {
 			drawNameTag(entityLiving, d, d1, d2);
 		}
 		super.doRenderLiving(entityLiving, d, d1, d2, f, f1);
