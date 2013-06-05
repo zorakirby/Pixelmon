@@ -42,14 +42,17 @@ public class CommandSpawn extends CommandBase {
 					if (var2[1].equalsIgnoreCase("s"))
 						((EntityPixelmon) var6).setIsShiny(true);
 				world.spawnEntityInWorld(var6);
+				notifyAdmins(var1, 1, "commands.pokespawn.success", new Object[]{var2});
 			} else if (EnumTrainers.has(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
+				notifyAdmins(var1, 1, "commands.pokespawn.success", new Object[]{var2});
 			} else if (NPCType.has(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
-				world.spawnEntityInWorld(var6);				
+				world.spawnEntityInWorld(var6);
+				notifyAdmins(var1, 1, "commands.pokespawn.success", new Object[]{var2});
 			} else {
 				var1.sendChatToPlayer(var5 + " is not in game!");
 			}
