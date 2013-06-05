@@ -14,6 +14,7 @@ import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerStorage;
+import pixelmon.battles.controller.BattleController;
 
 public class CommandHeal extends CommandBase {
 
@@ -44,13 +45,17 @@ public class CommandHeal extends CommandBase {
 				return;
 			}
 
-			if(!(var2 instanceof EntityPlayer))
-				{
-				var1.sendChatToPlayer(var2 + " is not a valid playername");
+			if(!(var2[0] instanceof EntityPlayer)){
+				var1.sendChatToPlayer(var2[0] + " is not a valid playername");
 				return;
-				}
+			}
 
-			this.player = var2;
+			if (var2[0].battleController != null) {
+				var1.sendChatToPlayer("Cannot heal " + var2[0] + " while they are in battle!");
+				return;
+			}
+
+			this.player = var2[0];
 			storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
 			storage.healAllPokemon();
 			return;
