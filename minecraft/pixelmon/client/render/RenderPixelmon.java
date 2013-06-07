@@ -1,5 +1,6 @@
 package pixelmon.client.render;
 
+import java.lang.Math;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -21,7 +22,7 @@ public class RenderPixelmon extends RenderLiving {
 
 	private int defaultNameRenderDistance = 8;
 	private int defaultBossNameRenderDistanceExtension = 8; //kept as an additive bonus to avoid scaling issues
-	private int configNameRenderMultiplier = (int) max(1, min(PixelmonConfig.nameplateRangeModifier, 3)); //keeps in bounds [1, 3], forces to int type
+	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3)); //keeps in bounds [1, 3], forces to int type
 	private int nameRenderDistanceNormal = defaultNameRenderDistance * configNameRenderMultiplier;
 	private int nameRenderDistanceBoss = nameRenderDistanceNormal + defaultBossNameRenderDistanceExtension;
 
