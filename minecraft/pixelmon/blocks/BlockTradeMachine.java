@@ -18,6 +18,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonItems;
 
 public class BlockTradeMachine extends BlockContainer {
 
@@ -32,6 +33,13 @@ public class BlockTradeMachine extends BlockContainer {
 		return -1;
 	}
 
+	@SideOnly(Side.CLIENT)
+    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
+    public int idPicked(World par1World, int par2, int par3, int par4)
+    {
+        return PixelmonItems.tradeMachineItem.itemID;
+    }
+
 	@Override
 	public int quantityDropped(Random random) {
 		return 0;
@@ -39,7 +47,7 @@ public class BlockTradeMachine extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
+		blockIcon = par1IconRegister.registerIcon("trademachine");
 	}
 	
 	@Override

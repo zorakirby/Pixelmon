@@ -70,6 +70,12 @@ public class BlockAnvil extends BlockContainer {
 		return PixelmonItems.anvilItem.itemID;
 	}
 
+	@SideOnly(Side.CLIENT)
+    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
+    public int idPicked(World par1World, int par2, int par3, int par4)
+    {
+        return PixelmonItems.anvilItem.itemID;
+    }
 	@Override
 	public boolean removeBlockByPlayer(World world, EntityPlayer player, int x, int y, int z) {
 		onBlockDestroyed(world, x, y, z);

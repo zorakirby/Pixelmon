@@ -332,6 +332,7 @@ public class PixelmonItems {
 		leggingsAluminium = new ItemPixelmonArmor(leggingsAluminiumID, 9, Pixelmon.ALUMINIUMARMOR, 0, 2, "pixelmon:aluminiumleggings", "Aluminium Leggings");
 		bootsAluminium = new ItemPixelmonArmor(bootsAluminiumID, 7, Pixelmon.ALUMINIUMARMOR, 0, 3, "pixelmon:aluminiumboots", "Aluminium Boots");
 
+		// TODO make correct icons for mossyrock and icyrock, instead of using anvil
 		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "anvil", "Mossy Rock");
 		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
 		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "anvil", "Icy Rock");
