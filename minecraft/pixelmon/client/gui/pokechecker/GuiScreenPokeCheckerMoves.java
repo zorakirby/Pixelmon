@@ -17,7 +17,6 @@ import pixelmon.database.DatabaseMoves;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
-	protected PixelmonDataPacket targetPacket;
 	GuiButton nameButton;
 	boolean renameButton;
 	static int selectednumber = -1;
@@ -307,6 +306,8 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname), (width - xSize) / 2 + 7, (height - ySize) / 2 + 70,
 					targetPacket.getType1().getColor());
 		}
+		
+		drawArrows(i, i1);
 	}
 
 	public void drawCenteredStringWithoutShadow(FontRenderer par1FontRenderer, String par2Str, int par3, int par4, int par5) {

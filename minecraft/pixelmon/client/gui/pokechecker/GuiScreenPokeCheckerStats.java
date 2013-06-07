@@ -18,7 +18,6 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumNature;
 
 public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
-	protected PixelmonDataPacket targetPacket;
 	GuiButton nameButton;
 	boolean renameButton;
 	boolean isPC;
@@ -152,6 +151,8 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname), (width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.getType1()
 					.getColor());
 		}
+		
+		drawArrows(i, i1);
 	}
 
 	private void drawColoredBar(int x, int y, int width, int height, float r, float g, float b) {
