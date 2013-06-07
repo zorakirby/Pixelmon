@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import pixelmon.api.PixelmonApi;
 import pixelmon.client.models.fossils.ModelFossil;
+import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.entities.pixelmon.interactions.InteractionEther;
 import pixelmon.entities.pixelmon.interactions.InteractionEvolutionStone;
@@ -53,7 +54,7 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 
-	public ModelBase getNPCModel(String model) {
+	public ModelBase getNPCModel(NPCType type, String model) {
 		return null;
 	}
 

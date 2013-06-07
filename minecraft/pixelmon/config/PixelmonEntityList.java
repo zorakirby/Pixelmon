@@ -8,6 +8,7 @@ import pixelmon.Pixelmon;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.entities.npcs.EntityDoctor;
+import pixelmon.entities.npcs.EntityNPC;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -39,6 +40,7 @@ public class PixelmonEntityList {
 				NPCType npcType = NPCType.get(par0Str);
 				if (npcType == NPCType.Doctor)
 					var2 = new EntityDoctor(par1World);
+				((EntityNPC)var2).init(par0Str);
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();
@@ -75,7 +77,7 @@ public class PixelmonEntityList {
 	}
 
 	public static void registerEntities() {
-		EntityRegistry.registerModEntity(EntityTrainer.class, "Trainer", PixelmonConfig.idTrainers, Pixelmon.instance, 100, 1, true);
+		EntityRegistry.registerModEntity(EntityNPC.class, "NPC", PixelmonConfig.idTrainers, Pixelmon.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityPixelmon.class, "Pixelmon", PixelmonConfig.idPixelmon, Pixelmon.instance, 100, 1, true);
 	}
 

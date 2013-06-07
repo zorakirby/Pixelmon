@@ -146,8 +146,12 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
 		boolean[] conds = { true, true };
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(var1, var3);
+		if (baseStats == null || baseStats.spawnConditions==null ) return false;
 		if (baseStats.spawnConditions.length == 0)
-			if (blockId != Block.grass.blockID || (biome == BiomeGenBase.jungle || biome == BiomeGenBase.jungleHills)
+			if (biome == BiomeGenBase.desert || biome == BiomeGenBase.desertHills) {
+				if (blockId != Block.sand.blockID)
+					return false;
+			} else if (blockId != Block.grass.blockID || (biome == BiomeGenBase.jungle || biome == BiomeGenBase.jungleHills)
 					&& worldObj.getBlockMaterial(var1, var2, var3) != Material.leaves)
 				return false;
 		for (SpawnConditions s : baseStats.spawnConditions) {

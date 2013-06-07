@@ -137,9 +137,15 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		drawImageQuad(60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
 		if ((targetPacket.getType2() != EnumType.Mystery))
 			drawImageQuad(100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
-
+		mc.renderEngine.bindTexture("/pixelmon/gui/summaryMoves.png");
+		drawArrows(par1, par2);
 	}
 
+	public void drawArrows(int mouseX, int mouseY) {
+		drawTexturedModalRect((width - xSize) / 2 + 98, (height) / 2 - 60, 60, 208, 16, 20);
+		drawTexturedModalRect((width - xSize) / 2 - 190, (height) / 2 - 60, 78, 208, 16, 20);
+	}
+	
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();

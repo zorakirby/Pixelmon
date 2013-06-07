@@ -15,16 +15,20 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public abstract class EntityNPC extends EntityCreature {
-	NPCType npcType;
+public class EntityNPC extends EntityCreature {
 	private ModelBase model = null;
 	public SpawnLocation npcLocation;
-	
+
 	public EntityNPC(World par1World, NPCType npcType) {
-		super(par1World);
-		this.npcType = npcType;
+		this(par1World);
+		setNPCType(npcType);
+	}
+
+	public EntityNPC(World world) {
+		super(world);
 		dataWatcher.addObject(3, ""); // Name
 		dataWatcher.addObject(4, "");// Model
+		dataWatcher.addObject(14, (int) 0); // NPCType
 		dataWatcher.addObject(26, ""); // Nickname
 	}
 
@@ -32,19 +36,19 @@ public abstract class EntityNPC extends EntityCreature {
 		setName(name);
 		health = 100;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public String getTexture() {
-		return "/pixelmon/texture/" + npcType.textureDirectory + "/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
+		return "/pixelmon/texture/" + getNPCType().textureDirectory + "/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
 	}
 
 	public ModelBase getModel() {
 		if (model == null)
-			model = Pixelmon.proxy.getNPCModel(dataWatcher.getWatchableObjectString(4));
+			model = Pixelmon.proxy.getNPCModel(getNPCType(), dataWatcher.getWatchableObjectString(4));
 		return model;
 	}
-	
+
 	public int getAge() {
 		return 0;
 	};
@@ -53,13 +57,21 @@ public abstract class EntityNPC extends EntityCreature {
 	protected boolean canDespawn() {
 		return false;
 	}
-	
+
 	public String getName() {
 		return dataWatcher.getWatchableObjectString(3);
 	}
 
 	public String getNickName() {
 		return dataWatcher.getWatchableObjectString(26);
+	}
+
+	public NPCType getNPCType() {
+		return NPCType.getType(dataWatcher.getWatchableObjectInt(14));
+	}
+
+	public void setNPCType(NPCType type) {
+		dataWatcher.updateObject(14, type.index);
 	}
 
 	public void setName(String name) {
@@ -70,6 +82,7 @@ public abstract class EntityNPC extends EntityCreature {
 	public int getMaxHealth() {
 		return 100;
 	}
+
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
@@ -103,11 +116,13 @@ public abstract class EntityNPC extends EntityCreature {
 		int blockId = this.worldObj.getBlockId(var1, var2 - 1, var3);
 		return blockId == Block.grass.blockID || blockId == Block.sand.blockID;
 	}
-	
+
 	@Override
 	public boolean interact(EntityPlayer player) {
 		return interactWithNPC(player);
 	}
-	
-	public abstract boolean interactWithNPC(EntityPlayer player);
+
+	public boolean interactWithNPC(EntityPlayer player) {
+		return false;
+	};
 }

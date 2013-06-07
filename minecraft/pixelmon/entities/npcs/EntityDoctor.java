@@ -13,7 +13,7 @@ public class EntityDoctor extends EntityNPC {
 
 	public EntityDoctor(World par1World) {
 		super(par1World, NPCType.Doctor);
-		setName("Phil");
+		setName("Doctor");
 	}
 
 	@Override

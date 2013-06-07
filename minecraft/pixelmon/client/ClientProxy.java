@@ -145,6 +145,7 @@ public class ClientProxy extends CommonProxy {
 		return model;
 	}
 
+	@Override
 	public ModelBase getNPCModel(NPCType type, String name) {
 		ModelBase model = null;
 		try {
