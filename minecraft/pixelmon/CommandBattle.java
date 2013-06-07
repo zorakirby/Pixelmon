@@ -12,23 +12,22 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
-import pixelmon.storage.PixelmonStorage;
-import pixelmon.storage.PlayerStorage;
 import pixelmon.battles.controller.BattleController;
 
-public class CommandHeal extends CommandBase {
-
-	private PlayerStorage storage;
-	private EntityPlayer player;
+public class CommandBattle extends CommandBase {
+	
+	private BattleControler battlecontroller;
+	private EntityPlayer challenger1;
+	private EntityPlayer challenger2;
 
 	@Override
 	public String getCommandName() {
-		return "pokeheal";
+		return "pokebattle";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender icommandsender){
-		return "pokeheal <playername>";
+		return "pokebattle <playername1> <playername2>";
 	}
 
 	@Override
@@ -39,26 +38,26 @@ public class CommandHeal extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender var1, String[] var2) {
 		try {
-			if (var2.length != 1){
+			if (var2.length != 2){
 				var1.sendChatToPlayer("Invalid Arguments");
 				var1.sendChatToPlayer(this.getCommandUsage(var1));
 				return;
-			}
+				}
 
 			if(!(var2[0] instanceof EntityPlayer)){
 				var1.sendChatToPlayer(var2[0] + " is not a valid playername");
 				return;
-			}
-
-			if (var2[0].battleController != null) {
-				var1.sendChatToPlayer("Cannot heal " + var2[0] + " while they are in battle!");
+				}
+			
+			if(!(var2[1] instanceof EntityPlayer)){
+				var1.sendChatToPlayer(var2[1] + " is not a valid playername");
 				return;
-			}
+				}
 
-			this.player = var2[0];
-			storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
-			storage.healAllPokemon();
-			notifyAdmins(var1, 0, "commands.pokeheal.success", new Object[] {var2[0]});
+			this.challenger1 = var2[0];
+			this.challenger2 = var2[1];
+			battlecontroller.BattleController(challenger1, challenger2);
+			notifyAdmins(var1, 1, "commands.pokebattle.success", new Object[] {var2[0], var2[1]});
 			return;
 
 		} catch (Exception e) {
