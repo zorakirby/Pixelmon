@@ -5,15 +5,19 @@ import java.util.List;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.PlayerNotFoundException;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import pixelmon.battles.BattleRegistry;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerStorage;
+
 import pixelmon.battles.controller.BattleController;
 
 public class CommandHeal extends CommandBase {
@@ -37,32 +41,39 @@ public class CommandHeal extends CommandBase {
 	}
 
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) {
+	public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr) {
 		try {
-			if (var2.length != 1){
-				var1.sendChatToPlayer("Invalid Arguments");
-				var1.sendChatToPlayer(this.getCommandUsage(var1));
+			if (par2ArrayOfStr.length != 1){
+				par1ICommandSender.sendChatToPlayer("Invalid Arguments");
+				par1ICommandSender.sendChatToPlayer(this.getCommandUsage(par1ICommandSender));
+				return;
+			}
+			
+			EntityPlayer entityplayer;
+			entityplayer = func_82359_c(par1ICommandSender, par2ArrayOfStr[0]);
+						
+			if(!(entityplayer instanceof EntityPlayer)){
+				par1ICommandSender.sendChatToPlayer(par2ArrayOfStr[0] + " is not a valid playername");
+				return;
+			}
+			
+			if (BattleRegistry.getBattle(entityplayer) != null) {
+				par1ICommandSender.sendChatToPlayer("Cannot heal " + par2ArrayOfStr[0] + " while they are in battle!");
 				return;
 			}
 
-			if(!(var2[0] instanceof EntityPlayer)){
-				var1.sendChatToPlayer(var2[0] + " is not a valid playername");
-				return;
-			}
-
-			if (var2[0].battleController != null) {
-				var1.sendChatToPlayer("Cannot heal " + var2[0] + " while they are in battle!");
-				return;
-			}
-
-			this.player = var2[0];
-			storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
+			storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityplayer);
 			storage.healAllPokemon();
-			notifyAdmins(var1, 0, "commands.pokeheal.success", new Object[] {var2[0]});
+			notifyAdmins(par1ICommandSender, 0, "Successfully healed " + par2ArrayOfStr[0] + "'s Pokemon!", new Object[] {par2ArrayOfStr[0]});
 			return;
 
-		} catch (Exception e) {
-			var1.sendChatToPlayer("Invalid Name!");
+		} 
+		catch (PlayerNotFoundException e){
+			//Catches the case where in cracked clients player's name defaults is "ASH"
+			par1ICommandSender.sendChatToPlayer("Invalid Name! Try again or try using 'ash'.");
+		}
+		catch (Exception e) {
+			par1ICommandSender.sendChatToPlayer("Invalid Name! Try again or try using 'ash'.");
 		}
 	}
 }
