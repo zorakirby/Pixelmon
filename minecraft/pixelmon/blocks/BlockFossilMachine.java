@@ -206,6 +206,13 @@ public class BlockFossilMachine extends BlockContainer {
 		return PixelmonItemsFossils.fossilMachineItem.itemID;
 	}
 
+	@SideOnly(Side.CLIENT)
+    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
+    public int idPicked(World par1World, int par2, int par3, int par4)
+    {
+        return PixelmonItemsFossils.fossilMachineItem.itemID;
+    }
+
 	@Override
 	public int quantityDropped(Random random) {
 		return 1;

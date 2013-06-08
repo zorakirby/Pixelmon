@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import pixelmon.Pixelmon;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsFossils;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.enums.EnumGui;
@@ -43,6 +44,13 @@ public class BlockFossilCleaner extends BlockContainer {
 	public int idDropped(int par1, Random par2Random, int par3) {
 		return PixelmonItemsFossils.fossilCleanerItem.itemID;
 	}
+
+	@SideOnly(Side.CLIENT)
+    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
+    public int idPicked(World par1World, int par2, int par3, int par4)
+    {
+        return PixelmonItemsFossils.fossilCleanerItem.itemID;
+    }
 
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 		return new ItemStack(PixelmonItemsFossils.fossilCleanerItem, 1);

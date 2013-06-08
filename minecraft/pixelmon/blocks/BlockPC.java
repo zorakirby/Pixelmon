@@ -44,6 +44,13 @@ public class BlockPC extends BlockContainer {
 		blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
 	}
 	
+	@SideOnly(Side.CLIENT)
+    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
+    public int idPicked(World par1World, int par2, int par3, int par4)
+    {
+        return PixelmonItems.pcItem.itemID;
+    }
+
 	@Override
 	public boolean isOpaqueCube() {
 		return false;

@@ -1,7 +1,6 @@
 package pixelmon.client.render;
 
-import java.lang.Math; 
-import net.minecraft.client.Minecraft;
+import java.lang.Math;import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.EntityLiving;
 import pixelmon.config.PixelmonConfig;
