@@ -28,7 +28,8 @@ import pixelmon.battles.controller.BattleController;
 
 public class CommandBattle extends CommandBase {
 	
-	BattleController bc;
+	BattleController bc1;
+	BattleController bc2;
 	PlayerParticipant player1;
 	PlayerParticipant player2;
 
@@ -39,7 +40,7 @@ public class CommandBattle extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender icommandsender){
-		return "pokebattle <playername1> <playername2>";
+		return "/pokebattle <player1> <player2>";
 	}
 
 	@Override
@@ -52,58 +53,63 @@ public class CommandBattle extends CommandBase {
     {
         if (par2ArrayOfStr.length != 2)
         {
-            throw new WrongUsageException("commands.pokebattle.usage", new Object[0]);
+        	par1ICommandSender.sendChatToPlayer("Invalid Arguments.");
+			par1ICommandSender.sendChatToPlayer(this.getCommandUsage(par1ICommandSender));
+			return;
         }
-        else
+
+        notifyAdmins(par1ICommandSender, 1, "Battle between " + par2ArrayOfStr[0] + " and " + par2ArrayOfStr[1] + " attempted...", new Object[] {par2ArrayOfStr[0], par2ArrayOfStr[1]});
+
+        EntityPlayerMP entityplayermp1 = func_82359_c(par1ICommandSender, par2ArrayOfStr[0]);
+
+        if (entityplayermp1 == null)
         {
-            EntityPlayerMP entityplayermp1 = func_82359_c(par1ICommandSender, par2ArrayOfStr[0]);
-
-            if (entityplayermp1 == null)
-            {
-            	throw new PlayerNotFoundException();
-            }
-            else
-            {
-            	EntityPlayerMP entityplayermp2 = func_82359_c(par1ICommandSender, par2ArrayOfStr[1]);
-
-                if (entityplayermp2 == null) {
-                	throw new PlayerNotFoundException();
-                }
-                else
-                {
-                	if (entityplayermp1.worldObj != entityplayermp2.worldObj)
-                    {
-                        notifyAdmins(par1ICommandSender, "commands.pokebattle.notSameDimension", new Object[0]);
-                        return;
-                    }
-                	else
-                	{
-                		try {
-                			EntityPixelmon player1firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(entityplayermp1).getFirstAblePokemon(entityplayermp1.worldObj);
-                			this.player1 = new PlayerParticipant(entityplayermp1, player1firstPokemon);
-                		
-                			EntityPixelmon player2firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(entityplayermp2).getFirstAblePokemon(entityplayermp2.worldObj);
-                			this.player2 = new PlayerParticipant(entityplayermp2, player2firstPokemon);
-                		
-                			this.player1.StartBattle(bc, this.player2);
-                			notifyAdmins(par1ICommandSender, 1, "commands.pokebattle.success", new Object[] {par2ArrayOfStr[0], par2ArrayOfStr[1]});
-                			return;
-                		}
-                		catch (PlayerNotLoadedException e){
-                			if (PixelmonConfig.printErrors) {
-                				System.out.println("Error loading player for command /pokebattle " + par2ArrayOfStr[0] + "  " + par2ArrayOfStr[1]);
-                				System.out.println(e.getStackTrace());
-                			}
-                		}
-                		catch (Exception e) {
-                			if (PixelmonConfig.printErrors) {
-                				System.out.println("Error loading player for command /pokebattle " + par2ArrayOfStr[0] + "  " + par2ArrayOfStr[1]);
-                				System.out.println(e.getStackTrace());
-                			}
-            			}
-                	}
-                }
-            }
+        	throw new PlayerNotFoundException();
         }
+           
+        EntityPlayerMP entityplayermp2 = func_82359_c(par1ICommandSender, par2ArrayOfStr[1]);
+
+        if (entityplayermp2 == null)
+        {
+        	throw new PlayerNotFoundException();
+        }
+
+        if (entityplayermp1 == entityplayermp2)
+        {
+        	notifyAdmins(par1ICommandSender, "Both participants cannot be the same person.", new Object[0]);
+        	return;    	
+        }
+
+        if (entityplayermp1.worldObj != entityplayermp2.worldObj)
+    	{
+	        notifyAdmins(par1ICommandSender, "Both participants are not in same dimension.", new Object[0]);
+	        return;
+        }
+        
+		try {
+			EntityPixelmon player1firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(entityplayermp1).getFirstAblePokemon(entityplayermp1.worldObj);
+			player1 = new PlayerParticipant(entityplayermp1, player1firstPokemon);
+			
+			EntityPixelmon player2firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(entityplayermp2).getFirstAblePokemon(entityplayermp2.worldObj);
+			player2 = new PlayerParticipant(entityplayermp2, player2firstPokemon);
+		
+			notifyAdmins(par1ICommandSender, 1, "Battle between " + par2ArrayOfStr[0] + " and " + par2ArrayOfStr[1] + " started!", new Object[] {par2ArrayOfStr[0], par2ArrayOfStr[1]});
+			bc1 = new BattleController(player1, player2);
+			return;
+		}
+		catch (PlayerNotLoadedException e){
+			if (PixelmonConfig.printErrors)
+			{
+				System.out.println("Error loading player for command /pokebattle " + par2ArrayOfStr[0] + "  " + par2ArrayOfStr[1]);
+				System.out.println(e.getStackTrace());
+			}
+		}
+		catch (Exception e)
+		{
+			if (PixelmonConfig.printErrors) {
+				System.out.println("Error loading player for command /pokebattle " + par2ArrayOfStr[0] + "  " + par2ArrayOfStr[1]);
+				System.out.println(e.getStackTrace());
+			}
+		}
     }
 }

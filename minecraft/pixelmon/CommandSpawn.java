@@ -29,6 +29,11 @@ public class CommandSpawn extends CommandBase {
 	}
 
 	@Override
+	public String getCommandUsage(ICommandSender icommandsender){
+		return "/pokespawn <pokemon>";
+	}
+
+	@Override
 	public void processCommand(ICommandSender var1, String[] var2) {
 		try {
 			ChunkCoordinates cc = var1.getPlayerCoordinates();
@@ -42,17 +47,20 @@ public class CommandSpawn extends CommandBase {
 					if (var2[1].equalsIgnoreCase("s"))
 						((EntityPixelmon) var6).setIsShiny(true);
 				world.spawnEntityInWorld(var6);
-				notifyAdmins(var1, 1, "commands.pokespawn.success", new Object[]{var2});
+				var1.sendChatToPlayer("Successfully spawned a " + var5);
+				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[]{var5});
 			} else if (EnumTrainers.has(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
-				notifyAdmins(var1, 1, "commands.pokespawn.success", new Object[]{var2});
+				var1.sendChatToPlayer("Successfully spawned a " + var5);
+				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[]{var5});
 			} else if (NPCType.has(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
-				notifyAdmins(var1, 1, "commands.pokespawn.success", new Object[]{var2});
+				var1.sendChatToPlayer("Successfully spawned a " + var5);
+				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[]{var5});
 			} else {
 				var1.sendChatToPlayer(var5 + " is not in game!");
 			}

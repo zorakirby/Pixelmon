@@ -17,11 +17,11 @@ public class CommandFreeze extends CommandBase {
 		Pixelmon.freeze = !Pixelmon.freeze;
 		if (Pixelmon.freeze) {
 			var4.sendChatToPlayer("Pixelmon are frozen in place!");
-			notifyAdmins(var1, 1, "commands.freeze.success", new Object[]{});
+			notifyAdmins(var1, 1, "Pixelmon are frozen in place!", new Object[]{});
 		}
 		else {
 			var4.sendChatToPlayer("Pixelmon are unfrozen!");
-			notifyAdmins(var1, 1, "commands.unfreeze.success", new Object[]{});
+			notifyAdmins(var1, 1, "Pixelmon are unfrozen!", new Object[]{});
 		}
 	}
 
