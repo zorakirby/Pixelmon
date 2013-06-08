@@ -1,6 +1,7 @@
 package pixelmon.client.render;
 
-import java.lang.Math;import pixelmon.entities.npcs.EntityDoctor;
+import java.lang.Math;
+import pixelmon.entities.npcs.EntityDoctor;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.config.PixelmonConfig;
 import net.minecraft.client.Minecraft;
@@ -10,7 +11,8 @@ import net.minecraft.entity.EntityLiving;
 public class RenderDoctor extends RenderLiving {
 
 	private int defaultNameRenderDistance = 8;
-	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3)); //keeps in bounds [1, 3], forces to int type	private int nameRenderDistanceNormal = defaultNameRenderDistance * configNameRenderMultiplier;
+	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3)); //keeps in bounds [1, 3], forces to int type
+	private int nameRenderDistanceNormal = defaultNameRenderDistance * configNameRenderMultiplier;
 
 	public RenderDoctor(float par2) {
 		super(null, par2);
