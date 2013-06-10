@@ -52,6 +52,7 @@ public enum EnumPokemon {
 	Flaaffy("Flaaffy"),
 	Flareon("Flareon"),
 	Flygon("Flygon"),
+	Froslass("Froslass"),
 	Gastly("Gastly"),
 	Gengar("Gengar"),
 	Geodude("Geodude"),
@@ -191,5 +192,13 @@ public enum EnumPokemon {
 			if (e.name.equalsIgnoreCase(name)) return e;
 		}
 		return null;
+	}
+	
+	public static String getDisplayName(String name){
+		if(name.equals("Nidoranfemale"))
+			return "Nidoran\u2640";
+		else if(name.equals("Nidoranmale"))
+			return "Nidoran\u2642";
+		else return name;
 	}
 }

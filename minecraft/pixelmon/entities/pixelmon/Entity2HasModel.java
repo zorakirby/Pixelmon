@@ -7,10 +7,12 @@ import java.io.InputStream;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
 import pixelmon.client.models.objHandling.ModelObj;
 import pixelmon.client.models.objHandling.Object3D;
+import pixelmon.entities.pixelmon.Entity7HasAI.Aggression;
 import pixelmon.enums.EnumPokemon;
 
 public abstract class Entity2HasModel extends Entity1Base {
@@ -19,12 +21,11 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public ModelObj objModel;
 	public float animationNum1 = 0f;
 
-	public int animationCounter = 0;
+	public int animationCounter = 0; //counter increases every "Entity-update" tick.
 	public int animationIncrement = 2;
 	public int animationLimit = 360;
-	public int animationCounter2 = 0;
-	public int animationIncrement2 = 3;
-	public int animationLimit2 = 360;
+	public int animationCounter2 = 0; //counter increases every single tick.
+	public int animationIncrement2 = 1;
 
 	public Entity2HasModel(World par1World) {
 		super(par1World);
@@ -89,13 +90,36 @@ public abstract class Entity2HasModel extends Entity1Base {
 			oldName = getName();
 		}
 		if (worldObj.isRemote) {
-			animationCounter = animationCounter + animationIncrement;
+			animationCounter += animationIncrement;
 			if (animationCounter >= animationLimit)
 				animationCounter = 0;
-			animationCounter2 = animationCounter2 + animationIncrement2;
+/*			animationCounter2 = animationCounter2 + animationIncrement2;
 			if (animationCounter2 >= animationLimit2)
-				animationCounter2 = 0;
+				animationCounter2 = 0;*/
 		}
-
+	}
+	
+	public void writeEntityToNBT(NBTTagCompound nbt) {
+		super.writeEntityToNBT(nbt);
+		nbt.setInteger("animationCounter2", animationCounter2); //writing to NBT, because otherwise, when the games is loaded again, all entities' animationCounter2 will be synchronized.
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt) {
+		super.readEntityFromNBT(nbt);
+		animationCounter2 = nbt.getInteger("animationCounter2");
+	}
+	
+	/**
+	 * Increases animationC0unter2 by 1 or resets it to zero if it reaches over the maximum integer limit. <br>
+	 * This is called in <code>PixelmonModelBase.render</code>, so that it increases every single tick, instead of just on "entity-update" ticks
+	 */
+	public void increaseAnimCounter2(){
+		if(!Minecraft.getMinecraft().isGamePaused){
+			animationCounter2 += animationIncrement2;
+			if(animationCounter2 < 0){
+				animationCounter2 = 0;
+			}
+		}
 	}
 }

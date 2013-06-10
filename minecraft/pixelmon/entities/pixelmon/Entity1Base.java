@@ -12,6 +12,7 @@ import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumNature;
 import pixelmon.enums.EnumPokeballs;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
@@ -19,7 +20,7 @@ import pixelmon.storage.PlayerStorage;
 public abstract class Entity1Base extends EntityTameable {
 	public EnumPokeballs caughtBall;
 	public boolean hitByPokeball = false;
-	public boolean isMale;
+	public Boolean isMale;
 	public boolean isInBall = false;
 	public boolean isFainted = false;
 	protected boolean isInitialised = false;
@@ -84,7 +85,7 @@ public abstract class Entity1Base extends EntityTameable {
 
 	public String getNickname() {
 		if (dataWatcher.getWatchableObjectString(3).equals(""))
-			return getName();
+			return EnumPokemon.getDisplayName(getName());
 		return dataWatcher.getWatchableObjectString(3);
 	}
 

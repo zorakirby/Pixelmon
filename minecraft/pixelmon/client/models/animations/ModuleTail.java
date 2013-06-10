@@ -6,13 +6,13 @@ import net.minecraft.client.model.ModelRenderer;
 
 public abstract class ModuleTail extends Module {
 
-	public ArrayList<ModelRenderer> tailParts;
+	public ArrayList<IModulizable> tailParts;
 	public int[] lengths;
 
 	public ModuleTail(ModelRenderer... tailArgs) {
-		tailParts = new ArrayList<ModelRenderer>();
+		tailParts = new ArrayList<IModulizable>();
 		for (ModelRenderer m : tailArgs) {
-			tailParts.add(m);
+			tailParts.add(getModulizableFrom(m));
 		}
 		lengths = new int[tailParts.size()];
 

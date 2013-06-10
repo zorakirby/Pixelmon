@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntityDaylightDetector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
@@ -44,6 +45,8 @@ import pixelmon.client.keybindings.PreviousPokemonKey;
 import pixelmon.client.keybindings.SendPokemonKey;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.client.models.objHandling.Object3D;
+import pixelmon.client.models.smd.Bone;
+import pixelmon.client.models.smd.ValveStudioModelLoader;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
 import pixelmon.client.render.RenderTrainer;
@@ -58,6 +61,7 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.trainers.EntityTrainer;
+import pixelmon.enums.EnumCustomModel;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
 import pixelmon.enums.EnumPokeballs;
@@ -71,6 +75,7 @@ import cpw.mods.fml.relauncher.Side;
 public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers() {
+		//Bone.setDebugModel();
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
@@ -80,9 +85,10 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
-
+		EnumCustomModel.preloadModels();
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
+
 	}
 
 	@Override
@@ -131,8 +137,9 @@ public class ClientProxy extends CommonProxy {
 				} catch (Exception e) {
 					if (PixelmonConfig.printErrors) {
 						System.out.println("Failed to construct model for " + name);
-						e.printStackTrace();
 					}
+					e.printStackTrace();
+					
 				}
 			} catch (Exception e) {
 				if (PixelmonConfig.printErrors) {

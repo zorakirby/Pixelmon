@@ -15,6 +15,7 @@ public abstract class PixelmonModelBase extends ModelBase {
 
 	@Override
 	public void render(Entity var1, float f, float f1, float f2, float f3, float f4, float f5) {
+		((EntityPixelmon)var1).increaseAnimCounter2();
 		doAnimation(var1, f, f1, f2, f3, f4, f5);
 	}
 

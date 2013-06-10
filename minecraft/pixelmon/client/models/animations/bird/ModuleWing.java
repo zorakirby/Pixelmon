@@ -2,12 +2,14 @@ package pixelmon.client.models.animations.bird;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.MathHelper;
+import pixelmon.client.models.animations.IModulizable;
+import pixelmon.client.models.animations.IModulizable.EnumGeomData;
 import pixelmon.client.models.animations.Module;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ModuleWing extends Module {
 
-	ModelRenderer wing;
+	IModulizable wing;
 
 	float WingRotationLimit;
 	float WingSpeed;
@@ -18,14 +20,14 @@ public class ModuleWing extends Module {
 	// EnumWing WingOrientation;
 	EnumWing WingVariable;
 
-	public ModuleWing(ModelRenderer wing, EnumWing WingVariable,
+	public ModuleWing(Object wing, EnumWing WingVariable,
 			float WingOrientation, float WingRotationLimit, float WingSpeed) {
-		this.wing = wing;
+		this.wing = getModulizableFrom(wing);
 		this.WingSpeed = WingSpeed;
 		this.WingRotationLimit = WingRotationLimit;
 		this.WingOrientation = WingOrientation;
-		WingInitY = wing.rotateAngleY;
-		WingInitZ = wing.rotateAngleZ;
+		WingInitY = this.wing.getValue(EnumGeomData.yrot);
+		WingInitZ = this.wing.getValue(EnumGeomData.zrot);
 		this.WingVariable = WingVariable;
 		if (WingVariable == EnumWing.Right) {
 			WingDirection = 1;
@@ -39,19 +41,19 @@ public class ModuleWing extends Module {
 	public void walk(EntityPixelmon entity, float f, float f1, float f2,
 			float f3, float f4) {
 
-		wing.rotateAngleY = MathHelper.cos((float) Math
+		wing.setValue(MathHelper.cos((float) Math
 				.toRadians(WingOrientation))
 				* WingDirection
 				* MathHelper.cos(f2 * WingSpeed)
 				* (float) Math.PI
-				* WingRotationLimit;
+				* WingRotationLimit, EnumGeomData.yrot);
 		
-		wing.rotateAngleZ = MathHelper.sin((float) Math
+		wing.setValue(MathHelper.sin((float) Math
 				.toRadians(WingOrientation))
 				* WingDirection
 				* MathHelper.cos(f2 * WingSpeed)
 				* (float) Math.PI
-				* WingRotationLimit;
+				* WingRotationLimit, EnumGeomData.zrot);
 
 	}
 

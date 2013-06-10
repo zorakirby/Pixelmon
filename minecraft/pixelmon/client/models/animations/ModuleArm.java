@@ -3,6 +3,7 @@ package pixelmon.client.models.animations;
 import java.util.ArrayList;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
+import pixelmon.client.models.animations.IModulizable.EnumGeomData;
 import pixelmon.client.models.animations.bird.EnumWing;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.client.model.ModelRenderer;
@@ -10,7 +11,7 @@ import net.minecraft.util.MathHelper;
 
 public class ModuleArm extends Module {
 
-	ModelRenderer arm;
+	IModulizable arm;
 
 	float ArmRotationLimit;
 	float ArmSpeed;
@@ -20,12 +21,12 @@ public class ModuleArm extends Module {
 	float ArmAxisRotation; //either 0 or 90
 	EnumArm ArmVariable;
 
-	public ModuleArm(ModelRenderer arm, EnumArm ArmVariable, float ArmAxisRotation, float ArmRotationLimit, float ArmSpeed) {
-		this.arm = arm;
+	public ModuleArm(Object arm, EnumArm ArmVariable, float ArmAxisRotation, float ArmRotationLimit, float ArmSpeed) {
+		this.arm = getModulizableFrom(arm);
 		this.ArmSpeed = ArmSpeed;
 		this.ArmRotationLimit = ArmRotationLimit;
-		ArmInitY = arm.rotateAngleY;
-		ArmInitZ = arm.rotateAngleZ;
+		ArmInitY = this.arm.getValue(EnumGeomData.yrot);
+		ArmInitZ = this.arm.getValue(EnumGeomData.zrot);
 		this.ArmAxisRotation = ArmAxisRotation;
 		this.ArmVariable = ArmVariable;
 		if (ArmVariable == EnumArm.Right) {
@@ -41,13 +42,15 @@ public class ModuleArm extends Module {
 			float f3, float f4) {
 		
 		if (ArmAxisRotation == 90) {
-			arm.rotateAngleY = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
+			float angleY = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
 					* ArmRotationLimit
 					* f1;
+			arm.setValue(angleY, EnumGeomData.yrot);
 		} else {
-			arm.rotateAngleX = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
+			float angleX = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
 					* ArmRotationLimit
 					* f1 * ArmDirection;
+			arm.setValue(angleX, EnumGeomData.xrot);
 		}
 
 		

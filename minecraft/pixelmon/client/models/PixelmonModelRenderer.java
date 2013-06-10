@@ -1,6 +1,10 @@
 package pixelmon.client.models;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
+
+import pixelmon.client.models.animations.IModulizable;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -9,11 +13,14 @@ import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraftforge.client.model.IModelCustom;
 
-public class PixelmonModelRenderer extends ModelRenderer {
+public class PixelmonModelRenderer extends ModelRenderer{
 	/** The GL display list rendered by the Tessellator for this model */
 	private int displayList;
 	private boolean compiled = false;
+	public ArrayList<ModelCustomWrapper> objs = new ArrayList();
+	
 
 	public PixelmonModelRenderer(ModelBase par1ModelBase, String par2Str) {
 		super(par1ModelBase, par2Str);
@@ -26,6 +33,11 @@ public class PixelmonModelRenderer extends ModelRenderer {
 	public PixelmonModelRenderer(ModelBase par1ModelBase, int par2, int par3) {
 		super(par1ModelBase, par2, par3);
 	}
+	
+	public void addCustomModel(ModelCustomWrapper model){
+		this.objs.add(model);
+	}
+	
 
 	 @SideOnly(Side.CLIENT)
 	    public void render(float par1)
@@ -123,8 +135,14 @@ public class PixelmonModelRenderer extends ModelRenderer {
 			((ModelBox) this.cubeList.get(var3)).render(var2, par1);
 		}
 
+		for(int i = 0; i < this.objs.size(); i++){
+			this.objs.get(i).render(par1);
+		}
+
 		GL11.glEndList();
 		this.compiled = true;
 	}
+
+
 
 }

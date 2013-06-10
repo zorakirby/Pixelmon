@@ -2,11 +2,12 @@ package pixelmon.client.models.animations.bird;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.MathHelper;
+import pixelmon.client.models.animations.IModulizable.EnumGeomData;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ModuleWingComplex extends ModuleWing {
 
-	public ModuleWingComplex(ModelRenderer wing, EnumWing WingVariable,
+	public ModuleWingComplex(Object wing, EnumWing WingVariable,
 			float WingOrientation, float WingRotationLimit) {
 		super(wing, WingVariable, WingOrientation, WingRotationLimit, 0);
 	}
@@ -18,17 +19,19 @@ public class ModuleWingComplex extends ModuleWing {
 		entity.animationLimit = 90;
 		entity.animationIncrement = 6;
 
+		float yRot;
+		float zRot;
 		if (WingVariable == EnumWing.Left) {
 
 			if (entity.animationCounter < 45) {
-				wing.rotateAngleY = MathHelper.cos((float) Math
+				yRot = MathHelper.cos((float) Math
 						.toRadians(WingOrientation))
 						* ((float) (1.0091F - 1.009F * Math.exp(-Math
 								.toRadians(entity.animationCounter) * 6))
 								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
 								* WingRotationLimit);
 
-				wing.rotateAngleZ = MathHelper.sin((float) Math
+				zRot = MathHelper.sin((float) Math
 						.toRadians(WingOrientation))
 						* ((float) (1.0091F - 1.009F * Math.exp(-Math
 								.toRadians(entity.animationCounter) * 6))
@@ -36,7 +39,7 @@ public class ModuleWingComplex extends ModuleWing {
 								* WingRotationLimit);
 
 			} else {
-				wing.rotateAngleY = MathHelper.cos((float) Math
+				yRot = MathHelper.cos((float) Math
 						.toRadians(WingOrientation))
 						* ((float) (0.5F
 								- 0.5F
@@ -45,7 +48,7 @@ public class ModuleWingComplex extends ModuleWing {
 								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
 								* WingRotationLimit));
 
-				wing.rotateAngleZ = MathHelper.sin((float) Math
+				zRot = MathHelper.sin((float) Math
 						.toRadians(WingOrientation))
 						* ((float) (0.5F
 								- 0.5F
@@ -57,14 +60,14 @@ public class ModuleWingComplex extends ModuleWing {
 			}
 		} else {
 			if (entity.animationCounter < 45) {
-				wing.rotateAngleY = MathHelper.cos((float) Math
+				yRot = MathHelper.cos((float) Math
 						.toRadians(WingOrientation))
 						* ((float) (Math.exp(-Math
 								.toRadians(entity.animationCounter) * 6))
 								* (float) Math.PI * 2 * WingRotationLimit - (float) Math.PI
 								* WingRotationLimit);
 
-				wing.rotateAngleZ = MathHelper.sin((float) Math
+				zRot = MathHelper.sin((float) Math
 						.toRadians(WingOrientation))
 						* ((float) (Math.exp(-Math
 								.toRadians(entity.animationCounter) * 6))
@@ -72,14 +75,14 @@ public class ModuleWingComplex extends ModuleWing {
 								* WingRotationLimit);
 
 			} else {
-				wing.rotateAngleY = MathHelper.cos((float) Math
+				yRot = MathHelper.cos((float) Math
 						.toRadians(WingOrientation))
 						* ((float) ((0.5F * Math.cos(Math
 								.toRadians(entity.animationCounter) * 4) - 0.5F)
 								* (float) Math.PI * 2 * WingRotationLimit + (float) Math.PI
 								* WingRotationLimit));
 
-				wing.rotateAngleZ = MathHelper.sin((float) Math
+				zRot = MathHelper.sin((float) Math
 						.toRadians(WingOrientation))
 						* ((float) (0.5F * Math.cos(Math
 								.toRadians(entity.animationCounter) * 4) - 0.5F)
@@ -87,6 +90,8 @@ public class ModuleWingComplex extends ModuleWing {
 								* WingRotationLimit);
 			}
 		}
+		wing.setValue(yRot, EnumGeomData.yrot);
+		wing.setValue(zRot, EnumGeomData.zrot);
 	}
 
 	@Override
