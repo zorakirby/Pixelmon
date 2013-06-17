@@ -15,7 +15,7 @@ public class IVStore {
 		IVStore iv = new IVStore();
 		iv.SpDef = RandomHelper.getRandomNumberBetween(1, 31);
 		iv.SpAtt = RandomHelper.getRandomNumberBetween(1, 31);
-		iv.Speed = RandomHelper.getRandomNumberBetween(1, 31;
+		iv.Speed = RandomHelper.getRandomNumberBetween(1, 31);
 		iv.Defence = RandomHelper.getRandomNumberBetween(1, 31);
 		iv.Attack = RandomHelper.getRandomNumberBetween(1, 31);
 		iv.HP = RandomHelper.getRandomNumberBetween(1, 31);
