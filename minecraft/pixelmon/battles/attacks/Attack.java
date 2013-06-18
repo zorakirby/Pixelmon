@@ -64,6 +64,8 @@ public class Attack {
 	public boolean flinched = false;
 
 	public void use(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+		target.hurtTime = 0;
+		user.hurtTime = 0;
 		boolean attackHandled = false, cantMiss = false;
 		flinched = false;
 		user.getLookHelper().setLookPositionWithEntity(target, 0, 0);

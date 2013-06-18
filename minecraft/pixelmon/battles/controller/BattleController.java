@@ -266,7 +266,7 @@ public class BattleController {
 			}
 	}
 
-	public void SwitchPokemon(EntityPixelmon currentPixelmon, int newPixelmonId) {
+	public EntityPixelmon SwitchPokemon(EntityPixelmon currentPixelmon, int newPixelmonId) {
 		for (BattleParticipant p : participants)
 			if (p.currentPokemon() == currentPixelmon) {
 				p.switchPokemon(newPixelmonId);
@@ -280,8 +280,9 @@ public class BattleController {
 						p2.attackersList.add(p2.currentPokemon().getPokemonId());
 						p2.updateOpponent();
 					}
-
+				return p.currentPokemon();
 			}
+		return null;
 	}
 
 	public void useItem(BattleParticipant p) {

@@ -498,4 +498,17 @@ public class PlayerStorage {
 		return -1;
 	}
 
+	public int getNextPokemonId(int pokemonID) {
+		for (int i = 0; i < partyPokemon.length; i++) {
+			NBTTagCompound nbt = partyPokemon[i];
+			if (nbt != null) {
+				if (nbt.getInteger("pixelmonID") != pokemonID) {
+					if (!nbt.getBoolean("IsFainted") && nbt.getShort("Health") >= 0)
+						return nbt.getInteger("pixelmonID");
+				}
+			}
+		}
+		return -1;
+	}
+
 }

@@ -185,6 +185,7 @@ public final class Experience {
 				}
 			}
 			battlingPokemon.stats.EVs.gainEV(evStore);
+			battlingPokemon.updateStats();
 			storage.updateNBT(battlingPokemon);
 		} else {
 			// Begin EXP award to a stored party pokemon.
@@ -209,6 +210,7 @@ public final class Experience {
 				}
 			}
 			partyPokemon.stats.EVs.gainEV(evStore);
+			partyPokemon.updateStats();
 			if (!wasAlreadyOut) {
 				storage.retrieve(partyPokemon);
 			}

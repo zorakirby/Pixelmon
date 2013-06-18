@@ -28,6 +28,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 	public boolean isFlying = false;
 
+	int initAir = 0;
+
 	public Entity5Rideable(World par1World) {
 		super(par1World);
 	}
@@ -75,6 +77,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						} else {
 							player.mountEntity(this);
 							tasks.taskEntries.clear();
+							initAir = player.getAir();
 						}
 						PixelmonEventHandler.fireEvent(EventType.RidePokemon, player);
 						return true;
@@ -214,6 +217,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				super.onLivingUpdate();
 				return;
 			}
+			if (baseStats.canSurf)
+				riddenByEntity.setAir(initAir);
 			ridingHelper.onLivingUpdate();
 			moveForward *= 0.4f;
 			if (moveForward > -0.1 && moveForward < 0.1)
