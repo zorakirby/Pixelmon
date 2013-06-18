@@ -29,6 +29,8 @@ public class PixelmonConfig {
 
 	public static int trainerRarityModifier;
 
+	public static int nameplateRangeModifier;
+
 	public static boolean scaleModelsUp;
 	public static boolean pokemonDropsEnabled = true;
 	public static boolean allowRiding = true;
@@ -55,6 +57,7 @@ public class PixelmonConfig {
 		maxNumWaterPokemon = config.get("general", "Max number of Water Pokemon (at one time)", 20).getInt(20);
 		maxNumAirPokemon = config.get("general", "Max number of Air Pokemon (at one time)", 20).getInt(5);
 		trainerRarityModifier = config.get("general", "Trainer Rarity (percentage 0-200)", 100).getInt(100);
+		nameplateRangeModifier = config.get("general", "Nameplate Visible Range Modifier (1=default, 2=farther, 3=far)", 1).getInt(1);
 		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
 		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled", true).getBoolean(true);
 		removeVanillaMusic = config.get("general", "Remove Minecraft Music", true).getBoolean(true);
