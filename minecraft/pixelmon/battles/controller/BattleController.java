@@ -199,11 +199,13 @@ public class BattleController {
 		if (p.willTryFlee && !p.currentPokemon().isLockedInBattle) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
 		} else if (p.currentPokemon().isLockedInBattle)
-			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), " cannot escape!");
+			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Cannot escape!");
 		else if (p.isSwitching)
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
 			useItem(p);
+		else if (otherParticipant(p).attack.flinched)
+			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), otherParticipant(p).currentPokemon().getOwner(), p.currentPokemon().getNickname() + " flinched!");
 		else {
 			for (int i = 0; i < p.currentPokemon().status.size(); i++) {
 				StatusBase e = p.currentPokemon().status.get(i);
