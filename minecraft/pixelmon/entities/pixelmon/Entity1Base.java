@@ -39,7 +39,6 @@ public abstract class Entity1Base extends EntityTameable {
 		isInitialised = true;
 		if (getBossMode() == null)
 			setBoss(EnumBossMode.Normal);
-		setBoss(EnumBossMode.Legendary);
 		if (getNature() == null)
 			setNature(EnumNature.getRandomNature());
 		if (getGrowth() == null)
