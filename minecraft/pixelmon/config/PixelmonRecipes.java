@@ -76,7 +76,10 @@ public class PixelmonRecipes {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.torsoAluminium, 1), new Object[] { "S S", "SSS", "SSS", Character.valueOf('S'), PixelmonItems.aluminiumIngot });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.leggingsAluminium, 1), new Object[] { "SSS", "S S", "S S", Character.valueOf('S'), PixelmonItems.aluminiumIngot });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.bootsAluminium, 1), new Object[] { "S S", "S S", Character.valueOf('S'), PixelmonItems.aluminiumIngot });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.newRunning, 1), new Object[] { "DBD", "I I", "F F", Character.valueOf('I'), Item.ingotIron, Character.valueOf('D'), Item.diamond, Character.valueOf('F'), Item.feather, Character.valueOf('B'), PixelmonItems.oldRunning});
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.oldRunning, 1), new Object[] { "IBI", "I I", "F F", Character.valueOf('I'), Item.ingotIron, Character.valueOf('F'), Item.feather, Character.valueOf('B'), Item.bootsLeather});
 
+		
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.anvilItem, 1), new Object[] { "XXX", "XX ", "XXX", Character.valueOf('X'), Item.ingotIron });
 
 		GameRegistry.addSmelting(PixelmonBlocks.bauxite.blockID, new ItemStack(PixelmonItems.aluminiumIngot), new Random().nextInt(3));
