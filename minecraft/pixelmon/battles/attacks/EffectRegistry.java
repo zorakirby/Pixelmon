@@ -46,6 +46,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Struggle;
 import pixelmon.battles.attacks.specialAttacks.basic.Suicide;
 import pixelmon.battles.attacks.specialAttacks.basic.Venoshock;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Bide;
+import pixelmon.battles.attacks.specialAttacks.multiTurn.Charge;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Fly;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.PetalDance;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.RazorWind;
@@ -152,6 +153,7 @@ public class EffectRegistry {
 
 		// Multi-Turn Attacks
 		effectMap.put("bide", Bide.class);
+		effectMap.put("charge", Charge.class);
 		effectMap.put("fly", Fly.class);
 		effectMap.put("petaldance", PetalDance.class);
 		effectMap.put("razorwind", RazorWind.class);
