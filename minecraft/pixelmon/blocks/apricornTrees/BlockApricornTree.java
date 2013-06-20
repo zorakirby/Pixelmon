@@ -2,6 +2,7 @@ package pixelmon.blocks.apricornTrees;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -27,11 +28,12 @@ public class BlockApricornTree extends BlockContainer {
 		super(id, Material.wood);
 		this.tree = tree;
 		setTickRandomly(true);
+		setHardness(2.0F);
 	}
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return PixelmonItemsApricorns.getApricorn(tree.apricorn).itemID;
+		return Block.wood.blockID;
 	}
 
 	@SideOnly(Side.CLIENT)
