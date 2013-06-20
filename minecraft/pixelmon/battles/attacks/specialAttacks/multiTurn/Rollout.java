@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class Rollout extends MultiTurnSpecialAttackBase {
@@ -28,9 +29,10 @@ public class Rollout extends MultiTurnSpecialAttackBase {
 			{
 				if(timesHit == getTurnCount(user) && 
 						(a.baseAttack.accuracy/100)* (user.battleStats.getAccuracy()/target.battleStats.getEvasion())
-						< RandomHelper.getRandomNumberBetween(1, 100))
+						<= RandomHelper.getRandomNumberBetween(1, 100))
 				{
 					a.baseAttack.basePower = (int) (30 * Math.pow(2, getTurnCount(user)));
+					if(attackList.contains(DatabaseMoves.getAttack("Defence Curl")))
 					timesHit++;
 					System.out.println(a.baseAttack.basePower);
 					hitsTarget = true;
