@@ -84,6 +84,7 @@ public class EffectRegistry {
 		effectMap.put("smackdown", SmackDown.class);
 		effectMap.put("struggle", Struggle.class);
 		effectMap.put("suicide", Suicide.class);
+		effectMap.put("teleport", Teleport.class);
 		effectMap.put("venoshock", Venoshock.class);
 
 		// Multi-Turn Attacks

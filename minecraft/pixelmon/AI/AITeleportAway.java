@@ -37,19 +37,19 @@ public class AITeleportAway extends EntityAIBase {
 
 	@Override
 	public void startExecuting() {
-		teleportRandomly();
+		teleportRandomly(pixelmon, rand);
 	}
 
 	Random rand = new Random();
 	
-	protected boolean teleportRandomly() {
+	public static boolean teleportRandomly(Entity7HasAI pixelmon, Random rand) {
 		double d = pixelmon.posX + (rand.nextDouble() - 0.5D) * 64D;
 		double d1 = pixelmon.posY + (double) (rand.nextInt(64) - 32);
 		double d2 = pixelmon.posZ + (rand.nextDouble() - 0.5D) * 64D;
-		return teleportTo(d, d1, d2);
+		return teleportTo(pixelmon, rand, d, d1, d2);
 	}
 
-	protected boolean teleportTo(double par1, double par3, double par5) {
+	protected static boolean teleportTo(Entity7HasAI pixelmon, Random rand, double par1, double par3, double par5) {
 		double d = pixelmon.posX;
 		double d1 = pixelmon.posY;
 		double d2 = pixelmon.posZ;
