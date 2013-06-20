@@ -52,7 +52,7 @@ public class BattleController {
 		for (BattleParticipant p : participants) {
 			p.StartBattle(this, otherParticipant(p));
 		}
-		for (BattleParticipant p: participants){
+		for (BattleParticipant p : participants) {
 			p.updateOpponent();
 			if (p.canGainXP())
 				p.addToAttackersList();
@@ -113,10 +113,11 @@ public class BattleController {
 				if (moveStage == MoveStage.PickAttacks) { // Pick Moves
 					// moveToPositions();
 					PickingMoves.pickMoves(this);
-					PickingMoves.checkMoveSpeed(this);
 					moveStage = MoveStage.Move;
 					turn = 0;
 				} else if (moveStage == MoveStage.Move) { // First Move
+					if (turn == 0)
+						PickingMoves.checkMoveSpeed(this);
 					takeTurn(participants.get(turn));
 					turn++;
 
@@ -204,8 +205,9 @@ public class BattleController {
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
 			useItem(p);
-		else if (otherParticipant(p).attack.flinched)
-			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), otherParticipant(p).currentPokemon().getOwner(), p.currentPokemon().getNickname() + " flinched!");
+		else if (otherParticipant(p) != null && otherParticipant(p).attack != null && otherParticipant(p).attack.flinched)
+			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), otherParticipant(p).currentPokemon().getOwner(), p.currentPokemon().getNickname()
+					+ " flinched!");
 		else {
 			for (int i = 0; i < p.currentPokemon().status.size(); i++) {
 				StatusBase e = p.currentPokemon().status.get(i);
