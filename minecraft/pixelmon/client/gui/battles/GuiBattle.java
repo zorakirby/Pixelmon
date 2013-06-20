@@ -65,6 +65,7 @@ public class GuiBattle extends GuiContainer {
 		this.mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
+		ClientBattleManager.canSwitch = true;
 		battleEnded = false;
 	}
 
@@ -731,7 +732,10 @@ public class GuiBattle extends GuiContainer {
 			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h)
 				mode = BattleMode.ChoosePokemon;
 			else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
-				mode = BattleMode.ChooseBag;
+				if (!ClientBattleManager.canSwitch)
+					ClientBattleManager.addMessage("You can't switch pokemon right now!");
+				else
+					mode = BattleMode.ChooseBag;
 			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
 				if (ClientBattleManager.opponentType == ParticipantType.WildPokemon) {
 					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));

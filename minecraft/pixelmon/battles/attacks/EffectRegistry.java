@@ -88,6 +88,7 @@ public class EffectRegistry {
 
 		// Multi-Turn Attacks
 		effectMap.put("bide", Bide.class);
+		effectMap.put("dig", Dig.class);
 		effectMap.put("fly", Fly.class);
 		effectMap.put("petaldance", PetalDance.class);
 		effectMap.put("razorwind", RazorWind.class);

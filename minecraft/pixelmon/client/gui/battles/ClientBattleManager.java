@@ -72,6 +72,8 @@ public class ClientBattleManager {
 
 	public static boolean isTM = false;
 
+	public static boolean canSwitch = true;
+
 	public static EntityPixelmon getUserPokemon() {
 		if (pokemonId != -1) {
 			if (oldId == pokemonId)
