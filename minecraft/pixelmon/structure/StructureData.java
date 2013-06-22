@@ -8,4 +8,5 @@ public class StructureData {
 	public boolean hasPokemon = false;
 	public BiomeGenBase[] biomes;
 	public int depth = 0;
+	public BlockSwitch[] blockSwitches;
 }

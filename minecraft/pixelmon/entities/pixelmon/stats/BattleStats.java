@@ -333,4 +333,12 @@ public class BattleStats {
 		return SpeedModifier + AttackModifier + DefenceModifier + SpecialAttackModifier + SpecialDefenceModifier + Evasion + Accuracy;
 	}
 
+	public boolean statCanBeRaised() {
+		for (int i = 0; i < stages.length; i++) {
+			if (stages[i] < 6)
+				return true;
+		}
+		return false;
+	}
+
 }
