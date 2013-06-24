@@ -45,6 +45,8 @@ public class PixelmonConfig {
 
 	public static boolean allowPVPExperience = true;
 	public static boolean printErrors = false;
+	
+	public static boolean allowRareCandyCrafting = false;
 
 	public static void loadConfig(Configuration configuration) {
 		config = configuration;
@@ -65,6 +67,7 @@ public class PixelmonConfig {
 		allowRiding = config.get("general", "Allow Riding", true).getBoolean(true);
 		allowPlanting = config.get("general", "Allow Planting", true).getBoolean(true);
 		allowPVPExperience = config.get("general", "Allow PVP Experience", true).getBoolean(true);
+		allowRareCandyCrafting = config.get("general", "Allow Crafting of Rare Candy", true).getBoolean(true);
 		idTrainers = config.get("IDs", "Trainer ID", 199).getInt(199);
 		idPixelmon = config.get("IDs", "Pixelmon ID", 200).getInt(200);
 		idPokeball = config.get("IDs", "Pokeball ID", 201).getInt(201);
