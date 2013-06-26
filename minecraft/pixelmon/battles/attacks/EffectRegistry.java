@@ -51,6 +51,7 @@ public class EffectRegistry {
 		effectMap.put("acrobatics", Acrobatics.class);
 		effectMap.put("acupressure", Acupressure.class);
 		effectMap.put("batonpass", BatonPass.class);
+		effectMap.put("beatup", BeatUp.class);
 		effectMap.put("curse", Curse.class);
 		effectMap.put("dosetdamage", DoSetDamage.class);
 		effectMap.put("drain", Drain.class);
