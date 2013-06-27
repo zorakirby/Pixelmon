@@ -23,6 +23,7 @@ import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemHammer;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.ItemPixelmonArmor;
+import pixelmon.items.ItemPixelmonBoots;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.ItemFossil;
 import pixelmon.items.ItemPotion;
@@ -98,8 +99,8 @@ public class PixelmonItems {
 	public static int torsoAluminiumID;
 	public static int leggingsAluminiumID;
 	public static int bootsAluminiumID;
-	public static int newRunningID;
-	public static int oldRunningID;
+	public static int newRunningShoesID;
+	public static int oldRunningShoesID;
 	
 
 	public static int aluminiumIngotID;
@@ -213,11 +214,11 @@ public class PixelmonItems {
 	public static Item leggingsAluminium;
 	@Mod.Item(name = "Aluminium Boots", typeClass = "pixelmon.items.ItemPixelmonArmor")
 	public static Item bootsAluminium;
-	@Mod.Item(name = "New Running Shoes", typeClass = "pixelmon.items.ItemRunningShoes")
-	public static Item newRunning;
+	@Mod.Item(name = "New Running Shoes", typeClass = "pixelmon.items.ItemPixelmonBoots")
+	public static Item newRunningShoes;
 	
-	@Mod.Item(name = "Old Running Shoes", typeClass = "pixelmon.items.ItemPixelmonArmor")
-	public static Item oldRunning;
+	@Mod.Item(name = "Old Running Shoes", typeClass = "pixelmon.items.ItemPixelmonBoots")
+	public static Item oldRunningShoes;
 
 	@Mod.Item(name = "Mossy Rock", typeClass = "pixelmon.items.ItemBlock")
 	public static Item mossyRock;
@@ -295,8 +296,8 @@ public class PixelmonItems {
 		mossyRockID = cfg.get("item", "Mossy Rock", 10132).getInt();
 		icyRockID = cfg.get("item", "Icy Rock", 10133).getInt();
 		
-		newRunningID = cfg.get("item", "New Running Boots", 10134).getInt();
-		oldRunningID = cfg.get("item", "Old Running Boots", 10135).getInt();
+		newRunningShoesID = cfg.get("item", "New Running Boots", 10134).getInt();
+		oldRunningShoesID = cfg.get("item", "Old Running Boots", 10135).getInt();
 		wailmerPailID = cfg.get("item", "Wailmer Pail", 10136).getInt();
 
 
@@ -353,8 +354,8 @@ public class PixelmonItems {
 		leggingsAluminium = new ItemPixelmonArmor(leggingsAluminiumID, 9, Pixelmon.ALUMINIUMARMOR, 0, 2, "pixelmon:aluminiumleggings", "Aluminium Leggings");
 		bootsAluminium = new ItemPixelmonArmor(bootsAluminiumID, 7, Pixelmon.ALUMINIUMARMOR, 0, 3, "pixelmon:aluminiumboots", "Aluminium Boots");
 		
-		newRunning = new ItemPixelmonArmor(newRunningID, 6, Pixelmon.RUNNINGARMOR, 0, 3, "pixelmon:runningboots", "New Running Boots");
-		oldRunning = new ItemPixelmonArmor(oldRunningID, 6, Pixelmon.OLDRUNNINGARMOR, 0, 3, "pixelmon:oldrunningboots", "Old Running Boots");
+		newRunningShoes = new ItemPixelmonBoots(newRunningShoesID, 6, Pixelmon.RUNNINGARMOR, 0, 3, "pixelmon:runningboots", "New Running Boots");
+		oldRunningShoes = new ItemPixelmonBoots(oldRunningShoesID, 6, Pixelmon.OLDRUNNINGARMOR, 0, 3, "pixelmon:oldrunningboots", "Old Running Boots");
 		wailmerPail = new ItemWailmerPail(wailmerPailID, "pixelmon:wailmerpail", "Wailmer Pail");
 
 		

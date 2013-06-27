@@ -1,5 +1,6 @@
 package pixelmon;
 
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
@@ -8,6 +9,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItems;
+import pixelmon.items.ItemPixelmonBoots;
 import pixelmon.sounds.Sounds;
 
 import net.minecraft.client.Minecraft;
@@ -18,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.TickType;
@@ -28,33 +31,40 @@ public class TickHandler implements ITickHandler {
 	boolean checkedForUsername = false;
 	boolean musicCleared = false;
 	boolean foundSounds = false;
-	
-	
-	
-	
-	private void onPlayerTick(EntityPlayer player) {
-
-			if(player.getCurrentItemOrArmor(1) != null){
-				ItemStack boots = player.getCurrentItemOrArmor(1);
-				if(boots.getItem() == PixelmonItems.newRunning){
-					player.addPotionEffect((new PotionEffect(Potion.moveSpeed.getId(), 10, 1)));
-					if((player.isSprinting() || player.isJumping)&& boots.getItem() == PixelmonItems.newRunning){
-						ItemStack itemstack = new ItemStack(PixelmonItems.newRunning);
-						boots.getItem().getItemDamageFromStack(boots);
-						boots.damageItem(boots, player);
+	private void onPlayerTick(EntityPlayer player){
+		if(player.getCurrentItemOrArmor(1) != null){
+			ItemStack boots = player.getCurrentItemOrArmor(1);
+			if (boots.getItem() == PixelmonItems.oldRunningShoes){
+				player.addPotionEffect((new PotionEffect(Potion.moveSpeed.getId(), 10, 0)));
+			}
+			else if(boots.getItem() == PixelmonItems.newRunningShoes){
+				player.addPotionEffect((new PotionEffect(Potion.moveSpeed.getId(), 10, 1)));
+				
+				if (ItemPixelmonBoots.bootLastX == 0 || ItemPixelmonBoots.bootLastZ == 0){
+					ItemPixelmonBoots.bootLastX = (int) player.getPlayerCoordinates().posX;
+					ItemPixelmonBoots.bootLastZ = (int) player.getPlayerCoordinates().posZ;
+				}
+				else{
+					int changeX =  (int) (Math.abs(ItemPixelmonBoots.bootLastX - player.getPlayerCoordinates().posX));
+					int changeZ =  (int) (Math.abs(ItemPixelmonBoots.bootLastZ - player.getPlayerCoordinates().posZ));
+					
+					if (changeX > 2 || changeZ > 2){
+						boots.damageItem(1, player);
+						ItemPixelmonBoots.bootLastX = (int) player.getPlayerCoordinates().posX;
+					    ItemPixelmonBoots.bootLastZ = (int) player.getPlayerCoordinates().posZ;
+						if((PixelmonItems.newRunningShoes.getItemDamageFromStack(boots) == PixelmonItems.newRunningShoes.getMaxDamage()))
+						{
+							ItemStack oldShoes = new ItemStack(PixelmonItems.oldRunningShoes, 1, 0);
+							int i = 3;
+							player.inventory.decrStackSize(i, 1);
+							player.inventory.addItemStackToInventory(oldShoes);
+						}
 					}
 				}
-				if(player.getCurrentItemOrArmor(1) != null){
-					ItemStack boots1 = player.getCurrentItemOrArmor(1);
-					if(boots1.getItem() == pixelmon.config.PixelmonItems.oldRunning){
-						player.addPotionEffect((new PotionEffect(Potion.moveSpeed.getId(), 10, 0)));
-					}
 				}
 			}
-	
-	}
-
-
+		}
+			
 	@Override
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {
 		
@@ -94,11 +104,8 @@ public class TickHandler implements ITickHandler {
 							"Couldn't find music at " + Minecraft.getMinecraftDir() + "/resources/music/pixelmon");
 				}
 			}
-		
 		}
-		
-				
-		
+
 	}
 
 	@Override
