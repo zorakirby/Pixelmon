@@ -19,7 +19,7 @@ public class ItemPixelmonBoots extends ItemArmor implements IArmorTextureProvide
     public ItemPixelmonBoots(int i, int index, EnumArmorMaterial enumArmorMaterial, int k, int l, String textureName, String itemName)
     {
         super(i, enumArmorMaterial, k, l);
-        this.setMaxDamage(5);//enumArmorMaterial.getDurability(l));
+        this.setMaxDamage(400);
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.textureName = textureName;
         setUnlocalizedName(itemName);

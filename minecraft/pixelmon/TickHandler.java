@@ -1,9 +1,16 @@
 package pixelmon;
 
-import java.lang.Math;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundPool;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -11,16 +18,6 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItems;
 import pixelmon.items.ItemPixelmonBoots;
 import pixelmon.sounds.Sounds;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundPool;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.TickType;
@@ -32,8 +29,8 @@ public class TickHandler implements ITickHandler {
 	boolean musicCleared = false;
 	boolean foundSounds = false;
 	private void onPlayerTick(EntityPlayer player){
-		if(player.getCurrentItemOrArmor(1) != null){
-			ItemStack boots = player.getCurrentItemOrArmor(1);
+		ItemStack boots = player.getCurrentItemOrArmor(1);
+		if(boots != null && boots.stackSize > 0 && boots.getItemDamage() < boots.getItem().getMaxDamage()){
 			if (boots.getItem() == PixelmonItems.oldRunningShoes){
 				player.addPotionEffect((new PotionEffect(Potion.moveSpeed.getId(), 10, 0)));
 			}
@@ -52,11 +49,10 @@ public class TickHandler implements ITickHandler {
 						boots.damageItem(1, player);
 						ItemPixelmonBoots.bootLastX = (int) player.getPlayerCoordinates().posX;
 					    ItemPixelmonBoots.bootLastZ = (int) player.getPlayerCoordinates().posZ;
-						if((PixelmonItems.newRunningShoes.getItemDamageFromStack(boots) == PixelmonItems.newRunningShoes.getMaxDamage()))
+						if(boots.getItemDamage() == PixelmonItems.newRunningShoes.getMaxDamage())
 						{
+							removeItem(player, boots);
 							ItemStack oldShoes = new ItemStack(PixelmonItems.oldRunningShoes, 1, 0);
-							int i = 3;
-							player.inventory.decrStackSize(i, 1);
 							player.inventory.addItemStackToInventory(oldShoes);
 						}
 					}
@@ -64,6 +60,21 @@ public class TickHandler implements ITickHandler {
 				}
 			}
 		}
+	
+	public void removeItem(EntityPlayer ep, ItemStack removeitem) {
+		IInventory inv = ep.inventory;
+		for(int i=0; i < inv.getSizeInventory(); i++)
+		{
+			if(inv.getStackInSlot(i) != null)
+			{
+				ItemStack j = inv.getStackInSlot(i);
+				if(j.getItem() != null && j.getItem() == removeitem.getItem())
+				{
+					inv.setInventorySlotContents(i, null);
+				}
+			}
+		}
+	}
 			
 	@Override
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {
