@@ -3,6 +3,8 @@ package pixelmon.entities.pixelmon;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
+import pixelmon.RandomHelper;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 
 public abstract class Entity7HasAI extends Entity6CanBattle {
@@ -29,6 +31,7 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 	};
 
 	public Aggression aggression;
+	public int aggressionTimer = 0;
 
 	protected AIHelper aiHelper;
 
@@ -76,7 +79,8 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 		super.onEntityUpdate();
 		if (aiHelper == null && baseStats != null)
 			aiHelper = new AIHelper(getName(), this, tasks);
-
+		if (aggressionTimer > 0)
+			aggressionTimer--;
 	}
 
 	public void setIdleSpot(ChunkCoordinates coords) {
@@ -118,6 +122,14 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 			this.dataWatcher.updateObject(16, Byte.valueOf((byte) (var2 | 1)));
 		} else {
 			this.dataWatcher.updateObject(16, Byte.valueOf((byte) (var2 & -2)));
+		}
+	}
+
+	@Override
+	public void StartBattle(BattleParticipant p1, BattleParticipant p2) {
+		super.StartBattle(p1, p2);
+		if (aggression == Aggression.aggressive) {
+			aggressionTimer = RandomHelper.getRandomNumberBetween(500, 2000);
 		}
 	}
 }

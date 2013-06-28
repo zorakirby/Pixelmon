@@ -23,6 +23,8 @@ public class AIStartBattle extends EntityAIBase {
 
 	@Override
 	public boolean shouldExecute() {
+		if (theEntity.aggressionTimer > 0)
+			return false;
 		if (theEntity.battleController != null)
 			return false;
 		if (theEntity.getOwner() != null)
@@ -60,6 +62,8 @@ public class AIStartBattle extends EntityAIBase {
 			if (target.battleController != null)
 				return false;
 			if (target.getHealth() <= 0 || target.isFainted || target.isDead)
+				return false;
+			if (target.getOwner() != null)
 				return false;
 			theEntity.StartBattle(new WildPixelmonParticipant((EntityPixelmon) theEntity), new WildPixelmonParticipant(target));
 			return true;

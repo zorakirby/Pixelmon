@@ -69,6 +69,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				GuiBattle.mode = BattleMode.EnforcedSwitch;
 				GuiBattle.oldMode = BattleMode.MainMenu;
 			} else if (packetID == EnumPackets.BackToMainMenu.getIndex()) {
+				ClientBattleManager.canSwitch = dataStream.readInt() == 1;
 				GuiBattle.oldMode = BattleMode.MainMenu;
 				GuiBattle.mode = BattleMode.MainMenu;
 			} else if (packetID == EnumPackets.ExitBattle.getIndex()) {

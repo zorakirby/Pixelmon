@@ -26,6 +26,8 @@ public class AIMoveTowardsTarget extends EntityAIBase {
 	 * Returns whether the EntityAIBase should begin execution.
 	 */
 	public boolean shouldExecute() {
+		if (theEntity.aggressionTimer > 0)
+			return false;
 		if (theEntity.battleController != null)
 			return false;
 		this.targetEntity = theEntity.getAttackTarget();

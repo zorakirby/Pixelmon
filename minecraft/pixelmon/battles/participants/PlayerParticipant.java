@@ -8,6 +8,7 @@ import pixelmon.PixelmonMethods;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -111,7 +112,16 @@ public class PlayerParticipant extends BattleParticipant {
 			bc.endBattle();
 			return null;
 		}
-		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, 0));
+		boolean canSwitch = true;
+		for (StatusBase status : currentPixelmon.status) {
+			try {
+				if (status.stopsSwitching())
+					canSwitch = false;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, canSwitch ? 1 : 0));
 		wait = true;
 		return null;
 	}

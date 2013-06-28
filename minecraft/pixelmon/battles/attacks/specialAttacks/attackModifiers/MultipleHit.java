@@ -18,8 +18,8 @@ public class MultipleHit extends AttackModifierBase {
 	}
 
 	public boolean RepeatsAttack() {
-		if (value2 == -1) {
-			if (count > value)
+		if (value2 == 0) {
+			if (count >= value)
 				return false;
 			count++;
 			return true;

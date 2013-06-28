@@ -66,6 +66,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (p2.currentPokemon().moveset.size() == 0)
 			p2.currentPokemon().loadMoveset();
 
+		
 		// pixelmon.isSwimming = false;
 	}
 

@@ -216,6 +216,10 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super.setEntityHealth(par1);
 		updateHealth();
 	}
+	
+	public void healEntityBy(int i) {
+		setEntityHealth(getHealth() + i);
+	}
 
 	public void updateHealth() {
 		if (health > stats.HP)
