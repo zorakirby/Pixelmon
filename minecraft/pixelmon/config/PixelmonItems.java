@@ -94,6 +94,7 @@ public class PixelmonItems {
 	public static int shovelAluminiumID;
 	public static int pickaxeAluminiumID;
 	public static int hoeAluminiumID;
+	public static int oldRodID;
 
 	public static int helmetAluminiumID;
 	public static int torsoAluminiumID;
@@ -101,16 +102,15 @@ public class PixelmonItems {
 	public static int bootsAluminiumID;
 	public static int newRunningShoesID;
 	public static int oldRunningShoesID;
-	
 
 	public static int aluminiumIngotID;
 	public static int aluminiumPlateID;
 
 	public static int mossyRockID;
 	public static int icyRockID;
-	
+
 	public static int wailmerPailID;
-	
+
 	@Mod.Item(name = "Pokedex", typeClass = "pixelmon.items.ItemPokedex")
 	public static Item pokeDex;
 
@@ -216,7 +216,7 @@ public class PixelmonItems {
 	public static Item bootsAluminium;
 	@Mod.Item(name = "New Running Shoes", typeClass = "pixelmon.items.ItemPixelmonBoots")
 	public static Item newRunningShoes;
-	
+
 	@Mod.Item(name = "Old Running Shoes", typeClass = "pixelmon.items.ItemPixelmonBoots")
 	public static Item oldRunningShoes;
 
@@ -224,11 +224,10 @@ public class PixelmonItems {
 	public static Item mossyRock;
 	@Mod.Item(name = "Icy Rock", typeClass = "pixelmon.items.ItemBlock")
 	public static Item icyRock;
-	
+
 	@Mod.Item(name = "Wailmer Pail", typeClass = "pixelmon.items.ItemWailmerPail")
 	public static Item wailmerPail;
 
-	
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
 		PixelmonItemsApricorns.load(cfg);
@@ -290,16 +289,13 @@ public class PixelmonItems {
 		torsoAluminiumID = cfg.get("item", "Aluminium Chestplate", 10129).getInt();
 		leggingsAluminiumID = cfg.get("item", "Aluminium Leggings", 10130).getInt();
 		bootsAluminiumID = cfg.get("item", "Aluminium Boots", 10131).getInt();
-		
 
-		
 		mossyRockID = cfg.get("item", "Mossy Rock", 10132).getInt();
 		icyRockID = cfg.get("item", "Icy Rock", 10133).getInt();
-		
+
 		newRunningShoesID = cfg.get("item", "New Running Boots", 10134).getInt();
 		oldRunningShoesID = cfg.get("item", "Old Running Boots", 10135).getInt();
 		wailmerPailID = cfg.get("item", "Wailmer Pail", 10136).getInt();
-
 
 		pokeDex = new ItemPokedex(pokeDexID).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rarecandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
@@ -328,9 +324,11 @@ public class PixelmonItems {
 		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, "anvil", "Anvil");
 		tradeMachineItem = new ItemBlock(tradeMachineItemID, PixelmonBlocks.tradeMachine, "trademachine", "Trade Machine");
 
-		thunderStoneShard = new PixelmonItem(thunderStoneShardID, "evolutionstones/thunderstoneshard", "Thunder Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
+		thunderStoneShard = new PixelmonItem(thunderStoneShardID, "evolutionstones/thunderstoneshard", "Thunder Stone Shard")
+				.setCreativeTab(PixelmonCreativeTabs.natural);
 		leafStoneShard = new PixelmonItem(leafStoneShardID, "evolutionstones/leafstoneshard", "Leaf Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
-		waterStoneShard = new PixelmonItem(waterStoneShardID, "evolutionstones/waterstoneshard", "Water Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
+		waterStoneShard = new PixelmonItem(waterStoneShardID, "evolutionstones/waterstoneshard", "Water Stone Shard")
+				.setCreativeTab(PixelmonCreativeTabs.natural);
 		fireStoneShard = new PixelmonItem(fireStoneShardID, "evolutionstones/firestoneshard", "Fire Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
 
 		aluminiumIngot = new PixelmonItem(aluminiumIngotID, "aluminiumingot", "Aluminium Ingot").setCreativeTab(CreativeTabs.tabMaterials);
@@ -342,7 +340,7 @@ public class PixelmonItems {
 		hammerGold = new ItemHammer(hammerGoldID, EnumToolMaterial.GOLD, "hammergold", "Gold Hammer");
 		hammerDiamond = new ItemHammer(hammerDiamondID, EnumToolMaterial.EMERALD, "hammerdiamond", "Diamond Hammer");
 		hammerAluminium = new ItemHammer(hammerAluminiumID, Pixelmon.ALUMINIUM, "hammeraluminium", "Aluminium Hammer");
-		
+
 		swordAluminium = new PixelmonItemSword(swordAluminiumID, Pixelmon.ALUMINIUM, "pixelmon:aluminiumsword");
 		axeAluminium = new PixelmonItemAxe(axeAluminiumID, Pixelmon.ALUMINIUM, "pixelmon:aluminiumaxe");
 		spadeAluminium = new PixelmonItemSpade(shovelAluminiumID, Pixelmon.ALUMINIUM, "pixelmon:aluminiumspade");
@@ -353,13 +351,13 @@ public class PixelmonItems {
 		torsoAluminium = new ItemPixelmonArmor(torsoAluminiumID, 8, Pixelmon.ALUMINIUMARMOR, 0, 1, "pixelmon:aluminiumtorso", "Aluminium Torso");
 		leggingsAluminium = new ItemPixelmonArmor(leggingsAluminiumID, 9, Pixelmon.ALUMINIUMARMOR, 0, 2, "pixelmon:aluminiumleggings", "Aluminium Leggings");
 		bootsAluminium = new ItemPixelmonArmor(bootsAluminiumID, 7, Pixelmon.ALUMINIUMARMOR, 0, 3, "pixelmon:aluminiumboots", "Aluminium Boots");
-		
+
 		newRunningShoes = new ItemPixelmonBoots(newRunningShoesID, 6, Pixelmon.RUNNINGARMOR, 0, 3, "pixelmon:runningboots", "New Running Boots");
 		oldRunningShoes = new ItemPixelmonBoots(oldRunningShoesID, 6, Pixelmon.OLDRUNNINGARMOR, 0, 3, "pixelmon:oldrunningboots", "Old Running Boots");
 		wailmerPail = new ItemWailmerPail(wailmerPailID, "pixelmon:wailmerpail", "Wailmer Pail");
 
-		
-		// TODO make correct icons for mossyrock and icyrock, instead of using anvil
+		// TODO make correct icons for mossyrock and icyrock, instead of using
+		// anvil
 		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "anvil", "Mossy Rock");
 		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
 		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "anvil", "Icy Rock");

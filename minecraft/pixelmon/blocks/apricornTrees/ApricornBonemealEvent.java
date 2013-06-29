@@ -7,7 +7,9 @@ import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import pixelmon.config.PixelmonBlocksApricornTrees;
+import pixelmon.config.PixelmonItems;
 import pixelmon.enums.EnumApricornTrees;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet132TileEntityData;
@@ -17,7 +19,6 @@ public class ApricornBonemealEvent {
 	public EnumApricornTrees tree;
 
 	@ForgeSubscribe
-	
 	public void onUseBonemeal(BonemealEvent event) {
 		World world = event.world;
 		PixelmonBlocksApricornTrees trees = new PixelmonBlocksApricornTrees();
@@ -27,20 +28,22 @@ public class ApricornBonemealEvent {
 				|| Id == trees.apricornTreeGreen.blockID || Id == trees.apricornTreeBlue.blockID || Id == trees.apricornTreeYellow.blockID
 				|| Id == trees.apricornTreeRed.blockID) {
 			if (!world.isRemote && world.getBlockMetadata(event.X, event.Y, event.Z) != BlockApricornTree.numStages - 1) {
-				
+
 				TileEntityApricornTree tileEntityApricornTree = (TileEntityApricornTree) world.getBlockTileEntity(event.X, event.Y, event.Z);
 
-				if (!(tileEntityApricornTree.wasWateredToday())) {
-					tileEntityApricornTree.updateWatering();
+				if (event.entityPlayer.getHeldItem().itemID == PixelmonItems.wailmerPail.itemID) {
+					if (!(tileEntityApricornTree.wasWateredToday())) {
+						tileEntityApricornTree.updateWatering();
+						world.setBlockMetadataWithNotify(event.X, event.Y, event.Z, world.getBlockMetadata(event.X, event.Y, event.Z) + 1, 2);
+						event.setResult(Result.ALLOW);
+					} else {
+						event.entityPlayer.sendChatToPlayer("It looks well watered today.");
+					}
+				} else {
 					world.setBlockMetadataWithNotify(event.X, event.Y, event.Z, world.getBlockMetadata(event.X, event.Y, event.Z) + 1, 2);
 					event.setResult(Result.ALLOW);
 				}
-				else {
-					event.entityPlayer.sendChatToPlayer("It looks well watered today.");
-				}
-				
-			  }
 			}
 		}
 	}
-
+}

@@ -45,29 +45,48 @@ public class PixelmonConfig {
 
 	public static boolean allowPVPExperience = true;
 	public static boolean printErrors = false;
-	
+
 	public static boolean allowRareCandyCrafting = false;
 
 	public static void loadConfig(Configuration configuration) {
 		config = configuration;
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
-		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs", false).getBoolean(false);
-		allowCapturingOutsideBattle = config.get("general", "Allow Capturing Outside of Battle", true).getBoolean(true);
-		maxNumLandPokemon = config.get("general", "Max number of Land Pokemon (at one time)", 40).getInt(40);
-		maxNumUndergroundPokemon = config.get("general", "Max number of Underground Pokemon (at one time)", 60).getInt(60);
-		maxNumWaterPokemon = config.get("general", "Max number of Water Pokemon (at one time)", 20).getInt(20);
-		maxNumAirPokemon = config.get("general", "Max number of Air Pokemon (at one time)", 20).getInt(5);
-		trainerRarityModifier = config.get("general", "Trainer Rarity (percentage 0-200)", 100).getInt(100);
-		nameplateRangeModifier = config.get("general", "Nameplate Visible Range Modifier (1=default, 2=farther, 3=far)", 1).getInt(1);
-		scaleModelsUp = config.get("general", "Scale Models Up", true).getBoolean(true);
-		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled", true).getBoolean(true);
-		removeVanillaMusic = config.get("general", "Remove Minecraft Music", true).getBoolean(true);
-		printErrors = config.get("general", "Print Errors", false).getBoolean(false);
-		allowRiding = config.get("general", "Allow Riding", true).getBoolean(true);
-		allowPlanting = config.get("general", "Allow Planting", true).getBoolean(true);
-		allowPVPExperience = config.get("general", "Allow PVP Experience", true).getBoolean(true);
-		allowRareCandyCrafting = config.get("general", "Allow Crafting of Rare Candy", true).getBoolean(true);
+		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs",
+				false).getBoolean(false);
+		allowCapturingOutsideBattle = config.get("general",
+				"Allow Capturing Outside of Battle", true).getBoolean(true);
+		maxNumLandPokemon = config.get("general",
+				"Max number of Land Pokemon (at one time)", 40).getInt(40);
+		maxNumUndergroundPokemon = config.get("general",
+				"Max number of Underground Pokemon (at one time)", 60).getInt(
+				60);
+		maxNumWaterPokemon = config.get("general",
+				"Max number of Water Pokemon (at one time)", 20).getInt(20);
+		maxNumAirPokemon = config.get("general",
+				"Max number of Air Pokemon (at one time)", 20).getInt(5);
+		trainerRarityModifier = config.get("general",
+				"Trainer Rarity (percentage 0-200)", 100).getInt(100);
+		nameplateRangeModifier = config
+				.get("general",
+						"Nameplate Visible Range Modifier (1=default, 2=farther, 3=far)",
+						1).getInt(1);
+		scaleModelsUp = config.get("general", "Scale Models Up", true)
+				.getBoolean(true);
+		pokemonDropsEnabled = config.get("general", "Pokemon Drops Enabled",
+				true).getBoolean(true);
+		removeVanillaMusic = config.get("general", "Remove Minecraft Music",
+				true).getBoolean(true);
+		printErrors = config.get("general", "Print Errors", false).getBoolean(
+				false);
+		allowRiding = config.get("general", "Allow Riding", true).getBoolean(
+				true);
+		allowPlanting = config.get("general", "Allow Planting", true)
+				.getBoolean(true);
+		allowPVPExperience = config
+				.get("general", "Allow PVP Experience", true).getBoolean(true);
+		allowRareCandyCrafting = config.get("general",
+				"Allow Crafting of Rare Candy", true).getBoolean(true);
 		idTrainers = config.get("IDs", "Trainer ID", 199).getInt(199);
 		idPixelmon = config.get("IDs", "Pixelmon ID", 200).getInt(200);
 		idPokeball = config.get("IDs", "Pokeball ID", 201).getInt(201);
@@ -87,10 +106,12 @@ public class PixelmonConfig {
 			while (it.hasNext()) {
 				Integer i = (Integer) it.next();
 				Class c1 = (Class) EntityList.IDtoClassMapping.get(i);
-				if (EntityPixelmon.class.isAssignableFrom(c1) || EntityTrainer.class.isAssignableFrom(c1)) {
+				if (EntityPixelmon.class.isAssignableFrom(c1)
+						|| EntityTrainer.class.isAssignableFrom(c1)) {
 					continue;
 				}
-				if (EntityLiving.class.isAssignableFrom(c1) && !Modifier.isAbstract(c1.getModifiers())) {
+				if (EntityLiving.class.isAssignableFrom(c1)
+						&& !Modifier.isAbstract(c1.getModifiers())) {
 					Class<? extends EntityLiving> c3 = c1;
 					int maxNonNullBiomes = 0;
 					for (BiomeGenBase biome : BiomeGenBase.biomeList) {

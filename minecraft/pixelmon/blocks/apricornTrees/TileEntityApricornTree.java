@@ -9,9 +9,9 @@ import net.minecraft.world.WorldServer;
 import pixelmon.enums.EnumApricornTrees;
 
 public class TileEntityApricornTree extends TileEntity {
-	
+
 	public EnumApricornTrees tree;
-	
+
 	public long timeLastWatered;
 
 	public TileEntityApricornTree() {
@@ -25,7 +25,7 @@ public class TileEntityApricornTree extends TileEntity {
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		
+
 		nbt.setLong("TimeLastWatered", timeLastWatered);
 		nbt.setShort("ApricornTreeID", (short) tree.id);
 	}
@@ -35,7 +35,7 @@ public class TileEntityApricornTree extends TileEntity {
 		super.readFromNBT(nbt);
 
 		tree = EnumApricornTrees.getFromID(nbt.getShort("ApricornTreeID"));
-		timeLastWatered = nbt.getLong("TimeLastWatered");		
+		timeLastWatered = nbt.getLong("TimeLastWatered");
 	}
 
 	@Override
@@ -44,27 +44,27 @@ public class TileEntityApricornTree extends TileEntity {
 		this.writeToNBT(nbt);
 		return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, nbt);
 	}
-	
-	public boolean wasWateredToday(){
+
+	public boolean wasWateredToday() {
 		WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
 		long tickTimeSinceMidnight = worldserver.getWorldTime();
 		long tickTimeSinceLastWatering = (worldserver.getTotalWorldTime() - timeLastWatered);
-				
-		if (tickTimeSinceLastWatering > tickTimeSinceMidnight){
+
+		if (tickTimeSinceLastWatering > tickTimeSinceMidnight) {
 			return false;
 		}
 		return true;
 	}
-	
-	public void updateWatering(){
+
+	public void updateWatering() {
 		WorldServer worldserver = MinecraftServer.getServer().worldServers[0];
 		timeLastWatered = worldserver.getTotalWorldTime();
-		
+
 		Packet132TileEntityData packet = (Packet132TileEntityData) this.getDescriptionPacket();
 		NBTTagCompound nbt = packet.customParam1;
-		
+
 		nbt.setLong("TimeLastWatered", timeLastWatered);
 		this.writeToNBT(nbt);
 	}
-	
+
 }
