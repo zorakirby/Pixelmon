@@ -149,7 +149,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
 		boolean[] conds = { true, true };
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(var1, var3);
-		if (baseStats == null || baseStats.spawnConditions==null ) return false;
+		if (baseStats == null || baseStats.spawnConditions == null)
+			return false;
 		if (baseStats.spawnConditions.length == 0)
 			if (biome == BiomeGenBase.desert || biome == BiomeGenBase.desertHills) {
 				if (blockId != Block.sand.blockID)
@@ -222,9 +223,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		if (nbt.hasKey("pixelmonOwner"))
-			try{
-			super.setOwner(nbt.getString("pixelmonOwner"));
-			}catch(Exception e){
+			try {
+				super.setOwner(nbt.getString("pixelmonOwner"));
+			} catch (Exception e) {
 				setDead();
 				return;
 			}
