@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import pixelmon.RandomHelper;
 import pixelmon.config.PixelmonConfig;
 
 import org.lwjgl.opengl.GL11;
@@ -21,8 +22,19 @@ import pixelmon.enums.EnumBossMode;
 public class RenderPixelmon extends RenderLiving {
 
 	private int defaultNameRenderDistance = 8;
-	private int defaultBossNameRenderDistanceExtension = 8; //kept as an additive bonus to avoid scaling issues
-	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3)); //keeps in bounds [1, 3], forces to int type
+	private int defaultBossNameRenderDistanceExtension = 8; // kept as an
+															// additive bonus to
+															// avoid scaling
+															// issues
+	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3)); // keeps
+																													// in
+																													// bounds
+																													// [1,
+																													// 3],
+																													// forces
+																													// to
+																													// int
+																													// type
 	private int nameRenderDistanceNormal = defaultNameRenderDistance * configNameRenderMultiplier;
 	private int nameRenderDistanceBoss = nameRenderDistanceNormal + defaultBossNameRenderDistanceExtension;
 
@@ -35,9 +47,8 @@ public class RenderPixelmon extends RenderLiving {
 		if (pixelmon.getName().equals(""))
 			return;
 		pixelmon.init(pixelmon.getName());
-		pixelmon.loadModel();
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
-		if (pixelmon.model != null)
+		if (pixelmon.getModel() != null)
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
 		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
 
@@ -69,7 +80,7 @@ public class RenderPixelmon extends RenderLiving {
 	public void renderPixelmon(EntityPixelmon pixelmon, double par2, double par4, double par6, float par8, float par9) {
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_CULL_FACE);
-		mainModel = pixelmon.model;
+		mainModel = pixelmon.getModel();
 		this.mainModel.onGround = this.renderSwingProgress(pixelmon, par9);
 
 		if (this.renderPassModel != null) {
@@ -113,10 +124,17 @@ public class RenderPixelmon extends RenderLiving {
 
 			GL11.glEnable(GL11.GL_ALPHA_TEST);
 			this.mainModel.setLivingAnimations(pixelmon, var16, var15, par9);
-			if (!pixelmon.getIsRed())
-				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
-			else {
+			if (pixelmon.getIsRed()) {
 				GL11.glColor4f(0, 0, 0, 1F);
+				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+			} else if (pixelmon.transformed) {
+				GL11.glColor4f(RandomHelper.getRandomNumberBetween(0.85f, 1f), RandomHelper.getRandomNumberBetween(0.85f, 1f), RandomHelper.getRandomNumberBetween(0.85f, 1f), 1);
+				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+			} else if (pixelmon.getBossMode() != EnumBossMode.Normal) {
+				GL11.glColor4f(pixelmon.getBossMode().r, pixelmon.getBossMode().g, pixelmon.getBossMode().b, 1f);
+				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+			} else {
+				GL11.glColor4f(1f, 1, 1, 1F);
 				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
 			}
 			float var19;

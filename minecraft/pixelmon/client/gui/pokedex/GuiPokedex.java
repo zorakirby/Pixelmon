@@ -110,8 +110,7 @@ public class GuiPokedex extends GuiContainer {
 		if (b) {
 			EntityPixelmon ep = selectedEntry.getRenderTarget(mc.theWorld);
 			if (ep != null) {
-				ep.loadModel();
-				if (ep.model != null)
+				if (ep.getModel() != null)
 					drawEntityToScreen(left + 130, top + 106, 51, 55, ep, par3, true);
 			}
 		}

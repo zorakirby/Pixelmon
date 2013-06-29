@@ -5,24 +5,35 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
+import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.models.objHandling.ModelObj;
 import pixelmon.client.models.objHandling.Object3D;
 import pixelmon.enums.EnumPokemon;
 
 public abstract class Entity2HasModel extends Entity1Base {
 
-	public ModelBase model;
+	@SideOnly(Side.CLIENT)
+	ModelBase model;
+	@SideOnly(Side.CLIENT)
 	public float animationNum1 = 0f;
-
+	@SideOnly(Side.CLIENT)
 	public int animationCounter = 0;
+	@SideOnly(Side.CLIENT)
 	public int animationIncrement = 2;
+	@SideOnly(Side.CLIENT)
 	public int animationLimit = 360;
+	@SideOnly(Side.CLIENT)
 	public int animationCounter2 = 0;
+	@SideOnly(Side.CLIENT)
 	public int animationIncrement2 = 3;
+	@SideOnly(Side.CLIENT)
 	public int animationLimit2 = 360;
 
 	public Entity2HasModel(World par1World) {
@@ -40,7 +51,14 @@ public abstract class Entity2HasModel extends Entity1Base {
 		setName(evolveTo);
 	}
 
-	public void loadModel() {
+	@SideOnly(Side.CLIENT)
+	public ModelBase getModel(){
+		if (model ==null) loadModel();
+		return model;
+	}
+
+	@SideOnly(Side.CLIENT)
+	void loadModel() {
 		if (Pixelmon.proxy.getModels().length == 0)
 			return;
 		int n = ((Entity3HasStats) this).baseStats.nationalPokedexNumber;
@@ -55,6 +73,18 @@ public abstract class Entity2HasModel extends Entity1Base {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
+	public boolean transformed;
+	@SideOnly(Side.CLIENT)
+	String transformedModel;
+	@SideOnly(Side.CLIENT)
+	public void transform(String transformedModel) {
+		transformed = true;
+		this.transformedModel = transformedModel;
+		ModelBase m = Pixelmon.proxy.loadModel(transformedModel);
+		model = m;
+	}
+	
 	String oldName;
 
 	public float getScaleFactor() {
@@ -67,7 +97,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 		if (worldObj.isRemote && !oldName.equals(getName())) {
 			isInitialised = false;
 			((Entity3HasStats) this).getBaseStats(getName());
-			loadModel();
+			model = null;
 			oldName = getName();
 		}
 		if (worldObj.isRemote) {
