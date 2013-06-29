@@ -47,7 +47,7 @@ public class BlockTradeMachine extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("trademachine");
+		blockIcon = par1IconRegister.registerIcon("pixelmon:trademachine");
 	}
 	
 	@Override
