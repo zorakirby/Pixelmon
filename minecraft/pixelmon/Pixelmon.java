@@ -58,6 +58,8 @@ public class Pixelmon {
 
 	public static EnumToolMaterial ALUMINIUM = EnumHelper.addToolMaterial("ALUMINUM", 2, 200, 6.5F, 2, 14);
 	public static EnumArmorMaterial ALUMINIUMARMOR = EnumHelper.addArmorMaterial("ALUMINUM", 15, new int[] { 2, 6, 5, 2 }, 8);
+	public static EnumArmorMaterial RUNNINGARMOR = EnumHelper.addArmorMaterial("RUNNING", 66, new int[] { 3, 8, 6, 3 }, 22);
+	public static EnumArmorMaterial OLDRUNNINGARMOR = EnumHelper.addArmorMaterial("OLDRUNNING", 999999, new int[] { 2, 6, 5, 1 }, 13);
 
 	@Instance("Pixelmon")
 	public static Pixelmon instance;
@@ -110,7 +112,7 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenEvolutionRock());
 
 		StructureRegistry.loadStructures(event.getSide());
-		
+
 		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
