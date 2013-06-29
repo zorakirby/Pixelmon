@@ -37,6 +37,7 @@ public class BattleController {
 		participant1.startedBattle = true;
 		participant1.team = 0;
 		participant2.team = 1;
+	
 		participants.add(participant1);
 		participants.add(participant2);
 		initBattle();

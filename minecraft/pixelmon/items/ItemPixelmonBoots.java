@@ -4,24 +4,30 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.IArmorTextureProvider;
 import pixelmon.config.PixelmonItems;
+import pixelmon.migration.Pixelmon;
 
-public class ItemPixelmonArmor extends ItemArmor implements IArmorTextureProvider{
+public class ItemPixelmonBoots extends ItemArmor implements IArmorTextureProvider{
 
-    public ItemPixelmonArmor(int i, int index, EnumArmorMaterial enumArmorMaterial, int k, int l, String textureName, String itemName)
+    public ItemPixelmonBoots(int i, int index, EnumArmorMaterial enumArmorMaterial, int k, int l, String textureName, String itemName)
     {
         super(i, enumArmorMaterial, k, l);
-        this.setMaxDamage(enumArmorMaterial.getDurability(l));
+        this.setMaxDamage(400);
         this.setCreativeTab(CreativeTabs.tabCombat);
         this.textureName = textureName;
         setUnlocalizedName(itemName);
     }
-
-	String textureName;
+    public static int bootLastX = 0;
+    public static int bootLastZ = 0;
+    
+    String textureName;
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -30,11 +36,11 @@ public class ItemPixelmonArmor extends ItemArmor implements IArmorTextureProvide
 	}
 	
 	public String getArmorTextureFile(ItemStack itemstack) {
-		if(itemstack.getItem() == PixelmonItems.leggingsAluminium)
-		return "/pixelmon/armor/aluminum_2.png";
-	
-				else{
-					return "/pixelmon/armor/aluminum_1.png";
+		if(itemstack.getItem() == PixelmonItems.newRunningShoes)
+		{
+					return"/pixelmon/armor/running_1.png";
+				}else{
+					return "/pixelmon/armor/oldrunning_1.png";
 		}
 			
 		}
