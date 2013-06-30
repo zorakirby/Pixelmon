@@ -128,7 +128,8 @@ public class RenderPixelmon extends RenderLiving {
 				GL11.glColor4f(0, 0, 0, 1F);
 				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
 			} else if (pixelmon.transformed) {
-				GL11.glColor4f(RandomHelper.getRandomNumberBetween(0.85f, 1f), RandomHelper.getRandomNumberBetween(0.85f, 1f), RandomHelper.getRandomNumberBetween(0.85f, 1f), 1);
+				GL11.glColor4f(RandomHelper.getRandomNumberBetween(0.85f, 1f), RandomHelper.getRandomNumberBetween(0.85f, 1f),
+						RandomHelper.getRandomNumberBetween(0.85f, 1f), 1);
 				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
 			} else if (pixelmon.getBossMode() != EnumBossMode.Normal) {
 				GL11.glColor4f(pixelmon.getBossMode().r, pixelmon.getBossMode().g, pixelmon.getBossMode().b, 1f);
@@ -259,8 +260,8 @@ public class RenderPixelmon extends RenderLiving {
 				s += " Lv: " + entitypixelmon.getLvl().getLevel() + " ";
 			s += entitypixelmon.getNickname();
 			if (entitypixelmon.getBossMode() == EnumBossMode.Normal) {
-				if (entitypixelmon.getOwner() != null) {
-					s += " (" + ((EntityPlayer) entitypixelmon.getOwner()).username + ")";
+				if (entitypixelmon.hasOwner()) {
+					s += " (" + entitypixelmon.getOwnerName() + ")";
 				} else if (!entitypixelmon.getTrainerName().equals("")) {
 					s += " (" + entitypixelmon.getTrainerName() + ")";
 				} else

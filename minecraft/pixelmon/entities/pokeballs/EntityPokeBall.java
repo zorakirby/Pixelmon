@@ -230,7 +230,10 @@ public class EntityPokeBall extends EntityThrowable {
 								return;
 							}
 							BattleParticipant part;
-							if (((EntityPixelmon) movingobjectposition.entityHit).getOwner() != null)
+							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner()
+									&& ((EntityPixelmon) movingobjectposition.entityHit).getOwner() == null)
+								return;
+							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner())
 								part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
 										(EntityPixelmon) movingobjectposition.entityHit);
 							else
@@ -274,7 +277,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 					}
 
-					if (p.getOwner() != null || p.getTrainer() != null) {
+					if (p.hasOwner() || p.getTrainer() != null) {
 						if (p.getOwner() == thrower)
 							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch Pokemon you already own!");
 						else
@@ -481,7 +484,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private void catchPokemon() {
 		if (canCatch) {
 			ChatHandler.sendChat((EntityPlayer) thrower, "You captured " + p.getName());
-			PixelmonEventHandler.fireEvent(EventType.CapturePokemon, (EntityPlayer)thrower);
+			PixelmonEventHandler.fireEvent(EventType.CapturePokemon, (EntityPlayer) thrower);
 			spawnCaptureParticles();
 			setIsCaptured(true);
 			waitTime = 0;

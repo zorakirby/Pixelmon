@@ -18,11 +18,9 @@ import pixelmon.entities.pixelmon.stats.FriendShip;
 import pixelmon.entities.pixelmon.stats.IVStore;
 import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.pixelmon.stats.Stats;
-import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumType;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.pokedex.Pokedex.DexRegisterStatus;
-import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
 
 public abstract class Entity3HasStats extends Entity2HasModel {
@@ -75,7 +73,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	protected void init(String name) {
 		super.init(name);
 		getBaseStats(name);
-		if (baseStats == null){
+		if (baseStats == null) {
 			setDead();
 			return;
 		}
@@ -129,7 +127,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void onDeath(DamageSource par1DamageSource) {
 		if (getOwner() != null) {
 			friendship.onFaint();
-			PixelmonEventHandler.fireEvent(EventType.PokemonFaint, (EntityPlayer)getOwner());
+			PixelmonEventHandler.fireEvent(EventType.PokemonFaint, (EntityPlayer) getOwner());
 		}
 		super.onDeath(par1DamageSource);
 	}
@@ -216,7 +214,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		super.setEntityHealth(par1);
 		updateHealth();
 	}
-	
+
 	public void healEntityBy(int i) {
 		setEntityHealth(getHealth() + i);
 	}
@@ -284,6 +282,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void onUpdate() {
 		if (getOwner() != null)
 			friendship.tick();
+		if (hasOwner() && getOwner() == null)
+			setDead();
 		super.onUpdate();
 	}
 
