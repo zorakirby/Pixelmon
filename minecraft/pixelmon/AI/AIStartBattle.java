@@ -27,7 +27,7 @@ public class AIStartBattle extends EntityAIBase {
 			return false;
 		if (theEntity.battleController != null)
 			return false;
-		if (theEntity.getOwner() != null && !theEntity.getOwnerName().equals(""))
+		if (theEntity.hasOwner())
 			return false;
 		if (theEntity.getAttackTarget() == null)
 			return false;

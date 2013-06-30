@@ -45,16 +45,19 @@ public class GeneralScattered extends StructureScattered {
 					}
 			// id, metadata
 			for (int i = 0; i < s.tileEntities.tagCount(); i++) {
-				NBTTagCompound nbt = (NBTTagCompound)s.tileEntities.tagAt(i);
+				NBTTagCompound nbt = (NBTTagCompound) s.tileEntities.tagAt(i);
 				int x = nbt.getInteger("x");
 				int y = nbt.getInteger("y");
 				int z = nbt.getInteger("z");
-				if (nbt.getString("id").equalsIgnoreCase("healer")){
-					this.placeBlockAtCurrentPosition(world, PixelmonBlocks.healer.blockID, this.getMetadataWithOffset(PixelmonBlocks.healer.blockID, s.blockData[x][y][z]), x, y, z, bb);
-				}else if (nbt.getString("id").equalsIgnoreCase("trade machine")){
-					this.placeBlockAtCurrentPosition(world, PixelmonBlocks.tradeMachine.blockID, this.getMetadataWithOffset(PixelmonBlocks.tradeMachine.blockID, s.blockData[x][y][z]), x, y, z, bb);
-				}else if (nbt.getString("id").equalsIgnoreCase("pokemon pc")){
-					this.placeBlockAtCurrentPosition(world, PixelmonBlocks.pc.blockID, this.getMetadataWithOffset(PixelmonBlocks.pc.blockID, s.blockData[x][y][z]), x, y, z, bb);
+				if (nbt.getString("id").equalsIgnoreCase("healer")) {
+					this.placeBlockAtCurrentPosition(world, PixelmonBlocks.healer.blockID,
+							this.getPixelmonMetadata(PixelmonBlocks.healer.blockID, s.blockData[x][y][z]), x, y, z, bb);
+				} else if (nbt.getString("id").equalsIgnoreCase("trade machine")) {
+					this.placeBlockAtCurrentPosition(world, PixelmonBlocks.tradeMachine.blockID,
+							this.getPixelmonMetadata(PixelmonBlocks.tradeMachine.blockID, s.blockData[x][y][z]), x, y, z, bb);
+				} else if (nbt.getString("id").equalsIgnoreCase("pokemon pc")) {
+					this.placeBlockAtCurrentPosition(world, PixelmonBlocks.pc.blockID,
+							this.getPixelmonMetadata(PixelmonBlocks.pc.blockID, s.blockData[x][y][z]), x, y, z, bb);
 				}
 			}
 			return true;
@@ -63,6 +66,10 @@ public class GeneralScattered extends StructureScattered {
 
 	protected int getMetadataWithOffset(int par1, int par2) {
 		return BlockRotation.setBlockRotation(coordBaseMode, par1, par2);
+	}
+
+	protected int getPixelmonMetadata(int par1, int par2) {
+		return BlockRotation.setPixelmonBlockRotation(coordBaseMode, par1, par2);
 	}
 
 	public boolean generate(World world, Random random) {
