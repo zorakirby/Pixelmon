@@ -16,7 +16,6 @@ public class JumpKick extends SpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-		System.out.println("Runs applyeffect");
 		return false;
 	}
 
