@@ -16,12 +16,13 @@ public class JumpKick extends SpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+		System.out.println("Runs applyeffect");
 		return false;
 	}
 
 	@Override
 	public void ApplyMissEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
-		user.attackEntityFrom(DamageSource.causeMobDamage(user), user.getHealth() / 2);
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " kept on going and hurt itself trying to land!");
+		user.attackEntityFrom(DamageSource.causeMobDamage(user), user.getMaxHealth() / 2);
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " kept on going and crashed!");
 	}
 }

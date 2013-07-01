@@ -13,6 +13,7 @@ import pixelmon.battles.attacks.specialAttacks.attackModifiers.Recoil;
 import pixelmon.battles.attacks.specialAttacks.basic.Acrobatics;
 import pixelmon.battles.attacks.specialAttacks.basic.Acupressure;
 import pixelmon.battles.attacks.specialAttacks.basic.BatonPass;
+import pixelmon.battles.attacks.specialAttacks.basic.BeatUp;
 import pixelmon.battles.attacks.specialAttacks.basic.Curse;
 import pixelmon.battles.attacks.specialAttacks.basic.DoSetDamage;
 import pixelmon.battles.attacks.specialAttacks.basic.Drain;
