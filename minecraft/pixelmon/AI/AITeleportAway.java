@@ -19,7 +19,7 @@ public class AITeleportAway extends EntityAIBase {
 
 	@Override
 	public boolean shouldExecute() {
-		if (pixelmon.getOwner() != null)
+		if (pixelmon.hasOwner())
 			return false;
 		this.closestLivingEntity = pixelmon.worldObj.getClosestPlayerToEntity(pixelmon, 7);
 
@@ -41,7 +41,7 @@ public class AITeleportAway extends EntityAIBase {
 	}
 
 	Random rand = new Random();
-	
+
 	public static boolean teleportRandomly(Entity7HasAI pixelmon, Random rand) {
 		double d = pixelmon.posX + (rand.nextDouble() - 0.5D) * 64D;
 		double d1 = pixelmon.posY + (double) (rand.nextInt(64) - 32);
@@ -78,7 +78,8 @@ public class AITeleportAway extends EntityAIBase {
 			if (flag1) {
 				pixelmon.setPosition(pixelmon.posX, pixelmon.posY, pixelmon.posZ);
 
-				if (pixelmon.worldObj.getCollidingBoundingBoxes(pixelmon, pixelmon.boundingBox).size() == 0 && !pixelmon.worldObj.isAnyLiquid(pixelmon.boundingBox)) {
+				if (pixelmon.worldObj.getCollidingBoundingBoxes(pixelmon, pixelmon.boundingBox).size() == 0
+						&& !pixelmon.worldObj.isAnyLiquid(pixelmon.boundingBox)) {
 					flag = true;
 				}
 			}

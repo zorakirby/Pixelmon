@@ -84,6 +84,12 @@ public class PixelmonRecipes {
 				PixelmonItems.aluminiumIngot });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.bootsAluminium, 1), new Object[] { "S S", "S S", Character.valueOf('S'),
 				PixelmonItems.aluminiumIngot });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.newRunningShoes, 1), new Object[] { "DOD", "I I", "F F", Character.valueOf('D'), Item.diamond,
+				Character.valueOf('O'), PixelmonItems.oldRunningShoes, Character.valueOf('I'), Item.ingotIron, Character.valueOf('F'), Item.feather });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.oldRunningShoes, 1), new Object[] { "IBI", "I I", "F F", Character.valueOf('I'), Item.ingotIron,
+				Character.valueOf('B'), Item.bootsLeather, Character.valueOf('F'), Item.feather });
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.wailmerPail, 1), new Object[] { "BBB", " W ", "III", Character.valueOf('I'), Item.ingotIron,
+				Character.valueOf('B'), Item.bone, Character.valueOf('W'), Item.bucketWater });
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.anvilItem, 1), new Object[] { "XXX", "XX ", "XXX", Character.valueOf('X'), Item.ingotIron });
 

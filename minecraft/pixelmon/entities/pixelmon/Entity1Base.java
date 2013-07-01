@@ -198,4 +198,11 @@ public abstract class Entity1Base extends EntityTameable {
 	public PlayerStorage getStorage() throws PlayerNotLoadedException{
 		return PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner());
 	}
+	
+	public boolean hasOwner() {
+		if (getOwnerName().equals(""))
+			return false;
+		else
+			return true;
+	}
 }

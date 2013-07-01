@@ -314,7 +314,7 @@ public class Attack {
 		return disabled;
 	}
 
-	public double calcCriticalHit(EffectBase e) {
+	public static double calcCriticalHit(EffectBase e) {
 		int critStage = 1;
 		int percent = 6;
 		if (e != null) {

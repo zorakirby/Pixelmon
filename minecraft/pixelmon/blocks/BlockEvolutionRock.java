@@ -46,7 +46,10 @@ public class BlockEvolutionRock extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
+		if (this.rockType == EnumEvolutionRock.MossyRock)
+			blockIcon = par1IconRegister.registerIcon("pixelmon:mossyrock");
+		else
+			blockIcon = par1IconRegister.registerIcon("pixelmon:icyrock");
 	}
 	
 	@Override

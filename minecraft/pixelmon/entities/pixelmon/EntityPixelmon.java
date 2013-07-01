@@ -2,6 +2,9 @@ package pixelmon.entities.pixelmon;
 
 import java.util.ArrayList;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -146,7 +149,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
 		boolean[] conds = { true, true };
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(var1, var3);
-		if (baseStats == null || baseStats.spawnConditions==null ) return false;
+		if (baseStats == null || baseStats.spawnConditions == null)
+			return false;
 		if (baseStats.spawnConditions.length == 0)
 			if (biome == BiomeGenBase.desert || biome == BiomeGenBase.desertHills) {
 				if (blockId != Block.sand.blockID)
@@ -219,7 +223,12 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		if (nbt.hasKey("pixelmonOwner"))
-			super.setOwner(nbt.getString("pixelmonOwner"));
+			try {
+				super.setOwner(nbt.getString("pixelmonOwner"));
+			} catch (Exception e) {
+				setDead();
+				return;
+			}
 		int h = health;
 		level.readFromNBT(nbt);
 		setEntityHealth(h);
@@ -253,5 +262,4 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public ArrayList<String> getPreEvolutions() {
 		return DatabaseStats.getPreEvolutions(getName());
 	}
-
 }
