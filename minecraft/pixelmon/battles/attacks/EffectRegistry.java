@@ -52,7 +52,6 @@ import pixelmon.battles.attacks.specialAttacks.multiTurn.Dig;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Fly;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.PetalDance;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.RazorWind;
-import pixelmon.battles.attacks.specialAttacks.multiTurn.Rollout;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.SolarBeam;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyAquaRing;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyBurn;
