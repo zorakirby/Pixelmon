@@ -164,7 +164,6 @@ public class EffectRegistry {
 		effectMap.put("fly", Fly.class);
 		effectMap.put("petaldance", PetalDance.class);
 		effectMap.put("razorwind", RazorWind.class);
-		effectMap.put("rollout", Rollout.class);
 		effectMap.put("solarbeam", SolarBeam.class);
 	}
 
