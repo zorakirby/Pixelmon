@@ -88,6 +88,7 @@ public class EffectRegistry {
 		effectMap.put("suicide", Suicide.class);
 		effectMap.put("teleport", Teleport.class);
 		effectMap.put("venoshock", Venoshock.class);
+		effectMap.put("wakeupslap", WakeUpSlap.class);
 
 		// Multi-Turn Attacks
 		effectMap.put("bide", Bide.class);
