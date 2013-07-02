@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
+import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -19,7 +20,7 @@ public class Metronome extends SpecialAttackBase {
 			ArrayList<String> targetAttackList) throws Exception {
 		
 		Attack RandomAttack;
-		
+		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " waggled its finger!");
 		do 
 		{
 		RandomAttack = DatabaseMoves.getAttack(RandomHelper.getRandomNumberBetween(1, 559));
