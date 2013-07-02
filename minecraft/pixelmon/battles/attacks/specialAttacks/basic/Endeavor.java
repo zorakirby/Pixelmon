@@ -21,7 +21,7 @@ public class Endeavor extends SpecialAttackBase{
 		int targetHealth = target.getHealth();
 		
 		if(userHealth >= targetHealth){
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The move failed!");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "But it failed!");
 		}
 		
 		if(userHealth < targetHealth){
