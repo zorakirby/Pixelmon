@@ -14,17 +14,25 @@ public class ApplySleep extends StatusApplierBase {
 	@Override
 	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (checkChance()) {
-			for (StatusBase e : target.status)
-				if (e.type == StatusType.Sleep) {
-					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already asleep!");
-					return;
-				}
-
+			
+			boolean hasAPrimary = target.hasPrimaryStatus();
+			
+			if (target.hasStatus(StatusType.Sleep))
+			{
+				if(attack.baseAttack.basePower == -1)
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already asleep!");
+				return;
+			}
+			if (hasAPrimary)
+			{
+				if (attack.baseAttack.basePower == -1)
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), attack.baseAttack.attackName + " failed!");
+				return;
+			}
+		
 			target.status.add(new Sleep());
-
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has fallen asleep!");
 
-		} else
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " did not fall asleep!");
+		}
 	}
 }
