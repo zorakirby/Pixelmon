@@ -216,9 +216,8 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 			this.setRotation(this.rotationYaw, this.rotationPitch);
 		} else {
 			if (!this.worldObj.isRemote) {
-				ItemStack itemstack = this.angler.getCurrentEquippedItem();
 
-				if (this.angler.isDead || !this.angler.isEntityAlive() || itemstack == null || itemstack.getItem() != PixelmonItems.oldRod
+				if (this.angler.isDead || !this.angler.isEntityAlive() || this.angler.getHeldItem() == null || this.angler.getHeldItem().getItem() != PixelmonItems.oldRod
 						|| this.getDistanceSqToEntity(this.angler) > 1024.0D) {
 					this.setDead();
 					this.angler.fishEntity = null;
@@ -488,7 +487,7 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 					try {
 						EntityPixelmon player1firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) angler).getFirstAblePokemon(
 								angler.worldObj);
-						bc2 = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildpixelmon);
+						bc2 = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildpixelmon2);
 						wildpixelmon2.StartBattle(bc2, part2);
 					} catch (Exception e) {
 
@@ -500,6 +499,8 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 				}
 
 				b0 = 1;
+			}else{
+				angler.sendChatToPlayer("Not even a nibble...");
 			}
 
 			if (this.inGround) {
