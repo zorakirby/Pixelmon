@@ -371,9 +371,9 @@ public class PixelmonItems {
 		
 		// TODO make correct icons for mossyrock and icyrock, instead of using
 		// anvil
-		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "anvil", "Mossy Rock");
+		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "mossyrock", "Mossy Rock");
 		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
-		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "anvil", "Icy Rock");
+		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "icyrock", "Icy Rock");
 		icyRock.setCreativeTab(PixelmonCreativeTabs.natural);
 	}
 

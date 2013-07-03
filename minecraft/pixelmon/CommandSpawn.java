@@ -13,6 +13,7 @@ import net.minecraft.world.WorldServer;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 
@@ -29,7 +30,7 @@ public class CommandSpawn extends CommandBase {
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender icommandsender){
+	public String getCommandUsage(ICommandSender icommandsender) {
 		return "/pokespawn <pokemon>";
 	}
 
@@ -44,23 +45,30 @@ public class CommandSpawn extends CommandBase {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				if (var2.length > 1)
-					if (var2[1].equalsIgnoreCase("s"))
-						((EntityPixelmon) var6).setIsShiny(true);
+					for (String s : var2) {
+						if (s.equalsIgnoreCase("s"))
+							((EntityPixelmon) var6).setIsShiny(true);
+						else if (s.startsWith("boss")) {
+							if (s.endsWith("1")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Uncommon);
+							else if (s.endsWith("2")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Rare);
+							else if (s.endsWith("3")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Legendary);
+						}
+					}
 				world.spawnEntityInWorld(var6);
 				var1.sendChatToPlayer("Successfully spawned a " + var5);
-				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[]{var5});
+				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[] { var5 });
 			} else if (EnumTrainers.has(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
 				var1.sendChatToPlayer("Successfully spawned a " + var5);
-				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[]{var5});
+				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[] { var5 });
 			} else if (NPCType.has(var5)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
 				var1.sendChatToPlayer("Successfully spawned a " + var5);
-				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[]{var5});
+				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[] { var5 });
 			} else {
 				var1.sendChatToPlayer(var5 + " is not in game!");
 			}
