@@ -3,6 +3,7 @@ package pixelmon.battles.controller;
 import java.util.ArrayList;
 import java.util.Random;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import pixelmon.api.events.EventType;
@@ -162,9 +163,9 @@ public class BattleController {
 				String name = p.currentPokemon().getNickname();
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player)
-					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
+					ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				Experience.awardExp(participants, p, p.currentPokemon());
-
+				EntityLiving g = p.currentPokemon().getOwner();
 				p.currentPokemon().setEntityHealth(0);
 				p.currentPokemon().setDead();
 				p.currentPokemon().isFainted = true;
@@ -174,6 +175,7 @@ public class BattleController {
 					p.wait = true;
 					p.getNextPokemon();
 				} else {
+					ChatHandler.sendBattleMessage(g, "You've run out of usable pokemon!");
 					endBattle();
 				}
 			}

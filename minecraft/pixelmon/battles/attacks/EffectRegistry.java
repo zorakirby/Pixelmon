@@ -25,6 +25,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.FalseSwipe;
 import pixelmon.battles.attacks.specialAttacks.basic.Flail;
 import pixelmon.battles.attacks.specialAttacks.basic.Frustration;
 import pixelmon.battles.attacks.specialAttacks.basic.GyroBall;
+import pixelmon.battles.attacks.specialAttacks.basic.Haze;
 import pixelmon.battles.attacks.specialAttacks.basic.Heal;
 import pixelmon.battles.attacks.specialAttacks.basic.HealOther;
 import pixelmon.battles.attacks.specialAttacks.basic.HeavySlam;
@@ -137,6 +138,7 @@ public class EffectRegistry {
 		effectMap.put("flail", Flail.class);
 		effectMap.put("frustration", Frustration.class);
 		effectMap.put("gyroball", GyroBall.class);
+		effectMap.put("haze", Haze.class);
 		effectMap.put("heal", Heal.class);
 		effectMap.put("healother", HealOther.class);
 		effectMap.put("heavyslam", HeavySlam.class);
