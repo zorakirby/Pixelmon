@@ -172,6 +172,7 @@ public class BattleController {
 				p.updatePokemon();
 
 				if (p.hasMorePokemon()) {
+					p.willTryFlee = false;
 					p.wait = true;
 					p.getNextPokemon();
 				} else {
@@ -201,6 +202,8 @@ public class BattleController {
 	private void takeTurn(BattleParticipant p) {
 		if (p.willTryFlee && !p.currentPokemon().isLockedInBattle) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
+			p.priority = 6;
+			System.out.println("raised priority");
 		} else if (p.currentPokemon().isLockedInBattle)
 			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Cannot escape!");
 		else if (p.isSwitching)
