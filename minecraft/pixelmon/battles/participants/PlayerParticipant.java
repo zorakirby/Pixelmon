@@ -61,10 +61,19 @@ public class PlayerParticipant extends BattleParticipant {
 		player.openGui(Pixelmon.instance, EnumGui.Battle.getIndex(), player.worldObj, BattleRegistry.getIndex(bc), 0, 0);
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon, currentPixelmon.getPokemonId()));
 		for (EntityPixelmon p : PixelmonMethods.getAllActivePokemon(player)) {
+			p.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
 			for (int i = 0; i < 4; i++) {
 				if (p.moveset.get(i) != null)
 					p.moveset.get(i).setDisabled(false, p);
 			}
+		}
+		try {
+			if (opponent.startedBattle && !(PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(currentPixelmon.getPokemonId(), player.worldObj))) {
+				currentPixelmon.releaseFromPokeball();
+				currentPixelmon.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
+			}
+		} catch (Exception e){
+			//Do nothing
 		}
 	}
 
@@ -85,6 +94,7 @@ public class PlayerParticipant extends BattleParticipant {
 			}
 		}
 		currentPixelmon.EndBattle();
+		storage.retrieve(currentPixelmon);
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ExitBattle, 0));
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.ClearTempStore, 0));
 	}
@@ -128,9 +138,9 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public void switchPokemon(int newPixelmonId) {
-		double x = currentPixelmon.posX;
-		double y = currentPixelmon.posY;
-		double z = currentPixelmon.posZ;
+		double x = player.posX;
+		double y = player.posY;
+		double z = player.posZ;
 		currentPixelmon.battleStats.clearBattleStats();
 		if (!currentPixelmon.isFainted) {
 			ChatHandler.sendBattleMessage(player, "That's enough " + currentPixelmon.getNickname() + "!");
@@ -146,8 +156,8 @@ public class PlayerParticipant extends BattleParticipant {
 		}
 		EntityPixelmon newPixelmon = storage.sendOut(newPixelmonId, currentPixelmon.getOwner().worldObj);
 		newPixelmon.motionX = newPixelmon.motionY = newPixelmon.motionZ = 0;
+		newPixelmon.setLocationAndAngles(x, y, z, player.rotationYaw, 0.0F);
 		newPixelmon.releaseFromPokeball();
-		newPixelmon.setLocationAndAngles(x, y, z, currentPixelmon.rotationYaw, 0.0F);
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetBattlingPokemon, newPixelmon.getPokemonId()));
 		ChatHandler.sendBattleMessage(player, "Go " + newPixelmon.getNickname() + "!");
 		bc.sendToOtherParticipants(this, player.username + " sent out " + newPixelmon.getNickname() + "!");

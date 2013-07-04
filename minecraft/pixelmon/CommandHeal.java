@@ -96,10 +96,10 @@ public class CommandHeal extends CommandBase {
 		} 
 		catch (PlayerNotFoundException e){
 			//Catches the case where in cracked clients player's name defaults is "ASH"
-			par1ICommandSender.sendChatToPlayer("Invalid Name! Try again or try using 'ash'." + e.toString());
+			par1ICommandSender.sendChatToPlayer("Invalid Name! Try again or try using 'ash'.");
 		}
 		catch (Exception e) {
-			par1ICommandSender.sendChatToPlayer("Invalid Name! Try again or try using 'ash'." + e.toString());
+			par1ICommandSender.sendChatToPlayer("Invalid Name! Try again or try using 'ash'.");
 		}
 	}
 }
