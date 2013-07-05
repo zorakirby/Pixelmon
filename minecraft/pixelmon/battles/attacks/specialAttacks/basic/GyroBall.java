@@ -18,7 +18,7 @@ public class GyroBall extends SpecialAttackBase {
 		if(a.baseAttack.basePower > 150){
 			a.baseAttack.basePower = 150;
 		}
-		return true;
+		return false;
 	}
 
 }
