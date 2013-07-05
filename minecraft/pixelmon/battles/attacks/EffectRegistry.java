@@ -29,6 +29,7 @@ public class EffectRegistry {
 		effectMap.put("perish", ApplyPerish.class);
 		effectMap.put("poison", ApplyPoison.class);
 		effectMap.put("poisonbadly", ApplyPoisonBadly.class);
+		effectMap.put("pp", Spite.class);
 		effectMap.put("protect", ApplyProtect.class);
 		effectMap.put("rest", ApplyRest.class);
 		effectMap.put("recharge", ApplyRecharge.class);
@@ -70,6 +71,7 @@ public class EffectRegistry {
 		effectMap.put("hex", Hex.class);
 		effectMap.put("hiddenpower", HiddenPower.class);
 		effectMap.put("jumpkick", JumpKick.class);
+		effectMap.put("lowkick", LowKick.class);
 		effectMap.put("magnitude", Magnitude.class);
 		effectMap.put("memento", Memento.class);
 		effectMap.put("nightshade", NightShade.class);
