@@ -118,6 +118,15 @@ public class GuiBattle extends GuiContainer {
 		if (!ClientBattleManager.hasMoreMessages() && battleEnded && !ClientBattleManager.hasLevelUps() && !ClientBattleManager.hasNewAttacks()) {
 			restoreSettingsAndClose();
 			return;
+		} else if(battleEnded && mc.thePlayer.getHealth() == 0) {
+			if (!wasThirdPerson)
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+			Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+			mc.thePlayer.closeScreen();
+			mc.setIngameFocus();
+			GuiPixelmonOverlay.isVisible = true;
+
+			return;
 		}
 		int left = (width - xSize) / 2;
 		int top = (height - ySize) / 2;
