@@ -92,6 +92,7 @@ public class PlayerStorage {
 		}
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
+		p.setBoss(EnumBossMode.Normal);
 		if (!hasSpace()) {
 			ChatHandler.sendChat(p.getOwner(), "Your party is full, " + p.getName() + " is sent to your computer!");
 			PixelmonStorage.ComputerManager.getPlayerStorage(player).addToComputer(p);
@@ -103,7 +104,6 @@ public class PlayerStorage {
 			p.setOwner(player.username);
 		else if (mode == PokeballManagerMode.Trainer)
 			p.setTrainer(trainer);
-		p.setBoss(EnumBossMode.Normal);
 		NBTTagCompound n = new NBTTagCompound();
 		int id = 0;
 		if (mode == PokeballManagerMode.Player)
