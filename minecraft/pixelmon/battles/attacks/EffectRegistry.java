@@ -29,6 +29,7 @@ public class EffectRegistry {
 		effectMap.put("perish", ApplyPerish.class);
 		effectMap.put("poison", ApplyPoison.class);
 		effectMap.put("poisonbadly", ApplyPoisonBadly.class);
+		effectMap.put("pp", Spite.class);
 		effectMap.put("protect", ApplyProtect.class);
 		effectMap.put("rest", ApplyRest.class);
 		effectMap.put("recharge", ApplyRecharge.class);
@@ -57,6 +58,7 @@ public class EffectRegistry {
 		effectMap.put("drain", Drain.class);
 		effectMap.put("dreameater", DreamEater.class);
 		effectMap.put("echoedvoice", EchoedVoice.class);
+		effectMap.put("endeavor", Endeavor.class);
 		effectMap.put("eruption", Eruption.class);
 		effectMap.put("facade", Acrobatics.class);
 		effectMap.put("falseswipe", FalseSwipe.class);
@@ -69,6 +71,7 @@ public class EffectRegistry {
 		effectMap.put("hex", Hex.class);
 		effectMap.put("hiddenpower", HiddenPower.class);
 		effectMap.put("jumpkick", JumpKick.class);
+		effectMap.put("lowkick", LowKick.class);
 		effectMap.put("magnitude", Magnitude.class);
 		effectMap.put("memento", Memento.class);
 		effectMap.put("nightshade", NightShade.class);
@@ -87,6 +90,7 @@ public class EffectRegistry {
 		effectMap.put("suicide", Suicide.class);
 		effectMap.put("teleport", Teleport.class);
 		effectMap.put("venoshock", Venoshock.class);
+		effectMap.put("wakeupslap", WakeUpSlap.class);
 
 		// Multi-Turn Attacks
 		effectMap.put("bide", Bide.class);
