@@ -55,6 +55,8 @@ import pixelmon.battles.attacks.specialAttacks.basic.Teleport;
 import pixelmon.battles.attacks.specialAttacks.basic.Venoshock;
 import pixelmon.battles.attacks.specialAttacks.basic.WakeUpSlap;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Bide;
+import pixelmon.battles.attacks.specialAttacks.multiTurn.Dig;
+import pixelmon.battles.attacks.specialAttacks.multiTurn.Fly;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.PetalDance;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.SolarBeam;
@@ -173,6 +175,8 @@ public class EffectRegistry {
 		// Multi-Turn Attacks
 		effectMap.put("bide", Bide.class);
 //		effectMap.put("charge", Charge.class);
+		effectMap.put("dig", Dig.class);
+		effectMap.put("fly", Fly.class);
 		effectMap.put("petaldance", PetalDance.class);
 		effectMap.put("razorwind", RazorWind.class);
 		effectMap.put("solarbeam", SolarBeam.class);
