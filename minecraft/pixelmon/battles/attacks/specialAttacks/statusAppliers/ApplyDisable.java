@@ -14,7 +14,6 @@ public class ApplyDisable extends StatusApplierBase {
 	public void ApplyEffect(Attack a, double crit, EntityPixelmon user,
 			EntityPixelmon target, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-		System.out.println(target.getLastMoveUsed().baseAttack.attackName);
 		if (target.getLastMoveUsed() == null) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
 					target.getNickname() + " hasn't used a move yet!");
