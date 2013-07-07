@@ -1,6 +1,7 @@
 package pixelmon.battles.participants;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.Pixelmon;
@@ -183,7 +184,7 @@ public class PlayerParticipant extends BattleParticipant {
 	}
 
 	@Override
-	public EntityLiving getEntity() {
+	public EntityLivingBase getEntity() {
 		return player;
 	}
 

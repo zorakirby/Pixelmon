@@ -1,6 +1,7 @@
 package pixelmon.AI;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.Vec3;
@@ -8,7 +9,7 @@ import pixelmon.entities.pixelmon.Entity7HasAI;
 
 public class AIMoveTowardsTarget extends EntityAIBase {
 	private Entity7HasAI theEntity;
-	private EntityLiving targetEntity;
+	private EntityLivingBase targetEntity;
 	private double movePosX;
 	private double movePosY;
 	private double movePosZ;

@@ -97,7 +97,7 @@ public class BattleController {
 		try {
 			if (isPvP()) {
 				for (BattleParticipant p : participants) {
-					if (((PlayerParticipant) p).player == null || (((PlayerParticipant) p).player.getHealth() == 0))
+					if (((PlayerParticipant) p).player == null || !(((PlayerParticipant) p).player.isEntityAlive()))
 						endBattleWithoutXP();
 				}
 			}

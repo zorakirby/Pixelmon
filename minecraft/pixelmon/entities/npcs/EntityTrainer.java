@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -101,15 +102,15 @@ public class EntityTrainer extends EntityNPC {
 		ChatHandler.sendBattleMessage(player, info.greeting);
 	}
 
-	public void loseBattle(EntityLiving entityLiving) {
+	public void loseBattle(Entity entityLiving) {
 		if (entityLiving instanceof EntityPlayer) {
 			ChatHandler.sendBattleMessage(entityLiving, info.loseMessage);
 			PixelmonEventHandler.fireEvent(EventType.BeatTrainer, (EntityPlayer) entityLiving);
 		}
 	}
 
-	public void winBattle(EntityLiving entityLiving) {
-		ChatHandler.sendBattleMessage(entityLiving, info.winMessage);
+	public void winBattle(Entity entity) {
+		ChatHandler.sendBattleMessage(entity, info.winMessage);
 	}
 
 	public void retrievePokemon() {
