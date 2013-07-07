@@ -15,6 +15,8 @@ public class Flinch extends AttackModifierBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) throws Exception{
 		if (checkChance()){
+			if (user.getOwner() != null)
+			if(target.getHealth() != 0 && target.battleController.isWaiting())
 			return true;
 		}
 		return false;
