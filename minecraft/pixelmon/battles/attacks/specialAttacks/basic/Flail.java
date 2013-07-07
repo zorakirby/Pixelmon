@@ -17,7 +17,7 @@ public class Flail extends SpecialAttackBase {
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 			
-		double i = (double)(user.getHealth()/(double)user.getMaxHealth())*100 + 1;
+		double i = (double)(user.func_110143_aJ()/(double)user.getMaxHealth())*100 + 1;
 		if(i >= 70)
 			a.baseAttack.basePower = 20;
 		else if (i >= 35 && i < 70)

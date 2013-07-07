@@ -60,7 +60,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void init(String name) {
 		super.init(name);
-		moveSpeed = getMoveSpeed();
+		//moveSpeed = getMoveSpeed();
 	}
 
 	public void onDeath(DamageSource damagesource) {
@@ -229,7 +229,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 				setDead();
 				return;
 			}
-		int h = health;
+		float h = func_110143_aJ();
 		level.readFromNBT(nbt);
 		setEntityHealth(h);
 

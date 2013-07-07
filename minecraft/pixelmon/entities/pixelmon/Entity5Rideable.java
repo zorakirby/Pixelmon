@@ -147,7 +147,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 					if (this.isAIEnabled()) {
 						var5 = this.getAIMoveSpeed();
 					} else {
-						var5 = this.landMovementFactor;
+						var5 = 1;
 					}
 
 					var5 *= var8;

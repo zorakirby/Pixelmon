@@ -1,13 +1,9 @@
 package pixelmon.entities.pixelmon;
 
-import java.io.File;
-import java.util.Random;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.texturepacks.TexturePackDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import pixelmon.Pixelmon;
 import pixelmon.entities.pixelmon.particleEffects.ParticleEffects;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -39,7 +35,7 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
+	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		if (par1DamageSource.isFireDamage())
 			dataWatcher.updateObject(26, (short) 1);
 		return super.attackEntityFrom(par1DamageSource, par2);
@@ -49,19 +45,16 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	boolean checkedForRoastedTexture = false;
 
 	@SideOnly(Side.CLIENT)
-	@Override
 	public String getTexture() {
 		try {
 			if (dataWatcher.getWatchableObjectShort(26) == (short) 1 && !checkedForRoastedTexture || hasRoastedTexture) {
 				if (!checkedForRoastedTexture) {
-					if (TexturePackDefault.class.getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
+					if (Pixelmon.class.getResourceAsStream("/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
 						hasRoastedTexture = true;
 					checkedForRoastedTexture = true;
 				}
 			}
-			if (getIsShiny()
-					&& Minecraft.getMinecraft().renderEngine.texturePack.getSelectedTexturePack().getResourceAsStream(
-							"/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
+			if (getIsShiny() && Pixelmon.class.getResourceAsStream("/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
 				return "/pixelmon/texture/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
 			else if (dataWatcher.getWatchableObjectShort(26) == (short) 1 && hasRoastedTexture) {
 				return "/pixelmon/texture/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";

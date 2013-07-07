@@ -64,12 +64,12 @@ public class Level {
 		pixelmon.getDataWatcher().updateObject(19, (short) i);
 		setScale();
 		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
-		if (pixelmon.getHealth() == pixelmon.stats.HP) {
+		if (pixelmon.func_110143_aJ() == pixelmon.stats.HP) {
 			updateStats();
 			pixelmon.setEntityHealth(pixelmon.stats.HP);
 		} else {
 			float oldHp = pixelmon.stats.HP;
-			float oldHealth = pixelmon.getHealth();
+			float oldHealth = pixelmon.func_110143_aJ();
 			updateStats();
 			float newHealth = pixelmon.stats.HP;
 			if (oldHp != 0)
@@ -134,7 +134,7 @@ public class Level {
 		float oldHp = pixelmon.stats.HP;
 		updateStats();
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
-		float newHealth = ((float) pixelmon.getHealth()) * percentGain;
+		float newHealth = pixelmon.func_110143_aJ() * percentGain;
 		pixelmon.setEntityHealth((int) Math.ceil(newHealth));
 		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP) {
 			PixelmonStatsPacket stats2 = PixelmonStatsPacket.createPacket(pixelmon);

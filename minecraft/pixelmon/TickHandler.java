@@ -80,9 +80,9 @@ public class TickHandler implements ITickHandler {
 
 		for (TickType type : types) {
 
-			if (!checkedForUsername && type == TickType.RENDER && !Minecraft.getMinecraft().session.username.equals("ASH")
+			if (!checkedForUsername && type == TickType.RENDER && !Minecraft.getMinecraft().thePlayer.username.equals("ASH")
 					&& java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
-				Minecraft.getMinecraft().session.username = "ASH";
+				Minecraft.getMinecraft().thePlayer.username = "ASH";
 			}
 			checkedForUsername = true;
 			if (type == TickType.RENDER) {
@@ -106,7 +106,7 @@ public class TickHandler implements ITickHandler {
 				if (musicCleared && !foundSounds) {
 					foundSounds = true;
 					Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(
-							"Couldn't find music at " + Minecraft.getMinecraftDir() + "/resources/music/pixelmon");
+							"Couldn't find music at " + Minecraft.getMinecraft().mcDataDir + "/resources/music/pixelmon");
 				}
 			}
 		}

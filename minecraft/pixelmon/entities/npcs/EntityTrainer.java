@@ -7,6 +7,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,7 +40,7 @@ public class EntityTrainer extends EntityNPC {
 		dataWatcher.addObject(25, (int) 0);
 		tasks.addTask(0, new EntityAISwimming(this));
 		tasks.addTask(1, new AITrainerInBattle(this));
-		tasks.addTask(2, new EntityAIWander(this, moveSpeed));
+		tasks.addTask(2, new EntityAIWander(this, SharedMonsterAttributes.field_111263_d.func_111110_b()));
 	}
 
 	public void init(String name) {

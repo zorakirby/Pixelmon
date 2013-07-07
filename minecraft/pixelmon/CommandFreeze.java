@@ -3,6 +3,7 @@ package pixelmon;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatMessageComponent;
 
 public class CommandFreeze extends CommandBase {
 
@@ -16,13 +17,17 @@ public class CommandFreeze extends CommandBase {
 		EntityPlayer var4 = getCommandSenderAsPlayer(var1);
 		Pixelmon.freeze = !Pixelmon.freeze;
 		if (Pixelmon.freeze) {
-			var4.sendChatToPlayer("Pixelmon are frozen in place!");
-			notifyAdmins(var1, 1, "Pixelmon are frozen in place!", new Object[]{});
+			var4.sendChatToPlayer(ChatMessageComponent.func_111066_d("Pixelmon are frozen in place!"));
+			notifyAdmins(var1, 1, "Pixelmon are frozen in place!", new Object[] {});
+		} else {
+			var4.sendChatToPlayer(ChatMessageComponent.func_111066_d("Pixelmon are unfrozen!"));
+			notifyAdmins(var1, 1, "Pixelmon are unfrozen!", new Object[] {});
 		}
-		else {
-			var4.sendChatToPlayer("Pixelmon are unfrozen!");
-			notifyAdmins(var1, 1, "Pixelmon are unfrozen!", new Object[]{});
-		}
+	}
+
+	@Override
+	public String getCommandUsage(ICommandSender icommandsender) {
+		return "/freeze";
 	}
 
 }

@@ -537,7 +537,7 @@ public class EntityPokeBall extends EntityThrowable {
 		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), p2.getName(), pokemonRate);
 		if (pokemonRate > 0) {
 			int hpMax = p2.getMaxHealth();
-			int hpCurrent = p2.getHealth();
+			float hpCurrent = p2.func_110143_aJ();
 			int bonusStatus = 1;
 			double ballBonus = PokeballTypeHelper.getBallBonus(getType(), thrower, p2, mode);
 			double a, b, p;

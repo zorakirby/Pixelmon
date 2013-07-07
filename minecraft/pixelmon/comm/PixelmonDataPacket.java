@@ -128,7 +128,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		xp = p.getLvl().getExp();
 		hp = p.stats.HP;
 		friendship = p.friendship.getFriendship();
-		health = p.getHealth();
+		health = (int)p.func_110143_aJ();
 		isMale = p.isMale;
 		isFainted = p.isFainted;
 		isShiny = p.getIsShiny();

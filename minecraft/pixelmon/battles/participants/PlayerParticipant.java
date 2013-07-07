@@ -107,7 +107,7 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.getHealth() <= 0;
+		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.func_110143_aJ() <= 0;
 	}
 
 	@Override

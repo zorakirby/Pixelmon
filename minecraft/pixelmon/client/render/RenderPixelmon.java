@@ -389,7 +389,7 @@ public class RenderPixelmon extends RenderLiving {
 			byte byte0 = -25;
 			GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 			tessellator.startDrawingQuads();
-			float f5 = ((EntityPixelmon) entityLiving).getHealth();
+			float f5 = ((EntityPixelmon) entityLiving).func_110143_aJ();
 			float f6 = ((EntityPixelmon) entityLiving).getMaxHealth();
 			float f8 = 50F * (f5 / f6);
 
