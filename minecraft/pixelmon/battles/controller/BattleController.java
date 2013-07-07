@@ -14,6 +14,7 @@ import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
+import pixelmon.battles.status.GlobalStatusBase;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonConfig;
@@ -28,7 +29,7 @@ public class BattleController {
 	public ArrayList<BattleParticipant> participants = new ArrayList<BattleParticipant>();
 
 	private int battleTicks = 0;
-
+	public ArrayList<GlobalStatusBase> globalStatuses = new ArrayList<GlobalStatusBase>();
 	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
@@ -175,6 +176,7 @@ public class BattleController {
 					p.willTryFlee = false;
 					p.wait = true;
 					p.getNextPokemon();
+					p.currentPokemon().battleController.globalStatuses = globalStatuses;
 				} else {
 					ChatHandler.sendBattleMessage(g, "You've run out of usable pokemon!");
 					endBattle();
