@@ -3,6 +3,7 @@ package pixelmon.client.render;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.client.ForgeHooksClient;
 
@@ -30,11 +31,11 @@ public class RenderPokeball extends Render {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(180, 1, 0, 1);
 		if (pokeball.getIsCaptured()) {
-			Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getCaptureTexture());
+			func_110776_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getCaptureTexture()));
 		} else if (pokeball.flashRed) {
-			Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getFlashRedTexture());
+			func_110776_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getFlashRedTexture()));
 		} else {
-			Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getTexture());
+			func_110776_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getTexture()));
 		}
 		RenderHelper.enableStandardItemLighting();
 		float factor = (float) (1.0 / 16.0);
@@ -45,5 +46,10 @@ public class RenderPokeball extends Render {
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		return null;
 	}
 }

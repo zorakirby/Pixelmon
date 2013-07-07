@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import pixelmon.blocks.BlockEvolutionRock;
 import pixelmon.blocks.TileEntityEvolutionRock;
+import pixelmon.client.render.RenderResources;
 import pixelmon.config.PixelmonBlocks;
 import pixelmon.enums.EnumEvolutionRock;
 import net.minecraft.client.Minecraft;
@@ -32,10 +33,10 @@ public class RenderTileEntityEvolutionRock extends TileEntitySpecialRenderer {
 		GL11.glScalef(1.0F, -1F, -1F); // if you read this comment out this line
 		
 		if (block.rockType == EnumEvolutionRock.MossyRock){
-			bindTextureByName("/pixelmon/models/mossyrock/mossrocktex.png"); 
+			func_110628_a(RenderResources.mossrocktex); 
 			mossyRockModel.renderAll();
 		}else if (block.rockType == EnumEvolutionRock.IcyRock){
-			bindTextureByName("/pixelmon/models/icyrock/icyrocktex.png"); 
+			func_110628_a(RenderResources.icyrocktex); 
 			icyRockModel.renderAll();
 		}
 		GL11.glPopMatrix(); // end

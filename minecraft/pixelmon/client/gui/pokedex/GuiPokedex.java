@@ -15,6 +15,7 @@ import org.lwjgl.util.Rectangle;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 
+import pixelmon.client.gui.GuiResources;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.config.PixelmonConfig;
@@ -74,7 +75,7 @@ public class GuiPokedex extends GuiContainer {
 		mfloat = par3;
 		PokedexEntry selectedEntry = pokedex.getEntry(currentEntry);
 		RenderHelper.disableStandardItemLighting();
-		mc.renderEngine.bindTexture("/pixelmon/gui/pokedex.png");
+		mc.renderEngine.func_110577_a(GuiResources.pokedex);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
 		fontRenderer.drawString("Pokedex", left + 6, top + 5, 0xFFFFFF);

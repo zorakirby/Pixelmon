@@ -6,6 +6,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.resources.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -13,6 +14,7 @@ import org.lwjgl.opengl.GL12;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.gui.GuiResources;
 import pixelmon.client.gui.pc.GuiPC;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -136,7 +138,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		float x1 = targetPacket.getType2().textureX;
 		float y1 = targetPacket.getType2().textureY;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture("/pixelmon/gui/types.png");
+		mc.renderEngine.func_110577_a(GuiResources.types);
 		drawImageQuad(60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
 		if ((targetPacket.getType2() != EnumType.Mystery))
 			drawImageQuad(100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
@@ -156,7 +158,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		else
 			numString = "" + targetPacket.getNationalPokedexNumber();
 
-		mc.renderEngine.bindTexture("/pixelmon/gui/summarySummary.png");
+		mc.renderEngine.func_110577_a(GuiResources.summarySummary);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 		drawTexturedModalRect((width - xSize) / 2 - 15, (height - ySize) / 2 + 120, 23, 225, 44, 28);
@@ -166,9 +168,9 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		drawTexturedModalRect((width - xSize) / 2 + 59, (height - ySize) / 2 + 145, 104, 239, 150, 16);
 
 		if (targetPacket.isShiny)
-			mc.renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+			mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
 		else
-			mc.renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+			mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
 		drawImageQuad(width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket
@@ -215,7 +217,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	public void drawArrows(int mouseX, int mouseY) {
 		if (isPC) return;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture("/pixelmon/gui/summaryMoves.png");
+		mc.renderEngine.func_110577_a(GuiResources.summaryMoves);
 		int l1 = (width - xSize) / 2 + 220;
 		int l2 = (width - xSize) / 2 - 62;
 		int w = 16;

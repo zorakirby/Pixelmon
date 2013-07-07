@@ -6,6 +6,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import pixelmon.RandomHelper;
@@ -153,7 +155,7 @@ public class RenderPixelmon extends RenderLiving {
 
 					if (var18 == 15) {
 						var19 = (float) pixelmon.ticksExisted + par9;
-						this.loadTexture("%blur%/misc/glint.png");
+						this.func_110776_a(new ResourceLocation("%blur%/misc/glint.png"));
 						GL11.glEnable(GL11.GL_BLEND);
 						var20 = 0.5F;
 						GL11.glColor4f(var20, var20, var20, 1.0F);
@@ -432,5 +434,10 @@ public class RenderPixelmon extends RenderLiving {
 
 	protected void preRenderCallback(EntityLiving entityliving, float f) {
 		preRenderScale((EntityPixelmon) entityliving, f);
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		return new ResourceLocation(((EntityPixelmon) entity).getTexture());
 	}
 }

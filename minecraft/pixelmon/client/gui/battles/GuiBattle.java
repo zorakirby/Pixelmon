@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -355,7 +356,7 @@ public class GuiBattle extends GuiContainer {
 			drawString(fontRenderer, move.pp + "/" + move.ppBase, width / 2 + 90, height / 2 - 83 + 22 * i, 0xFFFFFF);
 			float x = move.type.textureX;
 			float y = move.type.textureY;
-			mc.renderEngine.bindTexture("/pixelmon/gui/types.png");
+			mc.renderEngine.func_110577_a(GuiResources.types);
 			GuiHelper.drawImageQuad(width / 2 - 30, height / 2 - 92 + 22 * i, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f, zLevel);
 		}
 		for (int i = 0; i < pokemonToLearnAttack.numMoves; i++) {
@@ -374,7 +375,7 @@ public class GuiBattle extends GuiContainer {
 		drawString(fontRenderer, newAttack.pp + "/" + newAttack.ppBase, width / 2 + 90, height / 2 - 76 + 22 * 4, 0xFFFFFF);
 		float x = newAttack.baseAttack.attackType.textureX;
 		float y = newAttack.baseAttack.attackType.textureY;
-		mc.renderEngine.bindTexture("/pixelmon/gui/types.png");
+		mc.renderEngine.func_110577_a(GuiResources.types);
 		GuiHelper.drawImageQuad(width / 2 - 30, height / 2 + 3, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f, zLevel);
 		if (mouseX > width / 2 - 30 && mouseX < width / 2 + 120 && mouseY > height / 2 + 3 && mouseY < height / 2 + 25) {
 			mc.renderEngine.func_110577_a(GuiResources.chooseMove);
@@ -390,9 +391,9 @@ public class GuiBattle extends GuiContainer {
 			numString = "" + pokemonToLearnAttack.getNationalPokedexNumber();
 		int var9;
 		if (pokemonToLearnAttack.isShiny)
-			Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
 		else
-			Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
 		GuiHelper.drawImageQuad(width / 2 - 114, height / 2 - 76, 64f, 64f, 0f, 0f, 1f, 1f, zLevel);
 		drawCenteredString(fontRenderer, pokemonToLearnAttack.nickname.equals("") ? pokemonToLearnAttack.name : pokemonToLearnAttack.nickname, width / 2 - 82,
 				height / 2 + 8, 0xFFFFFF);
@@ -426,7 +427,7 @@ public class GuiBattle extends GuiContainer {
 	private int startIndex = 0;
 
 	private void drawUseBag(int mouseX, int mouseY) {
-		mc.renderEngine.bindTexture("/pixelmon/gui/itemGui2.png");
+		mc.renderEngine.func_110577_a(GuiResources.itemGui2);
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(width / 2 - 256 / 2, height / 2 - 102, 256, 205, 0, 0, 1, 205f / 256f, zLevel);
@@ -438,7 +439,7 @@ public class GuiBattle extends GuiContainer {
 
 		for (int i = startIndex; i < 6 + startIndex; i++) {
 			if (i < ClientBattleManager.bagStore.size()) {
-				mc.renderEngine.bindTexture("/pixelmon/gui/itemGui2.png");
+				mc.renderEngine.func_110577_a(GuiResources.itemGui2);
 				if (mouseX > width / 2 - 98 && mouseX < width / 2 - 98 + 187 && mouseY > height / 2 - 44 + (i - startIndex) * 21
 						&& mouseY < height / 2 - 24 + (i - startIndex) * 21)
 					GuiHelper.drawImageQuad(width / 2 - 98, height / 2 - 44 + (i - startIndex) * 21, 187, 20, 3f / 256f, 206 / 256f, 194f / 256f, 225f / 256f,
@@ -454,7 +455,7 @@ public class GuiBattle extends GuiContainer {
 			}
 		}
 
-		mc.renderEngine.bindTexture("/pixelmon/gui/itemGui2.png");
+		mc.renderEngine.func_110577_a(GuiResources.itemGui2);
 		if (startIndex > 0) {
 			if (mouseX > width / 2 - 11 && mouseX < width / 2 + 6 && mouseY > height / 2 - 55 && mouseY < height / 2 - 45)
 				GuiHelper.drawImageQuad(width / 2 - 11, height / 2 - 55, 17, 10, 211f / 256f, 220 / 256f, 228f / 256f, 230f / 256f, zLevel);
@@ -478,7 +479,7 @@ public class GuiBattle extends GuiContainer {
 	}
 
 	private void drawChooseBag(int mouseX, int mouseY) {
-		mc.renderEngine.bindTexture("/pixelmon/gui/itemGui1_Test.png");
+		mc.renderEngine.func_110577_a(GuiResources.itemGui1);
 		setCameraToPlayer();
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -492,7 +493,7 @@ public class GuiBattle extends GuiContainer {
 		x2 = width / 2 + 3;
 		y1 = height / 2 - 63;
 		y2 = height / 2 + 4;
-		mc.renderEngine.bindTexture("/pixelmon/gui/itemGui1_Test.png");
+		mc.renderEngine.func_110577_a(GuiResources.itemGui1);
 		int buttonWidth = 100, buttonHeight = 62;
 		if (mouseX > x1 && mouseX < x1 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight)
 			GuiHelper.drawImageQuad(x1, y1, buttonWidth, buttonHeight, 28f / 256f, 176f / 256f, 128f / 256f, 238f / 256f, zLevel);
@@ -510,7 +511,7 @@ public class GuiBattle extends GuiContainer {
 	int flashCount = 0;
 
 	private void drawMessageScreen() {
-		mc.renderEngine.bindTexture("/pixelmon/gui/battleGui3.png");
+		mc.renderEngine.func_110577_a(GuiResources.battleGui3);
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f, zLevel);
@@ -518,7 +519,7 @@ public class GuiBattle extends GuiContainer {
 			drawCenteredString(fontRenderer, ClientBattleManager.getNextMessage(), width / 2, height - 35, 0xFFFFFF);
 			flashCount++;
 			if (flashCount > 30) {
-				mc.renderEngine.bindTexture("/pixelmon/gui/battleGui3.png");
+				mc.renderEngine.func_110577_a(GuiResources.battleGui3);
 				GuiHelper.drawImageQuad(width / 2 + 130, height - 15, 10, 6, 611f / 640f, 149f / 480f, 628f / 640f, 159f / 480f, zLevel);
 				if (flashCount > 60)
 					flashCount = 0;
@@ -541,16 +542,16 @@ public class GuiBattle extends GuiContainer {
 
 	private void drawMainMenu(int mouseX, int mouseY) {
 		setCameraToPixelmon();
-		mc.renderEngine.bindTexture("/pixelmon/gui/battleGui1.png");
+		mc.renderEngine.func_110577_a(GuiResources.battleGui1);
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f, zLevel);
 		drawButton(width / 2 + 31, height - guiHeight + 9, 48, 16, "FIGHT", mouseX, mouseY, 0);
-		mc.renderEngine.bindTexture("/pixelmon/gui/battleGui1.png");
+		mc.renderEngine.func_110577_a(GuiResources.battleGui1);
 		drawButton(width / 2 + 31, height - guiHeight + 35, 48, 16, "BAG", mouseX, mouseY, 1);
-		mc.renderEngine.bindTexture("/pixelmon/gui/battleGui1.png");
+		mc.renderEngine.func_110577_a(GuiResources.battleGui1);
 		drawButton(width / 2 + 90, height - guiHeight + 9, 48, 16, "POKEMON", mouseX, mouseY, 2);
-		mc.renderEngine.bindTexture("/pixelmon/gui/battleGui1.png");
+		mc.renderEngine.func_110577_a(GuiResources.battleGui1);
 		drawButton(width / 2 + 90, height - guiHeight + 35, 48, 16, "RUN", mouseX, mouseY, 3);
 		if (ClientBattleManager.getUserPokemonPacket() != null)
 			drawString(fontRenderer, "What will " + ClientBattleManager.getUserPokemonPacket().name + " do?", width / 2 - 130, height - 35, 0xFFFFFF);
@@ -575,7 +576,7 @@ public class GuiBattle extends GuiContainer {
 			}
 		}
 
-		mc.renderEngine.bindTexture("/pixelmon/gui/choosePokemon.png");
+		mc.renderEngine.func_110577_a(GuiResources.choosePokemon);
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(width / 2 - 128, height - 203, 256, 203, 0, 0, 1, 203f / 256f, zLevel);
@@ -587,7 +588,7 @@ public class GuiBattle extends GuiContainer {
 
 		if (mode != BattleMode.EnforcedSwitch) {
 			if (mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17 && !isHealing) {
-				mc.renderEngine.bindTexture("/pixelmon/gui/choosePokemon.png");
+				mc.renderEngine.func_110577_a(GuiResources.choosePokemon);
 				GuiHelper.drawImageQuad(width / 2 + 63, height - 27, 48, 17, 198f / 256f, 210f / 256f, 246f / 256, 227f / 256f, zLevel);
 			}
 			drawString(fontRenderer, "Back", width / 2 + 75, height - 22, 0xFFFFFF);
@@ -602,25 +603,23 @@ public class GuiBattle extends GuiContainer {
 		else
 			numString = "" + p.getNationalPokedexNumber();
 		if (p.isShiny)
-			Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
 		else
-			Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
 		GuiHelper.drawImageQuad(width / 2 - 121, height - 176, 24f, 24f, 0f, 0f, 1f, 1f, zLevel);
 		drawHealthBar(width / 2 - 85, height - 135, 56, 9, p);
-		mc.renderEngine.bindTexture("/pixelmon/gui/choosePokemon.png");
-		GuiHelper.drawImageQuad(width / 2 - 95, height - 135, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f, zLevel);
+		mc.renderEngine.func_110577_a(GuiResources.choosePokemon);		GuiHelper.drawImageQuad(width / 2 - 95, height - 135, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f, zLevel);
 		drawCenteredString(fontRenderer, p.health + "/" + p.hp, width / 2 - 59, height - 123, 0xffffff);
 		drawString(fontRenderer, p.nickname.equals("") ? p.name : p.nickname, width / 2 - 90, height - 161, 0xffffff);
 		drawString(fontRenderer, "Lv. " + p.lvl, width / 2 - 90, height - 148, 0xffffff);
-		mc.renderEngine.bindTexture("/pixelmon/gui/choosePokemon.png");
-		if (p.isMale)
+		mc.renderEngine.func_110577_a(GuiResources.choosePokemon);		if (p.isMale)
 			GuiHelper.drawImageQuad(width / 2 - 60, height - 149, 6, 9, 32f / 256f, 208f / 256f, 38f / 256f, 217f / 256f, zLevel);
 		else
 			GuiHelper.drawImageQuad(width / 2 - 60, height - 149, 6, 9, 32f / 256f, 218f / 256f, 38f / 256f, 227f / 256f, zLevel);
 
 		if (mode == BattleMode.ApplyToPokemon && !isHealing) {
 			if (mouseX > width / 2 - 120 && mouseX < width / 2 - 21 && mouseY > height - 165 && mouseY < height - 113)
-				mc.renderEngine.bindTexture("/pixelmon/gui/selectCurrentPokemon.png");
+				mc.renderEngine.func_110577_a(GuiResources.selectCurrentPokemon);
 			GuiHelper.drawImageQuad(width / 2 - 120, height - 165, 89, 52, 0, 0, 1, 1, zLevel);
 		}
 
@@ -639,18 +638,16 @@ public class GuiBattle extends GuiContainer {
 					else
 						numString = "" + pdata.getNationalPokedexNumber();
 					if (pdata.isShiny)
-						Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+						Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
 					else
-						Minecraft.getMinecraft().renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+						Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
 					GuiHelper.drawImageQuad(width / 2 - 23, height - 192 + pos * 30, 24f, 24f, 0f, 0f, 1f, 1f, zLevel);
 					drawHealthBar(width / 2 + 65, height - 192 + pos * 30, 56, 9, pdata);
-					mc.renderEngine.bindTexture("/pixelmon/gui/choosePokemon.png");
-					GuiHelper.drawImageQuad(width / 2 + 55, height - 192 + pos * 30, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f, zLevel);
+					mc.renderEngine.func_110577_a(GuiResources.choosePokemon);					GuiHelper.drawImageQuad(width / 2 + 55, height - 192 + pos * 30, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f, zLevel);
 					drawString(fontRenderer, pdata.health + "/" + pdata.hp, width / 2 + 75, height - 180 + pos * 30, 0xffffff);
 					drawString(fontRenderer, pdata.nickname.equals("") ? pdata.name : pdata.nickname, width / 2 + 5, height - 190 + pos * 30, 0xffffff);
 					drawString(fontRenderer, "Lv. " + pdata.lvl, width / 2 + 5, height - 176 + pos * 30, 0xffffff);
-					mc.renderEngine.bindTexture("/pixelmon/gui/choosePokemon.png");
-					if (pdata.isMale)
+					mc.renderEngine.func_110577_a(GuiResources.choosePokemon);					if (pdata.isMale)
 						GuiHelper.drawImageQuad(width / 2 + 40, height - 176 + pos * 30, 6, 9, 32f / 256f, 208f / 256f, 38f / 256f, 217f / 256f, zLevel);
 					else
 						GuiHelper.drawImageQuad(width / 2 + 40, height - 176 + pos * 30, 6, 9, 32f / 256f, 218f / 256f, 38f / 256f, 227f / 256f, zLevel);
@@ -710,7 +707,7 @@ public class GuiBattle extends GuiContainer {
 	}
 
 	private void drawChooseAttack(int mouseX, int mouseY) {
-		mc.renderEngine.bindTexture("/pixelmon/gui/battleGui2.png");
+		mc.renderEngine.func_110577_a(GuiResources.battleGui2);
 		setCameraToPlayer();
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -721,15 +718,15 @@ public class GuiBattle extends GuiContainer {
 			drawButton(width / 2 - 141, height - guiHeight + 9, 87, 20, moveset[0].attackName, mouseX, mouseY, 0);
 		}
 		if (numMoves > 1) {
-			mc.renderEngine.bindTexture("/pixelmon/gui/battleGui2.png");
+			mc.renderEngine.func_110577_a(GuiResources.battleGui2);
 			drawButton(width / 2 - 50, height - guiHeight + 9, 87, 20, moveset[1].attackName, mouseX, mouseY, 1);
 		}
 		if (numMoves > 2) {
-			mc.renderEngine.bindTexture("/pixelmon/gui/battleGui2.png");
+			mc.renderEngine.func_110577_a(GuiResources.battleGui2);
 			drawButton(width / 2 - 141, height - guiHeight + 33, 87, 20, moveset[2].attackName, mouseX, mouseY, 2);
 		}
 		if (numMoves > 3) {
-			mc.renderEngine.bindTexture("/pixelmon/gui/battleGui2.png");
+			mc.renderEngine.func_110577_a(GuiResources.battleGui2);
 			drawButton(width / 2 - 50, height - guiHeight + 33, 87, 20, moveset[3].attackName, mouseX, mouseY, 3);
 		}
 		if (moveset[mouseOverButton] != null) {
@@ -743,7 +740,7 @@ public class GuiBattle extends GuiContainer {
 							+ fontRenderer.getStringWidth("Type: "), height - guiHeight + 33, moveset[mouseOverButton].type.getColor());
 		}
 		if (mouseX > width / 2 + 137 && mouseX < width / 2 + 148 && mouseY > height - 11 && mouseY < height - 1) {
-			mc.renderEngine.bindTexture("/pixelmon/gui/battleGui2.png");
+			mc.renderEngine.func_110577_a(GuiResources.battleGui2);
 			GuiHelper.drawImageQuad(width / 2 + 137, height - 11, 11, 10, 613f / 640f, 151f / 480f, 635f / 640f, 171f / 480f, zLevel);
 		}
 
