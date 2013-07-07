@@ -20,6 +20,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Drain;
 import pixelmon.battles.attacks.specialAttacks.basic.DreamEater;
 import pixelmon.battles.attacks.specialAttacks.basic.EchoedVoice;
 import pixelmon.battles.attacks.specialAttacks.basic.ElectroBall;
+import pixelmon.battles.attacks.specialAttacks.basic.Endeavor;
 import pixelmon.battles.attacks.specialAttacks.basic.Eruption;
 import pixelmon.battles.attacks.specialAttacks.basic.FalseSwipe;
 import pixelmon.battles.attacks.specialAttacks.basic.Flail;
@@ -32,6 +33,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.HeavySlam;
 import pixelmon.battles.attacks.specialAttacks.basic.Hex;
 import pixelmon.battles.attacks.specialAttacks.basic.HiddenPower;
 import pixelmon.battles.attacks.specialAttacks.basic.JumpKick;
+import pixelmon.battles.attacks.specialAttacks.basic.LowKick;
 import pixelmon.battles.attacks.specialAttacks.basic.Magnitude;
 import pixelmon.battles.attacks.specialAttacks.basic.Memento;
 import pixelmon.battles.attacks.specialAttacks.basic.Metronome;
@@ -51,6 +53,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Struggle;
 import pixelmon.battles.attacks.specialAttacks.basic.Suicide;
 import pixelmon.battles.attacks.specialAttacks.basic.Teleport;
 import pixelmon.battles.attacks.specialAttacks.basic.Venoshock;
+import pixelmon.battles.attacks.specialAttacks.basic.WakeUpSlap;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Bide;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Dig;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Fly;
@@ -103,6 +106,7 @@ public class EffectRegistry {
 		effectMap.put("perish", ApplyPerish.class);
 		effectMap.put("poison", ApplyPoison.class);
 		effectMap.put("poisonbadly", ApplyPoisonBadly.class);
+//		effectMap.put("pp", Spite.class);
 		effectMap.put("protect", ApplyProtect.class);
 		effectMap.put("rest", ApplyRest.class);
 		effectMap.put("recharge", ApplyRecharge.class);
@@ -132,6 +136,7 @@ public class EffectRegistry {
 		effectMap.put("dreameater", DreamEater.class);
 		effectMap.put("echoedvoice", EchoedVoice.class);
 		effectMap.put("electroball", ElectroBall.class);
+		effectMap.put("endeavor", Endeavor.class);
 		effectMap.put("eruption", Eruption.class);
 		effectMap.put("facade", Acrobatics.class);
 		effectMap.put("falseswipe", FalseSwipe.class);
@@ -145,6 +150,7 @@ public class EffectRegistry {
 		effectMap.put("hex", Hex.class);
 		effectMap.put("hiddenpower", HiddenPower.class);
 		effectMap.put("jumpkick", JumpKick.class);
+		effectMap.put("lowkick", LowKick.class);
 		effectMap.put("magnitude", Magnitude.class);
 		effectMap.put("memento", Memento.class);
 		effectMap.put("metronome", Metronome.class);
@@ -164,6 +170,7 @@ public class EffectRegistry {
 		effectMap.put("suicide", Suicide.class);
 		effectMap.put("teleport", Teleport.class);
 		effectMap.put("venoshock", Venoshock.class);
+		effectMap.put("wakeupslap", WakeUpSlap.class);
 
 		// Multi-Turn Attacks
 		effectMap.put("bide", Bide.class);

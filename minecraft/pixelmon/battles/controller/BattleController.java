@@ -3,6 +3,7 @@ package pixelmon.battles.controller;
 import java.util.ArrayList;
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -97,7 +98,7 @@ public class BattleController {
 		try {
 			if (isPvP()) {
 				for (BattleParticipant p : participants) {
-					if (((PlayerParticipant) p).player == null)
+					if (((PlayerParticipant) p).player == null || (((PlayerParticipant) p).player.getHealth() == 0))
 						endBattleWithoutXP();
 				}
 			}
@@ -165,6 +166,11 @@ public class BattleController {
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player)
 					ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
+				if (p.getType() == ParticipantType.Player){
+					Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+					Minecraft.getMinecraft().renderViewEntity = p.getEntity(); //Instantly switches to player cam on death (to avoid shaking)
+					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
+				}
 				Experience.awardExp(participants, p, p.currentPokemon());
 				EntityLiving g = p.currentPokemon().getOwner();
 				p.currentPokemon().setEntityHealth(0);

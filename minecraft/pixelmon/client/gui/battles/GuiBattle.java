@@ -50,6 +50,7 @@ public class GuiBattle extends GuiContainer {
 	private int guiWidth = 300;
 	private int guiHeight = 60;
 	boolean wasThirdPerson = false;
+	boolean wasGuiHidden = false;
 
 	public GuiBattle(int battleControllerIndex) {
 		super(new ContainerEmpty());
@@ -71,16 +72,53 @@ public class GuiBattle extends GuiContainer {
 
 	boolean first = true;
 
+	public void setCameraToPlayer(){
+		Minecraft.getMinecraft().gameSettings.thirdPersonView = 0; //Keep playercam in firstperson F1 mode
+		Minecraft.getMinecraft().gameSettings.hideGUI = true;
+		Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+	}
+	
+	public void setCameraToPixelmon(){
+		Minecraft.getMinecraft().gameSettings.thirdPersonView = 1; //Keep playercam in firstperson F1 mode
+		Minecraft.getMinecraft().gameSettings.hideGUI = true;
+		Minecraft.getMinecraft().renderViewEntity = ClientBattleManager.getUserPokemon();
+	}
+
+	
+	protected void restoreSettingsAndClose(){
+		if (wasThirdPerson){
+			Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+		}
+		else{
+			Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+		}
+		if (wasGuiHidden){
+			Minecraft.getMinecraft().gameSettings.hideGUI = true;
+		}
+		else{
+			Minecraft.getMinecraft().gameSettings.hideGUI = false;
+		}
+		Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+		mc.thePlayer.closeScreen();
+		mc.setIngameFocus();
+		GuiPixelmonOverlay.isVisible = true;
+	}
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float mfloat, int mouseX, int mouseY) {
 		if (first) {
 			if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 1)
 				wasThirdPerson = true;
+			if (Minecraft.getMinecraft().gameSettings.hideGUI == true)
+				wasGuiHidden = true;
 			first = false;
-			Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+			setCameraToPlayer();
 		}
 
 		if (!ClientBattleManager.hasMoreMessages() && battleEnded && !ClientBattleManager.hasLevelUps() && !ClientBattleManager.hasNewAttacks()) {
+			restoreSettingsAndClose();
+			return;
+		} else if(battleEnded && mc.thePlayer.getHealth() == 0) {
 			if (!wasThirdPerson)
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
 			Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
@@ -206,6 +244,7 @@ public class GuiBattle extends GuiContainer {
 	private LevelStage drawLevelStage = LevelStage.First;
 
 	private void drawLevelUp(int mouseX, int mouseY) {
+		setCameraToPlayer();
 		mc.renderEngine.bindTexture("/pixelmon/gui/levelUpPopUp.png");
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -434,6 +473,7 @@ public class GuiBattle extends GuiContainer {
 
 	private void drawChooseBag(int mouseX, int mouseY) {
 		mc.renderEngine.bindTexture("/pixelmon/gui/itemGui1_Test.png");
+		setCameraToPlayer();
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(width / 2 - 256 / 2, height / 2 - 76, 256, 153, 0, 0, 1, 153f / 256f, zLevel);
@@ -494,8 +534,7 @@ public class GuiBattle extends GuiContainer {
 	}
 
 	private void drawMainMenu(int mouseX, int mouseY) {
-		if (Minecraft.getMinecraft().renderViewEntity != Minecraft.getMinecraft().thePlayer)
-			Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+		setCameraToPixelmon();
 		mc.renderEngine.bindTexture("/pixelmon/gui/battleGui1.png");
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -517,6 +556,8 @@ public class GuiBattle extends GuiContainer {
 
 	private void drawChoosePokemon(int mouseX, int mouseY) {
 		isHealing = false;
+		setCameraToPlayer();
+		
 		if (mode == BattleMode.ApplyToPokemon && pixelmonToHeal != null) {
 			if (pixelmonToHeal.health >= healAmount || pixelmonToHeal.health >= pixelmonToHeal.hp) {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.BagPacket, itemToUse.id, battleControllerIndex, 0));
@@ -664,6 +705,7 @@ public class GuiBattle extends GuiContainer {
 
 	private void drawChooseAttack(int mouseX, int mouseY) {
 		mc.renderEngine.bindTexture("/pixelmon/gui/battleGui2.png");
+		setCameraToPlayer();
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f, zLevel);
@@ -744,21 +786,27 @@ public class GuiBattle extends GuiContainer {
 			int x2 = width / 2 + 90;
 			int y2 = height - guiHeight + 35;
 			int w = 48, h = 16;
-			if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h) {
+			if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h){
 				mode = BattleMode.ChooseAttack;
-				Minecraft.getMinecraft().renderViewEntity = ClientBattleManager.getUserPokemon();
-			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h)
-				mode = BattleMode.ChoosePokemon;
-			else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
-				if (!ClientBattleManager.canSwitch)
+				setCameraToPixelmon();
+			} 
+			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h){
+				if (!ClientBattleManager.canSwitch)	{
 					ClientBattleManager.addMessage("You can't switch pokemon right now!");
-				else
-					mode = BattleMode.ChooseBag;
-			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
+				} 
+				else {
+					mode = BattleMode.ChoosePokemon;
+				}
+			} 
+			else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
+				mode = BattleMode.ChooseBag;
+			} 
+			else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
 				if (ClientBattleManager.opponentType == ParticipantType.WildPokemon) {
 					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 					mode = BattleMode.Waiting;
-				} else {
+				}
+				else {
 					ClientBattleManager.addMessage("You can't run from a trainer battle!");
 				}
 			}
@@ -787,11 +835,7 @@ public class GuiBattle extends GuiContainer {
 				drawLevelStage = LevelStage.First;
 			else {
 				if (battleControllerIndex == -1 && !ClientBattleManager.hasNewAttacks()) {
-					if (!wasThirdPerson)
-						Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
-					mc.thePlayer.closeScreen();
-					mc.setIngameFocus();
-					GuiPixelmonOverlay.isVisible = true;
+					restoreSettingsAndClose();
 					return;
 				} else {
 					mode = oldMode;
@@ -811,6 +855,7 @@ public class GuiBattle extends GuiContainer {
 		int y1 = height - guiHeight + 9;
 		int y2 = height - guiHeight + 33;
 		int w = 87, h = 20;
+		setCameraToPixelmon();
 		PixelmonMovesetDataPacket[] moveset = ClientBattleManager.getUserPokemonPacket().moveset;
 		int numMoves = ClientBattleManager.getUserPokemonPacket().numMoves;
 		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h && numMoves > 0 && moveset[0].pp > 0 && !moveset[0].disabled) {
@@ -837,7 +882,6 @@ public class GuiBattle extends GuiContainer {
 	}
 
 	private void ChoosePokemonClick(int mouseX, int mouseY) {
-		Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
 		if (mode != BattleMode.EnforcedSwitch && mouseX > width / 2 + 63 && mouseX < width / 2 + 63 + 48 && mouseY > height - 27 && mouseY < height - 27 + 17) {
 			mode = BattleMode.MainMenu;
 			return;
@@ -871,11 +915,7 @@ public class GuiBattle extends GuiContainer {
 			if (battleControllerIndex != -1 || ClientBattleManager.hasNewAttacks() || ClientBattleManager.hasLevelUps())
 				mode = oldMode;
 			else {
-				if (!wasThirdPerson)
-					Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
-				mc.thePlayer.closeScreen();
-				mc.setIngameFocus();
-				GuiPixelmonOverlay.isVisible = true;
+				restoreSettingsAndClose();
 				return;
 			}
 		}
