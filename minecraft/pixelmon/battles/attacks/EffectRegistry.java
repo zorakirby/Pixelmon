@@ -172,6 +172,8 @@ public class EffectRegistry {
 		effectMap.put("petaldance", PetalDance.class);
 		effectMap.put("razorwind", RazorWind.class);
 		effectMap.put("solarbeam", SolarBeam.class);
+		
+		// Global statuses
 	}
 
 	public static EffectBase getEffect(String effectTypeString, Value[] values) {
