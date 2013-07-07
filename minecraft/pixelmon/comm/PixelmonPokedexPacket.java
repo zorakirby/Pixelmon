@@ -1,7 +1,7 @@
 package pixelmon.comm;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -46,7 +46,7 @@ public class PixelmonPokedexPacket extends PixelmonPacket
 		return p;
 	}
 	
-	public void writePacketData(DataOutputStream d) throws IOException 
+	public void writePacketData(DataOutput d) throws IOException 
 	{
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setTag("Pokedex", data);
@@ -62,7 +62,7 @@ public class PixelmonPokedexPacket extends PixelmonPacket
 		}
 	}
 
-	public void readPacketData(DataInputStream d) throws IOException 
+	public void readPacketData(DataInput d) throws IOException 
 	{
 		//data = readNBTTagCompound(d).getTagList("Pokedex");
 		data = new NBTTagList();

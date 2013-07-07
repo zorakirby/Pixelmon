@@ -41,7 +41,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		level = new Level((EntityPixelmon) this);
 		friendship = new FriendShip((EntityPixelmon) this);
 		dataWatcher.addObject(20, (short) 10); // MaxHP
-		dataWatcher.addObject(7, (short) health);
+		dataWatcher.addObject(7, (short) func_110143_aJ());
 	}
 
 	public int getCatchRate() {
@@ -133,7 +133,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
+	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		if (par1DamageSource.getSourceOfDamage() == getOwner())
 			friendship.hurtByOwner();
 		return super.attackEntityFrom(par1DamageSource, par2);
@@ -210,21 +210,20 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	@Override
-	public void setEntityHealth(int par1) {
+	public void setEntityHealth(float par1) {
 		super.setEntityHealth(par1);
 		updateHealth();
 	}
 
 	public void healEntityBy(int i) {
-		setEntityHealth(getHealth() + i);
+		setEntityHealth(func_110143_aJ() + i);
 	}
 
 	public void updateHealth() {
-		if (health > stats.HP)
-			health = stats.HP;
-		if (health < 0)
-			health = 0;
-		dataWatcher.updateObject(7, (short) health);
+		if (func_110143_aJ() > stats.HP)
+			setEntityHealth(stats.HP);
+		if (func_110143_aJ() < 0)
+			setEntityHealth(0);
 		if (getOwner() != null && worldObj.isRemote)
 			updateNBT();
 	}
@@ -239,13 +238,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public float getMoveSpeed() {
 		return 0.3f;
-	}
-
-	@Override
-	public int getHealth() {
-		if (dataWatcher.getWatchableObjectShort(7) != health)
-			health = dataWatcher.getWatchableObjectShort(7);
-		return super.getHealth();
 	}
 
 	@Override

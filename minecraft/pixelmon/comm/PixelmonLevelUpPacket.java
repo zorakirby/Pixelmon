@@ -1,7 +1,7 @@
 package pixelmon.comm;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,7 +41,7 @@ public class PixelmonLevelUpPacket extends PixelmonPacket {
 	}
 
 	@Override
-	public void writePacketData(DataOutputStream data) throws IOException {
+	public void writePacketData(DataOutput data) throws IOException {
 		data.writeInt(pokemonID);
 		data.writeInt(level);
 		statsLevel1.writePacketData(data);
@@ -49,7 +49,7 @@ public class PixelmonLevelUpPacket extends PixelmonPacket {
 	}
 
 	@Override
-	public void readPacketData(DataInputStream data) throws IOException {
+	public void readPacketData(DataInput data) throws IOException {
 		pokemonID = data.readInt();
 		level = data.readInt();
 		statsLevel1 = new PixelmonStatsPacket();
