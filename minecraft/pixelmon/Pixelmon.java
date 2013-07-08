@@ -2,6 +2,7 @@ package pixelmon;
 
 import java.io.File;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
@@ -10,6 +11,7 @@ import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
 import pixelmon.battles.BattleTickHandler;
 import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.client.ClientPacketHandler;
@@ -35,6 +37,7 @@ import pixelmon.worldGeneration.WorldGenThunderStoneOre;
 import pixelmon.worldGeneration.WorldGenWaterStoneOre;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
@@ -53,7 +56,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "2.2")
+@Mod(modid = "pixelmon", name = "Pixelmon", version = "2.2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
@@ -62,7 +65,7 @@ public class Pixelmon {
 	public static EnumArmorMaterial RUNNINGARMOR = EnumHelper.addArmorMaterial("RUNNING", 66, new int[] { 3, 8, 6, 3 }, 22);
 	public static EnumArmorMaterial OLDRUNNINGARMOR = EnumHelper.addArmorMaterial("OLDRUNNING", 999999, new int[] { 2, 6, 5, 1 }, 13);
 
-	@Instance("Pixelmon")
+	@Instance("pixelmon")
 	public static Pixelmon instance;
 	public static Migration migration;
 
@@ -75,9 +78,13 @@ public class Pixelmon {
 
 	public static File modDirectory;
 
-	@PreInit
+	Configuration config;
+	
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+		instance = this;
+		//Minecraft.getMinecraft().func_110442_L().
+		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		boolean checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
 		modDirectory = new File(event.getModConfigurationDirectory().getParent());
@@ -91,11 +98,12 @@ public class Pixelmon {
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
-		PixelmonConfig.loadConfig(config);
 	}
 
-	@Init
+	@EventHandler
 	public void load(FMLInitializationEvent event) {
+		PixelmonConfig.loadConfig(config);
+
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
@@ -131,13 +139,13 @@ public class Pixelmon {
 		proxy.registerTickHandlers();
 	}
 
-	@PostInit
+	@EventHandler
 	public void modsLoaded(FMLPostInitializationEvent event) {
 		PixelmonConfig.removeSpawns();
 		proxy.registerSounds();
 	}
 
-	@ServerStarting
+	@EventHandler
 	public void onServerStart(FMLServerStartingEvent event) {
 		if (MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager) {
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());

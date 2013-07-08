@@ -341,7 +341,7 @@ public class RenderPixelmon extends RenderLiving {
 			GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 			tessellator.startDrawingQuads();
 			float f5 = ((EntityPixelmon) entityLiving).getLvl().getExp();
-			float f6 = ((EntityPixelmon) entityLiving).getLvl().getExpToNextLevel();
+			float f6 = ((EntityPixelmon) entityLiving).getLvl().expToNextLevel;
 			if (f5 >= f6)
 				f5 = 56;
 			float f8 = 50F * (f5 / f6);

@@ -47,7 +47,23 @@ import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
 
 public class EntityPixelmon extends Entity9HasSounds {
-
+	public static final int dwName = 2;
+	public static final int dwNickname = 3;
+	public static final int dwPokemonID = 4;
+	public static final int dwLevel = 27;
+	public static final int dwExp = 14;
+	public static final int dwTrainerName = 15;
+	public static final int dwRed = 18;
+	public static final int dwScale = 19;
+	public static final int dwMaxHP = 20;
+	public static final int dwBossMode = 21;
+	public static final int dwNature = 22;
+	public static final int dwGrowth = 23;
+	public static final int dwNumInteractions = 24;
+	public static final int dwShiny = 25;
+	public static final int dwRoasted = 26;
+	
+	
 	public SpawnLocation pokemonLocation;
 	public boolean playerOwned = false;
 

@@ -19,7 +19,7 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 
 	public Entity8HoldsItems(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(24, (short) 0);
+		dataWatcher.addObject(EntityPixelmon.dwNumInteractions, (short) 0);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 	}
 
 	public int getNumInteractions() {
-		return dataWatcher.getWatchableObjectShort(24);
+		return dataWatcher.getWatchableObjectShort(EntityPixelmon.dwNumInteractions);
 	}
 
 	@Override

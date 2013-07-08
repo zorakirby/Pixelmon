@@ -26,12 +26,12 @@ public abstract class Entity1Base extends EntityTameable {
 
 	public Entity1Base(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(2, ""); // Name
-		dataWatcher.addObject(3, ""); // NickName
-		dataWatcher.addObject(4, -1); // pokemonId
-		dataWatcher.addObject(21, (short) -1); // BossMode
-		dataWatcher.addObject(22, (short) -1); // Nature
-		dataWatcher.addObject(23, (short) -1); // Growth
+		dataWatcher.addObject(EntityPixelmon.dwName, ""); // Name
+		dataWatcher.addObject(EntityPixelmon.dwNickname, ""); // NickName
+		dataWatcher.addObject(EntityPixelmon.dwPokemonID, -1); // pokemonId
+		dataWatcher.addObject(EntityPixelmon.dwBossMode, (short) -1); // BossMode
+		dataWatcher.addObject(EntityPixelmon.dwNature, (short) -1); // Nature
+		dataWatcher.addObject(EntityPixelmon.dwGrowth, (short) -1); // Growth
 	}
 
 	protected void init(String name) {
@@ -46,11 +46,11 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	public String getName() {
-		return dataWatcher.getWatchableObjectString(2);
+		return dataWatcher.getWatchableObjectString(EntityPixelmon.dwName);
 	}
 
 	public void setName(String name) {
-		dataWatcher.updateObject(2, name);
+		dataWatcher.updateObject(EntityPixelmon.dwName, name);
 	}
 
 	@Override
@@ -59,45 +59,45 @@ public abstract class Entity1Base extends EntityTameable {
 	}
 
 	public void setBoss(EnumBossMode mode) {
-		dataWatcher.updateObject(21, (short) mode.index);
+		dataWatcher.updateObject(EntityPixelmon.dwBossMode, (short) mode.index);
 	}
 
 	public EnumBossMode getBossMode() {
-		return EnumBossMode.getMode(dataWatcher.getWatchableObjectShort(21));
+		return EnumBossMode.getMode(dataWatcher.getWatchableObjectShort(EntityPixelmon.dwBossMode));
 	}
 
 	public void setNature(EnumNature nature) {
-		dataWatcher.updateObject(22, (short) nature.index);
+		dataWatcher.updateObject(EntityPixelmon.dwNature, (short) nature.index);
 	}
 
 	public void setGrowth(EnumGrowth growth) {
-		dataWatcher.updateObject(23, (short) growth.index);
+		dataWatcher.updateObject(EntityPixelmon.dwGrowth, (short) growth.index);
 	}
 
 	public EnumNature getNature() {
-		return EnumNature.getNatureFromIndex(dataWatcher.getWatchableObjectShort(22));
+		return EnumNature.getNatureFromIndex(dataWatcher.getWatchableObjectShort(EntityPixelmon.dwNature));
 	}
 
 	public EnumGrowth getGrowth() {
-		return EnumGrowth.getGrowthFromIndex(dataWatcher.getWatchableObjectShort(23));
+		return EnumGrowth.getGrowthFromIndex(dataWatcher.getWatchableObjectShort(EntityPixelmon.dwGrowth));
 	}
 
 	public String getNickname() {
-		if (dataWatcher.getWatchableObjectString(3).equals(""))
+		if (dataWatcher.getWatchableObjectString(EntityPixelmon.dwNickname).equals(""))
 			return getName();
-		return dataWatcher.getWatchableObjectString(3);
+		return dataWatcher.getWatchableObjectString(EntityPixelmon.dwNickname);
 	}
 
 	public void setNickname(String nickname) {
-		dataWatcher.updateObject(3, nickname);
+		dataWatcher.updateObject(EntityPixelmon.dwNickname, nickname);
 	}
 
 	public int getPokemonId() {
-		return dataWatcher.getWatchableObjectInt(4);
+		return dataWatcher.getWatchableObjectInt(EntityPixelmon.dwPokemonID);
 	}
 
 	public void setPokemonId(int id) {
-		dataWatcher.updateObject(4, id);
+		dataWatcher.updateObject(EntityPixelmon.dwPokemonID, id);
 	}
 
 	/**
@@ -129,28 +129,28 @@ public abstract class Entity1Base extends EntityTameable {
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
-		nbt.setInteger("pixelmonID", dataWatcher.getWatchableObjectInt(4));
-		nbt.setString("Name", dataWatcher.getWatchableObjectString(2));
-		nbt.setString("Nickname", dataWatcher.getWatchableObjectString(3));
+		nbt.setInteger("pixelmonID", dataWatcher.getWatchableObjectInt(EntityPixelmon.dwPokemonID));
+		nbt.setString("Name", dataWatcher.getWatchableObjectString(EntityPixelmon.dwName));
+		nbt.setString("Nickname", dataWatcher.getWatchableObjectString(EntityPixelmon.dwNickname));
 		if (caughtBall != null)
 			nbt.setInteger("CaughtBall", caughtBall.getIndex());
 		nbt.setBoolean("IsMale", isMale);
 		nbt.setBoolean("IsInBall", isInBall);
 		nbt.setBoolean("IsFainted", isFainted);
-		nbt.setShort("BossMode", dataWatcher.getWatchableObjectShort(21));
-		nbt.setShort("Nature", dataWatcher.getWatchableObjectShort(22));
-		nbt.setShort("Growth", dataWatcher.getWatchableObjectShort(23));
+		nbt.setShort("BossMode", dataWatcher.getWatchableObjectShort(EntityPixelmon.dwBossMode));
+		nbt.setShort("Nature", dataWatcher.getWatchableObjectShort(EntityPixelmon.dwNature));
+		nbt.setShort("Growth", dataWatcher.getWatchableObjectShort(EntityPixelmon.dwGrowth));
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		dataWatcher.updateObject(4, nbt.getInteger("pixelmonID"));
-		dataWatcher.updateObject(2, nbt.getString("Name"));
+		dataWatcher.updateObject(EntityPixelmon.dwPokemonID, nbt.getInteger("pixelmonID"));
+		dataWatcher.updateObject(EntityPixelmon.dwName, nbt.getString("Name"));
 		if (!isInitialised)
 			init(getName());
 		if (nbt.hasKey("Nickname"))
-			dataWatcher.updateObject(3, nbt.getString("Nickname"));
+			dataWatcher.updateObject(EntityPixelmon.dwNickname, nbt.getString("Nickname"));
 
 		if (nbt.hasKey("CaughtBall"))
 			caughtBall = EnumPokeballs.getFromIndex(nbt.getInteger("CaughtBall"));
@@ -158,15 +158,15 @@ public abstract class Entity1Base extends EntityTameable {
 		isInBall = nbt.getBoolean("IsInBall");
 		isFainted = nbt.getBoolean("IsFainted");
 		if (nbt.hasKey("BossMode"))
-			dataWatcher.updateObject(21, nbt.getShort("BossMode"));
+			dataWatcher.updateObject(EntityPixelmon.dwBossMode, nbt.getShort("BossMode"));
 		else
 			setBoss(EnumBossMode.Normal);
 		if (nbt.hasKey("Nature"))
-			dataWatcher.updateObject(22, nbt.getShort("Nature"));
+			dataWatcher.updateObject(EntityPixelmon.dwNature, nbt.getShort("Nature"));
 		else
 			setNature(EnumNature.getRandomNature());
 		if (nbt.hasKey("Growth"))
-			dataWatcher.updateObject(23, nbt.getShort("Growth"));
+			dataWatcher.updateObject(EntityPixelmon.dwGrowth, nbt.getShort("Growth"));
 		else
 			setGrowth(EnumGrowth.Ordinary);
 	}

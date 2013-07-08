@@ -30,13 +30,12 @@ public class Level {
 
 	private EntityPixelmon pixelmon;
 	private int baseLevel = 0;
+	public int expToNextLevel = 0;
 
 	public Level(EntityPixelmon p) {
 		this.pixelmon = p;
-		pixelmon.getDataWatcher().addObject(19, (short) -1); // Level
-		pixelmon.getDataWatcher().addObject(11, (short) 0); // Experience
-		pixelmon.getDataWatcher().addObject(13, (short) 0); // Experience to
-															// next level
+		pixelmon.getDataWatcher().addObject(EntityPixelmon.dwLevel, (short) -1); // Level
+		pixelmon.getDataWatcher().addObject(EntityPixelmon.dwExp, (short) 0); // ExperiencePercent
 		setScale();
 	}
 
@@ -47,23 +46,22 @@ public class Level {
 	public void writeToNBT(NBTTagCompound var1) {
 		var1.setInteger("Level", getLevel());
 		var1.setInteger("EXP", getExp());
-		var1.setInteger("EXPToNextLevel", getExpToNextLevel());
 	}
 
 	public void readFromNBT(NBTTagCompound var1) {
 		setExp(var1.getInteger("EXP"));
-		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
+		expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
 		setLevel(var1.getInteger("Level"));
 	}
 
 	public int getLevel() {
-		return pixelmon.getDataWatcher().getWatchableObjectShort(19);
+		return pixelmon.getDataWatcher().getWatchableObjectShort(EntityPixelmon.dwLevel);
 	}
 
 	public void setLevel(int i) {
-		pixelmon.getDataWatcher().updateObject(19, (short) i);
+		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwLevel, (short) i);
 		setScale();
-		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
+		expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
 		if (pixelmon.func_110143_aJ() == pixelmon.stats.HP) {
 			updateStats();
 			pixelmon.setEntityHealth(pixelmon.stats.HP);
@@ -111,19 +109,11 @@ public class Level {
 	}
 
 	public int getExp() {
-		return pixelmon.getDataWatcher().getWatchableObjectShort(11);
+		return pixelmon.getDataWatcher().getWatchableObjectShort(EntityPixelmon.dwExp);
 	}
 
 	public void setExp(int i) {
-		pixelmon.getDataWatcher().updateObject(11, (short) i);
-	}
-
-	public int getExpToNextLevel() {
-		return pixelmon.getDataWatcher().getWatchableObjectShort(13);
-	}
-
-	public void setExpToNextLevel(int i) {
-		pixelmon.getDataWatcher().updateObject(13, (short) i);
+		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwExp, (short) i);
 	}
 
 	public boolean canLevelUp() {
@@ -149,9 +139,6 @@ public class Level {
 		setScale();
 	}
 
-	public void learnNextMove() {
-	}
-
 	public void awardEXP(int i) {
 		if (!pixelmon.doesLevel)
 			return;
@@ -159,12 +146,12 @@ public class Level {
 		if ((pixelmon.getOwner() != null) && getLevel() != 100)
 			if (pixelmon.getOwner() != null)
 				ChatHandler.sendChat(pixelmon.getOwner(), "Your " + pixelmon.getNickname() + " gained " + i + " EXP!");
-		if (!canLevelUp() || getExpToNextLevel() == -1) {
+		if (!canLevelUp() || expToNextLevel == -1) {
 			setExp(0);
 			return;
 		}
-		while (getExp() >= getExpToNextLevel()) {
-			int newExp = getExp() - getExpToNextLevel();
+		while (getExp() >= expToNextLevel) {
+			int newExp = getExp() - expToNextLevel;
 			if (!canLevelUp())
 				return;
 
@@ -249,6 +236,6 @@ public class Level {
 
 	public void recalculateXP() {
 		setExp(0);
-		setExpToNextLevel(getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel()));
+		expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
 	}
 }

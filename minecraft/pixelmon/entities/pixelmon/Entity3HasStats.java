@@ -36,12 +36,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public Entity3HasStats(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(14, (short) 1000); // scale
+		dataWatcher.addObject(EntityPixelmon.dwScale, (short) 1000); // scale
 		stats = new Stats();
 		level = new Level((EntityPixelmon) this);
 		friendship = new FriendShip((EntityPixelmon) this);
-		dataWatcher.addObject(20, (short) 10); // MaxHP
-		dataWatcher.addObject(7, (short) func_110143_aJ());
+		dataWatcher.addObject(EntityPixelmon.dwMaxHP, (short) 10); // MaxHP
 	}
 
 	public int getCatchRate() {
@@ -204,7 +203,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public int getMaxHealth() {
 		if (isInitialised)
-			return dataWatcher.getWatchableObjectShort(20);
+			return dataWatcher.getWatchableObjectShort(EntityPixelmon.dwMaxHP);
 		else
 			return 10;
 	}
@@ -220,8 +219,10 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	public void updateHealth() {
-		if (func_110143_aJ() > stats.HP)
-			setEntityHealth(stats.HP);
+		if (stats != null) {
+			if (func_110143_aJ() > stats.HP)
+				setEntityHealth(stats.HP);
+		}
 		if (func_110143_aJ() < 0)
 			setEntityHealth(0);
 		if (getOwner() != null && worldObj.isRemote)
@@ -229,11 +230,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	public void setScale(float scale) {
-		dataWatcher.updateObject(14, (short) (scale * 1000));
+		dataWatcher.updateObject(EntityPixelmon.dwScale, (short) (scale * 1000));
 	}
 
 	public float getScale() {
-		return ((float) dataWatcher.getWatchableObjectShort(14)) / 1000.0f;
+		return ((float) dataWatcher.getWatchableObjectShort(EntityPixelmon.dwScale)) / 1000.0f;
 	}
 
 	public float getMoveSpeed() {
@@ -262,7 +263,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public void updateStats() {
 		stats.setLevelStats(getNature(), baseStats, level.getLevel());
-		dataWatcher.updateObject(20, (short) stats.HP);
+		dataWatcher.updateObject(EntityPixelmon.dwMaxHP, (short) stats.HP);
 		updateHealth();
 	}
 

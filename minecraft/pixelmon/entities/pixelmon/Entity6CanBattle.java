@@ -40,7 +40,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public Entity6CanBattle(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(15, ""); // Trainer Name
+		dataWatcher.addObject(EntityPixelmon.dwTrainerName, ""); // Trainer Name
 	}
 
 	public void loadMoveset() {
@@ -79,7 +79,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public void setTrainer(EntityTrainer trainer) {
 		this.trainer = trainer;
-		dataWatcher.updateObject(15, trainer.info.name);
+		dataWatcher.updateObject(EntityPixelmon.dwTrainerName, trainer.info.name);
 	}
 
 	public EntityTrainer getTrainer() {
@@ -87,7 +87,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	}
 
 	public String getTrainerName() {
-		return dataWatcher.getWatchableObjectString(15);
+		return dataWatcher.getWatchableObjectString(EntityPixelmon.dwTrainerName);
 	}
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
