@@ -168,9 +168,9 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		drawTexturedModalRect((width - xSize) / 2 + 59, (height - ySize) / 2 + 145, 104, 239, 150, 16);
 
 		if (targetPacket.isShiny)
-			mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+			mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 		else
-			mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+			mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
 		drawImageQuad(width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket

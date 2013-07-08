@@ -31,10 +31,10 @@ public class ItemPixelmonArmor extends ItemArmor {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, int layer) {
 		if (stack.getItem() == PixelmonItems.leggingsAluminium)
-			return "/pixelmon/armor/aluminum_2.png";
+			return "pixelmon:armor/aluminum_2.png";
 
 		else {
-			return "/pixelmon/armor/aluminum_1.png";
+			return "pixelmon:armor/aluminum_1.png";
 		}
 	}
 }

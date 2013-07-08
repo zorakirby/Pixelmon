@@ -391,9 +391,9 @@ public class GuiBattle extends GuiContainer {
 			numString = "" + pokemonToLearnAttack.getNationalPokedexNumber();
 		int var9;
 		if (pokemonToLearnAttack.isShiny)
-			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+			Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 		else
-			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+			Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
 		GuiHelper.drawImageQuad(width / 2 - 114, height / 2 - 76, 64f, 64f, 0f, 0f, 1f, 1f, zLevel);
 		drawCenteredString(fontRenderer, pokemonToLearnAttack.nickname.equals("") ? pokemonToLearnAttack.name : pokemonToLearnAttack.nickname, width / 2 - 82,
 				height / 2 + 8, 0xFFFFFF);
@@ -603,9 +603,9 @@ public class GuiBattle extends GuiContainer {
 		else
 			numString = "" + p.getNationalPokedexNumber();
 		if (p.isShiny)
-			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+			Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 		else
-			Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+			Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
 		GuiHelper.drawImageQuad(width / 2 - 121, height - 176, 24f, 24f, 0f, 0f, 1f, 1f, zLevel);
 		drawHealthBar(width / 2 - 85, height - 135, 56, 9, p);
 		mc.renderEngine.func_110577_a(GuiResources.choosePokemon);		GuiHelper.drawImageQuad(width / 2 - 95, height - 135, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f, zLevel);
@@ -638,9 +638,9 @@ public class GuiBattle extends GuiContainer {
 					else
 						numString = "" + pdata.getNationalPokedexNumber();
 					if (pdata.isShiny)
-						Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+						Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 					else
-						Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+						Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
 					GuiHelper.drawImageQuad(width / 2 - 23, height - 192 + pos * 30, 24f, 24f, 0f, 0f, 1f, 1f, zLevel);
 					drawHealthBar(width / 2 + 65, height - 192 + pos * 30, 56, 9, pdata);
 					mc.renderEngine.func_110577_a(GuiResources.choosePokemon);					GuiHelper.drawImageQuad(width / 2 + 55, height - 192 + pos * 30, 61, 9, 86f / 256f, 240f / 256f, 147f / 256f, 249f / 256f, zLevel);

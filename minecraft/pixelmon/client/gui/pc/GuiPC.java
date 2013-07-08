@@ -240,9 +240,9 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
-				mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+				mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 			else
-				mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+				mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
 			drawImageQuad(slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
 				mc.renderEngine.func_110577_a(GuiResources.heldItem);
@@ -263,9 +263,9 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + slot.pokemonData.getNationalPokedexNumber();
 			if (slot.pokemonData.isShiny)
-				mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+				mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 			else
-				mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+				mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
 			drawImageQuad(slot.x, slot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (slot.pokemonData.heldItemId != -1) {
 				mc.renderEngine.func_110577_a(GuiResources.heldItem);
@@ -282,9 +282,9 @@ public class GuiPC extends GuiContainer {
 			else
 				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
-				mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+				mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 			else
-				mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+				mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
 			drawImageQuad(mouseSlot.x, mouseSlot.y, 30f, 30f, 0f, 0f, 1f, 1f);
 			if (mouseSlot.pokemonData.heldItemId != -1) {
 				mc.renderEngine.func_110577_a(GuiResources.heldItem);

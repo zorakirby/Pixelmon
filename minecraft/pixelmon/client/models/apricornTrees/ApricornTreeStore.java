@@ -36,7 +36,7 @@ public class ApricornTreeStore {
 	}
 
 	public static ResourceLocation getTexture(EnumApricornTrees tree, int i) {
-		return new ResourceLocation("/pixelmon/texture/apricornTrees/apricornTree" + tree.toString() + "/" + modelList[i] + ".png");
+		return new ResourceLocation("pixelmon:textures/blocks/apricornTrees/apricornTree" + tree.toString() + "/" + modelList[i] + ".png");
 	}
 
 }

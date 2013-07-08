@@ -102,9 +102,9 @@ public class GuiTrading extends GuiContainer {
 					numString = "" + p.getNationalPokedexNumber();
 
 				if (p.isShiny)
-					Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 				else
-					Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
 				drawImageQuad(width / 2 - 93 + 25 * i, height / 2 + 68, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItemId != -1) {
 					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
@@ -191,9 +191,9 @@ public class GuiTrading extends GuiContainer {
 			else
 				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
-				Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 			else
-				Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
 			drawImageQuad(width / 2 - 117, height / 2 - 33, 24f, 24f, 0f, 0f, 1f, 1f);
 			if (p.heldItemId != -1) {
 				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
@@ -227,9 +227,9 @@ public class GuiTrading extends GuiContainer {
 			else
 				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
-				Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 			else
-				Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
 			drawImageQuad(width / 2 + 18, height / 2 - 33, 24f, 24f, 0f, 0f, 1f, 1f);
 			if (p.heldItemId != -1) {
 				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);

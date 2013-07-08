@@ -126,9 +126,9 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 					numString = "" + p.getNationalPokedexNumber();
 
 				if (p.isShiny)
-					mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png"));
+					mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 				else
-					mc.renderEngine.func_110577_a(new ResourceLocation("/mods/pixelmon/sprites/pokemon/" + numString + ".png"));
+					mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
 				drawImageQuad(slot.x, slot.y, 16f, 16f, 0f, 0f, 1f, 1f);
 
 				if (p.heldItemId != -1) {

@@ -1,5 +1,6 @@
 package pixelmon.entities.pixelmon;
 
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -49,17 +50,17 @@ public abstract class Entity4Textures extends Entity3HasStats {
 		try {
 			if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1 && !checkedForRoastedTexture || hasRoastedTexture) {
 				if (!checkedForRoastedTexture) {
-					if (Pixelmon.class.getResourceAsStream("pixelmon:pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
+					if (Pixelmon.class.getResourceAsStream("pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
 						hasRoastedTexture = true;
 					checkedForRoastedTexture = true;
 				}
 			}
-			if (getIsShiny() && Pixelmon.class.getResourceAsStream("pixelmon:pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
-				return "pixelmon:pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
+			if (getIsShiny() && Pixelmon.class.getResourceAsStream("pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
+				return "pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
 			else if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1 && hasRoastedTexture) {
-				return "pixelmon:pokemon-roasted/roasted" + getName().toLowerCase() + ".png";
+				return "pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";
 			} else
-				return "pixelmon:pokemon/" + getName().toLowerCase() + ".png";
+				return "pixelmon:textures/pokemon/" + getName().toLowerCase() + ".png";
 		} catch (Exception e) {
 			return "";
 		}
