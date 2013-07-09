@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import pixelmon.api.events.EventType;
@@ -14,8 +17,8 @@ import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
+import pixelmon.battles.status.GlobalStatusBase;
 import pixelmon.battles.status.StatusBase;
-import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -29,7 +32,7 @@ public class BattleController {
 	public ArrayList<BattleParticipant> participants = new ArrayList<BattleParticipant>();
 
 	private int battleTicks = 0;
-
+	public ArrayList<GlobalStatusBase> globalStatuses = new ArrayList<GlobalStatusBase>();
 	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
@@ -163,22 +166,27 @@ public class BattleController {
 					PixelmonEventHandler.fireEvent(EventType.BeatWildPokemon, ((PlayerParticipant) otherParticipant(p)).player);
 				String name = p.currentPokemon().getNickname();
 				sendToOtherParticipants(p, p.getFaintMessage());
+				if (p.getType() == ParticipantType.Player)
+					ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				if (p.getType() == ParticipantType.Player){
 					Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 					Minecraft.getMinecraft().renderViewEntity = p.getEntity(); //Instantly switches to player cam on death (to avoid shaking)
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				}
 				Experience.awardExp(participants, p, p.currentPokemon());
-
+				Entity g = p.currentPokemon().getOwner();
 				p.currentPokemon().setEntityHealth(0);
 				p.currentPokemon().setDead();
 				p.currentPokemon().isFainted = true;
 				p.updatePokemon();
 
 				if (p.hasMorePokemon()) {
+					p.willTryFlee = false;
 					p.wait = true;
 					p.getNextPokemon();
+					p.currentPokemon().battleController.globalStatuses = globalStatuses;
 				} else {
+					ChatHandler.sendBattleMessage(g, "You've run out of usable pokemon!");
 					endBattle();
 				}
 			}
@@ -204,6 +212,8 @@ public class BattleController {
 	private void takeTurn(BattleParticipant p) {
 		if (p.willTryFlee && !p.currentPokemon().isLockedInBattle) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
+			p.priority = 6;
+			System.out.println("raised priority");
 		} else if (p.currentPokemon().isLockedInBattle)
 			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Cannot escape!");
 		else if (p.isSwitching)

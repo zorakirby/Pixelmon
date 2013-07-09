@@ -17,6 +17,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusPersist;
 import pixelmon.battles.status.StatusType;
+import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.BattleVariables;
@@ -161,6 +162,17 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 				return true;
 			}
 		}
+		return false;
+	}
+	public boolean hasPrimaryStatus() {
+		if(hasStatus(StatusType.Poison )
+			|| hasStatus(StatusType.Burn)
+			|| hasStatus(StatusType.PoisonBadly)
+			|| hasStatus(StatusType.Freeze)
+			|| hasStatus(StatusType.Sleep)
+			|| hasStatus(StatusType.Paralysis)){
+					return true;
+				}
 		return false;
 	}
 

@@ -57,6 +57,8 @@ public class PickingMoves {
 					}
 				}
 			}
+			if (p.willTryFlee)
+				p.priority = 6;
 		}
 
 		Object[] array = bc.participants.toArray();
