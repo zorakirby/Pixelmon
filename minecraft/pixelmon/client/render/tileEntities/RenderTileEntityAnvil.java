@@ -96,7 +96,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 				if (itemToRender == PixelmonItemsPokeballs.ironDisc)
 					func_110628_a(RenderResources.ironDisc);
 				else
-					func_110628_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture()));
+					func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture()));
 				if (tile.state == 0)
 					modelDiscFlat.renderModel(0.0625f);
 				else if (tile.state == 1)
@@ -107,7 +107,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 				if (itemToRender == PixelmonItemsPokeballs.ironBase)
 					func_110628_a(RenderResources.ironDisc);
 				else
-					func_110628_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture()));
+					func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture()));
 				modelDiscHemiSphere.renderModel(0.0625f);
 			}
 		}

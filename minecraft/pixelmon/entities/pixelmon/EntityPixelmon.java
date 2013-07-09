@@ -76,6 +76,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void init(String name) {
 		super.init(name);
+		
 		//moveSpeed = getMoveSpeed();
 	}
 

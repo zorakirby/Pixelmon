@@ -31,11 +31,11 @@ public class RenderPokeball extends Render {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(180, 1, 0, 1);
 		if (pokeball.getIsCaptured()) {
-			func_110776_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getCaptureTexture()));
+			func_110776_a(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getCaptureTexture()));
 		} else if (pokeball.flashRed) {
-			func_110776_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getFlashRedTexture()));
+			func_110776_a(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getFlashRedTexture()));
 		} else {
-			func_110776_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + pokeball.getType().getTexture()));
+			func_110776_a(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getTexture()));
 		}
 		RenderHelper.enableStandardItemLighting();
 		float factor = (float) (1.0 / 16.0);

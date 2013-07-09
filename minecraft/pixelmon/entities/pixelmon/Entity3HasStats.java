@@ -237,10 +237,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		return ((float) dataWatcher.getWatchableObjectShort(EntityPixelmon.dwScale)) / 1000.0f;
 	}
 
-	public float getMoveSpeed() {
-		return 0.3f;
-	}
-
 	@Override
 	public void setPosition(double par1, double par3, double par5) {
 		this.posX = par1;
