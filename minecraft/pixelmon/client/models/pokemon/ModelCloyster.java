@@ -16,6 +16,7 @@ import net.minecraft.entity.Entity;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.serpent.SkeletonSerpent;
 
 public class ModelCloyster extends PixelmonModelBase
@@ -456,7 +457,7 @@ public class ModelCloyster extends PixelmonModelBase
       Body.addChild(Body2);
       
       ModuleHead headModule = new ModuleHead(Head);
-      skeleton = new SkeletonSerpent(Body, headModule);
+      skeleton = new SkeletonBase(Body);
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
