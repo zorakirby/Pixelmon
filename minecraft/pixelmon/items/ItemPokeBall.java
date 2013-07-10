@@ -2,6 +2,7 @@ package pixelmon.items;
 
 import java.util.HashMap;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -44,7 +45,7 @@ public class ItemPokeBall extends PixelmonItem {
 
 	@Override
 	public void useFromBag(EntityPixelmon userPokemon, EntityPixelmon targetPokemon) {
-		EntityPokeBall p = new EntityPokeBall(userPokemon.worldObj, userPokemon.getOwner(), targetPokemon, type,
+		EntityPokeBall p = new EntityPokeBall(userPokemon.worldObj, (EntityLivingBase) userPokemon.getOwner(), targetPokemon, type,
 				BattleRegistry.getBattle((EntityPlayer) userPokemon.getOwner()));
 		userPokemon.getOwner().worldObj.spawnEntityInWorld(p);
 		// EntityPokeBall p = new

@@ -67,7 +67,7 @@ public class TrainerParticipant extends BattleParticipant {
 	@Override
 	public boolean getIsFaintedOrDead() {
 		return trainer.releasedPokemon == null || trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted
-				|| trainer.releasedPokemon.getHealth() <= 0;
+				|| trainer.releasedPokemon.func_110143_aJ() <= 0;
 	}
 
 	@Override

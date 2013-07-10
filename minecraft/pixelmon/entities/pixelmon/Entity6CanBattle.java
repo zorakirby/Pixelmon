@@ -41,7 +41,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public Entity6CanBattle(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(15, ""); // Trainer Name
+		dataWatcher.addObject(EntityPixelmon.dwTrainerName, ""); // Trainer Name
 	}
 
 	public void loadMoveset() {
@@ -80,7 +80,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public void setTrainer(EntityTrainer trainer) {
 		this.trainer = trainer;
-		dataWatcher.updateObject(15, trainer.info.name);
+		dataWatcher.updateObject(EntityPixelmon.dwTrainerName, trainer.info.name);
 	}
 
 	public EntityTrainer getTrainer() {
@@ -88,7 +88,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	}
 
 	public String getTrainerName() {
-		return dataWatcher.getWatchableObjectString(15);
+		return dataWatcher.getWatchableObjectString(EntityPixelmon.dwTrainerName);
 	}
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
@@ -108,7 +108,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 					if (p instanceof PlayerParticipant && p.currentPokemon() != this)
 						((PlayerParticipant) p).updateOpponentHealth((EntityPixelmon) this);
 			}
-			if (health <= 0) {
+			if (func_110143_aJ() <= 0) {
 				this.onDeath(par1DamageSource);
 			}
 

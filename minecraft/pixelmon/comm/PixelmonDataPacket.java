@@ -1,6 +1,8 @@
 package pixelmon.comm;
 
+import java.io.DataInput;
 import java.io.DataInputStream;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,11 +124,11 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		name = p.getName();
 		nickname = p.getNickname();
 		lvl = p.getLvl().getLevel();
-		nextLvlXP = p.getLvl().getExpToNextLevel();
+		nextLvlXP = p.getLvl().expToNextLevel;
 		xp = p.getLvl().getExp();
 		hp = p.stats.HP;
 		friendship = p.friendship.getFriendship();
-		health = p.getHealth();
+		health = (int)p.func_110143_aJ();
 		isMale = p.isMale;
 		isFainted = p.isFainted;
 		isShiny = p.getIsShiny();
@@ -168,7 +170,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	}
 
 	@Override
-	public void writePacketData(DataOutputStream data) throws IOException {
+	public void writePacketData(DataOutput data) throws IOException {
 		data.writeInt(pokemonID);
 		Packet.writeString(name, data);
 		Packet.writeString(nickname, data);
@@ -204,7 +206,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	}
 
 	@Override
-	public void readPacketData(DataInputStream data) throws IOException {
+	public void readPacketData(DataInput data) throws IOException {
 		pokemonID = data.readInt();
 		name = Packet.readString(data, 64);
 		nickname = Packet.readString(data, 64);

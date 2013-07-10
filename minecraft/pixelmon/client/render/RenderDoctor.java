@@ -6,6 +6,8 @@ import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.config.PixelmonConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 
 public class RenderDoctor extends RenderLiving {
@@ -36,5 +38,10 @@ public class RenderDoctor extends RenderLiving {
 			String s = "Doctor " + doctor.getName();
 			renderLivingLabel(doctor, s, par2, par4, par6, 64);
 		}
+	}
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		return new ResourceLocation(((EntityDoctor)entity).getTexture());
 	}
 }

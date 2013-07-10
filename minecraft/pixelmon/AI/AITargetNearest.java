@@ -6,12 +6,13 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class AITargetNearest extends AITarget {
-	EntityLiving targetEntity;
+	EntityLivingBase targetEntity;
 	private TargetSorter field_48387_g;
 
 	public AITargetNearest(Entity7HasAI entity7HasAI, float par3, boolean par5) {
@@ -38,7 +39,8 @@ public class AITargetNearest extends AITarget {
 			return true;
 		}
 
-		List var5 = this.taskOwner.worldObj.getEntitiesWithinAABB(EntityPixelmon.class, this.taskOwner.boundingBox.expand((double) this.targetDistance, 4.0D, (double) this.targetDistance));
+		List var5 = this.taskOwner.worldObj.getEntitiesWithinAABB(EntityPixelmon.class,
+				this.taskOwner.boundingBox.expand((double) this.targetDistance, 4.0D, (double) this.targetDistance));
 		Collections.sort(var5, this.field_48387_g);
 		Iterator var2 = var5.iterator();
 

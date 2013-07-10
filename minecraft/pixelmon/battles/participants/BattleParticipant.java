@@ -3,6 +3,7 @@ package pixelmon.battles.participants;
 import java.util.ArrayList;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.controller.BattleController;
@@ -62,7 +63,7 @@ public abstract class BattleParticipant {
 
 	public abstract void updatePokemon();
 
-	public abstract EntityLiving getEntity();
+	public abstract EntityLivingBase getEntity();
 
 	public abstract void updateOpponent();
 

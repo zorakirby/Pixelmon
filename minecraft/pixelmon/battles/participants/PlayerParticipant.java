@@ -1,6 +1,7 @@
 package pixelmon.battles.participants;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.Pixelmon;
@@ -106,7 +107,7 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.getHealth() <= 0;
+		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.func_110143_aJ() <= 0;
 	}
 
 	@Override
@@ -183,7 +184,7 @@ public class PlayerParticipant extends BattleParticipant {
 	}
 
 	@Override
-	public EntityLiving getEntity() {
+	public EntityLivingBase getEntity() {
 		return player;
 	}
 

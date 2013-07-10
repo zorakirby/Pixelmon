@@ -1,6 +1,7 @@
 package pixelmon.AI;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,7 +47,7 @@ public abstract class AITarget extends EntityAIBase {
 	public boolean continueExecuting() {
 		if (taskOwner.battleController != null)
 			return false;
-		EntityLiving var1 = this.taskOwner.getAttackTarget();
+		EntityLivingBase var1 = this.taskOwner.getAttackTarget();
 
 		if (var1 == null) {
 			return false;
@@ -87,7 +88,7 @@ public abstract class AITarget extends EntityAIBase {
 	 * A method used to see if an entity is a suitable target through a number
 	 * of checks.
 	 */
-	protected boolean isSuitableTarget(EntityLiving entity, boolean par2) {
+	protected boolean isSuitableTarget(EntityLivingBase entity, boolean par2) {
 		if (entity == null) {
 			return false;
 		} else if (!(entity instanceof EntityPixelmon) && !(entity instanceof EntityPlayer))
@@ -111,7 +112,7 @@ public abstract class AITarget extends EntityAIBase {
 				return false;
 			}
 
-			if (!this.taskOwner.isWithinHomeDistance(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posY),
+			if (!this.taskOwner.func_110176_b(MathHelper.floor_double(entity.posX), MathHelper.floor_double(entity.posY),
 					MathHelper.floor_double(entity.posZ))) {
 				return false;
 			} else if (this.shouldCheckSight && !this.taskOwner.getEntitySenses().canSee(entity)) {
@@ -139,7 +140,7 @@ public abstract class AITarget extends EntityAIBase {
 		}
 	}
 
-	private boolean func_75295_a(EntityLiving par1EntityLiving) {
+	private boolean func_75295_a(EntityLivingBase par1EntityLiving) {
 		this.field_75302_c = 10 + this.taskOwner.getRNG().nextInt(5);
 		PathEntity var2 = this.taskOwner.getNavigator().getPathToEntityLiving(par1EntityLiving);
 

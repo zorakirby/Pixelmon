@@ -199,7 +199,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public static File getMinecraftDir() {
-		return Minecraft.getMinecraftDir();
+		return Minecraft.getMinecraft().mcDataDir;
 	}
 
 	@ForgeSubscribe

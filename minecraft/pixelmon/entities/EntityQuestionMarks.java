@@ -9,7 +9,7 @@ public class EntityQuestionMarks extends EntityLiving
 	public EntityQuestionMarks(World world)
 	{
 		super(world);
-		texture = "/pixelmon/image/questionmarks.png";
+//		texture = "/pixelmon/image/questionmarks.png";
 		height = 0.2F;
 	}
 

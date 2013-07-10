@@ -17,20 +17,20 @@ public class PainSplit extends SpecialAttackBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 
-		int newHPBase = (user.getHealth() + target.getHealth()) / 2;
-		if (user.getHealth() < newHPBase) {
-			user.heal((newHPBase - user.getHealth()));
+		float newHPBase = (user.func_110143_aJ() + target.func_110143_aJ()) / 2;
+		if (user.func_110143_aJ() < newHPBase) {
+			user.heal((newHPBase - user.func_110143_aJ()));
 			user.updateHealth();
-		} else if (user.getHealth() > newHPBase) {
-			user.attackEntityFrom(DamageSource.causeMobDamage(user), (user.getHealth() - newHPBase));
+		} else if (user.func_110143_aJ() > newHPBase) {
+			user.attackEntityFrom(DamageSource.causeMobDamage(user), (user.func_110143_aJ() - newHPBase));
 			user.updateHealth();
 		}
 
-		if (newHPBase > target.getHealth()) {
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), (user.getMaxHealth() - user.getHealth()));
+		if (newHPBase > target.func_110143_aJ()) {
+			target.attackEntityFrom(DamageSource.causeMobDamage(user), (user.getMaxHealth() - user.func_110143_aJ()));
 			target.updateHealth();
-		} else if (target.getHealth() > newHPBase) {
-			target.heal(target.getHealth() - newHPBase);
+		} else if (target.func_110143_aJ() > newHPBase) {
+			target.heal(target.func_110143_aJ() - newHPBase);
 			target.updateHealth();
 		}
 

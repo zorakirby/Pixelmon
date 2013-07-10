@@ -21,7 +21,7 @@ public class DreamEater extends SpecialAttackBase {
 			ArrayList<String> targetAttackList) throws Exception {
 
 			boolean hasIt = false;
-			int restoration = 0;
+			float restoration = 0;
 		
 			for (StatusBase e : target.status){
 				if (e.type == StatusType.Sleep) {
@@ -39,8 +39,8 @@ public class DreamEater extends SpecialAttackBase {
 				restoration = a.doDamageCalc(user, target, crit)/2;
 			}
 		
-			if(restoration >= target.getHealth()){
-				restoration = target.getHealth()/2;
+			if(restoration >= target.func_110143_aJ()){
+				restoration = target.func_110143_aJ()/2;
 			}
 		
 		

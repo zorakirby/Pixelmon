@@ -29,7 +29,7 @@ public class OHKO extends SpecialAttackBase {
 		int x = rand.nextInt(100)+1;
 		
 		if(x < chance){
-		target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth());
+		target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ());
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
 		}
 		

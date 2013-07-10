@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonBlocksApricornTrees;
 import pixelmon.config.PixelmonItems;
 import pixelmon.enums.EnumApricornTrees;
@@ -37,7 +38,7 @@ public class ApricornBonemealEvent {
 						world.setBlockMetadataWithNotify(event.X, event.Y, event.Z, world.getBlockMetadata(event.X, event.Y, event.Z) + 1, 2);
 						event.setResult(Result.ALLOW);
 					} else {
-						event.entityPlayer.sendChatToPlayer("It looks well watered today.");
+						ChatHandler.sendChat(event.entityPlayer, "It looks well watered today.");
 					}
 				} else {
 					world.setBlockMetadataWithNotify(event.X, event.Y, event.Z, world.getBlockMetadata(event.X, event.Y, event.Z) + 1, 2);

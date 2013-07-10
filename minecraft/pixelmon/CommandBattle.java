@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatMessageComponent;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
@@ -53,8 +54,8 @@ public class CommandBattle extends CommandBase {
     {
         if (par2ArrayOfStr.length != 2)
         {
-        	par1ICommandSender.sendChatToPlayer("Invalid Arguments.");
-			par1ICommandSender.sendChatToPlayer(this.getCommandUsage(par1ICommandSender));
+        	par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Arguments."));
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d(this.getCommandUsage(par1ICommandSender)));
 			return;
         }
 

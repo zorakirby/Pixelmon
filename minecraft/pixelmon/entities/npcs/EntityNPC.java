@@ -34,11 +34,10 @@ public class EntityNPC extends EntityCreature {
 
 	public void init(String name) {
 		setName(name);
-		health = 100;
+		setEntityHealth(100);
 	}
 
 	@SideOnly(Side.CLIENT)
-	@Override
 	public String getTexture() {
 		return "/pixelmon/texture/" + getNPCType().textureDirectory + "/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
 	}
@@ -79,9 +78,10 @@ public class EntityNPC extends EntityCreature {
 	}
 
 	@Override
-	public int getMaxHealth() {
-		return 100;
-	}
+    public void setEntityHealth(float par1)
+    {
+        this.dataWatcher.updateObject(6, Float.valueOf(MathHelper.clamp_float(par1, 0.0F, 100)));
+    }
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {

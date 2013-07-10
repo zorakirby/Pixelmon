@@ -2,6 +2,8 @@ package pixelmon.client.models.apricornTrees;
 
 import java.util.ArrayList;
 
+import net.minecraft.client.resources.ResourceLocation;
+
 import pixelmon.config.PixelmonConfig;
 import pixelmon.enums.EnumApricornTrees;
 
@@ -33,8 +35,8 @@ public class ApricornTreeStore {
 		return model;
 	}
 
-	public static String getTexture(EnumApricornTrees tree, int i) {
-		return "/pixelmon/texture/apricornTrees/apricornTree" + tree.toString() + "/" + modelList[i] + ".png";
+	public static ResourceLocation getTexture(EnumApricornTrees tree, int i) {
+		return new ResourceLocation("pixelmon:textures/blocks/apricornTrees/apricornTree" + tree.toString() + "/" + modelList[i] + ".png");
 	}
 
 }

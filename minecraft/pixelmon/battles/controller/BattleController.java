@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import pixelmon.api.events.EventType;
@@ -98,7 +100,7 @@ public class BattleController {
 		try {
 			if (isPvP()) {
 				for (BattleParticipant p : participants) {
-					if (((PlayerParticipant) p).player == null || (((PlayerParticipant) p).player.getHealth() == 0))
+					if (((PlayerParticipant) p).player == null || !(((PlayerParticipant) p).player.isEntityAlive()))
 						endBattleWithoutXP();
 				}
 			}
@@ -172,7 +174,7 @@ public class BattleController {
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				}
 				Experience.awardExp(participants, p, p.currentPokemon());
-				EntityLiving g = p.currentPokemon().getOwner();
+				Entity g = p.currentPokemon().getOwner();
 				p.currentPokemon().setEntityHealth(0);
 				p.currentPokemon().setDead();
 				p.currentPokemon().isFainted = true;

@@ -17,15 +17,15 @@ public class Endeavor extends SpecialAttackBase{
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		
-		int userHealth = user.getHealth();
-		int targetHealth = target.getHealth();
+		float userHealth = user.func_110143_aJ();
+		float targetHealth = target.func_110143_aJ();
 		
 		if(userHealth >= targetHealth){
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "But it failed!");
 		}
 		
 		if(userHealth < targetHealth){
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth() - user.getHealth());
+			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ() - user.func_110143_aJ());
 		}
 		
 		return true;
