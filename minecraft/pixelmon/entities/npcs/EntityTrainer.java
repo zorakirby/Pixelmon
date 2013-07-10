@@ -9,16 +9,19 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
+import pixelmon.RandomHelper;
 import pixelmon.AI.AITrainerInBattle;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonEntityList;
+import pixelmon.config.PixelmonItems;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.SpawnLocation;
 import pixelmon.database.TrainerInfo;
@@ -105,6 +108,15 @@ public class EntityTrainer extends EntityNPC {
 		if (entityLiving instanceof EntityPlayer) {
 			ChatHandler.sendBattleMessage(entityLiving, info.loseMessage);
 			PixelmonEventHandler.fireEvent(EventType.BeatTrainer, (EntityPlayer) entityLiving);
+			if (info.model.toString().equals("Fisherman") || info.model.toString().equals("Fisherman2") || info.model.toString().equals("Fisherman3")) {
+				int number = RandomHelper.getRandomNumberBetween(1, 100);
+				int number2 = RandomHelper.getRandomNumberBetween(1, 1000);
+				if (number == 60) {
+					this.attackingPlayer.inventory.addItemStackToInventory(new ItemStack(PixelmonItems.goodRod));
+				}else if(number2 == 600){
+					this.attackingPlayer.inventory.addItemStackToInventory(new ItemStack(PixelmonItems.superRod));
+				}
+			}
 		}
 	}
 

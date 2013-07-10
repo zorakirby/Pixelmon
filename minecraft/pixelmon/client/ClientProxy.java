@@ -43,7 +43,7 @@ import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.entities.projectiles.EntityOldHook;
+import pixelmon.entities.projectiles.*;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
 import pixelmon.enums.EnumPokeballs;
@@ -67,7 +67,10 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
 		RenderingRegistry.registerEntityRenderingHandler(EntityOldHook.class, new RenderOldHook());
+		RenderingRegistry.registerEntityRenderingHandler(EntityGoodHook.class, new RenderGoodHook());
+		RenderingRegistry.registerEntityRenderingHandler(EntitySuperHook.class, new RenderSuperHook());
 
+		
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 	}

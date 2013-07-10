@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import java.util.HashMap;
 import java.util.List;
 
 import pixelmon.RandomHelper;
@@ -14,6 +15,8 @@ import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.spawning.SpawnData;
+import pixelmon.spawning.SpawnRegistry;
 import pixelmon.storage.PixelmonStorage;
 
 import com.google.common.io.ByteArrayDataInput;
@@ -38,8 +41,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 
-public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSpawnData {
+public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalSpawnData {
 	/** The tile this entity is on, X position */
 	private int xTile;
 
@@ -78,12 +82,13 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 	private double velocityZ;
 	BattleController bc;
 	PlayerParticipant player1;
+	public BiomeGenBase biome;
 
-	// welll I guess not very defined huh
+	private int number;
 
-	// private EntityFishHook fishhook;
+	public static HashMap<String, Integer> pixelmonRarity;
 
-	public EntityOldHook(World par1World) {
+	public EntityGoodHook(World par1World) {
 		super(par1World);
 		this.xTile = -1;
 		this.yTile = -1;
@@ -96,10 +101,11 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 		this.bobber = null;
 		this.setSize(0.25F, 0.25F);
 		this.ignoreFrustumCheck = true;
+		this.pixelmonRarity = new HashMap();
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EntityOldHook(World par1World, double par2, double par4, double par6, EntityPlayer par8EntityPlayer) {
+	public EntityGoodHook(World par1World, double par2, double par4, double par6, EntityPlayer par8EntityPlayer) {
 		this(par1World);
 		this.setPosition(par2, par4, par6);
 		this.ignoreFrustumCheck = true;
@@ -107,7 +113,7 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 		par8EntityPlayer.fishEntity = this;
 	}
 
-	public EntityOldHook(World par1World, EntityPlayer par2EntityPlayer) {
+	public EntityGoodHook(World par1World, EntityPlayer par2EntityPlayer) {
 		super(par1World);
 		this.xTile = -1;
 		this.yTile = -1;
@@ -217,7 +223,7 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 			if (!this.worldObj.isRemote) {
 
 				if (this.angler.isDead || !this.angler.isEntityAlive() || this.angler.getHeldItem() == null
-						|| this.angler.getHeldItem().getItem() != PixelmonItems.oldRod || this.getDistanceSqToEntity(this.angler) > 1024.0D) {
+						|| this.angler.getHeldItem().getItem() != PixelmonItems.goodRod || this.getDistanceSqToEntity(this.angler) > 1024.0D) {
 					this.setDead();
 					this.angler.fishEntity = null;
 					return;
@@ -459,46 +465,39 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 				b0 = 3;
 			} else if (this.ticksCatchable > 0) {
 				ChunkCoordinates cc = angler.getPlayerCoordinates();
-				
-				EntityPixelmon magikarp = (EntityPixelmon) PixelmonEntityList.createEntityByName("Magikarp", this.worldObj);
-				EntityPixelmon goldeen = (EntityPixelmon) PixelmonEntityList.createEntityByName("Goldeen", this.worldObj);
-				
-				WildPixelmonParticipant wildpixelmon = new WildPixelmonParticipant(magikarp);
-				WildPixelmonParticipant wildpixelmon2 = new WildPixelmonParticipant(goldeen);
-				
-				BattleParticipant part;
-				BattleParticipant part2;
-				
+
+				getListOfValidWaterPixelmon();
+
 				this.angler.addStat(StatList.fishCaughtStat, 1);
 				this.angler.addChatMessage("Oh, a bite!");
-				
-				
-				if (RandomHelper.getRandomNumberBetween(1, 10) * 10 <= 90) {
-					magikarp.setPosition(cc.posX, cc.posY + 1, cc.posZ);
-					part = new WildPixelmonParticipant((EntityPixelmon) magikarp);
 
-					try {
-						EntityPixelmon player1firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) angler).getFirstAblePokemon(
-								angler.worldObj);
-						bc = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildpixelmon);
-						wildpixelmon.StartBattle(bc, part);
-					} catch (Exception e) {
+				int intTotalRarity = 0;
+				for (Integer rarity : this.pixelmonRarity.values()) {
+					intTotalRarity += rarity;
+				}
 
+				int number = RandomHelper.getRandomNumberBetween(0, intTotalRarity);
+
+				int intCurrentRarityTotal = 0;
+				for (String pixelmon : this.pixelmonRarity.keySet()) {
+					intCurrentRarityTotal += this.pixelmonRarity.get(pixelmon);
+					if (intCurrentRarityTotal >= number) {
+						try {
+							EntityPixelmon pixelmonEntity = (EntityPixelmon) PixelmonEntityList.createEntityByName(pixelmon, this.worldObj);
+							WildPixelmonParticipant wildPixelmon = new WildPixelmonParticipant(pixelmonEntity);
+							pixelmonEntity.setPosition(cc.posX, cc.posY + 2, cc.posZ);
+							EntityPixelmon player1firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) angler).getFirstAblePokemon(
+									angler.worldObj);
+							bc = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildPixelmon);
+							wildPixelmon.StartBattle(bc, wildPixelmon);
+
+							this.worldObj.spawnEntityInWorld(pixelmonEntity);
+						} catch (Exception e) {
+							System.out.println("Error in Spawning Pixelmon caught by rod. " + e.toString());
+						}
+
+						break;
 					}
-					this.worldObj.spawnEntityInWorld(magikarp);
-
-				} else {
-					goldeen.setPosition(cc.posX, cc.posY + 1, cc.posZ);
-					part2 = new WildPixelmonParticipant((EntityPixelmon) goldeen);
-					try {
-						EntityPixelmon player1firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) angler).getFirstAblePokemon(
-								angler.worldObj);
-						bc = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildpixelmon2);
-						wildpixelmon2.StartBattle(bc, part2);
-					} catch (Exception e) {
-					}
-
-					this.worldObj.spawnEntityInWorld(goldeen);
 				}
 
 				b0 = 1;
@@ -516,22 +515,53 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 		}
 	}
 
-	/**
-	 * Will get destroyed next tick.
-	 */
-	public void setDead() {
-		super.setDead();
+	public void getListOfValidWaterPixelmon() {
 
-		if (this.angler != null) {
-			this.angler.fishEntity = null;
+		// Always have magikarp on list
+		pixelmonRarity.clear();
+		pixelmonRarity.put("Magikarp", 200);
+		pixelmonRarity.put("Tentacool", 190);
+		pixelmonRarity.put("Poliwag", 180);
+		pixelmonRarity.put("Psyduck", 150);
+		pixelmonRarity.put("Krabby", 110);
+		pixelmonRarity.put("Shelder", 100);
+		pixelmonRarity.put("Horsea", 100);
+		pixelmonRarity.put("Goldeen", 100);
+		pixelmonRarity.put("Staryu", 100);
+		pixelmonRarity.put("Tentacruel", 95);
+		pixelmonRarity.put("Poliwhirl", 90);
+		pixelmonRarity.put("Golduck", 90);
+
+
+
+		// Set Rarity Threshold
+		int rarityThreshold = 170;
+
+		if (this.angler.getCurrentEquippedItem() == new ItemStack(PixelmonItems.goodRod)) {
+			rarityThreshold = 60;
 		}
+
+		this.biome = this.worldObj.getWorldChunkManager().getBiomeGenAt((int) this.posX, (int) this.posZ);
+		List<SpawnData> spawnDataList = SpawnRegistry.getWaterSpawnsForBiome(this.biome);
+		for (SpawnData pixelmon : spawnDataList) {
+			if (!(pixelmon.name.equals("Magikarp"))) {
+				if (pixelmon.rarity > rarityThreshold) {
+				}
+
+			}
+		}
+
 	}
 
+	@Override
 	public void writeSpawnData(ByteArrayDataOutput data) {
 		data.writeInt(this.angler != null ? this.angler.entityId : 0);
+
 	}
 
+	@Override
 	public void readSpawnData(ByteArrayDataInput data) {
 		this.angler = (EntityPlayer) this.worldObj.getEntityByID(data.readInt());
+
 	}
 }

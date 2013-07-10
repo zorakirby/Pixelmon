@@ -1,6 +1,6 @@
 package pixelmon.items;
 
-import pixelmon.entities.projectiles.EntityOldHook;
+import pixelmon.entities.projectiles.EntityGoodHook;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -12,20 +12,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
-public class ItemOldRod extends Item {
+public class ItemGoodRod extends Item {
 
-	public ItemOldRod(int par1) {
+	public String rodType;
+
+	public ItemGoodRod(int par1) {
 	        super(par1);
 	        this.setMaxDamage(64);
 	        this.setMaxStackSize(1);
 	        this.setCreativeTab(CreativeTabs.tabTools);
-	        this.setUnlocalizedName("Old Rod");
+	        this.setUnlocalizedName("Good Rod");
 	    }
 
 	    @SideOnly(Side.CLIENT)
 
 	    /**
-	     * Returns True is the item is renderer in full 3D when hold.
+	     * Returns True is the item is renderer in full 3D when held.
 	     */
 	    public boolean isFull3D()
 	    {
@@ -61,7 +63,7 @@ public class ItemOldRod extends Item {
 
 	            if (!par2World.isRemote)
 	            {
-	                par2World.spawnEntityInWorld(new EntityOldHook(par2World, par3EntityPlayer));
+					par2World.spawnEntityInWorld(new EntityGoodHook(par2World, par3EntityPlayer));
 	            }
 	            
 
@@ -74,6 +76,6 @@ public class ItemOldRod extends Item {
 	    @SideOnly(Side.CLIENT)
 	    public void registerIcons(IconRegister par1IconRegister)
 	    {
-	     this.itemIcon = par1IconRegister.registerIcon("pixelmon:oldrod");
+	     this.itemIcon = par1IconRegister.registerIcon("pixelmon:goodrod");
 	    }	
 	}
