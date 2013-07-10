@@ -225,7 +225,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		}
 		if (func_110143_aJ() < 0)
 			setEntityHealth(0);
-		if (getOwner() != null && worldObj.isRemote)
+		if (getOwner() != null && !worldObj.isRemote)
 			updateNBT();
 	}
 

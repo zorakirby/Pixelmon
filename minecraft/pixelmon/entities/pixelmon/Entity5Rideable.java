@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -103,6 +104,18 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	@Override
 	public void moveEntityWithHeading(float par1, float par2) {
 		boolean movementHandled = false;
+		
+		if (riddenByEntity!=null && baseStats!=null){
+            this.prevRotationYaw = this.rotationYaw;// = this.riddenByEntity.rotationYaw;
+            this.rotationPitch = this.riddenByEntity.rotationPitch * 0.5F;
+            this.setRotation(this.rotationYaw, this.rotationPitch);
+            par1 = ((EntityLivingBase)this.riddenByEntity).moveStrafing * 0.5F;
+            rotationYaw -= par1*10;
+            par1 = 0;
+            this.rotationYawHead = this.renderYawOffset = this.rotationYaw;
+            par2 = ((EntityLivingBase)this.riddenByEntity).moveForward;
+		}
+		
 		if (riddenByEntity != null && baseStats != null && (baseStats.canSurf || !baseStats.canSurfSet) && this.inWater) {
 			if (!baseStats.canSurfSet) {
 				baseStats.canSurf = DatabaseMoves.CanLearnAttack(getName(), "Surf");
@@ -110,11 +123,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			}
 			if (baseStats.canSurf) {
 				double var9 = this.posY;
-				this.moveFlying(par1, par2, jumpMovementFactor);
-				this.moveEntity(this.motionX, this.motionY, this.motionZ);
-				this.motionX *= 0.900000011920929D;
-				this.motionY *= 0.900000011920929D;
-				this.motionZ *= 0.900000011920929D;
+				//this.moveFlying(par1, par2, jumpMovementFactor);
+				this.moveEntityWithHeading(par1, par2);
 				// this.motionY -= 0.02D;
 
 				if (this.isCollidedHorizontally
@@ -230,16 +240,6 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				}
 			}
 			if (playerRiding != null) {
-				if (isFlying) {
-					moveForward += 5 * (float) playerRiding.acceleration * 500f / (float) stats.Speed;
-				} else if (isInWater() && baseStats.canSurf) {
-					moveForward += 30 * (float) playerRiding.acceleration * 500f / (float) stats.Speed;
-				} else {
-					moveForward += playerRiding.acceleration;
-				}
-				rotationYaw += (float) playerRiding.rotation * 1.25f;
-				playerRiding.rotation = 0;
-				playerRiding.acceleration = 0;
 				if (!isInWater() && playerRiding.jump > 0) {
 					if (onGround) {
 						motionY = 0.5f;

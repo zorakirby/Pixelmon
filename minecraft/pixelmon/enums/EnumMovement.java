@@ -1,7 +1,7 @@
 package pixelmon.enums;
 
 public enum EnumMovement {
-	Accelerate(0), Decelerate(1), Left(2), Right(3), Jump(4), Crouch(5);
+	Jump(0), Crouch(1);
 	private EnumMovement(int index) {
 		this.index = index;
 	}
