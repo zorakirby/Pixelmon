@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -94,6 +95,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 				level.setLevel(spawnLevel);
 			else
 				level.setLevel(spawnLevel + rand.nextInt(spawnLevelRange));
+			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
 			setEntityHealth(stats.HP);
 		}
 	}
@@ -220,8 +222,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public void updateHealth() {
 		if (stats != null) {
-			if (func_110143_aJ() > stats.HP)
-				setEntityHealth(stats.HP);
+			if (func_110143_aJ() > this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e())
+				setEntityHealth((float)this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e());
 		}
 		if (func_110143_aJ() < 0)
 			setEntityHealth(0);
@@ -260,6 +262,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void updateStats() {
 		stats.setLevelStats(getNature(), baseStats, level.getLevel());
 		dataWatcher.updateObject(EntityPixelmon.dwMaxHP, (short) stats.HP);
+		this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
 		updateHealth();
 	}
 

@@ -95,13 +95,13 @@ public class RenderTileEntityHealer extends TileEntitySpecialRenderer {
 	
 		if (tile.allPlaced) {
 			if (tile.flashTimer < 10 || tile.stayDark)
-				func_110628_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + tile.pokeballType[k].getCaptureTexture()));
+				func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getCaptureTexture()));
 			else
-				func_110628_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + tile.pokeballType[k].getTexture()));
+				func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getTexture()));
 			if (tile.flashTimer >= 20)
 				tile.flashTimer = 0;
 		} else {
-			func_110628_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + tile.pokeballType[k].getTexture()));
+			func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getTexture()));
 		}
 		RenderHelper.enableStandardItemLighting();
 		GL11.glScalef(0.8F, 0.8F, 0.8F);
