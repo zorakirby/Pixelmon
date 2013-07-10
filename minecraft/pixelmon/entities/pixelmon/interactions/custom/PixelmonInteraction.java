@@ -31,7 +31,7 @@ public abstract class PixelmonInteraction {
 	}
 
 	public void setNumInteractions(int newValue) {
-		pixelmon.getDataWatcher().updateObject(24, (short) newValue);
+		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwNumInteractions, (short) newValue);
 	}
 
 	public void tick() {

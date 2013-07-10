@@ -3,6 +3,7 @@ package pixelmon.entities.pokeballs;
 import java.util.ArrayList;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
@@ -40,7 +41,7 @@ public class PokeballTypeHelper {
 		captureList.add(new CaptureHeavyBall());
 	}
 	
-	public static double getBallBonus(EnumPokeballs type, EntityLiving thrower, EntityPixelmon p2, Mode mode) {
+	public static double getBallBonus(EnumPokeballs type, EntityLivingBase thrower, EntityPixelmon p2, Mode mode) {
 		double ballBonus = type.getBallBonus();
 		for (CaptureBase c: captureList)
 			if (c.pokeball == type) return c.getBallBonus(type, (EntityPlayer)thrower, p2, mode);

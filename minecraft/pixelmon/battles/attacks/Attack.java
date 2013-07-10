@@ -67,7 +67,6 @@ public class Attack {
 		target.hurtTime = 0;
 		user.hurtTime = 0;
 		boolean attackHandled = false, cantMiss = false;
-		flinched = false;
 		user.getLookHelper().setLookPositionWithEntity(target, 0, 0);
 		double accuracy = ((double) baseAttack.accuracy) * ((double) user.battleStats.getAccuracy()) / ((double) target.battleStats.getEvasion());
 		double crit = calcCriticalHit(null);
@@ -377,7 +376,6 @@ public class Attack {
 			return DatabaseMoves.getAttack("Struggle");
 		} else {
 			int i1 = 0;
-			Random r = new Random();
 			i1 = RandomHelper.getRandomNumberBetween(0, usableMoves.size() - 1);
 			return usableMoves.get(i1);
 		}

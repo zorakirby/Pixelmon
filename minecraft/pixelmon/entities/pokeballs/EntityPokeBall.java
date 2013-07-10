@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -37,7 +38,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 	private Mode mode;
 	public int shakePokeball;
-	private EntityLiving thrower;
+	private EntityLivingBase thrower;
 	private EntityPixelmon p;
 	private int waitTime;
 	private boolean canCatch = false;
@@ -63,7 +64,7 @@ public class EntityPokeBall extends EntityThrowable {
 		isInitialized = true;
 	}
 
-	public EntityPokeBall(World world, EntityLiving entityliving, EnumPokeballs type, boolean dropItem) {
+	public EntityPokeBall(World world, EntityLivingBase entityliving, EnumPokeballs type, boolean dropItem) {
 		super(world, entityliving);
 		thrower = entityliving;
 		this.mode = Mode.empty;
@@ -118,7 +119,7 @@ public class EntityPokeBall extends EntityThrowable {
 
 	private BattleController battleController;
 
-	public EntityPokeBall(World world, EntityLiving thrower, EntityPixelmon target, EnumPokeballs type, BattleController battleController) {
+	public EntityPokeBall(World world, EntityLivingBase thrower, EntityPixelmon target, EnumPokeballs type, BattleController battleController) {
 		super(world, thrower);
 		this.thrower = thrower;
 		dropItem = false;
@@ -147,7 +148,7 @@ public class EntityPokeBall extends EntityThrowable {
 		this.motionY = (double) (-MathHelper.sin(0)) * 0.8;
 	}
 
-	public EntityPokeBall(World world, EntityLiving entityliving, EntityPixelmon e, EnumPokeballs type) {
+	public EntityPokeBall(World world, EntityLivingBase entityliving, EntityPixelmon e, EnumPokeballs type) {
 		super(world, entityliving);
 		thrower = entityliving;
 		endRotationYaw = entityliving.rotationYawHead;
@@ -536,7 +537,7 @@ public class EntityPokeBall extends EntityThrowable {
 		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), p2.getName(), pokemonRate);
 		if (pokemonRate > 0) {
 			int hpMax = p2.getMaxHealth();
-			int hpCurrent = p2.getHealth();
+			float hpCurrent = p2.func_110143_aJ();
 			int bonusStatus = 1;
 			double ballBonus = PokeballTypeHelper.getBallBonus(getType(), thrower, p2, mode);
 			double a, b, p;

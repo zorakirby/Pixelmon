@@ -1,7 +1,9 @@
 package pixelmon;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Map;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
@@ -80,9 +82,15 @@ public class TickHandler implements ITickHandler {
 
 		for (TickType type : types) {
 
-			if (!checkedForUsername && type == TickType.RENDER && !Minecraft.getMinecraft().session.username.equals("ASH")
+			if (Minecraft.getMinecraft().thePlayer !=null && !checkedForUsername && type == TickType.RENDER && !Minecraft.getMinecraft().thePlayer.username.equals("ASH")
 					&& java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
-				Minecraft.getMinecraft().session.username = "ASH";
+				try {
+					Field f = Minecraft.getMinecraft().thePlayer.getClass().getDeclaredField("username");
+					f.setAccessible(true);
+					f.set(Minecraft.getMinecraft().thePlayer, "ASH");
+				} catch (Exception e) {
+				}
+				//Minecraft.getMinecraft().thePlayer.username = "ASH";
 			}
 			checkedForUsername = true;
 			if (type == TickType.RENDER) {
@@ -95,7 +103,7 @@ public class TickHandler implements ITickHandler {
 					}
 				}
 				if (!musicCleared) {
-					ArrayList l = ObfuscationReflectionHelper.getPrivateValue(SoundPool.class, Minecraft.getMinecraft().sndManager.soundPoolMusic, 2);
+					Map l = ObfuscationReflectionHelper.getPrivateValue(SoundPool.class, Minecraft.getMinecraft().sndManager.soundPoolMusic, 1);
 					if (l.size() != 0) {
 						if (PixelmonConfig.removeVanillaMusic)
 							l.clear();
@@ -106,7 +114,7 @@ public class TickHandler implements ITickHandler {
 				if (musicCleared && !foundSounds) {
 					foundSounds = true;
 					Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(
-							"Couldn't find music at " + Minecraft.getMinecraftDir() + "/resources/music/pixelmon");
+							"Couldn't find music at " + Minecraft.getMinecraft().mcDataDir + "/resources/music/pixelmon");
 				}
 			}
 		}

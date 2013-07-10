@@ -18,7 +18,7 @@ public abstract class MultiTurnSpecialAttackBase extends EffectBase {
 	}
 
 	public void setTurnCount(EntityPixelmon user, int value) {
-		user.battleVariables.set(getClass(), 0);
+		user.battleVariables.set(getClass(), value);
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class DoSetDamage extends SpecialAttackBase {
 		target.attackEntityFrom(DamageSource.causeMobDamage(user), damage);
 		
 		if(name.contains("super fang"))
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.getHealth()/2);
+			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ()/2);
 			
 		
 		return false;

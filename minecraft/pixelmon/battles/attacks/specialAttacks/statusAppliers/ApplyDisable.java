@@ -3,19 +3,18 @@ package pixelmon.battles.attacks.specialAttacks.statusAppliers;
 import java.util.ArrayList;
 import java.util.Random;
 
+import pixelmon.RandomHelper;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.status.Disable;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class ApplyDisable extends StatusApplierBase {
-	Random rand = new Random();
 	@Override
 	public void ApplyEffect(Attack a, double crit, EntityPixelmon user,
 			EntityPixelmon target, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-		String lastUsedMove = targetAttackList.get(targetAttackList.size()-1);
-		if (targetAttackList.size() - 1 == -1) {
+		if (target.getLastMoveUsed() == null) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
 					target.getNickname() + " hasn't used a move yet!");
 		}
@@ -23,20 +22,16 @@ public class ApplyDisable extends StatusApplierBase {
 		else {
 			
 			
-			int effectiveTurns = rand.nextInt(4) + 4;
-			for(Attack atk: target.moveset){
-				if (atk.baseAttack.attackName.equalsIgnoreCase(lastUsedMove) && !atk.getDisabled()) {
+			
+			//		rand.nextInt(4) + 4;
+				if (!target.getLastMoveUsed().getDisabled())
+				{
+					target.getLastMoveUsed().setDisabled(true, target);
+					target.status.add(new Disable(target.getLastMoveUsed()));
+				}
 					
-					atk.setDisabled(true, target);
-					target.status.add(new Disable(atk, effectiveTurns));
-				}
-				
-				else if(atk.baseAttack.attackName.equalsIgnoreCase(lastUsedMove)&& atk.getDisabled())
-				{	
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), atk.baseAttack.attackName + " is already disabled!");	
-				}
-			}
-
+				else if (target.getLastMoveUsed().getDisabled())
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getLastMoveUsed().baseAttack.attackName + " is already disabled!");	
 		}
 		
 

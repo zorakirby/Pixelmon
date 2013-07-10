@@ -3,6 +3,7 @@ package pixelmon.creativeTabs;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.util.StringTranslate;
+import pixelmon.Pixelmon;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import cpw.mods.fml.relauncher.Side;
@@ -25,6 +26,6 @@ public class CreativeTabHeldItems extends CreativeTabs {
 	}
 
 	public String getTranslatedTabLabel() {
-		return StringTranslate.getInstance().translateKey(tabName);
+		return Pixelmon.stringtranslate.translateKey(tabName);
 	}
 }
