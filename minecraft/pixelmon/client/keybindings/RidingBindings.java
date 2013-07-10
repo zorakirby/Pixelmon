@@ -31,14 +31,6 @@ public class RidingBindings extends KeyHandler {
 		if (Minecraft.getMinecraft().thePlayer.ridingEntity == null || tickEnd) {
 			return;
 		}
-		if (kb.keyCode == Keyboard.KEY_W)
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Accelerate.index));
-		if (kb.keyCode == Keyboard.KEY_S)
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Decelerate.index));
-		if (kb.keyCode == Keyboard.KEY_A)
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Left.index));
-		if (kb.keyCode == Keyboard.KEY_D)
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Right.index));
 		if (kb.keyCode == Keyboard.KEY_SPACE)
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Jump.index));
 	}
