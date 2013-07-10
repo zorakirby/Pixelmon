@@ -11,6 +11,7 @@ import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
+import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -503,7 +504,7 @@ public class EntityOldHook extends EntityFishHook implements IEntityAdditionalSp
 
 				b0 = 1;
 			} else {
-				angler.sendChatToPlayer("Not even a nibble...");
+				ChatHandler.sendChat(angler, "Not even a nibble.");
 			}
 
 			if (this.inGround) {

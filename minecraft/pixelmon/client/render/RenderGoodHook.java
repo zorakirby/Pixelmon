@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import pixelmon.entities.projectiles.EntityGoodHook;
 import net.minecraft.util.MathHelper;
@@ -27,7 +28,6 @@ public class RenderGoodHook extends Render
         GL11.glScalef(0.5F, 0.5F, 0.5F);
         byte b0 = 1;
         byte b1 = 2;
-        this.loadTexture("/particles.png");
         Tessellator tessellator = Tessellator.instance;
         float f2 = (float)(b0 * 8 + 0) / 128.0F;
         float f3 = (float)(b0 * 8 + 8) / 128.0F;
@@ -106,4 +106,10 @@ public class RenderGoodHook extends Render
     {
         this.doRenderGoodHook((EntityGoodHook)par1Entity, par2, par4, par6, par8, par9);
     }
+
+	@Override
+	protected ResourceLocation func_110775_a(Entity entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
