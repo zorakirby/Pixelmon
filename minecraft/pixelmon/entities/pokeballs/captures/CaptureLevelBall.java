@@ -20,6 +20,8 @@ public class CaptureLevelBall extends CaptureBase {
 		double ballBonus = pokeball.getBallBonus();
 		if (mode == Mode.battle) {
 			BattleController bc = BattleRegistry.getBattle((EntityPlayer) thrower);
+			if(bc == null)
+				return ballBonus;
 			int ownerPokemonLevel = 0;
 			for (BattleParticipant p : bc.participants) {
 				if (p instanceof PlayerParticipant && p.getEntity() == thrower)
