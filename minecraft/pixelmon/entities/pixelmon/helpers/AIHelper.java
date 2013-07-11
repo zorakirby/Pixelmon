@@ -2,22 +2,9 @@ package pixelmon.entities.pixelmon.helpers;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIFollowOwner;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITasks;
-import net.minecraft.entity.ai.EntityAITempt;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import pixelmon.AI.AIIsInBattle;
-import pixelmon.AI.AIMoveTowardsTarget;
-import pixelmon.AI.AIStartBattle;
-import pixelmon.AI.AISwimming;
-import pixelmon.AI.AIFlying;
-import pixelmon.AI.AITargetNearest;
-import pixelmon.AI.AITeleportAway;
+import pixelmon.AI.*;
 import pixelmon.config.PixelmonItems;
 import pixelmon.database.SpawnLocation;
 import pixelmon.entities.pixelmon.Entity7HasAI;
@@ -43,13 +30,13 @@ public class AIHelper {
 	}
 
 	private void initSwimmingAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
-		tasks.addTask(i++, new EntityAITempt(entity, entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e(), PixelmonItems.rareCandy.itemID, false));
+		tasks.addTask(i++, new AITempt(entity, PixelmonItems.rareCandy.itemID, false));
 		tasks.addTask(i++, new AISwimming(entity));
 	}
 
 	private void initFlyingAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
 		tasks.addTask(i++, new EntityAISwimming(entity));
-		tasks.addTask(i++, new EntityAITempt(entity, entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e(), PixelmonItems.rareCandy.itemID, false));
+		tasks.addTask(i++, new AITempt(entity, PixelmonItems.rareCandy.itemID, false));
 		tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
 		tasks.addTask(i++, new EntityAIWander(entity, entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e()));
 		tasks.addTask(i++, new AIFlying(entity));
@@ -60,7 +47,7 @@ public class AIHelper {
 		if (((EntityPixelmon) entity).pokemonLocation != SpawnLocation.Water && !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
 			if (entity.aggression == Aggression.aggressive) {
 				tasks.addTask(i++, new AIStartBattle(entity));
-				tasks.addTask(i++, new AIMoveTowardsTarget(entity, (float)entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e(), 10));
+				tasks.addTask(i++, new AIMoveTowardsTarget(entity, 10));
 				tasks.addTask(i++, new AITargetNearest(entity, 10, true));
 			} else if (entity.aggression == Aggression.timid) {
 				tasks.addTask(i++, new EntityAIAvoidEntity(entity, EntityPlayer.class, 16.0F, 0.23F, 0.4F));
@@ -74,8 +61,8 @@ public class AIHelper {
 		} else {
 			tasks.addTask(i++, new EntityAISwimming(entity));
 			tasks.addTask(i++, new EntityAIFollowOwner(entity, 0.3F, 10.0F, 4.0F));
-			tasks.addTask(i++, new EntityAITempt(entity, entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e(), PixelmonItems.rareCandy.itemID, false));
-			tasks.addTask(i++, new EntityAIWander(entity, entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e()));
+			tasks.addTask(i++, new AITempt(entity, PixelmonItems.rareCandy.itemID, false));
+			tasks.addTask(i++, new AIWander(entity));
 			tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
 			tasks.addTask(i++, new EntityAILookIdle(entity));
 		}

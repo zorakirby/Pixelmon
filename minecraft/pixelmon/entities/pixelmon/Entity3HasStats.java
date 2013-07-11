@@ -96,6 +96,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			else
 				level.setLevel(spawnLevel + rand.nextInt(spawnLevelRange));
 			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
+			this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.2 + (1-(200f-stats.Speed)/200f)*0.3);
 			setEntityHealth(stats.HP);
 		}
 	}
