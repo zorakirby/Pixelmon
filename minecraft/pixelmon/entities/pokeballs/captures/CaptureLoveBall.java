@@ -20,6 +20,8 @@ public class CaptureLoveBall extends CaptureBase {
 		double ballBonus = type.getBallBonus();
 		if (mode == Mode.battle) {
 			BattleController bc = BattleRegistry.getBattle((EntityPlayer) thrower);
+			if(bc == null)
+				return ballBonus;
 			boolean ownerPokemonIsMale = true;
 			String ownerPokemonName = "";
 			for (BattleParticipant p : bc.participants) {
