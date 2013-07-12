@@ -90,6 +90,11 @@ public class PixelmonRecipes {
 				Character.valueOf('B'), Item.bootsLeather, Character.valueOf('F'), Item.feather });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.wailmerPail, 1), new Object[] { "BBB", " W ", "III", Character.valueOf('I'), Item.ingotIron,
 				Character.valueOf('B'), Item.bone, Character.valueOf('W'), Item.bucketWater });
+		
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.oldRod, 1), new Object[] { "  S", " ST", "S P", Character.valueOf('S'), Item.stick,
+			Character.valueOf('T'), Item.silk, Character.valueOf('P'), PixelmonItemsPokeballs.pokeBall });
+
+		
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.anvilItem, 1), new Object[] { "XXX", "XX ", "XXX", Character.valueOf('X'), Item.ingotIron });
 

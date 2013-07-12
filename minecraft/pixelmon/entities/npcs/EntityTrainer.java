@@ -11,16 +11,19 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
+import pixelmon.RandomHelper;
 import pixelmon.AI.AITrainerInBattle;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonEntityList;
+import pixelmon.config.PixelmonItems;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.SpawnLocation;
 import pixelmon.database.TrainerInfo;
@@ -40,7 +43,8 @@ public class EntityTrainer extends EntityNPC {
 		dataWatcher.addObject(25, (int) 0);
 		tasks.addTask(0, new EntityAISwimming(this));
 		tasks.addTask(1, new AITrainerInBattle(this));
-		tasks.addTask(2, new EntityAIWander(this, SharedMonsterAttributes.field_111263_d.func_111110_b()));
+		tasks.addTask(2, new EntityAIWander(this,
+				SharedMonsterAttributes.field_111263_d.func_111110_b()));
 	}
 
 	public void init(String name) {
@@ -49,7 +53,8 @@ public class EntityTrainer extends EntityNPC {
 		info = DatabaseTrainers.GetTrainerInfo(name);
 		if (info == null) {
 			if (PixelmonConfig.printErrors)
-				System.out.println("Database entry error/missing for trainer " + name);
+				System.out.println("Database entry error/missing for trainer "
+						+ name);
 			setDead();
 			return;
 		}
@@ -89,7 +94,8 @@ public class EntityTrainer extends EntityNPC {
 
 	public void loadPokemon() {
 		for (String pokemonName : info.partypokemon) {
-			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(pokemonName, worldObj);
+			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList
+					.createEntityByName(pokemonName, worldObj);
 			if (p != null) {
 				p.getLvl().setLevel((new Random()).nextInt(3) - 1 + info.level);
 				p.setEntityHealth(p.stats.HP);
@@ -106,7 +112,24 @@ public class EntityTrainer extends EntityNPC {
 	public void loseBattle(Entity entityLiving) {
 		if (entityLiving instanceof EntityPlayer) {
 			ChatHandler.sendBattleMessage(entityLiving, info.loseMessage);
-			PixelmonEventHandler.fireEvent(EventType.BeatTrainer, (EntityPlayer) entityLiving);
+			PixelmonEventHandler.fireEvent(EventType.BeatTrainer,
+					(EntityPlayer) entityLiving);
+			if (info.model.toString().equals("Fisherman")
+					|| info.model.toString().equals("Fisherman2")
+					|| info.model.toString().equals("Fisherman3")) {
+				int number = RandomHelper.getRandomNumberBetween(1, 1);
+				int number2 = RandomHelper.getRandomNumberBetween(1, 1);
+				if (number == 1) {
+					this.attackingPlayer.inventory
+							.addItemStackToInventory(new ItemStack(
+									PixelmonItems.goodRod));
+				}
+				if (number2 == 1) {
+					this.attackingPlayer.inventory
+							.addItemStackToInventory(new ItemStack(
+									PixelmonItems.superRod));
+				}
+			}
 		}
 	}
 
@@ -125,7 +148,8 @@ public class EntityTrainer extends EntityNPC {
 				nbt.setBoolean("IsFainted", false);
 				int numMoves = nbt.getInteger("PixelmonNumberMoves");
 				for (int i = 0; i < numMoves; i++) {
-					nbt.setInteger("PixelmonMovePP" + i, nbt.getInteger("PixelmonMovePPBase" + i));
+					nbt.setInteger("PixelmonMovePP" + i,
+							nbt.getInteger("PixelmonMovePPBase" + i));
 				}
 				if (nbt.hasKey("EffectCount")) {
 					int numStatus = nbt.getShort("EffectCount");

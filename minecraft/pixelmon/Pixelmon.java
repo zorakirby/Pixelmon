@@ -22,6 +22,9 @@ import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.EntitySpawning;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.entities.projectiles.EntityGoodHook;
+import pixelmon.entities.projectiles.EntityOldHook;
+import pixelmon.entities.projectiles.EntitySuperHook;
 import pixelmon.migration.Migration;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
@@ -110,7 +113,11 @@ public class Pixelmon {
 		proxy.registerInteractions();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityOldHook.class, "Old Hook", 214, this, 74, 1, true);
+		EntityRegistry.registerModEntity(EntityGoodHook.class, "Good Hook", 218, this, 75, 1, true);
+		EntityRegistry.registerModEntity(EntitySuperHook.class, "Super Hook", 218, this, 75, 1, true);
 
+		
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
