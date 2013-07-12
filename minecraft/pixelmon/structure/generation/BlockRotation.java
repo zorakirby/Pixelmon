@@ -1,22 +1,16 @@
 package pixelmon.structure.generation;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockTrapDoor;
+import pixelmon.blocks.decorative.BlockContainerPlus;
 
 public class BlockRotation {
 
 	public static int setBlockRotation(int coordBaseMode, int par1, int par2) {
-		if (par1 == Block.stairsNetherQuartz.blockID || 
-				par1 == Block.stairsCobblestone.blockID || 
-				par1 == Block.stairsNetherBrick.blockID ||
-				par1 == Block.stairsSandStone.blockID ||
-				par1 == Block.stairsStoneBrick.blockID ||
-				par1 == Block.stairsWoodBirch.blockID ||
-				par1 == Block.stairsWoodJungle.blockID ||
-				par1 == Block.stairsWoodOak.blockID ||
-				par1 == Block.stairsWoodSpruce.blockID) {
+		Block theBlock = Block.blocksList[par1];
+		if (theBlock instanceof BlockStairs)
 			return rotateStairs(coordBaseMode, par1, par2);
-		}
 		if (par1 == Block.pistonBase.blockID || par1 == Block.pistonStickyBase.blockID || par1 == Block.lever.blockID || par1 == Block.dispenser.blockID) {
 			return rotatePistonLeverDispenser(coordBaseMode, par1, par2);
 		}
@@ -26,6 +20,8 @@ public class BlockRotation {
 			return rotateTorch(coordBaseMode, par1, par2);
 		if (par1 == Block.signPost.blockID || par1 == Block.signWall.blockID)
 			return rotateSign(coordBaseMode, par1, par2);
+		if(Block.blocksList[par1] instanceof BlockContainerPlus)
+			return BlockContainerPlus.rotate(coordBaseMode, theBlock, par2);
 		return par2;
 	}
 

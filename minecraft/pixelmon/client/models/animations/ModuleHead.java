@@ -35,5 +35,10 @@ public class ModuleHead extends Module {
 			float f3, float f4) {
 		walk(entity, f, f1, f2, f3, f4);
 	}
+	
+	public ModuleHead addModule(Module m){
+		modules.add(m);
+		return this;
+	}
 
 }

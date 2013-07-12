@@ -50,6 +50,8 @@ public class RenderTileEntityPC extends TileEntitySpecialRenderer {
 										// and you can see what happens
 		model.renderModel(tile, 0.0625F); // renders and yes 0.0625 is a random
 											// number
+											
+											//...Actually, iz 1/16.
 		GL11.glPopMatrix(); // end
 
 	}

@@ -12,11 +12,24 @@ import pixelmon.client.models.smd.ValveStudioModelLoader;
  *
  */
 public enum EnumCustomModel{
-	Froslass("/pixelmon/models/froslass/froslass.pqc");
+	//pokemon
+	Froslass("/pixelmon/models/froslass/froslass.pqc"),
+	GlalieMatte("/pixelmon/models/glalie/glalie_matte.obj"),
+	GlalieReflective("/pixelmon/models/glalie/glalie_reflective.obj"),
+	
+	//blocks
+	EvoRock("/pixelmon/models/icyrock/icyrock.obj"),
+	PillarPlatform("/pixelmon/models/pillar/pillar_platform.obj"),
+	PillarColumn("/pixelmon/models/pillar/pillar_column.obj"),
+	PillarColumnFracturedBottom("/pixelmon/models/pillar/pillar_column_fractured_bottom.obj"),
+	PillarColumnFracturedTop("/pixelmon/models/pillar/pillar_column_fractured_top.obj");
 	
 	
+	
+	//fields
 	String fileName;
 	public IModelCustom theModel;
+	
 	public static HashMap<EnumCustomModel, IModelCustom> modelMap = new HashMap();
 	EnumCustomModel(String fileName){
 		this.fileName = fileName;

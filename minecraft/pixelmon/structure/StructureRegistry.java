@@ -5,16 +5,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cpw.mods.fml.relauncher.Side;
 
 import pixelmon.RandomHelper;
+import pixelmon.config.PixelmonBlocks;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.enums.EnumBiomes;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class StructureRegistry {
@@ -38,13 +43,10 @@ public class StructureRegistry {
 		}
 	}
 
-	private static StructureData loadStructureData(String filename, String path) {
+	public static StructureData loadStructureData(String filename, String path) {
 		StructureData data = new StructureData();
 		int schind = filename.indexOf(".data");
 		data.path = path + "/" + filename.substring(0, schind) + ".schematic";
-		if (!new File(data.path).exists())
-			return null;
-
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader(path + "/" + filename));
@@ -64,6 +66,8 @@ public class StructureRegistry {
 						data.hasPokemon = true;
 				} else if (line.startsWith("depth")) {
 					data.depth = Integer.parseInt(line.split(":")[1]);
+				} else if(line.startsWith("swap")){
+					swapBlocks(data, line.split(":", 2)[1]);
 				}
 				line = br.readLine();
 			}
@@ -78,6 +82,26 @@ public class StructureRegistry {
 		data.ySize = s.height;
 		data.zSize = s.length;
 		return data;
+	}
+	
+	private static void swapBlocks(StructureData data, String line){
+		String[] params = line.split(":");
+		int key = Integer.parseInt(params[0]);
+		try{
+			int value = -1;
+			try{
+				value = Integer.parseInt(params[1]);
+			}catch(Exception e){
+				Block theBlock = (Block) PixelmonBlocks.class.getField(params[1]).get(null);
+				value = theBlock.blockID;
+			}
+			if(data.filter == null)
+				data.filter = new HashMap();
+			data.filter.put(key, value);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 
 	static FilenameFilter filter = new FilenameFilter() {

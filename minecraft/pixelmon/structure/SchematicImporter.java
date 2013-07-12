@@ -2,9 +2,11 @@ package pixelmon.structure;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.Vec3;
 
 public class SchematicImporter {
 	private String filename;
@@ -24,9 +26,23 @@ public class SchematicImporter {
 	 * The Bounding Box of the Schematic
 	 */
 	public int width, height, length;
-
+	public int offsetX = 0, offsetY = 0, offsetZ = 0;
+	
+	public StructureData creator;
+	
 	public SchematicImporter(String filename) {
 		this.filename = filename;
+	}
+	
+	public SchematicImporter(String filename, StructureData creator){
+		this.filename = filename;
+		this.creator = creator;
+	}
+	
+	public void setOffset(int x, int y, int z){
+		this.offsetX = x;
+		this.offsetY = y;
+		this.offsetZ = z;
 	}
 
 	public void readHeader(){
@@ -38,8 +54,8 @@ public class SchematicImporter {
 		height = n.getShort("Height");
 		length = n.getShort("Length");
 	}
-	
-	public void readSchematic() {
+
+	public void readSchematic(){
 		NBTTagCompound n = getNBTTag();
 		if (n == null)
 			return;
@@ -58,8 +74,12 @@ public class SchematicImporter {
 		for (int y = 0; y < height; y++) {
 			for (int z = 0; z < length; z++) {
 				for (int x = 0; x < width; x++) {
-					blocks[x][y][z] = blockArray[i];
-					blockData[x][y][z] = blockDataArray[i];
+					int[] idAndMeta = {blockArray[i], blockDataArray[i]};
+					if(creator != null && creator.filter != null){
+						idAndMeta = creator.doFilter(idAndMeta);
+					}
+					blocks[x][y][z] = idAndMeta[0];
+					blockData[x][y][z] = idAndMeta[1];
 					i++;
 				}
 			}

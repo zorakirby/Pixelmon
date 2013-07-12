@@ -1,8 +1,7 @@
 package pixelmon.structure.generation;
 
+import java.util.ArrayList;
 import java.util.Random;
-
-import pixelmon.structure.StructureData;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -10,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
+import pixelmon.structure.StructureData;
 
 public abstract class StructureScattered extends StructureComponent {
 	/** The size of the bounding box for this feature in the X axis */
@@ -28,7 +28,6 @@ public abstract class StructureScattered extends StructureComponent {
 		this.scatteredFeatureSizeY = height;
 		this.scatteredFeatureSizeZ = length;
 		this.coordBaseMode = par1Random.nextInt(4);
-
 		switch (this.coordBaseMode) {
 		case 0:
 		case 2:
@@ -93,5 +92,24 @@ public abstract class StructureScattered extends StructureComponent {
 		}
 
 		return -1;
+	}
+	
+	public void fixLighting(World world){
+		ArrayList<Chunk> chunks = WorldStructureHelper.getChunksInBounds(world, boundingBox);
+		for(Chunk chunk : chunks){
+			chunk.generateSkylightMap();
+			chunk.generateHeightMap();
+			chunk.updateSkylight();
+			chunk.resetRelightChecks();
+		}
+	}
+	public void fixLighting(World world, StructureBoundingBox bb){
+		ArrayList<Chunk> chunks = WorldStructureHelper.getChunksInBounds(world, bb);
+		for(Chunk chunk : chunks){
+			chunk.generateSkylightMap();
+			chunk.generateHeightMap();
+			chunk.updateSkylight();
+			chunk.resetRelightChecks();
+		}
 	}
 }

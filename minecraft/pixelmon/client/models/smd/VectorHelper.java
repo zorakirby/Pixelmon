@@ -85,8 +85,6 @@ public abstract class VectorHelper {
 	public static Matrix4f matrix4FromLocRot(float xl, float yl, float zl, float xr, float yr, float zr){
 		Vector3f loc = new Vector3f(xl, yl, zl);
 		Matrix4f part1 = new Matrix4f();
-		Matrix4f part2 = new Matrix4f();
-		
 		part1.translate(loc);
 		part1.rotate(zr, Z_AXIS);
 		part1.rotate(yr, Y_AXIS);

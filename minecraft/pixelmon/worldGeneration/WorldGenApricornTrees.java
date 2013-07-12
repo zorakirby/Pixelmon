@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.common.BiomeDictionary;
 import pixelmon.blocks.apricornTrees.BlockApricornTree;
 import pixelmon.config.PixelmonBlocksApricornTrees;
 import pixelmon.enums.EnumBiomes;
@@ -18,7 +19,8 @@ public class WorldGenApricornTrees implements IWorldGenerator {
 		if (world.provider.isHellWorld) // if nether
 			return;
 		BiomeGenBase biome = world.getBiomeGenForCoords(chunkX * 16, chunkZ * 16);
-		if (biome == EnumBiomes.Forest.getBiome() || biome == EnumBiomes.ForestHills.getBiome() || biome == EnumBiomes.Taiga.getBiome() || biome == EnumBiomes.TaigaHills.getBiome()) {
+		if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.FOREST)){ /*this check will equate to 'true' for the same biomes as before (forest, forestHills, taiga, taigahills) but with the added bonus of also 
+		 																			equating to 'true' for any biomes we register with FOREST type in the future*/
 			for (int i = 0; i < random.nextInt(3) - 1; i++) {
 				int x = random.nextInt(16) + chunkX * 16;
 				int z = random.nextInt(16) + chunkZ * 16;

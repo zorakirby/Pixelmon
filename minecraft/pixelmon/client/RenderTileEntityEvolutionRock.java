@@ -12,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 
+@Deprecated
 public class RenderTileEntityEvolutionRock extends TileEntitySpecialRenderer {
 
 	IModelCustom icyRockModel;

@@ -10,7 +10,7 @@ public class ModelCustomWrapper{
 	
 	public IModelCustom model;
 	int frame = 0;
-	float offsetX = 0, offsetY = 0, offsetZ =0;
+	float offsetX = 0, offsetY = 0, offsetZ =0; //these are garbage cuz of setRotationPoint :\
 	
 	public ModelCustomWrapper(IModelCustom m){
 		this.model = m;
@@ -42,8 +42,7 @@ public class ModelCustomWrapper{
 		GL11.glScalef(scale, scale, scale);
 		GL11.glRotatef(90, 1, 0, 0);
 		GL11.glTranslatef(offsetX, offsetZ, offsetY); //Z comes before Y because we are rotating by 90 first
-		
-		model.renderAll(); 
+		model.renderAll();
 		GL11.glPopMatrix();
 	}
 }

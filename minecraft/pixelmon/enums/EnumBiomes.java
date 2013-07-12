@@ -1,7 +1,10 @@
 package pixelmon.enums;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+
+import pixelmon.worldGeneration.biome.BiomeGenMysteryValley;
 
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -33,7 +36,9 @@ public enum EnumBiomes
 	River("River", BiomeGenBase.river),
 	
 	Nether("Hell", BiomeGenBase.hell),
-	Sky("Sky", BiomeGenBase.sky);
+	Sky("Sky", BiomeGenBase.sky),
+	
+	ShrineFalls("ShrineFalls", BiomeGenMysteryValley.instance);
 	
 	private BiomeGenBase biome;
 	private String name;

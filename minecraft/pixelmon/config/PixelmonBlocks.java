@@ -3,7 +3,9 @@ package pixelmon.config;
 import java.lang.reflect.Field;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import pixelmon.blocks.BlockAnvil;
@@ -23,6 +25,12 @@ import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
+import pixelmon.blocks.decorative.BlockContainerPlus;
+import pixelmon.blocks.decorative.BlockFancyPillar;
+import pixelmon.blocks.decorative.BlockPlus;
+import pixelmon.blocks.decorative.BlockStairsPublic;
+import pixelmon.blocks.decorative.BlockUnown;
+import pixelmon.blocks.decorative.TileEntityDecorativeBase;
 import pixelmon.enums.EnumEvolutionRock;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.items.ItemBlock;
@@ -47,6 +55,14 @@ public class PixelmonBlocks {
 	public static int fossilCleanerId;
 	public static int mossyRockId;
 	public static int icyRockId;
+	public static int fancyPillarId;
+	//public static int fancyPillarBrokenId;
+	public static int unownBlockId;
+	public static int unownBlockId2;
+	public static int shrineBlockId;
+	public static int shrineBrickId;
+	public static int shrineStairsId;
+	public static int shrineBrickStairsId;
 
 	@Mod.Block(name = "Thunderstone Ore")
 	public static Block thunderStoneOre;
@@ -76,6 +92,22 @@ public class PixelmonBlocks {
 	public static Block mossyRock;
 	@Mod.Block(name = "Icy Rock", itemTypeClass = ItemBlock.class)
 	public static Block icyRock;
+	@Mod.Block(name = "Ancient Pillar")
+	public static Block fancyPillar;
+	//@Mod.Block(name = "Broken Pillar")
+	//public static Block brokenPillar;
+	@Mod.Block(name = "Unown Block")
+	public static Block unownBlock;
+	@Mod.Block(name = "Unown Block")
+	public static Block unownBlock2;
+	@Mod.Block(name = "Shrine Block")
+	public static Block shrineBlock;
+	@Mod.Block(name = "Shrine Brick")
+	public static Block shrineBrick;
+	@Mod.Block(name = "Shrine Stairs")
+	public static Block shrineStairs;
+	@Mod.Block(name = "Shrine Brick Stairs")
+	public static Block shrineBrickStairs;
 	
 
 	public static void load(Configuration configuration) {
@@ -92,12 +124,21 @@ public class PixelmonBlocks {
 		fossilId = configuration.getBlock("Fossil", 225).getInt(225);
 		tradeMachineId = configuration.getBlock("Trade Machine", 311).getInt(311);
 		fossilCleanerId = configuration.getBlock("Fossil Cleaner", 312).getInt(312);
+
 		
 		PixelmonBlocksApricornTrees.load(configuration);
 
 		mossyRockId = configuration.getBlock("Mossy Rock", 318).getInt(318);
 		icyRockId = configuration.getBlock("Icy Rock", 319).getInt(319);
-
+		fancyPillarId = configuration.getBlock("Ancient Pillar", 320).getInt(320);
+		//fancyPillarBrokenId = configuration.getBlock("Broken Ancient Pillar", 321).getInt(321);
+		unownBlockId2 = configuration.getBlock("Unown Block (P-?)", 323).getInt(323); //THIS MUST COME BEFORE UNOWN BLOCK A-O, SO THE LETTERS COME AFTER EACH OTHER CORRECTLY, CUZ IT'S WEIRD
+		unownBlockId = configuration.getBlock("Unown Block (A-O)", 322).getInt(322);
+		shrineBlockId = configuration.getBlock("Shrine Block", 324).getInt(324);
+		shrineBrickId = configuration.getBlock("Shrine Brick", 325).getInt(325);
+		shrineStairsId = configuration.getBlock("Shrine Stairs", 326).getInt(326);
+		shrineBrickStairsId = configuration.getBlock("Shrine Brick Stairs", 327).getInt(327);
+		
 		healer = new BlockHealer(pokemonHealerIdleId);
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f, "Thunder Stone Ore");
 		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f, "Leaf Stone Ore");
@@ -110,8 +151,16 @@ public class PixelmonBlocks {
 		fossil = new BlockFossil(fossilId).setHardness(5f);
 		tradeMachine = new BlockTradeMachine(tradeMachineId);
 		fossilCleaner = new BlockFossilCleaner(fossilCleanerId);
-		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
-		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
+		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setModelName("ModelMossyRock").setUnlocalizedName("mossyRock").setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
+		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setModelName("ModelIcyRock").setUnlocalizedName("icyRock").setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
+		fancyPillar = new BlockFancyPillar(fancyPillarId, Material.rock).setDirectionalType(BlockContainerPlus.DirectionType.THREEAXIS).setModelName("ModelFancyPillar").setRenderOptions(-1, false, false).setHardness(6.5F).setCreativeTab(CreativeTabs.tabDecorations);
+		//brokenPillar = new BlockFancyPillar(fancyPillarBrokenId, Material.rock).setIsDamaged(true).setDirectionalType(BlockContainerPlus.DirectionType.THREEAXIS).setModelName("ModelFancyPillar").setRenderOptions(-1, false, false).setHardness(3.5F).setUnlocalizedName("damagedPillar").setCreativeTab(CreativeTabs.tabDecorations);
+		unownBlock = new BlockUnown(unownBlockId, Material.rock).setAlphaFlag(true).setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
+		unownBlock2 = new BlockUnown(unownBlockId2, Material.rock).setAlphaFlag(false).setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
+		shrineBrick = new BlockPlus(shrineBlockId, Material.rock).setIconName("pixelmon:shrinebrick").setUnlocalizedName("shrinebrick").setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
+		shrineBlock = new BlockPlus(shrineBrickId, Material.rock).setIconName("pixelmon:shrinebrickalt").setUnlocalizedName("shrinebrickalt").setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
+		shrineStairs = new BlockStairsPublic(shrineStairsId, shrineBlock, 0).setUnlocalizedName("shrinestairs");
+		shrineBrickStairs = new BlockStairsPublic(shrineBrickStairsId, shrineBrick, 0).setUnlocalizedName("shrinebrickstairs");
 	}
 
 	public static void registerBlocks() {
@@ -126,7 +175,17 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(bauxite, "Bauxite");
 		GameRegistry.registerBlock(fossil, "Fossil");
 		GameRegistry.registerBlock(tradeMachine, "Trading Machine");
+		GameRegistry.registerBlock(mossyRock, "Mossy Rock");
+		GameRegistry.registerBlock(icyRock, "Icy Rock");
 		GameRegistry.registerBlock(fossilCleaner, "Fossil Cleaner");
+		GameRegistry.registerBlock(fancyPillar, "Ancient Pillar");
+		//GameRegistry.registerBlock(brokenPillar, "Damaged Pillar");
+		GameRegistry.registerBlock(unownBlock, "UnownBlock");
+		GameRegistry.registerBlock(unownBlock2, "UnownBlock2");
+		GameRegistry.registerBlock(shrineBrick, "ShrineBlock");
+		GameRegistry.registerBlock(shrineBlock, "ShrineBrick");
+		GameRegistry.registerBlock(shrineStairs, "ShrineStairs");
+		GameRegistry.registerBlock(shrineBrickStairs, "ShrineBrickStairs");
 
 		MinecraftForge.setBlockHarvestLevel(bauxite, "pickaxe", 2);
 
@@ -137,6 +196,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerTileEntity(TileEntityTradeMachine.class, "Trade Machine");
 		GameRegistry.registerTileEntity(TileEntityFossilCleaner.class, "Fossil Cleaner");
 		GameRegistry.registerTileEntity(TileEntityEvolutionRock.class, "Evolution Rock");
+		GameRegistry.registerTileEntity(TileEntityDecorativeBase.class, "Decorative Tileent");
 
 		PixelmonBlocksApricornTrees.registerBlocks();
 	}
@@ -152,7 +212,8 @@ public class PixelmonBlocks {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		PixelmonBlocksApricornTrees.addNames();
+		//BlockUnown.registerNames();
+		//PixelmonBlocksApricornTrees.addNames();
 	}
 
 }

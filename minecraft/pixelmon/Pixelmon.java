@@ -6,6 +6,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,8 +21,13 @@ import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.EntitySpawning;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.migration.Migration;
+import pixelmon.migration.MigrationLoader;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.structure.StructureRegistry;
+import pixelmon.structure.generation.ComplexScattered;
+import pixelmon.structure.generation.WorldStructureHelper;
+import pixelmon.structure.worldGen.WorldGenScatteredFeature;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenEvolutionRock;
@@ -30,6 +36,7 @@ import pixelmon.worldGeneration.WorldGenFossils;
 import pixelmon.worldGeneration.WorldGenLeafStoneOre;
 import pixelmon.worldGeneration.WorldGenThunderStoneOre;
 import pixelmon.worldGeneration.WorldGenWaterStoneOre;
+import pixelmon.worldGeneration.biome.BiomeGenMysteryValley;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -108,14 +115,21 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 		GameRegistry.registerWorldGenerator(new WorldGenEvolutionRock());
 
-		//StructureRegistry.loadStructures(event.getSide());
 		
-		//GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		GameRegistry.addBiome(BiomeGenMysteryValley.instance);
+		BiomeDictionary.registerBiomeType(BiomeGenMysteryValley.instance, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.WATER, BiomeDictionary.Type.MAGICAL );
+		
+		ComplexScattered.registerStructures();
+		/*StructureRegistry.loadStructures(event.getSide());
+		
+		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
-		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
+		 MinecraftForge.EVENT_BUS.register(new MigrationLoader());*/
+		
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
+		MinecraftForge.EVENT_BUS.register(WorldStructureHelper.instance);
 
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
 		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);

@@ -1,19 +1,13 @@
 package pixelmon.client;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntityDaylightDetector;
 import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
@@ -27,6 +21,9 @@ import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
+import pixelmon.blocks.decorative.BlockContainerPlus;
+import pixelmon.blocks.decorative.BlockUnown;
+import pixelmon.blocks.decorative.TileEntityDecorativeBase;
 import pixelmon.client.gui.GuiChooseStarter;
 import pixelmon.client.gui.GuiHealer;
 import pixelmon.client.gui.GuiPixelmonOverlay;
@@ -44,14 +41,13 @@ import pixelmon.client.keybindings.NextPokemonKey;
 import pixelmon.client.keybindings.PreviousPokemonKey;
 import pixelmon.client.keybindings.SendPokemonKey;
 import pixelmon.client.models.fossils.ModelFossil;
-import pixelmon.client.models.objHandling.Object3D;
-import pixelmon.client.models.smd.Bone;
-import pixelmon.client.models.smd.ValveStudioModelLoader;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
+import pixelmon.client.render.RenderSimpleBlocks;
 import pixelmon.client.render.RenderTrainer;
 import pixelmon.client.render.tileEntities.RenderTileEntityAnvil;
 import pixelmon.client.render.tileEntities.RenderTileEntityApricornTrees;
+import pixelmon.client.render.tileEntities.RenderTileEntityDecorativeBase;
 import pixelmon.client.render.tileEntities.RenderTileEntityHealer;
 import pixelmon.client.render.tileEntities.RenderTileEntityPC;
 import pixelmon.client.render.tileEntities.RenderTileEntityTradingMachine;
@@ -64,7 +60,6 @@ import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumCustomModel;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
-import pixelmon.enums.EnumPokeballs;
 import pixelmon.sounds.Sounds;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -76,6 +71,8 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers() {
 		//Bone.setDebugModel();
+		System.out.println("IMAGINARY! " + Math.sqrt(-1));
+		EnumCustomModel.preloadModels();
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
@@ -85,9 +82,10 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
-		EnumCustomModel.preloadModels();
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDecorativeBase.class, new RenderTileEntityDecorativeBase());
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
+		RenderingRegistry.registerBlockHandler(BlockContainerPlus.renderingID, RenderTileEntityDecorativeBase.INSTANCE);
 
 	}
 

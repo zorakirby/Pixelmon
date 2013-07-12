@@ -1,5 +1,6 @@
 package pixelmon.structure.generation;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import pixelmon.structure.SchematicImporter;
@@ -12,8 +13,8 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 public class GeneralScattered extends StructureScattered {
 
-	private SchematicImporter s;
-	private StructureData sd;
+	protected SchematicImporter s;
+	protected StructureData sd;
 
 	// TODO implement a system in which we can have special pokemon spawn at
 	// special coordinates.
