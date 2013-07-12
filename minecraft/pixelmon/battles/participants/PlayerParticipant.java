@@ -1,6 +1,5 @@
 package pixelmon.battles.participants;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,6 +16,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
+import pixelmon.items.heldItems.ChoiceItem;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
@@ -25,6 +25,7 @@ public class PlayerParticipant extends BattleParticipant {
 	public EntityPlayerMP player;
 	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
+	public boolean choiceItemLocked = false;
 
 	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) throws PlayerNotLoadedException {
 		player = p;
@@ -132,6 +133,11 @@ public class PlayerParticipant extends BattleParticipant {
 				e.printStackTrace();
 			}
 		}
+		if(currentPixelmon.heldItem != null)
+		if(currentPixelmon.heldItem.getItemName() == "choiceband"||
+		   currentPixelmon.heldItem.getItemName() == "choicescarf"||
+		   currentPixelmon.heldItem.getItemName() == "choicespecs")
+		currentPixelmon.mustUseLastMove = true;
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, canSwitch ? 1 : 0));
 		wait = true;
 		return null;

@@ -36,7 +36,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	public boolean isLockedInBattle = false;
 	public Attack lastMoveUsed;
 	public Attack disabledMove;
-
+	public boolean mustUseLastMove = false;
 	public BattleVariables battleVariables = new BattleVariables();
 
 	public Entity6CanBattle(World par1World) {
