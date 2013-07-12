@@ -3,7 +3,7 @@ package pixelmon.client.gui.pc;
 import java.awt.Rectangle;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import pixelmon.comm.PixelmonDataPacket;
 
 public class SlotPC {

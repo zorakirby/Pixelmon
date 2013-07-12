@@ -5,19 +5,13 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.resources.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-
 import pixelmon.client.gui.GuiResources;
 import pixelmon.client.gui.pc.GuiPC;
-import pixelmon.comm.EnumPackets;
-import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.enums.EnumNature;
 
 public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 	GuiButton nameButton;

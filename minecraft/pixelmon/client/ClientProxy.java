@@ -1,18 +1,13 @@
 package pixelmon.client;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntityDaylightDetector;
 import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
@@ -26,27 +21,45 @@ import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
-import pixelmon.client.gui.*;
+import pixelmon.client.gui.GuiChooseStarter;
+import pixelmon.client.gui.GuiDoctor;
+import pixelmon.client.gui.GuiHealer;
+import pixelmon.client.gui.GuiPixelmonOverlay;
+import pixelmon.client.gui.GuiTrading;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.inventoryExtended.InventoryDetectionTickHandler;
 import pixelmon.client.gui.pc.GuiPC;
-import pixelmon.client.gui.pokechecker.*;
+import pixelmon.client.gui.pokechecker.GuiScreenPokeChecker;
+import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerMoves;
+import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerStats;
 import pixelmon.client.gui.pokedex.GuiPokedex;
-import pixelmon.client.keybindings.*;
+import pixelmon.client.keybindings.MinimizeMaximizeOverlayKey;
+import pixelmon.client.keybindings.MovementHandler;
+import pixelmon.client.keybindings.NextPokemonKey;
+import pixelmon.client.keybindings.PreviousPokemonKey;
+import pixelmon.client.keybindings.SendPokemonKey;
 import pixelmon.client.models.fossils.ModelFossil;
-import pixelmon.client.models.objHandling.Object3D;
-import pixelmon.client.render.*;
-import pixelmon.client.render.tileEntities.*;
+import pixelmon.client.render.RenderDoctor;
+import pixelmon.client.render.RenderHook;
+import pixelmon.client.render.RenderPixelmon;
+import pixelmon.client.render.RenderPokeball;
+import pixelmon.client.render.RenderTrainer;
+import pixelmon.client.render.tileEntities.RenderTileEntityAnvil;
+import pixelmon.client.render.tileEntities.RenderTileEntityApricornTrees;
+import pixelmon.client.render.tileEntities.RenderTileEntityHealer;
+import pixelmon.client.render.tileEntities.RenderTileEntityPC;
+import pixelmon.client.render.tileEntities.RenderTileEntityTradingMachine;
+import pixelmon.client.render.tileEntities.RenderTileFossilCleaner;
+import pixelmon.client.render.tileEntities.RenderTileFossilMachine;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.npcs.EntityDoctor;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.entities.projectiles.*;
+import pixelmon.entities.projectiles.EntityHook;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
-import pixelmon.enums.EnumPokeballs;
 import pixelmon.sounds.Sounds;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -66,11 +79,8 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
-		RenderingRegistry.registerEntityRenderingHandler(EntityOldHook.class, new RenderOldHook());
-		RenderingRegistry.registerEntityRenderingHandler(EntityGoodHook.class, new RenderGoodHook());
-		RenderingRegistry.registerEntityRenderingHandler(EntitySuperHook.class, new RenderSuperHook());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHook.class, new RenderHook());
 
-		
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 	}
@@ -79,7 +89,7 @@ public class ClientProxy extends CommonProxy {
 	public World GetClientWorld() {
 		return Minecraft.getMinecraft().theWorld;
 	}
-	
+
 	@Override
 	public void registerKeyBindings() {
 		MinecraftForge.EVENT_BUS.register(this);
@@ -198,7 +208,6 @@ public class ClientProxy extends CommonProxy {
 			return new GuiTrading(x);
 		else if (ID == EnumGui.Doctor.getIndex())
 			return new GuiDoctor();
-
 
 		return null;
 	}

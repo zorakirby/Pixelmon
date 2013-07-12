@@ -1,6 +1,6 @@
 package pixelmon.client.render;
 
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 
 public class RenderResources {
 	public static ResourceLocation anvil = new ResourceLocation("pixelmon:textures/blocks/anvil.png");

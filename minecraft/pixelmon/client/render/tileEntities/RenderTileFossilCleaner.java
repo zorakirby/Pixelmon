@@ -4,16 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import pixelmon.blocks.TileEntityFossilCleaner;
-import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.client.models.ModelFossilCleaner;
 import pixelmon.client.render.RenderResources;
 import pixelmon.config.PixelmonBlocks;

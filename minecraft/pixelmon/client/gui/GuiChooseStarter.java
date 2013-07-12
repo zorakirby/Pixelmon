@@ -7,7 +7,6 @@ import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.gui.ContainerEmpty;
-import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiChooseStarter extends GuiContainer {

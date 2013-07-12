@@ -1,21 +1,17 @@
 package pixelmon.entities.projectiles;
 
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import java.util.HashMap;
 import java.util.List;
 
 import pixelmon.RandomHelper;
 import pixelmon.battles.controller.BattleController;
-import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumRodType;
 import pixelmon.spawning.SpawnData;
 import pixelmon.spawning.SpawnRegistry;
 import pixelmon.storage.PixelmonStorage;
@@ -25,18 +21,12 @@ import com.google.common.io.ByteArrayDataOutput;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityFishHook;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -44,25 +34,28 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalSpawnData {
+public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawnData {
 	/** The tile this entity is on, X position */
-	private int xTile;
+	public int xTile;
 
 	/** The tile this entity is on, Y position */
-	private int yTile;
+	public int yTile;
 
 	/** The tile this entity is on, Z position */
-	private int zTile;
-	private int inTile;
-	private boolean inGround;
+	public int zTile;
+	public int inTile;
+	public boolean inGround;
 	public int shake;
 	public EntityPlayer angler;
-	private int ticksInGround;
-	private int ticksInAir;
+	public int ticksInGround;
+	public int ticksInAir;
 
 	/** the number of ticks remaining until this fish can no longer be caught */
-	private int ticksCatchable;
+	public int ticksCatchable;
 
 	/**
 	 * The entity that the fishing rod is connected to, if any. When you right
@@ -70,27 +63,27 @@ public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalS
 	 * entity.
 	 */
 	public Entity bobber;
-	private int fishPosRotationIncrements;
-	private double fishX;
-	private double fishY;
-	private double fishZ;
-	private double fishYaw;
-	private double fishPitch;
+	public int fishPosRotationIncrements;
+	public double fishX;
+	public double fishY;
+	public double fishZ;
+	public double fishYaw;
+	public double fishPitch;
 	@SideOnly(Side.CLIENT)
-	private double velocityX;
+	public double velocityX;
 	@SideOnly(Side.CLIENT)
-	private double velocityY;
+	public double velocityY;
 	@SideOnly(Side.CLIENT)
-	private double velocityZ;
-	BattleController bc;
-	PlayerParticipant player1;
-	public BiomeGenBase biome;
+	public double velocityZ;
 
-	private int number;
+	public BattleController bc;
+	public PlayerParticipant player1;
+	public BiomeGenBase biome;
+	public EnumRodType rodType;
 
 	public static HashMap<String, Integer> pixelmonRarity;
 
-	public EntityGoodHook(World par1World) {
+	public EntityHook(World par1World, EntityPlayer par2EntityPlayer, EnumRodType rodType) {
 		super(par1World);
 		this.xTile = -1;
 		this.yTile = -1;
@@ -101,31 +94,8 @@ public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalS
 		this.ticksInAir = 0;
 		this.ticksCatchable = 0;
 		this.bobber = null;
-		this.setSize(0.25F, 0.25F);
-		this.ignoreFrustumCheck = true;
+		this.rodType = rodType;
 		this.pixelmonRarity = new HashMap();
-	}
-
-	@SideOnly(Side.CLIENT)
-	public EntityGoodHook(World par1World, double par2, double par4, double par6, EntityPlayer par8EntityPlayer) {
-		this(par1World);
-		this.setPosition(par2, par4, par6);
-		this.ignoreFrustumCheck = true;
-		this.angler = par8EntityPlayer;
-		par8EntityPlayer.fishEntity = this;
-	}
-
-	public EntityGoodHook(World par1World, EntityPlayer par2EntityPlayer) {
-		super(par1World);
-		this.xTile = -1;
-		this.yTile = -1;
-		this.zTile = -1;
-		this.inTile = 0;
-		this.inGround = false;
-		this.shake = 0;
-		this.ticksInAir = 0;
-		this.ticksCatchable = 0;
-		this.bobber = null;
 		this.ignoreFrustumCheck = true;
 		this.angler = par2EntityPlayer;
 		this.angler.fishEntity = this;
@@ -142,77 +112,15 @@ public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalS
 		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI) * f);
 		this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI) * f);
 		this.calculateVelocity(this.motionX, this.motionY, this.motionZ, 1.5F, 1.0F);
+
+		this.rodType = rodType;
 	}
 
-	protected void entityInit() {
-	}
-
-	@SideOnly(Side.CLIENT)
-	/**
-	 * Checks if the entity is in range to render by using the past in distance and comparing it to its average edge
-	 * length * 64 * renderDistanceWeight Args: distance
-	 */
-	public boolean isInRangeToRenderDist(double par1) {
-		double d1 = this.boundingBox.getAverageEdgeLength() * 4.0D;
-		d1 *= 64.0D;
-		return par1 < d1 * d1;
-	}
-
-	public void calculateVelocity(double par1, double par3, double par5, float par7, float par8) {
-		float f2 = MathHelper.sqrt_double(par1 * par1 + par3 * par3 + par5 * par5);
-		par1 /= (double) f2;
-		par3 /= (double) f2;
-		par5 /= (double) f2;
-		par1 += this.rand.nextGaussian() * 0.007499999832361937D * (double) par8;
-		par3 += this.rand.nextGaussian() * 0.007499999832361937D * (double) par8;
-		par5 += this.rand.nextGaussian() * 0.007499999832361937D * (double) par8;
-		par1 *= (double) par7;
-		par3 *= (double) par7;
-		par5 *= (double) par7;
-		this.motionX = par1;
-		this.motionY = par3;
-		this.motionZ = par5;
-		float f3 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
-		this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
-		this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(par3, (double) f3) * 180.0D / Math.PI);
-		this.ticksInGround = 0;
-	}
-
-	@SideOnly(Side.CLIENT)
-	/**
-	 * Sets the position and rotation. Only difference from the other one is no bounding on the rotation. Args: posX,
-	 * posY, posZ, yaw, pitch
-	 */
-	public void setPositionAndRotation2(double par1, double par3, double par5, float par7, float par8, int par9) {
-		this.fishX = par1;
-		this.fishY = par3;
-		this.fishZ = par5;
-		this.fishYaw = (double) par7;
-		this.fishPitch = (double) par8;
-		this.fishPosRotationIncrements = par9;
-		this.motionX = this.velocityX;
-		this.motionY = this.velocityY;
-		this.motionZ = this.velocityZ;
-	}
-
-	@SideOnly(Side.CLIENT)
-	/**
-	 * Sets the velocity to the args. Args: x, y, z
-	 */
-	public void setVelocity(double par1, double par3, double par5) {
-		this.velocityX = this.motionX = par1;
-		this.velocityY = this.motionY = par3;
-		this.velocityZ = this.motionZ = par5;
-	}
-
-	/**
-	 * Called to update the entity's position/logic.
-	 */
+	@Override
 	public void onUpdate() {
-
 		if (this.fishPosRotationIncrements > 0) {
 			double d0 = this.posX + (this.fishX - this.posX) / (double) this.fishPosRotationIncrements;
-			double d1 = this.posY + (this.fishY - this.posY) / (double) this.fishPosRotationIncrements - .1;
+			double d1 = this.posY + (this.fishY - this.posY) / (double) this.fishPosRotationIncrements;
 			double d2 = this.posZ + (this.fishZ - this.posZ) / (double) this.fishPosRotationIncrements;
 			double d3 = MathHelper.wrapAngleTo180_double(this.fishYaw - (double) this.rotationYaw);
 			this.rotationYaw = (float) ((double) this.rotationYaw + d3 / (double) this.fishPosRotationIncrements);
@@ -223,9 +131,10 @@ public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalS
 			this.setRotation(this.rotationYaw, this.rotationPitch);
 		} else {
 			if (!this.worldObj.isRemote) {
+				ItemStack itemstack = this.angler.getCurrentEquippedItem();
 
-				if (this.angler.isDead || !this.angler.isEntityAlive() || this.angler.getHeldItem() == null
-						|| this.angler.getHeldItem().getItem() != PixelmonItems.goodRod || this.getDistanceSqToEntity(this.angler) > 1024.0D) {
+				if (this.angler.isDead || !this.angler.isEntityAlive() || this.angler.getCurrentEquippedItem() == null
+						|| this.angler.getCurrentEquippedItem().getItem() != PixelmonItems.superRod || this.getDistanceSqToEntity(this.angler) > 1024.0D) {
 					this.setDead();
 					this.angler.fishEntity = null;
 					return;
@@ -272,7 +181,7 @@ public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalS
 
 			Vec3 vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
 			Vec3 vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-			MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3, vec31);
+			MovingObjectPosition movingobjectposition = this.worldObj.clip(vec3, vec31, true);
 			vec3 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
 			vec31 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
@@ -420,36 +329,9 @@ public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalS
 		}
 	}
 
-	/**
-	 * (abstract) Protected helper method to write subclass entity data to NBT.
-	 */
-	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
-		par1NBTTagCompound.setShort("xTile", (short) this.xTile);
-		par1NBTTagCompound.setShort("yTile", (short) this.yTile);
-		par1NBTTagCompound.setShort("zTile", (short) this.zTile);
-		par1NBTTagCompound.setByte("inTile", (byte) this.inTile);
-		par1NBTTagCompound.setByte("shake", (byte) this.shake);
-		par1NBTTagCompound.setByte("inGround", (byte) (this.inGround ? 1 : 0));
-	}
-
-	/**
-	 * (abstract) Protected helper method to read subclass entity data from NBT.
-	 */
-	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
-		this.xTile = par1NBTTagCompound.getShort("xTile");
-		this.yTile = par1NBTTagCompound.getShort("yTile");
-		this.zTile = par1NBTTagCompound.getShort("zTile");
-		this.inTile = par1NBTTagCompound.getByte("inTile") & 255;
-		this.shake = par1NBTTagCompound.getByte("shake") & 255;
-		this.inGround = par1NBTTagCompound.getByte("inGround") == 1;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public float getShadowSize() {
-		return 0.0F;
-	}
-
+	@Override
 	public int catchFish() {
+
 		if (this.worldObj.isRemote) {
 			return 0;
 		} else {
@@ -505,7 +387,6 @@ public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalS
 				b0 = 1;
 			} else {
 				ChatHandler.sendChat(angler, "Not even a nibble.");
-
 			}
 
 			if (this.inGround) {
@@ -519,41 +400,15 @@ public class EntityGoodHook extends EntityFishHook implements IEntityAdditionalS
 	}
 
 	public void getListOfValidWaterPixelmon() {
-
-		// Always have magikarp on list
+		List<SpawnData> spawns = SpawnRegistry.getWaterSpawnsForBiome(worldObj.getBiomeGenForCoords(xTile, zTile));
 		pixelmonRarity.clear();
-		pixelmonRarity.put("Magikarp", 200);
-		pixelmonRarity.put("Tentacool", 190);
-		pixelmonRarity.put("Poliwag", 180);
-		pixelmonRarity.put("Psyduck", 150);
-		pixelmonRarity.put("Krabby", 110);
-		pixelmonRarity.put("Shelder", 100);
-		pixelmonRarity.put("Horsea", 100);
-		pixelmonRarity.put("Goldeen", 100);
-		pixelmonRarity.put("Staryu", 100);
-		pixelmonRarity.put("Tentacruel", 95);
-		pixelmonRarity.put("Poliwhirl", 90);
-		pixelmonRarity.put("Golduck", 90);
 
-
-
-		// Set Rarity Threshold
-		int rarityThreshold = 170;
-
-		if (this.angler.getCurrentEquippedItem() == new ItemStack(PixelmonItems.goodRod)) {
-			rarityThreshold = 60;
-		}
-
-		this.biome = this.worldObj.getWorldChunkManager().getBiomeGenAt((int) this.posX, (int) this.posZ);
-		List<SpawnData> spawnDataList = SpawnRegistry.getWaterSpawnsForBiome(this.biome);
-		for (SpawnData pixelmon : spawnDataList) {
-			if (!(pixelmon.name.equals("Magikarp"))) {
-				if (pixelmon.rarity > rarityThreshold) {
-				}
-
+		int rarityThreshold = rodType.rarityThreshold;
+		for (SpawnData pixelmon : spawns) {
+			if (pixelmon.rarity >= rarityThreshold) {
+				pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
 			}
 		}
-
 	}
 
 	@Override
