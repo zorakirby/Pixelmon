@@ -33,6 +33,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.HeavySlam;
 import pixelmon.battles.attacks.specialAttacks.basic.Hex;
 import pixelmon.battles.attacks.specialAttacks.basic.HiddenPower;
 import pixelmon.battles.attacks.specialAttacks.basic.JumpKick;
+import pixelmon.battles.attacks.specialAttacks.basic.LastResort;
 import pixelmon.battles.attacks.specialAttacks.basic.LowKick;
 import pixelmon.battles.attacks.specialAttacks.basic.Magnitude;
 import pixelmon.battles.attacks.specialAttacks.basic.Memento;
@@ -150,6 +151,7 @@ public class EffectRegistry {
 		effectMap.put("hex", Hex.class);
 		effectMap.put("hiddenpower", HiddenPower.class);
 		effectMap.put("jumpkick", JumpKick.class);
+		effectMap.put("lastresort", LastResort.class);
 		effectMap.put("lowkick", LowKick.class);
 		effectMap.put("magnitude", Magnitude.class);
 		effectMap.put("memento", Memento.class);
