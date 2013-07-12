@@ -1,11 +1,8 @@
 package pixelmon.storage;
 
-import java.util.ArrayList;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import pixelmon.battles.BattleRegistry;
-import pixelmon.battles.controller.BattleController;
 
 public class PixelmonStorage {
 	public static PokeballManager PokeballManager = new PokeballManager();
@@ -26,4 +23,3 @@ public class PixelmonStorage {
 		ComputerManager.playerLoggedIn(player);
 	}
 }
-
