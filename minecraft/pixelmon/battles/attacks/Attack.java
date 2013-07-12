@@ -222,6 +222,7 @@ public class Attack {
 		} else {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " tried to use " + baseAttack.attackName
 					+ ", but it missed!");
+			attackList.set(attackList.size()-1, null);
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
@@ -242,6 +243,7 @@ public class Attack {
 			user.getTrainer().pokemonStorage.updateNBT(user);
 		if (target.getTrainer() != null)
 			target.getTrainer().pokemonStorage.updateNBT(target);
+		user.lastMoveUsed = this;
 		pp--;
 		ItemHeld.useBattleItems(user, target);
 		return;
