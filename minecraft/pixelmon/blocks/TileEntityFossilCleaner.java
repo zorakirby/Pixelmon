@@ -34,7 +34,7 @@ public class TileEntityFossilCleaner extends TileEntity {
 					itemInCleaner = ((ItemCoveredFossil) PixelmonItemsFossils.getItemFromIndex(itemInCleaner)).cleanedFossil.itemID;
 					itemClean = true;
 					if (worldObj instanceof WorldServer)
-						((WorldServer) worldObj).getPlayerManager().flagChunkForUpdate(xCoord, yCoord, zCoord);
+						((WorldServer) worldObj).getPlayerManager().markBlockForUpdate(xCoord, yCoord, zCoord);
 				}
 			}
 
@@ -51,7 +51,7 @@ public class TileEntityFossilCleaner extends TileEntity {
 			itemInCleaner = -1;
 			timer = 360;
 			if (worldObj instanceof WorldServer)
-				((WorldServer) worldObj).getPlayerManager().flagChunkForUpdate(xCoord, yCoord, zCoord);
+				((WorldServer) worldObj).getPlayerManager().markBlockForUpdate(xCoord, yCoord, zCoord);
 			return PixelmonItemsFossils.getFossilFromIndex(itemId);
 		}
 		return null;

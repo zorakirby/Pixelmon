@@ -15,8 +15,8 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
+import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.pokedex.Pokedex;
@@ -92,6 +92,7 @@ public class PlayerStorage {
 		}
 		if (p.moveset.size() == 0)
 			p.loadMoveset();
+		p.setBoss(EnumBossMode.Normal);
 		if (!hasSpace()) {
 			ChatHandler.sendChat(p.getOwner(), "Your party is full, " + p.getName() + " is sent to your computer!");
 			PixelmonStorage.ComputerManager.getPlayerStorage(player).addToComputer(p);
@@ -103,7 +104,6 @@ public class PlayerStorage {
 			p.setOwner(player.username);
 		else if (mode == PokeballManagerMode.Trainer)
 			p.setTrainer(trainer);
-		p.setBoss(EnumBossMode.Normal);
 		NBTTagCompound n = new NBTTagCompound();
 		int id = 0;
 		if (mode == PokeballManagerMode.Player)
@@ -137,7 +137,7 @@ public class PlayerStorage {
 			n.setCompoundTag("Held Item", p.getHeldItem().writeToNBT(new NBTTagCompound()));
 		}
 		partyPokemon[getNextOpen()] = n;
-		if (p.getHealth() > 0)
+		if (p.func_110143_aJ() > 0)
 			n.setBoolean("IsFainted", false);
 		if (mode == PokeballManagerMode.Player)
 			((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.AddToStorage).getPacket());
@@ -311,7 +311,7 @@ public class PlayerStorage {
 					pixelmon.writeToNBT(nbt);
 					nbt.setString("id", pixelmon.getName());
 					nbt.setName(pixelmon.getName());
-					if (pixelmon.getHealth() <= 0)
+					if (pixelmon.func_110143_aJ() <= 0)
 						nbt.setBoolean("IsFainted", true);
 					if (mode == PokeballManagerMode.Player)
 						player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
@@ -455,6 +455,7 @@ public class PlayerStorage {
 
 	private void heal(NBTTagCompound nbt) {
 		nbt.setShort("Health", (short) nbt.getInteger("StatsHP"));
+		nbt.setFloat("HealF", (float) nbt.getInteger("StatsHP"));
 		nbt.setBoolean("IsFainted", false);
 		int numMoves = nbt.getInteger("PixelmonNumberMoves");
 		for (int i = 0; i < numMoves; i++) {
@@ -493,6 +494,19 @@ public class PlayerStorage {
 			if (n != null) {
 				if (n.getInteger("pixelmonID") == pokemonID)
 					return n.getInteger("PixelmonOrder");
+			}
+		}
+		return -1;
+	}
+
+	public int getNextPokemonId(int pokemonID) {
+		for (int i = 0; i < partyPokemon.length; i++) {
+			NBTTagCompound nbt = partyPokemon[i];
+			if (nbt != null) {
+				if (nbt.getInteger("pixelmonID") != pokemonID) {
+					if (!nbt.getBoolean("IsFainted") && nbt.getShort("Health") >= 0)
+						return nbt.getInteger("pixelmonID");
+				}
 			}
 		}
 		return -1;

@@ -10,11 +10,9 @@ import net.minecraft.client.renderer.Tessellator;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-
+import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.gui.GuiResources;
 import pixelmon.client.gui.pc.GuiPC;
-import pixelmon.comm.EnumPackets;
-import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
@@ -91,7 +89,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	}
 
 	protected void mouseClicked(int x, int y, int par3) {
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
+				Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		super.mouseClicked(x, y, par3);
@@ -109,6 +108,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 				buttonList.add(nameButton);
 			}
 		}
+		arrowsMouseClicked(x, y);
 	}
 
 	public void drawGuiContainerForegroundLayer(int par1, int par2) {
@@ -133,7 +133,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		float x1 = targetPacket.getType2().textureX;
 		float y1 = targetPacket.getType2().textureY;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture("/pixelmon/gui/types.png");
+		mc.renderEngine.func_110577_a(GuiResources.types);
 		drawImageQuad(60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
 		if ((targetPacket.getType2() != EnumType.Mystery))
 			drawImageQuad(100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
@@ -141,7 +141,8 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	}
 
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
+				Minecraft.getMinecraft().displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		String numString = "";
@@ -152,7 +153,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		else
 			numString = "" + targetPacket.getNationalPokedexNumber();
 
-		mc.renderEngine.bindTexture("/pixelmon/gui/summarySummary.png");
+		mc.renderEngine.func_110577_a(GuiResources.summarySummary);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 		drawTexturedModalRect((width - xSize) / 2 - 15, (height - ySize) / 2 + 120, 23, 225, 44, 28);
@@ -161,19 +162,69 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		drawExpBar((width - xSize) / 2 + 86, (height - ySize) / 2 + 145, 122, 14, targetPacket);
 		drawTexturedModalRect((width - xSize) / 2 + 59, (height - ySize) / 2 + 145, 104, 239, 150, 16);
 
-		
 		if (targetPacket.isShiny)
-			mc.renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+			mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 		else
-			mc.renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+			mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
 		drawImageQuad(width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
-			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.getType1().getColor());
-		else {
-			drawCenteredStringWithoutShadow(fontRenderer, "(" + String.valueOf(targetPacket.name) + ")", (width - xSize) / 2 + 7, (height - ySize) / 2 + 78, targetPacket
+			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket
 					.getType1().getColor());
-			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname), (width - xSize) / 2 + 7, (height - ySize) / 2 + 70, targetPacket.getType1()
-					.getColor());
+		else {
+			drawCenteredStringWithoutShadow(fontRenderer, "(" + String.valueOf(targetPacket.name) + ")", (width - xSize) / 2 + 7, (height - ySize) / 2 + 78,
+					targetPacket.getType1().getColor());
+			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname), (width - xSize) / 2 + 7, (height - ySize) / 2 + 70,
+					targetPacket.getType1().getColor());
+		}
+
+		drawArrows(i, i1);
+	}
+
+	public void arrowsMouseClicked(int x, int y) {
+		if (isPC) return;
+		int l1 = (width - xSize) / 2 + 220;
+		int l2 = (width - xSize) / 2 - 62;
+		int w = 16;
+		int t = (height - ySize) / 2;
+		int h = 21;
+		if (y > t && y < t + h) {
+			if (x > l1 && x < l1 + w)
+				getNextPokemon();
+			if (x > l2 && x < l2 + w)
+				getPrevPokemon();
+		}
+	}
+
+	private void getPrevPokemon() {
+		if (!isPC){
+			int pos = targetPacket.order;
+			targetPacket = ServerStorageDisplay.getPrevFromPos(pos);
+		}
+	}
+
+	private void getNextPokemon() {
+		if (!isPC){
+			int pos = targetPacket.order;
+			targetPacket = ServerStorageDisplay.getNextFromPos(pos);
+		}
+	}
+
+	public void drawArrows(int mouseX, int mouseY) {
+		if (isPC) return;
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		mc.renderEngine.func_110577_a(GuiResources.summaryMoves);
+		int l1 = (width - xSize) / 2 + 220;
+		int l2 = (width - xSize) / 2 - 62;
+		int w = 16;
+		int t = (height - ySize) / 2;
+		int h = 21;
+		drawTexturedModalRect(l1, t, 24, 207, w, h);
+		drawTexturedModalRect(l2, t, 42, 207, w, h);
+		if (mouseY > t && mouseY < t + h) {
+			if (mouseX > l1 && mouseX < l1 + w)
+				drawTexturedModalRect(l1, t, 60, 207, w, h);
+			if (mouseX > l2 && mouseX < l2 + w)
+				drawTexturedModalRect(l2, t, 78, 207, w, h);
 		}
 	}
 

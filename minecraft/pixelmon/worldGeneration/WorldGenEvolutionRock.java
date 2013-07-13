@@ -43,7 +43,6 @@ public class WorldGenEvolutionRock implements IWorldGenerator {
 									world.setBlock(xPos, yPos + 1, zPos, PixelmonBlocks.icyRockId, 0, 0);
 								else if (r == EnumEvolutionRock.MossyRock)
 									world.setBlock(xPos, yPos + 1, zPos, PixelmonBlocks.mossyRockId, 0, 0);
-								System.out.println("spawned at " + xPos + " " + yPos + " " + zPos);
 							}
 							return;
 						}

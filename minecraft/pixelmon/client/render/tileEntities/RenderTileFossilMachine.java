@@ -1,17 +1,18 @@
 package pixelmon.client.render.tileEntities;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.client.models.ModelFossilMachine;
 import pixelmon.client.models.ModelPokeball;
+import pixelmon.client.render.RenderResources;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItemsFossils;
@@ -52,7 +53,7 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 			j = 270;
 		}
 
-		bindTextureByName("/pixelmon/texture/blocks/fossilmachine.png");
+		func_110628_a(RenderResources.fossilMachine);
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) d + 0.6F, (float) d1 + 2.3F, (float) d2 + 0.5F);
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F);
@@ -85,7 +86,7 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		renderBarLevel(tile, d, d1, d2, 64);
 
 		if (fossilTexture(tile)!="")
-			bindTextureByName("/pixelmon/texture/fossils/" + fossilTexture(tile) + ".png");
+			func_110628_a(new ResourceLocation("/pixelmon/texture/fossils/" + fossilTexture(tile) + ".png"));
 
 		GL11.glPushMatrix();
 		if (tile.currentFossil != -1) {
@@ -109,7 +110,7 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		// Pokeball rendering
 
 		if (tile.currentPokeball != -1) {
-			bindTextureByName("/mods/pixelmon/textures/pokeballs/" + tile.currentPokeballTexture);
+			func_110628_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + tile.currentPokeballTexture));
 
 			GL11.glPushMatrix();
 			if (i == 0) {

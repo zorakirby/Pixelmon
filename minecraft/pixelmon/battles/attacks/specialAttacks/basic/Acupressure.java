@@ -15,9 +15,20 @@ public class Acupressure extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception{
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList,
+			ArrayList<String> targetAttackList) throws Exception {
 		boolean handled = false;
+		int count = 0;
+		if (!user.battleStats.statCanBeRaised()) {
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "No effect!");
+			return false;
+		}
 		while (!handled) {
+			count++;
+			if (count > 100) {
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "No effect!");
+				return false;
+			}
 			int selection = (new Random()).nextInt(7);
 			switch (selection) {
 			case 0:

@@ -10,6 +10,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import pixelmon.Pixelmon;
 import pixelmon.battles.participants.ParticipantType;
+import pixelmon.battles.status.Transformed;
 import pixelmon.client.gui.ClientTradingManager;
 import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.ClientBattleManager.AttackData;
@@ -21,6 +22,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonPokedexPacket;
 import pixelmon.comm.PixelmonStatsPacket;
+import pixelmon.comm.PixelmonTransformPacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
 import cpw.mods.fml.common.network.IPacketHandler;
@@ -69,6 +71,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				GuiBattle.mode = BattleMode.EnforcedSwitch;
 				GuiBattle.oldMode = BattleMode.MainMenu;
 			} else if (packetID == EnumPackets.BackToMainMenu.getIndex()) {
+				ClientBattleManager.canSwitch = dataStream.readInt() == 1;
 				GuiBattle.oldMode = BattleMode.MainMenu;
 				GuiBattle.mode = BattleMode.MainMenu;
 			} else if (packetID == EnumPackets.ExitBattle.getIndex()) {
@@ -124,6 +127,14 @@ public class ClientPacketHandler implements IPacketHandler {
 			} else if (packetID == EnumPackets.SetTradingReadyClient.getIndex()) {
 				boolean ready = dataStream.readInt() == 1;
 				ClientTradingManager.player2Ready = ready;
+			} else if (packetID == EnumPackets.Transform.getIndex()) {
+				PixelmonTransformPacket p = new PixelmonTransformPacket();
+				try {
+					p.readPacketData(dataStream);
+					Transformed.applyToClientEntity(p);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

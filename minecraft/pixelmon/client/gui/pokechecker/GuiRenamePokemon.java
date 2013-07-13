@@ -8,6 +8,8 @@ import net.minecraft.util.StringTranslate;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import pixelmon.Pixelmon;
+import pixelmon.client.gui.GuiResources;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
@@ -29,7 +31,7 @@ public class GuiRenamePokemon extends GuiContainer {
 	@SuppressWarnings("unchecked")
 	public void initGui() {
 		super.initGui();
-		StringTranslate stringtranslate = StringTranslate.getInstance();
+		StringTranslate stringtranslate = new StringTranslate();
 		Keyboard.enableRepeatEvents(true);
 		buttonList.clear();
 		buttonList.add(new GuiRenameButtons(0, width / 2 - 98, height / 4 + 80, stringtranslate.translateKey("selectWorld.renameButton")));
@@ -85,11 +87,10 @@ public class GuiRenamePokemon extends GuiContainer {
 
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
-		mc.renderEngine.bindTexture("/pixelmon/gui/rename.png");
+		mc.renderEngine.func_110577_a(GuiResources.rename);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect((width - xSize) / 2 - 40, height / 4, 0, 0, 256, 114);
-		StringTranslate stringtranslate = StringTranslate.getInstance();
-		drawCenteredString(fontRenderer, stringtranslate.translateKey("Rename Pokemon"), width / 2, (height / 4 - 60) + 80, 0xffffff);
+		drawCenteredString(fontRenderer, Pixelmon.stringtranslate.translateKey("Rename Pokemon"), width / 2, (height / 4 - 60) + 80, 0xffffff);
 		theGuiTextField.drawTextBox();
 	}
 }

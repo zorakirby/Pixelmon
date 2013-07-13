@@ -3,6 +3,7 @@ package pixelmon.client.render.tileEntities;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -16,6 +17,7 @@ import pixelmon.client.models.plates.ModelIngot;
 import pixelmon.client.models.plates.ModelPlate;
 import pixelmon.client.models.plates.ModelPlateStage2;
 import pixelmon.client.models.plates.ModelPlateStage3;
+import pixelmon.client.render.RenderResources;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.items.ItemPokeballDisc;
@@ -41,7 +43,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		modelPlateIngot = new ModelIngot();
 		modelPlate = new ModelPlate();
 		modelPlateStage2 = new ModelPlateStage2();
-		modelPlateStage3  = new ModelPlateStage3();
+		modelPlateStage3 = new ModelPlateStage3();
 	}
 
 	public void renderAModelAt(TileEntityAnvil tile, double d, double d1, double d2, float f) {
@@ -67,7 +69,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		if (i < 0)
 			return;
 
-		bindTextureByName("/pixelmon/texture/blocks/anvil.png"); // texture
+		func_110628_a(RenderResources.anvil); // texture
 		GL11.glPushMatrix(); // start
 		GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F); // size
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F); // rotate based on metadata
@@ -78,37 +80,34 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		if (tile.itemOnAnvil != -1) {
 			GL11.glTranslatef((float) 0, (float) 0.03F, (float) 0); // size
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
-			if (tile.itemOnAnvil == PixelmonItems.aluminiumIngot.itemID)
-			{
-				bindTextureByName("/pixelmon/texture/aluminum/ingot.png");
+			if (tile.itemOnAnvil == PixelmonItems.aluminiumIngot.itemID) {
+				func_110628_a(RenderResources.aluminiumIngot);
 				if (tile.state == 0)
 					modelPlateIngot.renderModel(0.0625f);
 				else if (tile.state == 1)
 					modelPlateStage2.renderModel(0.0625f);
 				else if (tile.state == 2)
 					modelPlateStage3.renderModel(0.0625f);
+			} else if (tile.itemOnAnvil == PixelmonItems.aluminiumPlate.itemID) {
+				func_110628_a(RenderResources.aluminiumIngot);
+				modelPlate.renderModel(0.0625f);
 			}
-			else
-				if(tile.itemOnAnvil == PixelmonItems.aluminiumPlate.itemID){
-					bindTextureByName("/pixelmon/texture/aluminum/ingot.png");
-					modelPlate.renderModel(0.0625f);
-				}
 			if (itemToRender instanceof ItemPokeballDisc || itemToRender == PixelmonItemsPokeballs.ironDisc) {
 				if (itemToRender == PixelmonItemsPokeballs.ironDisc)
-					bindTextureByName("/mods/pixelmon/textures/pokeballs/irondisc.png");
+					func_110628_a(RenderResources.ironDisc);
 				else
-					bindTextureByName("/mods/pixelmon/textures/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture());
+					func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture()));
 				if (tile.state == 0)
 					modelDiscFlat.renderModel(0.0625f);
 				else if (tile.state == 1)
 					modelDiscStage1.renderModel(0.0625f);
 				else if (tile.state == 2)
 					modelDiscStage2.renderModel(0.0625f);
-				}
-				else if (itemToRender instanceof ItemPokeballLid || itemToRender == PixelmonItemsPokeballs.ironBase) {
+			} else if (itemToRender instanceof ItemPokeballLid || itemToRender == PixelmonItemsPokeballs.ironBase) {
 				if (itemToRender == PixelmonItemsPokeballs.ironBase)
-					bindTextureByName("/mods/pixelmon/textures/pokeballs/irondisc.png");
-				else bindTextureByName("/mods/pixelmon/textures/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture());
+					func_110628_a(RenderResources.ironDisc);
+				else
+					func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture()));
 				modelDiscHemiSphere.renderModel(0.0625f);
 			}
 		}

@@ -16,9 +16,9 @@ public class Leech extends StatusBase {
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " drains health from " + user.getNickname());
 		int dmg = (int) (((float) user.getMaxHealth()) / 8);
-		if (user.getHealth() < 16)
+		if (user.func_110143_aJ() < 16)
 			dmg = 1;
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), dmg);
-		target.setEntityHealth(target.getHealth() + dmg);
+		target.healEntityBy(dmg);
 	}
 }

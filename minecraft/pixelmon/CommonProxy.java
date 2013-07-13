@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import pixelmon.api.PixelmonApi;
 import pixelmon.client.models.fossils.ModelFossil;
+import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.entities.pixelmon.interactions.InteractionEther;
 import pixelmon.entities.pixelmon.interactions.InteractionEvolutionStone;
@@ -43,9 +44,6 @@ public class CommonProxy implements IGuiHandler {
 		return RenderingRegistry.addNewArmourRendererPrefix(name);
 	}
 	
-	public void preloadTextures() {
-	}
-
 	public void registerPacketHandlers() {
 	}
 
@@ -56,12 +54,8 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 
-	public ModelBase getTrainerModel(String model) {
+	public ModelBase getNPCModel(NPCType type, String model) {
 		return null;
-	}
-
-	public int getTexture(String string, String string2) {
-		return 0;
 	}
 
 	public void registerSounds() {

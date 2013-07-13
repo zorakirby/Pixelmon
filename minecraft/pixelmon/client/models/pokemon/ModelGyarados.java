@@ -565,7 +565,8 @@ public class ModelGyarados extends ModelBase {
 		HeadBase.addChild(MouthBase);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		Segment1.render(f5);
@@ -587,7 +588,8 @@ public class ModelGyarados extends ModelBase {
 
 	float timer = 0;
 
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
+	public void setRotationAngles(float f, float f1, float f2, float f3,
+			float f4, float f5, Entity entity) {
 		float PI = (float) Math.PI;
 		float TopAngle = 1 * PI / 4;
 		float initialOffset = PI / 2;
@@ -597,39 +599,64 @@ public class ModelGyarados extends ModelBase {
 		HeadBase.rotateAngleX = f4 / 57.29578F;
 		HeadBase.rotateAngleY = f3 / 57.29578F;
 		float currentAngle = 0;
-		Segment1.rotateAngleX = ((float) Math.pow(dampingFactor, 1)) * TopAngle * (MathHelper.cos(animationSpeed * f + initialOffset)) - PI / 4;
+		Segment1.rotateAngleX = ((float) Math.pow(dampingFactor, 1)) * TopAngle
+				* (MathHelper.cos(animationSpeed * f + initialOffset)) - PI / 4;
 		currentAngle = Segment1.rotateAngleX;
-		Segment2.rotateAngleX = ((float) Math.pow(dampingFactor, 2)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1f * offset + initialOffset))
-				- currentAngle - PI / 5;
+		Segment2.rotateAngleX = ((float) Math.pow(dampingFactor, 2))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1f * offset
+						+ initialOffset)) - currentAngle - PI / 5;
 		currentAngle = Segment1.rotateAngleX + Segment2.rotateAngleX;
-		Segment3.rotateAngleX = ((float) Math.pow(dampingFactor, 3)) * TopAngle
-				* (MathHelper.cos(animationSpeed * f + 1.1f * 2 * offset + PI / 9 + initialOffset)) - currentAngle - PI / 6;
-		currentAngle = Segment1.rotateAngleX + Segment2.rotateAngleX + Segment3.rotateAngleX;
-		Segment4.rotateAngleX = ((float) Math.pow(dampingFactor, 5)) * TopAngle
-				* (MathHelper.cos(animationSpeed * f + 1.2f * 3 * offset + 2 * PI / 9 + initialOffset)) - currentAngle;// -PI/6;
-		currentAngle = Segment1.rotateAngleX + Segment2.rotateAngleX + Segment3.rotateAngleX + Segment4.rotateAngleX;
-		Segment5.rotateAngleX = ((float) Math.pow(dampingFactor, 6)) * TopAngle
-				* (MathHelper.cos(animationSpeed * f + 1.3f * 4 * offset + PI / 9 + initialOffset)) - currentAngle;// -PI/7;
+		Segment3.rotateAngleX = ((float) Math.pow(dampingFactor, 3))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.1f * 2 * offset + PI
+						/ 9 + initialOffset)) - currentAngle - PI / 6;
+		currentAngle = Segment1.rotateAngleX + Segment2.rotateAngleX
+				+ Segment3.rotateAngleX;
+		Segment4.rotateAngleX = ((float) Math.pow(dampingFactor, 5))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.2f * 3 * offset + 2
+						* PI / 9 + initialOffset)) - currentAngle;// -PI/6;
+		currentAngle = Segment1.rotateAngleX + Segment2.rotateAngleX
+				+ Segment3.rotateAngleX + Segment4.rotateAngleX;
+		Segment5.rotateAngleX = ((float) Math.pow(dampingFactor, 6))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.3f * 4 * offset + PI
+						/ 9 + initialOffset)) - currentAngle;// -PI/7;
 		currentAngle = currentAngle + Segment5.rotateAngleX;
-		Segment6.rotateAngleX = ((float) Math.pow(dampingFactor, 7)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1.4f * 5 * offset + initialOffset))
-				- currentAngle;// -PI/8;
+		Segment6.rotateAngleX = ((float) Math.pow(dampingFactor, 7))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.4f * 5 * offset
+						+ initialOffset)) - currentAngle;// -PI/8;
 		currentAngle = currentAngle + Segment6.rotateAngleX;
-		Segment7.rotateAngleX = ((float) Math.pow(dampingFactor, 6)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1.5f * 6 * offset + initialOffset))
-				- currentAngle;
+		Segment7.rotateAngleX = ((float) Math.pow(dampingFactor, 6))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.5f * 6 * offset
+						+ initialOffset)) - currentAngle;
 		currentAngle = currentAngle + Segment7.rotateAngleX;
-		Segment8.rotateAngleX = ((float) Math.pow(dampingFactor, 6)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1.6f * 7 * offset + initialOffset))
-				- currentAngle;
+		Segment8.rotateAngleX = ((float) Math.pow(dampingFactor, 6))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.6f * 7 * offset
+						+ initialOffset)) - currentAngle;
 		currentAngle = currentAngle + Segment8.rotateAngleX;
-		Segment9.rotateAngleX = ((float) Math.pow(dampingFactor, 7)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1.7f * 8 * offset + initialOffset))
-				- currentAngle;
+		Segment9.rotateAngleX = ((float) Math.pow(dampingFactor, 7))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.7f * 8 * offset
+						+ initialOffset)) - currentAngle;
 		currentAngle = currentAngle + Segment9.rotateAngleX;
-		Segment10.rotateAngleX = ((float) Math.pow(dampingFactor, 8)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1.8f * 9 * offset + initialOffset))
-				- currentAngle;
+		Segment10.rotateAngleX = ((float) Math.pow(dampingFactor, 8))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.8f * 9 * offset
+						+ initialOffset)) - currentAngle;
 		currentAngle = currentAngle + Segment10.rotateAngleX;
-		Segment11.rotateAngleX = ((float) Math.pow(dampingFactor, 9)) * TopAngle * (MathHelper.cos(animationSpeed * f + 1.9f * 10 * offset + initialOffset))
-				- currentAngle;
-		Segment12.rotateAngleX = ((float) Math.pow(dampingFactor, 10)) * TopAngle * (MathHelper.cos(animationSpeed * f + 2f * 11 * offset + initialOffset))
-				- currentAngle;
+		Segment11.rotateAngleX = ((float) Math.pow(dampingFactor, 9))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 1.9f * 10 * offset
+						+ initialOffset)) - currentAngle;
+		Segment12.rotateAngleX = ((float) Math.pow(dampingFactor, 10))
+				* TopAngle
+				* (MathHelper.cos(animationSpeed * f + 2f * 11 * offset
+						+ initialOffset)) - currentAngle;
 	}
 
 }

@@ -15,13 +15,21 @@ public class ApplyFreeze extends StatusApplierBase {
 	@Override
 	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		if (checkChance()) {
-			for (StatusBase e : target.status)
-				if (e.type == StatusType.Freeze) {
-					return;
-				}
-			if (target.type.contains(EnumType.Ice)) {
+			
+			boolean hasAPrimary = target.hasPrimaryStatus();
+			
+			if (target.hasStatus(StatusType.Freeze)) 
+			{
+				if(attack.baseAttack.basePower == -1)
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already frozen!");
 				return;
 			}
+			if (target.type.contains(EnumType.Ice) || hasAPrimary) {
+				if(attack.baseAttack.basePower == -1)
+					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), attack.baseAttack.attackName + " failed!");
+				return;
+			}
+			
 			target.status.add(new Freeze());
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " has been frozen solid");
 		}

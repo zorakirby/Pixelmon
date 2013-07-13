@@ -1,7 +1,9 @@
 package pixelmon.comm;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInput;
 import java.io.DataInputStream;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -33,9 +35,9 @@ public abstract class PixelmonPacket extends Packet250CustomPayload
     }
 
 	@Override
-	public abstract void writePacketData(DataOutputStream par1DataOutputStream) throws IOException;
+	public abstract void writePacketData(DataOutput par1DataOutputStream) throws IOException;
 	@Override
-	public abstract void readPacketData(DataInputStream par1DataInputStream) throws IOException;
+	public abstract void readPacketData(DataInput par1DataInputStream) throws IOException;
 
 	public abstract int getID();
     public String toString(boolean full)

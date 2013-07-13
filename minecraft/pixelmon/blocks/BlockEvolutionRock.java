@@ -27,6 +27,18 @@ public class BlockEvolutionRock extends BlockContainer {
 		return -1;
 	}
 
+	@SideOnly(Side.CLIENT)
+    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
+    public int idPicked(World par1World, int par2, int par3, int par4)
+    {
+		if (this.rockType == EnumEvolutionRock.MossyRock) {
+			return PixelmonItems.mossyRock.itemID;
+		}
+		else {
+			return PixelmonItems.icyRock.itemID;
+		}
+    }
+
 	@Override
 	public int quantityDropped(Random random) {
 		return 0;
@@ -34,7 +46,10 @@ public class BlockEvolutionRock extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
+		if (this.rockType == EnumEvolutionRock.MossyRock)
+			blockIcon = par1IconRegister.registerIcon("pixelmon:mossyrock");
+		else
+			blockIcon = par1IconRegister.registerIcon("pixelmon:icyrock");
 	}
 	
 	@Override

@@ -5,34 +5,26 @@ import java.lang.reflect.Field;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.Configuration;
 import pixelmon.Pixelmon;
-import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.enums.EnumEthers;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPotions;
+import pixelmon.enums.EnumRodType;
 import pixelmon.enums.EnumStatusAilmentHealers;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
-import pixelmon.items.ItemHammer;
-import pixelmon.items.ItemHeld;
-import pixelmon.items.ItemPixelmonArmor;
-import pixelmon.items.ItemPokedex;
+import pixelmon.items.ItemFishingRod;
 import pixelmon.items.ItemFossil;
+import pixelmon.items.ItemHammer;
+import pixelmon.items.ItemPixelmonArmor;
+import pixelmon.items.ItemPixelmonBoots;
+import pixelmon.items.ItemPokedex;
 import pixelmon.items.ItemPotion;
 import pixelmon.items.ItemStatusAilmentHealer;
+import pixelmon.items.ItemWailmerPail;
 import pixelmon.items.PixelmonItem;
-import pixelmon.items.heldItems.ItemBerryLeppa;
-import pixelmon.items.heldItems.ItemBerryOran;
-import pixelmon.items.heldItems.ItemBerryRawst;
-import pixelmon.items.heldItems.ItemExpShare;
-import pixelmon.items.heldItems.ItemLuckyEgg;
 import pixelmon.items.weapons.PixelmonItemAxe;
 import pixelmon.items.weapons.PixelmonItemHoe;
 import pixelmon.items.weapons.PixelmonItemPickAxe;
@@ -97,13 +89,20 @@ public class PixelmonItems {
 	public static int torsoAluminiumID;
 	public static int leggingsAluminiumID;
 	public static int bootsAluminiumID;
+	public static int newRunningShoesID;
+	public static int oldRunningShoesID;
 
 	public static int aluminiumIngotID;
 	public static int aluminiumPlateID;
 
 	public static int mossyRockID;
 	public static int icyRockID;
-	
+
+	public static int wailmerPailID;
+	public static int oldRodID;
+	public static int goodRodID;
+	public static int superRodID;
+
 	@Mod.Item(name = "Pokedex", typeClass = "pixelmon.items.ItemPokedex")
 	public static Item pokeDex;
 
@@ -207,13 +206,27 @@ public class PixelmonItems {
 	public static Item leggingsAluminium;
 	@Mod.Item(name = "Aluminium Boots", typeClass = "pixelmon.items.ItemPixelmonArmor")
 	public static Item bootsAluminium;
+	@Mod.Item(name = "New Running Shoes", typeClass = "pixelmon.items.ItemPixelmonBoots")
+	public static Item newRunningShoes;
+
+	@Mod.Item(name = "Old Running Shoes", typeClass = "pixelmon.items.ItemPixelmonBoots")
+	public static Item oldRunningShoes;
 
 	@Mod.Item(name = "Mossy Rock", typeClass = "pixelmon.items.ItemBlock")
 	public static Item mossyRock;
 	@Mod.Item(name = "Icy Rock", typeClass = "pixelmon.items.ItemBlock")
 	public static Item icyRock;
 
-	
+	@Mod.Item(name = "Wailmer Pail", typeClass = "pixelmon.items.ItemWailmerPail")
+	public static Item wailmerPail;
+
+	@Mod.Item(name = "Old Rod", typeClass = "pixelmon.items.ItemOldRod")
+	public static Item oldRod;
+	@Mod.Item(name = "Good Rod", typeClass = "pixelmon.items.ItemGoodRod")
+	public static Item goodRod;
+	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemSuperRod")
+	public static Item superRod;
+
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
 		PixelmonItemsApricorns.load(cfg);
@@ -275,9 +288,16 @@ public class PixelmonItems {
 		torsoAluminiumID = cfg.get("item", "Aluminium Chestplate", 10129).getInt();
 		leggingsAluminiumID = cfg.get("item", "Aluminium Leggings", 10130).getInt();
 		bootsAluminiumID = cfg.get("item", "Aluminium Boots", 10131).getInt();
-		
+
 		mossyRockID = cfg.get("item", "Mossy Rock", 10132).getInt();
 		icyRockID = cfg.get("item", "Icy Rock", 10133).getInt();
+
+		newRunningShoesID = cfg.get("item", "New Running Boots", 10134).getInt();
+		oldRunningShoesID = cfg.get("item", "Old Running Boots", 10135).getInt();
+		wailmerPailID = cfg.get("item", "Wailmer Pail", 10136).getInt();
+		oldRodID = cfg.get("item", "Old Rod", 10137).getInt();
+		goodRodID = cfg.get("item", "Good Rod", 10138).getInt();
+		superRodID = cfg.get("item", "Super Rod", 10139).getInt();
 
 		pokeDex = new ItemPokedex(pokeDexID).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rarecandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
@@ -306,9 +326,11 @@ public class PixelmonItems {
 		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, "anvil", "Anvil");
 		tradeMachineItem = new ItemBlock(tradeMachineItemID, PixelmonBlocks.tradeMachine, "trademachine", "Trade Machine");
 
-		thunderStoneShard = new PixelmonItem(thunderStoneShardID, "evolutionstones/thunderstoneshard", "Thunder Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
+		thunderStoneShard = new PixelmonItem(thunderStoneShardID, "evolutionstones/thunderstoneshard", "Thunder Stone Shard")
+				.setCreativeTab(PixelmonCreativeTabs.natural);
 		leafStoneShard = new PixelmonItem(leafStoneShardID, "evolutionstones/leafstoneshard", "Leaf Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
-		waterStoneShard = new PixelmonItem(waterStoneShardID, "evolutionstones/waterstoneshard", "Water Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
+		waterStoneShard = new PixelmonItem(waterStoneShardID, "evolutionstones/waterstoneshard", "Water Stone Shard")
+				.setCreativeTab(PixelmonCreativeTabs.natural);
 		fireStoneShard = new PixelmonItem(fireStoneShardID, "evolutionstones/firestoneshard", "Fire Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
 
 		aluminiumIngot = new PixelmonItem(aluminiumIngotID, "aluminiumingot", "Aluminium Ingot").setCreativeTab(CreativeTabs.tabMaterials);
@@ -332,9 +354,19 @@ public class PixelmonItems {
 		leggingsAluminium = new ItemPixelmonArmor(leggingsAluminiumID, 9, Pixelmon.ALUMINIUMARMOR, 0, 2, "pixelmon:aluminiumleggings", "Aluminium Leggings");
 		bootsAluminium = new ItemPixelmonArmor(bootsAluminiumID, 7, Pixelmon.ALUMINIUMARMOR, 0, 3, "pixelmon:aluminiumboots", "Aluminium Boots");
 
-		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "anvil", "Mossy Rock");
+		newRunningShoes = new ItemPixelmonBoots(newRunningShoesID, 6, Pixelmon.RUNNINGARMOR, 0, 3, "pixelmon:runningboots", "New Running Boots");
+		oldRunningShoes = new ItemPixelmonBoots(oldRunningShoesID, 6, Pixelmon.OLDRUNNINGARMOR, 0, 3, "pixelmon:oldrunningboots", "Old Running Boots");
+		wailmerPail = new ItemWailmerPail(wailmerPailID, "pixelmon:wailmerpail", "Wailmer Pail");
+
+		oldRod = new ItemFishingRod(oldRodID, EnumRodType.OldRod, "Old Rod");
+		goodRod = new ItemFishingRod(goodRodID, EnumRodType.GoodRod, "Good Rod");
+		superRod = new ItemFishingRod(superRodID, EnumRodType.SuperRod, "Super Rod");
+
+		// TODO make correct icons for mossyrock and icyrock, instead of using
+		// anvil
+		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "mossyrock", "Mossy Rock");
 		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
-		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "anvil", "Icy Rock");
+		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "icyrock", "Icy Rock");
 		icyRock.setCreativeTab(PixelmonCreativeTabs.natural);
 	}
 

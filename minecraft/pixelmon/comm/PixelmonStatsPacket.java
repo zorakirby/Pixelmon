@@ -1,7 +1,7 @@
 package pixelmon.comm;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,7 +44,7 @@ public class PixelmonStatsPacket extends PixelmonPacket {
 		return p;
 	}
 
-	public void writePacketData(DataOutputStream data) throws IOException {
+	public void writePacketData(DataOutput data) throws IOException {
 		data.writeShort((short) HP);
 		data.writeShort((short) Speed);
 		data.writeShort((short) Attack);
@@ -53,7 +53,7 @@ public class PixelmonStatsPacket extends PixelmonPacket {
 		data.writeShort((short) SpecialDefence);
 	}
 
-	public void readPacketData(DataInputStream data) throws IOException {
+	public void readPacketData(DataInput data) throws IOException {
 		HP = data.readShort();
 		Speed = data.readShort();
 		Attack = data.readShort();

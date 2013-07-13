@@ -16,6 +16,9 @@ public enum EnumBossMode {
 	public int extraLevels;
 	public float catchRateModifier = 1;
 	public int numDroppedItems = 0;
+	public float r;
+	public float g;
+	public float b;
 
 	private EnumBossMode(int index, int rarity, Color colour, float scaleFactor, int extraLevels, float catchRateModifier, int numDroppedItems) {
 		this.index = index;
@@ -25,6 +28,19 @@ public enum EnumBossMode {
 		this.scaleFactor = scaleFactor;
 		this.extraLevels = extraLevels;
 		this.numDroppedItems = numDroppedItems;
+		if (colour == Color.CYAN){
+			r = 0.5f;
+			g = 1f;
+			b = 1f;
+		}else if (colour == Color.RED){
+			r = 1f;
+			g = 0.5f;
+			b = 0.5f;
+		}else if (colour == Color.YELLOW){
+			r = 1f;
+			g = 1f;
+			b = 0.5f;
+		}
 	}
 
 	public static EnumBossMode getMode(int index) {

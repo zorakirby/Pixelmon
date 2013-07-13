@@ -323,9 +323,9 @@ public class ModelFearow extends PixelmonModelBase {
 		ModuleHead headModule = new ModuleHead(Head);
 
 		ModuleWing leftWingModule = new ModuleWing(LeftWing, EnumWing.Left,
-				35, 0.25F, 1F);
+				35, 0.25F, 1.0F);
 		ModuleWing rightWingModule = new ModuleWing(RightWing, EnumWing.Right,
-				35, 0.25F, 1F);
+				35, 0.25F, 1.0F);
 
 		skeleton = new SkeletonBird(Body, headModule, leftWingModule,
 				rightWingModule, LeftLeg, RightLeg);

@@ -20,8 +20,9 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.SpawnLocation;
+import pixelmon.entities.npcs.EntityNPC;
+import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumBossMode;
 import pixelmon.spawning.spawners.*;
 import cpw.mods.fml.common.ITickHandler;
@@ -122,8 +123,8 @@ public class PixelmonSpawner implements ITickHandler {
 				if (var4 instanceof EntityPixelmon) {
 					if (((EntityPixelmon) var4).pokemonLocation == b.spawnLocation)
 						b.count++;
-				} else if (var4 instanceof EntityTrainer) {
-					if (((EntityTrainer) var4).trainerLocation == b.spawnLocation)
+				} else if (var4 instanceof EntityNPC) {
+					if (((EntityNPC) var4).npcLocation == b.spawnLocation)
 						b.count++;
 				}
 			}
@@ -193,8 +194,8 @@ public class PixelmonSpawner implements ITickHandler {
 									pokemon.setLocationAndAngles((double) x, (double) y, (double) z, world.rand.nextFloat() * 360.0F, 0.0F);
 									if (pokemon instanceof EntityPixelmon)
 										((EntityPixelmon) pokemon).pokemonLocation = spawnLocation;
-									if (pokemon instanceof EntityTrainer)
-										((EntityTrainer) pokemon).trainerLocation = spawnLocation;
+									if (pokemon instanceof EntityNPC)
+										((EntityNPC) pokemon).npcLocation = spawnLocation;
 									if (pokemon.getCanSpawnHere()) {
 										++numInChunk;
 										world.spawnEntityInWorld(pokemon);

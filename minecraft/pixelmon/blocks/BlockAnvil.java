@@ -70,6 +70,12 @@ public class BlockAnvil extends BlockContainer {
 		return PixelmonItems.anvilItem.itemID;
 	}
 
+	@SideOnly(Side.CLIENT)
+    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
+    public int idPicked(World par1World, int par2, int par3, int par4)
+    {
+        return PixelmonItems.anvilItem.itemID;
+    }
 	@Override
 	public boolean removeBlockByPlayer(World world, EntityPlayer player, int x, int y, int z) {
 		onBlockDestroyed(world, x, y, z);
@@ -144,10 +150,10 @@ public class BlockAnvil extends BlockContainer {
 						|| player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc || player.getCurrentEquippedItem().getItem() == PixelmonItems.aluminiumIngot)) {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
-			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 			return true;
 		}
-		((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+		((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 		return false;
 	}
 

@@ -1,18 +1,13 @@
 package pixelmon.client;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntityDaylightDetector;
 import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
@@ -27,6 +22,7 @@ import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
 import pixelmon.client.gui.GuiChooseStarter;
+import pixelmon.client.gui.GuiDoctor;
 import pixelmon.client.gui.GuiHealer;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.GuiTrading;
@@ -43,7 +39,8 @@ import pixelmon.client.keybindings.NextPokemonKey;
 import pixelmon.client.keybindings.PreviousPokemonKey;
 import pixelmon.client.keybindings.SendPokemonKey;
 import pixelmon.client.models.fossils.ModelFossil;
-import pixelmon.client.models.objHandling.Object3D;
+import pixelmon.client.render.RenderDoctor;
+import pixelmon.client.render.RenderHook;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
 import pixelmon.client.render.RenderTrainer;
@@ -55,12 +52,14 @@ import pixelmon.client.render.tileEntities.RenderTileEntityTradingMachine;
 import pixelmon.client.render.tileEntities.RenderTileFossilCleaner;
 import pixelmon.client.render.tileEntities.RenderTileFossilMachine;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.entities.npcs.EntityDoctor;
+import pixelmon.entities.npcs.EntityTrainer;
+import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.entities.trainers.EntityTrainer;
+import pixelmon.entities.projectiles.EntityHook;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
-import pixelmon.enums.EnumPokeballs;
 import pixelmon.sounds.Sounds;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -80,6 +79,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHook.class, new RenderHook());
 
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
@@ -88,13 +88,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public World GetClientWorld() {
 		return Minecraft.getMinecraft().theWorld;
-	}
-
-	@Override
-	public void preloadTextures() {
-		// for (EnumPokemon pokemon : EnumPokemon.values())
-		// MinecraftForgeClient.preloadTexture("/pixelmon/texture/pokemon/" +
-		// pokemon.name.toLowerCase() + ".png");
 	}
 
 	@Override
@@ -111,6 +104,7 @@ public class ClientProxy extends CommonProxy {
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDoctor.class, new RenderDoctor(0.5f));
 	}
 
 	public static ArrayList<String> modelPaths = new ArrayList<String>();
@@ -166,10 +160,11 @@ public class ClientProxy extends CommonProxy {
 		return model;
 	}
 
-	public ModelBase getTrainerModel(String name) {
+	@Override
+	public ModelBase getNPCModel(NPCType type, String name) {
 		ModelBase model = null;
 		try {
-			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models.trainers.Model" + name);
+			Class<?> var3 = (Class<?>) Class.forName("pixelmon.client.models." + type.textureDirectory + ".Model" + name);
 			if (var3 != null) {
 				model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
 			}
@@ -211,12 +206,14 @@ public class ClientProxy extends CommonProxy {
 			return new GuiScreenPokeCheckerMoves(ServerStorageDisplay.get(x), false);
 		else if (ID == EnumGui.Trading.getIndex())
 			return new GuiTrading(x);
+		else if (ID == EnumGui.Doctor.getIndex())
+			return new GuiDoctor();
 
 		return null;
 	}
 
 	public static File getMinecraftDir() {
-		return Minecraft.getMinecraftDir();
+		return Minecraft.getMinecraft().mcDataDir;
 	}
 
 	@ForgeSubscribe
@@ -237,11 +234,6 @@ public class ClientProxy extends CommonProxy {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public int getTexture(String string, String string2) {
-		return RenderingRegistry.addTextureOverride(string, string2);
 	}
 
 	@Override

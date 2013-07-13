@@ -13,12 +13,12 @@ public class IVStore {
 
 	public static IVStore CreateNewIVs() {
 		IVStore iv = new IVStore();
-		iv.SpDef = RandomHelper.getRandomNumberBetween(0, 32);
-		iv.SpAtt = RandomHelper.getRandomNumberBetween(0, 32);
-		iv.Speed = RandomHelper.getRandomNumberBetween(0, 32);
-		iv.Defence = RandomHelper.getRandomNumberBetween(0, 32);
-		iv.Attack = RandomHelper.getRandomNumberBetween(0, 32);
-		iv.HP = RandomHelper.getRandomNumberBetween(0, 32);
+		iv.SpDef = RandomHelper.getRandomNumberBetween(1, 31);
+		iv.SpAtt = RandomHelper.getRandomNumberBetween(1, 31);
+		iv.Speed = RandomHelper.getRandomNumberBetween(1, 31);
+		iv.Defence = RandomHelper.getRandomNumberBetween(1, 31);
+		iv.Attack = RandomHelper.getRandomNumberBetween(1, 31);
+		iv.HP = RandomHelper.getRandomNumberBetween(1, 31);
 		return iv;
 	}
 

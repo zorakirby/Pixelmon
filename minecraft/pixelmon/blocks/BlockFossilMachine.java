@@ -102,7 +102,7 @@ public class BlockFossilMachine extends BlockContainer {
 				world.spawnEntityInWorld(p);
 				p.catchInPokeball();
 				p.friendship.initFromCapture();
-				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+				((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 			}
 	}
 
@@ -126,7 +126,7 @@ public class BlockFossilMachine extends BlockContainer {
 
 			world.spawnEntityInWorld(var3);
 			tile.currentPokeball = -1;
-			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 		}
 		if (tile.currentFossil != -1 && player.getCurrentEquippedItem() != null && !(player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall)) {
 			int itemId = tile.currentFossil;
@@ -145,14 +145,14 @@ public class BlockFossilMachine extends BlockContainer {
 			tile.currentFossil = -1;
 			tile.fossilProgress = 0.0f;
 			tile.pokemonProgress = 0.0f;
-			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 		}
 		// Item Placing
 		if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall) && tile.currentPokeball == -1) {
 			tile.currentPokeball = player.getCurrentEquippedItem().itemID;
 			tile.currentPokeballTexture = ((ItemPokeBall) player.getCurrentEquippedItem().getItem()).type.getTexture();
 			player.getCurrentEquippedItem().stackSize--;
-			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 			return true;
 		}
 		if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemFossil
@@ -160,7 +160,7 @@ public class BlockFossilMachine extends BlockContainer {
 			if ((player.getCurrentEquippedItem().getItem() instanceof ItemFossil) && tile.currentFossil == -1 && !tile.pokemonOccupied) {
 				tile.currentFossil = player.getCurrentEquippedItem().itemID;
 				player.getCurrentEquippedItem().stackSize--;
-				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+				((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 				return true;
 			}
 		// Pokemon retrieval
@@ -173,7 +173,7 @@ public class BlockFossilMachine extends BlockContainer {
 			tile.currentPokemon = "";
 			tile.currentPokeball = -1;
 			tile.completionRate = 0;
-			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 		}
 		if (!tile.pokemonOccupied && player.getCurrentEquippedItem() != null
 				&& !(player.getCurrentEquippedItem().getItem() instanceof ItemFossil && !(player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall))) {
@@ -184,10 +184,10 @@ public class BlockFossilMachine extends BlockContainer {
 			tile.currentPokemon = "";
 			tile.currentPokeball = -1;
 			tile.completionRate = 0;
-			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 		}
 
-		((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+		((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 		return false;
 	}
 
@@ -205,6 +205,13 @@ public class BlockFossilMachine extends BlockContainer {
 	public int idDropped(int par1, Random par2Random, int par3) {
 		return PixelmonItemsFossils.fossilMachineItem.itemID;
 	}
+
+	@SideOnly(Side.CLIENT)
+    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
+    public int idPicked(World par1World, int par2, int par3, int par4)
+    {
+        return PixelmonItemsFossils.fossilMachineItem.itemID;
+    }
 
 	@Override
 	public int quantityDropped(Random random) {

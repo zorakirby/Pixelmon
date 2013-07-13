@@ -17,11 +17,12 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusPersist;
 import pixelmon.battles.status.StatusType;
+import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
+import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.BattleVariables;
 import pixelmon.entities.pixelmon.stats.BattleStats;
 import pixelmon.entities.pixelmon.stats.Moveset;
-import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
@@ -40,7 +41,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public Entity6CanBattle(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(15, ""); // Trainer Name
+		dataWatcher.addObject(EntityPixelmon.dwTrainerName, ""); // Trainer Name
 	}
 
 	public void loadMoveset() {
@@ -66,6 +67,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (p2.currentPokemon().moveset.size() == 0)
 			p2.currentPokemon().loadMoveset();
 
+		
 		// pixelmon.isSwimming = false;
 	}
 
@@ -78,7 +80,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public void setTrainer(EntityTrainer trainer) {
 		this.trainer = trainer;
-		dataWatcher.updateObject(15, trainer.info.name);
+		dataWatcher.updateObject(EntityPixelmon.dwTrainerName, trainer.info.name);
 	}
 
 	public EntityTrainer getTrainer() {
@@ -86,7 +88,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	}
 
 	public String getTrainerName() {
-		return dataWatcher.getWatchableObjectString(15);
+		return dataWatcher.getWatchableObjectString(EntityPixelmon.dwTrainerName);
 	}
 
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
@@ -106,7 +108,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 					if (p instanceof PlayerParticipant && p.currentPokemon() != this)
 						((PlayerParticipant) p).updateOpponentHealth((EntityPixelmon) this);
 			}
-			if (health <= 0) {
+			if (func_110143_aJ() <= 0) {
 				this.onDeath(par1DamageSource);
 			}
 
@@ -160,6 +162,17 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 				return true;
 			}
 		}
+		return false;
+	}
+	public boolean hasPrimaryStatus() {
+		if(hasStatus(StatusType.Poison )
+			|| hasStatus(StatusType.Burn)
+			|| hasStatus(StatusType.PoisonBadly)
+			|| hasStatus(StatusType.Freeze)
+			|| hasStatus(StatusType.Sleep)
+			|| hasStatus(StatusType.Paralysis)){
+					return true;
+				}
 		return false;
 	}
 
