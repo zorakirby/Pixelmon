@@ -36,17 +36,18 @@ public class CommandSpawn extends CommandBase {
 	}
 
 	@Override
-	public void processCommand(ICommandSender var1, String[] var2) {
+	public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr) {
 		try {
-			ChunkCoordinates cc = var1.getPlayerCoordinates();
+			ChunkCoordinates cc = par1ICommandSender.getPlayerCoordinates();
 			WorldServer world = MinecraftServer.getServer().worldServerForDimension(0);
-			String var5 = String.valueOf(Character.toUpperCase(var2[0].charAt(0)));
-			var5 += var2[0].substring(1);
-			if (EnumPokemon.hasPokemon(var5)) {
-				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
+			String name = par2ArrayOfStr[0].substring(0,1).toUpperCase() + par2ArrayOfStr[0].substring(1);
+			if (EnumPokemon.hasPokemon(name)) {
+				if(name.equalsIgnoreCase("mrmime"))
+					name = "MrMime";
+				Entity var6 = PixelmonEntityList.createEntityByName(name, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
-				if (var2.length > 1)
-					for (String s : var2) {
+				if (par2ArrayOfStr.length > 1)
+					for (String s : par2ArrayOfStr) {
 						if (s.equalsIgnoreCase("s"))
 							((EntityPixelmon) var6).setIsShiny(true);
 						else if (s.startsWith("boss")) {
@@ -56,25 +57,25 @@ public class CommandSpawn extends CommandBase {
 						}
 					}
 				world.spawnEntityInWorld(var6);
-				var1.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + var5));
-				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[] { var5 });
-			} else if (EnumTrainers.has(var5)) {
-				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
+				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + name));
+				notifyAdmins(par1ICommandSender, 1, par1ICommandSender + " successfully spawned " + name, new Object[] { name });
+			} else if (EnumTrainers.has(name)) {
+				Entity var6 = PixelmonEntityList.createEntityByName(name, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
-				var1.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + var5));
-				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[] { var5 });
-			} else if (NPCType.has(var5)) {
-				Entity var6 = PixelmonEntityList.createEntityByName(var5, world);
+				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + name));
+				notifyAdmins(par1ICommandSender, 1, par1ICommandSender + " successfully spawned " + name, new Object[] { name });
+			} else if (NPCType.has(name)) {
+				Entity var6 = PixelmonEntityList.createEntityByName(name, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
-				var1.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + var5));
-				notifyAdmins(var1, 1, var1 + " successfully spawned " + var5, new Object[] { var5 });
+				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + name));
+				notifyAdmins(par1ICommandSender, 1, par1ICommandSender + " successfully spawned " + name, new Object[] { name });
 			} else {
-				var1.sendChatToPlayer(ChatMessageComponent.func_111066_d(var5 + " is not in game!"));
+				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d(name + " is not in game!"));
 			}
 		} catch (Exception e) {
-			var1.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Name!"));
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Name!"));
 		}
 	}
 
