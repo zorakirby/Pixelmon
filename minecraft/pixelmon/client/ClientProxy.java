@@ -24,6 +24,7 @@ import pixelmon.blocks.TileEntityFossilCleaner;
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.blocks.TileEntityPotionMaking;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
 import pixelmon.client.gui.*;
@@ -66,6 +67,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPotionMaking.class, new RenderTileEntityPotionMaking());
 		RenderingRegistry.registerEntityRenderingHandler(EntityOldHook.class, new RenderOldHook());
 		RenderingRegistry.registerEntityRenderingHandler(EntityGoodHook.class, new RenderGoodHook());
 		RenderingRegistry.registerEntityRenderingHandler(EntitySuperHook.class, new RenderSuperHook());

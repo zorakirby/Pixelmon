@@ -29,6 +29,7 @@ import pixelmon.items.ItemPixelmonBoots;
 import pixelmon.items.ItemPokedex;
 import pixelmon.items.ItemFossil;
 import pixelmon.items.ItemPotion;
+import pixelmon.items.ItemRevive;
 import pixelmon.items.ItemStatusAilmentHealer;
 import pixelmon.items.ItemSuperRod;
 import pixelmon.items.ItemWailmerPail;
@@ -68,6 +69,7 @@ public class PixelmonItems {
 	public static int burnHealID;
 	public static int iceHealID;
 	public static int fullHealID;
+	public static int reviveID;
 
 	public static int pcItemID;
 	public static int healerItemID;
@@ -241,6 +243,9 @@ public class PixelmonItems {
 	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemSuperRod")
 	public static Item superRod;
 	
+	@Mod.Item(name = "Revive", typeClass = "pixelmon.items.ItemRevive")
+	public static Item revive;
+	
 
 	
 
@@ -316,6 +321,8 @@ public class PixelmonItems {
 		oldRodID = cfg.get("item", "Old Rod", 10137).getInt();
 		goodRodID = cfg.get("item", "Good Rod", 10138).getInt();
 		superRodID = cfg.get("item", "Super Rod", 10139).getInt();
+		
+		reviveID = cfg.get("item", "Revive", 10140).getInt();
 
 
 
@@ -346,7 +353,8 @@ public class PixelmonItems {
 		healerItem = new ItemBlock(healerItemID, PixelmonBlocks.healer, "healer", "Healer");
 		anvilItem = new ItemBlock(anvilItemID, PixelmonBlocks.anvil, "anvil", "Anvil");
 		tradeMachineItem = new ItemBlock(tradeMachineItemID, PixelmonBlocks.tradeMachine, "trademachine", "Trade Machine");
-
+		revive = new ItemRevive(reviveID, EnumPotions.Revive, "Reive");
+		
 		thunderStoneShard = new PixelmonItem(thunderStoneShardID, "evolutionstones/thunderstoneshard", "Thunder Stone Shard")
 				.setCreativeTab(PixelmonCreativeTabs.natural);
 		leafStoneShard = new PixelmonItem(leafStoneShardID, "evolutionstones/leafstoneshard", "Leaf Stone Shard").setCreativeTab(PixelmonCreativeTabs.natural);
