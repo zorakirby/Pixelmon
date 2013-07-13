@@ -1,10 +1,10 @@
 package pixelmon.client.models;
 
-import pixelmon.client.models.animations.SkeletonBase;
-import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
+import pixelmon.client.models.animations.SkeletonBase;
+import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class PixelmonModelBase extends ModelBase {
 	protected SkeletonBase skeleton;

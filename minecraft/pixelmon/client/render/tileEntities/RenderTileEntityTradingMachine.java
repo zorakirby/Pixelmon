@@ -1,17 +1,13 @@
 package pixelmon.client.render.tileEntities;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 
 import org.lwjgl.opengl.GL11;
 
-import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityTradeMachine;
-import pixelmon.client.models.ModelPC;
 import pixelmon.client.models.ModelTradingMachine;
 import pixelmon.client.render.RenderResources;
-import pixelmon.config.PixelmonBlocks;
 
 public class RenderTileEntityTradingMachine extends TileEntitySpecialRenderer {
 	private ModelTradingMachine model;

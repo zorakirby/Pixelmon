@@ -1,10 +1,8 @@
 package pixelmon.client.models;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraftforge.client.model.IModelCustom;
+
+import org.lwjgl.opengl.GL11;
 
 public class ModelOBJWrapper{
 	

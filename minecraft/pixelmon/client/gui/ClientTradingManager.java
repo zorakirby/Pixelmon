@@ -2,11 +2,10 @@ package pixelmon.client.gui;
 
 import java.util.List;
 
-import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.comm.PixelmonStatsPacket;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.comm.PixelmonStatsPacket;
 
 public class ClientTradingManager {
 	public static EntityPlayer tradePartner;

@@ -35,7 +35,7 @@ public class PixelmonRecipes {
 		// Character.valueOf('B'), Block.button, Character.valueOf('D'),
 		// Item.diamond });
 		if (PixelmonConfig.allowRareCandyCrafting)
-			GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.rareCandy), new Object[] { Item.lightStoneDust, Item.appleGold, Item.sugar });
+			GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.rareCandy), new Object[] { Item.glowstone, Item.appleGold, Item.sugar });
 		GameRegistry.addShapelessRecipe(new ItemStack(PixelmonItems.potion, 4), new Object[] { Item.glassBottle, Item.bucketMilk, Item.wheat });
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.pokeDex, 1),
 				new Object[] { "IPI", "DGD", "IRI", Character.valueOf('I'), Item.ingotIron, Character.valueOf('P'), Block.thinGlass, Character.valueOf('D'),

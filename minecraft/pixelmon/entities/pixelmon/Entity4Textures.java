@@ -1,6 +1,5 @@
 package pixelmon.entities.pixelmon;
 
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;

@@ -2,23 +2,22 @@ package pixelmon.client;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraftforge.client.model.IModelCustom;
+
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class PixelmonModelRenderer extends ModelRenderer {
 	/** The GL display list rendered by the Tessellator for this model */
 	private int displayList;
 	private boolean compiled = false;
 	private ArrayList<ModelOBJWrapper> objs = new ArrayList();
-	
 
 	public PixelmonModelRenderer(ModelBase par1ModelBase, String par2Str) {
 		super(par1ModelBase, par2Str);
@@ -31,95 +30,75 @@ public class PixelmonModelRenderer extends ModelRenderer {
 	public PixelmonModelRenderer(ModelBase par1ModelBase, int par2, int par3) {
 		super(par1ModelBase, par2, par3);
 	}
-	
-	public void addOBJModel(ModelOBJWrapper model){
+
+	public void addOBJModel(ModelOBJWrapper model) {
 		this.objs.add(model);
 	}
-	
 
-	 @SideOnly(Side.CLIENT)
-	    public void render(float par1)
-	    {
-	        if (!this.isHidden)
-	        {
-	            if (this.showModel)
-	            {
-	                if (!this.compiled)
-	                {
-	                    this.compileDisplayList(par1);
-	                }
+	@SideOnly(Side.CLIENT)
+	public void render(float par1) {
+		if (!this.isHidden) {
+			if (this.showModel) {
+				if (!this.compiled) {
+					this.compileDisplayList(par1);
+				}
 
-	                GL11.glTranslatef(this.field_82906_o, this.field_82908_p, this.field_82907_q);
-	                int var2;
+				GL11.glTranslatef(this.offsetX, this.offsetY, this.offsetZ);
+				int var2;
 
-	                if (this.rotateAngleX == 0.0F && this.rotateAngleY == 0.0F && this.rotateAngleZ == 0.0F)
-	                {
-	                    if (this.rotationPointX == 0.0F && this.rotationPointY == 0.0F && this.rotationPointZ == 0.0F)
-	                    {
-	                        GL11.glCallList(this.displayList);
+				if (this.rotateAngleX == 0.0F && this.rotateAngleY == 0.0F && this.rotateAngleZ == 0.0F) {
+					if (this.rotationPointX == 0.0F && this.rotationPointY == 0.0F && this.rotationPointZ == 0.0F) {
+						GL11.glCallList(this.displayList);
 
-	                        if (this.childModels != null)
-	                        {
-	                            for (var2 = 0; var2 < this.childModels.size(); ++var2)
-	                            {
-	                                ((ModelRenderer)this.childModels.get(var2)).render(par1);
-	                            }
-	                        }
-	                    }
-	                    else
-	                    {
-	                        GL11.glTranslatef(this.rotationPointX * par1, this.rotationPointY * par1, this.rotationPointZ * par1);
-	                        GL11.glCallList(this.displayList);
+						if (this.childModels != null) {
+							for (var2 = 0; var2 < this.childModels.size(); ++var2) {
+								((ModelRenderer) this.childModels.get(var2)).render(par1);
+							}
+						}
+					} else {
+						GL11.glTranslatef(this.rotationPointX * par1, this.rotationPointY * par1, this.rotationPointZ * par1);
+						GL11.glCallList(this.displayList);
 
-	                        if (this.childModels != null)
-	                        {
-	                            for (var2 = 0; var2 < this.childModels.size(); ++var2)
-	                            {
-	                                ((ModelRenderer)this.childModels.get(var2)).render(par1);
-	                            }
-	                        }
+						if (this.childModels != null) {
+							for (var2 = 0; var2 < this.childModels.size(); ++var2) {
+								((ModelRenderer) this.childModels.get(var2)).render(par1);
+							}
+						}
 
-	                        GL11.glTranslatef(-this.rotationPointX * par1, -this.rotationPointY * par1, -this.rotationPointZ * par1);
-	                    }
-	                }
-	                else
-	                {
-	                    GL11.glPushMatrix();
-	                    GL11.glTranslatef(this.rotationPointX * par1, this.rotationPointY * par1, this.rotationPointZ * par1);
+						GL11.glTranslatef(-this.rotationPointX * par1, -this.rotationPointY * par1, -this.rotationPointZ * par1);
+					}
+				} else {
+					GL11.glPushMatrix();
+					GL11.glTranslatef(this.rotationPointX * par1, this.rotationPointY * par1, this.rotationPointZ * par1);
 
-	                    if (this.rotateAngleY != 0.0F)
-	                    {
-	                        GL11.glRotatef(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
-	                    }
-	                    
-	                    if (this.rotateAngleZ != 0.0F)
-	                    {
-	                        GL11.glRotatef(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
-	                    }
+					if (this.rotateAngleY != 0.0F) {
+						GL11.glRotatef(this.rotateAngleY * (180F / (float) Math.PI), 0.0F, 1.0F, 0.0F);
+					}
 
-	                    if (this.rotateAngleX != 0.0F)
-	                    {
-	                        GL11.glRotatef(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
-	                    }
+					if (this.rotateAngleZ != 0.0F) {
+						GL11.glRotatef(this.rotateAngleZ * (180F / (float) Math.PI), 0.0F, 0.0F, 1.0F);
+					}
 
-	                    GL11.glCallList(this.displayList);
+					if (this.rotateAngleX != 0.0F) {
+						GL11.glRotatef(this.rotateAngleX * (180F / (float) Math.PI), 1.0F, 0.0F, 0.0F);
+					}
 
-	                    if (this.childModels != null)
-	                    {
-	                        for (var2 = 0; var2 < this.childModels.size(); ++var2)
-	                        {
-	                            ((ModelRenderer)this.childModels.get(var2)).render(par1);
-	                        }
-	                    }
+					GL11.glCallList(this.displayList);
 
-	                    GL11.glPopMatrix();
-	                }
+					if (this.childModels != null) {
+						for (var2 = 0; var2 < this.childModels.size(); ++var2) {
+							((ModelRenderer) this.childModels.get(var2)).render(par1);
+						}
+					}
 
-	                GL11.glTranslatef(-this.field_82906_o, -this.field_82908_p, -this.field_82907_q);
-	            }
-	        }
-	    }
-	
+					GL11.glPopMatrix();
+				}
+
+				GL11.glTranslatef(-this.offsetX, -this.offsetY, -this.offsetZ);
+			}
+		}
+	}
+
 	/**
 	 * Compiles a GL display list for this model
 	 */
@@ -133,7 +112,7 @@ public class PixelmonModelRenderer extends ModelRenderer {
 			((ModelBox) this.cubeList.get(var3)).render(var2, par1);
 		}
 
-		for(int i = 0; i < this.objs.size(); i++){
+		for (int i = 0; i < this.objs.size(); i++) {
 			this.objs.get(i).render(par1);
 		}
 

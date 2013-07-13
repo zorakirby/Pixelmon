@@ -49,7 +49,7 @@ public class DropItemHelper {
 		else if (droppedItem.equalsIgnoreCase("Feather"))
 			return Item.feather.itemID;
 		else if (droppedItem.equalsIgnoreCase("Glowstone"))
-			return Item.lightStoneDust.itemID;
+			return Item.glowstone.itemID;
 		else if (droppedItem.equalsIgnoreCase("Gold Nugget"))
 			return Item.goldNugget.itemID;
 		else if (droppedItem.equalsIgnoreCase("Gunpowder"))

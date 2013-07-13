@@ -1,13 +1,11 @@
 package pixelmon.client.gui;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
-import pixelmon.client.gui.battles.ClientBattleManager;
-import pixelmon.client.gui.battles.GuiBattle.BattleMode;
 import pixelmon.gui.ContainerEmpty;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.resources.ResourceLocation;
-import net.minecraft.inventory.Container;
 
 public class GuiDoctor extends GuiContainer {
 	static ResourceLocation battleGui3 = new ResourceLocation("/pixelmon/gui/battleGui3.png");
