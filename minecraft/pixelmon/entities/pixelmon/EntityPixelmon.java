@@ -84,8 +84,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 		if (!worldObj.isRemote) {
 			super.onDeath(damagesource);
 			if (getOwner() != null) {
-				String s = "Your " + getName() + " fainted!";
-				ChatHandler.sendChat(getOwner(), s);
 				isFainted = true;
 				setEntityHealth(0);
 				catchInPokeball();
