@@ -78,6 +78,7 @@ import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyPerish;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyPoison;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyPoisonBadly;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyProtect;
+import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyRainy;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyRecharge;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyRest;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySafeGuard;
@@ -184,6 +185,7 @@ public class EffectRegistry {
 		effectMap.put("solarbeam", SolarBeam.class);
 		
 		// Global statuses
+		effectMap.put("rainy", ApplyRainy.class);
 	}
 
 	public static EffectBase getEffect(String effectTypeString, Value[] values) {

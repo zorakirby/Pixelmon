@@ -132,6 +132,7 @@ public class BattleController {
 						for (BattleParticipant p : participants) {
 							p.turnTick();
 						}
+						
 						for (int i = 0; i < battleStatusList.size(); i++) {
 							try {
 								battleStatusList.get(i).turnTick(null, null);
@@ -139,6 +140,12 @@ public class BattleController {
 								System.out.println("Error on battleStatus tick for " + battleStatusList.get(i).type.toString());
 								e.printStackTrace();
 							}
+						}
+						
+						for (GlobalStatusBase g : globalStatuses)
+						{
+							ChatHandler.sendBattleMessage(participants.get(1).getEntity(), participants.get(2).getEntity(), g.endOfTurnMessage());
+							g.applyRepeatedEffect(globalStatuses, this.participants.get(1).currentPokemon(), this.participants.get(2).currentPokemon());
 						}
 						turnCount++;
 					}
@@ -185,7 +192,6 @@ public class BattleController {
 					p.willTryFlee = false;
 					p.wait = true;
 					p.getNextPokemon();
-					p.currentPokemon().battleController.globalStatuses = globalStatuses;
 				} else {
 					ChatHandler.sendBattleMessage(g, "You've run out of usable pokemon!");
 					endBattle();

@@ -1,10 +1,14 @@
 package pixelmon.battles.status;
 
+import java.util.ArrayList;
+
+import pixelmon.battles.attacks.Attack;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumType;
 
 public class Rainy extends GlobalStatusBase {
 
-	public Rainy(boolean hasEndOfMoveEffect, boolean hasInMoveEffect) {
+	public Rainy() {
 		super(false, true);
 	}
 	
@@ -15,9 +19,13 @@ public class Rainy extends GlobalStatusBase {
 	}
 	
 	@Override
-	public void applyInMoveEffect(GlobalStatusBase[] global, EntityPixelmon user, EntityPixelmon target)
+	public void applyInMoveEffect(EntityPixelmon user, EntityPixelmon target, Attack a)
 	{
-		
+		if (a.baseAttack.attackType == EnumType.Water)
+			a.baseAttack.basePower *= 2;
+		else if (a.baseAttack.attackType == EnumType.Fire)
+			a.baseAttack.basePower /= 2;
+		return;	
 	}
 
 }
