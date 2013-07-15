@@ -296,7 +296,7 @@ public enum EnumType {
 				e = Effectiveness.Super.value;
 			}
 			if (t1 == Steel) {
-				e = Effectiveness.Not.value;
+				e = Effectiveness.Super.value;
 			}
 
 		}
