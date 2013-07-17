@@ -71,19 +71,18 @@ public class TileEntityTradeMachine extends TileEntity {
 	}
 
 	public boolean ready(EntityPlayer player, boolean ready) {
-		if (player1 != null)
+		if (player1 != null && player2 != null) {
 			if (player.username == player1.username) {
 				ready1 = ready;
 				((EntityPlayerMP) player2).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetTradingReadyClient, ready ? 1
 						: 0));
 			}
-		if (player2 != null)
 			if (player.username == player2.username) {
 				ready2 = ready;
 				((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetTradingReadyClient, ready ? 1
 						: 0));
 			}
-
+		}
 		tradePushed = false;
 		return false;
 	}
