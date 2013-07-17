@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
+import net.minecraft.client.resources.AbstractResourcePack;
 import net.minecraft.client.resources.ResourceManager;
 import net.minecraft.util.ResourceLocation;
 import pixelmon.enums.EnumPokemon;
@@ -16,30 +17,28 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class Sounds {
 
+	private static final String[] MusicList = { "A Simple Moment By the Sea", "Across the Desert", "Distant Shores", "Pixelmon Waltz" };
+
 	@SideOnly(Side.CLIENT)
 	public static void installSounds() {
-		System.out.println("Checking for sounds in " + Minecraft.getMinecraft().mcDataDir + "/resources/newsound/pixelmon");
+		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
 		for (EnumPokemon p : EnumPokemon.values()) {
-			installSound(Minecraft.getMinecraft().mcDataDir + "/resources/sound/pixelmon/", p.name.toLowerCase(), "pixelmon/");
+			installPokemonSounds(p, resourcePack);
 		}
 
 		installSound(Minecraft.getMinecraft().mcDataDir + "/resources/sound/pixelmon/", "anvilHits", "pixelmon/");
 	}
 
+	public static void installPokemonSounds(EnumPokemon p, AbstractResourcePack resourcePack){
+		if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase())))
+			Minecraft.getMinecraft().sndManager.addSound("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + ".ogg");
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public static boolean installMusic() {
-		System.out.println("Checking for pixelmon resources");
-		FMLFileResourcePack resourcePack = (FMLFileResourcePack)FMLClientHandler.instance().getResourcePackFor("pixelmon");
-		ResourceManager r = Minecraft.getMinecraft().func_110442_L();
-		File musicDir = new File(Minecraft.getMinecraft().mcDataDir + "/resources/music/pixelmon");
-		File[] musicFiles = musicDir.listFiles();
-		if (musicFiles == null || musicFiles.length == 0) {
-			System.out.println("No Music Files found!");
-			return false;
-		} else {
-			for (File f : musicFiles) {
-				Minecraft.getMinecraft().sndManager.addMusic("music.pixelmon." + f.getName());
-			}
+		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
+		for (String songName : MusicList) {
+			Minecraft.getMinecraft().sndManager.addMusic("pixelmon:pixelmon/" + songName + ".ogg");
 		}
 		return true;
 	}

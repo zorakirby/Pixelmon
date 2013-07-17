@@ -102,7 +102,7 @@ public class TickHandler implements ITickHandler {
 						PacketDispatcher.sendPacketToServer(packet);
 					}
 				}
-				if (!musicCleared) {
+				if (true && !musicCleared) {
 					Map l = ObfuscationReflectionHelper.getPrivateValue(SoundPool.class, Minecraft.getMinecraft().sndManager.soundPoolMusic, 1);
 					if (l.size() != 0) {
 						if (PixelmonConfig.removeVanillaMusic)
