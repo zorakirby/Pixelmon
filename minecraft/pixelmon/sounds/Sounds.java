@@ -29,11 +29,16 @@ public class Sounds {
 		installSound(Minecraft.getMinecraft().mcDataDir + "/resources/sound/pixelmon/", "anvilHits", "pixelmon/");
 	}
 
-	public static void installPokemonSounds(EnumPokemon p, AbstractResourcePack resourcePack){
-		if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase())))
-			Minecraft.getMinecraft().sndManager.addSound("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + ".ogg");
+	public static void installPokemonSounds(EnumPokemon p, AbstractResourcePack resourcePack) {
+		if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + ".ogg")))
+			Minecraft.getMinecraft().sndManager.addSound("pixelmon:pixelmon/" + p.name.toLowerCase() + ".ogg");
+		int i = 1;
+		while (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + i + ".ogg"))) {
+			Minecraft.getMinecraft().sndManager.addSound("pixelmon:pixelmon/" + p.name.toLowerCase() + i + ".ogg");
+			i++;
+		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public static boolean installMusic() {
 		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
@@ -46,6 +51,6 @@ public class Sounds {
 	@SideOnly(Side.CLIENT)
 	private static void installSound(String path, String name, String newPath) {
 		if (new File(path + name + ".ogg").exists())
-			Minecraft.getMinecraft().sndManager.addSound("sound.pixelmon." + name + ".ogg");
+			Minecraft.getMinecraft().sndManager.addSound("pixelmon:pixelmon/" + name + ".ogg");
 	}
 }
