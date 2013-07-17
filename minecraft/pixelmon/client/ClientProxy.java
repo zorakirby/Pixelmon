@@ -46,6 +46,7 @@ import pixelmon.client.render.RenderPokeball;
 import pixelmon.client.render.RenderTrainer;
 import pixelmon.client.render.tileEntities.RenderTileEntityAnvil;
 import pixelmon.client.render.tileEntities.RenderTileEntityApricornTrees;
+import pixelmon.client.render.tileEntities.RenderTileEntityEvolutionRock;
 import pixelmon.client.render.tileEntities.RenderTileEntityHealer;
 import pixelmon.client.render.tileEntities.RenderTileEntityPC;
 import pixelmon.client.render.tileEntities.RenderTileEntityTradingMachine;

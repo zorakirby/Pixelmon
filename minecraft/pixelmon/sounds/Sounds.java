@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
+import net.minecraft.client.resources.ResourceManager;
+import net.minecraft.util.ResourceLocation;
 import pixelmon.enums.EnumPokemon;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -24,7 +26,9 @@ public class Sounds {
 
 	@SideOnly(Side.CLIENT)
 	public static boolean installMusic() {
-		System.out.println("Checking for music in " + Minecraft.getMinecraft().mcDataDir + "/resources/music/pixelmon");
+		System.out.println("Checking for pixelmon resources");
+		ResourceLocation resourceLocation = new ResourceLocation("pixelmon:music");
+		ResourceManager r = Minecraft.getMinecraft().func_110442_L();
 		File musicDir = new File(Minecraft.getMinecraft().mcDataDir + "/resources/music/pixelmon");
 		File[] musicFiles = musicDir.listFiles();
 		if (musicFiles == null || musicFiles.length == 0) {
