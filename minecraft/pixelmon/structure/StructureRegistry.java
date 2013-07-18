@@ -5,8 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 
 import pixelmon.RandomHelper;
@@ -14,40 +17,46 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.enums.EnumBiomes;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.AbstractResourcePack;
+import net.minecraft.client.resources.ResourceManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class StructureRegistry {
 	public static ArrayList<StructureData> scatteredStructures = new ArrayList<StructureData>();
 
-	public static void loadStructures(Side side) {
-		File f = null;
-		if (side == Side.CLIENT)
-			f = new File(Minecraft.getMinecraft().mcDataDir + "/resources/pixelmon/structures/standAlone");
-		else if (side == Side.SERVER)
-			f = new File(MinecraftServer.getServer().getFolderName() + "/resources/pixelmon/structures/standAlone");
-		if (f != null && !f.isDirectory()) {
-			System.out.println("Standalone structures directory is corrupted");
-			return;
-		}
 
-		for (String filename : f.list(filter)) {
-			StructureData data = loadStructureData(filename, f.getAbsolutePath());
-			if (data != null)
+	public static void loadStructures(Side side) {
+		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
+		System.out.println("Attempting to load structures.....");
+		int i = 1;
+		while (resourcePack.func_110589_b(new ResourceLocation("pixelmon:structures/standAlone/pokecenter" + i + ".data"))) {
+			System.out.println("Struct while loop");
+			StructureData data = loadStructureData("pokecenter" + i, "pixelmon:structures/standAlone");
+			i++;
+			if (data != null) {
 				scatteredStructures.add(data);
+				System.out.println("Structure added!");
+			} else
+				System.out.println("No Structures added ):");
 		}
 	}
 
 	private static StructureData loadStructureData(String filename, String path) {
 		StructureData data = new StructureData();
-		int schind = filename.indexOf(".data");
-		data.path = path + "/" + filename.substring(0, schind) + ".schematic";
-		if (!new File(data.path).exists())
+		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
+		
+		if (!resourcePack.func_110589_b(new ResourceLocation("pixelmon:structures/standAlone/" + filename +".schematic")))
 			return null;
-
+		data.path = path + "/" + filename +".schematic";
+		System.out.println(data.path);
+		InputStream is;
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new FileReader(path + "/" + filename));
+			is = resourcePack.func_110590_a(new ResourceLocation(path + "/" + filename +".schematic"));
+			br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+
 			String line = br.readLine();
 			while (line != null) {
 				if (line.startsWith("biomes:")) {
@@ -80,14 +89,6 @@ public class StructureRegistry {
 		return data;
 	}
 
-	static FilenameFilter filter = new FilenameFilter() {
-		@Override
-		public boolean accept(File dir, String name) {
-			if (name.endsWith(".data"))
-				return true;
-			return false;
-		}
-	};
 
 	public static StructureData getScatteredStructureFromBiome(BiomeGenBase biomeGenForCoords) {
 		ArrayList<StructureData> possibleStructures = new ArrayList<StructureData>();
