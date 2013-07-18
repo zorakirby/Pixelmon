@@ -54,12 +54,12 @@ public class StructureRegistry {
 		InputStream is;
 		BufferedReader br;
 		try {
-			is = resourcePack.func_110590_a(new ResourceLocation(path + "/" + filename +".schematic"));
-			br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+			is = resourcePack.func_110590_a(new ResourceLocation(path + "/" + filename +".data"));
+			br = new BufferedReader(new InputStreamReader(is,"utf-8"));
 
 			String line = br.readLine();
 			while (line != null) {
-				if (line.startsWith("biomes:")) {
+				if (line.contains("biomes:")) {
 					String[] biomeList = line.split(":")[1].split(";");
 					data.biomes = new BiomeGenBase[biomeList.length];
 					int i = 0;
@@ -88,7 +88,6 @@ public class StructureRegistry {
 		data.zSize = s.length;
 		return data;
 	}
-
 
 	public static StructureData getScatteredStructureFromBiome(BiomeGenBase biomeGenForCoords) {
 		ArrayList<StructureData> possibleStructures = new ArrayList<StructureData>();
