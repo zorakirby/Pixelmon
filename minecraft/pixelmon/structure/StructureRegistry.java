@@ -29,15 +29,12 @@ public class StructureRegistry {
 
 	public static void loadStructures(Side side) {
 		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
-		System.out.println("Attempting to load structures...");
 		int i = 1;
 		while (resourcePack.func_110589_b(new ResourceLocation("pixelmon:structures/standAlone/pokecenter" + i + ".data"))) {
 			StructureData data = loadStructureData("pokecenter" + i, "pixelmon:structures/standAlone");
 			i++;
-			if (data != null) {
+			if (data != null)
 				scatteredStructures.add(data);
-			} else
-				System.out.println("No Structures added ):");
 		}
 	}
 
