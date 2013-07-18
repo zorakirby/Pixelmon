@@ -91,8 +91,10 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		return dataWatcher.getWatchableObjectString(EntityPixelmon.dwTrainerName);
 	}
 
-	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
+	@Override
+	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		if (!worldObj.isRemote) {
+
 			if (par1DamageSource.damageType == "player" || par1DamageSource == DamageSource.cactus || par1DamageSource.damageType == "arrow")
 				return false;
 			if (battleController != null) {
