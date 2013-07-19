@@ -71,6 +71,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHook.class, new RenderHook());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityApricornTree.class, new RenderTileEntityApricornTrees());
@@ -79,7 +80,6 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
-		RenderingRegistry.registerEntityRenderingHandler(EntityHook.class, new RenderHook());
 
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
