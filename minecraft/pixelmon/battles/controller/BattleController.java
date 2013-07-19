@@ -163,12 +163,16 @@ public class BattleController {
 		for (BattleParticipant p : participants) {
 			p.updatePokemon();
 			if (p.getIsFaintedOrDead()) {
+				String name;
 				if (p instanceof WildPixelmonParticipant && otherParticipant(p) instanceof PlayerParticipant)
 					PixelmonEventHandler.fireEvent(EventType.BeatWildPokemon, ((PlayerParticipant) otherParticipant(p)).player);
-				String name = p.currentPokemon().getNickname();
+				
+				if (p.currentPokemon().getNickname() != null)
+					name = p.currentPokemon().getNickname();
+				else
+					name = p.currentPokemon().getName();
+				
 				sendToOtherParticipants(p, p.getFaintMessage());
-				if (p.getType() == ParticipantType.Player)
-					ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				if (p.getType() == ParticipantType.Player){
 					Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 					Minecraft.getMinecraft().renderViewEntity = p.getEntity(); //Instantly switches to player cam on death (to avoid shaking)

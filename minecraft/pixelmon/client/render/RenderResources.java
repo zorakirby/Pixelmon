@@ -11,6 +11,6 @@ public class RenderResources {
 	public static ResourceLocation tradingMachine = new ResourceLocation("pixelmon:textures/blocks/tradingmachine.png");
 	public static ResourceLocation fossilCleaningMachine = new ResourceLocation("pixelmon:textures/blocks/fossilcleaningmachine.png");
 	public static ResourceLocation fossilMachine = new ResourceLocation("pixelmon:textures/blocks/fossilmachine.png");
-	public static ResourceLocation mossrocktex = new ResourceLocation("pixelmon:models/mossyrock/mossrocktex.png");
-	public static ResourceLocation icyrocktex = new ResourceLocation("pixelmon:models/icyrock/icyrocktex.png");
+	public static ResourceLocation mossrocktex = new ResourceLocation("pixelmon:textures/blocks/mossrocktex.png");
+	public static ResourceLocation icyrocktex = new ResourceLocation("pixelmon:textures/blocks/icyrocktex.png");
 }

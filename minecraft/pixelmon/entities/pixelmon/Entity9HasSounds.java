@@ -13,7 +13,7 @@ public abstract class Entity9HasSounds extends Entity8HoldsItems {
 	 */
 	@Override
 	protected String getLivingSound() {
-		return ("pixelmon." + getName().toLowerCase());
+		return ("pixelmon:pixelmon." + getName().toLowerCase());
 	}
 
 	/**

@@ -1,10 +1,13 @@
 package pixelmon.entities.pixelmon;
 
+import net.minecraft.client.resources.AbstractResourcePack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
 import pixelmon.entities.pixelmon.particleEffects.ParticleEffects;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -44,17 +47,19 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	boolean hasRoastedTexture = false;
 	boolean checkedForRoastedTexture = false;
 
+	AbstractResourcePack resourcePack;
 	@SideOnly(Side.CLIENT)
 	public String getTexture() {
 		try {
+			if (resourcePack ==null) resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
 			if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1 && !checkedForRoastedTexture || hasRoastedTexture) {
 				if (!checkedForRoastedTexture) {
-					if (Pixelmon.class.getResourceAsStream("pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
+					if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png")))
 						hasRoastedTexture = true;
 					checkedForRoastedTexture = true;
 				}
 			}
-			if (getIsShiny() && Pixelmon.class.getResourceAsStream("pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
+			if (getIsShiny() && resourcePack.func_110589_b(new ResourceLocation("pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png")))
 				return "pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
 			else if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1 && hasRoastedTexture) {
 				return "pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";

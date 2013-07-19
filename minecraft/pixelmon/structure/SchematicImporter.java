@@ -3,9 +3,13 @@ package pixelmon.structure;
 import java.io.File;
 import java.io.FileInputStream;
 
+import cpw.mods.fml.client.FMLClientHandler;
+
+import net.minecraft.client.resources.AbstractResourcePack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
 
 public class SchematicImporter {
 	private String filename;
@@ -68,8 +72,8 @@ public class SchematicImporter {
 
 	NBTTagCompound getNBTTag() {
 		try {
-			File file = new File(filename);
-			return CompressedStreamTools.readCompressed(new FileInputStream(file));
+			AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
+			return CompressedStreamTools.readCompressed(resourcePack.func_110590_a(new ResourceLocation(filename)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -455,6 +455,7 @@ public class PlayerStorage {
 
 	private void heal(NBTTagCompound nbt) {
 		nbt.setShort("Health", (short) nbt.getInteger("StatsHP"));
+		nbt.setFloat("HealF", (float) nbt.getInteger("StatsHP"));
 		nbt.setBoolean("IsFainted", false);
 		int numMoves = nbt.getInteger("PixelmonNumberMoves");
 		for (int i = 0; i < numMoves; i++) {

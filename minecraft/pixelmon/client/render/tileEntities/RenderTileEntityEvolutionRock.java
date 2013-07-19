@@ -1,4 +1,4 @@
-package pixelmon.client;
+package pixelmon.client.render.tileEntities;
 
 import org.lwjgl.opengl.GL11;
 
@@ -19,8 +19,8 @@ public class RenderTileEntityEvolutionRock extends TileEntitySpecialRenderer {
 	IModelCustom mossyRockModel;
 	
 	public RenderTileEntityEvolutionRock() {
-		icyRockModel = AdvancedModelLoader.loadModel("/pixelmon/models/icyrock/icyrock.obj");
-		mossyRockModel = AdvancedModelLoader.loadModel("/pixelmon/models/mossyrock/mossyrock.obj");
+		icyRockModel = AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/icyrock/icyrock.obj");
+		mossyRockModel = AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/mossyrock/mossyrock.obj");
 	}
 
 	@Override
