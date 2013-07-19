@@ -141,7 +141,8 @@ public class BattleController {
 								e.printStackTrace();
 							}
 						}
-						
+						if(globalStatuses.size() != 0)
+							System.out.println("Isn't empty");
 						for (GlobalStatusBase g : globalStatuses)
 						{
 							ChatHandler.sendBattleMessage(participants.get(1).getEntity(), participants.get(2).getEntity(), g.endOfTurnMessage());
