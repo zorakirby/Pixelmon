@@ -1,8 +1,6 @@
 package pixelmon.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 
 public class GuiResources {
 	public static ResourceLocation tradeGui = new ResourceLocation("pixelmon:gui/tradeGui.png");

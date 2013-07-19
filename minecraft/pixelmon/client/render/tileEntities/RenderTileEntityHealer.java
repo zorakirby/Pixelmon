@@ -1,11 +1,9 @@
 package pixelmon.client.render.tileEntities;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;

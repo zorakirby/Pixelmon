@@ -2,7 +2,6 @@ package pixelmon;
 
 import java.io.File;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
@@ -11,7 +10,6 @@ import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import pixelmon.battles.BattleTickHandler;
 import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.client.ClientPacketHandler;
@@ -22,9 +20,7 @@ import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.EntitySpawning;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.entities.projectiles.EntityGoodHook;
-import pixelmon.entities.projectiles.EntityOldHook;
-import pixelmon.entities.projectiles.EntitySuperHook;
+import pixelmon.entities.projectiles.EntityHook;
 import pixelmon.migration.Migration;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
@@ -41,11 +37,7 @@ import pixelmon.worldGeneration.WorldGenWaterStoneOre;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -113,9 +105,7 @@ public class Pixelmon {
 		proxy.registerInteractions();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityOldHook.class, "Old Hook", 214, this, 74, 1, true);
-		EntityRegistry.registerModEntity(EntityGoodHook.class, "Good Hook", 218, this, 75, 1, true);
-		EntityRegistry.registerModEntity(EntitySuperHook.class, "Super Hook", 218, this, 75, 1, true);
+		EntityRegistry.registerModEntity(EntityHook.class, "Hook", 214, this, 74, 1, true);
 
 		
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());

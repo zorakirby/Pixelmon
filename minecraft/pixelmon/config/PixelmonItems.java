@@ -5,39 +5,26 @@ import java.lang.reflect.Field;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.Configuration;
 import pixelmon.Pixelmon;
-import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.enums.EnumEthers;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPotions;
+import pixelmon.enums.EnumRodType;
 import pixelmon.enums.EnumStatusAilmentHealers;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
-import pixelmon.items.ItemGoodRod;
+import pixelmon.items.ItemFishingRod;
+import pixelmon.items.ItemFossil;
 import pixelmon.items.ItemHammer;
-import pixelmon.items.ItemHeld;
-import pixelmon.items.ItemOldRod;
 import pixelmon.items.ItemPixelmonArmor;
 import pixelmon.items.ItemPixelmonBoots;
 import pixelmon.items.ItemPokedex;
-import pixelmon.items.ItemFossil;
 import pixelmon.items.ItemPotion;
 import pixelmon.items.ItemStatusAilmentHealer;
-import pixelmon.items.ItemSuperRod;
 import pixelmon.items.ItemWailmerPail;
 import pixelmon.items.PixelmonItem;
-import pixelmon.items.heldItems.ItemBerryLeppa;
-import pixelmon.items.heldItems.ItemBerryOran;
-import pixelmon.items.heldItems.ItemBerryRawst;
-import pixelmon.items.heldItems.ItemExpShare;
-import pixelmon.items.heldItems.ItemLuckyEgg;
 import pixelmon.items.weapons.PixelmonItemAxe;
 import pixelmon.items.weapons.PixelmonItemHoe;
 import pixelmon.items.weapons.PixelmonItemPickAxe;
@@ -115,8 +102,7 @@ public class PixelmonItems {
 	public static int oldRodID;
 	public static int goodRodID;
 	public static int superRodID;
-	
-	
+
 	@Mod.Item(name = "Pokedex", typeClass = "pixelmon.items.ItemPokedex")
 	public static Item pokeDex;
 
@@ -233,17 +219,13 @@ public class PixelmonItems {
 
 	@Mod.Item(name = "Wailmer Pail", typeClass = "pixelmon.items.ItemWailmerPail")
 	public static Item wailmerPail;
-	
+
 	@Mod.Item(name = "Old Rod", typeClass = "pixelmon.items.ItemOldRod")
 	public static Item oldRod;
 	@Mod.Item(name = "Good Rod", typeClass = "pixelmon.items.ItemGoodRod")
 	public static Item goodRod;
 	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemSuperRod")
 	public static Item superRod;
-	
-
-	
-
 
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
@@ -317,9 +299,6 @@ public class PixelmonItems {
 		goodRodID = cfg.get("item", "Good Rod", 10138).getInt();
 		superRodID = cfg.get("item", "Super Rod", 10139).getInt();
 
-
-
-		
 		pokeDex = new ItemPokedex(pokeDexID).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rarecandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
 		potion = new ItemPotion(potionID, EnumPotions.Potion, "Potion");
@@ -378,15 +357,11 @@ public class PixelmonItems {
 		newRunningShoes = new ItemPixelmonBoots(newRunningShoesID, 6, Pixelmon.RUNNINGARMOR, 0, 3, "pixelmon:runningboots", "New Running Boots");
 		oldRunningShoes = new ItemPixelmonBoots(oldRunningShoesID, 6, Pixelmon.OLDRUNNINGARMOR, 0, 3, "pixelmon:oldrunningboots", "Old Running Boots");
 		wailmerPail = new ItemWailmerPail(wailmerPailID, "pixelmon:wailmerpail", "Wailmer Pail");
-		
-		oldRod = new ItemOldRod(oldRodID);
-		goodRod = new ItemGoodRod(goodRodID);
-		superRod = new ItemSuperRod(superRodID);
 
+		oldRod = new ItemFishingRod(oldRodID, EnumRodType.OldRod, "Old Rod");
+		goodRod = new ItemFishingRod(goodRodID, EnumRodType.GoodRod, "Good Rod");
+		superRod = new ItemFishingRod(superRodID, EnumRodType.SuperRod, "Super Rod");
 
-
-		
-		
 		// TODO make correct icons for mossyrock and icyrock, instead of using
 		// anvil
 		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "mossyrock", "Mossy Rock");

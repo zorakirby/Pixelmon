@@ -1,8 +1,8 @@
 package pixelmon.client;
 
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 
 public class RenderInvisible extends Render {
 

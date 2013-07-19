@@ -20,7 +20,8 @@ public class AIHelper {
 		if (tasks.taskEntries.size() != 0)
 			tasks.taskEntries.clear();
 		initBaseAI(entity, tasks);
-		if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.Land && !entity.baseStats.canFly && !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
+		if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.Land && !entity.baseStats.canFly
+				&& !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
 			initGroundAI(Name, entity, tasks);
 		} else if (entity.baseStats.canFly) {
 			initFlyingAI(Name, entity, tasks);
@@ -44,7 +45,8 @@ public class AIHelper {
 
 	private void initBaseAI(Entity7HasAI entity, EntityAITasks tasks) {
 		tasks.addTask(i++, new AIIsInBattle(entity));
-		if (((EntityPixelmon) entity).pokemonLocation != SpawnLocation.Water && !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
+		if (((EntityPixelmon) entity).pokemonLocation != SpawnLocation.Water
+				&& !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
 			if (entity.aggression == Aggression.aggressive) {
 				tasks.addTask(i++, new AIStartBattle(entity));
 				tasks.addTask(i++, new AIMoveTowardsTarget(entity, 10));
@@ -56,6 +58,9 @@ public class AIHelper {
 	}
 
 	private void initGroundAI(String Name, Entity7HasAI entity, EntityAITasks tasks) {
+		if (entity.baseStats.type1 != EnumType.Fire && entity.baseStats.type2 != EnumType.Fire)
+			entity.getNavigator().setCanSwim(true);
+
 		if (Name.equalsIgnoreCase("Abra")) {
 			tasks.addTask(i++, new AITeleportAway(entity));
 		} else {

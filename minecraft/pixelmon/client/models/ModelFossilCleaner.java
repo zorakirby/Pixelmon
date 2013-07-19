@@ -6,10 +6,10 @@
 
 package pixelmon.client.models;
 
-import pixelmon.blocks.TileEntityFossilCleaner;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import pixelmon.blocks.TileEntityFossilCleaner;
 
 public class ModelFossilCleaner extends ModelBase {
 	// fields

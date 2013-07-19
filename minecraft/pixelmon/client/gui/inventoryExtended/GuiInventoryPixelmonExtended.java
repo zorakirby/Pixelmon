@@ -8,12 +8,10 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import net.minecraft.util.StatCollector;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -29,11 +27,9 @@ import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerMoves;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.enums.EnumGui;
 import pixelmon.items.ItemHeld;
-import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiInventoryPixelmonExtended extends GuiInventory {

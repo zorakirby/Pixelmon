@@ -32,13 +32,13 @@ public class ModelPorygon extends PixelmonModelBase
         textureHeight = 32;
         Body = new PixelmonModelRenderer(this, "Body");
         Body.setRotationPoint(0, 20, 0);
-        Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/models/porygon/PorygonBody.obj")));
+        Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/porygon/PorygonBody.obj")));
         footL = new PixelmonModelRenderer(this, 0, 0);
-        footL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/models/porygon/PorygonLFoot.obj"), 3.015F, 1.561F, .829F ));
+        footL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/porygon/PorygonLFoot.obj"), 3.015F, 1.561F, .829F ));
         footR = new PixelmonModelRenderer(this, 0, 0);
-        footR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/models/porygon/PorygonRFoot.obj"), -3.015F, 1.561F, .829F));
+        footR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/porygon/PorygonRFoot.obj"), -3.015F, 1.561F, .829F));
         head = new PixelmonModelRenderer(this, 0, 0);
-        head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/models/porygon/PorygonHead.obj"), 0, 5.464F, -.806F));
+        head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/porygon/PorygonHead.obj"), 0, 5.464F, -.806F));
         Body.addChild(head);
         Body.addChild(footL);
         Body.addChild(footR);

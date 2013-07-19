@@ -41,12 +41,12 @@ public class MovementHandler implements ITickHandler {
 
 	@Override
 	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-
+		
 	}
 
 	@Override
 	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.WORLD);
+		return EnumSet.of(TickType.CLIENT);
 	}
 
 	@Override

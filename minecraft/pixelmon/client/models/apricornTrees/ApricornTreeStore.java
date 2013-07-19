@@ -2,8 +2,7 @@ package pixelmon.client.models.apricornTrees;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.resources.ResourceLocation;
-
+import net.minecraft.util.ResourceLocation;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.enums.EnumApricornTrees;
 

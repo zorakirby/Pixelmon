@@ -150,10 +150,10 @@ public class BlockAnvil extends BlockContainer {
 						|| player.getCurrentEquippedItem().getItem() == PixelmonItemsPokeballs.ironDisc || player.getCurrentEquippedItem().getItem() == PixelmonItems.aluminiumIngot)) {
 			((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil = player.getCurrentEquippedItem().itemID;
 			player.getCurrentEquippedItem().stackSize--;
-			((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+			((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 			return true;
 		}
-		((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+		((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 		return false;
 	}
 

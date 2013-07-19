@@ -1,16 +1,12 @@
 package pixelmon.client.gui.pc;
 
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import pixelmon.client.gui.pokechecker.GuiRenamePokemon;
 import pixelmon.client.gui.pokechecker.GuiScreenPokeChecker;
 import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerMoves;
 import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerStats;
 import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerWarning;
-import pixelmon.comm.EnumPackets;
-import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiScreenPokeCheckerPC extends GuiScreenPokeChecker {
 
