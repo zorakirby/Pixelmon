@@ -40,8 +40,8 @@ public enum EnumPotions {
 			return PixelmonItems.hyperPotion;
 		if (index == 50)
 			return PixelmonItems.maxPotion;
-		if (index == 2)
-			return PixelmonItems.revive;
+		//if (index == 2)
+			//return PixelmonItems.revive;
 		return PixelmonItems.potion;
 	}
 

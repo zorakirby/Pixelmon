@@ -15,7 +15,7 @@ import pixelmon.blocks.BlockFossilCleaner;
 import pixelmon.blocks.BlockFossilMachine;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
-import pixelmon.blocks.BlockPotionMaking;
+//import pixelmon.blocks.BlockPotionMaking;
 import pixelmon.blocks.BlockTradeMachine;
 import pixelmon.blocks.TileEntityAnvil;
 import pixelmon.blocks.TileEntityEvolutionRock;
@@ -23,7 +23,7 @@ import pixelmon.blocks.TileEntityFossilCleaner;
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
-import pixelmon.blocks.TileEntityPotionMaking;
+//import pixelmon.blocks.TileEntityPotionMaking;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.enums.EnumEvolutionRock;
 import pixelmon.enums.EnumEvolutionStone;
@@ -80,8 +80,8 @@ public class PixelmonBlocks {
 	public static Block mossyRock;
 	@Mod.Block(name = "Icy Rock", itemTypeClass = ItemBlock.class)
 	public static Block icyRock;
-	@Mod.Block(name = "Potion Maker", itemTypeClass = ItemBlock.class)
-	public static Block potionMaker;
+	//@Mod.Block(name = "Potion Maker", itemTypeClass = ItemBlock.class)
+	//public static Block potionMaker;
 	
 
 	public static void load(Configuration configuration) {
@@ -120,7 +120,7 @@ public class PixelmonBlocks {
 		fossilCleaner = new BlockFossilCleaner(fossilCleanerId);
 		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
 		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
-		potionMaker = new BlockPotionMaking(potionMakerId, Material.rock).setCreativeTab(PixelmonCreativeTabs.natural);
+		//potionMaker = new BlockPotionMaking(potionMakerId, Material.rock).setCreativeTab(PixelmonCreativeTabs.natural);
 
 	}
 
@@ -137,7 +137,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(fossil, "Fossil");
 		GameRegistry.registerBlock(tradeMachine, "Trading Machine");
 		GameRegistry.registerBlock(fossilCleaner, "Fossil Cleaner");
-		GameRegistry.registerBlock(potionMaker, "Potion Maker");
+		//GameRegistry.registerBlock(potionMaker, "Potion Maker");
 
 
 		MinecraftForge.setBlockHarvestLevel(bauxite, "pickaxe", 2);
@@ -149,7 +149,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerTileEntity(TileEntityTradeMachine.class, "Trade Machine");
 		GameRegistry.registerTileEntity(TileEntityFossilCleaner.class, "Fossil Cleaner");
 		GameRegistry.registerTileEntity(TileEntityEvolutionRock.class, "Evolution Rock");
-		GameRegistry.registerTileEntity(TileEntityPotionMaking.class, "Potion Maker");
+		//GameRegistry.registerTileEntity(TileEntityPotionMaking.class, "Potion Maker");
 
 		
 		PixelmonBlocksApricornTrees.registerBlocks();
