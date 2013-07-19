@@ -548,7 +548,7 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 			pixelmonRarity.put("Lapras", 10);
 			pixelmonRarity.put("Dratini", 5);
 			pixelmonRarity.put("Dragonair", 3);
-			ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
+			//ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
 
 		}
 
@@ -566,13 +566,13 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 			pixelmonRarity.put("Tentacruel", 95);
 			pixelmonRarity.put("Poliwhirl", 90);
 			pixelmonRarity.put("Golduck", 90);
-			ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
+			//ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
 
 		} else {
 			pixelmonRarity.clear();
 			pixelmonRarity.put("Magikarp", 200);
 			pixelmonRarity.put("Goldeen", 100);
-			ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
+			//ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
 
 		}
 
