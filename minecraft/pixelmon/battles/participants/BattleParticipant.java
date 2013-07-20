@@ -2,6 +2,7 @@ package pixelmon.battles.participants;
 
 import java.util.ArrayList;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import pixelmon.battles.attacks.Attack;
@@ -93,12 +94,13 @@ public abstract class BattleParticipant {
 			}
 		}
 		
-		for (int i = 0; i < this.bc.globalStatuses.size(); i++)
-		{
-			GlobalStatusBase g = bc.globalStatuses.get(i);
-			ChatHandler.sendBattleMessage(bc.participants.get(1).getEntity(), bc.participants.get(2).getEntity(), g.endOfTurnMessage());
-			g.applyRepeatedEffect(bc.globalStatuses, currentPokemon(), opponent.currentPokemon());
-		}
+//		for (int i = 0; i < this.bc.globalStatuses.size()-1; i++)
+//		{
+//			System.out.println(bc.globalStatuses.get(i).endOfTurnMessage());
+//			GlobalStatusBase g = bc.globalStatuses.get(i);
+//			ChatHandler.sendBattleMessage(bc.participants.get(0).currentPokemon().getOwner(), bc.participants.get(1).currentPokemon().getOwner(), g.endOfTurnMessage());
+//			g.applyRepeatedEffect(bc.globalStatuses, currentPokemon(), opponent.currentPokemon());
+//		}
 		
 	}
 }

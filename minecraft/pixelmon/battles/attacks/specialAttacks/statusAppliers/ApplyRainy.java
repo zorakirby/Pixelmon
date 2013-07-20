@@ -13,17 +13,19 @@ public class ApplyRainy extends StatusApplierBase {
 	@Override
 	public void ApplyEffect(Attack a, double crit, EntityPixelmon user,
 			EntityPixelmon target, ArrayList<String> attackList,
-			ArrayList<String> targetAttackList) throws Exception {
-		
-		for (GlobalStatusBase g : user.battleController.globalStatuses)
+			ArrayList<String> tsargetAttackList) throws Exception {
+		System.out.println("Size of statuses is " + user.battleController.globalStatuses.size());
+		if (user.battleController.globalStatuses.size() != 0)
+		for (int i = 0; i < user.battleController.globalStatuses.size(); i++)
 		{
-			if (g instanceof Rainy)
+			if (user.battleController.globalStatuses.get(i) instanceof Rainy)
 			{
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), a.baseAttack.attackName + " failed!");
 				return;
 			}
 				
 		}
+		user.battleController.checkAndRemoveWeather();
 		user.battleController.globalStatuses.add(new Rainy());
 	}
 

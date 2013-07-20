@@ -176,7 +176,7 @@ public class Attack {
 				}
 			}
 			
-			for (int i = 0; i < user.battleController.globalStatuses.size(); i++)
+			for (int i = 0; i < user.battleController.globalStatuses.size()-1; i++)
 			{
 				user.battleController.globalStatuses.get(i).applyInMoveEffect(user, target, this);
 			}

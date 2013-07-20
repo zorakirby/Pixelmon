@@ -18,6 +18,7 @@ import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.battles.status.GlobalStatusBase;
+import pixelmon.battles.status.Rainy;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonConfig;
@@ -141,12 +142,10 @@ public class BattleController {
 								e.printStackTrace();
 							}
 						}
-						if(globalStatuses.size() != 0)
-							System.out.println("Isn't empty");
-						for (GlobalStatusBase g : globalStatuses)
+						for (int i = 0 ; i < globalStatuses.size() ; i++)
 						{
-							ChatHandler.sendBattleMessage(participants.get(1).getEntity(), participants.get(2).getEntity(), g.endOfTurnMessage());
-							g.applyRepeatedEffect(globalStatuses, this.participants.get(1).currentPokemon(), this.participants.get(2).currentPokemon());
+							ChatHandler.sendBattleMessage(participants.get(0).currentPokemon().getOwner(), participants.get(1).currentPokemon().getOwner(), globalStatuses.get(i).endOfTurnMessage());
+							globalStatuses.get(i).applyRepeatedEffect(globalStatuses, this.participants.get(0).currentPokemon(), this.participants.get(1).currentPokemon());
 						}
 						turnCount++;
 					}
@@ -362,5 +361,14 @@ public class BattleController {
 
 	public Attack getLastMoveUsed() {
 		return lastMoveUsed;
+	}
+	
+	public void checkAndRemoveWeather() 
+	{
+		for (int i = 0; i < globalStatuses.size()-1; i++)
+		{
+			if (globalStatuses.get(i) instanceof Rainy /* || other weathers*/)
+				globalStatuses.remove(i);
+		}
 	}
 }

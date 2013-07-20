@@ -110,6 +110,7 @@ public class EffectRegistry {
 		effectMap.put("poisonbadly", ApplyPoisonBadly.class);
 //		effectMap.put("pp", Spite.class);
 		effectMap.put("protect", ApplyProtect.class);
+		effectMap.put("raindance", ApplyRainy.class);
 		effectMap.put("rest", ApplyRest.class);
 		effectMap.put("recharge", ApplyRecharge.class);
 		effectMap.put("safeguard", ApplySafeGuard.class);
@@ -185,7 +186,7 @@ public class EffectRegistry {
 		effectMap.put("solarbeam", SolarBeam.class);
 		
 		// Global statuses
-		effectMap.put("rainy", ApplyRainy.class);
+
 	}
 
 	public static EffectBase getEffect(String effectTypeString, Value[] values) {
