@@ -27,9 +27,9 @@ public abstract class GlobalStatusBase {
 		return hasInMoveEffect;
 	}
 */	
-	public String endOfTurnMessage()
+	public String endOfTurnMessage(ArrayList<GlobalStatusBase> list)
 	{
-		return null;
+		return "";
 	}
 	
 	public int getTurnTick()

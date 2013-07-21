@@ -94,13 +94,5 @@ public abstract class BattleParticipant {
 			}
 		}
 		
-//		for (int i = 0; i < this.bc.globalStatuses.size()-1; i++)
-//		{
-//			System.out.println(bc.globalStatuses.get(i).endOfTurnMessage());
-//			GlobalStatusBase g = bc.globalStatuses.get(i);
-//			ChatHandler.sendBattleMessage(bc.participants.get(0).currentPokemon().getOwner(), bc.participants.get(1).currentPokemon().getOwner(), g.endOfTurnMessage());
-//			g.applyRepeatedEffect(bc.globalStatuses, currentPokemon(), opponent.currentPokemon());
-//		}
-		
 	}
 }

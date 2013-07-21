@@ -5,8 +5,6 @@ import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import pixelmon.api.events.EventType;
@@ -17,6 +15,7 @@ import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
+import pixelmon.battles.status.Clear;
 import pixelmon.battles.status.GlobalStatusBase;
 import pixelmon.battles.status.Rainy;
 import pixelmon.battles.status.StatusBase;
@@ -64,6 +63,7 @@ public class BattleController {
 			if (p.canGainXP())
 				p.addToAttackersList();
 		}
+		globalStatuses.add(new Clear());
 	}
 
 	BattleParticipant otherParticipant(BattleParticipant current) {
@@ -142,10 +142,15 @@ public class BattleController {
 								e.printStackTrace();
 							}
 						}
+						if(globalStatuses.size() != 0)
 						for (int i = 0 ; i < globalStatuses.size() ; i++)
 						{
-							ChatHandler.sendBattleMessage(participants.get(0).currentPokemon().getOwner(), participants.get(1).currentPokemon().getOwner(), globalStatuses.get(i).endOfTurnMessage());
+							if (!globalStatuses.get(i).endOfTurnMessage(globalStatuses).equals(""))
+							{
+							ChatHandler.sendBattleMessage(participants.get(0).currentPokemon().getOwner(), participants.get(1).currentPokemon().getOwner(),
+									globalStatuses.get(i).endOfTurnMessage(globalStatuses));
 							globalStatuses.get(i).applyRepeatedEffect(globalStatuses, this.participants.get(0).currentPokemon(), this.participants.get(1).currentPokemon());
+							}
 						}
 						turnCount++;
 					}
@@ -367,8 +372,23 @@ public class BattleController {
 	{
 		for (int i = 0; i < globalStatuses.size()-1; i++)
 		{
-			if (globalStatuses.get(i) instanceof Rainy /* || other weathers*/)
+			GlobalStatusBase g = globalStatuses.get(i);
+			if (g instanceof Rainy || g instanceof Clear)
+			{
 				globalStatuses.remove(i);
+				return;
+			}
 		}
+	}
+	
+	public GlobalStatusBase getWeather()
+	{
+		for (int i = 0; i > globalStatuses.size(); i++)
+		{
+			GlobalStatusBase g = globalStatuses.get(i);
+			if (g instanceof Rainy || g instanceof Clear)
+				return g;
+		}
+		return null;
 	}
 }

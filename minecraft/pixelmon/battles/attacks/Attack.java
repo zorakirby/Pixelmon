@@ -175,8 +175,7 @@ public class Attack {
 					System.out.println(exc.getStackTrace());
 				}
 			}
-			
-			for (int i = 0; i < user.battleController.globalStatuses.size()-1; i++)
+			for (int i = 0; i < user.battleController.globalStatuses.size(); i++)
 			{
 				user.battleController.globalStatuses.get(i).applyInMoveEffect(user, target, this);
 			}
