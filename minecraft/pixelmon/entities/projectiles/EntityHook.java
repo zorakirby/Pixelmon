@@ -17,6 +17,8 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumRodType;
+import pixelmon.spawning.SpawnData;
+import pixelmon.spawning.SpawnRegistry;
 import pixelmon.storage.PixelmonStorage;
 
 import com.google.common.io.ByteArrayDataInput;
@@ -41,6 +43,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 
 public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawnData {
 	/** The tile this entity is on, X position */
@@ -67,6 +70,7 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 	 * entity.
 	 */
 	public Entity bobber;
+	public EntityHook bobberpos;
 	private int fishPosRotationIncrements;
 	private double fishX;
 	private double fishY;
@@ -473,8 +477,9 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 				getListOfValidWaterPixelmon();
 
 				this.angler.addStat(StatList.fishCaughtStat, 1);
-				this.angler.addChatMessage("Oh, a bite!");
-
+				ChatHandler.sendChat(angler, "Oh, a bite!");
+				ChatHandler.sendChat(angler, "rodrarity: " +  rodType.rarityThreshold);
+				ChatHandler.sendChat(angler, "keys: " +  pixelmonRarity.keySet());
 				int intTotalRarity = 0;
 				for (Integer rarity : this.pixelmonRarity.values()) {
 					intTotalRarity += rarity;
@@ -521,63 +526,21 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 
 	public void getListOfValidWaterPixelmon() {
 
-		// Always have magikarp on list
-		if (angler.inventory.getCurrentItem().itemID == PixelmonItems.superRod.itemID) {
-			pixelmonRarity.clear();
-			pixelmonRarity.put("Squirtle", 10);
-			pixelmonRarity.put("Wartortle", 5);
-			pixelmonRarity.put("Psyduck", 150);
-			pixelmonRarity.put("Golduck", 90);
-			pixelmonRarity.put("Poliwag", 180);
-			pixelmonRarity.put("Poliwhirl", 90);
-			pixelmonRarity.put("Tentacool", 190);
-			pixelmonRarity.put("Slowpoke", 80);
-			pixelmonRarity.put("Slowbro", 40);
-			pixelmonRarity.put("Seel", 80);
-			pixelmonRarity.put("Dewgong", 40);
-			pixelmonRarity.put("Shelder", 100);
-			pixelmonRarity.put("Krabby", 110);
-			pixelmonRarity.put("Kingler", 55);
-			pixelmonRarity.put("Horsea", 100);
-			pixelmonRarity.put("Seadra", 50);
-			pixelmonRarity.put("Goldeen", 100);
-			pixelmonRarity.put("Seaking", 50);
-			pixelmonRarity.put("Staryu", 100);
-			pixelmonRarity.put("Magikarp", 200);
-			pixelmonRarity.put("Gyarados", 1);
-			pixelmonRarity.put("Lapras", 10);
-			pixelmonRarity.put("Dratini", 5);
-			pixelmonRarity.put("Dragonair", 3);
-			//ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
+		// Always have magikarp and Goldeen on list
+		pixelmonRarity.put("Magikarp", 200);
+		pixelmonRarity.put("Goldeen", 100);
 
-		}
-
-		else if (angler.inventory.getCurrentItem().itemID == PixelmonItems.goodRod.itemID) {
-			pixelmonRarity.clear();
-			pixelmonRarity.put("Magikarp", 200);
-			pixelmonRarity.put("Tentacool", 190);
-			pixelmonRarity.put("Poliwag", 180);
-			pixelmonRarity.put("Psyduck", 150);
-			pixelmonRarity.put("Krabby", 110);
-			pixelmonRarity.put("Shelder", 100);
-			pixelmonRarity.put("Horsea", 100);
-			pixelmonRarity.put("Goldeen", 100);
-			pixelmonRarity.put("Staryu", 100);
-			pixelmonRarity.put("Tentacruel", 95);
-			pixelmonRarity.put("Poliwhirl", 90);
-			pixelmonRarity.put("Golduck", 90);
-			//ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
-
-		} else {
-			pixelmonRarity.clear();
-			pixelmonRarity.put("Magikarp", 200);
-			pixelmonRarity.put("Goldeen", 100);
-			//ChatHandler.sendChat(angler, "Keys: " + pixelmonRarity.keySet());
-
-		}
+		
+		List<SpawnData> spawns = SpawnRegistry.getWaterSpawnsForBiome(worldObj.getBiomeGenForCoords(xTile, zTile));
+		
+		 int rarityThreshold = rodType.rarityThreshold;
+		    for (SpawnData pixelmon : spawns) {
+		      if (pixelmon.rarity >= rarityThreshold) {
+		        pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
+		      }
+		    }
 
 	}
-
 
 	/**
 	 * Will get destroyed next tick.
