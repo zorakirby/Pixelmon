@@ -478,8 +478,6 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 
 				this.angler.addStat(StatList.fishCaughtStat, 1);
 				ChatHandler.sendChat(angler, "Oh, a bite!");
-				ChatHandler.sendChat(angler, "rodrarity: " +  rodType.rarityThreshold);
-				ChatHandler.sendChat(angler, "keys: " +  pixelmonRarity.keySet());
 				int intTotalRarity = 0;
 				for (Integer rarity : this.pixelmonRarity.values()) {
 					intTotalRarity += rarity;
