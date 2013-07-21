@@ -33,6 +33,7 @@ public class GeneralScattered extends StructureScattered {
 			for (int x = 0; x < s.width; x++)
 				for (int z = 0; z < s.length; z++)
 					for (int y = 0; y < s.height; y++) {
+						this.placeBlockAtCurrentPosition(world, 0, 0, x, y, z, bb);
 						int blockId = s.blocks[x][y][z];
 						try {
 							if (blockId < 0)
