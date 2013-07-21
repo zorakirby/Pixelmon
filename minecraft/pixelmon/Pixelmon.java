@@ -13,6 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import pixelmon.battles.BattleTickHandler;
 import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.client.ClientPacketHandler;
+import pixelmon.client.ClientProxy;
 import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
 import pixelmon.config.PixelmonConfig;
@@ -105,7 +106,7 @@ public class Pixelmon {
 		proxy.registerInteractions();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityHook.class, "Hook", 214, this, 74, 1, true);
+		EntityRegistry.registerModEntity(EntityHook.class, "Hook", 216, this, 75, 1, true);
 
 		
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());

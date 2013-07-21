@@ -1,9 +1,13 @@
 package pixelmon.client.render;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderFish;
 import net.minecraft.entity.Entity;
+import pixelmon.entities.projectiles.*;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
@@ -11,13 +15,11 @@ import net.minecraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import pixelmon.entities.projectiles.EntityHook;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 @SideOnly(Side.CLIENT)
-public class RenderHook extends Render
+public class RenderHook extends RenderFish
 {
+    private static final ResourceLocation field_110792_a = new ResourceLocation("textures/particle/particles.png");
+
     /**
      * Actually renders the fishing line and hook
      */
@@ -27,9 +29,10 @@ public class RenderHook extends Render
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(0.5F, 0.5F, 0.5F);
+        this.func_110777_b(par1EntityHook);
+        Tessellator tessellator = Tessellator.instance;
         byte b0 = 1;
         byte b1 = 2;
-        Tessellator tessellator = Tessellator.instance;
         float f2 = (float)(b0 * 8 + 0) / 128.0F;
         float f3 = (float)(b0 * 8 + 8) / 128.0F;
         float f4 = (float)(b1 * 8 + 0) / 128.0F;
@@ -61,7 +64,7 @@ public class RenderHook extends Render
             double d3 = par1EntityHook.angler.prevPosX + (par1EntityHook.angler.posX - par1EntityHook.angler.prevPosX) * (double)par9 + vec3.xCoord;
             double d4 = par1EntityHook.angler.prevPosY + (par1EntityHook.angler.posY - par1EntityHook.angler.prevPosY) * (double)par9 + vec3.yCoord;
             double d5 = par1EntityHook.angler.prevPosZ + (par1EntityHook.angler.posZ - par1EntityHook.angler.prevPosZ) * (double)par9 + vec3.zCoord;
-            double d6 = par1EntityHook.angler != Minecraft.getMinecraft().thePlayer ? (double)par1EntityHook.angler.getEyeHeight() : 0.0D;
+            double d6 = par1EntityHook.angler == Minecraft.getMinecraft().thePlayer ? 0.0D : (double)par1EntityHook.angler.getEyeHeight();
 
             if (this.renderManager.options.thirdPersonView > 0 || par1EntityHook.angler != Minecraft.getMinecraft().thePlayer)
             {
@@ -97,6 +100,16 @@ public class RenderHook extends Render
         }
     }
 
+    protected ResourceLocation func_110791_a(EntityHook par1EntityHook)
+    {
+        return field_110792_a;
+    }
+
+    protected ResourceLocation func_110775_a(Entity par1Entity)
+    {
+        return this.func_110791_a((EntityHook)par1Entity);
+    }
+
     /**
      * Actually renders the given argument. This is a synthetic bridge method, always casting down its argument and then
      * handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic
@@ -107,10 +120,4 @@ public class RenderHook extends Render
     {
         this.doRenderHook((EntityHook)par1Entity, par2, par4, par6, par8, par9);
     }
-
-	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

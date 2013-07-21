@@ -220,11 +220,11 @@ public class PixelmonItems {
 	@Mod.Item(name = "Wailmer Pail", typeClass = "pixelmon.items.ItemWailmerPail")
 	public static Item wailmerPail;
 
-	@Mod.Item(name = "Old Rod", typeClass = "pixelmon.items.ItemOldRod")
+	@Mod.Item(name = "Old Rod", typeClass = "pixelmon.items.ItemFishingRod")
 	public static Item oldRod;
-	@Mod.Item(name = "Good Rod", typeClass = "pixelmon.items.ItemGoodRod")
+	@Mod.Item(name = "Good Rod", typeClass = "pixelmon.items.ItemFishingRod")
 	public static Item goodRod;
-	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemSuperRod")
+	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemFishingRod")
 	public static Item superRod;
 
 	public static void load(Configuration cfg) {
