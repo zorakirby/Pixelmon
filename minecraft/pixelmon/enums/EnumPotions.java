@@ -5,7 +5,7 @@ import pixelmon.config.PixelmonItems;
 
 public enum EnumPotions {
 	Potion(2, 20, 0, "potion"), SuperPotion(18, 50, 0, "superpotion"),
-	HyperPotion(34, 200, 0, "hyperpotion"), MaxPotion(50, 0, 100, "maxpotion");
+	HyperPotion(34, 200, 0, "hyperpotion"), MaxPotion(50, 0, 100, "maxpotion"), Revive(2, 20, 0, "Revive");
 
 	private EnumPotions(int index, int healAmount, int healPercent, String filenamePrefix) {
 		this.healAmount = healAmount;
@@ -40,6 +40,8 @@ public enum EnumPotions {
 			return PixelmonItems.hyperPotion;
 		if (index == 50)
 			return PixelmonItems.maxPotion;
+		//if (index == 2)
+			//return PixelmonItems.revive;
 		return PixelmonItems.potion;
 	}
 
@@ -56,6 +58,8 @@ public enum EnumPotions {
 			return EnumPotions.HyperPotion;
 		if (index == 50)
 			return EnumPotions.MaxPotion;
+		if(index == 2)
+			return EnumPotions.Revive;
 		else
 			return EnumPotions.Potion;
 	}
