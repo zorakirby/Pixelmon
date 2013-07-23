@@ -7,6 +7,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -32,6 +33,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 	public SlotInventoryPixelmon[] pixelmonSlots;
+	private RenderItem itemRenderer = new RenderItem();
 
 	boolean pixelmonMenuOpen;
 	int menuX;
@@ -129,9 +131,8 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 				if (p.heldItemId != -1) {
 					ItemHeld heldItem = (ItemHeld) PixelmonItemsHeld.getHeldItem(p.heldItemId);
 					if (heldItem != null) {
-						Icon icon = heldItem.getIconIndex(new ItemStack(heldItem));
-						mc.renderEngine.func_110577_a(GuiResources.items);
-						drawIcon(slot.heldItemX, slot.heldItemY, icon, 16, 16);
+			            itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.func_110434_K(), new ItemStack(heldItem), slot.heldItemX, slot.heldItemY);
+			            itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.func_110434_K(), new ItemStack(heldItem), slot.heldItemX, slot.heldItemY, null);
 					}
 				} else {
 					mc.renderEngine.func_110577_a(GuiResources.heldItem);

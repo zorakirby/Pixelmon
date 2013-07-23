@@ -138,9 +138,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 				if (p.heldItemId != -1) {
 					ItemHeld heldItem = (ItemHeld) PixelmonItemsHeld.getHeldItem(p.heldItemId);
 					if (heldItem != null) {
-						Icon icon = heldItem.getIconIndex(new ItemStack(heldItem));
-						mc.renderEngine.func_110577_a(GuiResources.mcItems);
-						drawIcon(slot.heldItemX, slot.heldItemY, icon, 16, 16);
+			            itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.func_110434_K(), new ItemStack(heldItem), slot.heldItemX, slot.heldItemY);
+			            itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.func_110434_K(), new ItemStack(heldItem), slot.heldItemX, slot.heldItemY, null);
 					}
 				} else {
 					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
