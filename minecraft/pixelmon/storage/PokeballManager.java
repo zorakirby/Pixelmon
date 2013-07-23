@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
-import pixelmon.DownloadHelper;
 import pixelmon.Pixelmon;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.database.DownloadHelper;
 import pixelmon.enums.EnumGui;
 
 import net.minecraft.entity.player.EntityPlayer;
