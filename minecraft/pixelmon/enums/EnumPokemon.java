@@ -85,6 +85,7 @@ public enum EnumPokemon {
 	Krokorok("Krokorok"),
 	Lapras("Lapras"),
 	Leafeon("Leafeon"),
+	Lickitung("Lickitung"),
 	Lunatone("Lunatone"),
 	Machamp("Machamp"),
 	Machoke("Machoke"),

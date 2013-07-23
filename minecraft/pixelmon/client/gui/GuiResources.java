@@ -25,7 +25,7 @@ public class GuiResources {
 	public static ResourceLocation pixelmonCreativeInventory = new ResourceLocation("pixelmon:gui/PixelmonCreativeInventory.png");
 	public static ResourceLocation pixelmonOverlay = new ResourceLocation("pixelmon:gui/pixelmonOverlay.png");
 	public static ResourceLocation pixelmonOverlayExtended2 = new ResourceLocation("pixelmon:gui/pixelmonOverlayExtended2.png");
-	public static ResourceLocation mcInventory = new ResourceLocation("gui/inventory.png");
+	public static ResourceLocation mcInventory = new ResourceLocation("minecraft:textures/gui/container/inventory.png");
 	public static ResourceLocation mcItems = new ResourceLocation("gui/items.png");
 	
 	public static ResourceLocation pcPartyBox = new ResourceLocation("pixelmon:gui/pcPartyBox.png");
