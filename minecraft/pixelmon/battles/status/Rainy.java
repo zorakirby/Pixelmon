@@ -3,6 +3,7 @@ package pixelmon.battles.status;
 import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.controller.BattleController;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
@@ -14,12 +15,12 @@ public class Rainy extends GlobalStatusBase {
 	}
 	
 	@Override
-	public String endOfTurnMessage(ArrayList<GlobalStatusBase> list)
+	public String endOfTurnMessage(BattleController bc)
 	{
 		turnsToGo--;
 		if (turnsToGo == 0)
 		{
-			list.remove(this);
+			bc.removeGlobalStatus(this);
 			return "The rain subsided";
 		}
 		return "It is raining heavily!";

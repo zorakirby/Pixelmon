@@ -32,7 +32,7 @@ public class BattleController {
 	public ArrayList<BattleParticipant> participants = new ArrayList<BattleParticipant>();
 
 	private int battleTicks = 0;
-	public ArrayList<GlobalStatusBase> globalStatuses = new ArrayList<GlobalStatusBase>();
+	private ArrayList<GlobalStatusBase> globalStatuses = new ArrayList<GlobalStatusBase>();
 	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
@@ -144,10 +144,10 @@ public class BattleController {
 						}
 						for (int i = 0 ; i < globalStatuses.size() ; i++)
 						{
-							if (!globalStatuses.get(i).endOfTurnMessage(globalStatuses).equals(""))
+							if (!globalStatuses.get(i).endOfTurnMessage(this).equals(""))
 							{
 							ChatHandler.sendBattleMessage(participants.get(0).currentPokemon().getOwner(), participants.get(1).currentPokemon().getOwner(),
-									globalStatuses.get(i).endOfTurnMessage(globalStatuses));
+									globalStatuses.get(i).endOfTurnMessage(this));
 							globalStatuses.get(i).applyRepeatedEffect(globalStatuses, this.participants.get(0).currentPokemon(), this.participants.get(1).currentPokemon());
 							}
 						}
@@ -393,7 +393,7 @@ public class BattleController {
 	
 	public void removeGlobalStatus(GlobalStatusBase g)
 	{
-		for (int i = 0; i > globalStatuses.size(); i++)
+		for (int i = 0; i < globalStatuses.size(); i++)
 		{
 			if (globalStatuses.get(i) == g)
 			{
@@ -413,4 +413,14 @@ public class BattleController {
 		globalStatuses.add(g);
 			
 	}
+	
+	public GlobalStatusBase getGlobalStatus(int index)
+	{
+		return globalStatuses.get(index);
+	}
+	public int getGlobalStatusSize()
+	{
+		return globalStatuses.size();
+	}
+	
 }

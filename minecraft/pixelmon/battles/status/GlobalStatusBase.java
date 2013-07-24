@@ -3,6 +3,7 @@ package pixelmon.battles.status;
 import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.controller.BattleController;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class GlobalStatusBase {
@@ -11,7 +12,7 @@ public abstract class GlobalStatusBase {
 	{
 		this.name = name;
 	}
-	public String endOfTurnMessage(ArrayList<GlobalStatusBase> list)
+	public String endOfTurnMessage(BattleController bc)
 	{
 		return "";
 	}
