@@ -9,8 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import pixelmon.DownloadHelper;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.database.DownloadHelper;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

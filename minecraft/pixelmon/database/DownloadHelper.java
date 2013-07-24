@@ -1,4 +1,4 @@
-package pixelmon;
+package pixelmon.database;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,23 +9,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Scanner;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedInputStream;
 
 import javax.swing.text.Document;
 import javax.swing.text.rtf.RTFEditorKit;
 
-import pixelmon.database.DatabaseHelper;
+import pixelmon.Pixelmon;
 
 public class DownloadHelper {
 
-	public static String readFile(String url) {
+	public static DLInfo readFile(String path) {
 		try {
-			byte[] array = new byte[4096];
-			RTFEditorKit rtfParser = new RTFEditorKit();
-			Document document = rtfParser.createDefaultDocument();
-			rtfParser.read(new URL(url).openStream(), document, 0);
-			return document.getText(0, document.getLength());
+			URL url = new URL(path);
+			InputStream stream = url.openStream();
+			Scanner s = new java.util.Scanner(stream).useDelimiter("\r\n");
+			DLInfo dlInfo = new DLInfo();
+			dlInfo.version = s.hasNext() ? s.next() : "";
+			dlInfo.checksum = s.hasNext() ? s.next() : "";
+			dlInfo.url = s.hasNext() ? s.next() : "";
+			s.close();
+			stream.close();
+			return dlInfo;
 		} catch (Exception e) {
 		}
 		return null;
@@ -81,13 +87,11 @@ public class DownloadHelper {
 		}
 	}
 
-	public static boolean compareVersion(String file, String url) {
-		if (url == null)
-			return true;
+	public static boolean compareVersion(String file, String checksumString) {
+		long checksum = Long.parseLong(checksumString);
 		try {
 			long fileVersion = getChecksum(new FileInputStream(new File(getDir(), file)));
-			long urlVersion = getChecksum(new URL(url).openStream());
-			return fileVersion == urlVersion;
+			return fileVersion == checksum;
 		} catch (Exception e) {
 			return false;
 		}
@@ -119,18 +123,10 @@ public class DownloadHelper {
 		return Pixelmon.modDirectory;
 	}
 
-	private static String dbPath = null;
-
-	public static String getDatabasePath() {
-		if (dbPath != null)
-			return dbPath;
-		String databasePath = DownloadHelper.readFile(DatabaseHelper.databaseURL);
+	public static DLInfo getDatabasePath() {
+		DLInfo databasePath = DownloadHelper.readFile(DatabaseHelper.databaseURL);
 		if (databasePath == null)
 			return null;
-		int startString = databasePath.indexOf("\n");
-		if (startString != -1)
-			databasePath = databasePath.substring(0, startString);
-		dbPath = databasePath;
-		return dbPath;
+		return databasePath;
 	}
 }

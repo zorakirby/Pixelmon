@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import pixelmon.DownloadHelper;
 import pixelmon.config.PixelmonConfig;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModClassLoader;
@@ -25,7 +24,7 @@ public class DatabaseHelper {
 	 * 
 	 * @return True if they do, otherwise false
 	 */
-	public static String databaseURL = "http://pixelmonmod.com/pixelmon.db";
+	public static String databaseURL = "http://pixelmonmod.com/db.info";
 	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
 
 	public static boolean checkForDatabaseUpdates = true;
@@ -69,8 +68,11 @@ public class DatabaseHelper {
 	}
 
 	public static void checkVersion() {
-		if (!DownloadHelper.compareVersion("database/Pixelmon.db", databaseURL)) {
-			DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
+		DLInfo dlInfo = DownloadHelper.getDatabasePath();
+		if (dlInfo == null)
+			return;
+		if (!DownloadHelper.compareVersion("database/Pixelmon.db", dlInfo.checksum)) {
+			DownloadHelper.downloadFile("database/Pixelmon.db", dlInfo.url);
 		}
 	}
 

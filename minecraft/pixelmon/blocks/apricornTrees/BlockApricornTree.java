@@ -38,7 +38,7 @@ public class BlockApricornTree extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("tree_top");
+		blockIcon = par1IconRegister.registerIcon("log_oak_top");
 	}
 
 	@Override
