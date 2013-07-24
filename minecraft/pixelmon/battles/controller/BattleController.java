@@ -142,7 +142,6 @@ public class BattleController {
 								e.printStackTrace();
 							}
 						}
-						if(globalStatuses.size() != 0)
 						for (int i = 0 ; i < globalStatuses.size() ; i++)
 						{
 							if (!globalStatuses.get(i).endOfTurnMessage(globalStatuses).equals(""))
@@ -370,7 +369,7 @@ public class BattleController {
 	
 	public void checkAndRemoveWeather() 
 	{
-		for (int i = 0; i < globalStatuses.size()-1; i++)
+		for (int i = 0; i < globalStatuses.size(); i++)
 		{
 			GlobalStatusBase g = globalStatuses.get(i);
 			if (g instanceof Rainy || g instanceof Clear)
@@ -390,5 +389,28 @@ public class BattleController {
 				return g;
 		}
 		return null;
+	}
+	
+	public void removeGlobalStatus(GlobalStatusBase g)
+	{
+		for (int i = 0; i > globalStatuses.size(); i++)
+		{
+			if (globalStatuses.get(i) == g)
+			{
+				if (g instanceof Rainy)
+					globalStatuses.add(new Clear());
+				globalStatuses.remove(i);	
+			}
+		}
+	}
+	
+	public void addGlobalStatus(GlobalStatusBase g)
+	{
+		if (g instanceof Rainy)
+			for (int i = 0; i < globalStatuses.size(); i++)
+				if (globalStatuses.get(i) instanceof Clear)
+					globalStatuses.remove(i);
+		globalStatuses.add(g);
+			
 	}
 }

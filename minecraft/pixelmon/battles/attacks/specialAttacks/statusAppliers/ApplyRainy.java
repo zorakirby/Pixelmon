@@ -15,9 +15,9 @@ public class ApplyRainy extends StatusApplierBase {
 			EntityPixelmon target, ArrayList<String> attackList,
 			ArrayList<String> tsargetAttackList) throws Exception {
 		System.out.println("Size of statuses is " + user.battleController.globalStatuses.size());
-		if (user.battleController.globalStatuses.size() != 0)
 		for (int i = 0; i < user.battleController.globalStatuses.size(); i++)
 		{
+			System.out.println(user.battleController.globalStatuses.get(i).getName());
 			if (user.battleController.globalStatuses.get(i) instanceof Rainy)
 			{
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), a.baseAttack.attackName + " failed!");
@@ -27,6 +27,11 @@ public class ApplyRainy extends StatusApplierBase {
 		}
 		user.battleController.checkAndRemoveWeather();
 		user.battleController.globalStatuses.add(new Rainy());
+		for (int i = 0; i < user.battleController.globalStatuses.size(); i++)
+		{
+			System.out.println(user.battleController.globalStatuses.get(i).getName());
+		}
+		
 	}
 
 	@Override

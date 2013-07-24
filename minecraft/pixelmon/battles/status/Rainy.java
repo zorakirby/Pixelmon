@@ -7,10 +7,10 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 public class Rainy extends GlobalStatusBase {
-	int turnsToGo = 5;
-	boolean endsThisTurn = false;
+	
+	int turnsToGo = 10; // endOfTurnMessage is called twice at once, so turns require doubling (will make a fix at some point)
 	public Rainy() {
-		super(false, true);
+		super("Rainy");
 	}
 	
 	@Override
@@ -35,7 +35,5 @@ public class Rainy extends GlobalStatusBase {
 	   else if (a.baseAttack.attackType == EnumType.Fire)
 				a.baseAttack.basePower *= 0.5;
 		}
-		return;	
 	}
-
 }
