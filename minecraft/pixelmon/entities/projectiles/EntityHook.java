@@ -477,7 +477,6 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 				getListOfValidWaterPixelmon();
 
 				this.angler.addStat(StatList.fishCaughtStat, 1);
-				ChatHandler.sendChat(angler, "Oh, a bite!");
 				int intTotalRarity = 0;
 				for (Integer rarity : this.pixelmonRarity.values()) {
 					intTotalRarity += rarity;
@@ -529,7 +528,7 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 		pixelmonRarity.put("Goldeen", 100);
 
 		
-		List<SpawnData> spawns = SpawnRegistry.getWaterSpawnsForBiome(worldObj.getBiomeGenForCoords(xTile, zTile));
+		List<SpawnData> spawns = SpawnRegistry.getWaterSpawnsForBiome(worldObj.getBiomeGenForCoords((int)fishX, (int)fishZ));
 		
 		 int rarityThreshold = rodType.rarityThreshold;
 		    for (SpawnData pixelmon : spawns) {
