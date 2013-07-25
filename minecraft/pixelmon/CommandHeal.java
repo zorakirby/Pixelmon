@@ -45,9 +45,8 @@ public class CommandHeal extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender par1ICommandSender, String[] par2ArrayOfStr) {
 		try {
-			if (par2ArrayOfStr.length < 1) {
-				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Arguments."));
-				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d(this.getCommandUsage(par1ICommandSender)));
+			if (par2ArrayOfStr.length == 0) {
+				this.processCommand(par1ICommandSender, new String[] {par1ICommandSender.getCommandSenderName()});
 				return;
 			}
 
@@ -92,11 +91,15 @@ public class CommandHeal extends CommandBase {
 				return;
 			}
 		} catch (PlayerNotFoundException e) {
-			// Catches the case where in cracked clients player's name defaults
-			// is "ASH"
-			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Name! Try again or try using 'ash'."));
+			// Catches the case where in cracked clients player's name defaults is "ASH"
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Name! Try again."));
 		} catch (Exception e) {
-			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Name! Try again or try using 'ash'."));
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Name! Try again."));
 		}
 	}
+
+    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    {
+        return par2ArrayOfStr.length != 1 && par2ArrayOfStr.length != 2 ? null : getListOfStringsMatchingLastWord(par2ArrayOfStr, MinecraftServer.getServer().getAllUsernames());
+    }
 }
