@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.server.FMLServerHandler;
 
 import pixelmon.RandomHelper;
 import pixelmon.config.PixelmonConfig;
@@ -26,12 +27,10 @@ import net.minecraft.world.biome.BiomeGenBase;
 public class StructureRegistry {
 	public static ArrayList<StructureData> scatteredStructures = new ArrayList<StructureData>();
 
-
 	public static void loadStructures(Side side) {
-		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
 		int i = 1;
-		while (resourcePack.func_110589_b(new ResourceLocation("pixelmon:structures/standAlone/pokecenter" + i + ".data"))) {
-			StructureData data = loadStructureData("pokecenter" + i, "pixelmon:structures/standAlone");
+		while (StructureRegistry.class.getResourceAsStream("/pixelmon/structure/standAlone/" + "pokecenter" + i + ".data") != null) {
+			StructureData data = loadStructureData("pokecenter" + i, "/pixelmon/structure/standAlone");
 			i++;
 			if (data != null)
 				scatteredStructures.add(data);
@@ -40,17 +39,15 @@ public class StructureRegistry {
 
 	private static StructureData loadStructureData(String filename, String path) {
 		StructureData data = new StructureData();
-		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
-		
-		if (!resourcePack.func_110589_b(new ResourceLocation("pixelmon:structures/standAlone/" + filename +".schematic")))
+		if (StructureRegistry.class.getResourceAsStream("/pixelmon/structure/standAlone/" + filename + ".schematic") == null)
 			return null;
-		data.path = path + "/" + filename +".schematic";
+		data.path = path + "/" + filename + ".schematic";
 
 		InputStream is;
 		BufferedReader br;
 		try {
-			is = resourcePack.func_110590_a(new ResourceLocation(path + "/" + filename +".data"));
-			br = new BufferedReader(new InputStreamReader(is,"utf-8"));
+			is = StructureRegistry.class.getResourceAsStream("/pixelmon/structure/standAlone/" + filename + ".data");
+			br = new BufferedReader(new InputStreamReader(is, "utf-8"));
 
 			String line = br.readLine();
 			while (line != null) {

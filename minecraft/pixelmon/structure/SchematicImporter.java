@@ -72,8 +72,7 @@ public class SchematicImporter {
 
 	NBTTagCompound getNBTTag() {
 		try {
-			AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
-			return CompressedStreamTools.readCompressed(resourcePack.func_110590_a(new ResourceLocation(filename)));
+			return CompressedStreamTools.readCompressed(StructureRegistry.class.getResourceAsStream(filename));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
