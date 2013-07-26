@@ -35,7 +35,7 @@ public class Level {
 	public Level(EntityPixelmon p) {
 		this.pixelmon = p;
 		pixelmon.getDataWatcher().addObject(EntityPixelmon.dwLevel, (short) -1); // Level
-		pixelmon.getDataWatcher().addObject(EntityPixelmon.dwExp, (short) 0); // ExperiencePercent
+		pixelmon.getDataWatcher().addObject(EntityPixelmon.dwExp, (int) 0); // ExperiencePercent
 		setScale();
 	}
 
@@ -109,11 +109,11 @@ public class Level {
 	}
 
 	public int getExp() {
-		return pixelmon.getDataWatcher().getWatchableObjectShort(EntityPixelmon.dwExp);
+		return pixelmon.getDataWatcher().getWatchableObjectInt(EntityPixelmon.dwExp);
 	}
 
 	public void setExp(int i) {
-		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwExp, (short) i);
+		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwExp, (int) i);
 	}
 
 	public boolean canLevelUp() {
