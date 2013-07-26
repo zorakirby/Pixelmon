@@ -130,6 +130,10 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						&& this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
 					this.motionY = 0.30000001192092896D;
 				}
+				
+				this.motionY *= 0.9800000190734863D;
+				this.motionX *= (double) 0.96f;
+				this.motionZ *= (double) 0.96f;
 
 				movementHandled = true;
 			}
