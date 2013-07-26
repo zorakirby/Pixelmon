@@ -135,6 +135,9 @@ public class ClientPacketHandler implements IPacketHandler {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			}else if (packetID == EnumPackets.SwitchCamera.getIndex()){
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
