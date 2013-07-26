@@ -19,6 +19,6 @@ public class CaptureSafariBall extends CaptureBase {
 		if(biome == BiomeGenBase.plains){
 			return 1.5;
 		}
-		return 0;
+		return 1;
 	}
 }
