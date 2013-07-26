@@ -489,7 +489,6 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 							bc = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildPixelmon);
 							wildPixelmon.StartBattle(bc, wildPixelmon);
 							this.worldObj.spawnEntityInWorld(pixelmonEntity);
-							System.out.println("Keys: " + pixelmonRarity.keySet());
 						} catch (Exception e) {
 							System.out.println("Error in Spawning Pixelmon caught by rod. " + e.toString());
 						}
