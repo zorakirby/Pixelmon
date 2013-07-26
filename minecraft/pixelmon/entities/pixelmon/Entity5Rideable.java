@@ -123,9 +123,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			}
 			if (baseStats.canSurf) {
 				double var9 = this.posY;
-				//this.moveFlying(par1, par2, jumpMovementFactor);
-				this.moveEntityWithHeading(par1, par2);
-				// this.motionY -= 0.02D;
+				this.moveFlying(par1, par2, jumpMovementFactor);
+				this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
 				if (this.isCollidedHorizontally
 						&& this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
