@@ -21,7 +21,7 @@ public class Rainy extends GlobalStatusBase {
 		if (turnsToGo == 0)
 		{
 			bc.removeGlobalStatus(this);
-			return "The rain subsided";
+			return "The rain stopped";
 		}
 		return "It is raining heavily!";
 	}

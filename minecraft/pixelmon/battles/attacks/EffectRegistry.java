@@ -82,6 +82,7 @@ import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyRainy;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyRecharge;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyRest;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySafeGuard;
+import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySandstorm;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySleep;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySunny;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyTrickRoom;
@@ -110,7 +111,6 @@ public class EffectRegistry {
 		effectMap.put("poisonbadly", ApplyPoisonBadly.class);
 //		effectMap.put("pp", Spite.class);
 		effectMap.put("protect", ApplyProtect.class);
-		effectMap.put("raindance", ApplyRainy.class);
 		effectMap.put("rest", ApplyRest.class);
 		effectMap.put("recharge", ApplyRecharge.class);
 		effectMap.put("safeguard", ApplySafeGuard.class);
@@ -186,7 +186,8 @@ public class EffectRegistry {
 		effectMap.put("solarbeam", SolarBeam.class);
 		
 		// Global statuses
-
+		effectMap.put("raindance", ApplyRainy.class);
+		effectMap.put("sandstorm", ApplySandstorm.class);
 	}
 
 	public static EffectBase getEffect(String effectTypeString, Value[] values) {

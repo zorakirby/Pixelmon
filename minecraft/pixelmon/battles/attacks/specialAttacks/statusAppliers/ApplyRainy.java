@@ -25,11 +25,6 @@ public class ApplyRainy extends StatusApplierBase {
 		}
 		user.battleController.checkAndRemoveWeather();
 		user.battleController.addGlobalStatus(new Rainy());
-		for (int i = 0; i < user.battleController.getGlobalStatusSize(); i++)
-		{
-			System.out.println(user.battleController.getGlobalStatus(i).getName());
-		}
-		
 	}
 
 	@Override
