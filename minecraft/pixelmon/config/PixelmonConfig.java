@@ -21,6 +21,7 @@ public class PixelmonConfig {
 
 	public static boolean allowNonPixelmonMobs;
 	public static boolean allowCapturingOutsideBattle = true;
+	public static boolean spawnStructures = true;
 
 	public static int maxNumLandPokemon;
 	public static int maxNumWaterPokemon;
@@ -52,6 +53,7 @@ public class PixelmonConfig {
 		config = configuration;
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
+		spawnStructures = config.get("general", "Allow Structures to Spawn", true).getBoolean(true);
 		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs",
 				false).getBoolean(false);
 		allowCapturingOutsideBattle = config.get("general",
