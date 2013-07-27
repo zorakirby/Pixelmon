@@ -35,6 +35,8 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 	private int minDistanceBetweenScatteredFeatures = 1;
 
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+		if (random.nextInt(6) != 1)
+			return;
 		int xPos = random.nextInt(16) + chunkX * 16;
 		int yPos = 64;
 		int zPos = random.nextInt(16) + chunkZ * 16;
@@ -57,5 +59,4 @@ public class WorldGenScatteredFeature extends MapGenScatteredFeature implements 
 		return false;
 	}
 
-	
 }

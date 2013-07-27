@@ -19,21 +19,13 @@ import pixelmon.enums.EnumPokemon;
 
 public abstract class Entity2HasModel extends Entity1Base {
 
-	@SideOnly(Side.CLIENT)
 	ModelBase model;
-	@SideOnly(Side.CLIENT)
 	public float animationNum1 = 0f;
-	@SideOnly(Side.CLIENT)
 	public int animationCounter = 0;
-	@SideOnly(Side.CLIENT)
 	public int animationIncrement = 2;
-	@SideOnly(Side.CLIENT)
 	public int animationLimit = 360;
-	@SideOnly(Side.CLIENT)
 	public int animationCounter2 = 0;
-	@SideOnly(Side.CLIENT)
 	public int animationIncrement2 = 3;
-	@SideOnly(Side.CLIENT)
 	public int animationLimit2 = 360;
 
 	public Entity2HasModel(World par1World) {

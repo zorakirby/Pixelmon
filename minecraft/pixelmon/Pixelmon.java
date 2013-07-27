@@ -66,7 +66,7 @@ public class Pixelmon {
 	public static Migration migration;
 
 	public static StringTranslate stringtranslate = new StringTranslate();
-	
+
 	@SidedProxy(clientSide = "pixelmon.client.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
 
@@ -75,7 +75,7 @@ public class Pixelmon {
 	public static File modDirectory;
 
 	Configuration config;
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		instance = this;
@@ -104,7 +104,7 @@ public class Pixelmon {
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntityHook.class, "Hook", 216, this, 75, 1, true);
-		
+
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
@@ -124,11 +124,14 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
 
-		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
-		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
-		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
-		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
-		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
+		if (event.getSide().isClient())
+			TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
+		else {
+			TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
+			TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
+			TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
+			TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
+		}
 		proxy.registerTickHandlers();
 	}
 
