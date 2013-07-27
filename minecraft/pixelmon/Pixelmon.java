@@ -124,14 +124,12 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
 
-		if (event.getSide().isClient())
-			TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
-		else {
-			TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
-			TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
-			TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
-			TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
-		}
+		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
+		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
+		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
+		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
+		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
+		
 		proxy.registerTickHandlers();
 	}
 
