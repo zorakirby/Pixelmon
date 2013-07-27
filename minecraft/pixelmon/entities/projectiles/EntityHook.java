@@ -397,14 +397,17 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 				}
 
 				if (this.ticksCatchable > 0) {
-					this.motionY -= (double) (this.rand.nextFloat() * this.rand.nextFloat() * this.rand.nextFloat()) * 0.2D;
+					if (this.ticksCatchable == 5) {
+						ChatHandler.sendChat(angler, "Keys: " + this.pixelmonRarity.keySet());
+						ChatHandler.sendChat(angler, "                                                           !");
+					}
+					this.motionY -= (double) (this.rand.nextFloat() * this.rand.nextFloat() * this.rand.nextFloat()) * 0.4D;
 				}
-
 				d5 = d6 * 2.0D - 1.0D;
 				this.motionY += 0.03999999910593033D * d5;
 
 				if (d6 > 0.0D) {
-					f2 = (float) ((double) f2 * 0.9D);
+					f2 = (float) ((double) f2 * 0.8D);
 					this.motionY *= 0.8D;
 				}
 
@@ -522,8 +525,10 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 
 		int rarityThreshold = rodType.rarityThreshold;
 		for (SpawnData pixelmon : spawns) {
-			if (pixelmon.rarity >= rarityThreshold) {
-				pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
+			if (spawns != null) {
+				if (pixelmon.rarity >= rarityThreshold) {
+					pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
+				}
 			}
 		}
 
