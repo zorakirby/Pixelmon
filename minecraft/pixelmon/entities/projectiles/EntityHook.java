@@ -227,14 +227,6 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 			this.setRotation(this.rotationYaw, this.rotationPitch);
 		} else {
 			if (!this.worldObj.isRemote) {
-
-				if (this.angler.isDead || !this.angler.isEntityAlive() || this.angler.getHeldItem() == null
-						|| this.getDistanceSqToEntity(this.angler) > 1024.0D) {
-					this.setDead();
-					this.angler.fishEntity = null;
-					return;
-				}
-
 				if (this.bobber != null) {
 					if (!this.bobber.isDead) {
 						this.posX = this.bobber.posX;
@@ -405,14 +397,16 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 				}
 
 				if (this.ticksCatchable > 0) {
-					this.motionY -= (double) (this.rand.nextFloat() * this.rand.nextFloat() * this.rand.nextFloat()) * 0.2D;
+					if (this.ticksCatchable == 5) {
+						ChatHandler.sendChat(angler, "                                                           !");
+					}
+					this.motionY -= (double) (this.rand.nextFloat() * this.rand.nextFloat() * this.rand.nextFloat()) * 0.4D;
 				}
-
 				d5 = d6 * 2.0D - 1.0D;
 				this.motionY += 0.03999999910593033D * d5;
 
 				if (d6 > 0.0D) {
-					f2 = (float) ((double) f2 * 0.9D);
+					f2 = (float) ((double) f2 * 0.8D);
 					this.motionY *= 0.8D;
 				}
 
@@ -496,7 +490,6 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 									angler.worldObj);
 							bc = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildPixelmon);
 							wildPixelmon.StartBattle(bc, wildPixelmon);
-
 							this.worldObj.spawnEntityInWorld(pixelmonEntity);
 						} catch (Exception e) {
 							System.out.println("Error in Spawning Pixelmon caught by rod. " + e.toString());
@@ -527,15 +520,16 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 		pixelmonRarity.put("Magikarp", 200);
 		pixelmonRarity.put("Goldeen", 100);
 
-		
-		List<SpawnData> spawns = SpawnRegistry.getWaterSpawnsForBiome(worldObj.getBiomeGenForCoords((int)fishX, (int)fishZ));
-		
-		 int rarityThreshold = rodType.rarityThreshold;
-		    for (SpawnData pixelmon : spawns) {
-		      if (pixelmon.rarity >= rarityThreshold) {
-		        pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
-		      }
-		    }
+		List<SpawnData> spawns = SpawnRegistry.getWaterSpawnsForBiome(worldObj.getBiomeGenForCoords((int) this.posX, (int) this.posZ));
+
+		int rarityThreshold = rodType.rarityThreshold;
+		for (SpawnData pixelmon : spawns) {
+			if (spawns != null) {
+				if (pixelmon.rarity >= rarityThreshold) {
+					pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
+				}
+			}
+		}
 
 	}
 

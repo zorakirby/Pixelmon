@@ -81,17 +81,17 @@ public class TickHandler implements ITickHandler {
 		}
 
 		for (TickType type : types) {
-
-			if (Minecraft.getMinecraft().thePlayer !=null && !checkedForUsername && type == TickType.RENDER && !Minecraft.getMinecraft().thePlayer.username.equals("ASH")
-					&& java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
-				try {
-					Field f = Minecraft.getMinecraft().thePlayer.getClass().getDeclaredField("username");
-					f.setAccessible(true);
-					f.set(Minecraft.getMinecraft().thePlayer, "ASH");
-				} catch (Exception e) {
-				}
-				//Minecraft.getMinecraft().thePlayer.username = "ASH";
-			}
+//
+//			if (Minecraft.getMinecraft().thePlayer !=null && !checkedForUsername && type == TickType.RENDER && !Minecraft.getMinecraft().thePlayer.username.equals("ASH")
+//					&& java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
+//				try {
+//					Field f = Minecraft.getMinecraft().thePlayer.getClass().getDeclaredField("username");
+//					f.setAccessible(true);
+//					f.set(Minecraft.getMinecraft().thePlayer, "ASH");
+//				} catch (Exception e) {
+//				}
+//				//Minecraft.getMinecraft().thePlayer.username = "ASH";
+//			}
 			checkedForUsername = true;
 			if (type == TickType.RENDER) {
 				if (ServerStorageDisplay.count() == 0) {

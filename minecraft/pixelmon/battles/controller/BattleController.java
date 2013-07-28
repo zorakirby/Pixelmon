@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
@@ -20,6 +21,8 @@ import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.battles.status.GlobalStatusBase;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
+import pixelmon.comm.EnumPackets;
+import pixelmon.comm.PacketCreator;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.items.PixelmonItem;
@@ -42,7 +45,7 @@ public class BattleController {
 		participant1.startedBattle = true;
 		participant1.team = 0;
 		participant2.team = 1;
-	
+
 		participants.add(participant1);
 		participants.add(participant2);
 		initBattle();
@@ -166,16 +169,16 @@ public class BattleController {
 				String name;
 				if (p instanceof WildPixelmonParticipant && otherParticipant(p) instanceof PlayerParticipant)
 					PixelmonEventHandler.fireEvent(EventType.BeatWildPokemon, ((PlayerParticipant) otherParticipant(p)).player);
-				
+
 				if (p.currentPokemon().getNickname() != null)
 					name = p.currentPokemon().getNickname();
 				else
 					name = p.currentPokemon().getName();
-				
+
 				sendToOtherParticipants(p, p.getFaintMessage());
-				if (p.getType() == ParticipantType.Player){
-					Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
-					Minecraft.getMinecraft().renderViewEntity = p.getEntity(); //Instantly switches to player cam on death (to avoid shaking)
+				if (p.getType() == ParticipantType.Player) {
+					((EntityPlayerMP)p.getEntity()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SwitchCamera, 0));
+					//Instantly switches to player cam on death (to avoid shaking)
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				}
 				Experience.awardExp(participants, p, p.currentPokemon());

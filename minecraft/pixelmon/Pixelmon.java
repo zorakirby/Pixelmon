@@ -52,7 +52,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "pixelmon", name = "Pixelmon", version = "2.2")
+@Mod(modid = "pixelmon", name = "Pixelmon", version = "2.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
@@ -66,7 +66,7 @@ public class Pixelmon {
 	public static Migration migration;
 
 	public static StringTranslate stringtranslate = new StringTranslate();
-	
+
 	@SidedProxy(clientSide = "pixelmon.client.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
 
@@ -75,11 +75,10 @@ public class Pixelmon {
 	public static File modDirectory;
 
 	Configuration config;
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		instance = this;
-		//Minecraft.getMinecraft().func_110442_L().
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		boolean checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
@@ -89,8 +88,6 @@ public class Pixelmon {
 		}
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
-
-		event.getModMetadata().version = "2.2";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 
@@ -108,7 +105,6 @@ public class Pixelmon {
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntityHook.class, "Hook", 216, this, 75, 1, true);
 
-		
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
@@ -122,9 +118,9 @@ public class Pixelmon {
 
 		StructureRegistry.loadStructures(event.getSide());
 
-		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		if(PixelmonConfig.spawnStructures)
+			GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
-		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
@@ -134,6 +130,7 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
 		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
+		
 		proxy.registerTickHandlers();
 	}
 

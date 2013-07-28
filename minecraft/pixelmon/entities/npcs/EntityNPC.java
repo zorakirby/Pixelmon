@@ -15,7 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityNPC extends EntityCreature {
+public abstract class EntityNPC extends EntityCreature {
 	private ModelBase model = null;
 	public SpawnLocation npcLocation;
 
@@ -39,7 +39,7 @@ public class EntityNPC extends EntityCreature {
 
 	@SideOnly(Side.CLIENT)
 	public String getTexture() {
-		return "/pixelmon/texture/" + getNPCType().textureDirectory + "/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
+		return "pixelmon:textures/" + getNPCType().textureDirectory + "/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
 	}
 
 	public ModelBase getModel() {
