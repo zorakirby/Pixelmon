@@ -17,8 +17,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class RidingBindings extends KeyHandler {
 
 	public RidingBindings() {
-		super(new KeyBinding[] { new KeyBinding("Accelerate", Keyboard.KEY_W), new KeyBinding("Decelerate", Keyboard.KEY_S), new KeyBinding("Left", Keyboard.KEY_A),
-				new KeyBinding("Right", Keyboard.KEY_D), new KeyBinding("Jump/Fly", Keyboard.KEY_SPACE), }, new boolean[] { true, true, true, true, true });
+		super(new KeyBinding[] { new KeyBinding("Descend", Keyboard.KEY_C), }, new boolean[] { true });
 	}
 
 	@Override
@@ -31,8 +30,8 @@ public class RidingBindings extends KeyHandler {
 		if (Minecraft.getMinecraft().thePlayer.ridingEntity == null || tickEnd) {
 			return;
 		}
-		if (kb.keyCode == Keyboard.KEY_SPACE)
-			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Movement, EnumMovement.Jump.index));
+		if (kb.keyCode == Keyboard.KEY_C)
+			MovementHandler.jump--;
 	}
 
 	@Override

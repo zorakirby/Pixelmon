@@ -7,6 +7,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -104,18 +106,19 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	@Override
 	public void moveEntityWithHeading(float par1, float par2) {
 		boolean movementHandled = false;
-		
-		if (riddenByEntity!=null && baseStats!=null){
-            this.prevRotationYaw = this.rotationYaw;// = this.riddenByEntity.rotationYaw;
-            this.rotationPitch = this.riddenByEntity.rotationPitch * 0.5F;
-            this.setRotation(this.rotationYaw, this.rotationPitch);
-            par1 = ((EntityLivingBase)this.riddenByEntity).moveStrafing * 0.5F;
-            rotationYaw -= par1*10;
-            par1 = 0;
-            this.rotationYawHead = this.renderYawOffset = this.rotationYaw;
-            par2 = ((EntityLivingBase)this.riddenByEntity).moveForward;
+
+		if (riddenByEntity != null && baseStats != null) {
+			this.prevRotationYaw = this.rotationYaw;// =
+													// this.riddenByEntity.rotationYaw;
+			this.rotationPitch = this.riddenByEntity.rotationPitch * 0.5F;
+			this.setRotation(this.rotationYaw, this.rotationPitch);
+			par1 = ((EntityLivingBase) this.riddenByEntity).moveStrafing * 0.5F;
+			rotationYaw -= par1 * 10;
+			par1 = 0;
+			this.rotationYawHead = this.renderYawOffset = this.rotationYaw;
+			par2 = ((EntityLivingBase) this.riddenByEntity).moveForward;
 		}
-		
+
 		if (riddenByEntity != null && baseStats != null && (baseStats.canSurf || !baseStats.canSurfSet) && this.inWater) {
 			if (!baseStats.canSurfSet) {
 				baseStats.canSurf = DatabaseMoves.CanLearnAttack(getName(), "Surf");
@@ -130,7 +133,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						&& this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
 					this.motionY = 0.30000001192092896D;
 				}
-				
+
 				this.motionY *= 0.9800000190734863D;
 				this.motionX *= (double) 0.96f;
 				this.motionZ *= (double) 0.96f;
@@ -230,8 +233,12 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				super.onLivingUpdate();
 				return;
 			}
-			if (baseStats.canSurf)
+			if (baseStats.canSurf) {
+				if (riddenByEntity.isInWater() && riddenByEntity instanceof EntityPlayer) {
+					((EntityPlayer) riddenByEntity).addPotionEffect((new PotionEffect(Potion.nightVision.getId(), 10, 0)));
+				}
 				riddenByEntity.setAir(initAir);
+			}
 			ridingHelper.onLivingUpdate();
 			moveForward *= 0.4f;
 			if (moveForward > -0.1 && moveForward < 0.1)
@@ -331,5 +338,23 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			riddenByEntity.mountEntity(this);
 			((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
 		}
+	}
+
+	boolean ridingOverride = false;
+
+	@Override
+	public boolean isRiding() {
+		if (ridingOverride)
+			return false;
+		return super.isRiding();
+	}
+
+	@Override
+	public void onEntityUpdate() {
+		if (riddenByEntity != null)
+			ridingOverride = true;
+		super.onEntityUpdate();
+		if (riddenByEntity != null)
+			ridingOverride = true;
 	}
 }

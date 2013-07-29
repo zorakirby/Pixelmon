@@ -37,6 +37,7 @@ import pixelmon.client.keybindings.MinimizeMaximizeOverlayKey;
 import pixelmon.client.keybindings.MovementHandler;
 import pixelmon.client.keybindings.NextPokemonKey;
 import pixelmon.client.keybindings.PreviousPokemonKey;
+import pixelmon.client.keybindings.RidingBindings;
 import pixelmon.client.keybindings.SendPokemonKey;
 import pixelmon.client.models.fossils.ModelFossil;
 import pixelmon.client.render.RenderDoctor;
@@ -99,6 +100,7 @@ public class ClientProxy extends CommonProxy {
 		KeyBindingRegistry.registerKeyBinding(new NextPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new PreviousPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new MinimizeMaximizeOverlayKey());
+		KeyBindingRegistry.registerKeyBinding(new RidingBindings());
 		TickRegistry.registerTickHandler(new MovementHandler(), Side.CLIENT);
 	}
 
