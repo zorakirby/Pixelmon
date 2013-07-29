@@ -118,7 +118,8 @@ public class Pixelmon {
 
 		StructureRegistry.loadStructures(event.getSide());
 
-		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		if(PixelmonConfig.spawnStructures)
+			GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
