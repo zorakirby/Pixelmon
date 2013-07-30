@@ -339,22 +339,4 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
 		}
 	}
-
-	boolean ridingOverride = false;
-
-	@Override
-	public boolean isRiding() {
-		if (ridingOverride)
-			return false;
-		return super.isRiding();
-	}
-
-	@Override
-	public void onEntityUpdate() {
-		if (riddenByEntity != null)
-			ridingOverride = true;
-		super.onEntityUpdate();
-		if (riddenByEntity != null)
-			ridingOverride = true;
-	}
 }
