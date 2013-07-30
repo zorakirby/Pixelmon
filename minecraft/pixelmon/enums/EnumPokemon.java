@@ -31,6 +31,7 @@ public enum EnumPokemon {
 	Cloyster("Cloyster"),
 	Cranidos("Cranidos"),
 	Cubone("Cubone"),
+	Dewgong("Dewgong"),
 	Diglett("Diglett"),
 	Ditto("Ditto"),
 	Dodrio("Dodrio"),
