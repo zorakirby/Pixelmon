@@ -1191,13 +1191,13 @@ public class ModelCharmander extends PixelmonModelBase {
 		LeftArm.addChild(RingFingerL);
 		Body.addChild(LeftArm);
 		
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 1, 0.5F);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 1, 0.5F);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0.2F);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0.2F);
 
 		ModuleHead headModule = new ModuleHead(Head);
 		
 		float legspeed = 0.5F;
-		float legRotationLimit = .6F;
+		float legRotationLimit = .4F;
 		
 		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
