@@ -37,6 +37,7 @@ public class ModelGastly extends PixelmonModelBase
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5);
+        setRotation(Body, 1.3F, .7F, 0);
         Body.render(f5);
     }
  

@@ -397,7 +397,7 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 				}
 
 				if (this.ticksCatchable > 0) {
-					if (this.ticksCatchable == 5) {
+					if (this.ticksCatchable == 10) {
 						ChatHandler.sendChat(angler, "                                                           !");
 					}
 					this.motionY -= (double) (this.rand.nextFloat() * this.rand.nextFloat() * this.rand.nextFloat()) * 0.4D;
