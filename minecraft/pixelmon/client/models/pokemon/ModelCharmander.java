@@ -1196,8 +1196,8 @@ public class ModelCharmander extends PixelmonModelBase {
 
 		ModuleHead headModule = new ModuleHead(Head);
 		
-		float legspeed = 0.5F;
-		float legRotationLimit = .4F;
+		float legspeed = 0.6F;
+		float legRotationLimit = .5F;
 		
 		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
 				EnumPhase.InPhase, legRotationLimit, legspeed);
