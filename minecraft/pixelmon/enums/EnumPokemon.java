@@ -129,6 +129,7 @@ public enum EnumPokemon {
 	Pinsir("Pinsir"),
 	Poliwag("Poliwag"),
 	Poliwhirl("Poliwhirl"),
+	Poliwrath("Poliwrath"),
 	Ponyta("Ponyta"),
 	Porygon("Porygon"),
 	Primeape("Primeape"),
