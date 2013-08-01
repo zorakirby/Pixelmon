@@ -35,7 +35,6 @@ public class ModelRichBoy extends ModelBase
   {
     textureWidth = 128;
     textureHeight = 64;
-    setTextureOffset("HEADPIECE.DELETETHIS", 0, 0);
     
       leftfoot = new ModelRenderer(this, 0, 0);
       leftfoot.addBox(-1.5F, 0F, -3.5F, 3, 2, 5);
