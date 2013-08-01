@@ -34,8 +34,8 @@ public class RenderPixelmon extends RenderLiving {
 		EntityPixelmon pixelmon = (EntityPixelmon) entityLiving;
 		if (pixelmon.getName().equals(""))
 			return;
-		pixelmon.init(pixelmon.getName());
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
+		if (!pixelmon.isInitialised) pixelmon.init(pixelmon.getName());
 		if (pixelmon.getModel() != null)
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
 		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
