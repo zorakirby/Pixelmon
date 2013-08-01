@@ -93,6 +93,7 @@ public class EffectRegistry {
 
 	static {
 		// Status Appliers
+		effectMap.put("SandStorm", ApplySandstorm.class);
 		effectMap.put("aquaring", ApplyAquaRing.class);
 		effectMap.put("burn", ApplyBurn.class);
 		effectMap.put("confusion", ApplyConfusion.class);
@@ -187,7 +188,7 @@ public class EffectRegistry {
 		
 		// Global statuses
 		effectMap.put("raindance", ApplyRainy.class);
-		effectMap.put("sandstorm", ApplySandstorm.class);
+
 	}
 
 	public static EffectBase getEffect(String effectTypeString, Value[] values) {
