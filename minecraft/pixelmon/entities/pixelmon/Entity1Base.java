@@ -22,7 +22,7 @@ public abstract class Entity1Base extends EntityTameable {
 	public boolean isMale;
 	public boolean isInBall = false;
 	public boolean isFainted = false;
-	protected boolean isInitialised = false;
+	public boolean isInitialised = false;
 
 	public Entity1Base(World par1World) {
 		super(par1World);

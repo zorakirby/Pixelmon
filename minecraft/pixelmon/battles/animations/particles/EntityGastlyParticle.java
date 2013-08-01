@@ -32,9 +32,9 @@ public class EntityGastlyParticle extends EntityFX
             this.particleGreen = 0.52F;
             this.particleBlue = 0.68F;
         } else{
-            this.particleRed = 0.19F;
-            this.particleGreen = 0.0F;
-            this.particleBlue = 0.38F;
+            this.particleRed = 0.8F;
+            this.particleGreen = 0.3F;
+            this.particleBlue = 0.6F;
         }
     }
 

@@ -371,7 +371,7 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 						}
 
 						if (this.rand.nextInt(short1) == 0) {
-							this.ticksCatchable = this.rand.nextInt(30) + 10;
+							this.ticksCatchable = this.rand.nextInt(30) + 30;
 							this.motionY -= 0.20000000298023224D;
 							this.playSound("random.splash", 0.25F, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
 							float f3 = (float) MathHelper.floor_double(this.boundingBox.minY);
@@ -397,14 +397,16 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 				}
 
 				if (this.ticksCatchable > 0) {
-					this.motionY -= (double) (this.rand.nextFloat() * this.rand.nextFloat() * this.rand.nextFloat()) * 0.2D;
+					if (angler instanceof EntityPlayerMP)
+						if (this.ticksCatchable == 30)
+							ChatHandler.sendChat(angler, "                                                           !");
+					this.motionY -= (double) (this.rand.nextFloat() * this.rand.nextFloat() * this.rand.nextFloat()) * 0.4D;
 				}
-
 				d5 = d6 * 2.0D - 1.0D;
 				this.motionY += 0.03999999910593033D * d5;
 
 				if (d6 > 0.0D) {
-					f2 = (float) ((double) f2 * 0.9D);
+					f2 = (float) ((double) f2 * 0.8D);
 					this.motionY *= 0.8D;
 				}
 
@@ -481,14 +483,15 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 					intCurrentRarityTotal += this.pixelmonRarity.get(pixelmon);
 					if (intCurrentRarityTotal >= number) {
 						try {
-							EntityPixelmon pixelmonEntity = (EntityPixelmon) PixelmonEntityList.createEntityByName(pixelmon, this.worldObj);
-							WildPixelmonParticipant wildPixelmon = new WildPixelmonParticipant(pixelmonEntity);
-							pixelmonEntity.setPosition(cc.posX, cc.posY + 2, cc.posZ);
 							EntityPixelmon player1firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) angler).getFirstAblePokemon(
 									angler.worldObj);
-							bc = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildPixelmon);
-							wildPixelmon.StartBattle(bc, wildPixelmon);
+							EntityPixelmon pixelmonEntity = (EntityPixelmon) PixelmonEntityList.createEntityByName(pixelmon, this.worldObj);
+							pixelmonEntity.setPosition(cc.posX, cc.posY + 2, cc.posZ);
 							this.worldObj.spawnEntityInWorld(pixelmonEntity);
+							if (player1firstPokemon == null)
+								break;
+							WildPixelmonParticipant wildPixelmon = new WildPixelmonParticipant(pixelmonEntity);
+							bc = new BattleController(new PlayerParticipant((EntityPlayerMP) angler, player1firstPokemon), wildPixelmon);
 						} catch (Exception e) {
 							System.out.println("Error in Spawning Pixelmon caught by rod. " + e.toString());
 						}
@@ -521,11 +524,14 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 		List<SpawnData> spawns = SpawnRegistry.getWaterSpawnsForBiome(worldObj.getBiomeGenForCoords((int) this.posX, (int) this.posZ));
 
 		int rarityThreshold = rodType.rarityThreshold;
-		for (SpawnData pixelmon : spawns) {
-			if (pixelmon.rarity >= rarityThreshold) {
-				pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
+		if (spawns != null)
+			for (SpawnData pixelmon : spawns) {
+				if (spawns != null) {
+					if (pixelmon.rarity >= rarityThreshold) {
+						pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
+					}
+				}
 			}
-		}
 
 	}
 

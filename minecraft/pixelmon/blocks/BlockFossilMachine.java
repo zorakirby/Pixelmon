@@ -151,7 +151,7 @@ public class BlockFossilMachine extends BlockContainer {
 		if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemPokeBall) && tile.currentPokeball == -1) {
 			tile.currentPokeball = player.getCurrentEquippedItem().itemID;
 			tile.currentPokeballTexture = ((ItemPokeBall) player.getCurrentEquippedItem().getItem()).type.getTexture();
-			player.getCurrentEquippedItem().stackSize--;
+			 player.getCurrentEquippedItem().stackSize--;
 			((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 			return true;
 		}
@@ -159,7 +159,8 @@ public class BlockFossilMachine extends BlockContainer {
 				&& EnumPokemon.hasPokemon(((ItemFossil) player.getCurrentEquippedItem().getItem()).pokemon))
 			if ((player.getCurrentEquippedItem().getItem() instanceof ItemFossil) && tile.currentFossil == -1 && !tile.pokemonOccupied) {
 				tile.currentFossil = player.getCurrentEquippedItem().itemID;
-				player.getCurrentEquippedItem().stackSize--;
+				if (!player.capabilities.isCreativeMode)
+					player.getCurrentEquippedItem().stackSize--;
 				((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 				return true;
 			}

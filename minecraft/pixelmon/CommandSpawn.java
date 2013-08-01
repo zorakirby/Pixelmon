@@ -12,6 +12,7 @@ import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.WorldServer;
 import pixelmon.config.PixelmonEntityList;
+import pixelmon.database.SpawnLocation;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBossMode;
@@ -46,6 +47,7 @@ public class CommandSpawn extends CommandBase {
 					name = "MrMime";
 				Entity var6 = PixelmonEntityList.createEntityByName(name, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
+				((EntityPixelmon)var6).pokemonLocation = SpawnLocation.Land;  
 				if (par2ArrayOfStr.length > 1)
 					for (String s : par2ArrayOfStr) {
 						if (s.equalsIgnoreCase("s"))

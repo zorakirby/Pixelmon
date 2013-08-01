@@ -1,6 +1,6 @@
 package pixelmon.client.models.animations.serpent;
 
-import pixelmon.client.PixelmonModelRenderer;
+import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.entities.pixelmon.EntityPixelmon;

@@ -238,4 +238,14 @@ public class Level {
 		setExp(0);
 		expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
 	}
+
+	int oldLevel = -1;
+
+	public int getExtForNextLevelClient() {
+		if (oldLevel != getLevel()){
+			expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
+			oldLevel = getLevel();
+		}
+		return expToNextLevel;
+	}
 }

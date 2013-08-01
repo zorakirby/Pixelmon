@@ -21,19 +21,8 @@ import pixelmon.enums.EnumBossMode;
 public class RenderPixelmon extends RenderLiving {
 
 	private int defaultNameRenderDistance = 8;
-	private int defaultBossNameRenderDistanceExtension = 8; // kept as an
-															// additive bonus to
-															// avoid scaling
-															// issues
-	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3)); // keeps
-																													// in
-																													// bounds
-																													// [1,
-																													// 3],
-																													// forces
-																													// to
-																													// int
-																													// type
+	private int defaultBossNameRenderDistanceExtension = 8; 
+	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3)); 
 	private int nameRenderDistanceNormal = defaultNameRenderDistance * configNameRenderMultiplier;
 	private int nameRenderDistanceBoss = nameRenderDistanceNormal + defaultBossNameRenderDistanceExtension;
 
@@ -45,8 +34,8 @@ public class RenderPixelmon extends RenderLiving {
 		EntityPixelmon pixelmon = (EntityPixelmon) entityLiving;
 		if (pixelmon.getName().equals(""))
 			return;
-		pixelmon.init(pixelmon.getName());
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
+		if (!pixelmon.isInitialised) pixelmon.init(pixelmon.getName());
 		if (pixelmon.getModel() != null)
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
 		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
@@ -338,7 +327,7 @@ public class RenderPixelmon extends RenderLiving {
 			GL11.glDisable(3553 /* GL_TEXTURE_2D */);
 			tessellator.startDrawingQuads();
 			float f5 = ((EntityPixelmon) entityLiving).getLvl().getExp();
-			float f6 = ((EntityPixelmon) entityLiving).getLvl().expToNextLevel;
+			float f6 = ((EntityPixelmon) entityLiving).getLvl().getExtForNextLevelClient();
 			if (f5 >= f6)
 				f5 = 56;
 			float f8 = 50F * (f5 / f6);

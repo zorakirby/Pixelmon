@@ -25,7 +25,7 @@ public abstract class ParticleEffects {
 		else if (pixelmon.getName().equalsIgnoreCase("Gastly"))
 			return new GastlyParticles(pixelmon);
 		else if (pixelmon.getName().equalsIgnoreCase("Charmander"))
-			return new FlameParticles(pixelmon, 0.55F, 0.52F, 2);
+			return new FlameParticles(pixelmon, 0.7F, 0.6F, 3);
 		else if (pixelmon.getName().equalsIgnoreCase("Charmeleon"))
 			return new FlameParticles(pixelmon, 0.95F, 1.2F, 4);
 		else if (pixelmon.getName().equalsIgnoreCase("Charizard"))

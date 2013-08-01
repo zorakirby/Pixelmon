@@ -86,7 +86,7 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		renderBarLevel(tile, d, d1, d2, 64);
 
 		if (fossilTexture(tile)!="")
-			func_110628_a(new ResourceLocation("/pixelmon/texture/fossils/" + fossilTexture(tile) + ".png"));
+			func_110628_a(new ResourceLocation("pixelmon:textures/fossils/" + fossilTexture(tile) + ".png"));
 
 		GL11.glPushMatrix();
 		if (tile.currentFossil != -1) {
@@ -110,7 +110,7 @@ public class RenderTileFossilMachine extends TileEntitySpecialRenderer {
 		// Pokeball rendering
 
 		if (tile.currentPokeball != -1) {
-			func_110628_a(new ResourceLocation("/mods/pixelmon/textures/pokeballs/" + tile.currentPokeballTexture));
+			func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.currentPokeballTexture));
 
 			GL11.glPushMatrix();
 			if (i == 0) {
