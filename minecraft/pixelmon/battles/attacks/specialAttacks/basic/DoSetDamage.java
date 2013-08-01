@@ -29,7 +29,7 @@ public class DoSetDamage extends SpecialAttackBase {
 			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ()/2);
 			
 		
-		return false;
+		return true;
 	}
 
 }
