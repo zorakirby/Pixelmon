@@ -29,7 +29,8 @@ public class ModelGastly extends PixelmonModelBase
         Body = new PixelmonModelRenderer(this, "Body");
         Body.setRotationPoint(0, 20, 0);
         Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/gastly/gastly.obj")));
- 
+        setRotation(Body, 1.3F, .7F, 0);
+        
         skeleton = new SkeletonBase(Body);
     }
  
@@ -37,7 +38,6 @@ public class ModelGastly extends PixelmonModelBase
     {
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5);
-        setRotation(Body, 1.3F, .7F, 0);
         Body.render(f5);
     }
  
