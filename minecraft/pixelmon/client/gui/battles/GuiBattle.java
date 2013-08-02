@@ -683,9 +683,7 @@ public class GuiBattle extends GuiContainer {
 		// Get value as percent.
 		// Get Width of bar
 		float Percent = ((float) (p.health)) / ((float) p.hp);
-		float fWidth = Percent * (float) (width);
-		// Set Width of bar
-		int CurWidth = (int) (fWidth) - 6;
+		float CurWidth = Percent * (float) (barWidth);
 
 		if (p.health <= (p.hp / 5))
 			tessellator.setColorRGBA_F(0.8F, 0.0F, 0.0F, 1.0F);
