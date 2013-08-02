@@ -34,9 +34,9 @@ public class ItemPixelmonBoots extends ItemArmor {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot, int layer) {
 		if (stack.getItem() == PixelmonItems.newRunningShoes) {
-			return "/pixelmon/armor/running_1.png";
+			return "pixelmon:armor/running_1.png";
 		} else {
-			return "/pixelmon/armor/oldrunning_1.png";
+			return "pixelmon:armor/oldrunning_1.png";
 		}
 
 	}
