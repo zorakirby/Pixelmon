@@ -31,7 +31,7 @@ public class ModelOddish extends PixelmonModelBase
         textureWidth = 64;
         textureHeight = 32;
         Body = new PixelmonModelRenderer(this, "Body");
-        Body.setRotationPoint(0, 20, 0);
+        Body.setRotationPoint(0, 24, 0);
         Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/oddish/OddishBodyCon.obj")));
         footL = new PixelmonModelRenderer(this, 0, 0);
         footL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/oddish/OddishLfootCon.obj"), 0F, 0F, 0F ));

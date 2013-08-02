@@ -39,8 +39,10 @@ public class SendPixelmon extends PacketHandlerBase {
 
 				if (playerPokeballs.get(player) != null && !playerPokeballs.get(player).isDead)
 					return;
-
+				
 				EntityPixelmon pokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj);
+				if (pokemon.riddenByEntity == player) 
+					pokemon.mountEntity(null);
 				EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, pokemon, pokemon.caughtBall);
 				playerPokeballs.put(player, pokeball);
 
