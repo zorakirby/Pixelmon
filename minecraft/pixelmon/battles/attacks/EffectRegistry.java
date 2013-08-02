@@ -72,6 +72,7 @@ import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyImmobilize;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyInfatuated;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyLeech;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyLightScreen;
+import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyMeanLook;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyMist;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyParalysis;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyPerish;
@@ -106,6 +107,7 @@ public class EffectRegistry {
 		effectMap.put("leech", ApplyLeech.class);
 		effectMap.put("lightscreen", ApplyLightScreen.class);
 		effectMap.put("mist", ApplyMist.class);
+		effectMap.put("meanlook", ApplyMeanLook.class);
 		effectMap.put("paralysis", ApplyParalysis.class);
 		effectMap.put("perish", ApplyPerish.class);
 		effectMap.put("poison", ApplyPoison.class);
