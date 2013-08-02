@@ -61,20 +61,19 @@ public class PickingMoves {
 				p.priority = 6;
 		}
 
-		Object[] array = bc.participants.toArray();
+		BattleParticipant[] array = bc.participants.toArray(new BattleParticipant[]{});
 		for (int i = 1; i < array.length; i++) {
 			BattleParticipant p = (BattleParticipant) array[i];
 			int holePos = i;
-			while (holePos > 0 && (((BattleParticipant) array[holePos - 1]).priority < p.priority || 
-					(((BattleParticipant) array[holePos - 1]).priority == p.priority && doesGoFirst(p, (BattleParticipant) array[holePos - 1])))) {
+			while (holePos > 0 && (array[holePos - 1].priority < p.priority || array[holePos - 1].priority == p.priority && doesGoFirst(p, array[holePos - 1]))) {
 				array[holePos] = array[holePos - 1];
 				holePos--;
 			}
 			array[holePos] = p;
 		}
 
-		for (Object p : array)
-			sortedParticipants.add((BattleParticipant) p);
+		for (BattleParticipant p : array)
+			sortedParticipants.add(p);
 
 		bc.participants = sortedParticipants;
 	}

@@ -17,8 +17,6 @@ import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class RidingBindings extends KeyHandler {
-	
-	public EntityPlayer player;
 
 	public RidingBindings() {
 		super(new KeyBinding[] { new KeyBinding("Descend", Keyboard.KEY_C), }, new boolean[] { true });
@@ -31,13 +29,14 @@ public class RidingBindings extends KeyHandler {
 
 	@Override
 	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
-		if (player != null)	
-		if (Minecraft.getMinecraft().thePlayer.ridingEntity == null || tickEnd){
-				return;
-			}
-			if (kb.keyCode == Keyboard.KEY_C)
-				MovementHandler.jump--;
+		if (Minecraft.getMinecraft().currentScreen != null && Minecraft.getMinecraft().thePlayer != null
+				&& Minecraft.getMinecraft().thePlayer.ridingEntity == null || tickEnd) {
+			return;
 		}
+		if (kb.keyCode == Keyboard.KEY_C)
+			MovementHandler.jump--;
+	}
+
 	@Override
 	public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd) {
 	}
