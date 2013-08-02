@@ -4,6 +4,8 @@ import java.util.EnumSet;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import org.lwjgl.input.Keyboard;
 
@@ -15,6 +17,8 @@ import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class RidingBindings extends KeyHandler {
+	
+	public EntityPlayer player;
 
 	public RidingBindings() {
 		super(new KeyBinding[] { new KeyBinding("Descend", Keyboard.KEY_C), }, new boolean[] { true });
@@ -27,13 +31,13 @@ public class RidingBindings extends KeyHandler {
 
 	@Override
 	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
-		if (Minecraft.getMinecraft().thePlayer.ridingEntity == null || tickEnd) {
-			return;
+		if (player != null)	
+		if (Minecraft.getMinecraft().thePlayer.ridingEntity == null || tickEnd){
+				return;
+			}
+			if (kb.keyCode == Keyboard.KEY_C)
+				MovementHandler.jump--;
 		}
-		if (kb.keyCode == Keyboard.KEY_C)
-			MovementHandler.jump--;
-	}
-
 	@Override
 	public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd) {
 	}
