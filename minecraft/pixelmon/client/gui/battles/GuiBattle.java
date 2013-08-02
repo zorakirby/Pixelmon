@@ -21,6 +21,7 @@ import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.gui.GuiHelper;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.GuiResources;
+import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
@@ -815,6 +816,9 @@ public class GuiBattle extends GuiContainer {
 					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 					mode = BattleMode.Waiting;
 				} else {
+					if (!ClientBattleManager.canSwitch)
+						ClientBattleManager.addMessage(ClientBattleManager.getUserPokemon().getNickname() + " is trapped! You cannot flee!");
+					else
 					ClientBattleManager.addMessage("You can't run from a trainer battle!");
 				}
 			}
