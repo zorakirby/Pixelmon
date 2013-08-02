@@ -81,7 +81,7 @@ public class Pixelmon {
 		instance = this;
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
-		boolean checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
+		boolean checkForDatabaseUpdates = config.get("general", "Check for database updates", false).getBoolean(false);
 		modDirectory = new File(event.getModConfigurationDirectory().getParent());
 		if (!DatabaseHelper.has(checkForDatabaseUpdates)) {
 			throw new RuntimeException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!");
