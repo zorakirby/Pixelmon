@@ -704,13 +704,7 @@ public class GuiBattle extends GuiContainer {
 		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
 
-	private void drawChooseAttack(int mouseX, int mouseY) {
-			for(int n = 0; n < ClientBattleManager.getUserPokemon().moveset.size(); n++)
-			{
-				if (ClientBattleManager.getUserPokemon().moveset.get(n) == ClientBattleManager.getUserPokemon().getLastMoveUsed())
-					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, n, battleControllerIndex,
-							ClientBattleManager.getUserPokemonPacket().pokemonID));
-			}
+	private void drawChooseAttack(int mouseX, int mouseY) {	
 		mc.renderEngine.func_110577_a(GuiResources.battleGui2);
 		setCameraToPlayer();
 
