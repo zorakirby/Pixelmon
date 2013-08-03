@@ -10,9 +10,10 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
 
 public class Sandstorm extends GlobalStatusBase {
-	int turnsToGo = 10;
-	public Sandstorm(String name) {
+	int turnsToGo;
+	public Sandstorm(String name, int turns) {
 		super("Sandstorm");
+		turnsToGo = turns;
 		
 	}
 	@Override

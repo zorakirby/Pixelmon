@@ -94,7 +94,7 @@ public class EffectRegistry {
 
 	static {
 		// Status Appliers
-		effectMap.put("SandStorm", ApplySandstorm.class);
+		effectMap.put("sandstorm", ApplySandstorm.class);
 		effectMap.put("aquaring", ApplyAquaRing.class);
 		effectMap.put("burn", ApplyBurn.class);
 		effectMap.put("confusion", ApplyConfusion.class);

@@ -3,7 +3,6 @@ package pixelmon.battles.controller;
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -19,6 +18,7 @@ import pixelmon.battles.participants.WildPixelmonParticipant;
 import pixelmon.battles.status.Clear;
 import pixelmon.battles.status.GlobalStatusBase;
 import pixelmon.battles.status.Rainy;
+import pixelmon.battles.status.Sandstorm;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
@@ -375,7 +375,7 @@ public class BattleController {
 		for (int i = 0; i < globalStatuses.size(); i++)
 		{
 			GlobalStatusBase g = globalStatuses.get(i);
-			if (g instanceof Rainy || g instanceof Clear)
+			if (g instanceof Rainy || g instanceof Clear || g instanceof Sandstorm /* || g instanceof Sunny || g instanceof Hail*/)
 			{
 				globalStatuses.remove(i);
 				return;
@@ -385,11 +385,11 @@ public class BattleController {
 	
 	public GlobalStatusBase getWeather()
 	{
-		for (int i = 0; i > globalStatuses.size(); i++)
+		for (int i = 0; i < globalStatuses.size(); i++)
 		{
 			GlobalStatusBase g = globalStatuses.get(i);
-			if (g instanceof Rainy || g instanceof Clear)
-				return g;
+			if (g instanceof Rainy || g instanceof Clear || g instanceof Sandstorm)
+				return globalStatuses.get(i);
 		}
 		return null;
 	}
@@ -400,7 +400,7 @@ public class BattleController {
 		{
 			if (globalStatuses.get(i) == g)
 			{
-				if (g instanceof Rainy)
+				if (g instanceof Rainy || g instanceof Sandstorm /* || g instanceof Sunny || g instanceof Hail*/)
 					globalStatuses.add(new Clear());
 				globalStatuses.remove(i);	
 			}
@@ -409,7 +409,7 @@ public class BattleController {
 	
 	public void addGlobalStatus(GlobalStatusBase g)
 	{
-		if (g instanceof Rainy)
+		if (g instanceof Rainy || g instanceof Sandstorm /* || g instanceof Sunny || g instanceof Hail*/)
 			for (int i = 0; i < globalStatuses.size(); i++)
 				if (globalStatuses.get(i) instanceof Clear)
 					globalStatuses.remove(i);
