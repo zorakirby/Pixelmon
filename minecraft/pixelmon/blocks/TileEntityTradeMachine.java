@@ -46,6 +46,8 @@ public class TileEntityTradeMachine extends TileEntity {
 	public void registerPlayer(EntityPlayer player) {
 		try {
 			PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
+			if (playerCount == 1 && player == player1)
+				return;
 			playerCount++;
 			if (playerCount == 1)
 				player1 = player;

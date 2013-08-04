@@ -185,12 +185,12 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		for (int i = 0; i < status.size(); i++) {
 			try {
 				if (status.get(i) instanceof StatusPersist)
-					((StatusPersist) status.get(i)).writeToNBT(status.get(i).type.index, nbt);
+					((StatusPersist) status.get(i)).writeToNBT(i, nbt);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		nbt.setShort("EffectCount", (short) status.size());
+		nbt.setShort("StatusCount", (short) status.size());
 	}
 
 	@Override
@@ -198,9 +198,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		super.readEntityFromNBT(nbt);
 		moveset.readFromNBT(nbt);
 		int statusCount = 0;
-		statusCount = nbt.getShort("EffectCount");
+		statusCount = nbt.getShort("StatusCount");
 		for (int i = 0; i < statusCount; i++) {
-			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Effect" + i));
+			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Status" + i));
 			status.add(s.restoreFromNBT(nbt));
 		}
 	}

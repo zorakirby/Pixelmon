@@ -91,31 +91,31 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 
 	public void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
-		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xcccccc);
-		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(mc.thePlayer.username), 8, 115, 0xcccccc);
+		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xffffff);
+		drawString(fontRenderer, "OT. Trainer", -20, 100, 0xffffff);
+		drawCenteredString(fontRenderer, String.valueOf(mc.thePlayer.username), 8, 115, 0xffffff);
 
-		drawString(fontRenderer, "HP:", 60, -7, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.HP), 200 - (String.valueOf(targetPacket.HP).length() * 3), -7, 0xcccccc);
-		drawString(fontRenderer, "Attack:", 60, 13, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.Attack), 200 - (String.valueOf(targetPacket.Attack).length() * 3), 13, 0xcccccc);
-		drawString(fontRenderer, "Defence:", 60, 32, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.Defence), 200 - (String.valueOf(targetPacket.Defence).length() * 3), 32, 0xcccccc);
-		drawString(fontRenderer, "SP.Attack:", 60, 53, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.SpecialAttack), 200 - (String.valueOf(targetPacket.SpecialAttack).length() * 3), 53, 0xcccccc);
-		drawString(fontRenderer, "SP.Defense:", 60, 73, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.SpecialDefence), 200 - (String.valueOf(targetPacket.SpecialDefence).length() * 3), 73, 0xcccccc);
-		drawString(fontRenderer, "Speed:", 60, 93, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.Speed), 200 - (String.valueOf(targetPacket.Speed).length() * 3), 93, 0xcccccc);
+		drawString(fontRenderer, "HP:", 60, -12, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.HP), 200 - (String.valueOf(targetPacket.HP).length() * 3), -12, 0xffffff);
+		drawString(fontRenderer, "Attack:", 60, 9, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.Attack), 200 - (String.valueOf(targetPacket.Attack).length() * 3), 9, 0xffffff);
+		drawString(fontRenderer, "Defence:", 60, 28, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.Defence), 200 - (String.valueOf(targetPacket.Defence).length() * 3), 28, 0xffffff);
+		drawString(fontRenderer, "SP.Attack:", 60, 48, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.SpecialAttack), 200 - (String.valueOf(targetPacket.SpecialAttack).length() * 3), 48, 0xffffff);
+		drawString(fontRenderer, "SP.Defense:", 60, 69, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.SpecialDefence), 200 - (String.valueOf(targetPacket.SpecialDefence).length() * 3), 69, 0xffffff);
+		drawString(fontRenderer, "Speed:", 60, 88, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.Speed), 200 - (String.valueOf(targetPacket.Speed).length() * 3), 88, 0xffffff);
 
-		drawString(fontRenderer, "Happiness", 72, 115, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.friendship), 95, 130, 0xcccccc);
-		drawString(fontRenderer, "Nature", 158, 115, 0xcccccc);
+		drawString(fontRenderer, "Happiness", 72, 115, 0xffffff);
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.friendship), 95, 130, 0xffffff);
+		drawString(fontRenderer, "Nature", 158, 115, 0xffffff);
 		drawCenteredString(fontRenderer, targetPacket.nature.toString(), 174, 130, -1);
-		drawCenteredString(fontRenderer, "Growth", 8, 135, 0xcccccc);
+		drawCenteredString(fontRenderer, "Growth", 8, 135, 0xffffff);
 		drawCenteredString(fontRenderer, targetPacket.growth.toString(), 8, 148, -1);
-		drawString(fontRenderer, "Stats", 145, 166, -6250336);
+		drawString(fontRenderer, "Stats", 145, 166, 0xffffff);
 	}
 
 	public void drawGuiContainerBackgroundLayer(float f, int i, int i1) {
