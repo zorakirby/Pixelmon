@@ -94,7 +94,6 @@ public class EffectRegistry {
 
 	static {
 		// Status Appliers
-		effectMap.put("sandstorm", ApplySandstorm.class);
 		effectMap.put("aquaring", ApplyAquaRing.class);
 		effectMap.put("burn", ApplyBurn.class);
 		effectMap.put("confusion", ApplyConfusion.class);
@@ -118,7 +117,6 @@ public class EffectRegistry {
 		effectMap.put("recharge", ApplyRecharge.class);
 		effectMap.put("safeguard", ApplySafeGuard.class);
 		effectMap.put("sleep", ApplySleep.class);
-		effectMap.put("sunny", ApplySunny.class);
 		effectMap.put("trickroom", ApplyTrickRoom.class);
 		effectMap.put("yawn", ApplyYawn.class);
 
@@ -190,7 +188,8 @@ public class EffectRegistry {
 		
 		// Global statuses
 		effectMap.put("raindance", ApplyRainy.class);
-
+		effectMap.put("sunny", ApplySunny.class);
+		effectMap.put("sandstorm", ApplySandstorm.class);
 	}
 
 	public static EffectBase getEffect(String effectTypeString, Value[] values) {
