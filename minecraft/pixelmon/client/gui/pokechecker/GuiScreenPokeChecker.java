@@ -113,19 +113,19 @@ public class GuiScreenPokeChecker extends GuiContainer {
 
 	public void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
-		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xcccccc);
+		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xffffff);
 		drawCenteredString(fontRenderer, targetPacket.health + "/" + targetPacket.hp, 185, 10, 0xdddddd);
-		drawString(fontRenderer, "Status", -10, 100, 0xcccccc);
+		drawString(fontRenderer, "Status", -10, 100, 0xffffff);
 		if (targetPacket.isFainted)
-			drawString(fontRenderer, "*FAINTED*", 117, -11, 0xcccccc);
-		drawString(fontRenderer, "Total Experience", 95, 40, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.xp), 135, 55, 0xcccccc);
-		drawString(fontRenderer, "Level Up", 82, 94, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.nextLvlXP), 152, 98, 0xcccccc);
-		drawString(fontRenderer, "TO", 127, 119, 0xcccccc);
-		drawString(fontRenderer, "Lvl: " + (targetPacket.lvl + 1), 152, 123, 0xcccccc);
-		drawString(fontRenderer, "Summary", -15, 166, -6250336);
+			drawString(fontRenderer, "*FAINTED*", 117, -11, 0xffffff);
+		drawString(fontRenderer, "Total Experience", 95, 40, 0xffffff);
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.xp), 135, 55, 0xffffff);
+		drawString(fontRenderer, "Level Up", 82, 94, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.nextLvlXP), 152, 98, 0xffffff);
+		drawString(fontRenderer, "TO", 127, 119, 0xffffff);
+		drawString(fontRenderer, "Lvl: " + (targetPacket.lvl + 1), 152, 123, 0xffffff);
+		drawString(fontRenderer, "Summary", -15, 166, 0xffffff);
 
 		int typeImg;
 		float x = targetPacket.getType1().textureX;
