@@ -268,6 +268,7 @@ public class BattleController {
 	}
 
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {
+		System.out.println(user.battleStats.getSpeedModifier());
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
 		if (B > 255)
@@ -276,12 +277,8 @@ public class BattleController {
 		float F = A * 32 / B + 30 * C;
 
 		if (F > 255 || new Random().nextInt(255) < F) {
-			if (!user.isLockedInBattle) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
-			} else {
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Its locked in battle!");
-			}
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " couldn't escape!");
 	}
