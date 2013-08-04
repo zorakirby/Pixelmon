@@ -166,7 +166,7 @@ public class ModelRattata extends PixelmonModelBase
       Left_Back_Ear.setTextureSize(128, 64);
       Left_Back_Ear.mirror = true;
       setRotation(Left_Back_Ear, 0.0174533F, -0.3839724F, -0.122173F);
-      PixelmonModelRenderer      Right_Inner_Ear_1 = new PixelmonModelRenderer(this, 40, 37);
+      PixelmonModelRenderer      Right_Inner_Ear_1 = new PixelmonModelRenderer(this, 36, 37);
       Right_Inner_Ear_1.addBox(0F, 0F, 0F, 1, 3, 4);
       Right_Inner_Ear_1.setRotationPoint(-1.3F, 9.7F, -0.4F);
       Right_Inner_Ear_1.setTextureSize(128, 64);
@@ -178,7 +178,7 @@ public class ModelRattata extends PixelmonModelBase
       Right_Inner_Ear_2.setTextureSize(128, 64);
       Right_Inner_Ear_2.mirror = true;
       setRotation(Right_Inner_Ear_2, -0.0436332F, -0.6806784F, -0.5061455F);
-      PixelmonModelRenderer      Right_Inner_Ear_3 = new PixelmonModelRenderer(this, 41, 38);
+      PixelmonModelRenderer      Right_Inner_Ear_3 = new PixelmonModelRenderer(this, 36, 37);
       Right_Inner_Ear_3.addBox(0F, 0F, 0F, 1, 4, 3);
       Right_Inner_Ear_3.setRotationPoint(-2.7F, 9.4F, 1.1F);
       Right_Inner_Ear_3.setTextureSize(128, 64);
@@ -346,7 +346,7 @@ public class ModelRattata extends PixelmonModelBase
       Head_Right_Back.setTextureSize(128, 64);
       Head_Right_Back.mirror = true;
       setRotation(Head_Right_Back, 0.4886922F, -0.4537856F, 0.1396263F);
-      PixelmonModelRenderer   Right_Eye = new PixelmonModelRenderer(this, 117, 18);
+      PixelmonModelRenderer   Right_Eye = new PixelmonModelRenderer(this, 117, 27);
       Right_Eye.addBox(0F, 0F, 0F, 2, 4, 3);
       Right_Eye.setRotationPoint(-1.9F, 10.3F, -5.6F);
       Right_Eye.setTextureSize(128, 64);
