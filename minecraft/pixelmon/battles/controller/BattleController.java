@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import pixelmon.RandomHelper;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.battles.BattleRegistry;
@@ -42,6 +43,7 @@ public class BattleController {
 	private Attack lastMoveUsed;
 
 	public BattleController(BattleParticipant participant1, BattleParticipant participant2) throws Exception {
+		globalStatuses.add(new Clear());
 		participant1.startedBattle = true;
 		participant1.team = 0;
 		participant2.team = 1;
@@ -66,7 +68,6 @@ public class BattleController {
 			if (p.canGainXP())
 				p.addToAttackersList();
 		}
-		globalStatuses.add(new Clear());
 	}
 
 	BattleParticipant otherParticipant(BattleParticipant current) {
@@ -228,12 +229,10 @@ public class BattleController {
 	}
 
 	private void takeTurn(BattleParticipant p) {
-		if (p.willTryFlee && !p.currentPokemon().isLockedInBattle) {
+		if (p.willTryFlee) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
 			p.priority = 6;
-			System.out.println("raised priority");
-		} else if (p.currentPokemon().isLockedInBattle)
-			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Cannot escape!");
+		}
 		else if (p.isSwitching)
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
@@ -271,12 +270,14 @@ public class BattleController {
 		System.out.println(user.battleStats.getSpeedModifier());
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
-		if (B > 255)
-			B = 255;
-		float C = p.escapeAttempts++;
+			  B = (B / 4) % 256;
+		float C = ++p.escapeAttempts;
 		float F = A * 32 / B + 30 * C;
-
-		if (F > 255 || new Random().nextInt(255) < F) {
+		int random = RandomHelper.getRandomNumberBetween(1, 255);
+		System.out.println(C);
+		System.out.println(random);
+		System.out.println(F);
+		if (F > 255 || random < F) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
 		} else
