@@ -63,6 +63,7 @@ import pixelmon.battles.attacks.specialAttacks.multiTurn.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.SolarBeam;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyAquaRing;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyBurn;
+import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyClamped;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyConfusion;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyDisable;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyFireSpin;
@@ -97,6 +98,7 @@ public class EffectRegistry {
 		effectMap.put("aquaring", ApplyAquaRing.class);
 		effectMap.put("burn", ApplyBurn.class);
 		effectMap.put("confusion", ApplyConfusion.class);
+		effectMap.put("clamp", ApplyClamped.class);
 		effectMap.put("disable", ApplyDisable.class);
 		effectMap.put("firespin", ApplyFireSpin.class);
 		effectMap.put("flee", ApplyFlee.class);
