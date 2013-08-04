@@ -115,6 +115,8 @@ public class Attack {
 		if (cantMiss || RandomHelper.getRandomNumberBetween(0, 100) <= accuracy) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
 					user.getNickname() + " used " + baseAttack.attackName + " on " + target.getNickname() + "!");
+			if(EnumType.getTotalEffectiveness(target.type, baseAttack.attackType) != EFFECTIVE_NONE)
+			{
 			for (int j = 0; j < baseAttack.effects.size(); j++) {
 				EffectBase e = baseAttack.effects.get(j);
 				if (e instanceof StatsEffect) {
@@ -153,7 +155,16 @@ public class Attack {
 				}
 				// if (e.effectType == EffectType.AttackModifier) {
 				// }
+				;
 			}
+			
+			}
+			else 
+			{
+				ChatHandler.sendBattleMessage(user.getOwner(),  target.getOwner(), "It had no effect!");
+				return;
+			}
+		
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
