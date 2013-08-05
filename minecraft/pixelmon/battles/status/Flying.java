@@ -17,9 +17,17 @@ public class Flying extends StatusBase {
 
 	@Override
 	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
-		if (!a.baseAttack.attackName.equalsIgnoreCase("Smack Down"))
-			return true;
-		return false;
+		String moveName = a.baseAttack.attackName;
+		if (moveName.equalsIgnoreCase("Hurricane")|| moveName.equalsIgnoreCase("Whirlwind")
+				|| moveName.equalsIgnoreCase("Smack Down") || moveName.equalsIgnoreCase("Thunder")
+				|| moveName.equalsIgnoreCase("Sky Uppercut"))
+			return false;			
+		if (moveName.equalsIgnoreCase("Twister") || moveName.equalsIgnoreCase("Gust"))
+		{
+			a.baseAttack.basePower*=2;
+			return false;
+		}
+		return true;
 	}
 
 	@Override

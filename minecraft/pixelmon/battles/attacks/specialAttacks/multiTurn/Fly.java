@@ -24,6 +24,11 @@ public class Fly extends MultiTurnSpecialAttackBase {
 			user.status.add(new Flying());
 			return true;
 		} else {
+			if (!user.hasStatus(StatusType.Flying))
+			{
+				setPersists(user, false);
+				return true;
+			}
 			for (int i = 0; i < user.status.size(); i++) {
 				StatusBase e = user.status.get(i);
 				if (e.type == StatusType.Flying)
