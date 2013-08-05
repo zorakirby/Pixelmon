@@ -19,7 +19,6 @@ public class ApplySunny extends StatusApplierBase {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The move failed!");
 				return;
 			}
-			user.battleController.checkAndRemoveWeather();
 			user.battleController.addGlobalStatus(new Sunny());
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The sunlight turned harsh!");
 	}

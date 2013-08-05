@@ -19,7 +19,6 @@ public class ApplySandstorm extends StatusApplierBase {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), a.baseAttack.attackName + " failed!");
 			return;
 		}
-		user.battleController.checkAndRemoveWeather();
 		user.battleController.addGlobalStatus(new Sandstorm("Sandstorm", RandomHelper.getRandomNumberBetween(5, 8)*2));
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "A sandstorm kicked up!");
 	}

@@ -19,7 +19,6 @@ public class ApplyRainy extends StatusApplierBase {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), a.baseAttack.attackName + " failed!");
 				return;
 		}
-		user.battleController.checkAndRemoveWeather();
 		user.battleController.addGlobalStatus(new Rainy());
 	}
 

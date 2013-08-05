@@ -53,6 +53,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.SmackDown;
 import pixelmon.battles.attacks.specialAttacks.basic.Struggle;
 import pixelmon.battles.attacks.specialAttacks.basic.Suicide;
 import pixelmon.battles.attacks.specialAttacks.basic.Teleport;
+import pixelmon.battles.attacks.specialAttacks.basic.Thunder;
 import pixelmon.battles.attacks.specialAttacks.basic.Venoshock;
 import pixelmon.battles.attacks.specialAttacks.basic.WakeUpSlap;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Bide;
@@ -176,6 +177,7 @@ public class EffectRegistry {
 		effectMap.put("struggle", Struggle.class);
 		effectMap.put("suicide", Suicide.class);
 		effectMap.put("teleport", Teleport.class);
+		effectMap.put("thunder", Thunder.class);
 		effectMap.put("venoshock", Venoshock.class);
 		effectMap.put("wakeupslap", WakeUpSlap.class);
 
