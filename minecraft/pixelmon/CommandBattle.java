@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatMessageComponent;
+import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
@@ -81,6 +82,16 @@ public class CommandBattle extends CommandBase {
         	return;    	
         }
 
+		if (BattleRegistry.getBattle(entityplayermp1) != null) {
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Cannot challenge " + par2ArrayOfStr[0] + " while they are in battle!"));
+			return;
+		}
+
+		if (BattleRegistry.getBattle(entityplayermp2) != null) {
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Cannot challenge " + par2ArrayOfStr[1] + " while they are in battle!"));
+			return;
+		}        	
+        
         if (entityplayermp1.worldObj != entityplayermp2.worldObj)
     	{
 	        notifyAdmins(par1ICommandSender, "Both participants are not in same dimension.", new Object[0]);

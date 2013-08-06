@@ -80,7 +80,7 @@ public class CommandHeal extends CommandBase {
 
 				storage = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) entityplayer);
 				storage.healAllPokemon();
-				notifyAdmins(par1ICommandSender, 1, par1ICommandSender.toString() + " successfully healed " + par2ArrayOfStr[0] + "'s Pokemon!",
+				notifyAdmins(par1ICommandSender, 1, par1ICommandSender.getCommandSenderName() + " successfully healed " + par2ArrayOfStr[0] + "'s Pokemon!",
 						new Object[] { par2ArrayOfStr[0] });
 
 				if (par2ArrayOfStr[0].contains("@")) {

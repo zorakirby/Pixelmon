@@ -798,7 +798,7 @@ public class GuiBattle extends GuiContainer {
 			} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h) {
 				mode = BattleMode.ChooseBag;
 			} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h) {
-				if (ClientBattleManager.opponentType == ParticipantType.WildPokemon) {
+				if (ClientBattleManager.opponentType == ParticipantType.WildPokemon && ClientBattleManager.canSwitch) {
 					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 					mode = BattleMode.Waiting;
 				} else {

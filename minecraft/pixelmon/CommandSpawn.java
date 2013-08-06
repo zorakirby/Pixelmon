@@ -60,19 +60,19 @@ public class CommandSpawn extends CommandBase {
 					}
 				world.spawnEntityInWorld(var6);
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + name));
-				notifyAdmins(par1ICommandSender, 1, par1ICommandSender + " successfully spawned " + name, new Object[] { name });
+				notifyAdmins(par1ICommandSender, 1, par1ICommandSender.getCommandSenderName() + " successfully spawned " + name, new Object[] { name });
 			} else if (EnumTrainers.has(name)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(name, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + name));
-				notifyAdmins(par1ICommandSender, 1, par1ICommandSender + " successfully spawned " + name, new Object[] { name });
+				notifyAdmins(par1ICommandSender, 1, par1ICommandSender.getCommandSenderName() + " successfully spawned " + name, new Object[] { name });
 			} else if (NPCType.has(name)) {
 				Entity var6 = PixelmonEntityList.createEntityByName(name, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				world.spawnEntityInWorld(var6);
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + name));
-				notifyAdmins(par1ICommandSender, 1, par1ICommandSender + " successfully spawned " + name, new Object[] { name });
+				notifyAdmins(par1ICommandSender, 1, par1ICommandSender.getCommandSenderName() + " successfully spawned " + name, new Object[] { name });
 			} else {
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d(name + " is not in game!"));
 			}

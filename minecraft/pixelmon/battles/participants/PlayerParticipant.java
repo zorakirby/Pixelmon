@@ -70,8 +70,8 @@ public class PlayerParticipant extends BattleParticipant {
 		}
 		try {
 			if (opponent.startedBattle && !(PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(currentPixelmon.getPokemonId(), player.worldObj))) {
-				currentPixelmon.releaseFromPokeball();
 				currentPixelmon.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
+				currentPixelmon.releaseFromPokeball();
 			}
 		} catch (Exception e){
 			//Do nothing
