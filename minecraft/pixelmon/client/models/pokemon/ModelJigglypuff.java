@@ -33,7 +33,7 @@ public class ModelJigglypuff extends ModelBase {
 		Shape1.setTextureSize(64, 32);
 		Shape1.mirror = true;
 		setRotation(Shape1, -0.3490659F, 0F, 0.122173F);
-		EarR = new ModelRenderer(this, 25, 4);
+		EarR = new ModelRenderer(this, 23, 4);
 		EarR.addBox(-2F, -2F, -0.5F, 2, 2, 1);
 		EarR.setRotationPoint(-2F, 18.9F, 0F);
 		EarR.setTextureSize(64, 32);
@@ -87,7 +87,7 @@ public class ModelJigglypuff extends ModelBase {
 		FootR.setTextureSize(64, 32);
 		FootR.mirror = true;
 		setRotation(FootR, 0F, -0.9599311F, -0.2617994F);
-		EarR2 = new ModelRenderer(this, 25, 4);
+		EarR2 = new ModelRenderer(this, 23, 4);
 		EarR2.addBox(0F, -2F, -0.5F, 2, 2, 1);
 		EarR2.setRotationPoint(2F, 18.9F, 0F);
 		EarR2.setTextureSize(64, 32);
@@ -108,7 +108,7 @@ public class ModelJigglypuff extends ModelBase {
 		ArmL.render(f5);
 		FootL.render(f5);
 		FootR.render(f5);
-		EarR.render(f5);
+		EarR2.render(f5);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
