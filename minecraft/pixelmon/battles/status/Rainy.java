@@ -32,9 +32,9 @@ public class Rainy extends GlobalStatusBase {
 		if (a.baseAttack.basePower != -1)
 		{
 			if (a.baseAttack.attackType == EnumType.Water)
-				a.baseAttack.basePower *= 1.5;
+				a.movePower *= 1.5;
 	   else if (a.baseAttack.attackType == EnumType.Fire)
-				a.baseAttack.basePower *= 0.5;
+				a.movePower *= 0.5;
 		}
 	}
 }
