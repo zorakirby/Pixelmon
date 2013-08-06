@@ -107,7 +107,7 @@ public class ModelWigglytuff extends ModelBase {
 		Arm.setRotationPoint(-3.4F, 15.8F, -1.3F);
 		Arm.setTextureSize(128, 64);
 		Arm.mirror = true;
-		setRotation(Arm, 0F, -0.5235988F, -0.8726646F);
+		setRotation(Arm, 0F, -0.5235988F, -0.9F);
 		PalmL = new ModelRenderer(this, 31, 8);
 		PalmL.addBox(0F, -0.5F, -0.5F, 1, 1, 1);
 		PalmL.setRotationPoint(6F, 19.4F, -2.8F);
@@ -153,10 +153,10 @@ public class ModelWigglytuff extends ModelBase {
 		setRotation(EarTipL, 0.0872665F, -0.3490659F, 0.5759587F);
 		ArmL = new ModelRenderer(this, 31, 11);
 		ArmL.addBox(-5F, -1F, -1F, 5, 2, 2);
-		ArmL.setRotationPoint(3.4F, 15.8F, -1.3F);
+		ArmL.setRotationPoint(3.8F, 15.8F, -1.3F);
 		ArmL.setTextureSize(128, 64);
 		ArmL.mirror = true;
-		setRotation(ArmL, 0F, -2.6529F, -0.8726646F);
+		setRotation(ArmL, 0F, -.29F, -2.2F);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
