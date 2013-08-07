@@ -93,4 +93,7 @@ public abstract class BattleParticipant {
 			}
 		}
 	}
+
+	public void tick() {
+	}
 }

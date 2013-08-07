@@ -25,11 +25,13 @@ public class PlayerParticipant extends BattleParticipant {
 	public EntityPlayerMP player;
 	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
+	int startAir = 0;
 
 	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) throws PlayerNotLoadedException {
 		player = p;
 		currentPixelmon = firstPixelmon;
 		storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
+		startAir = p.getAir();
 	}
 
 	@Override
@@ -69,12 +71,13 @@ public class PlayerParticipant extends BattleParticipant {
 			}
 		}
 		try {
-			if (opponent.startedBattle && !(PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(currentPixelmon.getPokemonId(), player.worldObj))) {
+			if (opponent.startedBattle
+					&& !(PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(currentPixelmon.getPokemonId(), player.worldObj))) {
 				currentPixelmon.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
 				currentPixelmon.releaseFromPokeball();
 			}
-		} catch (Exception e){
-			//Do nothing
+		} catch (Exception e) {
+			// Do nothing
 		}
 	}
 
@@ -214,4 +217,8 @@ public class PlayerParticipant extends BattleParticipant {
 		return lvl;
 	}
 
+	@Override
+	public void tick() {
+		player.setAir(startAir);
+	}
 }

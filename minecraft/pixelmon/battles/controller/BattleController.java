@@ -103,6 +103,9 @@ public class BattleController {
 
 	public void update() {
 		try {
+			for (BattleParticipant p: participants)
+				p.tick();
+			
 			if (isPvP()) {
 				for (BattleParticipant p : participants) {
 					if (((PlayerParticipant) p).player == null || !(((PlayerParticipant) p).player.isEntityAlive()))
