@@ -56,8 +56,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	@Override
 	public void initGui() {
 		super.initGui();
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
 		int width = var5.getScaledWidth();
 		int height = var5.getScaledHeight();
 		for (int i = 0; i < pixelmonSlots.length; i++) {
@@ -101,8 +100,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		this.mc.renderEngine.func_110577_a(GuiResources.pixelmonOverlayExtended2);
 		this.drawTexturedModalRect(width / 2 - 130, height / 2 - 83, 0, 0, 46, 167);
 
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		int textureIndex;
@@ -110,7 +108,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDisable(GL11.GL_FOG);
 		Tessellator var2 = Tessellator.instance;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
+		mc.entityRenderer.setupOverlayRendering();
 
 		fontRenderer.setUnicodeFlag(true);
 
@@ -142,7 +140,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			            itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.func_110434_K(), new ItemStack(heldItem), slot.heldItemX, slot.heldItemY, null);
 					}
 				} else {
-					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
+					mc.renderEngine.func_110577_a(GuiResources.heldItem);
 					drawImageQuad(slot.heldItemX + 3, slot.heldItemY + 3, 10f, 10f, 0f, 0f, 1f, 1f);
 				}
 			}
@@ -172,8 +170,9 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-
-		//drawPlayerOnGui(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - this.xSize_lo, (float) (guiTop + 75 - 50) - this.ySize_lo);
+		
+		//Draws Player in Inventory
+		func_110423_a(guiLeft + 51, guiTop + 75, 30, (float)(guiLeft + 51) - this.xSize_lo, (float)(guiTop + 75 - 50) - this.ySize_lo, this.mc.thePlayer);
 	}
 
 	public void drawIcon(int x, int y, Icon par3Icon, int width, int height) {

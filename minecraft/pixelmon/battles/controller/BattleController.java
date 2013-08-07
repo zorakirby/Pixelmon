@@ -108,6 +108,12 @@ public class BattleController {
 					if (((PlayerParticipant) p).player == null || !(((PlayerParticipant) p).player.isEntityAlive()))
 						endBattleWithoutXP();
 				}
+			} else {
+				for (BattleParticipant p : participants) {
+					if((p.getType().index == 0))
+						if (((PlayerParticipant) p).player == null || (((PlayerParticipant) p).player.isDead))
+							endBattleWithoutXP();
+				}
 			}
 			if (isWaiting() || paused)
 				return;
