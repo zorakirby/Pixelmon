@@ -2,12 +2,12 @@ package pixelmon.client.gui.inventoryExtended;
 
 import java.awt.Rectangle;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,6 @@ import org.lwjgl.opengl.GL12;
 
 import pixelmon.Pixelmon;
 import pixelmon.client.ServerStorageDisplay;
-import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.GuiResources;
 import pixelmon.client.gui.pokechecker.GuiPokeCheckerTabs;
 import pixelmon.client.gui.pokechecker.GuiScreenPokeChecker;
@@ -32,11 +31,10 @@ import pixelmon.enums.EnumGui;
 import pixelmon.items.ItemHeld;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class GuiInventoryPixelmonExtended extends GuiInventory {
-
+public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 	public SlotInventoryPixelmon[] pixelmonSlots;
+	private RenderItem itemRenderer = new RenderItem();
 
-	GuiPixelmonOverlay overlay = new GuiPixelmonOverlay();
 	boolean pixelmonMenuOpen;
 	int menuX;
 	int menuY;
@@ -45,19 +43,25 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	GuiButton pMenuButtonStat;
 	PixelmonDataPacket selected;
 
-	private float xSize_lo, ySize_lo;
+	float xSize_lo, ySize_lo;
 
-	public GuiInventoryPixelmonExtended(EntityPlayer par1EntityPlayer) {
+	public GuiCreativeInventoryExtended(EntityPlayer par1EntityPlayer) {
 		super(par1EntityPlayer);
 		pixelmonMenuOpen = false;
 		pixelmonSlots = new SlotInventoryPixelmon[6];
 	}
 
+	public void drawButtonContainer() {
+		if (pixelmonMenuOpen) {
+			this.mc.renderEngine.func_110577_a(GuiResources.pokecheckerPopup);
+			this.drawTexturedModalRect(menuX - 73, menuY - 10, 0, 0, 67, 76);
+		}
+	}
+
 	@Override
 	public void initGui() {
 		super.initGui();
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
 		int width = var5.getScaledWidth();
 		int height = var5.getScaledHeight();
 		for (int i = 0; i < pixelmonSlots.length; i++) {
@@ -67,7 +71,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			int offset = 0;
 			if (p != null) {
 				int i = p.order;
-				int x = width / 2 - 121;
+				int x = width / 2 - 141;
 				int y = height / 2 + i * 18 - 65;
 				pixelmonSlots[i] = new SlotInventoryPixelmon(x, y, p);
 			}
@@ -77,7 +81,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		super.drawScreen(par1, par2, par3);
-		GL11.glDisable(GL11.GL_LIGHTING);
 		this.xSize_lo = (float) par1;
 		this.ySize_lo = (float) par2;
 		if (pixelmonMenuOpen) {
@@ -85,24 +88,14 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		}
 	}
 
-	public void drawButtonContainer() {
-		if (pixelmonMenuOpen) {
-			mc.renderEngine.func_110577_a(GuiResources.pokecheckerPopup);
-			this.drawTexturedModalRect(menuX - 73, menuY - 10, 0, 0, 67, 76);
-		}
-	}
-
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
-		this.mc.renderEngine.func_110577_a(GuiResources.mcInventory);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(par1, par2, par3);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		this.mc.renderEngine.func_110577_a(GuiResources.pixelmonOverlayExtended2);
-		this.drawTexturedModalRect(width / 2 - 130, height / 2 - 83, 0, 0, 46, 167);
+		this.mc.renderEngine.func_110577_a(GuiResources.pixelmonCreativeInventory);
+		this.drawTexturedModalRect(width / 2 - 150, height / 2 - 83, 0, 0, 54, 167);
 
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		int textureIndex;
@@ -110,7 +103,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDisable(GL11.GL_FOG);
 		Tessellator var2 = Tessellator.instance;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
+		mc.entityRenderer.setupOverlayRendering();
 
 		fontRenderer.setUnicodeFlag(true);
 
@@ -142,13 +135,12 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 			            itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.func_110434_K(), new ItemStack(heldItem), slot.heldItemX, slot.heldItemY, null);
 					}
 				} else {
-					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
+					mc.renderEngine.func_110577_a(GuiResources.heldItem);
 					drawImageQuad(slot.heldItemX + 3, slot.heldItemY + 3, 10f, 10f, 0f, 0f, 1f, 1f);
 				}
 			}
 			drawButtonContainer();
 		}
-
 		int mouseX = Mouse.getX() * this.width / this.mc.displayWidth;
 		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
 		if (!pixelmonMenuOpen) {
@@ -158,13 +150,13 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 						drawPokemonInfo(mouseX, mouseY, s);
 					}
 					if (s.getHeldItemBounds().contains(mouseX, mouseY) && heldItemQualifies(s)) {
-						this.mc.renderEngine.func_110577_a(GuiResources.pixelmonOverlayExtended2);
+						mc.renderEngine.func_110577_a(GuiResources.pixelmonCreativeInventory);
 						drawImageQuad(s.heldItemX - 2, s.heldItemY - 2, 20, 20, 58f / 256f, 185f / 256f, 78f / 256f, 205f / 256f);
 					}
 				}
 			}
 		}
-		//this.fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency() + ""), -29, 154, 0xFFFFFF);
+		//fontRenderer.drawString(StatCollector.translateToLocal(PlayerStorage.getCurrency() + ""), -29, 154, 0xFFFFFF);
 
 		fontRenderer.setUnicodeFlag(false);
 		RenderHelper.disableStandardItemLighting();
@@ -173,7 +165,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 
-		//drawPlayerOnGui(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - this.xSize_lo, (float) (guiTop + 75 - 50) - this.ySize_lo);
 	}
 
 	public void drawIcon(int x, int y, Icon par3Icon, int width, int height) {
@@ -227,6 +218,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 	private void drawImageQuad(int x, int y, float w, float h, float us, float vs, float ue, float ve) {
 		// activate the specified texture
+
 		float var7 = 0.00390625F;
 		float var8 = 0.00390625F;
 		Tessellator var9 = Tessellator.instance;
@@ -236,11 +228,6 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		var9.addVertexWithUV((double) (x + w), (double) (y + 0), (double) this.zLevel, (double) ((float) ue), (double) ((float) vs));
 		var9.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) this.zLevel, (double) ((float) us), (double) ((float) vs));
 		var9.draw();
-	}
-
-	@Override
-	protected void actionPerformed(GuiButton par1GuiButton) {
-		super.actionPerformed(par1GuiButton);
 	}
 
 	Rectangle buttonBounds;
