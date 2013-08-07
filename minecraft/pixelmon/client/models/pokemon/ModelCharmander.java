@@ -783,12 +783,12 @@ public class ModelCharmander extends PixelmonModelBase {
 		TailSeg6.setTextureSize(128, 64);
 		TailSeg6.mirror = true;
 		setRotation(TailSeg6, 0.9599311F, 0F, 0F);
-		PixelmonModelRenderer Flame = new PixelmonModelRenderer(this, 116, -6);
-		Flame.addBox(0F, -7F, -3F, 0, 8, 6);
-		Flame.setRotationPoint(0F, 9F, 26.5F);
-		Flame.setTextureSize(128, 64);
-		Flame.mirror = true;
-		setRotation(Flame, 0F, 0F, 0F);
+		//PixelmonModelRenderer Flame = new PixelmonModelRenderer(this, 116, -6);
+		//Flame.addBox(0F, -7F, -3F, 0, 8, 6);
+		//Flame.setRotationPoint(0F, 9F, 26.5F);
+		//Flame.setTextureSize(128, 64);
+		//Flame.mirror = true;
+		//setRotation(Flame, 0F, 0F, 0F);
 		PixelmonModelRenderer TailBase = new PixelmonModelRenderer(this, 92, 42);
 		TailBase.addBox(-4F, 3.7F, 3.8F, 8, 6, 9);
 		TailBase.setRotationPoint(0F, 8F, 0F);
@@ -808,7 +808,7 @@ public class ModelCharmander extends PixelmonModelBase {
 		Tail.addChild(TailSeg4);
 		Tail.addChild(TailSeg5);
 		Tail.addChild(TailSeg6);
-		Tail.addChild(Flame);
+		//Tail.addChild(Flame);
 		Tail.addChild(TailBase);
 		Tail.addChild(TailDiag);
 		Body.addChild(Tail);
