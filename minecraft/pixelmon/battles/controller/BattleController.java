@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import pixelmon.RandomHelper;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
 import pixelmon.battles.BattleRegistry;
@@ -105,8 +104,14 @@ public class BattleController {
 		try {
 			if (isPvP()) {
 				for (BattleParticipant p : participants) {
-					if (((PlayerParticipant) p).player == null || !(((PlayerParticipant) p).player.isEntityAlive()))
+					if (((PlayerParticipant) p).player == null || (((PlayerParticipant) p).player.isDead))
 						endBattleWithoutXP();
+				}
+			} else {
+				for (BattleParticipant p : participants) {
+					if((p.getType().index == 0))
+						if (((PlayerParticipant) p).player == null || (((PlayerParticipant) p).player.isDead))
+							endBattleWithoutXP();
 				}
 			}
 			if (isWaiting() || paused)
@@ -178,9 +183,8 @@ public class BattleController {
 
 				sendToOtherParticipants(p, p.getFaintMessage());
 				if (p.getType() == ParticipantType.Player) {
-					((EntityPlayerMP) p.getEntity()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SwitchCamera, 0));
-					// Instantly switches to player cam on death (to avoid
-					// shaking)
+					((EntityPlayerMP)p.getEntity()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SwitchCamera, 0));
+					//Instantly switches to player cam on death (to avoid shaking)
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				}
 				Experience.awardExp(participants, p, p.currentPokemon());
@@ -188,7 +192,6 @@ public class BattleController {
 				p.currentPokemon().setEntityHealth(0);
 				p.currentPokemon().setDead();
 				p.currentPokemon().isFainted = true;
-				p.currentPokemon().catchInPokeball();
 				p.updatePokemon();
 
 				if (p.hasMorePokemon()) {
@@ -221,10 +224,13 @@ public class BattleController {
 	}
 
 	private void takeTurn(BattleParticipant p) {
-		if (p.willTryFlee) {
+		if (p.willTryFlee && !p.currentPokemon().isLockedInBattle) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
 			p.priority = 6;
-		} else if (p.isSwitching)
+			System.out.println("raised priority");
+		} else if (p.currentPokemon().isLockedInBattle)
+			ChatHandler.sendBattleMessage(p.currentPokemon().getOwner(), "Cannot escape!");
+		else if (p.isSwitching)
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
 			useItem(p);
@@ -260,12 +266,12 @@ public class BattleController {
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
-		B = (B / 4) % 256;
-		float C = ++p.escapeAttempts;
+		if (B > 255)
+			B = 255;
+		float C = p.escapeAttempts++;
 		float F = A * 32 / B + 30 * C;
 
-		int random = RandomHelper.getRandomNumberBetween(1, 255);
-		if (F > 255 || random < F) {
+		if (F > 255 || new Random().nextInt(255) < F) {
 			if (!user.isLockedInBattle) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
