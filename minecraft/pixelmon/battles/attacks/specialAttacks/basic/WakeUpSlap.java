@@ -16,7 +16,7 @@ public class WakeUpSlap extends SpecialAttackBase{
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		
 		if(target.hasStatus(StatusType.Sleep)){
-			a.baseAttack.basePower = a.baseAttack.basePower * 2;
+			a.movePower *= 2;
 			target.removeStatus(StatusType.Sleep);
 		}
 		

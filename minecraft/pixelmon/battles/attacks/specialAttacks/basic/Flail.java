@@ -19,17 +19,17 @@ public class Flail extends SpecialAttackBase {
 			
 		double i = (double)(user.func_110143_aJ()/(double)user.getMaxHealth())*100 + 1;
 		if(i >= 70)
-			a.baseAttack.basePower = 20;
+			a.movePower = 20;
 		else if (i >= 35 && i < 70)
-			a.baseAttack.basePower = 40;
+			a.movePower = 40;
 		else if (i >= 20 && i < 35)
-			a.baseAttack.basePower = 80;
+			a.movePower = 80;
 		else if (i >= 10 && i < 20)
-			a.baseAttack.basePower = 100;
+			a.movePower = 100;
 		else if (i >= 4 && i < 10)
-			a.baseAttack.basePower = 150;
+			a.movePower = 150;
 		else if (i > 0 && i < 4)
-			a.baseAttack.basePower = 200;
+			a.movePower = 200;
 		return false;
 	}
 

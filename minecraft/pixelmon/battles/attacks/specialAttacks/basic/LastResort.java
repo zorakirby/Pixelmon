@@ -32,7 +32,7 @@ public class LastResort extends SpecialAttackBase {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), a.baseAttack.attackName + " failed!");
 				return true;
 			}
-			if(!atk.baseAttack.attackName.equalsIgnoreCase("Last Resort")); // Last Resort.
+			if(!atk.baseAttack.attackName.equalsIgnoreCase("Last Resort"));
 			for (String s : attackList)
 			{
 				
