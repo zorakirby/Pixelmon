@@ -192,6 +192,7 @@ public class Attack {
 					System.out.println(exc.getStackTrace());
 				}
 			}
+			if (user.battleController != null)
 			for (int i = 0; i < user.battleController.getGlobalStatusSize(); i++)
 			{
 				user.battleController.getGlobalStatus(i).applyInMoveEffect(user, target, this);
