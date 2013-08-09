@@ -118,9 +118,6 @@ public class GuiBattle extends GuiContainer {
 		if (!ClientBattleManager.hasMoreMessages() && battleEnded && !ClientBattleManager.hasLevelUps() && !ClientBattleManager.hasNewAttacks()) {
 			restoreSettingsAndClose();
 			return;
-		} else if (mc.thePlayer.isDead) {
-			restoreSettingsAndClose();
-			return;
 		}
 		int left = (width - xSize) / 2;
 		int top = (height - ySize) / 2;
