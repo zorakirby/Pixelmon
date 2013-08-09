@@ -16,11 +16,9 @@ public class Facade extends SpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
-		a.baseAttack.basePower = 70;
-		for (StatusBase e : target.status) {
-			if (e.type == StatusType.Burn || e.type == StatusType.Poison || e.type == StatusType.PoisonBadly || e.type == StatusType.Paralysis)
-				a.baseAttack.basePower = 140;
-		}
+		a.movePower = 70;
+		if (target.hasPrimaryStatus())
+			a.movePower = 140;
 		return false;
 	}
 }

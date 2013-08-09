@@ -48,8 +48,8 @@ public class WildPixelmonParticipant extends BattleParticipant {
 		}
 
 		for (int i = 0; i < 4; i++) {
-			if (pixelmon.moveset.attacks[i] != null)
-				pixelmon.moveset.attacks[i].setDisabled(false, pixelmon);
+			if (pixelmon.getMoveset().attacks[i] != null)
+				pixelmon.getMoveset().attacks[i].setDisabled(false, pixelmon);
 		}
 	}
 
@@ -82,8 +82,8 @@ public class WildPixelmonParticipant extends BattleParticipant {
 
 	@Override
 	public Attack getMove() {
-		if (pixelmon.moveset.size() > 0 && opponent != null)
-			return Attack.getWhichMoveIsBest(pixelmon.moveset, opponent.currentPokemon().type, pixelmon, opponent.currentPokemon());
+		if (pixelmon.getMoveset().size() > 0 && opponent != null)
+			return Attack.getWhichMoveIsBest(pixelmon.getMoveset(), opponent.currentPokemon().type, pixelmon, opponent.currentPokemon());
 		if (bc == null)
 			return null;
 		bc.setFlee(pixelmon);
@@ -97,9 +97,9 @@ public class WildPixelmonParticipant extends BattleParticipant {
 
 	@Override
 	public boolean checkPokemon() {
-		if (pixelmon.moveset.size() == 0) {
+		if (pixelmon.getMoveset().size() == 0) {
 			pixelmon.loadMoveset();
-			if (pixelmon.moveset.size() == 0) {
+			if (pixelmon.getMoveset().size() == 0) {
 				if (PixelmonConfig.printErrors)
 					System.out.println("Couldn't load " + pixelmon.getName() + "'s moves");
 				return false;

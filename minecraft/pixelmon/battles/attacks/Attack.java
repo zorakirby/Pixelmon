@@ -47,6 +47,8 @@ public class Attack {
 	public int pp;
 	public int ppBase;
 	public boolean STAB;
+	public int movePower;
+	public int moveAccuracy;
 
 	public Attack(int attackIndex, String moveName, ResultSet rs) throws SQLException {
 		if (fullAttackList[attackIndex] == null) {
@@ -64,11 +66,13 @@ public class Attack {
 	public boolean flinched = false;
 
 	public void use(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+		movePower = baseAttack.basePower;
+		moveAccuracy = baseAttack.accuracy;
 		target.hurtTime = 0;
 		user.hurtTime = 0;
 		boolean attackHandled = false, cantMiss = false;
 		user.getLookHelper().setLookPositionWithEntity(target, 0, 0);
-		double accuracy = ((double) baseAttack.accuracy) * ((double) user.battleStats.getAccuracy()) / ((double) target.battleStats.getEvasion());
+		double accuracy = ((double) moveAccuracy) * ((double) user.battleStats.getAccuracy()) / ((double) target.battleStats.getEvasion());
 		double crit = calcCriticalHit(null);
 		/* Check for Protect */
 		for (int i = 0; i < target.status.size(); i++) {
@@ -282,7 +286,7 @@ public class Attack {
 		// * baseAttack.basePower + 2) * modifier;
 
 		double DmgRand = ((15 * rand) + 85) * 0.01;
-		double DamageBase = (((((((2 * Level) / 5) + 2) * attack * baseAttack.basePower) * 0.02) / defense) + 2);
+		double DamageBase = (((((((2 * Level) / 5) + 2) * attack * movePower) * 0.02) / defense) + 2);
 
 		// Split up so they can be monitored while debugging.
 		double Damage = DamageBase * modifier * DmgRand * 0.85;
@@ -353,8 +357,8 @@ public class Attack {
 		boolean[] b = new boolean[4];
 		int i1 = 0;
 		b[0] = b[1] = b[2] = b[3] = true;
-		for (int i = 0; i < entity.moveset.size(); i++) {
-			Attack a = entity.moveset.get(i);
+		for (int i = 0; i < entity.getMoveset().size(); i++) {
+			Attack a = entity.getMoveset().get(i);
 			if (!a.canHit(entity, target)) {
 				b[i1] = false;
 			}

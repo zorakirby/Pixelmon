@@ -30,12 +30,12 @@ public class InteractionTM implements IInteraction {
 						return true;
 					}
 					a.STAB = DatabaseMoves.hasSTAB(entityPixelmon.getName(), ((ItemTM) itemstack.getItem()).attackName);
-					if (entityPixelmon.moveset.size() >= 4) {
+					if (entityPixelmon.getMoveset().size() >= 4) {
 						ReplaceMove.tmID = itemstack.itemID;
 						((EntityPlayerMP) entityPixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
 								EnumPackets.ChooseMoveToReplace, entityPixelmon.getPokemonId(), a.baseAttack.attackIndex, entityPixelmon.getLvl().getLevel()));
 					} else {
-						entityPixelmon.moveset.add(a);
+						entityPixelmon.getMoveset().add(a);
 						ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
 						if (!player.capabilities.isCreativeMode)
 							player.inventory.consumeInventoryItem(itemstack.itemID);

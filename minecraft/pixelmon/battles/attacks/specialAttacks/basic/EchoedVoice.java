@@ -22,7 +22,7 @@ public class EchoedVoice extends SpecialAttackBase {
 			else
 				break;
 		}
-		a.baseAttack.basePower = power;
+		a.movePower = power;
 		return false;
 	}
 

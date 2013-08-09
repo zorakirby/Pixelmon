@@ -90,7 +90,7 @@ public class PlayerStorage {
 			pokedex.set(Pokedex.nameToID(p.getName()), DexRegisterStatus.caught);
 			pokedex.sendToPlayer((EntityPlayerMP) pokedex.owner);
 		}
-		if (p.moveset.size() == 0)
+		if (p.getMoveset().size() == 0)
 			p.loadMoveset();
 		p.setBoss(EnumBossMode.Normal);
 		if (!hasSpace()) {
@@ -314,7 +314,12 @@ public class PlayerStorage {
 					if (pixelmon.func_110143_aJ() <= 0)
 						nbt.setBoolean("IsFainted", true);
 					if (mode == PokeballManagerMode.Player)
-						player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
+					{
+						if (EntityAlreadyExists(pixelmon.getPokemonId(), pixelmon.worldObj))
+							player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(pixelmon, EnumPackets.UpdateStorage).getPacket());
+						else
+							player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
+					}
 				}
 			}
 		}
