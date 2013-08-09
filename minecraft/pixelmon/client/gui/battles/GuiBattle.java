@@ -74,26 +74,21 @@ public class GuiBattle extends GuiContainer {
 	boolean first = true;
 
 	public void setCameraToPlayer() {
-		mc.gameSettings.thirdPersonView = 0; // Keep
-																	// playercam
-																	// in
-																	// firstperson
-																	// F1 mode
+		// Keep playercam in firstperson mode
+		mc.gameSettings.thirdPersonView = 0; 	
 		mc.gameSettings.hideGUI = true;
 		mc.renderViewEntity = mc.thePlayer;
 	}
 
 	public void setCameraToPixelmon() {
-		mc.gameSettings.thirdPersonView = 1; // Keep
-																	// playercam
-																	// in
-																	// firstperson
-																	// F1 mode
+		// Keep pokecam in thirdperson mode
+		mc.gameSettings.thirdPersonView = 1;
 		mc.gameSettings.hideGUI = true;
 		mc.renderViewEntity = ClientBattleManager.getUserPokemon();
 	}
 
 	protected void restoreSettingsAndClose() {
+		GuiPixelmonOverlay.isVisible = true;
 		if (wasThirdPerson) {
 			mc.gameSettings.thirdPersonView = 1;
 		} else {
@@ -107,7 +102,6 @@ public class GuiBattle extends GuiContainer {
 		mc.renderViewEntity = mc.thePlayer;
 		mc.thePlayer.closeScreen();
 		mc.setIngameFocus();
-		GuiPixelmonOverlay.isVisible = true;
 	}
 
 	@Override
@@ -122,9 +116,6 @@ public class GuiBattle extends GuiContainer {
 		}
 
 		if (!ClientBattleManager.hasMoreMessages() && battleEnded && !ClientBattleManager.hasLevelUps() && !ClientBattleManager.hasNewAttacks()) {
-			restoreSettingsAndClose();
-			return;
-		} else if (mc.thePlayer.isDead) {
 			restoreSettingsAndClose();
 			return;
 		}
