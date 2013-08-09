@@ -102,8 +102,7 @@ public class PokeballManager {
 				CompressedStreamTools.write(nbt, s);
 				s.close();
 				f.close();
-				if (!p.player.playerNetServerHandler.connectionClosed)
-					replaceSaveFile(playerPokemonList.get(i));
+				replaceSaveFile(playerPokemonList.get(i));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
