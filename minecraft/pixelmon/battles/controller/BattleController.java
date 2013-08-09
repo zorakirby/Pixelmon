@@ -192,6 +192,12 @@ public class BattleController {
 					// shaking)
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				}
+				if (otherParticipant(p) instanceof PlayerParticipant){
+					//Switches camera to player for opponent who faints player's pokemon
+					//Keeps camera from shaking during XP awarding after battle
+					((EntityPlayerMP) otherParticipant(p).getEntity()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SwitchCamera, 0));
+				}
+					
 				Experience.awardExp(participants, p, p.currentPokemon());
 				Entity g = p.currentPokemon().getOwner();
 				p.currentPokemon().setEntityHealth(0);
