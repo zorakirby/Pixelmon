@@ -12,6 +12,7 @@ import pixelmon.Pixelmon;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.status.Transformed;
 import pixelmon.client.gui.ClientTradingManager;
+import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.ClientBattleManager.AttackData;
 import pixelmon.client.gui.battles.GuiBattle;
@@ -138,6 +139,8 @@ public class ClientPacketHandler implements IPacketHandler {
 			}else if (packetID == EnumPackets.SwitchCamera.getIndex()){
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+			}else if (packetID == EnumPackets.PlayerDeath.getIndex()){
+				GuiPixelmonOverlay.isVisible = true;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
