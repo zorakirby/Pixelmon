@@ -103,9 +103,9 @@ public class BattleController {
 
 	public void update() {
 		try {
-			for (BattleParticipant p: participants)
+			for (BattleParticipant p : participants)
 				p.tick();
-			
+
 			if (isPvP()) {
 				for (BattleParticipant p : participants) {
 					if (((PlayerParticipant) p).player == null || !(((PlayerParticipant) p).player.isEntityAlive()))
@@ -113,7 +113,7 @@ public class BattleController {
 				}
 			} else {
 				for (BattleParticipant p : participants) {
-					if((p.getType().index == 0))
+					if ((p.getType().index == 0))
 						if (((PlayerParticipant) p).player == null || (((PlayerParticipant) p).player.isDead))
 							endBattleWithoutXP();
 				}
@@ -137,6 +137,11 @@ public class BattleController {
 				} else if (moveStage == MoveStage.Move) { // First Move
 					if (turn == 0)
 						PickingMoves.checkMoveSpeed(this);
+					for (BattleParticipant p : participants)
+						if (!p.currentPokemon().worldObj.loadedEntityList.contains(p.currentPokemon())) {
+							p.currentPokemon().releaseFromPokeball();
+							p.currentPokemon().hurtResistantTime = 0;
+						}
 					takeTurn(participants.get(turn));
 					turn++;
 
@@ -204,7 +209,8 @@ public class BattleController {
 					p.willTryFlee = false;
 					p.wait = true;
 					p.getNextPokemon();
-					p.currentPokemon().battleController.globalStatuses = globalStatuses;
+					// p.currentPokemon().battleController.globalStatuses =
+					// globalStatuses;
 				} else {
 					ChatHandler.sendBattleMessage(g, "You've run out of usable pokemon!");
 					endBattle();

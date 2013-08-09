@@ -136,11 +136,15 @@ public class ClientPacketHandler implements IPacketHandler {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}else if (packetID == EnumPackets.SwitchCamera.getIndex()){
+			} else if (packetID == EnumPackets.SwitchCamera.getIndex()) {
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
-			}else if (packetID == EnumPackets.PlayerDeath.getIndex()){
+			} else if (packetID == EnumPackets.PlayerDeath.getIndex()) {
 				GuiPixelmonOverlay.isVisible = true;
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+				Minecraft.getMinecraft().gameSettings.hideGUI = false;
+				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+				Minecraft.getMinecraft().currentScreen = null;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
