@@ -90,7 +90,7 @@ public class PlayerStorage {
 			pokedex.set(Pokedex.nameToID(p.getName()), DexRegisterStatus.caught);
 			pokedex.sendToPlayer((EntityPlayerMP) pokedex.owner);
 		}
-		if (p.moveset.size() == 0)
+		if (p.getMoveset().size() == 0)
 			p.loadMoveset();
 		p.setBoss(EnumBossMode.Normal);
 		if (!hasSpace()) {
@@ -175,6 +175,7 @@ public class PlayerStorage {
 			if (n != null) {
 				if (n.getInteger("pixelmonID") == id) {
 					n.setFloat("FallDistance", 0);
+					n.setInteger("Bukkit.MaxHealth", n.getInteger("StatsHP"));
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
 					if (mode == PokeballManagerMode.Player) {
@@ -313,8 +314,12 @@ public class PlayerStorage {
 					nbt.setName(pixelmon.getName());
 					if (pixelmon.func_110143_aJ() <= 0)
 						nbt.setBoolean("IsFainted", true);
-					if (mode == PokeballManagerMode.Player)
-						player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
+					if (mode == PokeballManagerMode.Player) {
+						if (EntityAlreadyExists(pixelmon.getPokemonId(), pixelmon.worldObj))
+							player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(pixelmon, EnumPackets.UpdateStorage).getPacket());
+						else
+							player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
+					}
 				}
 			}
 		}
@@ -461,11 +466,11 @@ public class PlayerStorage {
 		for (int i = 0; i < numMoves; i++) {
 			nbt.setInteger("PixelmonMovePP" + i, nbt.getInteger("PixelmonMovePPBase" + i));
 		}
-		int numStatus = nbt.getShort("EffectCount");
+		int numStatus = nbt.getShort("StatusCount");
 		for (int i = 0; i < numStatus; i++) {
-			nbt.removeTag("Effect" + i);
+			nbt.removeTag("Status" + i);
 		}
-		nbt.setShort("EffectCount", (short) 0);
+		nbt.setShort("StatusCount", (short) 0);
 		if (mode == PokeballManagerMode.Player)
 			player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
 	}

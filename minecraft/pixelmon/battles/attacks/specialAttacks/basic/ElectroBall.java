@@ -18,13 +18,13 @@ public class ElectroBall extends SpecialAttackBase {
 			ArrayList<String> targetAttackList) throws Exception {
 		int targetSpeed = target.stats.Speed, userSpeed = user.stats.Speed;
 		if ((double)userSpeed*0.25 > targetSpeed)
-			a.baseAttack.basePower = 150;
+			a.movePower = 150;
 		else if ((double)(userSpeed*0.50) <= targetSpeed) 
-			a.baseAttack.basePower = 60;
+			a.movePower = 60;
 		else if ((double)(userSpeed*0.34) <= targetSpeed)
-			a.baseAttack.basePower = 80;
+			a.movePower = 80;
 		else if ((double)(userSpeed*0.25) < targetSpeed)
-			a.baseAttack.basePower = 120;
+			a.movePower = 120;
 		return false;
 	}
 

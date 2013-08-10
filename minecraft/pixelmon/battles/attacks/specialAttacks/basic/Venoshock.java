@@ -16,14 +16,9 @@ public class Venoshock extends SpecialAttackBase {
 
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
-		a.baseAttack.basePower = 65;
-		boolean isPoisoned = false;
-		for (StatusBase e : target.status)
-			if (e.type == StatusType.Poison || e.type == StatusType.PoisonBadly)
-				isPoisoned = true;
-
-		if (isPoisoned)
-			a.baseAttack.basePower = 130;
+		a.movePower = 65;
+		if (target.hasStatus(StatusType.Poison) || (target.hasStatus(StatusType.PoisonBadly)))
+			a.movePower = 130;
 		return false;
 	}
 }

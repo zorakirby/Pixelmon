@@ -4,6 +4,8 @@ import java.util.EnumSet;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import org.lwjgl.input.Keyboard;
 
@@ -27,7 +29,8 @@ public class RidingBindings extends KeyHandler {
 
 	@Override
 	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
-		if (Minecraft.getMinecraft().thePlayer.ridingEntity == null || tickEnd) {
+		if (Minecraft.getMinecraft().currentScreen != null && Minecraft.getMinecraft().thePlayer != null
+				&& Minecraft.getMinecraft().thePlayer.ridingEntity == null || tickEnd) {
 			return;
 		}
 		if (kb.keyCode == Keyboard.KEY_C)

@@ -77,7 +77,7 @@ public class TrainerParticipant extends BattleParticipant {
 
 	@Override
 	public Attack getMove() {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, opponent.currentPokemon().type, trainer.releasedPokemon, opponent.currentPokemon());
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.getMoveset(), opponent.currentPokemon().type, trainer.releasedPokemon, opponent.currentPokemon());
 	}
 
 	@Override

@@ -1030,10 +1030,10 @@ public class ModelDewgong extends PixelmonModelBase {
 		//		EnumPhase.InPhase, legRotationLimit, legspeed);
 		//ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
 		//		EnumPhase.InPhase, legRotationLimit, legspeed);
-		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .2F, .05F, legspeed);
+		//ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .2F, .05F, legspeed);
 		
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
-				null, null, tailModule);
+				null, null, null);
 		
 		
 	}

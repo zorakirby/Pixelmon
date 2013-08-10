@@ -17,6 +17,7 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusPersist;
 import pixelmon.battles.status.StatusType;
+import pixelmon.battles.status.Transformed;
 import pixelmon.comm.ChatHandler;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.npcs.EntityTrainer;
@@ -30,7 +31,7 @@ import pixelmon.storage.PixelmonStorage;
 public abstract class Entity6CanBattle extends Entity5Rideable {
 	public BattleStats battleStats = new BattleStats(this);
 	public ArrayList<StatusBase> status = new ArrayList<StatusBase>();
-	public Moveset moveset = new Moveset();
+	private Moveset moveset = new Moveset();
 	public BattleController battleController;
 	protected EntityTrainer trainer;
 	public boolean isLockedInBattle = false;
@@ -46,6 +47,16 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 
 	public void loadMoveset() {
 		moveset = DatabaseMoves.GetInitialMoves(getName(), getLvl().getLevel());
+	}
+	
+	public Moveset getMoveset(){
+		if (hasStatus(StatusType.Transformed)){
+			for (int i =0; i < status.size(); i++){
+				if (status.get(i) instanceof Transformed)
+					return ((Transformed)status.get(i)).getMoveset();
+			}
+		}
+		return moveset;
 	}
 
 	@Override
@@ -64,7 +75,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 			return;
 		}
 		p2.currentPokemon().battleController = battleController;
-		if (p2.currentPokemon().moveset.size() == 0)
+		if (p2.currentPokemon().getMoveset().size() == 0)
 			p2.currentPokemon().loadMoveset();
 
 		
@@ -185,12 +196,12 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		for (int i = 0; i < status.size(); i++) {
 			try {
 				if (status.get(i) instanceof StatusPersist)
-					((StatusPersist) status.get(i)).writeToNBT(status.get(i).type.index, nbt);
+					((StatusPersist) status.get(i)).writeToNBT(i, nbt);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		nbt.setShort("EffectCount", (short) status.size());
+		nbt.setShort("StatusCount", (short) status.size());
 	}
 
 	@Override
@@ -198,9 +209,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		super.readEntityFromNBT(nbt);
 		moveset.readFromNBT(nbt);
 		int statusCount = 0;
-		statusCount = nbt.getShort("EffectCount");
+		statusCount = nbt.getShort("StatusCount");
 		for (int i = 0; i < statusCount; i++) {
-			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Effect" + i));
+			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Status" + i));
 			status.add(s.restoreFromNBT(nbt));
 		}
 	}

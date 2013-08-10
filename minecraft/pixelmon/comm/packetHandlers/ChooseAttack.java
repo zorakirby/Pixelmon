@@ -23,6 +23,6 @@ public class ChooseAttack extends PacketHandlerBase {
 		BattleController bc = BattleRegistry.getBattle(battleIndex);
 		for (BattleParticipant p : bc.participants)
 			if (p.currentPokemon().getPokemonId() == pokemonID)
-				bc.setAttack(p.currentPokemon(), p.currentPokemon().moveset.get(buttonId));
+				bc.setAttack(p.currentPokemon(), p.currentPokemon().getMoveset().get(buttonId));
 	}
 }

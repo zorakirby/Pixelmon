@@ -255,7 +255,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						motionY = 0.5f;
 						jump();
 					} else if (baseStats.canFly) {
-						motionY += 0.02f;
+						motionY += 0.14f;
 						isFlying = true;
 					}
 				} else if (isInWater()) {

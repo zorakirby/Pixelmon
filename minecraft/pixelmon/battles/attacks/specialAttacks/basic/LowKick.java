@@ -18,22 +18,22 @@ public class LowKick extends SpecialAttackBase{
 		int weight = (int) DatabaseStats.getWeight(target.getNickname());
 		
 		if(weight >= 0.1){
-			a.baseAttack.basePower = 20;
+			a.movePower = 20;
 		}
 		if(weight >= 10.0){
-			a.baseAttack.basePower = 40;
+			a.movePower = 40;
 		}
 		if(weight >= 25.0){
-			a.baseAttack.basePower = 60;
+			a.movePower = 60;
 		}
 		if(weight >= 50.0){
-			a.baseAttack.basePower = 80;
+			a.movePower = 80;
 		}
 		if(weight >= 100.0){
-			a.baseAttack.basePower = 100;
+			a.movePower = 100;
 		}
 		if(weight >= 200.0){
-			a.baseAttack.basePower = 120;
+			a.movePower = 120;
 		}
 		
 		return false;

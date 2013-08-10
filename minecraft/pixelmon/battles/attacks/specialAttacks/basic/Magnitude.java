@@ -19,25 +19,25 @@ public class Magnitude extends SpecialAttackBase {
 			ArrayList<String> targetAttackList) throws Exception {
 		int i = RandomHelper.getRandomNumberBetween(1, 100);
 		if (i <= 5) {
-			a.baseAttack.basePower = 10;
+			a.movePower = 10;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Magnitude 4!");
 		} else if (i <= 15 && i > 5) {
-			a.baseAttack.basePower = 30;
+			a.movePower = 30;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Magnitude 5!");
 		} else if (i <= 35 && i > 15) {
-			a.baseAttack.basePower = 50;
+			a.movePower = 50;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Magnitude 6!");
 		} else if (i <= 65 && i > 35) {
-			a.baseAttack.basePower = 70;
+			a.movePower = 70;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Magnitude 7!");
 		} else if (i <= 85 && i > 65) {
-			a.baseAttack.basePower = 90;
+			a.movePower = 90;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Magnitude 8!");
 		} else if (i <= 95 && i > 85) {
-			a.baseAttack.basePower = 110;
+			a.movePower = 110;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Magnitude 9!");
 		} else if (i <= 100 && i > 95) {
-			a.baseAttack.basePower = 150;
+			a.movePower = 150;
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Magnitude 10!");
 		}
 		return false;

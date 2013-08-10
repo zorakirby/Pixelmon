@@ -39,7 +39,7 @@ public class SendPixelmon extends PacketHandlerBase {
 
 				if (playerPokeballs.get(player) != null && !playerPokeballs.get(player).isDead)
 					return;
-
+				
 				EntityPixelmon pokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj);
 				EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, pokemon, pokemon.caughtBall);
 				playerPokeballs.put(player, pokeball);
@@ -65,6 +65,9 @@ public class SendPixelmon extends PacketHandlerBase {
 					return;
 				}
 
+				if (pixelmon.riddenByEntity == player) 
+					player.mountEntity(null);
+				
 				if (pixelmon.getOwner() == null)
 					pixelmon.unloadEntity();
 				else if (pixelmon.getOwner() == player) {

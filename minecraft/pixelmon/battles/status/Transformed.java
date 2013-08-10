@@ -28,7 +28,6 @@ public class Transformed extends StatusBase {
 		this.target = target;
 		PixelmonTransformPacket p = new PixelmonTransformPacket(user.getPokemonId(), target.getName());
 		((EntityPlayerMP) user.getOwner()).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
-
 	}
 
 	Moveset moveset;
@@ -36,8 +35,8 @@ public class Transformed extends StatusBase {
 	public Moveset getMoveset() {
 		if (moveset == null) {
 			moveset = new Moveset();
-			for (int i = 0; i < target.moveset.size(); i++) {
-				Attack a = DatabaseMoves.getAttack(target.moveset.get(i).baseAttack.attackName);
+			for (int i = 0; i < target.getMoveset().size(); i++) {
+				Attack a = DatabaseMoves.getAttack(target.getMoveset().get(i).baseAttack.attackName);
 				a.pp = 5;
 				moveset.add(a);
 			}

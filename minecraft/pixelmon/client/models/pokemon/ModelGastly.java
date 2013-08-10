@@ -27,7 +27,7 @@ public class ModelGastly extends PixelmonModelBase
         textureWidth = 64;
         textureHeight = 32;
         Body = new PixelmonModelRenderer(this, "Body");
-        Body.setRotationPoint(0, 20, 0);
+        Body.setRotationPoint(0, 0, 0);
         Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/gastly/gastly.obj")));
         setRotation(Body, 1.3F, .7F, 0);
         

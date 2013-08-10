@@ -90,7 +90,7 @@ public class RenderTileFossilCleaner extends TileEntitySpecialRenderer {
 	public void renderModel(TileEntityFossilCleaner tile, float f) {
 		if (tile.itemInCleaner != -1)
 			if (PixelmonItemsFossils.getFossilFromIndex(tile.itemInCleaner) != null) {
-				func_110628_a(new ResourceLocation("/pixelmon/texture/fossils/" + fossilTexture(tile) + ".png"));
+				func_110628_a(new ResourceLocation("pixelmon:textures/fossils/" + fossilTexture(tile) + ".png"));
 				GL11.glTranslatef(0, 2.23F, 0);
 				if (PixelmonItemsFossils.getFossilFromIndex(tile.itemInCleaner).getModel() != null)
 					PixelmonItemsFossils.getFossilFromIndex(tile.itemInCleaner).getModel().renderModel(f);

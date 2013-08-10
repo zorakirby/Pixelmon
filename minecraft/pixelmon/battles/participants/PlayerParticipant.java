@@ -25,11 +25,13 @@ public class PlayerParticipant extends BattleParticipant {
 	public EntityPlayerMP player;
 	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
+	int startAir = 0;
 
 	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) throws PlayerNotLoadedException {
 		player = p;
 		currentPixelmon = firstPixelmon;
 		storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
+		startAir = p.getAir();
 	}
 
 	@Override
@@ -64,17 +66,18 @@ public class PlayerParticipant extends BattleParticipant {
 		for (EntityPixelmon p : PixelmonMethods.getAllActivePokemon(player)) {
 			p.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
 			for (int i = 0; i < 4; i++) {
-				if (p.moveset.get(i) != null)
-					p.moveset.get(i).setDisabled(false, p);
+				if (p.getMoveset().get(i) != null)
+					p.getMoveset().get(i).setDisabled(false, p);
 			}
 		}
 		try {
-			if (opponent.startedBattle && !(PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(currentPixelmon.getPokemonId(), player.worldObj))) {
-				currentPixelmon.releaseFromPokeball();
+			if (opponent.startedBattle
+					&& !(PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(currentPixelmon.getPokemonId(), player.worldObj))) {
 				currentPixelmon.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
+				currentPixelmon.releaseFromPokeball();
 			}
-		} catch (Exception e){
-			//Do nothing
+		} catch (Exception e) {
+			// Do nothing
 		}
 	}
 
@@ -119,7 +122,7 @@ public class PlayerParticipant extends BattleParticipant {
 	public Attack getMove() {
 		if (bc == null)
 			return null;
-		if (currentPixelmon.moveset.size() == 0) {
+		if (currentPixelmon.getMoveset().size() == 0) {
 			bc.endBattle();
 			return null;
 		}
@@ -214,4 +217,8 @@ public class PlayerParticipant extends BattleParticipant {
 		return lvl;
 	}
 
+	@Override
+	public void tick() {
+		player.setAir(startAir);
+	}
 }

@@ -277,4 +277,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public ArrayList<String> getPreEvolutions() {
 		return DatabaseStats.getPreEvolutions(getName());
 	}
+	
+	//To disable Leashing
+	public void func_110162_b(Entity par1Entity, boolean par2) {};
 }

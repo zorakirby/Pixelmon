@@ -17,8 +17,8 @@ public class InteractionEther implements IInteraction {
 				ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 				if (itemstack.getItem() instanceof ItemEther) {
 					boolean canUseEther = false;
-					for (int i = 0; i < entityPixelmon.moveset.size(); i++) {
-						Attack a = entityPixelmon.moveset.get(i);
+					for (int i = 0; i < entityPixelmon.getMoveset().size(); i++) {
+						Attack a = entityPixelmon.getMoveset().get(i);
 						if (a.pp < a.ppBase) {
 							canUseEther = true;
 							break;

@@ -142,11 +142,11 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			}
 		} else
 			order = 0;
-		if (p.moveset.size() == 0)
+		if (p.getMoveset().size() == 0)
 			p.loadMoveset();
-		numMoves = p.moveset.size();
+		numMoves = p.getMoveset().size();
 		for (int i = 0; i < numMoves; i++) {
-			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.moveset, i);
+			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.getMoveset(), i);
 		}
 		HP = p.stats.HP;
 		Speed = p.stats.Speed;
