@@ -30,7 +30,7 @@ public class ModelOBJWrapper{
 	public void render(float scale){
 		GL11.glPushMatrix();
 		GL11.glScalef(scale, scale, scale);
-		GL11.glRotatef(90, 1, 0, 0);
+		//GL11.glRotatef(90, 3, 0, 0);
 		GL11.glTranslatef(offsetX, offsetZ, offsetY); //Z comes before Y because we are rotating by 90 first
 		
 		model.renderAll();

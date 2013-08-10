@@ -31,28 +31,34 @@ public class ModelBlastoise extends PixelmonModelBase
         textureWidth = 64;
         textureHeight = 32;
         Body = new PixelmonModelRenderer(this, "Body");
-        Body.setRotationPoint(0, 20, 0);
+        Body.setRotationPoint(0, 24, 0);
         Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/blastoise/BlastoiseBodyCon.obj")));
         Head = new PixelmonModelRenderer(this, 0, 0);
-        Head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/blastoise/BlastoiseHeadCon.obj"), 0, 0, 0 ));
+        Head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/blastoise/BlastoiseHeadCon.obj"), 0,0,0F));
+        Head.setRotationPoint(0.114F, 3.502F, 1.296F);
         footL = new PixelmonModelRenderer(this, 0, 0);
         footL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/blastoise/BlastoiseLeftLegCon.obj"), 0, 0, 0 ));
+        footL.setRotationPoint(1.031F, 1.390F, 0.152F);
         footR = new PixelmonModelRenderer(this, 0, 0);
         footR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/blastoise/BlastoiseRightLegCon.obj"), 0, 0, 0));
+        footR.setRotationPoint(-1.031F, 1.390F, 0.152F);
         ArmL = new PixelmonModelRenderer(this, 0, 0);
         ArmL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/blastoise/BlastoiseLeftArmCon.obj"), 0, 0, 0));
+        ArmL.setRotationPoint(1.614F, 3.214F, 1.097F);
         ArmR = new PixelmonModelRenderer(this, 0, 0);
         ArmR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/blastoise/BlastoiseRightArmCon.obj"), 0, 0, 0));
+        ArmR.setRotationPoint(-1.614F, 3.214F, 1.097F);
         Body.addChild(Head);
         Body.addChild(ArmL);
         Body.addChild(ArmR);
         Body.addChild(footL);
         Body.addChild(footR);
         
-        int degrees = 90;
+        int degrees = 180;
         float radians = (float) Math.toRadians(degrees);
         
-        //setRotation(Body, radians, 0, 0);
+        setRotation(Body, radians, 0, 0);
+        
 
         float legspeed = 0.5F;
         float legRotationLimit = 1.4F;
