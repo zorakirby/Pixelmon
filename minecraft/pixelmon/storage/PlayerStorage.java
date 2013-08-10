@@ -175,6 +175,7 @@ public class PlayerStorage {
 			if (n != null) {
 				if (n.getInteger("pixelmonID") == id) {
 					n.setFloat("FallDistance", 0);
+					n.setInteger("Bukkit.MaxHealth", n.getInteger("StatsHP"));
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
 					if (mode == PokeballManagerMode.Player) {
@@ -313,8 +314,7 @@ public class PlayerStorage {
 					nbt.setName(pixelmon.getName());
 					if (pixelmon.func_110143_aJ() <= 0)
 						nbt.setBoolean("IsFainted", true);
-					if (mode == PokeballManagerMode.Player)
-					{
+					if (mode == PokeballManagerMode.Player) {
 						if (EntityAlreadyExists(pixelmon.getPokemonId(), pixelmon.worldObj))
 							player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(pixelmon, EnumPackets.UpdateStorage).getPacket());
 						else
