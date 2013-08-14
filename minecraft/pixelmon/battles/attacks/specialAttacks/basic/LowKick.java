@@ -15,7 +15,7 @@ public class LowKick extends SpecialAttackBase{
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		
-		int weight = (int) DatabaseStats.getWeight(target.getNickname());
+		int weight = (int) DatabaseStats.getWeight(target.getName());
 		
 		if(weight >= 0.1){
 			a.movePower = 20;
