@@ -19,6 +19,11 @@ public class Confusion extends StatusBase {
 
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
+		if (effectTurns == 0) {
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " snaps out of confusion!");
+			user.status.remove(this);
+			return true;
+		}
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is confused...");
 		if ((new Random()).nextInt(100) <= 50) {
 			user.attackEntityFrom(DamageSource.causeMobDamage(user), calculateConfusionDamage(user));
@@ -44,10 +49,6 @@ public class Confusion extends StatusBase {
 
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
-		if (effectTurns == 0) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " snaps out of confusion!");
-			user.status.remove(this);
-		}
 		effectTurns--;
 	}
 }

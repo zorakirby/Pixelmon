@@ -5,7 +5,7 @@ import java.util.Random;
 
 import net.minecraft.util.DamageSource;
 import pixelmon.battles.attacks.Attack;
-import pixelmon.battles.attacks.Value;
+import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -17,7 +17,12 @@ public class OHKO extends SpecialAttackBase {
 	
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
-		
+		if (a.baseAttack.attackName.equals("Fissure") && target.hasStatus(StatusType.UnderGround))
+		{
+			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ());
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
+		}
+			
 		int chance;
 		if (target.getLvl().getLevel() > user.getLvl().getLevel())
 			chance = 0;

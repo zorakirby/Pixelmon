@@ -49,7 +49,12 @@ public class Attack {
 	public boolean STAB;
 	public int movePower;
 	public int moveAccuracy;
+<<<<<<< HEAD
 
+=======
+	
+	
+>>>>>>> refs/remotes/origin/master
 	public Attack(int attackIndex, String moveName, ResultSet rs) throws SQLException {
 		if (fullAttackList[attackIndex] == null) {
 			AttackBase a = new AttackBase(attackIndex, moveName, rs);
@@ -66,6 +71,10 @@ public class Attack {
 	public boolean flinched = false;
 
 	public void use(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+<<<<<<< HEAD
+=======
+		// TRY PUTTING THE STORING OF CURRENT ATTACK & ACCURACY ETCETERA HERE
+>>>>>>> refs/remotes/origin/master
 		movePower = baseAttack.basePower;
 		moveAccuracy = baseAttack.accuracy;
 		target.hurtTime = 0;
@@ -119,6 +128,8 @@ public class Attack {
 		if (cantMiss || RandomHelper.getRandomNumberBetween(0, 100) <= accuracy) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
 					user.getNickname() + " used " + baseAttack.attackName + " on " + target.getNickname() + "!");
+			if(EnumType.getTotalEffectiveness(target.type, baseAttack.attackType) != EFFECTIVE_NONE)
+			{
 			for (int j = 0; j < baseAttack.effects.size(); j++) {
 				EffectBase e = baseAttack.effects.get(j);
 				if (e instanceof StatsEffect) {
@@ -157,7 +168,16 @@ public class Attack {
 				}
 				// if (e.effectType == EffectType.AttackModifier) {
 				// }
+				;
 			}
+			
+			}
+			else 
+			{
+				ChatHandler.sendBattleMessage(user.getOwner(),  target.getOwner(), "It had no effect!");
+				return;
+			}
+		
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
@@ -178,6 +198,11 @@ public class Attack {
 					System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
 					System.out.println(exc.getStackTrace());
 				}
+			}
+			if (user.battleController != null)
+			for (int i = 0; i < user.battleController.getGlobalStatusSize(); i++)
+			{
+				user.battleController.getGlobalStatus(i).applyInMoveEffect(user, target, this);
 			}
 
 			if (!attackHandled) {
@@ -226,6 +251,7 @@ public class Attack {
 		} else {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " tried to use " + baseAttack.attackName
 					+ ", but it missed!");
+			attackList.set(attackList.size()-1, null);
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
@@ -246,6 +272,7 @@ public class Attack {
 			user.getTrainer().pokemonStorage.updateNBT(user);
 		if (target.getTrainer() != null)
 			target.getTrainer().pokemonStorage.updateNBT(target);
+		user.lastMoveUsed = this;
 		pp--;
 		ItemHeld.useBattleItems(user, target);
 		return;

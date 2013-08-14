@@ -1,12 +1,8 @@
 package pixelmon.battles.controller;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -19,8 +15,12 @@ import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
+import pixelmon.battles.status.Clear;
 import pixelmon.battles.status.GlobalStatusBase;
+import pixelmon.battles.status.Rainy;
+import pixelmon.battles.status.Sandstorm;
 import pixelmon.battles.status.StatusBase;
+import pixelmon.battles.status.Sunny;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -36,13 +36,14 @@ public class BattleController {
 	public ArrayList<BattleParticipant> participants = new ArrayList<BattleParticipant>();
 
 	private int battleTicks = 0;
-	public ArrayList<GlobalStatusBase> globalStatuses = new ArrayList<GlobalStatusBase>();
+	private ArrayList<GlobalStatusBase> globalStatuses = new ArrayList<GlobalStatusBase>();
 	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
 	private Attack lastMoveUsed;
 
 	public BattleController(BattleParticipant participant1, BattleParticipant participant2) throws Exception {
+		globalStatuses.add(new Clear());
 		participant1.startedBattle = true;
 		participant1.team = 0;
 		participant2.team = 1;
@@ -150,12 +151,22 @@ public class BattleController {
 						for (BattleParticipant p : participants) {
 							p.turnTick();
 						}
+						
 						for (int i = 0; i < battleStatusList.size(); i++) {
 							try {
 								battleStatusList.get(i).turnTick(null, null);
 							} catch (Exception e) {
 								System.out.println("Error on battleStatus tick for " + battleStatusList.get(i).type.toString());
 								e.printStackTrace();
+							}
+						}
+						for (int i = 0 ; i < globalStatuses.size() ; i++)
+						{
+							if (!globalStatuses.get(i).endOfTurnMessage(this).equals(""))
+							{
+							ChatHandler.sendBattleMessage(participants.get(0).currentPokemon().getOwner(), participants.get(1).currentPokemon().getOwner(),
+									globalStatuses.get(i).endOfTurnMessage(this));
+							globalStatuses.get(i).applyRepeatedEffect(globalStatuses, this.participants.get(0).currentPokemon(), this.participants.get(1).currentPokemon());
 							}
 						}
 						turnCount++;
@@ -215,8 +226,11 @@ public class BattleController {
 					p.willTryFlee = false;
 					p.wait = true;
 					p.getNextPokemon();
+<<<<<<< HEAD
 					// p.currentPokemon().battleController.globalStatuses =
 					// globalStatuses;
+=======
+>>>>>>> refs/remotes/origin/master
 				} else {
 					ChatHandler.sendBattleMessage(g, "You've run out of usable pokemon!");
 					endBattle();
@@ -245,7 +259,12 @@ public class BattleController {
 		if (p.willTryFlee) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
 			p.priority = 6;
+<<<<<<< HEAD
 		} else if (p.isSwitching)
+=======
+		}
+		else if (p.isSwitching)
+>>>>>>> refs/remotes/origin/master
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
 			useItem(p);
@@ -279,20 +298,30 @@ public class BattleController {
 	}
 
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {
+		System.out.println(user.battleStats.getSpeedModifier());
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
+<<<<<<< HEAD
 		B = (B / 4) % 256;
+=======
+			  B = (B / 4) % 256;
+>>>>>>> refs/remotes/origin/master
 		float C = ++p.escapeAttempts;
 		float F = A * 32 / B + 30 * C;
+<<<<<<< HEAD
 
 		int random = RandomHelper.getRandomNumberBetween(1, 255);
 		if (F > 255 || random < F) {
 			if (!user.isLockedInBattle) {
+=======
+		int random = RandomHelper.getRandomNumberBetween(1, 255);
+		System.out.println(C);
+		System.out.println(random);
+		System.out.println(F);
+		if (F > 255 || random < F) {
+>>>>>>> refs/remotes/origin/master
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
-			} else {
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Its locked in battle!");
-			}
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " couldn't escape!");
 	}
@@ -380,4 +409,48 @@ public class BattleController {
 	public Attack getLastMoveUsed() {
 		return lastMoveUsed;
 	}
+	
+	public GlobalStatusBase getWeather()
+	{
+		for (int i = 0; i < globalStatuses.size(); i++)
+		{
+			GlobalStatusBase g = globalStatuses.get(i);
+			if (g instanceof Rainy || g instanceof Clear || g instanceof Sandstorm || g instanceof Sunny)
+				return globalStatuses.get(i);
+		}
+		return null;
+	}
+	
+	public void removeGlobalStatus(GlobalStatusBase g)
+	{
+		for (int i = 0; i < globalStatuses.size(); i++)
+		{
+			if (globalStatuses.get(i) == g)
+			{
+				if (g instanceof Rainy || g instanceof Sandstorm  || g instanceof Sunny /* || g instanceof Hail*/)
+					globalStatuses.add(new Clear());
+				globalStatuses.remove(i);	
+			}
+		}
+	}
+	
+	public void addGlobalStatus(GlobalStatusBase g)
+	{
+		if (g instanceof Rainy || g instanceof Sandstorm || g instanceof Sunny /*|| g instanceof Hail*/)
+			for (int i = 0; i < globalStatuses.size(); i++)
+				if (globalStatuses.get(i) instanceof Clear)
+					globalStatuses.remove(i);
+		globalStatuses.add(g);
+			
+	}
+	
+	public GlobalStatusBase getGlobalStatus(int index)
+	{
+		return globalStatuses.get(index);
+	}
+	public int getGlobalStatusSize()
+	{
+		return globalStatuses.size();
+	}
+	
 }

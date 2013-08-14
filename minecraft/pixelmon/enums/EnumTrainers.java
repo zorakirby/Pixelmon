@@ -1,15 +1,15 @@
 package pixelmon.enums;
 
 public enum EnumTrainers {
-	Youngster, 
-	Fisherman,
-	//FemaleRocketGrunt, This model needs to be pieced correctly.
 	BugCatcher,
-	Ornithologist,
-	Swimmer,
+	BugManiac,
 	FireBreather,
-	//FemaleScientist,
-	BugManiac;
+	Fisherman,
+	Ornithologist,
+	RichBoy,
+	Swimmer,
+	Youngster;
+	
 
 	
 	public static boolean has(String creatureName) {

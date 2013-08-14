@@ -21,6 +21,7 @@ import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.gui.GuiHelper;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.GuiResources;
+import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
@@ -688,7 +689,7 @@ public class GuiBattle extends GuiContainer {
 		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
 
-	private void drawChooseAttack(int mouseX, int mouseY) {
+	private void drawChooseAttack(int mouseX, int mouseY) {	
 		mc.renderEngine.func_110577_a(GuiResources.battleGui2);
 		setCameraToPlayer();
 
@@ -787,6 +788,9 @@ public class GuiBattle extends GuiContainer {
 					PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.Flee, 0));
 					mode = BattleMode.Waiting;
 				} else {
+					if (!ClientBattleManager.canSwitch)
+						ClientBattleManager.addMessage(ClientBattleManager.getUserPokemon().getNickname() + " is trapped! You cannot flee!");
+					else
 					ClientBattleManager.addMessage("You can't run from a trainer battle!");
 				}
 			}
@@ -835,28 +839,32 @@ public class GuiBattle extends GuiContainer {
 		int y1 = height - guiHeight + 9;
 		int y2 = height - guiHeight + 33;
 		int w = 87, h = 20;
-		setCameraToPixelmon();
+
 		PixelmonMovesetDataPacket[] moveset = ClientBattleManager.getUserPokemonPacket().moveset;
 		int numMoves = ClientBattleManager.getUserPokemonPacket().numMoves;
 		if (mouseX > x1 && mouseX < x1 + w && mouseY > y1 && mouseY < y1 + h && numMoves > 0 && moveset[0].pp > 0 && !moveset[0].disabled) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 0, battleControllerIndex,
 					ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
+			setCameraToPixelmon();
 			return;
 		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y1 && mouseY < y1 + h && numMoves > 1 && moveset[1].pp > 0 && !moveset[1].disabled) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 1, battleControllerIndex,
 					ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
+			setCameraToPixelmon();
 			return;
 		} else if (mouseX > x1 && mouseX < x1 + w && mouseY > y2 && mouseY < y2 + h && numMoves > 2 && moveset[2].pp > 0 && !moveset[2].disabled) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 2, battleControllerIndex,
 					ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
+			setCameraToPixelmon();
 			return;
 		} else if (mouseX > x2 && mouseX < x2 + w && mouseY > y2 && mouseY < y2 + h && numMoves > 3 && moveset[3].pp > 0 && !moveset[3].disabled) {
 			PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.ChooseAttack, 3, battleControllerIndex,
 					ClientBattleManager.getUserPokemonPacket().pokemonID));
 			mode = BattleMode.Waiting;
+			setCameraToPixelmon();
 			return;
 		}
 	}

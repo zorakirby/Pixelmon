@@ -20,12 +20,10 @@ public class PoisonBadly extends StatusPersist {
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is hurt by poison!");
 		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 16f * poisonSeverity));
-	}
-
-	@Override
-	public void onDamageRecieved() {
 		poisonSeverity++;
 	}
+
+
 
 	@Override
 	public boolean clearsOnBattleEnd() {

@@ -6,6 +6,6 @@ public class Clear extends GlobalStatusBase {
 	
 	public Clear()
 	{
-		super(false, false);
+		super("Clear");
 	}
 }
