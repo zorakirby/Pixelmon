@@ -91,7 +91,12 @@ public class PixelmonItems {
 	public static int bootsAluminiumID;
 	public static int newRunningShoesID;
 	public static int oldRunningShoesID;
-
+	
+	public static int tradeMonitorID;
+	public static int tradeHolderRightID;
+	public static int LtradeHolderLeftID;
+	public static int tradePanelID;
+	
 	public static int aluminiumIngotID;
 	public static int aluminiumPlateID;
 
@@ -226,6 +231,17 @@ public class PixelmonItems {
 	public static Item goodRod;
 	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemFishingRod")
 	public static Item superRod;
+	
+	@Mod.Item(name = "Tradeing Machine Monitor", typeClass = "pixelmon.items.ItemTradingMachine")
+	public static Item tradeMonitor;
+	@Mod.Item(name = "Tradeing Machine Holder Right", typeClass = "pixelmon.items.ItemTradingMachine")
+	public static Item tradeHolderRight;
+	@Mod.Item(name = "Tradeing Machine Holder Left", typeClass = "pixelmon.items.ItemTradingMachineL")
+	public static Item LtradeHolderLeft;
+	@Mod.Item(name = "Tradeing Machine Control Panel", typeClass = "pixelmon.items.ItemTradingMachine")
+	public static Item tradePanel;
+	
+	
 
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
@@ -298,6 +314,11 @@ public class PixelmonItems {
 		oldRodID = cfg.get("item", "Old Rod", 10137).getInt();
 		goodRodID = cfg.get("item", "Good Rod", 10138).getInt();
 		superRodID = cfg.get("item", "Super Rod", 10139).getInt();
+		
+		tradeMonitorID = cfg.get("item", "Trade Monitor", 10140).getInt();
+		tradeHolderRightID = cfg.get("item", "Trade Holder Right", 10141).getInt();
+		LtradeHolderLeftID = cfg.get("item", "Trade Holder Left", 10143).getInt();
+		tradePanelID = cfg.get("item", "Trade Panel", 10144).getInt();
 
 		pokeDex = new ItemPokedex(pokeDexID).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rarecandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
@@ -361,6 +382,11 @@ public class PixelmonItems {
 		oldRod = new ItemFishingRod(oldRodID, EnumRodType.OldRod, "Old Rod");
 		goodRod = new ItemFishingRod(goodRodID, EnumRodType.GoodRod, "Good Rod");
 		superRod = new ItemFishingRod(superRodID, EnumRodType.SuperRod, "Super Rod");
+		
+		tradeMonitor = new PixelmonItem(tradeMonitorID, "tradingmachinepieces/tradingMonitor", "Trade Monitor");
+		tradeHolderRight = new PixelmonItem(tradeHolderRightID, "tradingmachinepieces/tradingHolderR", "Trade Holder Right");
+		LtradeHolderLeft = new PixelmonItem(LtradeHolderLeftID, "tradingmachinepieces/tradingHolderL", "Trade Holder Left");
+		tradePanel = new PixelmonItem(tradePanelID, "tradingmachinepieces/tradingPanel", "Trade Panel");
 
 		// TODO make correct icons for mossyrock and icyrock, instead of using
 		// anvil
