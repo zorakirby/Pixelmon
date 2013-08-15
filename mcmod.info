@@ -3,10 +3,10 @@
   "modid": "Pixelmon",
   "name": "Pixelmon",
   "description": "A mod that brings Pokemon to Minecraft",
-  "version": "2.0.0 beta",
-  "mcversion": "1.4.7",
-  "url": "http://pixelmon.freeforums.org/index.php",
-  "updateUrl": "http://pixelmon.freeforums.org/releases-f22.html",
+  "version": "2.3.1",
+  "mcversion": "1.6.2",
+  "url": "http://pixelmonmod.com/forum/",
+  "updateUrl": "http://pixelmonmod.com/forum/viewtopic.php?f=0&t=6263",
   "authors": [
     "MrMasoschism",
     "The Pixelmon Team"
