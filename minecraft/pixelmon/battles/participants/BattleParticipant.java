@@ -31,6 +31,7 @@ public abstract class BattleParticipant {
 	public boolean wait;
 	public int escapeAttempts = 0;
 	public int willUseItemInStackInfo;
+	public int damageTakenThisTurn = 0;
 
 	public abstract EntityPixelmon currentPokemon();
 
@@ -93,6 +94,7 @@ public abstract class BattleParticipant {
 				}
 			}
 		}
+		damageTakenThisTurn = 0;
 		
 	}
 

@@ -169,7 +169,7 @@ public class BattleController {
 							globalStatuses.get(i).applyRepeatedEffect(globalStatuses, this.participants.get(0).currentPokemon(), this.participants.get(1).currentPokemon());
 							}
 						}
-						turnCount++;
+
 					}
 					checkAndReplaceFaintedPokemon();
 				}

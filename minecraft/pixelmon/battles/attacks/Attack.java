@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,6 +19,7 @@ import pixelmon.battles.attacks.specialAttacks.attackModifiers.Flinch;
 import pixelmon.battles.attacks.specialAttacks.basic.SpecialAttackBase;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.MultiTurnSpecialAttackBase;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.StatusApplierBase;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
@@ -32,7 +32,6 @@ import pixelmon.enums.EnumType;
 import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.heldItems.ChoiceItem;
-import pixelmon.storage.PixelmonStorage;
 
 public class Attack {
 	public static final float EFFECTIVE_NORMAL = 1, EFFECTIVE_SUPER = 2, EFFECTIVE_MAX = 4, EFFECTIVE_NOT = 0.5F, EFFECTIVE_BARELY = 0.25F, EFFECTIVE_NONE = 0;
@@ -201,6 +200,10 @@ public class Attack {
 					power = 0;
 				else {
 					target.attackEntityFrom(DamageSource.causeMobDamage(user), power);
+					if (target.battleController.participants.get(0).currentPokemon() == target)
+						target.battleController.participants.get(0).damageTakenThisTurn += power;
+					else 
+						target.battleController.participants.get(1).damageTakenThisTurn += power;
 				}
 
 				doMove(user, target);
