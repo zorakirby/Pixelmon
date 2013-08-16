@@ -3,12 +3,6 @@ package pixelmon.battles.attacks;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
-<<<<<<< HEAD
-import pixelmon.battles.attacks.specialAttacks.attackModifiers.*;
-import pixelmon.battles.attacks.specialAttacks.basic.*;
-import pixelmon.battles.attacks.specialAttacks.multiTurn.*;
-import pixelmon.battles.attacks.specialAttacks.statusAppliers.*;
-=======
 import pixelmon.battles.attacks.specialAttacks.attackModifiers.AlwaysHit;
 import pixelmon.battles.attacks.specialAttacks.attackModifiers.CriticalHit;
 import pixelmon.battles.attacks.specialAttacks.attackModifiers.Damage;
@@ -20,6 +14,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Acrobatics;
 import pixelmon.battles.attacks.specialAttacks.basic.Acupressure;
 import pixelmon.battles.attacks.specialAttacks.basic.BatonPass;
 import pixelmon.battles.attacks.specialAttacks.basic.BeatUp;
+import pixelmon.battles.attacks.specialAttacks.basic.BellyDrum;
 import pixelmon.battles.attacks.specialAttacks.basic.Curse;
 import pixelmon.battles.attacks.specialAttacks.basic.DoSetDamage;
 import pixelmon.battles.attacks.specialAttacks.basic.Drain;
@@ -60,6 +55,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Struggle;
 import pixelmon.battles.attacks.specialAttacks.basic.Suicide;
 import pixelmon.battles.attacks.specialAttacks.basic.Teleport;
 import pixelmon.battles.attacks.specialAttacks.basic.Thunder;
+import pixelmon.battles.attacks.specialAttacks.basic.Transform;
 import pixelmon.battles.attacks.specialAttacks.basic.Venoshock;
 import pixelmon.battles.attacks.specialAttacks.basic.WakeUpSlap;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Bide;
@@ -96,7 +92,6 @@ import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySleep;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySunny;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyTrickRoom;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyYawn;
->>>>>>> refs/remotes/origin/master
 
 public class EffectRegistry {
 	public static HashMap<String, Class> effectMap = new HashMap<String, Class>();
@@ -144,6 +139,7 @@ public class EffectRegistry {
 		effectMap.put("acupressure", Acupressure.class);
 		effectMap.put("batonpass", BatonPass.class);
 		effectMap.put("beatup", BeatUp.class);
+		effectMap.put("bellydrum", BellyDrum.class);
 		effectMap.put("curse", Curse.class);
 		effectMap.put("dosetdamage", DoSetDamage.class);
 		effectMap.put("drain", Drain.class);
@@ -184,11 +180,8 @@ public class EffectRegistry {
 		effectMap.put("struggle", Struggle.class);
 		effectMap.put("suicide", Suicide.class);
 		effectMap.put("teleport", Teleport.class);
-<<<<<<< HEAD
 		effectMap.put("transform", Transform.class);
-=======
 		effectMap.put("thunder", Thunder.class);
->>>>>>> refs/remotes/origin/master
 		effectMap.put("venoshock", Venoshock.class);
 		effectMap.put("wakeupslap", WakeUpSlap.class);
 
