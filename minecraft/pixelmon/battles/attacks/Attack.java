@@ -49,12 +49,6 @@ public class Attack {
 	public boolean STAB;
 	public int movePower;
 	public int moveAccuracy;
-<<<<<<< HEAD
-
-=======
-	
-	
->>>>>>> refs/remotes/origin/master
 	public Attack(int attackIndex, String moveName, ResultSet rs) throws SQLException {
 		if (fullAttackList[attackIndex] == null) {
 			AttackBase a = new AttackBase(attackIndex, moveName, rs);
@@ -71,10 +65,6 @@ public class Attack {
 	public boolean flinched = false;
 
 	public void use(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
-<<<<<<< HEAD
-=======
-		// TRY PUTTING THE STORING OF CURRENT ATTACK & ACCURACY ETCETERA HERE
->>>>>>> refs/remotes/origin/master
 		movePower = baseAttack.basePower;
 		moveAccuracy = baseAttack.accuracy;
 		target.hurtTime = 0;

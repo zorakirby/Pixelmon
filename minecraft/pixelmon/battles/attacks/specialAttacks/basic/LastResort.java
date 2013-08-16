@@ -18,14 +18,14 @@ public class LastResort extends SpecialAttackBase {
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 		boolean usedAllMoves = true;
-		System.out.println(user.moveset.size());
-		if (user.moveset.size() == 1)
+		System.out.println(user.getMoveset().size());
+		if (user.getMoveset().size() == 1)
 		{
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), a.baseAttack.attackName + " failed!");
 			return true;
 		}
 			
-		for (Attack atk : user.moveset)
+		for (Attack atk : user.getMoveset())
 		{
 			if(usedAllMoves == false)
 			{

@@ -226,11 +226,8 @@ public class BattleController {
 					p.willTryFlee = false;
 					p.wait = true;
 					p.getNextPokemon();
-<<<<<<< HEAD
 					// p.currentPokemon().battleController.globalStatuses =
 					// globalStatuses;
-=======
->>>>>>> refs/remotes/origin/master
 				} else {
 					ChatHandler.sendBattleMessage(g, "You've run out of usable pokemon!");
 					endBattle();
@@ -259,12 +256,9 @@ public class BattleController {
 		if (p.willTryFlee) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
 			p.priority = 6;
-<<<<<<< HEAD
-		} else if (p.isSwitching)
-=======
 		}
 		else if (p.isSwitching)
->>>>>>> refs/remotes/origin/master
+
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
 			useItem(p);
@@ -301,25 +295,11 @@ public class BattleController {
 		System.out.println(user.battleStats.getSpeedModifier());
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
-<<<<<<< HEAD
 		B = (B / 4) % 256;
-=======
-			  B = (B / 4) % 256;
->>>>>>> refs/remotes/origin/master
+
 		float C = ++p.escapeAttempts;
 		float F = A * 32 / B + 30 * C;
-<<<<<<< HEAD
-
-		int random = RandomHelper.getRandomNumberBetween(1, 255);
-		if (F > 255 || random < F) {
-			if (!user.isLockedInBattle) {
-=======
-		int random = RandomHelper.getRandomNumberBetween(1, 255);
-		System.out.println(C);
-		System.out.println(random);
-		System.out.println(F);
-		if (F > 255 || random < F) {
->>>>>>> refs/remotes/origin/master
+		if (F > 255 || RandomHelper.getRandomNumberBetween(1, 255) < F) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
 		} else

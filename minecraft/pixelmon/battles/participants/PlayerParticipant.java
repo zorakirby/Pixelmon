@@ -25,11 +25,7 @@ public class PlayerParticipant extends BattleParticipant {
 	public EntityPlayerMP player;
 	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
-<<<<<<< HEAD
 	int startAir = 0;
-=======
-	public boolean choiceItemLocked = false;
->>>>>>> refs/remotes/origin/master
 
 	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) throws PlayerNotLoadedException {
 		player = p;
