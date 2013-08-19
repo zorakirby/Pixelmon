@@ -22,7 +22,7 @@ public class EntityShinyParticle extends EntityExplodeFX {
 		this.motionY = par10 + (double) ((float) (Math.random()));
 		this.motionZ = par12;
 		this.particleScale = this.rand.nextFloat() * this.rand.nextFloat() + 0.7F;
-		this.particleMaxAge = 5;
+		this.particleMaxAge = 3;
 	}
 
 	/**
