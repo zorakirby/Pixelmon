@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class Sounds {
 
-	private static final String[] MusicList = { "A Simple Moment By the Sea", "Across the Desert", "Distant Shores", "Pixelmon Waltz" };
+	private static final String[] MusicList = { "A Simple Moment By the Sea", "Across the Desert", "Distant Shores", "Pixelmon Waltz", "Nightfall" };
 
 	@SideOnly(Side.CLIENT)
 	public static void installSounds() {
