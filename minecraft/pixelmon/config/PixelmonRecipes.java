@@ -3,6 +3,7 @@ package pixelmon.config;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPane;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import pixelmon.enums.EnumApricorns;
@@ -94,7 +95,20 @@ public class PixelmonRecipes {
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.oldRod, 1), new Object[] { "  S", " ST", "S P", Character.valueOf('S'), Item.stick,
 			Character.valueOf('T'), Item.silk, Character.valueOf('P'), PixelmonItemsPokeballs.pokeBall });
 
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.LtradeHolderLeft, 1), new Object[] { "APA", "AAA", "   ", Character.valueOf('A'), PixelmonItems.aluminiumPlate, Character.valueOf('P'), PixelmonItemsPokeballs.pokeBall});
 		
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.tradeHolderRight, 1), new Object[] { "APA", "AAA", " A ", Character.valueOf('A'), PixelmonItems.aluminiumPlate, Character.valueOf('P'), PixelmonItemsPokeballs.pokeBall});
+		
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.tradeMonitor, 1), new Object[] { "AAA", "AGA", "AAA", Character.valueOf('A'), PixelmonItems.aluminiumPlate,
+			Character.valueOf('G'), Block.thinGlass});
+		
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.tradePanel, 1), new Object[] { "AAA", "RRR", "ARA", Character.valueOf('A'), PixelmonItems.aluminiumPlate,
+			Character.valueOf('R'), Item.redstone});
+		
+		
+		GameRegistry.addRecipe(new ItemStack(PixelmonItems.tradeMachineItem, 1), new Object[] { " M ", "LPR", "   ", Character.valueOf('M'), PixelmonItems.tradeMonitor,
+			Character.valueOf('R'), PixelmonItems.tradeHolderRight, Character.valueOf('P'), PixelmonItems.tradePanel, Character.valueOf('L'), PixelmonItems.LtradeHolderLeft});
+
 
 		GameRegistry.addRecipe(new ItemStack(PixelmonItems.anvilItem, 1), new Object[] { "XXX", "XX ", "XXX", Character.valueOf('X'), Item.ingotIron });
 

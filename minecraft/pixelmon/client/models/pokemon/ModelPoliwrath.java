@@ -35,16 +35,22 @@ public class ModelPoliwrath extends PixelmonModelBase
         Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/poliwrath/PoliwrathBodyCon.obj")));
         footL = new PixelmonModelRenderer(this, 0, 0);
         footL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/poliwrath/PoliwrathLegLeftCon.obj"), 0, 0, 0 ));
+        footL.setRotationPoint(8.379F, 32.515F, -8.651F);
         footR = new PixelmonModelRenderer(this, 0, 0);
         footR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/poliwrath/PoliwrathLegRightCon.obj"), 0, 0, 0));
+        footR.setRotationPoint(-8.379F, 32.515F, -8.651F);
         ArmL = new PixelmonModelRenderer(this, 0, 0);
         ArmL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/poliwrath/PoliwrathUpperArmLeftCon.obj"), 0, 0, 0));
+        ArmL.setRotationPoint(12.458F, 63.272F, -4.895F);
         ArmL2 = new PixelmonModelRenderer(this, 0, 0);
         ArmL2.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/poliwrath/PoliwrathLowerArmLeftCon.obj"), 0, 0, 0));
+        ArmL2.setRotationPoint(-12.458F, -63.272F, 4.895F);
         ArmR = new PixelmonModelRenderer(this, 0, 0);
         ArmR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/poliwrath/PoliwrathUpperArmRightCon.obj"), 0, 0, 0));
+        ArmR.setRotationPoint(-12.458F, 63.272F, -4.895F);
         ArmR2 = new PixelmonModelRenderer(this, 0, 0);
         ArmR2.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/poliwrath/PoliwrathLowerArmRightCon.obj"), 0, 0, 0));
+        ArmR2.setRotationPoint(12.458F, -63.272F, 4.895F);
         ArmL.addChild(ArmL2);
         ArmR.addChild(ArmR2);
         Body.addChild(ArmL);
@@ -52,7 +58,7 @@ public class ModelPoliwrath extends PixelmonModelBase
         Body.addChild(footL);
         Body.addChild(footR);
         
-        int degrees = 90;
+        int degrees = 180;
         float radians = (float) Math.toRadians(degrees);
         
         setRotation(Body, radians, 0, 0);
@@ -85,7 +91,6 @@ public class ModelPoliwrath extends PixelmonModelBase
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
-        Body.rotateAngleX = (float) Math.toRadians(90);
     }
 
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)

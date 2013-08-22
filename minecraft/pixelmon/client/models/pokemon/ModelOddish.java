@@ -34,14 +34,16 @@ public class ModelOddish extends PixelmonModelBase
         Body.setRotationPoint(0, 24, 0);
         Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/oddish/OddishBodyCon.obj")));
         footL = new PixelmonModelRenderer(this, 0, 0);
-        footL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/oddish/OddishLfootCon.obj"), 0F, 0F, 0F ));
+        footL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/oddish/OddishRfootCon.obj"), 0F, 0F, 0F ));
+        footL.setRotationPoint(-0.202F, 0.393F, -0.290F);
         footR = new PixelmonModelRenderer(this, 0, 0);
         footR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/oddish/OddishRfootCon.obj"), 0F, 0F, 0F));
+        footR.setRotationPoint(0.202F, 0.393F, -0.290F);
         Body.addChild(footL);
         Body.addChild(footR);
 
         
-        int degrees = 90;
+        int degrees = 180;
         float radians = (float) Math.toRadians(degrees);
         
         setRotation(Body, radians, 0, 0);
