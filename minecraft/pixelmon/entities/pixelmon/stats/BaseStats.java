@@ -8,6 +8,7 @@ import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumType;
 
 public class BaseStats {
+	public int numSounds = 0;
 	public String pixelmonName;
 
 	public BaseStats(String name) {

@@ -8,6 +8,7 @@ import net.minecraft.client.audio.SoundPool;
 import net.minecraft.client.resources.AbstractResourcePack;
 import net.minecraft.client.resources.ResourceManager;
 import net.minecraft.util.ResourceLocation;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.enums.EnumPokemon;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.FMLFileResourcePack;
@@ -30,11 +31,14 @@ public class Sounds {
 	}
 
 	public static void installPokemonSounds(EnumPokemon p, AbstractResourcePack resourcePack) {
-		if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + ".ogg")))
+		if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + ".ogg"))){
 			Minecraft.getMinecraft().sndManager.addSound("pixelmon:pixelmon/" + p.name.toLowerCase() + ".ogg");
-		int i = 1;
+			Entity3HasStats.getBaseStats(p.name).numSounds++;
+		}
+		int i = 2;
 		while (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + i + ".ogg"))) {
 			Minecraft.getMinecraft().sndManager.addSound("pixelmon:pixelmon/" + p.name.toLowerCase() + i + ".ogg");
+			Entity3HasStats.getBaseStats(p.name).numSounds++;
 			i++;
 		}
 	}
