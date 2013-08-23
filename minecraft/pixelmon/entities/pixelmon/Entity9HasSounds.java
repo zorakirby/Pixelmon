@@ -18,12 +18,10 @@ public abstract class Entity9HasSounds extends Entity8HoldsItems {
 		if (baseStats.numSounds > 1) {
 			int ind = getRNG().nextInt(baseStats.numSounds);
 			if (ind == 0){
-				System.out.println("pixelmon:pixelmon." + getName().toLowerCase());
 				return ("pixelmon:pixelmon." + getName().toLowerCase());
 			}
 			else{
 				ind++;
-				System.out.println("pixelmon:pixelmon." + getName().toLowerCase() + ind);
 				return ("pixelmon:pixelmon." + getName().toLowerCase() + ind);
 			}
 		}
