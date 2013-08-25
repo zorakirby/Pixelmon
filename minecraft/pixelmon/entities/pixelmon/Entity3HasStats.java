@@ -53,17 +53,23 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public boolean isEntityInsideOpaqueBlock() {
 		if (super.isEntityInsideOpaqueBlock())
-			if (worldObj.getBlockMaterial((int) posX + 1, (int) posY, (int) posZ) == Material.air)
+			if (worldObj.getBlockMaterial((int) posX + 1, (int) posY,
+					(int) posZ) == Material.air)
 				setPosition(posX + 1, posY, posZ);
-			else if (worldObj.getBlockMaterial((int) posX - 1, (int) posY, (int) posZ) == Material.air)
+			else if (worldObj.getBlockMaterial((int) posX - 1, (int) posY,
+					(int) posZ) == Material.air)
 				setPosition(posX - 1, posY, posZ);
-			else if (worldObj.getBlockMaterial((int) posX, (int) posY + 1, (int) posZ) == Material.air)
+			else if (worldObj.getBlockMaterial((int) posX, (int) posY + 1,
+					(int) posZ) == Material.air)
 				setPosition(posX, posY + 1, posZ);
-			else if (worldObj.getBlockMaterial((int) posX, (int) posY - 1, (int) posZ) == Material.air)
+			else if (worldObj.getBlockMaterial((int) posX, (int) posY - 1,
+					(int) posZ) == Material.air)
 				setPosition(posX, posY - 1, posZ);
-			else if (worldObj.getBlockMaterial((int) posX, (int) posY, (int) posZ + 1) == Material.air)
+			else if (worldObj.getBlockMaterial((int) posX, (int) posY,
+					(int) posZ + 1) == Material.air)
 				setPosition(posX, posY, posZ + 1);
-			else if (worldObj.getBlockMaterial((int) posX, (int) posY, (int) posZ - 1) == Material.air)
+			else if (worldObj.getBlockMaterial((int) posX, (int) posY,
+					(int) posZ - 1) == Material.air)
 				setPosition(posX, posY, posZ - 1);
 
 		return super.isEntityInsideOpaqueBlock();
@@ -72,7 +78,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	protected void init(String name) {
 		super.init(name);
-		getBaseStats(name);
+		baseStats = getBaseStats(name);
 		if (baseStats == null) {
 			setDead();
 			return;
@@ -95,45 +101,49 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 				level.setLevel(spawnLevel);
 			else
 				level.setLevel(spawnLevel + rand.nextInt(spawnLevelRange));
-			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
-			this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.65);
+			this.func_110148_a(SharedMonsterAttributes.field_111267_a)
+					.func_111128_a(stats.HP);
+			this.func_110148_a(SharedMonsterAttributes.field_111263_d)
+					.func_111128_a(0.65);
 			setEntityHealth(stats.HP);
 		}
 	}
-	
-	float getMoveSpeed(){
-		return 0.3f + (1-(200f-stats.Speed)/200f)*0.3f;
+
+	float getMoveSpeed() {
+		return 0.3f + (1 - (200f - stats.Speed) / 200f) * 0.3f;
 	}
 
-	void getBaseStats(String name) {
-		boolean has = false;
+	public static BaseStats getBaseStatsFromStore(String name) {
 		for (int i = 0; i < baseStatsStore.length; i++) {
 			if (baseStatsStore[i] == null)
 				break;
 			if (baseStatsStore[i].pixelmonName.equals(name)) {
-				has = true;
-				baseStats = baseStatsStore[i];
-				break;
+				return baseStatsStore[i];
 			}
 		}
-		if (!has) {
-			baseStats = loadBaseStats(getName());
-			for (int i = 0; i < baseStatsStore.length; i++)
-				if (baseStatsStore[i] == null)
-					baseStatsStore[i] = (baseStats);
-		}
+		return null;
 	}
 
-	private BaseStats loadBaseStats(String name) {
-		BaseStats store = DatabaseStats.GetBaseStats(name);
-		return store;
+	public static BaseStats getBaseStats(String name) {
+		BaseStats baseStats = getBaseStatsFromStore(name);
+		if (baseStats != null)
+			return baseStats;
+		baseStats = DatabaseStats.GetBaseStats(name);
+
+		for (int i = 0; i < baseStatsStore.length; i++)
+			if (baseStatsStore[i] == null){
+				baseStatsStore[i] = baseStats;
+				break;
+			}
+		return baseStats;
 	}
 
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
 		if (getOwner() != null) {
 			friendship.onFaint();
-			PixelmonEventHandler.fireEvent(EventType.PokemonFaint, (EntityPlayer) getOwner());
+			PixelmonEventHandler.fireEvent(EventType.PokemonFaint,
+					(EntityPlayer) getOwner());
 		}
 		super.onDeath(par1DamageSource);
 	}
@@ -154,7 +164,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public void moveEntityWithHeading(float par1, float par2) {
 		if (baseStats != null) {
-			if (((EntityPixelmon) this).pokemonLocation == SpawnLocation.Water && isInWater()) {
+			if (((EntityPixelmon) this).pokemonLocation == SpawnLocation.Water
+					&& isInWater()) {
 				this.moveEntity(this.motionX, this.motionY, this.motionZ);
 				return;
 			}
@@ -172,7 +183,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		try {
 			Pokedex pokedex = getStorage().pokedex;
 
-			pokedex.set(Pokedex.nameToID(this.getName()), DexRegisterStatus.caught);
+			pokedex.set(Pokedex.nameToID(this.getName()),
+					DexRegisterStatus.caught);
 			pokedex.sendToPlayer((EntityPlayerMP) pokedex.owner);
 		} catch (PlayerNotLoadedException e) {
 		}
@@ -200,7 +212,9 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	public boolean canBreatheUnderwater() {
 		if (baseStats != null) {
-			if (((EntityPixelmon) this).pokemonLocation == SpawnLocation.Water || baseStats.type1 == EnumType.Water || baseStats.type2 == EnumType.Water)
+			if (((EntityPixelmon) this).pokemonLocation == SpawnLocation.Water
+					|| baseStats.type1 == EnumType.Water
+					|| baseStats.type2 == EnumType.Water)
 				return true;
 			else
 				return false;
@@ -227,8 +241,10 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public void updateHealth() {
 		if (stats != null) {
-			if (func_110143_aJ() > this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e())
-				setEntityHealth((float)this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e());
+			if (func_110143_aJ() > this.func_110148_a(
+					SharedMonsterAttributes.field_111267_a).func_111126_e())
+				setEntityHealth((float) this.func_110148_a(
+						SharedMonsterAttributes.field_111267_a).func_111126_e());
 		}
 		if (func_110143_aJ() < 0)
 			setEntityHealth(0);
@@ -237,11 +253,13 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	}
 
 	public void setScale(float scale) {
-		dataWatcher.updateObject(EntityPixelmon.dwScale, (short) (scale * 1000));
+		dataWatcher
+				.updateObject(EntityPixelmon.dwScale, (short) (scale * 1000));
 	}
 
 	public float getScale() {
-		return ((float) dataWatcher.getWatchableObjectShort(EntityPixelmon.dwScale)) / 1000.0f;
+		return ((float) dataWatcher
+				.getWatchableObjectShort(EntityPixelmon.dwScale)) / 1000.0f;
 	}
 
 	@Override
@@ -256,18 +274,25 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		float halfWidth = this.width * scale / 2.0F;
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
-					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale + baseStats.hoverHeight, par5
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3
+					- (double) this.yOffset + (double) this.ySize, par5
+					- (double) halfLength, par1 + (double) halfWidth, par3
+					- (double) this.yOffset + (double) this.ySize
+					+ (double) height * scale + baseStats.hoverHeight, par5
 					+ (double) halfLength);
 		else
-			this.boundingBox.setBounds(par1 - (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize, par5 - (double) halfLength, par1
-					+ (double) halfWidth, par3 - (double) this.yOffset + (double) this.ySize + (double) height * scale, par5 + (double) halfLength);
+			this.boundingBox.setBounds(par1 - (double) halfWidth, par3
+					- (double) this.yOffset + (double) this.ySize, par5
+					- (double) halfLength, par1 + (double) halfWidth, par3
+					- (double) this.yOffset + (double) this.ySize
+					+ (double) height * scale, par5 + (double) halfLength);
 	}
 
 	public void updateStats() {
 		stats.setLevelStats(getNature(), baseStats, level.getLevel());
 		dataWatcher.updateObject(EntityPixelmon.dwMaxHP, (short) stats.HP);
-		this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
+		this.func_110148_a(SharedMonsterAttributes.field_111267_a)
+				.func_111128_a(stats.HP);
 		updateHealth();
 	}
 
@@ -306,6 +331,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	@Override
 	public int getMaxSpawnedInChunk() {
-		return rand.nextInt(baseStats.maxGroupSize - baseStats.minGroupSize + 1) + baseStats.minGroupSize;
+		return rand
+				.nextInt(baseStats.maxGroupSize - baseStats.minGroupSize + 1)
+				+ baseStats.minGroupSize;
 	}
 }
