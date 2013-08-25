@@ -16,6 +16,7 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pixelmon.stats.Stats;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
@@ -200,6 +201,9 @@ public class PlayerParticipant extends BattleParticipant {
 	public void updateOpponentHealth(EntityPixelmon pixelmon) {
 		PixelmonDataPacket p = new PixelmonDataPacket(pixelmon, EnumPackets.SetOpponent);
 		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
+		if (this.opponent.currentPokemon().isDead || this.opponent.currentPokemon().isFainted || this.opponent.currentPokemon().func_110143_aJ() <= 0) {
+			GivePlayerExp();
+		}
 	}
 
 	@Override
@@ -220,5 +224,27 @@ public class PlayerParticipant extends BattleParticipant {
 	@Override
 	public void tick() {
 		player.setAir(startAir);
+	}
+
+	public void GivePlayerExp() {
+		int opponentPixelmonLevel = this.opponent.currentPokemon().getLvl().getLevel();
+		int ExpAmmount = 0;
+		int divisor = 5;
+		if (opponentPixelmonLevel >= 75) {
+			ExpAmmount = opponentPixelmonLevel / (divisor * 5);
+			this.player.addExperience(ExpAmmount);
+		} else if (opponentPixelmonLevel >= 50) {
+			ExpAmmount = opponentPixelmonLevel / (divisor * 4);
+			this.player.addExperience(ExpAmmount);
+		} else if (opponentPixelmonLevel >= 35) {
+			ExpAmmount = opponentPixelmonLevel / (divisor * 2);
+			this.player.addExperience(ExpAmmount);
+		} else if (opponentPixelmonLevel > divisor) {
+			ExpAmmount = opponentPixelmonLevel / divisor;
+			this.player.addExperience(ExpAmmount);
+		} else {
+			this.player.addExperience(1);
+		}
+		//System.out.println(this.player.username + "gained " + ExpAmmount + " ammount of experience");
 	}
 }
