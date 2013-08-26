@@ -30,6 +30,8 @@ public abstract class ParticleEffects {
 			return new FlameParticles(pixelmon, 0.95F, 1.2F, 4);
 		else if (pixelmon.getName().equalsIgnoreCase("Charizard"))
 			return new FlameParticles(pixelmon, 2.35F, 3F, 7);
+		else if(pixelmon.getIsShiny() == true)
+			return new ShinyParticles(pixelmon);
 		return null;
 	}
 }

@@ -41,6 +41,7 @@ public class GuiResources {
 	
 	public static ResourceLocation items = new ResourceLocation("pixelmon:gui/items.png");
 	public static ResourceLocation types = new ResourceLocation("pixelmon:gui/types.png");
+	public static ResourceLocation shiny = new ResourceLocation("pixelmon:sprites/shinypokemon/star.png");
 	
 	public static ResourceLocation shinySprite(String numString) {
 		return new ResourceLocation("pixelmon:sprites/shinypokemon/" + numString + ".png");
