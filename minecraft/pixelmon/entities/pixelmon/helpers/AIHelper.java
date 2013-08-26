@@ -24,10 +24,19 @@ public class AIHelper {
 				&& !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
 			initGroundAI(Name, entity, tasks);
 		} else if (entity.baseStats.canFly) {
-			initFlyingAI(Name, entity, tasks);
+			if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.AirPersistent)
+				initFlyingPersistentAI(Name, entity, tasks);
+			else
+				initFlyingAI(Name, entity, tasks);
 		} else if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.Water) {
 			initSwimmingAI(Name, entity, tasks);
 		}
+	}
+
+	private void initFlyingPersistentAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
+		tasks.addTask(i++, new EntityAISwimming(entity));
+		tasks.addTask(i++, new AITempt(entity, PixelmonItems.rareCandy.itemID, false));
+		tasks.addTask(i++, new AIFlyingPersistent((EntityPixelmon)entity));
 	}
 
 	private void initSwimmingAI(String name, Entity7HasAI entity, EntityAITasks tasks) {

@@ -118,6 +118,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void releaseFromPokeball() {
 		aggression = Aggression.passive;
+		isDead = false;
 		worldObj.spawnEntityInWorld(this);
 		isInBall = false;
 		worldObj.playSoundAtEntity(this, getLivingSound(), this.getSoundVolume(), this.getSoundPitch());
@@ -195,7 +196,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 			return;
 		if (posX > 1e20 || posX < -1e20 || posZ > 1e20 || posZ < -1e20)
 			unloadEntity();
-		if (getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
+		if (battleController ==null && getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
 				if (worldObj.getWorldTime() < 12000
 						&& this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY),

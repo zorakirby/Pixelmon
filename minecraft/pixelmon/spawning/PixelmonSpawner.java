@@ -43,6 +43,7 @@ public class PixelmonSpawner implements ITickHandler {
 		spawners.add(new SpawnerLand());
 		spawners.add(new SpawnerUnderground());
 		spawners.add(new SpawnerUnderWater());
+		spawners.add(new SpawnerAir());
 	}
 
 	/**
@@ -162,7 +163,7 @@ public class PixelmonSpawner implements ITickHandler {
 
 						if (s.canPokemonSpawnHere(world, cpXtmp, cpYtmp, cpZtmp)) {
 							float x = (float) cpXtmp + 0.5F;
-							float y = (float) cpYtmp;
+							float y = (float) cpYtmp + s.getYOffset();
 							float z = (float) cpZtmp + 0.5F;
 
 							if (world.getClosestPlayer((double) x, (double) y, (double) z, 24.0D) == null) {
