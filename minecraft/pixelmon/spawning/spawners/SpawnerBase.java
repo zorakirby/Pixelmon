@@ -24,4 +24,8 @@ public abstract class SpawnerBase {
 	
 	public abstract boolean canPokemonSpawnHere(World par1World, int par2, int par3, int par4);
 
+	public float getYOffset() {
+		return 0;
+	}
+
 }

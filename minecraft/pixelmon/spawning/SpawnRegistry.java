@@ -16,6 +16,7 @@ public class SpawnRegistry {
 	private static HashMap<BiomeGenBase, List<SpawnData>> biomeSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
 	private static HashMap<BiomeGenBase, List<SpawnData>> undergroundSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
 	private static HashMap<BiomeGenBase, List<SpawnData>> biomeWaterSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
+	private static HashMap<BiomeGenBase, List<SpawnData>> airSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
 	private static DatabaseStats db;
 
 	public static void addSpawn(String name, int rarity, ClassType type) {
@@ -39,6 +40,8 @@ public class SpawnRegistry {
 					if (type == ClassType.Pixelmon) {
 						if (s == SpawnLocation.Land || s == SpawnLocation.Air) {
 							storeSpawnInfo(biomeSpawns, name, rarity, type, b, s);
+						}else if (s == SpawnLocation.AirPersistent) {
+								storeSpawnInfo(airSpawns, name, rarity, type, b, s);
 						} else if (s == SpawnLocation.UnderGround) {
 							storeSpawnInfo(undergroundSpawns, name, rarity, type, b, s);
 						} else if (s == SpawnLocation.Water || s == SpawnLocation.OnWater) {
@@ -99,5 +102,9 @@ public class SpawnRegistry {
 
 	public static List<SpawnData> getWaterSpawnsForBiome(BiomeGenBase b) {
 		return biomeWaterSpawns.get(b);
+	}
+
+	public static List<SpawnData> getAirSpawnsForBiome(BiomeGenBase b) {
+		return airSpawns.get(b);
 	}
 }
