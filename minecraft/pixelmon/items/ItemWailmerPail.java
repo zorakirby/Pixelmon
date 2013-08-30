@@ -1,6 +1,6 @@
 package pixelmon.items;
 
-import pixelmon.config.PixelmonBlocksApricornTrees;
+import pixelmon.comm.ChatHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -52,7 +52,6 @@ public class ItemWailmerPail extends Item {
 		} else {
 			if (applyBonemeal(par1ItemStack, par3World, par4, par5, par6, par2EntityPlayer)) {
 				if (!par3World.isRemote) {
-					par3World.playAuxSFX(2005, par4, par5, par6, 0);
 				}
 
 				return true;
@@ -122,21 +121,8 @@ public class ItemWailmerPail extends Item {
 			if (!par1World.isRemote) {
 
 			}
-			return true;
-		}
-
-		if (l == PixelmonBlocksApricornTrees.apricornTreeYellow.blockID || l == PixelmonBlocksApricornTrees.apricornTreeWhite.blockID
-				|| l == PixelmonBlocksApricornTrees.apricornTreeRed.blockID || l == PixelmonBlocksApricornTrees.apricornTreePink.blockID
-				|| l == PixelmonBlocksApricornTrees.apricornTreeGreen.blockID || l == PixelmonBlocksApricornTrees.apricornTreeBlue.blockID
-				|| l == PixelmonBlocksApricornTrees.apricornTreeBlack.blockID) {
-			if (!par1World.isRemote) {
-				if ((double) par1World.rand.nextFloat() < 0.45D) {
-					((BlockSapling) Block.sapling).markOrGrowMarked(par1World, par2, par3, par4, par1World.rand);
-				}
-
-			}
-
 		}
 		return true;
+
 	}
 }
