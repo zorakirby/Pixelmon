@@ -25,7 +25,7 @@ public class ModelArticuno extends PixelmonModelBase
     textureHeight = 64;
     
       Body = new PixelmonModelRenderer(this, "Body");
-      Body.setRotationPoint(0,0,0);
+      Body.setRotationPoint(0,5,-10);
       PixelmonModelRenderer  Body1 = new PixelmonModelRenderer(this, 0, 0);
       Body1.addBox(-1.5F, -2.5F, -4F, 5, 5, 8);
       Body1.setRotationPoint(0F, -13F, 8F);

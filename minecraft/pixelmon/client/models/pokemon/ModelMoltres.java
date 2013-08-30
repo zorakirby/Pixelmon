@@ -26,7 +26,7 @@ public class ModelMoltres extends PixelmonModelBase
     
     
       Body = new PixelmonModelRenderer(this, "Body");
-      Body.setRotationPoint(0, -13, 0);
+      Body.setRotationPoint(0,-9, -10);
       PixelmonModelRenderer body1 = new PixelmonModelRenderer(this, 0, 0);
       body1.addBox(-7.5F, 4.5F, -2.5F, 2, 1, 5);
       body1.setRotationPoint(0F, -1F, 7F);
