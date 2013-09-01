@@ -7,14 +7,7 @@ import pixelmon.enums.heldItems.EnumChoiceItems;
 import pixelmon.enums.heldItems.EnumEvAdjustingItems;
 import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
-import pixelmon.items.heldItems.ChoiceItem;
-import pixelmon.items.heldItems.EVAdjusting;
-import pixelmon.items.heldItems.ItemBerryLeppa;
-import pixelmon.items.heldItems.ItemBerryOran;
-import pixelmon.items.heldItems.ItemBerryRawst;
-import pixelmon.items.heldItems.ItemEverstone;
-import pixelmon.items.heldItems.ItemExpShare;
-import pixelmon.items.heldItems.ItemLuckyEgg;
+import pixelmon.items.heldItems.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Mod;
@@ -24,7 +17,7 @@ public class PixelmonItemsHeld {
 	public static int luckyEggID;
 	public static int expShareID;
 	public static int everStoneID;
-
+	
 	public static int berryOranID;
 	public static int berryRawstID;
 	public static int berryLeppaID;
@@ -40,6 +33,11 @@ public class PixelmonItemsHeld {
 	public static int powerLensID;
 	public static int powerBandID;
 	public static int powerAnkletID;
+	public static int sootheBellID;
+	public static int smokeBallID;
+	public static int wideLensID;
+	public static int leftoversID;
+
 
 	@Mod.Item(name = "Everstone", typeClass = "pixelmon.items.ItemEvolutionStone")
 	public static Item everStone;
@@ -77,7 +75,18 @@ public class PixelmonItemsHeld {
 	public static Item berryRawst;
 	@Mod.Item(name = "Leppa Berry", typeClass = "pixelmon.items.heldItems.ItemBerryLeppa")
 	public static Item berryLeppa;
+	
+	@Mod.Item(name = "Soothe Bell", typeClass = "pixelmon.items.heldItems.ItemSootheBell")
+	public static Item sootheBell;
+	@Mod.Item(name = "Smoke Ball", typeClass = "pixelmon.items.heldItems.ItemSmokeBall")
+	public static Item smokeBall;
+	@Mod.Item(name = "Wide Lens", typeClass = "pixelmon.items.heldItems.ItemWideLens")
+	public static Item wideLens;
+	@Mod.Item(name = "Leftovers", typeClass = "pixelmon.items.heldItems.ItemLeftovers")
+	public static Item leftovers;
 
+
+	
 	public static void load(Configuration cfg) {
 		everStoneID = cfg.get("heldItem", "EverStone", 12000).getInt();
 
@@ -99,6 +108,12 @@ public class PixelmonItemsHeld {
 		berryOranID = cfg.get("berry", "OranBerry", 12003).getInt();
 		berryRawstID = cfg.get("berry", "RawstBerry", 12004).getInt();
 		berryLeppaID = cfg.get("berry", "LeppaBerry", 12005).getInt();
+		sootheBellID = cfg.get("heldItem", "SootheBell", 12016).getInt();
+		smokeBallID = cfg.get("heldItem", "SmokeBall", 12017).getInt();
+		wideLensID = cfg.get("heldItem", "WideLens", 12018).getInt();
+		leftoversID = cfg.get("heldItem", "Leftovers", 12019).getInt();
+
+
 
 		luckyEgg = new ItemLuckyEgg(luckyEggID);
 		expShare = new ItemExpShare(expShareID);
@@ -117,7 +132,10 @@ public class PixelmonItemsHeld {
 		berryOran = new ItemBerryOran(berryOranID);
 		berryLeppa = new ItemBerryLeppa(berryLeppaID);
 		berryRawst = new ItemBerryRawst(berryRawstID);
-
+		sootheBell = new ItemSootheBell(sootheBellID);
+		smokeBall = new ItemSmokeBall(smokeBallID);
+		wideLens = new ItemWideLens(wideLensID);
+		leftovers = new ItemLeftovers(leftoversID);
 		everStone = new ItemEverstone(everStoneID);
 	}
 

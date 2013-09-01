@@ -25,6 +25,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.items.PixelmonItem;
 import cpw.mods.fml.common.network.Player;
@@ -197,12 +198,14 @@ public class BattleController {
 					// shaking)
 					ChatHandler.sendChat(p.currentPokemon().getOwner(), "Your " + name + " fainted!");
 				}
-				if (otherParticipant(p) instanceof PlayerParticipant){
-					//Switches camera to player for opponent who faints player's pokemon
-					//Keeps camera from shaking during XP awarding after battle
-					((EntityPlayerMP) otherParticipant(p).getEntity()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SwitchCamera, 0));
+				if (otherParticipant(p) instanceof PlayerParticipant) {
+					// Switches camera to player for opponent who faints
+					// player's pokemon
+					// Keeps camera from shaking during XP awarding after battle
+					((EntityPlayerMP) otherParticipant(p).getEntity()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
+							EnumPackets.SwitchCamera, 0));
 				}
-					
+
 				Experience.awardExp(participants, p, p.currentPokemon());
 				Entity g = p.currentPokemon().getOwner();
 				p.currentPokemon().setEntityHealth(0);
@@ -286,7 +289,12 @@ public class BattleController {
 		float F = A * 32 / B + 30 * C;
 
 		int random = RandomHelper.getRandomNumberBetween(1, 255);
-		if (F > 255 || random < F) {
+		if (user.getHeldItem() != null) {
+			if (user.getHeldItem().itemID == PixelmonItemsHeld.smokeBall.itemID) {
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
+				endBattle();
+			}
+		} else if (F > 255 || random < F) {
 			if (!user.isLockedInBattle) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
 				endBattle();
