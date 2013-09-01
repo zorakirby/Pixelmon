@@ -12,6 +12,7 @@ import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonConfig;
@@ -184,7 +185,7 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		storage.updateNBT(currentPixelmon);
+		storage.update(currentPixelmon, EnumUpdateType.HP);
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonPokedexPacket;
 import pixelmon.comm.PixelmonStatsPacket;
 import pixelmon.comm.PixelmonTransformPacket;
+import pixelmon.comm.PixelmonUpdatePacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
 import cpw.mods.fml.common.network.IPacketHandler;
@@ -43,6 +44,14 @@ public class ClientPacketHandler implements IPacketHandler {
 				ServerStorageDisplay.remove(dataStream.readInt());
 			} else if (packetID == EnumPackets.UpdateStorage.getIndex()) {
 				ServerStorageDisplay.update(dataStream);
+			}else if (packetID == EnumPackets.UpdatePokemon.getIndex()){
+				PixelmonUpdatePacket p = new PixelmonUpdatePacket();
+				try{
+					p.readPacketData(dataStream);
+					ServerStorageDisplay.update(p);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			} else if (packetID == EnumPackets.AddToTempStore.getIndex()) {
 				PixelmonServerStore.addToList(dataStream);
 			} else if (packetID == EnumPackets.RemoveFromTempStore.getIndex()) {

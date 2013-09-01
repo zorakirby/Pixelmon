@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import pixelmon.api.interactions.IInteraction;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.items.ItemHeld;
 import pixelmon.storage.PixelmonStorage;
@@ -26,7 +27,7 @@ public class InteractionHeldItem implements IInteraction {
 					itemstack1.stackSize = 1;
 					player.inventory.consumeInventoryItem(itemstack.itemID);
 					entityPixelmon.setHeldItem(itemstack1);
-					entityPixelmon.updateNBT();
+					entityPixelmon.update(EnumUpdateType.HeldItem);
 					return true;
 				}
 			}

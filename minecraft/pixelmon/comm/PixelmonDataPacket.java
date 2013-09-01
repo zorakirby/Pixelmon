@@ -67,7 +67,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public boolean doesLevel;
 	public int heldItemId = -1;
 	public int xp;
-	private int effectCount = 0;
+	protected int effectCount = 0;
 	public EnumNature nature;
 	public EnumGrowth growth;
 	public ArrayList<StatusType> status = new ArrayList<StatusType>();
@@ -128,7 +128,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		xp = p.getLvl().getExp();
 		hp = p.stats.HP;
 		friendship = p.friendship.getFriendship();
-		health = (int)p.func_110143_aJ();
+		health = (int) p.func_110143_aJ();
 		isMale = p.isMale;
 		isFainted = p.isFainted;
 		isShiny = p.getIsShiny();
@@ -249,5 +249,54 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		if (description == null)
 			description = DatabaseStats.getDescription(name);
 		return description;
+	}
+
+	public void update(PixelmonUpdatePacket p) {
+		for (EnumUpdateType type : p.updateTypes) {
+			switch (type) {
+			case HP:
+				hp = p.hp;
+				health = p.health;
+				isFainted = p.isFainted;
+				break;
+			case Stats:
+				lvl = p.lvl;
+				nextLvlXP = p.nextLvlXP;
+				xp = p.xp;
+				HP = p.HP;
+				Speed = p.Speed;
+				Attack = p.Attack;
+				Defence = p.Defence;
+				SpecialAttack = p.SpecialAttack;
+				SpecialDefence = p.SpecialDefence;
+				break;
+			case Nickname:
+				nickname = p.nickname;
+				break;
+			case Name:
+				name = p.name;
+				nationalPokedexNumber = -1;
+				break;
+			case Friendship:
+				friendship = p.friendship;
+				break;
+			case Moveset:
+				numMoves = p.numMoves;
+				moveset = p.moveset;
+				break;
+			case HeldItem:
+				heldItemId = p.heldItemId;
+				break;
+			case Status:
+				effectCount = p.effectCount;
+				status = p.status;
+				break;
+			case CanLevel:
+				doesLevel = p.doesLevel;
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }

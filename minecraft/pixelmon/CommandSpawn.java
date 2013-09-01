@@ -47,7 +47,7 @@ public class CommandSpawn extends CommandBase {
 					name = "MrMime";
 				Entity var6 = PixelmonEntityList.createEntityByName(name, world);
 				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
-				((EntityPixelmon)var6).pokemonLocation = SpawnLocation.Land;  
+				((EntityPixelmon)var6).pokemonLocation = SpawnLocation.AirPersistent;  
 				if (par2ArrayOfStr.length > 1)
 					for (String s : par2ArrayOfStr) {
 						if (s.equalsIgnoreCase("s"))

@@ -1,6 +1,7 @@
 package pixelmon.items;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPotions;
@@ -31,7 +32,7 @@ public class ItemPotion extends PixelmonItem {
 		float newHP = pxm.func_110143_aJ() + healAmount(pxm);
 		pxm.setEntityHealth(newHP);
 		if (pxm.getOwner() != null)
-			pxm.updateNBT();
+			pxm.update(EnumUpdateType.HP);
 	}
 
 	@Override

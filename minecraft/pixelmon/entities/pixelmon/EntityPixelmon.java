@@ -110,8 +110,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 	}
 
 	public void catchInPokeball() {
-		if (getOwner() != null)
-			updateNBT();
 		isInBall = true;
 		unloadEntity();
 	}

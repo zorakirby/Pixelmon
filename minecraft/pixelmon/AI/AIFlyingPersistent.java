@@ -42,7 +42,7 @@ public class AIFlyingPersistent extends EntityAIBase {
 	}
 
 	public void pickDirection() {
-		pixelmon.rotationYaw += pixelmon.getRNG().nextInt(60) - 30;
+		pixelmon.rotationYaw += pixelmon.getRNG().nextInt(90) - 30;
 	}
 
 	public void pickSpeed() {
