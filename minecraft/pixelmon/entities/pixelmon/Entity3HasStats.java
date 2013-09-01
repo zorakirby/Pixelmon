@@ -11,6 +11,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.SpawnLocation;
@@ -189,7 +190,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		} catch (PlayerNotLoadedException e) {
 		}
 		if (getOwner() != null)
-			updateNBT();
+			update(EnumUpdateType.Name, EnumUpdateType.Stats);
 	}
 
 	@Override
@@ -249,7 +250,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		if (func_110143_aJ() < 0)
 			setEntityHealth(0);
 		if (getOwner() != null && !worldObj.isRemote)
-			updateNBT();
+			update(EnumUpdateType.HP);
 	}
 
 	public void setScale(float scale) {

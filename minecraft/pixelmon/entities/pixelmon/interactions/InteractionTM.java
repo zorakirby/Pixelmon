@@ -7,6 +7,7 @@ import pixelmon.api.interactions.IInteraction;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.packetHandlers.ReplaceMove;
 import pixelmon.database.DatabaseMoves;
@@ -40,7 +41,7 @@ public class InteractionTM implements IInteraction {
 						if (!player.capabilities.isCreativeMode)
 							player.inventory.consumeInventoryItem(itemstack.itemID);
 					}
-					entityPixelmon.updateNBT();
+					entityPixelmon.update(EnumUpdateType.Moveset);
 				} else {
 					ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " can't learn " + ((ItemTM) itemstack.getItem()).attackName
 							+ "!");

@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -186,7 +187,7 @@ public final class Experience {
 			}
 			battlingPokemon.stats.EVs.gainEV(evStore);
 			battlingPokemon.updateStats();
-			storage.updateNBT(battlingPokemon);
+			storage.update(battlingPokemon, EnumUpdateType.Stats);
 		} else {
 			// Begin EXP award to a stored party pokemon.
 			EntityPixelmon partyPokemon;

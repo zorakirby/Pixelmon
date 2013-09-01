@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -35,7 +36,7 @@ public class SetHeldItem extends PacketHandlerBase {
 					pixelmon.heldItem = new ItemStack(heldItem);
 				else
 					pixelmon.heldItem = null;
-				storage.updateNBT(pixelmon);
+				storage.update(pixelmon, EnumUpdateType.HeldItem);
 			} else {
 				storage.getNBT(pokemonId).setInteger("HeldItem", itemId);
 			}

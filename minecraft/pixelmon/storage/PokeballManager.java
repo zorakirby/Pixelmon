@@ -11,6 +11,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import pixelmon.Pixelmon;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DownloadHelper;
 import pixelmon.enums.EnumGui;

@@ -6,6 +6,7 @@ import java.io.IOException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
@@ -33,7 +34,7 @@ public class DeleteMove extends PacketHandlerBase {
 				p = storage.sendOut(pokemonID, player.worldObj);
 			ChatHandler.sendChat(player, "Your " + p.getName() + " forgot " + p.getMoveset().get(removeIndex).baseAttack.attackName + "!");
 			p.getMoveset().remove(removeIndex);
-			storage.updateNBT(p);
+			storage.update(p, EnumUpdateType.Moveset);
 		} catch (PlayerNotLoadedException e) {
 		}
 	}
