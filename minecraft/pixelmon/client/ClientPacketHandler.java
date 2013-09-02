@@ -158,6 +158,8 @@ public class ClientPacketHandler implements IPacketHandler {
 
 			} else if (packetID == EnumPackets.AcceptBattle.getIndex()) {
 
+			} else if (packetID == EnumPackets.BossDrop.getIndex()) {
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

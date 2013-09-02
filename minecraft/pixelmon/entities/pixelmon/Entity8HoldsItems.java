@@ -87,12 +87,16 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
-		if (!par1DamageSource.damageType.equalsIgnoreCase("mob"))
-			dropItems = false;
+		if (par1DamageSource.getEntity() instanceof EntityPixelmon){
+			EntityPixelmon pix =(EntityPixelmon)par1DamageSource.getEntity();
+			if (pix.getOwner()!=null)
+				dropItemHelper.dropBossItems((EntityPlayerMP)pix.getOwner());
+		}
 		super.onDeath(par1DamageSource);
 	}
-	
+
 	boolean dropItems = true;
+
 	@Override
 	protected int getDropItemId() {
 		return dropItemHelper.getDropItemID();
