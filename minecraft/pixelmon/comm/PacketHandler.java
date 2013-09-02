@@ -20,6 +20,7 @@ import cpw.mods.fml.common.network.Player;
 public class PacketHandler implements IConnectionHandler, IPacketHandler {
 	private static ArrayList<PacketHandlerBase> handlers = new ArrayList<PacketHandlerBase>();
 	static {
+		handlers.add(new AcceptDeclineBattle());
 		handlers.add(new BagPacket());
 		handlers.add(new ChooseAttack());
 		handlers.add(new ChooseStarter());

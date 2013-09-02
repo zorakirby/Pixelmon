@@ -44,9 +44,9 @@ public class ClientPacketHandler implements IPacketHandler {
 				ServerStorageDisplay.remove(dataStream.readInt());
 			} else if (packetID == EnumPackets.UpdateStorage.getIndex()) {
 				ServerStorageDisplay.update(dataStream);
-			}else if (packetID == EnumPackets.UpdatePokemon.getIndex()){
+			} else if (packetID == EnumPackets.UpdatePokemon.getIndex()) {
 				PixelmonUpdatePacket p = new PixelmonUpdatePacket();
-				try{
+				try {
 					p.readPacketData(dataStream);
 					ServerStorageDisplay.update(p);
 				} catch (IOException e) {
@@ -154,6 +154,10 @@ public class ClientPacketHandler implements IPacketHandler {
 				Minecraft.getMinecraft().gameSettings.hideGUI = false;
 				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
 				Minecraft.getMinecraft().currentScreen = null;
+			} else if (packetID == EnumPackets.BattleQuery.getIndex()) {
+
+			} else if (packetID == EnumPackets.AcceptBattle.getIndex()) {
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

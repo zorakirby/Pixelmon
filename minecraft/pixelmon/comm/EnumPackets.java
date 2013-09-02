@@ -7,7 +7,7 @@ public enum EnumPackets {
 			36), EnforcedSwitch(37), DeleteMove(38), Pokedex(39), Movement(40), RegisterTrader(41), SelectPokemonForTrade(42), SetTradeTarget(43), SetTradeTargetStats(
 			44), SetSelectedStats(45), DeRegisterTrader(46), SetTradingReady(47), SetTradingReadyClient(48), RemoveFromTempStore(49), PCClickOnBox(50), PCClickOnParty(
 			51), PCClosed(52), PCTrashPokemon(53), Trade(54), RequestPCData(55), RequestUpdatedPokemonList(56), SetMousePokemon(57), ClearMousePokemon(58), Transform(
-			59), SwitchCamera(60), PlayerDeath(61), UpdatePokemon(62);
+			59), SwitchCamera(60), PlayerDeath(61), UpdatePokemon(62), BattleQuery(63), AcceptBattle(64), DeclineBattle(65);
 	private int index;
 
 	private EnumPackets(int i) {

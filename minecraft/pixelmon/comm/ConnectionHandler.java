@@ -10,6 +10,7 @@ import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.server.MinecraftServer;
 import pixelmon.Pixelmon;
+import pixelmon.battles.BattleQuery;
 import pixelmon.enums.EnumGui;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
@@ -20,9 +21,9 @@ public class ConnectionHandler implements IConnectionHandler {
 
 	@Override
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
-		PixelmonStorage.playerLoggedIn((EntityPlayerMP)player);
+		PixelmonStorage.playerLoggedIn((EntityPlayerMP) player);
 		try {
-			PixelmonStorage.PokeballManager.loadPlayer((EntityPlayerMP)player);
+			PixelmonStorage.PokeballManager.loadPlayer((EntityPlayerMP) player);
 		} catch (PlayerNotLoadedException e) {
 			e.printStackTrace();
 		}
@@ -53,6 +54,9 @@ public class ConnectionHandler implements IConnectionHandler {
 			try {
 				netHandler = (NetHandler) f.get(tcpConnection);
 				PixelmonStorage.onPlayerDC(netHandler.getPlayer());
+				BattleQuery bq = BattleQuery.getQuery((EntityPlayerMP) netHandler.getPlayer());
+				if (bq != null)
+					bq.declineQuery((EntityPlayerMP) netHandler.getPlayer());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
