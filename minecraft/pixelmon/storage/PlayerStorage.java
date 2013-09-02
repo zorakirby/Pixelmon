@@ -180,6 +180,7 @@ public class PlayerStorage {
 					n.setInteger("Bukkit.MaxHealth", n.getInteger("StatsHP"));
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
+					e.setBoss(EnumBossMode.Normal);
 					if (mode == PokeballManagerMode.Player) {
 						e.setOwner(player.username);
 						e.playerOwned = true;
