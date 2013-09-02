@@ -10,6 +10,7 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.entities.pixelmon.interactions.custom.PixelmonInteraction;
+import pixelmon.enums.EnumBossMode;
 
 public abstract class Entity8HoldsItems extends Entity7HasAI {
 	public ItemStack heldItem;
@@ -87,10 +88,10 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
-		if (par1DamageSource.getEntity() instanceof EntityPixelmon){
-			EntityPixelmon pix =(EntityPixelmon)par1DamageSource.getEntity();
-			if (pix.getOwner()!=null)
-				dropItemHelper.dropBossItems((EntityPlayerMP)pix.getOwner());
+		if (par1DamageSource.getEntity() instanceof EntityPixelmon && ((EntityPixelmon) par1DamageSource.getEntity()).getBossMode() != EnumBossMode.Normal) {
+			EntityPixelmon pix = (EntityPixelmon) par1DamageSource.getEntity();
+			if (pix.getOwner() != null)
+				dropItemHelper.dropBossItems((EntityPlayerMP) pix.getOwner());
 		}
 		super.onDeath(par1DamageSource);
 	}
