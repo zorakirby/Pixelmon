@@ -26,6 +26,7 @@ public enum EnumPokemon {
 	Charizard("Charizard"),
 	Charmander("Charmander"),
 	Charmeleon("Charmeleon"),
+	Chikorita("Chikorita"),
 	Clefable("Clefable"),
 	Clefairy("Clefairy"),
 	Cloyster("Cloyster"),
