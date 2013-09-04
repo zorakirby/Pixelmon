@@ -10,7 +10,11 @@ import pixelmon.battles.participants.PlayerParticipant;
 public class BattleRegistry {
 	private static int battleIndex = 0;
 	private static ArrayList<BattleController> battleList = new ArrayList<BattleController>();
-
+	
+	public static ArrayList<BattleController> getBattleList(){
+		return battleList;
+	}
+	
 	public static void registerBattle(BattleController bc) {
 		bc.battleIndex = battleIndex++;
 		battleList.add(bc);
