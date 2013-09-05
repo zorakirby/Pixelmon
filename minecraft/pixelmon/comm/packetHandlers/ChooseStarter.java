@@ -5,9 +5,9 @@ import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import pixelmon.StarterList;
 import pixelmon.comm.EnumPackets;
 import pixelmon.config.PixelmonEntityList;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
@@ -27,7 +27,7 @@ public class ChooseStarter extends PacketHandlerBase {
 			EntityPlayer player = (EntityPlayer) play;
 			PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
 			int pokemonIndex = dataStream.readInt();
-			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(StarterList.getStarterStringList()[pokemonIndex], player.worldObj);
+			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(Entity3HasStats.getBaseStats(pokemonIndex).pixelmonName, player.worldObj);
 			p.getLvl().setLevel(5);
 			p.setEntityHealth(p.stats.HP);
 			p.loadMoveset();

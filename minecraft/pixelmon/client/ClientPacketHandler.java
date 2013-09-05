@@ -25,6 +25,7 @@ import pixelmon.comm.PixelmonPokedexPacket;
 import pixelmon.comm.PixelmonStatsPacket;
 import pixelmon.comm.PixelmonTransformPacket;
 import pixelmon.comm.PixelmonUpdatePacket;
+import pixelmon.comm.StarterListPacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
 import cpw.mods.fml.common.network.IPacketHandler;
@@ -160,6 +161,15 @@ public class ClientPacketHandler implements IPacketHandler {
 
 			} else if (packetID == EnumPackets.BossDrop.getIndex()) {
 
+			}else if (packetID == EnumPackets.StarterList.getIndex()){
+				StarterListPacket p = new StarterListPacket();
+				try {
+					p.readPacketData(dataStream);
+					PixelmonServerStore.starterListPacket = p;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

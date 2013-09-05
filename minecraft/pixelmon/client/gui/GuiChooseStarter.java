@@ -3,7 +3,8 @@ package pixelmon.client.gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import pixelmon.StarterList;
+import pixelmon.client.PixelmonServerStore;
+import pixelmon.client.ServerStorageDisplay;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.gui.ContainerEmpty;
@@ -11,19 +12,16 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiChooseStarter extends GuiContainer {
 
-	String[] starterList;
-
 	public GuiChooseStarter() {
 		super(new ContainerEmpty());
-		starterList = StarterList.getStarterStringList();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void initGui() {
 		super.initGui();
 		buttonList.clear();
-		for (int i = 0; i < starterList.length; i++) {
-			buttonList.add(new GuiButton(i, width / 3 - 100, height / 6 + i * 20, starterList[i]));
+		for (int i = 0; i < PixelmonServerStore.starterListPacket.starterList.length; i++) {
+			buttonList.add(new GuiButton(i, width / 3 - 100, height / 6 + i * 20, PixelmonServerStore.starterListPacket.starterList[i].name));
 		}
 	}
 
@@ -31,10 +29,9 @@ public class GuiChooseStarter extends GuiContainer {
 	}
 
 	public void actionPerformed(GuiButton button) {
-		String pixelmonName = starterList[button.id];
-		Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, button.id);
+		Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, 
+				PixelmonServerStore.starterListPacket.starterListIndex[button.id]);
 		PacketDispatcher.sendPacketToServer(packet);
-		//PlayerStorage.setCurrency(3000);
 		mc.thePlayer.closeScreen();
 	}
 
