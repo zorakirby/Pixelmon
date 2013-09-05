@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 import pixelmon.Pixelmon;
 import pixelmon.comm.EnumUpdateType;
+import pixelmon.comm.StarterListPacket;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.config.StarterList;
 import pixelmon.database.DownloadHelper;
 import pixelmon.enums.EnumGui;
 
@@ -75,12 +77,17 @@ public class PokeballManager {
 			}
 			playerPokemonList.add(p);
 			if (p.count() == 0)
-				((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
+			{
+				StarterListPacket slp = new StarterListPacket(StarterList.StarterList);
+				player.playerNetServerHandler.sendPacketToPlayer(slp.getPacket());
+			}
+				//((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
 
 		} else {
 			p = new PlayerStorage(player);
 			playerPokemonList.add(p);
-			((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
+			StarterListPacket slp = new StarterListPacket(StarterList.StarterList);
+			player.playerNetServerHandler.sendPacketToPlayer(slp.getPacket());
 		}
 		return p;
 	}
