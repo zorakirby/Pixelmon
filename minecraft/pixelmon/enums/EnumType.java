@@ -398,7 +398,7 @@ public enum EnumType {
 				e = Effectiveness.None.value;
 			}
 			if (t1 == Fighting){
-				e = Effectiveness.None.Value;
+				e = Effectiveness.None.value;
 			}
 			if (t1 == Psychic) {
 				e = Effectiveness.Super.value;
