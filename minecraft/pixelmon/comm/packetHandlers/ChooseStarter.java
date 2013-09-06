@@ -13,6 +13,7 @@ import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
+import pixelmon.config.StarterList;
 import cpw.mods.fml.common.network.Player;
 
 public class ChooseStarter extends PacketHandlerBase {
@@ -27,7 +28,7 @@ public class ChooseStarter extends PacketHandlerBase {
 			EntityPlayer player = (EntityPlayer) play;
 			PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
 			int pokemonIndex = dataStream.readInt();
-			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(Entity3HasStats.getBaseStats(pokemonIndex).pixelmonName, player.worldObj);
+			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(StarterList.StarterList[pokemonIndex].name, player.worldObj);
 			p.getLvl().setLevel(5);
 			p.setEntityHealth(p.stats.HP);
 			p.loadMoveset();
