@@ -144,6 +144,7 @@ public enum EnumPokemon {
 	Rapidash("Rapidash"),
 	Raticate("Raticate"),
 	Rattata("Rattata"),
+	Rayquaza("Rayquaza"),
 	Rhydon("Rhydon"),
 	Rhyhorn("Rhyhorn"),
 	Sandile("Sandile"),
