@@ -64,8 +64,7 @@ public class GuiChooseStarter extends GuiContainer {
 
 	public void actionPerformed(GuiButton button) {
 		if (((StarterButton) button).starterIndex != -1) {
-			Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter,
-					PixelmonServerStore.starterListPacket.starterListIndex[button.id]);
+			Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.ChooseStarter, button.id);
 			PacketDispatcher.sendPacketToServer(packet);
 			mc.thePlayer.closeScreen();
 		}
