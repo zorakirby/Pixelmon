@@ -113,6 +113,8 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		fontRenderer.setUnicodeFlag(true);
 
 		for (SlotInventoryPixelmon slot : pixelmonSlots) {
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
 			if (slot == null) {
 				continue;
 			}

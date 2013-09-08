@@ -126,6 +126,7 @@ public class GuiCreativeInventoryExtended extends GuiContainerCreative {
 					mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 				else
 					mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
+				GL11.glDisable(GL11.GL_LIGHTING);
 				drawImageQuad(slot.x, slot.y, 16f, 16f, 0f, 0f, 1f, 1f);
 
 				if (p.heldItemId != -1) {
