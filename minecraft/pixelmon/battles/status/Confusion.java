@@ -20,7 +20,7 @@ public class Confusion extends StatusBase {
 	@Override
 	public boolean canAttackThisTurn(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is confused...");
-		if ((new Random()).nextInt(100) <= 50) {
+		if (user.getRNG().nextInt(100) <= 50) {
 			user.attackEntityFrom(DamageSource.causeMobDamage(user), calculateConfusionDamage(user));
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " hurt itself in its confusion");
 			return false;
