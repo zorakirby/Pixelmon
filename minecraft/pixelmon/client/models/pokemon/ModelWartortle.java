@@ -56,13 +56,13 @@ public class ModelWartortle extends PixelmonModelBase {
 						.loadModel("/pixelmon/client/models/objFiles/wartortle/RightArm.obj")));
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
-		Lleg.setRotationPoint(0.48F, 1.2F, 0.1F);
+		Lleg.setRotationPoint(0.48F, 1.2F, -0.1F);
 		Lleg.addOBJModel(new ModelOBJWrapper(
 				AdvancedModelLoader
 						.loadModel("/pixelmon/client/models/objFiles/wartortle/Leftleg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
-		RLeg.setRotationPoint(-0.54F, 1.2F, 0.1F);
+		RLeg.setRotationPoint(-0.54F, 1.2F, -0.1F);
 		RLeg.addOBJModel(new ModelOBJWrapper(
 				AdvancedModelLoader
 						.loadModel("/pixelmon/client/models/objFiles/wartortle/RightLeg.obj")));
