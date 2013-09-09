@@ -329,6 +329,9 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onEntityUpdate() {
+		if (this.posY < 1) {
+			this.setDead();
+		}
 		if (!worldObj.isRemote && getIsWaiting()) {
 			if (!isUnloaded) {
 				if (waitTime == 0) {
