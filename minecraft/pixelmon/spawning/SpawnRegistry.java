@@ -66,9 +66,7 @@ public class SpawnRegistry {
 
 	public static void getGenerationInfo(HashMap<String, String> hashmap, String name) {
 		List<SpawnData> spawnList = new ArrayList<SpawnData>();
-		BaseStats stats = db.GetBaseStats(name);
-		int ID = stats.nationalPokedexNumber;
-		// for (SpawnData pixelmon : spawnList) {
+		int ID = db.getNationalPokedexNumber(name);
 		if (!hashmap.containsKey(name)) {
 			if (ID <= 151) {
 			//	System.out.println("Generation 1: " + name);
@@ -85,6 +83,8 @@ public class SpawnRegistry {
 			} else if (ID > 493 && ID <= 649) {
 			//	System.out.println("Generation 5: " + name);
 				hashmap.put(name, "Gen5");
+			}else{
+				System.out.println("[Pixelmon]" + name + " does not have a valid id number");
 			}
 		}
 
