@@ -9,6 +9,7 @@ import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.SpawnLocation;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.stats.BaseStats;
 
 public class SpawnRegistry {
@@ -66,7 +67,7 @@ public class SpawnRegistry {
 
 	public static void getGenerationInfo(HashMap<String, String> hashmap, String name) {
 		List<SpawnData> spawnList = new ArrayList<SpawnData>();
-		int ID = db.getNationalPokedexNumber(name);
+		int ID = Entity3HasStats.getBaseStats(name).nationalPokedexNumber;
 		if (!hashmap.containsKey(name)) {
 			if (ID <= 151) {
 			//	System.out.println("Generation 1: " + name);
