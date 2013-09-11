@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -79,7 +80,7 @@ public class TickHandler implements ITickHandler {
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {
 
 		if (types.equals(EnumSet.of(TickType.PLAYER))) {
-			if (tickData[0] instanceof EntityClientPlayerMP)
+			if (!(tickData[0] instanceof EntityPlayerMP))
 				onPlayerTick((EntityPlayer) tickData[0]);
 		}
 

@@ -24,7 +24,9 @@ public class GuiAcceptDeny extends GuiContainer {
 	static ResourceLocation main = new ResourceLocation("pixelmon:gui/acceptDeny/main.png");
 	static ResourceLocation button = new ResourceLocation("pixelmon:gui/acceptDeny/button.png");
 	static ResourceLocation buttonOver = new ResourceLocation("pixelmon:gui/acceptDeny/buttonOver.png");
+	boolean accepted = false;
 	int battleQueryID;
+
 	public GuiAcceptDeny(int battleQueryID) {
 		super(new ContainerEmpty());
 		this.battleQueryID = battleQueryID;
@@ -74,7 +76,8 @@ public class GuiAcceptDeny extends GuiContainer {
 		}
 
 		GL11.glDisable(GL11.GL_LIGHTING);
-		fontRenderer.drawString(opponent.opponentName, (width - 280) / 2 + 183 - fontRenderer.getStringWidth(opponent.opponentName), (height - 182) / 2 + 107, 0xffffff);
+		fontRenderer.drawString(opponent.opponentName, (width - 280) / 2 + 183 - fontRenderer.getStringWidth(opponent.opponentName), (height - 182) / 2 + 107,
+				0xffffff);
 
 		pos = 0;
 		for (int pid : opponent.pokeballs) {
@@ -94,37 +97,40 @@ public class GuiAcceptDeny extends GuiContainer {
 		itemRenderer.renderWithColor = true;
 		GL11.glDisable(GL11.GL_LIGHTING);
 
+		mc.renderEngine.func_110577_a(buttonOver);
+		if (accepted)
+			GuiHelper.drawImageQuad((width - 280) / 2 + 20, (height - 182) / 2 + 147, 110, 30, 0, 0, 1, 1, zLevel);
 		mc.renderEngine.func_110577_a(button);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 25, (height - 182) / 2 + 152, 100, 20, 0, 0, 1, 1, zLevel);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 145, (height - 182) / 2 + 152, 100, 20, 0, 0, 1, 1, zLevel);
 
 		mc.renderEngine.func_110577_a(buttonOver);
-		if (mouseX > (width - 280) / 2 + 25 && mouseX < (width - 280) / 2 + 25+100)
-			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152+20){
+		if (mouseX > (width - 280) / 2 + 25 && mouseX < (width - 280) / 2 + 25 + 100 && !accepted)
+			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152 + 20) {
 				GuiHelper.drawImageQuad((width - 280) / 2 + 25, (height - 182) / 2 + 152, 100, 20, 0, 0, 1, 1, zLevel);
 			}
-		if (mouseX > (width - 280) / 2 + 145 && mouseX < (width - 280) / 2 + 145+100)
-			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152+20){
+		if (mouseX > (width - 280) / 2 + 145 && mouseX < (width - 280) / 2 + 145 + 100)
+			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152 + 20) {
 				GuiHelper.drawImageQuad((width - 280) / 2 + 145, (height - 182) / 2 + 152, 100, 20, 0, 0, 1, 1, zLevel);
 			}
 		fontRenderer.drawString("Accept", (width - 280) / 2 + 75 - fontRenderer.getStringWidth("Accept") / 2, (height - 182) / 2 + 158, 0xffffff);
 		fontRenderer.drawString("Decline", (width - 280) / 2 + 195 - fontRenderer.getStringWidth("Decline") / 2, (height - 182) / 2 + 158, 0xffffff);
-		
+
 		GL11.glDisable(GL11.GL_BLEND);
 	}
-	
+
 	@Override
 	protected void mouseClicked(int par1, int mouseX, int mouseY) {
-		if (mouseX > (width - 280) / 2 + 25 && mouseX < (width - 280) / 2 + 25+100)
-			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152+20){
+		if (mouseX > (width - 280) / 2 + 25 && mouseX < (width - 280) / 2 + 25 + 100 && !accepted)
+			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152 + 20) {
+				accepted = true;
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.AcceptBattle, battleQueryID));
 			}
-		if (mouseX > (width - 280) / 2 + 145 && mouseX < (width - 280) / 2 + 145+100)
-			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152+20){
+		if (mouseX > (width - 280) / 2 + 145 && mouseX < (width - 280) / 2 + 145 + 100)
+			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152 + 20) {
 				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.DeclineBattle, battleQueryID));
 				mc.thePlayer.closeScreen();
-			}	
+			}
 	}
 
-	
 }
