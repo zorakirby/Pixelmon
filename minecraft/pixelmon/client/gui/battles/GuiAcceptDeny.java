@@ -120,7 +120,7 @@ public class GuiAcceptDeny extends GuiContainer {
 	}
 
 	@Override
-	protected void mouseClicked(int par1, int mouseX, int mouseY) {
+	protected void mouseClicked(int mouseX, int mouseY, int par3) {
 		if (mouseX > (width - 280) / 2 + 25 && mouseX < (width - 280) / 2 + 25 + 100 && !accepted)
 			if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152 + 20) {
 				accepted = true;

@@ -25,7 +25,8 @@ public class BattleQueryPacket extends PixelmonPacket {
 				pokeballs[i] = opponentStorage.partyPokemon[i].getInteger("CaughtBall");
 				if (opponentStorage.partyPokemon[i].getBoolean("IsFainted"))
 					pokeballs[i] = pokeballs[i] * -1 - 1;
-			}
+			} else
+				pokeballs[i] = -999;
 		}
 	}
 
