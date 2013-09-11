@@ -8,10 +8,12 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.WorldServer;
+import pixelmon.comm.BattleQueryPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.SpawnLocation;
 import pixelmon.entities.npcs.NPCType;
@@ -20,6 +22,8 @@ import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
+import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PokeballManager;
 
 public class CommandSpawn extends CommandBase {
 
