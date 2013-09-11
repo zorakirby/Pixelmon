@@ -39,7 +39,6 @@ public class Confusion extends StatusBase {
 		double Damage = ((2 * user.getLvl().getLevel() + 10) / 250 * (attack / defence) * 40 + 2) * modifier;
 
 		return (int) Math.floor(Damage);
-		// (int) Math.round(Damage);
 	}
 
 	@Override

@@ -23,6 +23,8 @@ public class BattleQueryPacket extends PixelmonPacket {
 		for (int i = 0; i < 6; i++) {
 			if (opponentStorage.partyPokemon[i] != null) {
 				pokeballs[i] = opponentStorage.partyPokemon[i].getInteger("CaughtBall");
+				if (opponentStorage.partyPokemon[i].getBoolean("IsFainted"))
+					pokeballs[i] = pokeballs[i] * -1 - 1;
 			}
 		}
 	}

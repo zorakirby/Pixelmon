@@ -156,12 +156,11 @@ public class ClientPacketHandler implements IPacketHandler {
 				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
 				Minecraft.getMinecraft().currentScreen = null;
 			} else if (packetID == EnumPackets.BattleQuery.getIndex()) {
-
-			} else if (packetID == EnumPackets.AcceptBattle.getIndex()) {
-
+				int queryID = dataStream.readInt();
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.AcceptDeny.getIndex(), Minecraft.getMinecraft().theWorld, queryID, 0, 0);
 			} else if (packetID == EnumPackets.BossDrop.getIndex()) {
 
-			}else if (packetID == EnumPackets.StarterList.getIndex()){
+			} else if (packetID == EnumPackets.StarterList.getIndex()) {
 				StarterListPacket p = new StarterListPacket();
 				try {
 					p.readPacketData(dataStream);

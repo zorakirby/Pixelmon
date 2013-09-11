@@ -3,6 +3,7 @@ package pixelmon;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
@@ -16,6 +17,7 @@ import pixelmon.database.SpawnLocation;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBossMode;
+import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
 
@@ -74,6 +76,7 @@ public class CommandSpawn extends CommandBase {
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + name));
 				notifyAdmins(par1ICommandSender, 1, par1ICommandSender.getCommandSenderName() + " successfully spawned " + name, new Object[] { name });
 			} else {
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.AcceptDeny.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d(name + " is not in game!"));
 			}
 		} catch (Exception e) {

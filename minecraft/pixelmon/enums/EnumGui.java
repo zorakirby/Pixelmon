@@ -18,7 +18,8 @@ public enum EnumGui {
 	PokeCheckerMoves(13),
 	Trading(14),
 	Doctor(15),
-	PokemonTrade(16);
+	PokemonTrade(16),
+	AcceptDeny(17);
 	
 	private int index;
 	
