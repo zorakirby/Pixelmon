@@ -202,7 +202,10 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeBoolean(isShiny);
 		data.writeShort(nature.index);
 		data.writeShort(growth.index);
-		data.writeShort(pokeball.getIndex());
+		if (pokeball != null)
+			data.writeShort(pokeball.getIndex());
+		else
+			data.writeShort(0);
 		data.writeBoolean(doesLevel);
 		data.writeInt(heldItemId);
 		data.writeShort(effectCount);
