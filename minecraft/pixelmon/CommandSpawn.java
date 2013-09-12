@@ -80,7 +80,6 @@ public class CommandSpawn extends CommandBase {
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully spawned a " + name));
 				notifyAdmins(par1ICommandSender, 1, par1ICommandSender.getCommandSenderName() + " successfully spawned " + name, new Object[] { name });
 			} else {
-				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.AcceptDeny.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d(name + " is not in game!"));
 			}
 		} catch (Exception e) {
