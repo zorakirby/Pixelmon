@@ -150,7 +150,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				}
 			} else if (packetID == EnumPackets.SwitchCamera.getIndex()) {
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
-				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+				//Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
 			} else if (packetID == EnumPackets.PlayerDeath.getIndex()) {
 				GuiPixelmonOverlay.isVisible = true;
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
@@ -162,7 +162,8 @@ public class ClientPacketHandler implements IPacketHandler {
 				try {
 					p.readPacketData(dataStream);
 					GuiAcceptDeny.opponent = p;
-					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.AcceptDeny.getIndex(), Minecraft.getMinecraft().theWorld, p.queryIndex, 0, 0);
+					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.AcceptDeny.getIndex(), Minecraft.getMinecraft().theWorld,
+							p.queryIndex, 0, 0);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

@@ -20,6 +20,8 @@ public class AcceptDeclineBattle extends PacketHandlerBase {
 	@Override
 	public void handlePacket(int index, Player player, DataInputStream dataStream) throws IOException {
 		BattleQuery query = BattleQuery.getQuery(dataStream.readInt());
+		if (query == null)
+			return;
 		if (index == EnumPackets.AcceptBattle.getIndex())
 			query.acceptQuery((EntityPlayerMP) player);
 		else if (index == EnumPackets.DeclineBattle.getIndex())
