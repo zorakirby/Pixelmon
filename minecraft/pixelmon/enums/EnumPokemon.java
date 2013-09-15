@@ -187,6 +187,7 @@ public enum EnumPokemon {
 	Weepinbell("Weepinbell"),
 	Weezing("Weezing"),
 	Wigglytuff("Wigglytuff"),
+	Wynaut("Wynaut"),
 	Zapdos("Zapdos"),
 	Zubat("Zubat");
 
