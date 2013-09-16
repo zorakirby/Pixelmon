@@ -6,6 +6,7 @@ import java.util.Random;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.comm.ChatHandler;
+import pixelmon.database.DownloadHelper;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class PlayerComputerStorage {
@@ -13,8 +14,10 @@ public class PlayerComputerStorage {
 	public static final int boxCount = 8;
 	private NBTTagCompound data = new NBTTagCompound();
 	public EntityPlayer player;
+	public String saveFile;
 
 	public PlayerComputerStorage(EntityPlayer player) {
+		this.saveFile = DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".comp";
 		this.player = player;
 		for (int i = 0; i < boxCount; i++) {
 			storageBoxes[i] = new ComputerBox(this, i);
