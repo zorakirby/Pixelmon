@@ -125,10 +125,11 @@ public class EntityCamera extends EntityLiving {
 
 	public void pointAt(Entity entity) {
 		target = entity;
-		prevPosX = posX = target.posX + 3;
-		prevPosY = posY = target.posY + 0.5f;
-		prevPosZ = posZ = target.posZ;
-
+		if (target != null) {
+			prevPosX = posX = target.posX + 3;
+			prevPosY = posY = target.posY + 0.5f;
+			prevPosZ = posZ = target.posZ;
+		}
 	}
 
 }
