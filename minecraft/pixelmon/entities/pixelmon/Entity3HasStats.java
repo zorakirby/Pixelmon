@@ -11,6 +11,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.SpawnLocation;
@@ -72,7 +73,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	protected void init(String name) {
 		super.init(name);
-		getBaseStats(name);
+		baseStats = getBaseStats(name);
 		if (baseStats == null) {
 			setDead();
 			return;
@@ -100,33 +101,42 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 			setEntityHealth(stats.HP);
 		}
 	}
-	
-	float getMoveSpeed(){
-		return 0.3f + (1-(200f-stats.Speed)/200f)*0.3f;
+
+	float getMoveSpeed() {
+		return 0.3f + (1 - (200f - stats.Speed) / 200f) * 0.3f;
 	}
 
-	void getBaseStats(String name) {
-		boolean has = false;
+	public static BaseStats getBaseStatsFromStore(String name) {
 		for (int i = 0; i < baseStatsStore.length; i++) {
 			if (baseStatsStore[i] == null)
 				break;
 			if (baseStatsStore[i].pixelmonName.equals(name)) {
-				has = true;
-				baseStats = baseStatsStore[i];
-				break;
+				return baseStatsStore[i];
 			}
 		}
-		if (!has) {
-			baseStats = loadBaseStats(getName());
-			for (int i = 0; i < baseStatsStore.length; i++)
-				if (baseStatsStore[i] == null)
-					baseStatsStore[i] = (baseStats);
-		}
+		return null;
 	}
 
-	private BaseStats loadBaseStats(String name) {
-		BaseStats store = DatabaseStats.GetBaseStats(name);
-		return store;
+	public static BaseStats getBaseStats(int index) {
+		for (BaseStats b : baseStatsStore) {
+			if (b != null && b.nationalPokedexNumber == index)
+				return b;
+		}
+		return null;
+	}
+
+	public static BaseStats getBaseStats(String name) {
+		BaseStats baseStats = getBaseStatsFromStore(name);
+		if (baseStats != null)
+			return baseStats;
+		baseStats = DatabaseStats.GetBaseStats(name);
+
+		for (int i = 0; i < baseStatsStore.length; i++)
+			if (baseStatsStore[i] == null) {
+				baseStatsStore[i] = baseStats;
+				break;
+			}
+		return baseStats;
 	}
 
 	@Override
@@ -177,7 +187,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		} catch (PlayerNotLoadedException e) {
 		}
 		if (getOwner() != null)
-			updateNBT();
+			update(EnumUpdateType.Name, EnumUpdateType.Stats);
 	}
 
 	@Override
@@ -228,12 +238,12 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void updateHealth() {
 		if (stats != null) {
 			if (func_110143_aJ() > this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e())
-				setEntityHealth((float)this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e());
+				setEntityHealth((float) this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e());
 		}
 		if (func_110143_aJ() < 0)
 			setEntityHealth(0);
 		if (getOwner() != null && !worldObj.isRemote)
-			updateNBT();
+			update(EnumUpdateType.HP);
 	}
 
 	public void setScale(float scale) {
@@ -308,4 +318,5 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public int getMaxSpawnedInChunk() {
 		return rand.nextInt(baseStats.maxGroupSize - baseStats.minGroupSize + 1) + baseStats.minGroupSize;
 	}
+
 }

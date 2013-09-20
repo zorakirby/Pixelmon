@@ -11,7 +11,10 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import pixelmon.Pixelmon;
+import pixelmon.comm.EnumUpdateType;
+import pixelmon.comm.StarterListPacket;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.config.StarterList;
 import pixelmon.database.DownloadHelper;
 import pixelmon.enums.EnumGui;
 
@@ -73,13 +76,19 @@ public class PokeballManager {
 				throw new PlayerNotLoadedException();
 			}
 			playerPokemonList.add(p);
-			if (p.count() == 0)
-				((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
+			if (p.count() == 0) {
+				StarterListPacket slp = new StarterListPacket(StarterList.StarterList);
+				player.playerNetServerHandler.sendPacketToPlayer(slp.getPacket());
+			}
+			// ((EntityPlayerMP) player).openGui(Pixelmon.instance,
+			// EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP)
+			// player).worldObj, 0, 0, 0);
 
 		} else {
 			p = new PlayerStorage(player);
 			playerPokemonList.add(p);
-			((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
+			StarterListPacket slp = new StarterListPacket(StarterList.StarterList);
+			player.playerNetServerHandler.sendPacketToPlayer(slp.getPacket());
 		}
 		return p;
 	}
@@ -92,18 +101,16 @@ public class PokeballManager {
 
 	public void savePlayer(PlayerStorage p) {
 		try {
-			for (int i = 0; i < playerPokemonList.size(); i++) {
-				String userName = playerPokemonList.get(i).userName;
-				File playerSaveFile = new File(playerPokemonList.get(i).saveFile + "temp");
-				FileOutputStream f = new FileOutputStream(playerSaveFile);
-				DataOutputStream s = new DataOutputStream(f);
-				NBTTagCompound nbt = new NBTTagCompound();
-				playerPokemonList.get(i).writeToNBT(nbt);
-				CompressedStreamTools.write(nbt, s);
-				s.close();
-				f.close();
-				replaceSaveFile(playerPokemonList.get(i));
-			}
+			String userName = p.userName;
+			File playerSaveFile = new File(p.saveFile + "temp");
+			FileOutputStream f = new FileOutputStream(playerSaveFile);
+			DataOutputStream s = new DataOutputStream(f);
+			NBTTagCompound nbt = new NBTTagCompound();
+			p.writeToNBT(nbt);
+			CompressedStreamTools.write(nbt, s);
+			s.close();
+			f.close();
+			replaceSaveFile(p);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

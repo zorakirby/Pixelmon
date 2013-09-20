@@ -5,6 +5,7 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import pixelmon.RandomHelper;
 import pixelmon.battles.participants.BattleParticipant;
+import pixelmon.database.SpawnLocation;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 
 public abstract class Entity7HasAI extends Entity6CanBattle {
@@ -81,6 +82,13 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 			aiHelper = new AIHelper(getName(), this, tasks);
 		if (aggressionTimer > 0)
 			aggressionTimer--;
+	}
+
+	@Override
+	public void moveEntityWithHeading(float par1, float par2) {
+		super.moveEntityWithHeading(par1, par2);
+		if (((EntityPixelmon) this).pokemonLocation == SpawnLocation.AirPersistent)
+			motionY = 0;
 	}
 
 	public void setIdleSpot(ChunkCoordinates coords) {

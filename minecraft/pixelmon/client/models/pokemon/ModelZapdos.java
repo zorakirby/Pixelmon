@@ -25,7 +25,7 @@ public class ModelZapdos extends PixelmonModelBase
     textureHeight = 32;
     
       Body = new PixelmonModelRenderer(this, "Body");
-      Body.setRotationPoint(0,-15,8);
+      Body.setRotationPoint(0,0, -10);
       PixelmonModelRenderer Body1 = new PixelmonModelRenderer(this, 0, 0);
       Body1.addBox(-4F, -3.5F, 0F, 8, 6, 3);
       Body1.setTextureSize(128, 32);

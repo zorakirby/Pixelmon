@@ -10,6 +10,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.blocks.BlockEvolutionRock;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonStatsPacket;
@@ -130,7 +131,7 @@ public class Level {
 			PixelmonStatsPacket stats2 = PixelmonStatsPacket.createPacket(pixelmon);
 			PixelmonLevelUpPacket p = new PixelmonLevelUpPacket(pixelmon, getLevel(), stats, stats2, EnumPackets.LevelUp);
 			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
-			pixelmon.updateNBT();
+			pixelmon.update(EnumUpdateType.Stats);
 		}
 
 		if (pixelmon.getOwner() != null)
@@ -212,6 +213,7 @@ public class Level {
 								EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
 					} else {
 						pixelmon.getMoveset().add(a);
+						pixelmon.update(EnumUpdateType.Moveset);
 						ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
 					}
 				}

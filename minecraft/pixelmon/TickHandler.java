@@ -7,7 +7,9 @@ import java.util.Map;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundPool;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -33,12 +35,13 @@ public class TickHandler implements ITickHandler {
 
 	private void onPlayerTick(EntityPlayer player) {
 		ItemStack boots = player.getCurrentItemOrArmor(1);
-		if (boots != null && boots.stackSize > 0 && boots.getItemDamage() < boots.getItem().getMaxDamage()) {
+		if (boots == null) {
+			player.capabilities.setPlayerWalkSpeed(.1F);
+		} else {
 			if (boots.getItem() == PixelmonItems.oldRunningShoes) {
-				player.addPotionEffect((new PotionEffect(Potion.moveSpeed.getId(), 10, 0)));
+				player.capabilities.setPlayerWalkSpeed(.17F);
 			} else if (boots.getItem() == PixelmonItems.newRunningShoes) {
-				player.addPotionEffect((new PotionEffect(Potion.moveSpeed.getId(), 10, 1)));
-
+				player.capabilities.setPlayerWalkSpeed(.21F);
 				if (ItemPixelmonBoots.bootLastX == 0 || ItemPixelmonBoots.bootLastZ == 0) {
 					ItemPixelmonBoots.bootLastX = (int) player.getPlayerCoordinates().posX;
 					ItemPixelmonBoots.bootLastZ = (int) player.getPlayerCoordinates().posZ;
@@ -47,7 +50,7 @@ public class TickHandler implements ITickHandler {
 					int changeZ = (int) (Math.abs(ItemPixelmonBoots.bootLastZ - player.getPlayerCoordinates().posZ));
 
 					if (changeX > 2 || changeZ > 2) {
-						boots.damageItem(1, player);
+						boots.damageItem(100, player);
 						ItemPixelmonBoots.bootLastX = (int) player.getPlayerCoordinates().posX;
 						ItemPixelmonBoots.bootLastZ = (int) player.getPlayerCoordinates().posZ;
 						if (boots.getItemDamage() == PixelmonItems.newRunningShoes.getMaxDamage()) {
@@ -77,21 +80,27 @@ public class TickHandler implements ITickHandler {
 	public void tickStart(EnumSet<TickType> types, Object... tickData) {
 
 		if (types.equals(EnumSet.of(TickType.PLAYER))) {
-			onPlayerTick((EntityPlayer) tickData[0]);
+			if (!(tickData[0] instanceof EntityPlayerMP))
+				onPlayerTick((EntityPlayer) tickData[0]);
 		}
 
 		for (TickType type : types) {
-//
-//			if (Minecraft.getMinecraft().thePlayer !=null && !checkedForUsername && type == TickType.RENDER && !Minecraft.getMinecraft().thePlayer.username.equals("ASH")
-//					&& java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
-//				try {
-//					Field f = Minecraft.getMinecraft().thePlayer.getClass().getDeclaredField("username");
-//					f.setAccessible(true);
-//					f.set(Minecraft.getMinecraft().thePlayer, "ASH");
-//				} catch (Exception e) {
-//				}
-//				//Minecraft.getMinecraft().thePlayer.username = "ASH";
-//			}
+			//
+			// if (Minecraft.getMinecraft().thePlayer !=null &&
+			// !checkedForUsername && type == TickType.RENDER &&
+			// !Minecraft.getMinecraft().thePlayer.username.equals("ASH")
+			// &&
+			// java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp")
+			// > 0) {
+			// try {
+			// Field f =
+			// Minecraft.getMinecraft().thePlayer.getClass().getDeclaredField("username");
+			// f.setAccessible(true);
+			// f.set(Minecraft.getMinecraft().thePlayer, "ASH");
+			// } catch (Exception e) {
+			// }
+			// //Minecraft.getMinecraft().thePlayer.username = "ASH";
+			// }
 			checkedForUsername = true;
 			if (type == TickType.RENDER) {
 				if (ServerStorageDisplay.count() == 0) {

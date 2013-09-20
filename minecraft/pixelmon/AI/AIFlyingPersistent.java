@@ -9,6 +9,7 @@ public class AIFlyingPersistent extends EntityAIBase {
 	EntityPixelmon pixelmon;
 	int ticksToChangeDirection = 0;
 	int ticksToChangeSpeed = 0;
+	float movespeed = 1f;
 
 	public AIFlyingPersistent(EntityPixelmon pixelmon) {
 		this.pixelmon = pixelmon;
@@ -36,14 +37,15 @@ public class AIFlyingPersistent extends EntityAIBase {
 			pickSpeed();
 			ticksToChangeSpeed = 100 + pixelmon.getRNG().nextInt(500);
 		}
+		pixelmon.moveEntityWithHeading(0, movespeed);
 		super.updateTask();
 	}
 
 	public void pickDirection() {
-		pixelmon.rotationYaw += pixelmon.getRNG().nextInt(60) - 30;
+		pixelmon.rotationYaw += pixelmon.getRNG().nextInt(90) - 30;
 	}
 
 	public void pickSpeed() {
-		
+		movespeed = pixelmon.getRNG().nextFloat() * 0.3f + 0.5f;
 	}
 }

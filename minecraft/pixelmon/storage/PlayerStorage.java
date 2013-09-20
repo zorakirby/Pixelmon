@@ -1,5 +1,6 @@
 package pixelmon.storage;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -8,11 +9,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.comm.PixelmonUpdatePacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.DownloadHelper;
 import pixelmon.entities.npcs.EntityTrainer;
@@ -39,7 +45,10 @@ public class PlayerStorage {
 		this.mode = PokeballManagerMode.Player;
 		this.player = player;
 		this.userName = player.username;
-		this.saveFile = DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
+		if (MinecraftServer.getServer() instanceof DedicatedServer)
+			this.saveFile = DownloadHelper.getDir() + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
+		else
+			this.saveFile = DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
 		pokedex = new Pokedex(player);
 	}
 
@@ -178,6 +187,7 @@ public class PlayerStorage {
 					n.setInteger("Bukkit.MaxHealth", n.getInteger("StatsHP"));
 					n.setBoolean("IsInBall", false);
 					EntityPixelmon e = (EntityPixelmon) PixelmonEntityList.createEntityFromNBT(n, world);
+					e.setBoss(EnumBossMode.Normal);
 					if (mode == PokeballManagerMode.Player) {
 						e.setOwner(player.username);
 						e.playerOwned = true;
@@ -303,7 +313,7 @@ public class PlayerStorage {
 		return false;
 	}
 
-	public void updateNBT(EntityPixelmon pixelmon) {
+	private void updateNBT(EntityPixelmon pixelmon) {
 		for (int i = 0; i < partyPokemon.length; i++) {
 			NBTTagCompound nbt = partyPokemon[i];
 			if (nbt != null) {
@@ -314,15 +324,28 @@ public class PlayerStorage {
 					nbt.setName(pixelmon.getName());
 					if (pixelmon.func_110143_aJ() <= 0)
 						nbt.setBoolean("IsFainted", true);
-					if (mode == PokeballManagerMode.Player) {
-						if (EntityAlreadyExists(pixelmon.getPokemonId(), pixelmon.worldObj))
-							player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(pixelmon, EnumPackets.UpdateStorage).getPacket());
-						else
-							player.playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(nbt, EnumPackets.UpdateStorage).getPacket());
-					}
 				}
 			}
 		}
+	}
+
+	public void update(NBTTagCompound nbt, EnumUpdateType type) {
+		update(nbt, new EnumUpdateType[] { type });
+	}
+
+	public void update(NBTTagCompound nbt, EnumUpdateType[] types) {
+		if (mode == PokeballManagerMode.Player)
+			player.playerNetServerHandler.sendPacketToPlayer(new PixelmonUpdatePacket(nbt, types).getPacket());
+	}
+
+	public void update(EntityPixelmon pixelmon, EnumUpdateType type) {
+		update(pixelmon, new EnumUpdateType[] { type });
+	}
+
+	public void update(EntityPixelmon pixelmon, EnumUpdateType[] types) {
+		updateNBT(pixelmon);
+		if (mode == PokeballManagerMode.Player)
+			player.playerNetServerHandler.sendPacketToPlayer(new PixelmonUpdatePacket(pixelmon, types).getPacket());
 	}
 
 	public void sendUpdatedList() {

@@ -24,6 +24,7 @@ import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseMoves;
@@ -258,14 +259,15 @@ public class Attack {
 			}
 		}
 		if (user.getOwner() != null)
-			user.updateNBT();
+			user.update(EnumUpdateType.HP, EnumUpdateType.Moveset);
 		if (target.getOwner() != null)
-			target.updateNBT();
+			target.update(EnumUpdateType.HP, EnumUpdateType.Moveset);
 		if (user.getTrainer() != null)
-			user.getTrainer().pokemonStorage.updateNBT(user);
+			user.getTrainer().pokemonStorage.update(user, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });
 		if (target.getTrainer() != null)
-			target.getTrainer().pokemonStorage.updateNBT(target);
+			target.getTrainer().pokemonStorage.update(target, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });;
 		user.lastMoveUsed = this;
+			
 		pp--;
 		ItemHeld.useBattleItems(user, target);
 		return;

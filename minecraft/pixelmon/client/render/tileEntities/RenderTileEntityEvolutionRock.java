@@ -26,7 +26,7 @@ public class RenderTileEntityEvolutionRock extends TileEntitySpecialRenderer {
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double d, double d1, double d2, float f) {
 		if (Minecraft.getMinecraft().theWorld.getBlockId(tile.xCoord, tile.yCoord-1, tile.zCoord) == PixelmonBlocks.pc.blockID) return;
-		BlockEvolutionRock block = (BlockEvolutionRock)((TileEntityEvolutionRock)tile).blockType;
+		BlockEvolutionRock block = (BlockEvolutionRock)((TileEntityEvolutionRock)tile).getBlockType();
 		GL11.glPushMatrix(); // start
 		GL11.glTranslatef((float) d + 0.5F, (float) d1+0.04f, (float) d2 + 0.5F); // size
 		GL11.glRotatef(180, 1, 0, 0);

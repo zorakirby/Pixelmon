@@ -18,6 +18,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
+import pixelmon.battles.BattleQuery;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
@@ -230,17 +231,17 @@ public class EntityPokeBall extends EntityThrowable {
 								setDead();
 								return;
 							}
-							BattleParticipant part;
 							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner()
 									&& ((EntityPixelmon) movingobjectposition.entityHit).getOwner() == null)
 								return;
 							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner())
-								part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
+								new BattleQuery((EntityPlayerMP) thrower, pixelmon,
+										(EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
 										(EntityPixelmon) movingobjectposition.entityHit);
-							else
-								part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
-
-							pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
+							else {
+								BattleParticipant part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
+								pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
+							}
 
 						} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
 							if (((EntityTrainer) movingobjectposition.entityHit).releasedPokemon != null
@@ -328,6 +329,9 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onEntityUpdate() {
+		if (this.posY < 1) {
+			this.setDead();
+		}
 		if (!worldObj.isRemote && getIsWaiting()) {
 			if (!isUnloaded) {
 				if (waitTime == 0) {

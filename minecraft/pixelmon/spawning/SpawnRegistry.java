@@ -9,12 +9,16 @@ import pixelmon.config.PixelmonEntityList.ClassType;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.SpawnLocation;
+import pixelmon.entities.pixelmon.Entity3HasStats;
+import pixelmon.entities.pixelmon.stats.BaseStats;
 
 public class SpawnRegistry {
 
 	private static HashMap<BiomeGenBase, List<SpawnData>> biomeSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
 	private static HashMap<BiomeGenBase, List<SpawnData>> undergroundSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
 	private static HashMap<BiomeGenBase, List<SpawnData>> biomeWaterSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
+	private static HashMap<BiomeGenBase, List<SpawnData>> airSpawns = new HashMap<BiomeGenBase, List<SpawnData>>();
+	private static DatabaseStats db;
 
 	public static void addSpawn(String name, int rarity, ClassType type) {
 		BiomeGenBase[] biomes = null;
@@ -37,6 +41,8 @@ public class SpawnRegistry {
 					if (type == ClassType.Pixelmon) {
 						if (s == SpawnLocation.Land || s == SpawnLocation.Air) {
 							storeSpawnInfo(biomeSpawns, name, rarity, type, b, s);
+						}else if (s == SpawnLocation.AirPersistent) {
+								storeSpawnInfo(airSpawns, name, rarity, type, b, s);
 						} else if (s == SpawnLocation.UnderGround) {
 							storeSpawnInfo(undergroundSpawns, name, rarity, type, b, s);
 						} else if (s == SpawnLocation.Water || s == SpawnLocation.OnWater) {
@@ -59,6 +65,34 @@ public class SpawnRegistry {
 		hashmap.put(b, spawnList);
 	}
 
+	public static void getGenerationInfo(HashMap<String, String> hashmap, String name) {
+		List<SpawnData> spawnList = new ArrayList<SpawnData>();
+		int ID = Entity3HasStats.getBaseStats(name).nationalPokedexNumber;
+		if (!hashmap.containsKey(name)) {
+			if (ID <= 151) {
+			//	System.out.println("Generation 1: " + name);
+				hashmap.put(name, "Gen1");
+			} else if (ID > 151 && ID <= 251) {
+				//System.out.println("Generation 2: " + name);
+				hashmap.put(name, "Gen2");
+			} else if (ID > 251 && ID <= 386) {
+			//	System.out.println("Generation 3: " + name);
+				hashmap.put(name, "Gen3");
+			} else if (ID > 386 && ID <= 493) {
+			//	System.out.println("Generation 4: " + name);
+				hashmap.put(name, "Gen4");
+			} else if (ID > 493 && ID <= 649) {
+			//	System.out.println("Generation 5: " + name);
+				hashmap.put(name, "Gen5");
+			}else{
+				System.out.println("[Pixelmon]" + name + " does not have a valid id number");
+			}
+		}
+
+	}
+
+	// }
+
 	public static List<SpawnData> getSpawnsForBiome(BiomeGenBase b) {
 		return biomeSpawns.get(b);
 	}
@@ -69,5 +103,9 @@ public class SpawnRegistry {
 
 	public static List<SpawnData> getWaterSpawnsForBiome(BiomeGenBase b) {
 		return biomeWaterSpawns.get(b);
+	}
+
+	public static List<SpawnData> getAirSpawnsForBiome(BiomeGenBase b) {
+		return airSpawns.get(b);
 	}
 }
