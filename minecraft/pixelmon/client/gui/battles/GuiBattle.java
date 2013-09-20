@@ -292,7 +292,7 @@ public class GuiBattle extends GuiContainer {
 	private LevelStage drawLevelStage = LevelStage.First;
 
 	private void drawLevelUp(int mouseX, int mouseY) {
-//		if (camera != null)
+		if (camera != null)
 		setCameraToPlayer();
 		mc.renderEngine.func_110577_a(GuiResources.levelUpPopup);
 
