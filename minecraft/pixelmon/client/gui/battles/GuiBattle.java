@@ -94,6 +94,7 @@ public class GuiBattle extends GuiContainer {
 		// mc.gameSettings.thirdPersonView = 0;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = mc.thePlayer;
+		
 		if (camera.target != mc.thePlayer) {
 			mc.gameSettings.limitFramerate = 0;
 			camera.pointAt(mc.thePlayer);
@@ -136,6 +137,7 @@ public class GuiBattle extends GuiContainer {
 			if (mc.gameSettings.hideGUI == true)
 				wasGuiHidden = true;
 			first = false;
+			if (camera != null)
 			setCameraToPlayer();
 		}
 
@@ -290,6 +292,7 @@ public class GuiBattle extends GuiContainer {
 	private LevelStage drawLevelStage = LevelStage.First;
 
 	private void drawLevelUp(int mouseX, int mouseY) {
+//		if (camera != null)
 		setCameraToPlayer();
 		mc.renderEngine.func_110577_a(GuiResources.levelUpPopup);
 
