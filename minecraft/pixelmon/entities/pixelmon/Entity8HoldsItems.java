@@ -86,12 +86,16 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 
 	}
 
+	boolean dropped = false;
+
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
-		if (par1DamageSource.getEntity() instanceof EntityPixelmon && ((EntityPixelmon) par1DamageSource.getEntity()).getBossMode() != EnumBossMode.Normal) {
+		if (par1DamageSource.getEntity() instanceof EntityPixelmon && getBossMode() != EnumBossMode.Normal && !worldObj.isRemote) {
 			EntityPixelmon pix = (EntityPixelmon) par1DamageSource.getEntity();
-			if (pix.getOwner() != null)
+			if (pix.getOwner() != null && !dropped) {
 				dropItemHelper.dropBossItems((EntityPlayerMP) pix.getOwner());
+				dropped = true;
+			}
 		}
 		super.onDeath(par1DamageSource);
 	}

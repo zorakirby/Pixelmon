@@ -20,6 +20,7 @@ import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.battles.GuiBattle.BattleMode;
 import pixelmon.client.gui.pokedex.ClientPokedexManager;
 import pixelmon.comm.BattleQueryPacket;
+import pixelmon.comm.BossDropPacket;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
@@ -150,7 +151,8 @@ public class ClientPacketHandler implements IPacketHandler {
 				}
 			} else if (packetID == EnumPackets.SwitchCamera.getIndex()) {
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
-				//Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+				// Minecraft.getMinecraft().renderViewEntity =
+				// Minecraft.getMinecraft().thePlayer;
 			} else if (packetID == EnumPackets.PlayerDeath.getIndex()) {
 				GuiPixelmonOverlay.isVisible = true;
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
@@ -168,7 +170,15 @@ public class ClientPacketHandler implements IPacketHandler {
 					e.printStackTrace();
 				}
 			} else if (packetID == EnumPackets.BossDrop.getIndex()) {
-
+				try {
+					BossDropPacket p = new BossDropPacket();
+					p.readPacketData(dataStream);
+					for (int i = 0; i < p.itemIds.length; i++) {
+						System.out.println("item " + i + " = " + p.itemIds[i]);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			} else if (packetID == EnumPackets.StarterList.getIndex()) {
 				StarterListPacket p = new StarterListPacket();
 				try {
@@ -183,5 +193,4 @@ public class ClientPacketHandler implements IPacketHandler {
 			e.printStackTrace();
 		}
 	}
-
 }

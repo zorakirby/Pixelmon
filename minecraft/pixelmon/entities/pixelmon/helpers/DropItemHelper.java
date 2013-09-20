@@ -95,6 +95,6 @@ public class DropItemHelper {
 			drops[i] = item.itemID;
 		}
 		BossDropPacket p = new BossDropPacket(drops); 
-		player.playerNetServerHandler.sendPacketToPlayer(p);
+		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 	}
 }
