@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -26,6 +25,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItems;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
@@ -42,6 +42,8 @@ import pixelmon.items.ItemStatusAilmentHealer;
 import pixelmon.items.ItemTM;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.pokedex.Pokedex.DexRegisterStatus;
+import pixelmon.spawning.SpawnData;
+import pixelmon.spawning.SpawnRegistry;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
@@ -62,8 +64,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public static final int dwNumInteractions = 24;
 	public static final int dwShiny = 25;
 	public static final int dwRoasted = 26;
-	
-	
+
 	public SpawnLocation pokemonLocation;
 	public boolean playerOwned = false;
 
@@ -76,8 +77,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void init(String name) {
 		super.init(name);
-		
-		//moveSpeed = getMoveSpeed();
+
+		// moveSpeed = getMoveSpeed();
 	}
 
 	public void onDeath(DamageSource damagesource) {
@@ -190,11 +191,12 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	@Override
 	public void onUpdate() {
+		checkGeneration();
 		if (Pixelmon.freeze)
 			return;
 		if (posX > 1e20 || posX < -1e20 || posZ > 1e20 || posZ < -1e20)
 			unloadEntity();
-		if (battleController ==null && getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
+		if (battleController == null && getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
 				if (worldObj.getWorldTime() < 12000
 						&& this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY),
@@ -206,6 +208,32 @@ public class EntityPixelmon extends Entity9HasSounds {
 		if (playerOwned && getOwner() == null)
 			setDead();
 		super.onUpdate();
+	}
+
+	private void checkGeneration() {
+		String name = this.getName();
+		int ID = this.getBaseStats(name).nationalPokedexNumber;
+		if (ID < 151) {
+			if (PixelmonConfig.Gen1 == false) {
+				this.setDead();
+			}
+		} else if (ID > 151 && ID <= 251) {
+			if (PixelmonConfig.Gen2 == false) {
+				this.setDead();
+			}
+		} else if (ID > 251 && ID <= 386) {
+			if (PixelmonConfig.Gen3 == false) {
+				this.setDead();
+			}
+		} else if (ID > 386 && ID <= 493) {
+			if (PixelmonConfig.Gen4 == false) {
+				this.setDead();
+			}
+		} else if (ID > 493 && ID <= 649) {
+			if (PixelmonConfig.Gen5 == false)
+				this.setDead();
+		}
+		return;
 	}
 
 	@Override
@@ -276,7 +304,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public ArrayList<String> getPreEvolutions() {
 		return DatabaseStats.getPreEvolutions(getName());
 	}
-	
-	//To disable Leashing
-	public void func_110162_b(Entity par1Entity, boolean par2) {};
+
+	// To disable Leashing
+	public void func_110162_b(Entity par1Entity, boolean par2) {
+	};
 }
