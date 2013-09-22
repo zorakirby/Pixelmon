@@ -14,10 +14,13 @@ import pixelmon.battles.status.Transformed;
 import pixelmon.client.gui.ClientTradingManager;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.battles.ClientBattleManager;
+import pixelmon.client.gui.battles.GuiAcceptDeny;
 import pixelmon.client.gui.battles.ClientBattleManager.AttackData;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.battles.GuiBattle.BattleMode;
 import pixelmon.client.gui.pokedex.ClientPokedexManager;
+import pixelmon.comm.BattleQueryPacket;
+import pixelmon.comm.BossDropPacket;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
@@ -148,7 +151,8 @@ public class ClientPacketHandler implements IPacketHandler {
 				}
 			} else if (packetID == EnumPackets.SwitchCamera.getIndex()) {
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
-				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+				// Minecraft.getMinecraft().renderViewEntity =
+				// Minecraft.getMinecraft().thePlayer;
 			} else if (packetID == EnumPackets.PlayerDeath.getIndex()) {
 				GuiPixelmonOverlay.isVisible = true;
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
@@ -156,12 +160,26 @@ public class ClientPacketHandler implements IPacketHandler {
 				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
 				Minecraft.getMinecraft().currentScreen = null;
 			} else if (packetID == EnumPackets.BattleQuery.getIndex()) {
-
-			} else if (packetID == EnumPackets.AcceptBattle.getIndex()) {
-
+				BattleQueryPacket p = new BattleQueryPacket();
+				try {
+					p.readPacketData(dataStream);
+					GuiAcceptDeny.opponent = p;
+					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.AcceptDeny.getIndex(), Minecraft.getMinecraft().theWorld,
+							p.queryIndex, 0, 0);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			} else if (packetID == EnumPackets.BossDrop.getIndex()) {
-
-			}else if (packetID == EnumPackets.StarterList.getIndex()){
+				try {
+					BossDropPacket p = new BossDropPacket();
+					p.readPacketData(dataStream);
+					for (int i = 0; i < p.itemIds.length; i++) {
+						System.out.println("item " + i + " = " + p.itemIds[i]);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else if (packetID == EnumPackets.StarterList.getIndex()) {
 				StarterListPacket p = new StarterListPacket();
 				try {
 					p.readPacketData(dataStream);
@@ -175,5 +193,4 @@ public class ClientPacketHandler implements IPacketHandler {
 			e.printStackTrace();
 		}
 	}
-
 }

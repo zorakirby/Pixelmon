@@ -14,6 +14,7 @@ import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumNature;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumType;
 
 public class PixelmonDataPacket extends PixelmonPacket {
@@ -70,6 +71,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	protected int effectCount = 0;
 	public EnumNature nature;
 	public EnumGrowth growth;
+	public EnumPokeballs pokeball;
 	public ArrayList<StatusType> status = new ArrayList<StatusType>();
 
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
@@ -94,6 +96,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = p.getBoolean("IsShiny");
 		nature = EnumNature.getNatureFromIndex(p.getShort("Nature"));
 		growth = EnumGrowth.getGrowthFromIndex(p.getShort("Growth"));
+		pokeball = EnumPokeballs.getFromIndex(p.getInteger("CaughtBall"));
 		order = p.getInteger("PixelmonOrder");
 		numMoves = p.getInteger("PixelmonNumberMoves");
 		for (int i = 0; i < numMoves; i++) {
@@ -134,6 +137,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = p.getIsShiny();
 		nature = p.getNature();
 		growth = p.getGrowth();
+		pokeball = p.caughtBall;
 		if (p.getOwner() != null) {
 			try {
 				order = p.getStorage().getPosition(pokemonID);
@@ -198,6 +202,10 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeBoolean(isShiny);
 		data.writeShort(nature.index);
 		data.writeShort(growth.index);
+		if (pokeball != null)
+			data.writeShort(pokeball.getIndex());
+		else
+			data.writeShort(0);
 		data.writeBoolean(doesLevel);
 		data.writeInt(heldItemId);
 		data.writeShort(effectCount);
@@ -235,6 +243,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = data.readBoolean();
 		nature = EnumNature.getNatureFromIndex(data.readShort());
 		growth = EnumGrowth.getGrowthFromIndex(data.readShort());
+		pokeball = EnumPokeballs.getFromIndex(data.readShort());
 		doesLevel = data.readBoolean();
 		heldItemId = data.readInt();
 		effectCount = data.readShort();

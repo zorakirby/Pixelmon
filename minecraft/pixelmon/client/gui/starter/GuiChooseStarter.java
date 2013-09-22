@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.gui.GuiHelper;
 import pixelmon.client.gui.GuiResources;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -75,14 +76,14 @@ public class GuiChooseStarter extends GuiContainer {
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
 		mc.renderEngine.func_110577_a(GuiResources.starterBackground);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawImageQuad(0, 0, width, height, 0, 0, 1, 1);
+		GuiHelper.drawImageQuad(0, 0, width, height, 0, 0, 1, 1, zLevel);
 
 		for (int i = 0; i < shadowList.size(); i++)
 			shadowList.get(i).draw(mc, width, height);
 		GL11.glEnable(GL11.GL_BLEND);
 		mc.renderEngine.func_110577_a(GuiResources.starterBorders);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		drawImageQuad(0, 0, width, height, 0, 0, 1, 1);
+		GuiHelper.drawImageQuad(0, 0, width, height, 0, 0, 1, 1, zLevel);
 		if (currentScreen == StarterScreen.Copyright) {
 			// mc.renderEngine.func_110577_a(GuiResources.cwPanel);
 			// drawImageQuad(width/4, height/4, width/2, height/2, 0, 0, 1, 1);
@@ -110,7 +111,7 @@ public class GuiChooseStarter extends GuiContainer {
 		}
 		for (int i = 0; i < shadowList.size(); i++)
 			shadowList.get(i).update();
-		
+
 		if (Minecraft.getMinecraft().thePlayer.getRNG().nextFloat() < 0.008f) {
 			EnumShadow shadowType;
 			float f = mc.thePlayer.getRNG().nextFloat();
@@ -131,19 +132,6 @@ public class GuiChooseStarter extends GuiContainer {
 			currentScreen = StarterScreen.Choose;
 			initGui();
 		}
-	}
-
-	void drawImageQuad(int x, int y, float w, float h, float us, float vs, float ue, float ve) {
-		// activate the specified texture
-		float var7 = 0.00390625F;
-		float var8 = 0.00390625F;
-		Tessellator var9 = Tessellator.instance;
-		var9.startDrawingQuads();
-		var9.addVertexWithUV((double) (x + 0), (double) (y + h), (double) this.zLevel, (double) ((float) us), (double) ((float) ve));
-		var9.addVertexWithUV((double) (x + w), (double) (y + h), (double) this.zLevel, (double) ((float) ue), (double) ((float) ve));
-		var9.addVertexWithUV((double) (x + w), (double) (y + 0), (double) this.zLevel, (double) ((float) ue), (double) ((float) vs));
-		var9.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) this.zLevel, (double) ((float) us), (double) ((float) vs));
-		var9.draw();
 	}
 
 	public void removeShadow(Shadow shadow) {

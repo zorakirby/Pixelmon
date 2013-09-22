@@ -36,10 +36,10 @@ public class BattleQuery {
 	private void sendQuery() {
 		try {
 			BattleQueryPacket packet1 = new BattleQueryPacket(queryIndex, player2.username, PixelmonStorage.PokeballManager.getPlayerStorage(player2));
-			player1.playerNetServerHandler.sendPacketToPlayer(packet1);
+			player1.playerNetServerHandler.sendPacketToPlayer(packet1.getPacket());
 
 			BattleQueryPacket packet2 = new BattleQueryPacket(queryIndex, player1.username, PixelmonStorage.PokeballManager.getPlayerStorage(player1));
-			player2.playerNetServerHandler.sendPacketToPlayer(packet2);
+			player2.playerNetServerHandler.sendPacketToPlayer(packet2.getPacket());
 
 			queryList.add(this);
 		} catch (PlayerNotLoadedException e) {

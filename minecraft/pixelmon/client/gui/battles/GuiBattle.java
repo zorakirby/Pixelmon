@@ -2,6 +2,7 @@ package pixelmon.client.gui.battles;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,12 +15,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.participants.ParticipantType;
+import pixelmon.client.EntityCamera;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.gui.GuiHelper;
 import pixelmon.client.gui.GuiPixelmonOverlay;
@@ -47,6 +50,8 @@ public class GuiBattle extends GuiContainer {
 		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, YesNo, EnforcedSwitch;
 	}
 
+	EntityCamera camera;
+
 	private int battleControllerIndex = -1;
 	public static BattleMode mode;
 	public static BagSection bagSection;
@@ -55,6 +60,7 @@ public class GuiBattle extends GuiContainer {
 	private int guiHeight = 60;
 	boolean wasThirdPerson = false;
 	boolean wasGuiHidden = false;
+	int limitFrameRate = 0;
 
 	public GuiBattle(int battleControllerIndex) {
 		super(new ContainerEmpty());
@@ -63,6 +69,12 @@ public class GuiBattle extends GuiContainer {
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
 		battleEnded = false;
+		camera = new EntityCamera(Minecraft.getMinecraft().theWorld);
+		camera.setLocationAndAngles(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY, Minecraft.getMinecraft().thePlayer.posZ,
+				0.0f, 0.0F);
+		Minecraft.getMinecraft().renderViewEntity = camera;
+		Minecraft.getMinecraft().theWorld.spawnEntityInWorld(camera);
+		limitFrameRate = Minecraft.getMinecraft().gameSettings.limitFramerate;
 	}
 
 	public GuiBattle() {
@@ -78,16 +90,23 @@ public class GuiBattle extends GuiContainer {
 
 	public void setCameraToPlayer() {
 		// Keep playercam in firstperson mode
-		mc.gameSettings.thirdPersonView = 0;
-		mc.gameSettings.hideGUI = true;
-		mc.renderViewEntity = mc.thePlayer;
+		// mc.gameSettings.thirdPersonView = 0;
+		// mc.gameSettings.hideGUI = true;
+		// mc.renderViewEntity = mc.thePlayer;
+		if (camera.target != mc.thePlayer) {
+			mc.gameSettings.limitFramerate = 0;
+			camera.pointAt(mc.thePlayer);
+		}
 	}
 
 	public void setCameraToPixelmon() {
 		// Keep pokecam in thirdperson mode
-		mc.gameSettings.thirdPersonView = 1;
-		mc.gameSettings.hideGUI = true;
-		mc.renderViewEntity = ClientBattleManager.getUserPokemon();
+		// mc.gameSettings.thirdPersonView = 1;
+		// mc.gameSettings.hideGUI = true;
+		// mc.renderViewEntity = ClientBattleManager.getUserPokemon();
+		if (camera.target != ClientBattleManager.getUserPokemon()) {
+			camera.pointAt(ClientBattleManager.getUserPokemon());
+		}
 	}
 
 	protected void restoreSettingsAndClose() {
@@ -103,6 +122,7 @@ public class GuiBattle extends GuiContainer {
 			mc.gameSettings.hideGUI = false;
 		}
 		mc.renderViewEntity = mc.thePlayer;
+		mc.gameSettings.limitFramerate = limitFrameRate;
 		mc.thePlayer.closeScreen();
 		mc.setIngameFocus();
 	}

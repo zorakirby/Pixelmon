@@ -25,6 +25,7 @@ import pixelmon.client.gui.GuiDoctor;
 import pixelmon.client.gui.GuiHealer;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.GuiTrading;
+import pixelmon.client.gui.battles.GuiAcceptDeny;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.inventoryExtended.InventoryDetectionTickHandler;
 import pixelmon.client.gui.pc.GuiPC;
@@ -107,6 +108,7 @@ public class ClientProxy extends CommonProxy {
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCamera.class, new RenderInvisible());
 		//RenderingRegistry.registerEntityRenderingHandler(EntityDoctor.class, new RenderDoctor(0.5f));
 	}
 
@@ -211,7 +213,8 @@ public class ClientProxy extends CommonProxy {
 			return new GuiTrading(x);
 		else if (ID == EnumGui.Doctor.getIndex())
 			return new GuiDoctor();
-
+		else if (ID == EnumGui.AcceptDeny.getIndex())
+			return new GuiAcceptDeny(x);
 		return null;
 	}
 

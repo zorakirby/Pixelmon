@@ -21,8 +21,10 @@ import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.EntitySpawning;
 import pixelmon.entities.EntityDeath;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.projectiles.EntityHook;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.migration.Migration;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
@@ -134,6 +136,9 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
 		
 		proxy.registerTickHandlers();
+		for(EnumPokemon pokemon: EnumPokemon.values()){
+			Entity3HasStats.getBaseStats(pokemon.name);
+		}
 	}
 
 	@EventHandler

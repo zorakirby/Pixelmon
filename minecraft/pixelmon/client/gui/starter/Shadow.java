@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
+import pixelmon.client.gui.GuiHelper;
 import pixelmon.client.gui.GuiResources;
 
 import net.minecraft.client.Minecraft;
@@ -63,6 +64,6 @@ public class Shadow {
 		float totHeight = screenHeight - 50;
 		float y = yPos * totHeight - shadowType.height + 50;
 		GL11.glEnable(GL11.GL_BLEND);
-		parent.drawImageQuad((int) x, (int) y, shadowType.width, shadowType.height, 0, 0, 1, 1);
+		GuiHelper.drawImageQuad((int) x, (int) y, shadowType.width, shadowType.height, 0, 0, 1, 1, 0);
 	}
 }

@@ -13,16 +13,18 @@ public abstract class Entity9HasSounds extends Entity8HoldsItems {
 	 */
 	@Override
 	protected String getLivingSound() {
+		String name = getName().toLowerCase();
+		if (baseStats.hasMaleFemaleSound)
+			name += isMale ? "M" : "F";
 		if (baseStats.numSounds == 1)
-			return ("pixelmon:pixelmon." + getName().toLowerCase());
+			return ("pixelmon:pixelmon." + name);
 		if (baseStats.numSounds > 1) {
 			int ind = getRNG().nextInt(baseStats.numSounds);
-			if (ind == 0){
-				return ("pixelmon:pixelmon." + getName().toLowerCase());
-			}
-			else{
+			if (ind == 0) {
+				return ("pixelmon:pixelmon." + name);
+			} else {
 				ind++;
-				return ("pixelmon:pixelmon." + getName().toLowerCase() + ind);
+				return ("pixelmon:pixelmon." + name + ind);
 			}
 		}
 		return "";
