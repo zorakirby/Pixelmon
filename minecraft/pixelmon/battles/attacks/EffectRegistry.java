@@ -26,6 +26,7 @@ import pixelmon.battles.attacks.specialAttacks.basic.Endeavor;
 import pixelmon.battles.attacks.specialAttacks.basic.Eruption;
 import pixelmon.battles.attacks.specialAttacks.basic.FalseSwipe;
 import pixelmon.battles.attacks.specialAttacks.basic.Flail;
+import pixelmon.battles.attacks.specialAttacks.basic.FoulPlay;
 import pixelmon.battles.attacks.specialAttacks.basic.Frustration;
 import pixelmon.battles.attacks.specialAttacks.basic.FutureSight;
 import pixelmon.battles.attacks.specialAttacks.basic.GyroBall;
@@ -156,6 +157,7 @@ public class EffectRegistry {
 		effectMap.put("facade", Acrobatics.class);
 		effectMap.put("falseswipe", FalseSwipe.class);
 		effectMap.put("flail", Flail.class);
+		effectMap.put("foulplay", FoulPlay.class);
 		effectMap.put("frustration", Frustration.class);
 		effectMap.put("futuresight", FutureSight.class);
 		effectMap.put("gyroball", GyroBall.class);

@@ -201,10 +201,13 @@ public class Attack {
 					power = 0;
 				else {
 					target.attackEntityFrom(DamageSource.causeMobDamage(user), power);
+					if (!target.isDead)
+					{
 					if (target.battleController.participants.get(0).currentPokemon() == target)
 						target.battleController.participants.get(0).damageTakenThisTurn += power;
 					else 
 						target.battleController.participants.get(1).damageTakenThisTurn += power;
+					}
 				}
 
 				doMove(user, target);
