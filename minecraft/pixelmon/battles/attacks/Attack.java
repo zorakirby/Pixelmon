@@ -266,8 +266,7 @@ public class Attack {
 			user.getTrainer().pokemonStorage.update(user, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });
 		if (target.getTrainer() != null)
 			target.getTrainer().pokemonStorage.update(target, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });;
-		user.lastMoveUsed = this;
-			
+		user.lastMoveUsed = DatabaseMoves.getAttack(this.baseAttack.attackName);	
 		pp--;
 		ItemHeld.useBattleItems(user, target);
 		return;
