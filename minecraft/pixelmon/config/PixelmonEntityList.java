@@ -94,8 +94,8 @@ public class PixelmonEntityList {
 			String name = pokemon.name;
 			int rarity = DatabaseStats.GetRarity(name);
 			SpawnRegistry.getGenerationInfo(hashmap, pokemon.name);
-			if (rarity > 0)
-				SpawnRegistry.addSpawn(name, rarity, ClassType.Pixelmon);
+		//	if (rarity > 0)
+			//	SpawnRegistry.addSpawn(name, rarity, ClassType.Pixelmon);
 		}
 
 		for (EnumTrainers trainer : EnumTrainers.values()) {
