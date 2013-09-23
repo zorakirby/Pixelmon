@@ -36,7 +36,7 @@ public class ItemEvolutionStone extends PixelmonItem {
 							System.out.println(e.pokemonName + " isn't coded yet");
 						return false;
 					}
-					pixelmon.evolve(evolveTo);
+					pixelmon.startEvolution(evolveTo);
 					itemstack.stackSize--;
 					return true;
 				}

@@ -188,6 +188,11 @@ public class ClientPacketHandler implements IPacketHandler {
 					e.printStackTrace();
 				}
 				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+			} else if (packetID == EnumPackets.Evolution.getIndex()) {
+				int pokemonID = dataStream.readInt();
+				String newPokemonName = Packet.readString(dataStream, 64);
+				PixelmonServerStore.evolutionTarget = newPokemonName;
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

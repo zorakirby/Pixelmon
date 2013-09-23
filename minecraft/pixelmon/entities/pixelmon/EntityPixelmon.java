@@ -33,6 +33,7 @@ import pixelmon.database.SpawnConditions;
 import pixelmon.database.SpawnLocation;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
+import pixelmon.entities.pixelmon.helpers.EvolutionQuery;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemHeld;
@@ -62,8 +63,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public static final int dwNumInteractions = 24;
 	public static final int dwShiny = 25;
 	public static final int dwRoasted = 26;
-	
-	
+
 	public SpawnLocation pokemonLocation;
 	public boolean playerOwned = false;
 
@@ -76,8 +76,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void init(String name) {
 		super.init(name);
-		
-		//moveSpeed = getMoveSpeed();
+
+		// moveSpeed = getMoveSpeed();
 	}
 
 	public void onDeath(DamageSource damagesource) {
@@ -194,7 +194,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 			return;
 		if (posX > 1e20 || posX < -1e20 || posZ > 1e20 || posZ < -1e20)
 			unloadEntity();
-		if (battleController ==null && getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
+		if (battleController == null && getOwner() == null && baseStats != null && baseStats.spawnConditions != null && baseStats.spawnConditions.length > 0) {
 			if (baseStats.spawnConditions[0] == SpawnConditions.Darkness)
 				if (worldObj.getWorldTime() < 12000
 						&& this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY),
@@ -276,7 +276,22 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public ArrayList<String> getPreEvolutions() {
 		return DatabaseStats.getPreEvolutions(getName());
 	}
-	
-	//To disable Leashing
-	public void func_110162_b(Entity par1Entity, boolean par2) {};
+
+	// To disable Leashing
+	public void func_110162_b(Entity par1Entity, boolean par2) {
+	}
+
+	// Client Side for rendering
+	public int evolving = 0;
+	public String evolvingInto;
+	public int evolvingVal = 0;
+	public boolean canMove = true;
+	public float heightDiff;
+	public float widthDiff;
+	public float lengthDiff;
+	public boolean stopRender = false;
+
+	public void startEvolution(String evolutionName) {
+		new EvolutionQuery(this, evolutionName);
+	};
 }

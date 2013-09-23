@@ -26,7 +26,9 @@ public class AIWander extends EntityAIBase {
 			return false;
 		} else if (this.entity.getRNG().nextInt(120) != 0) {
 			return false;
-		} else {
+		}else if (entity instanceof EntityPixelmon && !((EntityPixelmon)entity).canMove)
+			return false;
+		else {
 			Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
 
 			if (vec3 == null) {

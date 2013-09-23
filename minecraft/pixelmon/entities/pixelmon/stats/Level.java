@@ -164,7 +164,7 @@ public class Level {
 			setExp(newExp);
 			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.everStone)) {
 				if (pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
-					pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
+					pixelmon.startEvolution(pixelmon.baseStats.evolveInto.name);
 				}
 				for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
 					if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
@@ -176,12 +176,12 @@ public class Level {
 								evolves = false;
 						}
 						if (evolves) {
-							pixelmon.evolve(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName);
 							break;
 						}
 					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.biome) {
 						if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome()) {
-							pixelmon.evolve(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName);
 							break;
 						}
 					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.evolutionRock) {
@@ -197,7 +197,7 @@ public class Level {
 							}
 						}
 						if (evolves) {
-							pixelmon.evolve(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName);
 							break;
 						}
 					}

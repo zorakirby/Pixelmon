@@ -93,7 +93,7 @@ public class GuiBattle extends GuiContainer {
 		// mc.gameSettings.thirdPersonView = 0;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = mc.thePlayer;
-		if (camera.target != mc.thePlayer) {
+		if (camera != null && camera.target != mc.thePlayer) {
 			mc.gameSettings.limitFramerate = 0;
 			camera.pointAt(mc.thePlayer);
 		}
@@ -104,7 +104,7 @@ public class GuiBattle extends GuiContainer {
 		// mc.gameSettings.thirdPersonView = 1;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = ClientBattleManager.getUserPokemon();
-		if (camera.target != ClientBattleManager.getUserPokemon()) {
+		if (camera != null && camera.target != ClientBattleManager.getUserPokemon()) {
 			camera.pointAt(ClientBattleManager.getUserPokemon());
 		}
 	}
