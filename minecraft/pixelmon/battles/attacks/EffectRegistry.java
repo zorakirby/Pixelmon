@@ -53,7 +53,6 @@ import pixelmon.battles.attacks.specialAttacks.basic.RaiseStats;
 import pixelmon.battles.attacks.specialAttacks.basic.Return;
 import pixelmon.battles.attacks.specialAttacks.basic.Revenge;
 import pixelmon.battles.attacks.specialAttacks.basic.Reversal;
-import pixelmon.battles.attacks.specialAttacks.basic.SeismicToss;
 import pixelmon.battles.attacks.specialAttacks.basic.SmackDown;
 import pixelmon.battles.attacks.specialAttacks.basic.Spite;
 import pixelmon.battles.attacks.specialAttacks.basic.Struggle;
@@ -94,6 +93,7 @@ import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyRest;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySafeGuard;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySandstorm;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySleep;
+import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySubstitute;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplySunny;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyTrickRoom;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyYawn;
@@ -127,6 +127,7 @@ public class EffectRegistry {
 		effectMap.put("recharge", ApplyRecharge.class);
 		effectMap.put("safeguard", ApplySafeGuard.class);
 		effectMap.put("sleep", ApplySleep.class);
+		effectMap.put("substitute", ApplySubstitute.class);
 		effectMap.put("trickroom", ApplyTrickRoom.class);
 		effectMap.put("yawn", ApplyYawn.class);
 
@@ -184,7 +185,6 @@ public class EffectRegistry {
 		effectMap.put("return", Return.class);
 		effectMap.put("revenge", Revenge.class);
 		effectMap.put("reversal", Reversal.class);
-		effectMap.put("seismictoss", SeismicToss.class);
 		effectMap.put("smackdown", SmackDown.class);
 		effectMap.put("struggle", Struggle.class);
 		effectMap.put("suicide", Suicide.class);

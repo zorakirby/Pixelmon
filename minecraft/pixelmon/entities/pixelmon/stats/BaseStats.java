@@ -20,6 +20,7 @@ public class BaseStats {
 	public int evolveLevel, catchRate, malePercent, nationalPokedexNumber;
 	public int spawnLevel, spawnLevelRange;
 	public int baseExp, baseFriendship;
+	public int rarity;
 
 	public EnumType type1;
 

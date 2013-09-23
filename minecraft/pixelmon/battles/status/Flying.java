@@ -1,7 +1,5 @@
 package pixelmon.battles.status;
 
-import java.util.ArrayList;
-
 import pixelmon.battles.attacks.Attack;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -31,7 +29,7 @@ public class Flying extends StatusBase {
 	}
 
 	@Override
-	public boolean stopsStatusChange() {
+	public boolean stopsStatusChange(Attack a) {
 		return true;
 	}
 }

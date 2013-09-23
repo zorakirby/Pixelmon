@@ -141,6 +141,7 @@ public class DatabaseStats {
 				store.droppedItem = rs.getString("DroppedItem");
 				store.spawnConditions = SpawnConditions.ParseSpawnConditions(rs.getString("SpawnConditions"));
 				store.baseFriendship = rs.getInt("BaseFriendship");
+				store.rarity = rs.getInt("Rarity");
 
 				String sp = rs.getString("SwimmingParameters");
 				if (!rs.wasNull())

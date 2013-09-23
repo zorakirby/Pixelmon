@@ -81,11 +81,9 @@ public class BattleQuery {
 	}
 
 	public static BattleQuery getQuery(int index) {
-		for (int j = 0; j < 3; j++) {
-			for (int i = 0; i < queryList.size(); i++) {
-				if (queryList.get(i).queryIndex == index)
-					return queryList.get(i);
-			}
+		for (int i = 0; i < queryList.size(); i++) {
+			if (queryList.get(i).queryIndex == index)
+				return queryList.get(i);
 		}
 		return null;
 	}

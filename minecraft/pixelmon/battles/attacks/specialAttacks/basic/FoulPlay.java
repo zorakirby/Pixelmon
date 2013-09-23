@@ -26,7 +26,7 @@ public class FoulPlay extends SpecialAttackBase {
 			int damage = a.doDamageCalc(user, target, crit);
 			user.battleStats.setAttackModifier((int)oldAttackModifier);
 			user.stats.Attack = oldAttack;
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), damage);
+			target.doBattleDamage(user, damage);
 			
 		return true;
 	}

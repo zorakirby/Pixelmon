@@ -136,7 +136,7 @@ public class Attack {
 						for (int i = 0; i < target.status.size(); i++) {
 							StatusBase et = target.status.get(i);
 							try {
-								if (!et.stopsStatusChange())
+								if (!et.stopsStatusChange(this))
 									e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 							} catch (Exception exc) {
 								if (PixelmonConfig.printErrors) {
@@ -200,8 +200,8 @@ public class Attack {
 				if (baseAttack.attackCategory == ATTACK_STATUS)
 					power = 0;
 				else {
-					target.attackEntityFrom(DamageSource.causeMobDamage(user), power);
-					if (!target.isDead)
+					target.doBattleDamage(user, power);
+					if (target.battleController != null && user.battleController != null)
 					{
 					if (target.battleController.participants.get(0).currentPokemon() == target)
 						target.battleController.participants.get(0).damageTakenThisTurn += power;

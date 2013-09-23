@@ -3,6 +3,8 @@ package pixelmon.client.gui.battles;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +22,7 @@ import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import pixelmon.Pixelmon;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.client.EntityCamera;
@@ -37,6 +40,7 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.BagSection;
+import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.items.ItemData;
 import pixelmon.items.ItemEther;
@@ -56,7 +60,7 @@ public class GuiBattle extends GuiContainer {
 	private int battleControllerIndex = -1;
 	public static BattleMode mode;
 	public static BagSection bagSection;
-	public static boolean battleEnded = false;
+	public static boolean battleEnded = true;
 	private int guiWidth = 300;
 	private int guiHeight = 60;
 	boolean wasThirdPerson = false;
@@ -94,8 +98,7 @@ public class GuiBattle extends GuiContainer {
 		// mc.gameSettings.thirdPersonView = 0;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = mc.thePlayer;
-		
-		if (camera.target != mc.thePlayer) {
+		if (camera != null && camera.target != mc.thePlayer) {
 			mc.gameSettings.limitFramerate = 0;
 			camera.pointAt(mc.thePlayer);
 		}
@@ -106,7 +109,7 @@ public class GuiBattle extends GuiContainer {
 		// mc.gameSettings.thirdPersonView = 1;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = ClientBattleManager.getUserPokemon();
-		if (camera.target != ClientBattleManager.getUserPokemon()) {
+		if (camera != null && camera.target != ClientBattleManager.getUserPokemon()) {
 			camera.pointAt(ClientBattleManager.getUserPokemon());
 		}
 	}
@@ -127,6 +130,11 @@ public class GuiBattle extends GuiContainer {
 		mc.gameSettings.limitFramerate = limitFrameRate;
 		mc.thePlayer.closeScreen();
 		mc.setIngameFocus();
+		if (evolveList.size() > 0) {
+			int pokemonID = evolveList.get(0);
+			evolveList.remove(0);
+			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+		}
 	}
 
 	@Override
@@ -976,6 +984,8 @@ public class GuiBattle extends GuiContainer {
 	private Packet250CustomPayload sendPacket;
 
 	public static BattleMode oldMode;
+
+	public static List<Integer> evolveList = new ArrayList<Integer>();
 
 	private void ReplaceAttackClicked(int mouseX, int mouseY) {
 		Attack newAttack = ClientBattleManager.newAttackList.get(0).attack;

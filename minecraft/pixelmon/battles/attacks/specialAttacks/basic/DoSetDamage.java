@@ -23,10 +23,10 @@ public class DoSetDamage extends SpecialAttackBase {
 		String name = a.baseAttack.attackName.toLowerCase();			
 		
 		if (damage != 0)
-		target.attackEntityFrom(DamageSource.causeMobDamage(user), damage);
+			target.doBattleDamage(user, damage);
 		
 		if(name.contains("super fang"))
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ()/2);
+			target.doBattleDamage(user, (int)(target.func_110143_aJ()/2));
 			
 		
 		return true;

@@ -20,6 +20,8 @@ import pixelmon.battles.status.GlobalStatusBase;
 import pixelmon.battles.status.Rainy;
 import pixelmon.battles.status.Sandstorm;
 import pixelmon.battles.status.StatusBase;
+import pixelmon.battles.status.StatusType;
+import pixelmon.battles.status.Substitute;
 import pixelmon.battles.status.Sunny;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
@@ -338,6 +340,16 @@ public class BattleController {
 	public EntityPixelmon SwitchPokemon(EntityPixelmon currentPixelmon, int newPixelmonId) {
 		for (BattleParticipant p : participants)
 			if (p.currentPokemon() == currentPixelmon) {
+				ArrayList<StatusBase> statuses = new ArrayList<StatusBase>();
+/*				if (p.currentPokemon().hasStatus(StatusType.Substitute))
+				{
+					for (int i = 0; i < p.currentPokemon().status.size(); i++)
+					{
+						if (p.currentPokemon().status.get(i) instanceof Substitute)
+							statuses.add(p.currentPokemon().status.get(i));
+					}
+				} 
+*/
 				p.switchPokemon(newPixelmonId);
 				p.currentPokemon().battleController = this;
 				p.attackersList.add(p.currentPokemon().getPokemonId());
@@ -349,6 +361,8 @@ public class BattleController {
 						p2.attackersList.add(p2.currentPokemon().getPokemonId());
 						p2.updateOpponent();
 					}
+				for (StatusBase e : statuses)
+					p.currentPokemon().status.add(e);
 				return p.currentPokemon();
 			}
 		return null;
