@@ -10,9 +10,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraftforge.common.RotationHelper;
+import pixelmon.Pixelmon;
 import pixelmon.client.EntityCamera;
 import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.render.GraphicsHelper;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.comm.EnumPackets;
@@ -21,6 +23,7 @@ import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonEntityList;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pixelmon.stats.BaseStats;
+import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 
 public class GuiEvolve extends GuiContainer {
@@ -189,5 +192,15 @@ public class GuiEvolve extends GuiContainer {
 		if (stage == 3)
 			Minecraft.getMinecraft().thePlayer.closeScreen();
 
+	}
+
+	@Override
+	public void onGuiClosed() {
+		super.onGuiClosed();
+		if (GuiBattle.evolveList.size() > 0) {
+			int pokemonID = GuiBattle.evolveList.get(0);
+			GuiBattle.evolveList.remove(0);
+			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+		}
 	}
 }

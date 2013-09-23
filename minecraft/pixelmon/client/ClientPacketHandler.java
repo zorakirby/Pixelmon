@@ -192,7 +192,13 @@ public class ClientPacketHandler implements IPacketHandler {
 				int pokemonID = dataStream.readInt();
 				String newPokemonName = Packet.readString(dataStream, 64);
 				PixelmonServerStore.evolutionTarget = newPokemonName;
-				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+				if (GuiBattle.battleEnded)
+					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+				else {
+					GuiBattle.evolveList.add(pokemonID);
+				}
+
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
