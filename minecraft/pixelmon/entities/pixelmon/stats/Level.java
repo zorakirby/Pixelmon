@@ -162,13 +162,14 @@ public class Level {
 			setLevel(getLevel() + 1);
 			onLevelUp(stats);
 			setExp(newExp);
+			boolean evolves = false;
 			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.everStone)) {
 				if (pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
-					pixelmon.startEvolution(pixelmon.baseStats.evolveInto.name);
+					pixelmon.startEvolution(pixelmon.baseStats.evolveInto.name, true);
 				}
 				for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
 					if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
-						boolean evolves = true;
+						evolves = true;
 						if (e.extraParam != null) {
 							if (e.extraParam.equalsIgnoreCase("day") && !pixelmon.worldObj.isDaytime())
 								evolves = false;
@@ -176,16 +177,16 @@ public class Level {
 								evolves = false;
 						}
 						if (evolves) {
-							pixelmon.startEvolution(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName, true);
 							break;
 						}
 					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.biome) {
 						if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome()) {
-							pixelmon.startEvolution(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName, true);
 							break;
 						}
 					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.evolutionRock) {
-						boolean evolves = false;
+						evolves = false;
 						EntityPlayer player = (EntityPlayer) pixelmon.getOwner();
 						for (int j = 0; j < pixelmon.worldObj.loadedTileEntityList.size(); j++) {
 							TileEntity t = (TileEntity) pixelmon.worldObj.loadedTileEntityList.get(j);
@@ -197,14 +198,14 @@ public class Level {
 							}
 						}
 						if (evolves) {
-							pixelmon.startEvolution(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName, true);
 							break;
 						}
 					}
 				}
 			}
 			String name = pixelmon.getName();
-			if (DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
+			if (!evolves && pixelmon.evolving == 0 && DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
 				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
 				for (Attack a : newAttacks) {
 					if (pixelmon.getMoveset().size() >= 4) {
@@ -244,7 +245,7 @@ public class Level {
 	int oldLevel = -1;
 
 	public int getExtForNextLevelClient() {
-		if (oldLevel != getLevel()){
+		if (oldLevel != getLevel()) {
 			expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
 			oldLevel = getLevel();
 		}

@@ -319,7 +319,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public float lengthDiff;
 	public boolean stopRender = false;
 
-	public void startEvolution(String evolutionName) {
-		new EvolutionQuery(this, evolutionName);
+	public void startEvolution(String evolutionName, boolean fromLevelUp) {
+		new EvolutionQuery(this, evolutionName, fromLevelUp);
 	};
 }

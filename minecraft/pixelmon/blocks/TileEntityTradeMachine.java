@@ -178,7 +178,7 @@ public class TileEntityTradeMachine extends TileEntity {
 				if (e.mode == InfoMode.trade) {
 					if (EnumPokemon.hasPokemon(e.extraParam)) {
 						EntityPixelmon pixelmon = storage1.sendOut(pokemon2.getInteger("pixelmonID"), worldObj);
-						pixelmon.startEvolution(e.extraParam);
+						pixelmon.startEvolution(e.extraParam, false);
 						storage1.retrieve(pixelmon);
 					}
 				}
@@ -188,7 +188,7 @@ public class TileEntityTradeMachine extends TileEntity {
 				if (e.mode == InfoMode.trade) {
 					if (EnumPokemon.hasPokemon(e.extraParam)) {
 						EntityPixelmon pixelmon = storage2.sendOut(pokemon1.getInteger("pixelmonID"), worldObj);
-						pixelmon.startEvolution(e.extraParam);
+						pixelmon.startEvolution(e.extraParam, false);
 						storage2.retrieve(pixelmon);
 					}
 				}

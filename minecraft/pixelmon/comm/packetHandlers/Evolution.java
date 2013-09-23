@@ -12,10 +12,15 @@ public class Evolution extends PacketHandlerBase {
 
 	public Evolution() {
 		packetsHandled.add(EnumPackets.Evolution);
+		packetsHandled.add(EnumPackets.StopEvolution);
 	}
 
 	@Override
 	public void handlePacket(int index, Player player, DataInputStream dataStream) throws IOException {
-		EvolutionQuery.acceptQuery(dataStream.readInt());
+		if (index == EnumPackets.Evolution.getIndex())
+			EvolutionQuery.acceptQuery(dataStream.readInt());
+		else if (index == EnumPackets.StopEvolution.getIndex()) {
+			EvolutionQuery.declineQuery(dataStream.readInt());
+		}
 	}
 }
