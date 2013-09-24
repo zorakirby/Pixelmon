@@ -1,12 +1,17 @@
 package pixelmon.client.render;
 
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -21,8 +26,8 @@ import pixelmon.enums.EnumBossMode;
 public class RenderPixelmon extends RenderLiving {
 
 	private int defaultNameRenderDistance = 8;
-	private int defaultBossNameRenderDistanceExtension = 8; 
-	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3)); 
+	private int defaultBossNameRenderDistanceExtension = 8;
+	private int configNameRenderMultiplier = (int) Math.max(1, Math.min(PixelmonConfig.nameplateRangeModifier, 3));
 	private int nameRenderDistanceNormal = defaultNameRenderDistance * configNameRenderMultiplier;
 	private int nameRenderDistanceBoss = nameRenderDistanceNormal + defaultBossNameRenderDistanceExtension;
 
@@ -32,12 +37,17 @@ public class RenderPixelmon extends RenderLiving {
 
 	public void doRenderLiving(EntityLiving entityLiving, double d, double d1, double d2, float f, float f1) {
 		EntityPixelmon pixelmon = (EntityPixelmon) entityLiving;
+		if (pixelmon.stopRender)
+			return;
 		if (pixelmon.getName().equals(""))
 			return;
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
-		if (!pixelmon.isInitialised) pixelmon.init(pixelmon.getName());
+		if (!pixelmon.isInitialised)
+			pixelmon.init(pixelmon.getName());
 		if (pixelmon.getModel() != null)
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
+		if (pixelmon.evolving != 0)
+			return;
 		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
 
 		float var10 = pixelmon.getDistanceToEntity(this.renderManager.livingPlayer);
@@ -122,6 +132,27 @@ public class RenderPixelmon extends RenderLiving {
 			} else if (pixelmon.getBossMode() != EnumBossMode.Normal) {
 				GL11.glColor4f(pixelmon.getBossMode().r, pixelmon.getBossMode().g, pixelmon.getBossMode().b, 1f);
 				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+			} else if (pixelmon.evolving == 1) {
+				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+				GL11.glEnable(GL11.GL_BLEND);
+				GL11.glDisable(GL11.GL_TEXTURE_2D);
+				GL11.glColor4f(1, 1, 1, ((float) pixelmon.evolvingVal) / 20f);
+				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+				GL11.glEnable(GL11.GL_TEXTURE_2D);
+			} else if (pixelmon.evolving == 2) {
+				if (pixelmon.evolvingVal < 180) {
+					GL11.glDisable(GL11.GL_TEXTURE_2D);
+					GL11.glColor4f(1, 1, 1, 1);
+					this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+					GL11.glEnable(GL11.GL_TEXTURE_2D);
+				} else {
+					this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+					GL11.glEnable(GL11.GL_BLEND);
+					GL11.glDisable(GL11.GL_TEXTURE_2D);
+					GL11.glColor4f(1, 1, 1, (200f - (float) pixelmon.evolvingVal) / 20f);
+					this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
+					GL11.glEnable(GL11.GL_TEXTURE_2D);
+				}
 			} else {
 				GL11.glColor4f(1f, 1, 1, 1F);
 				this.renderModel(pixelmon, var16, var15, var13, var11 - var10, var12, var14);
@@ -411,8 +442,13 @@ public class RenderPixelmon extends RenderLiving {
 	protected void preRenderScale(EntityPixelmon entity, float f) {
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
 		scaleFactor *= entity.getScaleFactor();
+
 		GL11.glScalef(scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor * entity.getScale() * entity.baseStats.giScale, scaleFactor
 				* entity.getScale() * entity.baseStats.giScale);
+		if (entity.evolving == 2) {
+			float scale = (entity.evolvingVal) / 200f;
+			GL11.glScalef(1 + scale * entity.widthDiff, 1 + scale * entity.heightDiff, 1 + scale * entity.lengthDiff);
+		}
 		if (entity.baseStats.doesHover) {
 			GL11.glTranslatef(0, -1 * entity.baseStats.hoverHeight, 0);
 		}

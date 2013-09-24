@@ -33,6 +33,7 @@ import pixelmon.database.SpawnConditions;
 import pixelmon.database.SpawnLocation;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
+import pixelmon.entities.pixelmon.helpers.EvolutionQuery;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemHeld;
@@ -304,8 +305,21 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public ArrayList<String> getPreEvolutions() {
 		return DatabaseStats.getPreEvolutions(getName());
 	}
-
+	
 	// To disable Leashing
-	public void func_110162_b(Entity par1Entity, boolean par2) {
+	public void func_110162_b(Entity par1Entity, boolean par2) {};
+
+	// Client Side for rendering
+	public int evolving = 0;
+	public String evolvingInto;
+	public int evolvingVal = 0;
+	public boolean canMove = true;
+	public float heightDiff;
+	public float widthDiff;
+	public float lengthDiff;
+	public boolean stopRender = false;
+
+	public void startEvolution(String evolutionName, boolean fromLevelUp) {
+		new EvolutionQuery(this, evolutionName, fromLevelUp);
 	};
 }

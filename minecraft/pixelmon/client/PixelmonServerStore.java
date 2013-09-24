@@ -14,6 +14,7 @@ public class PixelmonServerStore {
 	private static PixelmonDataPacket[][] store = new PixelmonDataPacket[PlayerComputerStorage.boxCount][ComputerBox.boxLimit];
 	private static PixelmonDataPacket mousePokemon;
 	public static StarterListPacket starterListPacket;
+	public static String evolutionTarget;
 
 	public static void addToList(DataInputStream dataStream) {
 		PixelmonDataPacket p = new PixelmonDataPacket();
