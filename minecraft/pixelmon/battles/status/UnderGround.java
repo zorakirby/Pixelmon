@@ -17,7 +17,7 @@ public class UnderGround extends StatusBase {
 	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
 		if (a.baseAttack.attackName == "Earthquake" || a.baseAttack.attackName == "Magnitude")
 		{
-			a.baseAttack.basePower *=2;
+			a.movePower *=2;
 			return false;
 		}
 		if (a.baseAttack.attackName == "Fissure")

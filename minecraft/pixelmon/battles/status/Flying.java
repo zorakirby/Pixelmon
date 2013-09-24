@@ -22,7 +22,7 @@ public class Flying extends StatusBase {
 			return false;			
 		if (moveName.equalsIgnoreCase("Twister") || moveName.equalsIgnoreCase("Gust"))
 		{
-			a.baseAttack.basePower*=2;
+			a.movePower*=2;
 			return false;
 		}
 		return true;
