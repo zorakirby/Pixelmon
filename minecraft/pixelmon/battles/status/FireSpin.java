@@ -20,7 +20,7 @@ public class FireSpin extends StatusBase {
 	@Override
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is trapped in a vortex and takes damage!");
-		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 16));
+		user.doBattleDamage(target, (int) (((float) user.getMaxHealth()) / 16));
 	}
 
 	@Override

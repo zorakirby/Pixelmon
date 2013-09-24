@@ -28,7 +28,7 @@ public class FutureSighted extends StatusBase {
 			{
 			ChatHandler.sendBattleMessage(entityPixelmon.getOwner(), entityPixelmon2.getOwner(), entityPixelmon2.getNickname() + " took the future sight attack!");
 			int damage = a.doDamageCalc(entityPixelmon, entityPixelmon2, 1);
-			entityPixelmon2.attackEntityFrom(DamageSource.causeMobDamage(entityPixelmon), damage);
+			entityPixelmon2.doBattleDamage(entityPixelmon, damage);
 			entityPixelmon.status.remove(this);
 			return;
 			}

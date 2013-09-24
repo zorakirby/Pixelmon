@@ -23,7 +23,7 @@ public class Clamped extends StatusBase {
 			ChatHandler.sendBattleMessage(entityPixelmon.getOwner(), entityPixelmon2.getOwner(), entityPixelmon.getNickname() + " was freed from clamp!");
 			return;
 		}
-		entityPixelmon.attackEntityFrom(DamageSource.causeMobDamage(entityPixelmon2), entityPixelmon.getMaxHealth()/16);
+		entityPixelmon.doBattleDamage(entityPixelmon2, entityPixelmon.getMaxHealth()/16);
 		ChatHandler.sendBattleMessage(entityPixelmon.getOwner(), entityPixelmon2.getOwner(), entityPixelmon.getNickname() + " was hurt by clamp!");
 		turnsLeft--;
 	}

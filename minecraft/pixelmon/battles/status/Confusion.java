@@ -26,7 +26,7 @@ public class Confusion extends StatusBase {
 		}
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is confused...");
 		if (user.getRNG().nextFloat() < 0.5f) {
-			user.attackEntityFrom(DamageSource.causeMobDamage(user), calculateConfusionDamage(user));
+			user.doBattleDamage(user, calculateConfusionDamage(user));
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " hurt itself in its confusion");
 			return false;
 		}

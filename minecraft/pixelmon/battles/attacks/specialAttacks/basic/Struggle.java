@@ -19,8 +19,8 @@ public class Struggle extends SpecialAttackBase {
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {			
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " struggled!");
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), a.doDamageCalc(user, target, crit));
-			user.attackEntityFrom(DamageSource.causeMobDamage(user), user.getMaxHealth()/4);
+			target.doBattleDamage(user, a.doDamageCalc(user, target, crit));
+			user.doBattleDamage(user, user.getMaxHealth()/4);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " took recoil damage!");
 		return true;
 	}

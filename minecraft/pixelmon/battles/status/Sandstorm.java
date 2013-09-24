@@ -33,12 +33,12 @@ public class Sandstorm extends GlobalStatusBase {
 	{
 		if (!user.type.contains(EnumType.Ground) && !user.type.contains(EnumType.Rock) && !user.type.contains(EnumType.Steel))
 		{
-			user.attackEntityFrom(DamageSource.causeMobDamage(target), user.getMaxHealth()/16);
+			user.doBattleDamage(user, user.getMaxHealth()/16);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " was buffeted by the sandstorm!");
 		}
 		if (!target.type.contains(EnumType.Ground) && !target.type.contains(EnumType.Rock) && !target.type.contains(EnumType.Steel))
 		{
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), user.getMaxHealth()/16);
+			target.doBattleDamage(user, user.getMaxHealth()/16);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " was buffeted by the sandstorm!");
 		}
 	}
