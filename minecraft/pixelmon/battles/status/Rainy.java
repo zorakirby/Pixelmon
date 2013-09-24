@@ -20,7 +20,7 @@ public class Rainy extends GlobalStatusBase {
 		turnsToGo--;
 		if (turnsToGo == 0)
 		{
-			bc.removeGlobalStatus(this);
+			bc.globalStatusController.removeGlobalStatus(this);
 			return "The rain stopped";
 		}
 		return "It is raining heavily!";

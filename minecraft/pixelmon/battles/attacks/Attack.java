@@ -190,9 +190,9 @@ public class Attack {
 				}
 			}
 			if (user.battleController != null)
-			for (int i = 0; i < user.battleController.getGlobalStatusSize(); i++)
+			for (int i = 0; i < user.battleController.globalStatusController.getGlobalStatusSize(); i++)
 			{
-				user.battleController.getGlobalStatus(i).applyInMoveEffect(user, target, this);
+				user.battleController.globalStatusController.getGlobalStatus(i).applyInMoveEffect(user, target, this);
 			}
 
 			if (!attackHandled) {

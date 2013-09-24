@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.util.DamageSource;
 
 import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.controller.GlobalStatusController;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
@@ -22,14 +23,14 @@ public class Sandstorm extends GlobalStatusBase {
 		turnsToGo--;
 		if (turnsToGo == 0)
 		{
-			bc.removeGlobalStatus(this);
+			bc.globalStatusController.removeGlobalStatus(this);
 			return "The sandstorm subsided";
 		}
 		return "The sandstorm rages harshly!";
 	}
 	
 	@Override
-	public void applyRepeatedEffect(ArrayList<GlobalStatusBase> global, EntityPixelmon user, EntityPixelmon target)
+	public void applyRepeatedEffect(GlobalStatusController global, EntityPixelmon user, EntityPixelmon target)
 	{
 		if (!user.type.contains(EnumType.Ground) && !user.type.contains(EnumType.Rock) && !user.type.contains(EnumType.Steel))
 		{

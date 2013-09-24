@@ -37,16 +37,16 @@ public class BattleController {
 	public int battleIndex;
 
 	public ArrayList<BattleParticipant> participants = new ArrayList<BattleParticipant>();
-
+	public GlobalStatusController globalStatusController = new GlobalStatusController();
 	private int battleTicks = 0;
-	private ArrayList<GlobalStatusBase> globalStatuses = new ArrayList<GlobalStatusBase>();
+	
 	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
 	private Attack lastMoveUsed;
 
 	public BattleController(BattleParticipant participant1, BattleParticipant participant2) throws Exception {
-		globalStatuses.add(new Clear());
+		globalStatusController.addGlobalStatus(new Clear());
 		participant1.startedBattle = true;
 		participant1.team = 0;
 		participant2.team = 1;
@@ -163,13 +163,13 @@ public class BattleController {
 								e.printStackTrace();
 							}
 						}
-						for (int i = 0 ; i < globalStatuses.size() ; i++)
+						for (int i = 0 ; i < globalStatusController.getGlobalStatusSize() ; i++)
 						{
-							if (!globalStatuses.get(i).endOfTurnMessage(this).equals(""))
+							if (!globalStatusController.getGlobalStatus(i).endOfTurnMessage(this).equals(""))
 							{
 							ChatHandler.sendBattleMessage(participants.get(0).currentPokemon().getOwner(), participants.get(1).currentPokemon().getOwner(),
-									globalStatuses.get(i).endOfTurnMessage(this));
-							globalStatuses.get(i).applyRepeatedEffect(globalStatuses, this.participants.get(0).currentPokemon(), this.participants.get(1).currentPokemon());
+									globalStatusController.getGlobalStatus(i).endOfTurnMessage(this));
+							globalStatusController.getGlobalStatus(i).applyRepeatedEffect(globalStatusController, this.participants.get(0).currentPokemon(), this.participants.get(1).currentPokemon());
 							}
 						}
 
@@ -297,7 +297,6 @@ public class BattleController {
 	}
 
 	private void calculateEscape(BattleParticipant p, EntityPixelmon user, EntityPixelmon target) {
-		System.out.println(user.battleStats.getSpeedModifier());
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
 		B = (B / 4) % 256;
@@ -314,7 +313,7 @@ public class BattleController {
 		} else if (F > 255 || random < F) {
 			if (!user.isLockedInBattle) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
-				endBattle();
+			endBattle();
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " couldn't escape!");
 		}
@@ -416,47 +415,6 @@ public class BattleController {
 		return lastMoveUsed;
 	}
 	
-	public GlobalStatusBase getWeather()
-	{
-		for (int i = 0; i < globalStatuses.size(); i++)
-		{
-			GlobalStatusBase g = globalStatuses.get(i);
-			if (g instanceof Rainy || g instanceof Clear || g instanceof Sandstorm || g instanceof Sunny)
-				return globalStatuses.get(i);
-		}
-		return null;
-	}
 	
-	public void removeGlobalStatus(GlobalStatusBase g)
-	{
-		for (int i = 0; i < globalStatuses.size(); i++)
-		{
-			if (globalStatuses.get(i) == g)
-			{
-				if (g instanceof Rainy || g instanceof Sandstorm  || g instanceof Sunny /* || g instanceof Hail*/)
-					globalStatuses.add(new Clear());
-				globalStatuses.remove(i);	
-			}
-		}
-	}
-	
-	public void addGlobalStatus(GlobalStatusBase g)
-	{
-		if (g instanceof Rainy || g instanceof Sandstorm || g instanceof Sunny /*|| g instanceof Hail*/)
-			for (int i = 0; i < globalStatuses.size(); i++)
-				if (globalStatuses.get(i) instanceof Clear)
-					globalStatuses.remove(i);
-		globalStatuses.add(g);
-			
-	}
-	
-	public GlobalStatusBase getGlobalStatus(int index)
-	{
-		return globalStatuses.get(index);
-	}
-	public int getGlobalStatusSize()
-	{
-		return globalStatuses.size();
-	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.controller.GlobalStatusController;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class GlobalStatusBase {
@@ -19,7 +20,7 @@ public abstract class GlobalStatusBase {
 	public void applyInMoveEffect(EntityPixelmon user, EntityPixelmon target, Attack a)
 	{}
 	
-	public void applyRepeatedEffect(ArrayList<GlobalStatusBase> global, EntityPixelmon user, EntityPixelmon target)
+	public void applyRepeatedEffect(GlobalStatusController globalStatusController, EntityPixelmon user, EntityPixelmon target)
 	{}
 	
 	public String getName()

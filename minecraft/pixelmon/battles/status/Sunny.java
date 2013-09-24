@@ -16,7 +16,7 @@ public class Sunny extends GlobalStatusBase {
 		turnsToGo--;
 		if (turnsToGo == 0)
 		{
-			bc.removeGlobalStatus(this);
+			bc.globalStatusController.removeGlobalStatus(this);
 			return "The sunlight faded.";
 		}
 		return "The sunlight is harsh!";

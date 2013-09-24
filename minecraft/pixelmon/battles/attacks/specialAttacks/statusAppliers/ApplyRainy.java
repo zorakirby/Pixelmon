@@ -14,12 +14,12 @@ public class ApplyRainy extends StatusApplierBase {
 	public void ApplyEffect(Attack a, double crit, EntityPixelmon user,
 			EntityPixelmon target, ArrayList<String> attackList,
 			ArrayList<String> tsargetAttackList) throws Exception {
-		if (user.battleController.getWeather() instanceof Rainy)
+		if (user.battleController.globalStatusController.getWeather() instanceof Rainy)
 		{
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), a.baseAttack.attackName + " failed!");
 				return;
 		}
-		user.battleController.addGlobalStatus(new Rainy());
+		user.battleController.globalStatusController.addGlobalStatus(new Rainy());
 	}
 
 	@Override

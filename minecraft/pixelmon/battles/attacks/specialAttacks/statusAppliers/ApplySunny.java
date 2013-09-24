@@ -14,12 +14,12 @@ public class ApplySunny extends StatusApplierBase {
 			EntityPixelmon target, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 
-			if (user.battleController.getWeather() instanceof Sunny)
+			if (user.battleController.globalStatusController.getWeather() instanceof Sunny)
 			{
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The move failed!");
 				return;
 			}
-			user.battleController.addGlobalStatus(new Sunny());
+			user.battleController.globalStatusController.addGlobalStatus(new Sunny());
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The sunlight turned harsh!");
 	}
 

@@ -21,12 +21,11 @@ public class Heal extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-		System.out.println("Runs Heal");
 		if (a.baseAttack.attackName.equals("Moonlight") || a.baseAttack.attackName.equals("Morning Sun"))
 		{
-			if (user.battleController.getWeather() instanceof Clear)
+			if (user.battleController.globalStatusController.getWeather() instanceof Clear)
 				user.heal(user.getMaxHealth()/2);
-			else if (user.battleController.getWeather() instanceof Sunny)
+			else if (user.battleController.globalStatusController.getWeather() instanceof Sunny)
 				user.heal(user.getMaxHealth()*(2/3));
 			else
 				user.heal(user.getMaxHealth()/4);

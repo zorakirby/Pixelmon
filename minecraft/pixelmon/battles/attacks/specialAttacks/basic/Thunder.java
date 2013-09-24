@@ -18,13 +18,12 @@ public class Thunder extends SpecialAttackBase {
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 		
-			if (user.battleController.getWeather() instanceof Rainy)
+			if (user.battleController.globalStatusController.getWeather() instanceof Rainy)
 				a.cantMiss(user);
-			else if (user.battleController.getWeather() instanceof Sunny)
+			else if (user.battleController.globalStatusController.getWeather() instanceof Sunny)
 				a.moveAccuracy = 50;
 //			if (target.hasStatus(StatusType.Bouncing))
 //				a.baseAttack.basePower *= 2;
-			System.out.println("Ran class");
 			return false;
 	}
 
