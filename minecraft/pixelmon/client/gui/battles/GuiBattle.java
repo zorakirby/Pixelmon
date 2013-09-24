@@ -11,6 +11,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -93,10 +94,11 @@ public class GuiBattle extends GuiContainer {
 		// mc.gameSettings.thirdPersonView = 0;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = mc.thePlayer;
-		if (camera.target != mc.thePlayer) {
-			mc.gameSettings.limitFramerate = 0;
-			camera.pointAt(mc.thePlayer);
-		}
+		if (camera != null)
+			if (camera.target != mc.thePlayer) {
+				mc.gameSettings.limitFramerate = 0;
+				camera.pointAt(mc.thePlayer);
+			}
 	}
 
 	public void setCameraToPixelmon() {
