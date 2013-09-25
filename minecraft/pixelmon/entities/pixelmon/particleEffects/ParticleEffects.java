@@ -29,7 +29,7 @@ public abstract class ParticleEffects {
 		else if (pixelmon.getName().equalsIgnoreCase("Charmeleon"))
 			return new FlameParticles(pixelmon, 1.2F, .7F, 5);
 		else if (pixelmon.getName().equalsIgnoreCase("Charizard"))
-			return new FlameParticles(pixelmon, 2.35F, 3F, 7);
+			return new FlameParticles(pixelmon, 2.2F, 1F, 7);
 		else if(pixelmon.getIsShiny() == true)
 			return new ShinyParticles(pixelmon);
 		return null;

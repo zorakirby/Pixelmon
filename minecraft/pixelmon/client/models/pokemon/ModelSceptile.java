@@ -18,48 +18,40 @@ import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
-public class ModelCharizard extends PixelmonModelBase {
+public class ModelSceptile extends PixelmonModelBase {
 
-	PixelmonModelRenderer Body, head, Larm, Rarm, Lleg, RLeg, tail, LWing, RWing;
+	PixelmonModelRenderer Body, head, Larm, Rarm, Lleg, RLeg, tail;
 
-	public ModelCharizard() {
+	public ModelSceptile() {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 24, 0);
-		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/Body.obj")));
+		Body.setRotationPoint(0, 21, 0);
+		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/sceptile/Body.obj")));
 
 		head = new PixelmonModelRenderer(this, 0, 0);
-		head.setRotationPoint(0, 5F, 0.74675F);
-		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/Head.obj")));
+		head.setRotationPoint(0, 23.4865F, -0.55F);
+		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/sceptile/Head.obj")));
 
 		Larm = new PixelmonModelRenderer(this, 0, 0);
-		Larm.setRotationPoint(0.573F, 3.146F, -0.045F);
-		Larm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/LeftArm.obj")));
+		Larm.setRotationPoint(1.284F, 18.8F, 0.609F);
+		Larm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/sceptile/LeftArm.obj")));
 
 		Rarm = new PixelmonModelRenderer(this, 0, 0);
-		Rarm.setRotationPoint(-0.573F, 3.146F, -0.045F);
-		Rarm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/RightArm.obj")));
+		Rarm.setRotationPoint(-1.284F, 18.8F, 0.609F);
+		Rarm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/sceptile/RightArm.obj")));
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
-		Lleg.setRotationPoint(0.762F, 2.07F, -0.146F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/LeftLeg.obj")));
+		Lleg.setRotationPoint(2.33F, 11.26F, -.11F);
+		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/sceptile/LeftLeg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
-		RLeg.setRotationPoint(-0.762F, 2.07F, -0.146F);
-		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/RightLeg.obj")));
+		RLeg.setRotationPoint(-2.33F, 11.26F, -.11F);
+		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/sceptile/RightLeg.obj")));
 
 		tail = new PixelmonModelRenderer(this, 0, 0);
-		tail.setRotationPoint(0F, 1.267F, -0.072F);
-		tail.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/Tail.obj")));
-
-		RWing = new PixelmonModelRenderer(this, 0, 0);
-		RWing.setRotationPoint(-0.318F, 3.23F, -0.501F);
-		RWing.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/RightWing.obj")));
-
-		LWing = new PixelmonModelRenderer(this, 0, 0);
-		LWing.setRotationPoint(0.318F, 3.23F, -0.501F);
-		LWing.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/charizard/LeftWing.obj")));
+		tail.setRotationPoint(0.17F, 8F, -1.756F);
+		tail.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/sceptile/Tail.obj")));
 
 		Body.addChild(head);
 		Body.addChild(Larm);
@@ -67,8 +59,6 @@ public class ModelCharizard extends PixelmonModelBase {
 		Body.addChild(Lleg);
 		Body.addChild(RLeg);
 		Body.addChild(tail);
-		Body.addChild(LWing);
-		Body.addChild(RWing);
 
 		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
