@@ -22,14 +22,14 @@ public class DoSetDamage extends SpecialAttackBase {
 			ArrayList<String> targetAttackList) throws Exception {
 		String name = a.baseAttack.attackName.toLowerCase();			
 		
-		
-		target.attackEntityFrom(DamageSource.causeMobDamage(user), damage);
+		if (damage != 0)
+			target.doBattleDamage(user, damage);
 		
 		if(name.contains("super fang"))
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ()/2);
+			target.doBattleDamage(user, (int)(target.func_110143_aJ()/2));
 			
 		
-		return false;
+		return true;
 	}
 
 }

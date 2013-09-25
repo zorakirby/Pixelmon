@@ -22,12 +22,12 @@ public class PainSplit extends SpecialAttackBase {
 			user.heal((newHPBase - user.func_110143_aJ()));
 			user.updateHealth();
 		} else if (user.func_110143_aJ() > newHPBase) {
-			user.attackEntityFrom(DamageSource.causeMobDamage(user), (user.func_110143_aJ() - newHPBase));
+			user.doBattleDamage(user, (int)(user.func_110143_aJ() - newHPBase));
 			user.updateHealth();
 		}
 
 		if (newHPBase > target.func_110143_aJ()) {
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), (user.getMaxHealth() - user.func_110143_aJ()));
+			target.doBattleDamage(user, (int)(user.getMaxHealth() - user.func_110143_aJ()));
 			target.updateHealth();
 		} else if (target.func_110143_aJ() > newHPBase) {
 			target.heal(target.func_110143_aJ() - newHPBase);

@@ -42,7 +42,7 @@ public class MultipleHit extends AttackModifierBase {
 			int power = a.doDamageCalc(user, target, crit);
 			if (a.baseAttack.attackCategory == Attack.ATTACK_STATUS)
 				power = 0;
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), power);
+			target.doBattleDamage(user, power);
 			a.doMove(user, target);
 			if (crit > 1)
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Critical Hit!");

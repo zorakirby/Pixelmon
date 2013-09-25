@@ -25,7 +25,7 @@ public class Endeavor extends SpecialAttackBase{
 		}
 		
 		if(userHealth < targetHealth){
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ() - user.func_110143_aJ());
+			target.doBattleDamage(user, (int)(target.func_110143_aJ() - user.func_110143_aJ()));
 		}
 		
 		return true;

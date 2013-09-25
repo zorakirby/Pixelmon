@@ -18,7 +18,7 @@ public class Leech extends StatusBase {
 		int dmg = (int) (((float) user.getMaxHealth()) / 8);
 		if (user.func_110143_aJ() < 16)
 			dmg = 1;
-		user.attackEntityFrom(DamageSource.causeMobDamage(user), dmg);
+		user.doBattleDamage(target, dmg);
 		target.healEntityBy(dmg);
 	}
 }

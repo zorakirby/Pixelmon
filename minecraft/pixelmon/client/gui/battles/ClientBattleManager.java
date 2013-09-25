@@ -12,6 +12,7 @@ import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.items.ItemData;
 
 public class ClientBattleManager {
+	public boolean mustUseLastMove = false;
 	public static class AttackData {
 		public int pokemonID;
 		public Attack attack;
@@ -101,5 +102,9 @@ public class ClientBattleManager {
 
 	public static boolean hasNewAttacks() {
 		return newAttackList.size() > 0;
+	}
+	
+	public void setMustUseLastMove() {
+		mustUseLastMove = true;
 	}
 }

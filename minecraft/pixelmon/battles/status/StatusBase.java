@@ -52,7 +52,7 @@ public abstract class StatusBase {
 		return damage;
 	}
 
-	public boolean stopsStatusChange() throws Exception {
+	public boolean stopsStatusChange(Attack a) throws Exception {
 		return false;
 	}
 

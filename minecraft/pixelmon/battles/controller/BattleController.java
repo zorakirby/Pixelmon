@@ -1,12 +1,8 @@
 package pixelmon.battles.controller;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -19,8 +15,14 @@ import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
+import pixelmon.battles.status.Clear;
 import pixelmon.battles.status.GlobalStatusBase;
+import pixelmon.battles.status.Rainy;
+import pixelmon.battles.status.Sandstorm;
 import pixelmon.battles.status.StatusBase;
+import pixelmon.battles.status.StatusType;
+import pixelmon.battles.status.Substitute;
+import pixelmon.battles.status.Sunny;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -35,15 +37,16 @@ public class BattleController {
 	public int battleIndex;
 
 	public ArrayList<BattleParticipant> participants = new ArrayList<BattleParticipant>();
-
+	public GlobalStatusController globalStatusController = new GlobalStatusController();
 	private int battleTicks = 0;
-	public ArrayList<GlobalStatusBase> globalStatuses = new ArrayList<GlobalStatusBase>();
+	
 	public ArrayList<StatusBase> battleStatusList = new ArrayList<StatusBase>();
 	public boolean battleEnded = false;
 	public int turnCount = 0;
 	private Attack lastMoveUsed;
 
 	public BattleController(BattleParticipant participant1, BattleParticipant participant2) throws Exception {
+		globalStatusController.addGlobalStatus(new Clear());
 		participant1.startedBattle = true;
 		participant1.team = 0;
 		participant2.team = 1;
@@ -151,6 +154,7 @@ public class BattleController {
 						for (BattleParticipant p : participants) {
 							p.turnTick();
 						}
+						
 						for (int i = 0; i < battleStatusList.size(); i++) {
 							try {
 								battleStatusList.get(i).turnTick(null, null);
@@ -159,7 +163,16 @@ public class BattleController {
 								e.printStackTrace();
 							}
 						}
-						turnCount++;
+						for (int i = 0 ; i < globalStatusController.getGlobalStatusSize() ; i++)
+						{
+							if (!globalStatusController.getGlobalStatus(i).endOfTurnMessage(this).equals(""))
+							{
+							ChatHandler.sendBattleMessage(participants.get(0).currentPokemon().getOwner(), participants.get(1).currentPokemon().getOwner(),
+									globalStatusController.getGlobalStatus(i).endOfTurnMessage(this));
+							globalStatusController.getGlobalStatus(i).applyRepeatedEffect(globalStatusController, this.participants.get(0).currentPokemon(), this.participants.get(1).currentPokemon());
+							}
+						}
+
 					}
 					checkAndReplaceFaintedPokemon();
 				}
@@ -248,7 +261,9 @@ public class BattleController {
 		if (p.willTryFlee) {
 			calculateEscape(p, p.currentPokemon(), otherParticipant(p).currentPokemon());
 			p.priority = 6;
-		} else if (p.isSwitching)
+		}
+		else if (p.isSwitching)
+
 			p.isSwitching = false;
 		else if (p.willUseItemInStack != null)
 			useItem(p);
@@ -285,6 +300,7 @@ public class BattleController {
 		float A = ((float) user.stats.Speed) * ((float) user.battleStats.getSpeedModifier()) / 100;
 		float B = ((float) target.stats.Speed) * ((float) target.battleStats.getSpeedModifier()) / 100;
 		B = (B / 4) % 256;
+
 		float C = ++p.escapeAttempts;
 		float F = A * 32 / B + 30 * C;
 
@@ -297,12 +313,10 @@ public class BattleController {
 		} else if (F > 255 || random < F) {
 			if (!user.isLockedInBattle) {
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " escaped!");
-				endBattle();
-			} else {
-				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Its locked in battle!");
-			}
+			endBattle();
 		} else
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " couldn't escape!");
+		}
 	}
 
 	public void setFlee(EntityPixelmon mypixelmon) {
@@ -325,6 +339,16 @@ public class BattleController {
 	public EntityPixelmon SwitchPokemon(EntityPixelmon currentPixelmon, int newPixelmonId) {
 		for (BattleParticipant p : participants)
 			if (p.currentPokemon() == currentPixelmon) {
+				ArrayList<StatusBase> statuses = new ArrayList<StatusBase>();
+/*				if (p.currentPokemon().hasStatus(StatusType.Substitute))
+				{
+					for (int i = 0; i < p.currentPokemon().status.size(); i++)
+					{
+						if (p.currentPokemon().status.get(i) instanceof Substitute)
+							statuses.add(p.currentPokemon().status.get(i));
+					}
+				} 
+*/
 				p.switchPokemon(newPixelmonId);
 				p.currentPokemon().battleController = this;
 				p.attackersList.add(p.currentPokemon().getPokemonId());
@@ -336,6 +360,8 @@ public class BattleController {
 						p2.attackersList.add(p2.currentPokemon().getPokemonId());
 						p2.updateOpponent();
 					}
+				for (StatusBase e : statuses)
+					p.currentPokemon().status.add(e);
 				return p.currentPokemon();
 			}
 		return null;
@@ -388,4 +414,7 @@ public class BattleController {
 	public Attack getLastMoveUsed() {
 		return lastMoveUsed;
 	}
+	
+	
+	
 }

@@ -16,7 +16,7 @@ public class Burn extends StatusPersist {
 	@Override
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is hurt by its burn!");
-		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 8));
+		user.doBattleDamage(user, (int) (((float) user.getMaxHealth()) / 8));
 	}
 
 	@Override

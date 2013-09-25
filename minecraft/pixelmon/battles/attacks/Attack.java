@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,6 +19,7 @@ import pixelmon.battles.attacks.specialAttacks.attackModifiers.Flinch;
 import pixelmon.battles.attacks.specialAttacks.basic.SpecialAttackBase;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.MultiTurnSpecialAttackBase;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.StatusApplierBase;
+import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusType;
 import pixelmon.comm.ChatHandler;
@@ -33,7 +33,6 @@ import pixelmon.enums.EnumType;
 import pixelmon.enums.heldItems.EnumHeldItems;
 import pixelmon.items.ItemHeld;
 import pixelmon.items.heldItems.ChoiceItem;
-import pixelmon.storage.PixelmonStorage;
 
 public class Attack {
 	public static final float EFFECTIVE_NORMAL = 1, EFFECTIVE_SUPER = 2, EFFECTIVE_MAX = 4, EFFECTIVE_NOT = 0.5F, EFFECTIVE_BARELY = 0.25F, EFFECTIVE_NONE = 0;
@@ -50,7 +49,6 @@ public class Attack {
 	public boolean STAB;
 	public int movePower;
 	public int moveAccuracy;
-
 	public Attack(int attackIndex, String moveName, ResultSet rs) throws SQLException {
 		if (fullAttackList[attackIndex] == null) {
 			AttackBase a = new AttackBase(attackIndex, moveName, rs);
@@ -120,6 +118,8 @@ public class Attack {
 		if (cantMiss || RandomHelper.getRandomNumberBetween(0, 100) <= accuracy) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
 					user.getNickname() + " used " + baseAttack.attackName + " on " + target.getNickname() + "!");
+			if(EnumType.getTotalEffectiveness(target.type, baseAttack.attackType) != EFFECTIVE_NONE)
+			{
 			for (int j = 0; j < baseAttack.effects.size(); j++) {
 				EffectBase e = baseAttack.effects.get(j);
 				if (e instanceof StatsEffect) {
@@ -136,7 +136,7 @@ public class Attack {
 						for (int i = 0; i < target.status.size(); i++) {
 							StatusBase et = target.status.get(i);
 							try {
-								if (!et.stopsStatusChange())
+								if (!et.stopsStatusChange(this))
 									e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 							} catch (Exception exc) {
 								if (PixelmonConfig.printErrors) {
@@ -158,7 +158,16 @@ public class Attack {
 				}
 				// if (e.effectType == EffectType.AttackModifier) {
 				// }
+				;
 			}
+			
+			}
+			else 
+			{
+				ChatHandler.sendBattleMessage(user.getOwner(),  target.getOwner(), "It had no effect!");
+				return;
+			}
+		
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
@@ -180,13 +189,25 @@ public class Attack {
 					System.out.println(exc.getStackTrace());
 				}
 			}
+			if (user.battleController != null)
+			for (int i = 0; i < user.battleController.globalStatusController.getGlobalStatusSize(); i++)
+			{
+				user.battleController.globalStatusController.getGlobalStatus(i).applyInMoveEffect(user, target, this);
+			}
 
 			if (!attackHandled) {
 				int power = doDamageCalc(user, target, crit);
 				if (baseAttack.attackCategory == ATTACK_STATUS)
 					power = 0;
 				else {
-					target.attackEntityFrom(DamageSource.causeMobDamage(user), power);
+					target.doBattleDamage(user, power);
+					if (target.battleController != null && user.battleController != null)
+					{
+					if (target.battleController.participants.get(0).currentPokemon() == target)
+						target.battleController.participants.get(0).damageTakenThisTurn += power;
+					else 
+						target.battleController.participants.get(1).damageTakenThisTurn += power;
+					}
 				}
 
 				doMove(user, target);
@@ -227,6 +248,7 @@ public class Attack {
 		} else {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " tried to use " + baseAttack.attackName
 					+ ", but it missed!");
+			attackList.set(attackList.size()-1, null);
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
@@ -247,6 +269,7 @@ public class Attack {
 			user.getTrainer().pokemonStorage.update(user, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });
 		if (target.getTrainer() != null)
 			target.getTrainer().pokemonStorage.update(target, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });;
+		user.lastMoveUsed = DatabaseMoves.getAttack(this.baseAttack.attackName);	
 		pp--;
 		ItemHeld.useBattleItems(user, target);
 		return;

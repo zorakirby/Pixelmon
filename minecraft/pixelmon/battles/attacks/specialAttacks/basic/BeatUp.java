@@ -72,7 +72,7 @@ public class BeatUp extends SpecialAttackBase {
 				}
 			}
 		}
-		target.attackEntityFrom(DamageSource.causeMobDamage(user), (int) Damage);
+		target.doBattleDamage(user, (int)Damage);
 	}
 
 	private boolean hasVolatileStatus(NBTTagCompound nbt) {

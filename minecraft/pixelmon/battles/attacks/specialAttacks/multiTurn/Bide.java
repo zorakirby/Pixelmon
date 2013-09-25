@@ -29,7 +29,7 @@ public class Bide extends MultiTurnSpecialAttackBase {
 			endHealth = user.func_110143_aJ();
 			setPersists(user, false);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " unleashed its energy!");
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), ((user.battleVariables.get("bidehealth") - endHealth) * 2));
+			target.doBattleDamage(user, (int)((user.battleVariables.get("bidehealth") - endHealth) * 2));
 
 			if (user.battleVariables.get("bidehealth") - endHealth == 0)
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + "'s attack failed!");

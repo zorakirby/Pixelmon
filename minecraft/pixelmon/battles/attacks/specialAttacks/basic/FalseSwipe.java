@@ -20,10 +20,10 @@ public class FalseSwipe extends SpecialAttackBase {
 		int check = a.doDamageCalc(user, target, a.calcCriticalHit(getEffect("FalseSwipe")));
 		if(check >= target.func_110143_aJ())
 		{
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), (target.func_110143_aJ()-1));
+			target.doBattleDamage(user, (int)(target.func_110143_aJ()-1));
 		}
 		else
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), check);	
+			target.doBattleDamage(user, check);	
 		return true;
 	}
 

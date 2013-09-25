@@ -16,7 +16,7 @@ public class Pursuit extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-			
+			// Will need to think about this one
 			return false;
 	}
 
