@@ -83,7 +83,7 @@ public class EvolutionQuery {
 	private void checkForLearnMoves() {
 		if (fromLevelUp) {
 			String name = pixelmon.getName();
-			for (int i = level; i < pixelmon.getLvl().getLevel(); i++) {
+			for (int i = level; i <= pixelmon.getLvl().getLevel(); i++) {
 				if (DatabaseMoves.LearnsAttackAtLevel(name, i)) {
 					ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, i);
 					for (Attack a : newAttacks) {

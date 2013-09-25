@@ -2,6 +2,8 @@ package pixelmon.client.gui;
 
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 import net.minecraft.client.Minecraft;
@@ -9,11 +11,13 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.RotationHelper;
 import pixelmon.Pixelmon;
 import pixelmon.client.EntityCamera;
 import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.render.GraphicsHelper;
 import pixelmon.client.render.RenderPixelmon;
@@ -27,6 +31,7 @@ import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 
 public class GuiEvolve extends GuiContainer {
+	public static ResourceLocation evo = new ResourceLocation("pixelmon:gui/EvolutionPopup.png");
 
 	public EntityPixelmon currentPokemon;
 	String newPokemon;
@@ -172,12 +177,16 @@ public class GuiEvolve extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+		mc.renderEngine.func_110577_a(evo);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		if (stage != 2)
+			GuiHelper.drawImageQuad(width / 2 - 100, height / 4 - 40, 200, 70, 0, 0, 1, 1, zLevel);
 		String s;
 		if (stage == 0) {
 			s = "Huh?";
 			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4, 0xFFFFFF);
 		}
-		if (stage == 1 || stage == 2) {
+		if (stage == 1) {
 			s = "What? " + currentPokemon.getNickname() + " is evolving!";
 			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4, 0xFFFFFF);
 		}
@@ -189,18 +198,21 @@ public class GuiEvolve extends GuiContainer {
 
 	@Override
 	protected void mouseClicked(int par1, int par2, int par3) {
-		if (stage == 3)
+		if (stage == 3){
 			Minecraft.getMinecraft().thePlayer.closeScreen();
-
+			if (GuiBattle.evolveList.size() > 0) {
+				int pokemonID = GuiBattle.evolveList.get(0);
+				GuiBattle.evolveList.remove(0);
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+			}
+			else if (ClientBattleManager.newAttackList.size()>0)
+					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+			Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+		}
 	}
 
 	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
-		if (GuiBattle.evolveList.size() > 0) {
-			int pokemonID = GuiBattle.evolveList.get(0);
-			GuiBattle.evolveList.remove(0);
-			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
-		}
 	}
 }

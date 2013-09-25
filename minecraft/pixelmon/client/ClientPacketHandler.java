@@ -12,6 +12,7 @@ import pixelmon.Pixelmon;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.status.Transformed;
 import pixelmon.client.gui.ClientTradingManager;
+import pixelmon.client.gui.GuiEvolve;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.GuiAcceptDeny;
@@ -95,7 +96,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				int newAttackId = dataStream.readInt();
 				int level = dataStream.readInt();
 				ClientBattleManager.newAttackList.add(new AttackData(pokemonID, DatabaseMoves.getAttack(newAttackId), level));
-				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
+				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle) && !(Minecraft.getMinecraft().currentScreen instanceof GuiEvolve))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 			} else if (packetID == EnumPackets.LevelUp.getIndex()) {
 				PixelmonLevelUpPacket p = new PixelmonLevelUpPacket();
