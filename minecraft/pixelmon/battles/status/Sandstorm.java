@@ -13,7 +13,7 @@ import pixelmon.enums.EnumType;
 public class Sandstorm extends GlobalStatusBase {
 	int turnsToGo;
 	public Sandstorm(String name, int turns) {
-		super("Sandstorm");
+		super(name);
 		turnsToGo = turns;
 		
 	}
