@@ -2,6 +2,7 @@ package pixelmon.client;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -110,7 +111,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCamera.class, new RenderInvisible());
-		//RenderingRegistry.registerEntityRenderingHandler(EntityDoctor.class, new RenderDoctor(0.5f));
+		// RenderingRegistry.registerEntityRenderingHandler(EntityDoctor.class,
+		// new RenderDoctor(0.5f));
 	}
 
 	public static ArrayList<String> modelPaths = new ArrayList<String>();
@@ -144,6 +146,26 @@ public class ClientProxy extends CommonProxy {
 		if (model == null)
 			if (PixelmonConfig.printErrors)
 				System.out.println("Can't find model for " + name);
+		return model;
+	}
+
+	@Override
+	public ModelBase loadFlyingModel(String name) {
+		ModelBase model = null;
+		for (String path : modelPaths) {
+			try {
+				Class<?> var3 = (Class<?>) Class.forName(path + ".flying" + ".Model" + name);
+				try {
+					if (var3 != null) {
+						model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
+						break;
+					}
+				} catch (Exception e) {
+				}
+			} catch (Exception e) {
+			}
+		}
+
 		return model;
 	}
 
@@ -256,9 +278,15 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public Object[] models = new Object[650];
+	public Object[] flyingModels = new Object[650];
 
 	@Override
 	public Object[] getModels() {
 		return models;
+	}
+
+	@Override
+	public Object[] getFlyingModels() {
+		return flyingModels;
 	}
 }

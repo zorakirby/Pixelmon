@@ -20,6 +20,7 @@ import pixelmon.enums.EnumPokemon;
 public abstract class Entity2HasModel extends Entity1Base {
 
 	ModelBase model;
+	ModelBase flyingModel;
 	public float animationNum1 = 0f;
 	public int animationCounter = 0;
 	public int animationIncrement = 2;
@@ -44,8 +45,12 @@ public abstract class Entity2HasModel extends Entity1Base {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public ModelBase getModel(){
-		if (model ==null) loadModel();
+	public ModelBase getModel() {
+		if (model == null)
+			loadModel();
+		if (flyingModel != null)
+			if(!onGround && !inWater)
+				return flyingModel;
 		return model;
 	}
 
@@ -58,10 +63,15 @@ public abstract class Entity2HasModel extends Entity1Base {
 			Object mod = Pixelmon.proxy.getModels()[n];
 			if (mod instanceof ModelBase)
 				model = (ModelBase) mod;
+			flyingModel = (ModelBase)Pixelmon.proxy.getFlyingModels()[n];
 		} else {
 			ModelBase m = Pixelmon.proxy.loadModel(getName());
 			Pixelmon.proxy.getModels()[n] = m;
 			model = m;
+			m = Pixelmon.proxy.loadFlyingModel(getName());
+			if (m != null)
+				Pixelmon.proxy.getFlyingModels()[n] = m;
+			flyingModel = m;
 		}
 	}
 
@@ -69,6 +79,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public boolean transformed;
 	@SideOnly(Side.CLIENT)
 	String transformedModel;
+
 	@SideOnly(Side.CLIENT)
 	public void transform(String transformedModel) {
 		transformed = true;
@@ -76,7 +87,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 		ModelBase m = Pixelmon.proxy.loadModel(transformedModel);
 		model = m;
 	}
-	
+
 	String oldName;
 
 	public float getScaleFactor() {

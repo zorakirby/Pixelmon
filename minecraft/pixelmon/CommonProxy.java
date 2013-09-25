@@ -53,6 +53,11 @@ public class CommonProxy implements IGuiHandler {
 	public ModelBase loadModel(String name) {
 		return null;
 	}
+	
+	public ModelBase loadFlyingModel(String name) {
+		return null;
+	}
+
 
 	public ModelBase getNPCModel(NPCType type, String model) {
 		return null;
@@ -68,6 +73,9 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public Object[] getModels() {
+		return null;
+	}
+	public Object[] getFlyingModels() {
 		return null;
 	}
 

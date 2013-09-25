@@ -180,7 +180,7 @@ public class GuiEvolve extends GuiContainer {
 		mc.renderEngine.func_110577_a(evo);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if (stage != 2)
-			GuiHelper.drawImageQuad(width / 2 - 100, height / 4 - 40, 200, 70, 0, 0, 1, 1, zLevel);
+			GuiHelper.drawImageQuad(width / 2 - 100, height / 4 - 40, 200, 40, 0, 0, 1, 1, zLevel);
 		String s;
 		if (stage == 0) {
 			s = "Huh?";

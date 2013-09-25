@@ -1,4 +1,4 @@
-package pixelmon.client.models.pokemon.flyingModels;
+package pixelmon.client.models.pokemon.flying;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -18,11 +18,11 @@ import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
-public class ModelFlyingCharizard extends PixelmonModelBase {
+public class ModelCharizard extends PixelmonModelBase {
 
 	PixelmonModelRenderer Body, LSeg1, LSeg2, LSeg3, LSeg4, RSeg1, RSeg2, RSeg3, RSeg4;
 
-	public ModelFlyingCharizard() {
+	public ModelCharizard() {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
