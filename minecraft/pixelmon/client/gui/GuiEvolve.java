@@ -5,7 +5,6 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
@@ -110,6 +109,7 @@ public class GuiEvolve extends GuiContainer {
 	@Override
 	public void updateScreen() {
 		ticks++;
+		int ticks2 = ticks;
 		if (ticks == 40 && stage == 0) {
 			currentPokemon.evolving = 1;
 			stage = 1;
@@ -213,6 +213,8 @@ public class GuiEvolve extends GuiContainer {
 
 	@Override
 	public void onGuiClosed() {
+		currentPokemon.setDead();
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
 		super.onGuiClosed();
 	}
 }
