@@ -205,7 +205,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				this.motionX *= (double) var3;
 				this.motionZ *= (double) var3;
 
-				this.prevLimbYaw = this.limbYaw;
+				this.prevLimbSwingAmount = this.limbSwingAmount;
 				var9 = this.posX - this.prevPosX;
 				double var12 = this.posZ - this.prevPosZ;
 				float var11 = MathHelper.sqrt_double(var9 * var9 + var12 * var12) * 4.0F;
@@ -214,8 +214,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 					var11 = 1.0F;
 				}
 
-				this.limbYaw += (var11 - this.limbYaw) * 0.4F;
-				this.limbSwing += this.limbYaw;
+				this.limbSwingAmount += (var11 - this.limbSwingAmount) * 0.4F;
+				this.limbSwing += this.limbSwingAmount;
 				movementHandled = true;
 
 			}
@@ -312,8 +312,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		debugOffsetZ = 0f;
 		if (this.riddenByEntity != null) {
 			try {
-				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsetX) * getScale() * getScaleFactor(), 0,
-						(debugOffsetZ + baseStats.ridingOffsetZ) * getScale() * getScaleFactor());
+				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsetX) * getPixelmonScale() * getScaleFactor(), 0,
+						(debugOffsetZ + baseStats.ridingOffsetZ) * getPixelmonScale() * getScaleFactor());
 				vec.rotateAroundY(-(this.renderYawOffset) * (float) Math.PI / 180.0f);
 				// System.out.println(rotationYaw +" " + renderYawOffset);
 				double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
@@ -321,7 +321,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				if (ep == null)
 					ep = EnumPokemon.get(getName());
 				this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY
-						+ (this.getMountedYOffset() + baseStats.ridingOffsetY + height + debugOffsetY) * getScale() * getScaleFactor(), this.posZ + var3
+						+ (this.getMountedYOffset() + baseStats.ridingOffsetY + height + debugOffsetY) * getPixelmonScale() * getScaleFactor(), this.posZ + var3
 						+ vec.zCoord);
 			} catch (Exception e) {
 				riddenByEntity.mountEntity(this);

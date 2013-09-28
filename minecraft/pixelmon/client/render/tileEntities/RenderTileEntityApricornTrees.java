@@ -13,7 +13,7 @@ public class RenderTileEntityApricornTrees extends TileEntitySpecialRenderer {
 	public void renderAModelAt(TileEntityApricornTree tile, double d, double d1, double d2, float f) {
 		int i = tile.getBlockMetadata(); // this is for rotation
 
-		func_110628_a(ApricornTreeStore.getTexture(tile.tree, i)); // texture
+		bindTexture(ApricornTreeStore.getTexture(tile.tree, i)); // texture
 		GL11.glPushMatrix(); // start
 		GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F); // size
 		GL11.glScalef(1.0F, -1F, -1F); // if you read this comment out this line

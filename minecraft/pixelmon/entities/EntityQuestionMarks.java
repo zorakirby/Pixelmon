@@ -11,11 +11,5 @@ public class EntityQuestionMarks extends EntityLiving
 		super(world);
 //		texture = "/pixelmon/image/questionmarks.png";
 		height = 0.2F;
-	}
-
-	public int getMaxHealth() 
-	{
-		return 0;
-	}
-	
+	}	
 }

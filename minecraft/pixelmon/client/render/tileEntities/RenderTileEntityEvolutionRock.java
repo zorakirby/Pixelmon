@@ -33,10 +33,10 @@ public class RenderTileEntityEvolutionRock extends TileEntitySpecialRenderer {
 		GL11.glScalef(1.0F, -1F, -1F); // if you read this comment out this line
 		
 		if (block.rockType == EnumEvolutionRock.MossyRock){
-			func_110628_a(RenderResources.mossrocktex); 
+			bindTexture(RenderResources.mossrocktex); 
 			mossyRockModel.renderAll();
 		}else if (block.rockType == EnumEvolutionRock.IcyRock){
-			func_110628_a(RenderResources.icyrocktex); 
+			bindTexture(RenderResources.icyrocktex); 
 			icyRockModel.renderAll();
 		}
 		GL11.glPopMatrix(); // end

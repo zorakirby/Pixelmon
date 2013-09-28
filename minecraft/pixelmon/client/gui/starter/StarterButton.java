@@ -35,9 +35,9 @@ public class StarterButton extends GuiButton {
 			this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
 			int k = this.getHoverState(this.field_82253_i);
 			if (field_82253_i && starterIndex!=-1)
-				mc.func_110434_K().func_110577_a(mouseOverTexture);
+				mc.getTextureManager().bindTexture(mouseOverTexture);
 			else
-				mc.func_110434_K().func_110577_a(buttonTexture);
+				mc.getTextureManager().bindTexture(buttonTexture);
 			drawImageQuad(xPosition, yPosition, width, height, 0, 0, 1, 1);
 			// this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 0,
 			// this.width, this.height);
@@ -46,7 +46,7 @@ public class StarterButton extends GuiButton {
 
 			if (starterIndex == -1) {
 				l = 14737632;
-				mc.renderEngine.func_110577_a(questionMark);
+				mc.renderEngine.bindTexture(questionMark);
 				drawImageQuad(this.xPosition + width / 2 - 12, this.yPosition + 5, 24f, 24f, 0f, 0f, 1f, 1f);
 			} else {
 				if (!this.enabled) {
@@ -62,7 +62,7 @@ public class StarterButton extends GuiButton {
 					numString = "0" + npn;
 				else
 					numString = "" + npn;
-				mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
+				mc.renderEngine.bindTexture(GuiResources.sprite(numString));
 				drawImageQuad(this.xPosition + 3, this.yPosition + 3, 24f, 24f, 0f, 0f, 1f, 1f);
 			}
 			String name = "";

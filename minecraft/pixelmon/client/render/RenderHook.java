@@ -29,7 +29,7 @@ public class RenderHook extends RenderFish
         GL11.glTranslatef((float)par2, (float)par4, (float)par6);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(0.5F, 0.5F, 0.5F);
-        this.func_110777_b(par1EntityHook);
+        this.bindEntityTexture(par1EntityHook);
         Tessellator tessellator = Tessellator.instance;
         byte b0 = 1;
         byte b1 = 2;

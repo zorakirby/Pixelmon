@@ -337,29 +337,29 @@ public class EntityPokeBall extends EntityThrowable {
 				if (waitTime == 0) {
 					p.setIsRed(true);
 					setIsOpen(true);
-					initialScale = p.getScale();
+					initialScale = p.getPixelmonScale();
 					initPos = Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
 					Vec3 current = Vec3.createVectorHelper(posX, posY, posZ);
 					current.xCoord -= initPos.xCoord;
 					current.yCoord -= initPos.yCoord;
 					current.zCoord -= initPos.zCoord;
 					diff = current;
-					p.setScale(initialScale / 1.1f);
+					p.setPixelmonScale(initialScale / 1.1f);
 				}
 				if (waitTime == 10) {
-					p.setScale(initialScale / 1.3f);
+					p.setPixelmonScale(initialScale / 1.3f);
 					moveCloser();
 				}
 				if (waitTime == 14) {
-					p.setScale(initialScale / 1.7f);
+					p.setPixelmonScale(initialScale / 1.7f);
 					moveCloser();
 				}
 				if (waitTime == 18) {
-					p.setScale(initialScale / 2.2f);
+					p.setPixelmonScale(initialScale / 2.2f);
 					moveCloser();
 				}
 				if (waitTime == 22) {
-					p.setScale(initialScale / 3);
+					p.setPixelmonScale(initialScale / 3);
 					moveCloser();
 					p.unloadEntity();
 					isUnloaded = true;
@@ -461,7 +461,7 @@ public class EntityPokeBall extends EntityThrowable {
 			}
 		} else {
 			if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
-				p.setScale(initialScale);
+				p.setPixelmonScale(initialScale);
 				if (numShakes == 0)
 					catchPokemon();
 				this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
@@ -540,8 +540,8 @@ public class EntityPokeBall extends EntityThrowable {
 		int pokemonRate = p2.getCatchRate();
 		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), p2.getName(), pokemonRate);
 		if (pokemonRate > 0) {
-			int hpMax = p2.getMaxHealth();
-			float hpCurrent = p2.func_110143_aJ();
+			float hpMax = p2.getMaxHealth();
+			float hpCurrent = p2.getHealth();
 			int bonusStatus = 1;
 			double ballBonus = PokeballTypeHelper.getBallBonus(getType(), thrower, p2, mode);
 			double a, b, p;

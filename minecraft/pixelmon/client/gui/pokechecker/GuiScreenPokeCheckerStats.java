@@ -130,14 +130,14 @@ public class GuiScreenPokeCheckerStats extends GuiScreenPokeChecker {
 		else
 			numString = "" + targetPacket.getNationalPokedexNumber();
 
-		mc.renderEngine.func_110577_a(GuiResources.summaryStats);
+		mc.renderEngine.bindTexture(GuiResources.summaryStats);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 
 		if (targetPacket.isShiny)
-			mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
+			mc.renderEngine.bindTexture(GuiResources.shinySprite(numString));
 		else
-			mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
+			mc.renderEngine.bindTexture(GuiResources.sprite(numString));
 		drawImageQuad(width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket.getType1().getColor());

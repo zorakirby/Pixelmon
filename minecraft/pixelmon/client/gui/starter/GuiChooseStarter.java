@@ -74,18 +74,18 @@ public class GuiChooseStarter extends GuiContainer {
 	ArrayList<Shadow> shadowList = new ArrayList<Shadow>();
 
 	public void drawGuiContainerBackgroundLayer(float par3, int par1, int par2) {
-		mc.renderEngine.func_110577_a(GuiResources.starterBackground);
+		mc.renderEngine.bindTexture(GuiResources.starterBackground);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(0, 0, width, height, 0, 0, 1, 1, zLevel);
 
 		for (int i = 0; i < shadowList.size(); i++)
 			shadowList.get(i).draw(mc, width, height);
 		GL11.glEnable(GL11.GL_BLEND);
-		mc.renderEngine.func_110577_a(GuiResources.starterBorders);
+		mc.renderEngine.bindTexture(GuiResources.starterBorders);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(0, 0, width, height, 0, 0, 1, 1, zLevel);
 		if (currentScreen == StarterScreen.Copyright) {
-			// mc.renderEngine.func_110577_a(GuiResources.cwPanel);
+			// mc.renderEngine.bindTexture(GuiResources.cwPanel);
 			// drawImageQuad(width/4, height/4, width/2, height/2, 0, 0, 1, 1);
 			drawCenteredString(fontRenderer, "This is a fan made mod, all trademarks and copyright for pokemon are owned", width / 2, height / 2 - 30, 0xFFFFFF);
 			drawCenteredString(fontRenderer, "by Nintendo and Game Freak Inc.", width / 2, height / 2 - 17, 0xFFFFFF);

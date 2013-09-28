@@ -18,7 +18,7 @@ public class WeezingParticles extends ParticleEffects {
 
 	@Override
 	public void onUpdate() {
-		float var2 = pixelmon.baseStats.width * pixelmon.baseStats.giScale * pixelmon.getScale();
+		float var2 = pixelmon.baseStats.width * pixelmon.baseStats.giScale * pixelmon.getPixelmonScale();
 		float var4 = rand.nextFloat() * (float) Math.PI * 2.0F;
 		float var5 = rand.nextFloat() * 4F + .5F;
 		float var6 = MathHelper.sin(var4) * var2 * .5F * var5;

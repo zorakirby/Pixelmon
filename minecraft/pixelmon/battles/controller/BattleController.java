@@ -221,7 +221,7 @@ public class BattleController {
 
 				Experience.awardExp(participants, p, p.currentPokemon());
 				Entity g = p.currentPokemon().getOwner();
-				p.currentPokemon().setEntityHealth(0);
+				p.currentPokemon().setHealth(0);
 				p.currentPokemon().setDead();
 				p.currentPokemon().isFainted = true;
 				p.currentPokemon().catchInPokeball();

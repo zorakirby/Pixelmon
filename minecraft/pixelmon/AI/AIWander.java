@@ -54,6 +54,6 @@ public class AIWander extends EntityAIBase {
 	 */
 	public void startExecuting() {
 		this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition,
-				entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e());
+				entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
 	}
 }

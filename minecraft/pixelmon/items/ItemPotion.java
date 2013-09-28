@@ -29,8 +29,8 @@ public class ItemPotion extends PixelmonItem {
 	}
 
 	public void healPokemon(EntityPixelmon pxm) {
-		float newHP = pxm.func_110143_aJ() + healAmount(pxm);
-		pxm.setEntityHealth(newHP);
+		float newHP = pxm.getHealth() + healAmount(pxm);
+		pxm.setHealth(newHP);
 		if (pxm.getOwner() != null)
 			pxm.update(EnumUpdateType.HP);
 	}

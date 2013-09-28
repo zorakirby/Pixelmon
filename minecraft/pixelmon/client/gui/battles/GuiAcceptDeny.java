@@ -68,24 +68,24 @@ public class GuiAcceptDeny extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_BLEND);
-		mc.renderEngine.func_110577_a(topLeft);
+		mc.renderEngine.bindTexture(topLeft);
 		GuiHelper.drawImageQuad((width - 280) / 2 - ticks * 50, (height - 182) / 2, 280, 182, 0, 0, 1, 1, zLevel);
-		mc.renderEngine.func_110577_a(middle);
+		mc.renderEngine.bindTexture(middle);
 		GuiHelper.drawImageQuad((width - 280) / 2 + ticks * 50, (height - 182) / 2, 280, 182, 0, 0, 1, 1, zLevel);
-		mc.renderEngine.func_110577_a(bottomRight);
+		mc.renderEngine.bindTexture(bottomRight);
 		GuiHelper.drawImageQuad((width - 280) / 2, (height - 182) / 2, 280, 182, 0, 0, 1, 1, zLevel);
 		if (ticks == 0) {
-			mc.renderEngine.func_110577_a(vs);
+			mc.renderEngine.bindTexture(vs);
 			GuiHelper.drawImageQuad((width - 280) / 2, (height - 182) / 2, 280, 226, 0, 0, 1, 1, zLevel);
 		}
 
 		// Player 1
-		mc.renderEngine.func_110577_a(player1Name);
+		mc.renderEngine.bindTexture(player1Name);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 76 - ticks * 50, (height - 182) / 2 + 9, 145, 17, 0, 0, 1, 1, zLevel);
 		drawEntity(Minecraft.getMinecraft().thePlayer, (width - 280) / 2 + 19 - ticks * 50, (height - 182) / 2 + 11, 20, 0, 0);
-		mc.renderEngine.func_110577_a(player1Frame);
+		mc.renderEngine.bindTexture(player1Frame);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 16 - ticks * 50, (height - 182) / 2 + 9, 65, 65, 0, 0, 1, 1, zLevel);
-		mc.renderEngine.func_110577_a(pokeballHolder);
+		mc.renderEngine.bindTexture(pokeballHolder);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 82 - ticks * 50, (height - 182) / 2 + 27, 80, 17, 0, 0, 1, 1, zLevel);
 		fontRenderer.drawString(mc.thePlayer.username, (width - 280) / 2 + 92 - ticks * 50, (height - 182) / 2 + 15, 0xffffff);
 
@@ -110,7 +110,7 @@ public class GuiAcceptDeny extends GuiContainer {
 				}
 				Item pball = EnumPokeballs.getFromIndex(pid).getItem();
 
-				itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.func_110434_K(), new ItemStack(pball), (width - 280) / 2 + 84 + pos * 12
+				itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(pball), (width - 280) / 2 + 84 + pos * 12
 						- ticks * 50, (height - 182) / 2 + 27);
 			}
 			pos++;
@@ -119,12 +119,12 @@ public class GuiAcceptDeny extends GuiContainer {
 		GL11.glDisable(GL11.GL_LIGHTING);
 
 		// Player2
-		mc.renderEngine.func_110577_a(player2Name);
+		mc.renderEngine.bindTexture(player2Name);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 56 + ticks * 50, (height - 182) / 2 + 103, 145, 17, 0, 0, 1, 1, zLevel);
 		drawEntity(Minecraft.getMinecraft().thePlayer, (width - 280) / 2 + 202 + ticks * 50, (height - 182) / 2 + 76, 20, 0, 0);
-		mc.renderEngine.func_110577_a(player2Frame);
+		mc.renderEngine.bindTexture(player2Frame);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 199 + ticks * 50, (height - 182) / 2 + 74, 65, 65, 0, 0, 1, 1, zLevel);
-		mc.renderEngine.func_110577_a(pokeballHolder);
+		mc.renderEngine.bindTexture(pokeballHolder);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 118 + ticks * 50, (height - 182) / 2 + 121, 80, 17, 0, 0, 1, 1, zLevel);
 		fontRenderer.drawString(opponent.opponentName, (width - 280) / 2 + 188 - fontRenderer.getStringWidth(opponent.opponentName) + ticks * 50,
 				(height - 182) / 2 + 108, 0xffffff);
@@ -141,7 +141,7 @@ public class GuiAcceptDeny extends GuiContainer {
 					GL11.glColor4f(0.4F, 0.4F, 0.4F, 1.0F);
 				}
 				Item pball = EnumPokeballs.getFromIndex(pid).getItem();
-				itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.func_110434_K(), new ItemStack(pball), (width - 280) / 2 + 120 + pos * 12
+				itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(pball), (width - 280) / 2 + 120 + pos * 12
 						+ ticks * 50, (height - 182) / 2 + 121);
 			}
 			pos++;
@@ -150,14 +150,14 @@ public class GuiAcceptDeny extends GuiContainer {
 		GL11.glDisable(GL11.GL_LIGHTING);
 
 		if (ticks == 0) {
-			mc.renderEngine.func_110577_a(buttonOver);
+			mc.renderEngine.bindTexture(buttonOver);
 			if (accepted)
 				GuiHelper.drawImageQuad((width - 280) / 2 + 20, (height - 182) / 2 + 147, 110, 30, 0, 0, 1, 1, zLevel);
-			mc.renderEngine.func_110577_a(button);
+			mc.renderEngine.bindTexture(button);
 			GuiHelper.drawImageQuad((width - 280) / 2 + 25, (height - 182) / 2 + 152, 100, 20, 0, 0, 1, 1, zLevel);
 			GuiHelper.drawImageQuad((width - 280) / 2 + 145, (height - 182) / 2 + 152, 100, 20, 0, 0, 1, 1, zLevel);
 
-			mc.renderEngine.func_110577_a(buttonOver);
+			mc.renderEngine.bindTexture(buttonOver);
 			if (mouseX > (width - 280) / 2 + 25 && mouseX < (width - 280) / 2 + 25 + 100 && !accepted)
 				if (mouseY > (height - 182) / 2 + 152 && mouseY < (height - 182) / 2 + 152 + 20) {
 					GuiHelper.drawImageQuad((width - 280) / 2 + 25, (height - 182) / 2 + 152, 100, 20, 0, 0, 1, 1, zLevel);
@@ -173,7 +173,7 @@ public class GuiAcceptDeny extends GuiContainer {
 	}
 
 	protected void drawEntity(EntityLivingBase entity, int par1, int par2, int par3, float par4, float par5) {
-		RenderManager.instance.renderEngine.func_110577_a(((AbstractClientPlayer) entity).func_110306_p());
+		RenderManager.instance.renderEngine.bindTexture(((AbstractClientPlayer) entity).getLocationSkin());
 		GuiHelper.drawImageQuad(par1, par2, 60, 60, 0.11f, 0.26f, 0.26f, 0.49f, this.zLevel);
 	}
 

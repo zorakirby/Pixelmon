@@ -122,7 +122,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 					if (p instanceof PlayerParticipant && p.currentPokemon() != this)
 						((PlayerParticipant) p).updateOpponentHealth((EntityPixelmon) this);
 			}
-			if (func_110143_aJ() <= 0) {
+			if (getHealth() <= 0) {
 				this.onDeath(par1DamageSource);
 			}
 

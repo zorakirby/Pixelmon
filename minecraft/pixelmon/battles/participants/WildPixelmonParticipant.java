@@ -61,7 +61,7 @@ public class WildPixelmonParticipant extends BattleParticipant {
 		else {
 			pixelmon.battleStats.clearBattleStats();
 			pixelmon.status.clear();
-			pixelmon.setEntityHealth(pixelmon.stats.HP);
+			pixelmon.setHealth(pixelmon.stats.HP);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class WildPixelmonParticipant extends BattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return pixelmon.isDead || pixelmon.isFainted || pixelmon.func_110143_aJ() <= 0;
+		return pixelmon.isDead || pixelmon.isFainted || pixelmon.getHealth() <= 0;
 	}
 
 	@Override

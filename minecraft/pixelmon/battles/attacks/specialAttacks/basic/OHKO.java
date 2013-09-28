@@ -21,7 +21,7 @@ public class OHKO extends SpecialAttackBase {
 		if (a.baseAttack.attackName.equals("Fissure") && target.hasStatus(StatusType.UnderGround))
 		{
 			if (!target.hasStatus(StatusType.Substitute)) {
-			target.doBattleDamage(user, (int)target.func_110143_aJ());
+			target.doBattleDamage(user, (int)target.getHealth());
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
 			}
 			else
@@ -43,7 +43,7 @@ public class OHKO extends SpecialAttackBase {
 		if(x < chance)
 		{
 			if (!target.hasStatus(StatusType.Substitute)) {
-				target.doBattleDamage(user, (int)target.func_110143_aJ());
+				target.doBattleDamage(user, (int)target.getHealth());
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
 			}
 			else

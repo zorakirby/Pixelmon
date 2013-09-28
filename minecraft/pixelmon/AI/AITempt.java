@@ -141,7 +141,7 @@ public class AITempt extends EntityAIBase {
         }
         else
         {
-            this.temptedEntity.getNavigator().tryMoveToEntityLiving(this.temptingPlayer, temptedEntity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e());
+            this.temptedEntity.getNavigator().tryMoveToEntityLiving(this.temptingPlayer, temptedEntity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
         }
     }
 

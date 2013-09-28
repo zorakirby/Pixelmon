@@ -15,15 +15,15 @@ public class ApplySubstitute extends StatusApplierBase {
 	public void ApplyEffect(Attack a, double crit, EntityPixelmon user,
 			EntityPixelmon target, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-			if (user.hasStatus(StatusType.Substitute) || user.func_110143_aJ() <= (user.getMaxHealth()/4))
+			if (user.hasStatus(StatusType.Substitute) || user.getHealth() <= (user.getMaxHealth()/4))
 			{
 				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "But the move failed!");
 				return;
 			}
-			int health = user.getMaxHealth()/4;
+			float health = user.getMaxHealth()/4;
 			user.doBattleDamage(user, user.getMaxHealth()/4);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " created a substitute!");
-			user.status.add(new Substitute(health));
+			user.status.add(new Substitute((int)health));
 	}
 
 }

@@ -19,11 +19,11 @@ public class Perish extends StatusBase {
 
 		if (effectTurns == 3) {
 			if (!target.isDead) {
-				target.doBattleDamage(user, (int)target.func_110143_aJ());
+				target.doBattleDamage(user, (int)target.getHealth());
 				ChatHandler.sendBattleMessage(target.getOwner(), user.getOwner(), "Perish Song struck " + target.getNickname() + "!");
 			}
 			if (!user.isDead) {
-				user.doBattleDamage(user, (int)target.func_110143_aJ());
+				user.doBattleDamage(user, (int)target.getHealth());
 				ChatHandler.sendBattleMessage(target.getOwner(), user.getOwner(), "Perish Song struck " + user.getNickname() + "!");
 			}
 		}

@@ -75,7 +75,7 @@ public class GuiPokedex extends GuiContainer {
 		mfloat = par3;
 		PokedexEntry selectedEntry = pokedex.getEntry(currentEntry);
 		RenderHelper.disableStandardItemLighting();
-		mc.renderEngine.func_110577_a(GuiResources.pokedex);
+		mc.renderEngine.bindTexture(GuiResources.pokedex);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
 		fontRenderer.drawString("Pokedex", left + 6, top + 5, 0xFFFFFF);

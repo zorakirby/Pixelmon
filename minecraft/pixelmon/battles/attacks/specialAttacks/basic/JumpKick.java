@@ -21,7 +21,7 @@ public class JumpKick extends SpecialAttackBase {
 
 	@Override
 	public void ApplyMissEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
-		user.doBattleDamage(user, (int)(user.func_110143_aJ() / 2));
+		user.doBattleDamage(user, (int)(user.getHealth() / 2));
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " kept on going and hurt itself trying to land!");
 	}
 }

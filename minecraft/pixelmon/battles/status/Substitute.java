@@ -58,7 +58,7 @@ public class Substitute extends StatusBase {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " tried to use " + attackName + ", but it failed!");
 		return true;
 	}
-	public void attackSubstitute(int damage, EntityPixelmon attacker)
+	public void attackSubstitute(float damage, EntityPixelmon attacker)
 	{
 		health -= damage;
 		

@@ -29,11 +29,11 @@ public class RenderPokeball extends Render {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glRotatef(180, 1, 0, 1);
 		if (pokeball.getIsCaptured()) {
-			func_110776_a(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getCaptureTexture()));
+			bindTexture(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getCaptureTexture()));
 		} else if (pokeball.flashRed) {
-			func_110776_a(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getFlashRedTexture()));
+			bindTexture(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getFlashRedTexture()));
 		} else {
-			func_110776_a(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getTexture()));
+			bindTexture(new ResourceLocation("pixelmon:textures/pokeballs/" + pokeball.getType().getTexture()));
 		}
 		RenderHelper.enableStandardItemLighting();
 		float factor = (float) (1.0 / 16.0);
@@ -47,7 +47,7 @@ public class RenderPokeball extends Render {
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
+	protected ResourceLocation getEntityTexture(Entity entity) {
 		return null;
 	}
 }
