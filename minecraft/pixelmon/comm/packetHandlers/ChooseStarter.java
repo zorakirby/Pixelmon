@@ -30,7 +30,7 @@ public class ChooseStarter extends PacketHandlerBase {
 			int pokemonIndex = dataStream.readInt();
 			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(StarterList.StarterList[pokemonIndex].name, player.worldObj);
 			p.getLvl().setLevel(5);
-			p.setEntityHealth(p.stats.HP);
+			p.setHealth(p.stats.HP);
 			p.loadMoveset();
 			p.caughtBall = EnumPokeballs.PokeBall;
 			p.friendship.initFromCapture();

@@ -146,7 +146,7 @@ public class PlayerStorage {
 			n.setCompoundTag("Held Item", p.getHeldItem().writeToNBT(new NBTTagCompound()));
 		}
 		partyPokemon[getNextOpen()] = n;
-		if (p.func_110143_aJ() > 0)
+		if (p.getHealth() > 0)
 			n.setBoolean("IsFainted", false);
 		if (mode == PokeballManagerMode.Player)
 			((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(new PixelmonDataPacket(n, EnumPackets.AddToStorage).getPacket());
@@ -322,7 +322,7 @@ public class PlayerStorage {
 					pixelmon.writeToNBT(nbt);
 					nbt.setString("id", pixelmon.getName());
 					nbt.setName(pixelmon.getName());
-					if (pixelmon.func_110143_aJ() <= 0)
+					if (pixelmon.getHealth() <= 0)
 						nbt.setBoolean("IsFainted", true);
 				}
 			}

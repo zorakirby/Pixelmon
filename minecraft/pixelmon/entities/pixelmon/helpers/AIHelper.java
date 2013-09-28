@@ -48,7 +48,7 @@ public class AIHelper {
 		tasks.addTask(i++, new EntityAISwimming(entity));
 		tasks.addTask(i++, new AITempt(entity, PixelmonItems.rareCandy.itemID, false));
 		tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
-		tasks.addTask(i++, new EntityAIWander(entity, entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e()));
+		tasks.addTask(i++, new EntityAIWander(entity, entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue()));
 		tasks.addTask(i++, new AIFlying(entity));
 	}
 

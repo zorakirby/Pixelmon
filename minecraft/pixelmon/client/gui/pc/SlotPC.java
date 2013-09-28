@@ -28,7 +28,7 @@ public class SlotPC {
 			pokeNum = "0" + pokemonData.getNationalPokedexNumber();
 		else
 			pokeNum = "" + pokemonData.getNationalPokedexNumber();
-		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/pixelmon/sprites/" + pokeNum));
+		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("/pixelmon/sprites/" + pokeNum));
 	}
 
 	public void clearPokemon() {

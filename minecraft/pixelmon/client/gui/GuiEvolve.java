@@ -177,7 +177,7 @@ public class GuiEvolve extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-		mc.renderEngine.func_110577_a(evo);
+		mc.renderEngine.bindTexture(evo);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if (stage != 2)
 			GuiHelper.drawImageQuad(width / 2 - 100, height / 4 - 40, 200, 40, 0, 0, 1, 1, zLevel);

@@ -95,12 +95,12 @@ public class GuiPixelmonOverlay extends Gui {
 					drawTexturedModalRect(2, var7 / 6 + i * 30 + 3 + offset, 75, 209, 28, 28);
 				}
 				if (p.isShiny)
-					mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
+					mc.renderEngine.bindTexture(GuiResources.shinySprite(numString));
 				else
-					mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
+					mc.renderEngine.bindTexture(GuiResources.sprite(numString));
 				drawImageQuad(3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItemId != -1) {
-					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
+					Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.heldItem);
 					drawImageQuad(18, var7 / 6 + i * 30 + 19 + offset, 6, 6, 0f, 0f, 1f, 1f);
 				}
 				if (!isGuiMinimized) {
@@ -131,9 +131,9 @@ public class GuiPixelmonOverlay extends Gui {
 
 	private void bindOverlayTexture() {
 		if (isGuiMinimized)
-			Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.overlaySimple);
+			Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.overlaySimple);
 		else
-			Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.overlayExtended);
+			Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.overlayExtended);
 	}
 
 	public boolean checkEntitysInWorld(World world) {

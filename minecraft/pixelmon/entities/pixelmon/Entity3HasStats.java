@@ -96,9 +96,9 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 				level.setLevel(spawnLevel);
 			else
 				level.setLevel(spawnLevel + rand.nextInt(spawnLevelRange));
-			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
-			this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.65);
-			setEntityHealth(stats.HP);
+			getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(stats.HP);
+			getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.65);
+			setHealth(stats.HP);
 		}
 	}
 
@@ -218,39 +218,32 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		return true;
 	}
 
-	public int getMaxHealth() {
-		if (isInitialised)
-			return dataWatcher.getWatchableObjectShort(EntityPixelmon.dwMaxHP);
-		else
-			return 10;
-	}
-
 	@Override
-	public void setEntityHealth(float par1) {
-		super.setEntityHealth(par1);
+	public void setHealth(float par1) {
+		super.setHealth(par1);
 		updateHealth();
 	}
 
 	public void healEntityBy(int i) {
-		setEntityHealth(func_110143_aJ() + i);
+		setHealth(getHealth() + i);
 	}
 
 	public void updateHealth() {
 		if (stats != null) {
-			if (func_110143_aJ() > this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e())
-				setEntityHealth((float) this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e());
+			if (getHealth() > getMaxHealth())
+				setHealth(getMaxHealth());
 		}
-		if (func_110143_aJ() < 0)
-			setEntityHealth(0);
+		if (getHealth() < 0)
+			setHealth(0);
 		if (getOwner() != null && !worldObj.isRemote)
 			update(EnumUpdateType.HP);
 	}
 
-	public void setScale(float scale) {
+	public void setPixelmonScale(float scale) {
 		dataWatcher.updateObject(EntityPixelmon.dwScale, (short) (scale * 1000));
 	}
 
-	public float getScale() {
+	public float getPixelmonScale() {
 		return ((float) dataWatcher.getWatchableObjectShort(EntityPixelmon.dwScale)) / 1000.0f;
 	}
 
@@ -262,7 +255,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		float scale = 1;
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
 		if (isInitialised)
-			scale = getScale() * scaleFactor * getScaleFactor();
+			scale = getPixelmonScale() * scaleFactor * getScaleFactor();
 		float halfWidth = this.width * scale / 2.0F;
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
@@ -277,7 +270,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void updateStats() {
 		stats.setLevelStats(getNature(), baseStats, level.getLevel());
 		dataWatcher.updateObject(EntityPixelmon.dwMaxHP, (short) stats.HP);
-		this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(stats.HP);
 		updateHealth();
 	}
 

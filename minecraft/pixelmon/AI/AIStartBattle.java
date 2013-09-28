@@ -61,7 +61,7 @@ public class AIStartBattle extends EntityAIBase {
 				return false;
 			if (target.battleController != null)
 				return false;
-			if (target.func_110143_aJ() <= 0 || target.isFainted || target.isDead)
+			if (target.getHealth() <= 0 || target.isFainted || target.isDead)
 				return false;
 			if (target.getOwner() != null)
 				return false;

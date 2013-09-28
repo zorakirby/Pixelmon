@@ -61,7 +61,7 @@ public class TileEntityApricornTree extends TileEntity {
 		timeLastWatered = worldserver.getTotalWorldTime();
 
 		Packet132TileEntityData packet = (Packet132TileEntityData) this.getDescriptionPacket();
-		NBTTagCompound nbt = packet.customParam1;
+		NBTTagCompound nbt = packet.data;
 
 		nbt.setLong("TimeLastWatered", timeLastWatered);
 		this.writeToNBT(nbt);

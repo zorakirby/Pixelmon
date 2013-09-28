@@ -19,14 +19,14 @@ public class Bide extends MultiTurnSpecialAttackBase {
 		decrementTurnCount(user);
 		if (getTurnCount(user) == 2) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " bided its time!");
-			user.battleVariables.set("bidehealth", (int)user.func_110143_aJ());
+			user.battleVariables.set("bidehealth", (int)user.getHealth());
 		}
 		if (getTurnCount(user) == 1) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is storing energy!");
 		}
 
 		if (getTurnCount(user) == 0) {
-			endHealth = user.func_110143_aJ();
+			endHealth = user.getHealth();
 			setPersists(user, false);
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " unleashed its energy!");
 			target.doBattleDamage(user, (int)((user.battleVariables.get("bidehealth") - endHealth) * 2));

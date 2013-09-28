@@ -15,7 +15,7 @@ public class Eruption extends SpecialAttackBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-		a.movePower = (int)(150 * (user.func_110143_aJ() / user.getMaxHealth()));
+		a.movePower = (int)(150 * (user.getHealth() / user.getMaxHealth()));
 		return false;
 	}
 

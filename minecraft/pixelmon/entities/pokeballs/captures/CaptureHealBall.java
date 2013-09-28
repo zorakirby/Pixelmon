@@ -18,6 +18,6 @@ public class CaptureHealBall extends CaptureBase {
 
 	@Override
 	public void doAfterEffect(EnumPokeballs type, EntityPixelmon p) {
-		p.setEntityHealth(p.getMaxHealth());
+		p.setHealth(p.getMaxHealth());
 	}
 }

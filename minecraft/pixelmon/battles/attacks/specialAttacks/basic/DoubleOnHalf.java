@@ -15,7 +15,7 @@ public class DoubleOnHalf extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-			if (target.func_110143_aJ() < target.getMaxHealth()/2)
+			if (target.getHealth() < target.getMaxHealth()/2)
 				a.movePower *= 2;
 		return false;
 	}

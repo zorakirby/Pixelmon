@@ -38,19 +38,19 @@ public class ItemPixelmonBoots extends ItemArmor {
 	}
 
 	private static UUID runningShoesUUID = UUID.fromString("B7060ADF-8FAF-4C0F-B816-87CB5721979F");
-	private static AttributeModifier oldRunningShoesModifier = new AttributeModifier(runningShoesUUID, SharedMonsterAttributes.field_111263_d.func_111108_a(),
+	private static AttributeModifier oldRunningShoesModifier = new AttributeModifier(runningShoesUUID, SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(),
 			0.5, 1);
-	private static AttributeModifier newRunningShoesModifier = new AttributeModifier(runningShoesUUID, SharedMonsterAttributes.field_111263_d.func_111108_a(),
+	private static AttributeModifier newRunningShoesModifier = new AttributeModifier(runningShoesUUID, SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(),
 			0.75, 1);
 
 	@Override
-	public Multimap func_111205_h() {
+	public Multimap getItemAttributeModifiers() {
 		Multimap o = HashMultimap.create();
 		if (itemHeld == false) {
 			if (this.itemID == PixelmonItems.oldRunningShoes.itemID) {
-				o.put(SharedMonsterAttributes.field_111263_d.func_111108_a(), oldRunningShoesModifier);
+				o.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(), oldRunningShoesModifier);
 			} else if (this.itemID == PixelmonItems.newRunningShoes.itemID) {
-				o.put(SharedMonsterAttributes.field_111263_d.func_111108_a(), newRunningShoesModifier);
+				o.put(SharedMonsterAttributes.movementSpeed.getAttributeUnlocalizedName(), newRunningShoesModifier);
 			}
 		} else {
 			HashMultimap.create();
@@ -61,7 +61,7 @@ public class ItemPixelmonBoots extends ItemArmor {
 	@Override
 	public void onArmorTickUpdate(World world, EntityPlayer player, ItemStack itemStack) {
 		ItemStack boots = player.getCurrentItemOrArmor(1);
-		AttributeInstance attributeinstance = player.func_110148_a(SharedMonsterAttributes.field_111263_d);
+		AttributeInstance attributeinstance = player.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
 		world = player.worldObj;
 		if (player.getHeldItem() != null) {
 			if (player.getHeldItem().getItem().itemID == PixelmonItems.oldRunningShoes.itemID && boots.getItem() != PixelmonItems.oldRunningShoes) {

@@ -26,7 +26,7 @@ public class DoSetDamage extends SpecialAttackBase {
 			target.doBattleDamage(user, damage);
 		
 		if(name.contains("super fang"))
-			target.doBattleDamage(user, (int)(target.func_110143_aJ()/2));
+			target.doBattleDamage(user, (int)(target.getHealth()/2));
 			
 		
 		return true;

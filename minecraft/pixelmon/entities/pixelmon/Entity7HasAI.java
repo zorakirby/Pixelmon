@@ -145,7 +145,7 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 		}
 	}
 	
-	public void doBattleDamage(EntityPixelmon source, int damage)
+	public void doBattleDamage(EntityPixelmon source, float damage)
 	{
 		if (((EntityPixelmon)this).hasStatus(StatusType.Substitute))
 			if(source != (EntityPixelmon)this)

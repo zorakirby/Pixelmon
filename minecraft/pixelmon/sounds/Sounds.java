@@ -34,7 +34,7 @@ public class Sounds {
 	public static void installPokemonSounds(EnumPokemon p, AbstractResourcePack resourcePack) {
 		boolean hasMaleFemale = false;
 		BaseStats baseStats = Entity3HasStats.getBaseStats(p.name);
-		if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + "M" + ".ogg"))) {
+		if (resourcePack.resourceExists(new ResourceLocation("pixelmon:sound/pixelmon/" + p.name.toLowerCase() + "M" + ".ogg"))) {
 			hasMaleFemale = true;
 		}
 		if (!hasMaleFemale) {
@@ -56,7 +56,7 @@ public class Sounds {
 	}
 
 	private static boolean addPokemonSound(EnumPokemon p, String nameString, AbstractResourcePack resourcePack, BaseStats baseStats) {
-		if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:sound/pixelmon/" + nameString + ".ogg"))) {
+		if (resourcePack.resourceExists(new ResourceLocation("pixelmon:sound/pixelmon/" + nameString + ".ogg"))) {
 			Minecraft.getMinecraft().sndManager.addSound("pixelmon:pixelmon/" + nameString + ".ogg");
 			baseStats.numSounds++;
 			return true;

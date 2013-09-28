@@ -46,7 +46,7 @@ public class EntityTrainer extends EntityNPC {
 		dataWatcher.addObject(25, (int) 0);
 		tasks.addTask(0, new EntityAISwimming(this));
 		tasks.addTask(1, new AITrainerInBattle(this));
-		tasks.addTask(2, new EntityAIWander(this, SharedMonsterAttributes.field_111263_d.func_111110_b()));
+		tasks.addTask(2, new EntityAIWander(this, SharedMonsterAttributes.movementSpeed.getDefaultValue()));
 	}
 
 	public void init(String name) {
@@ -98,7 +98,7 @@ public class EntityTrainer extends EntityNPC {
 			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(pokemonName, worldObj);
 			if (p != null) {
 				p.getLvl().setLevel((new Random()).nextInt(3) - 1 + info.level);
-				p.setEntityHealth(p.stats.HP);
+				p.setHealth(p.stats.HP);
 				p.setTrainer(this);
 				pokemonStorage.addToParty(p);
 			}

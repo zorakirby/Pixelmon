@@ -112,7 +112,7 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.func_110143_aJ() <= 0;
+		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.getHealth() <= 0;
 	}
 
 	@Override
@@ -138,9 +138,9 @@ public class PlayerParticipant extends BattleParticipant {
 			}
 		}
 		if(currentPixelmon.heldItem != null)
-		if(currentPixelmon.heldItem.getItemName() == "choiceband"||
-		   currentPixelmon.heldItem.getItemName() == "choicescarf"||
-		   currentPixelmon.heldItem.getItemName() == "choicespecs")
+		if(currentPixelmon.heldItem.getItem().getItemDisplayName(currentPixelmon.heldItem) == "choiceband"||
+		   currentPixelmon.heldItem.getItem().getItemDisplayName(currentPixelmon.heldItem) == "choicescarf"||
+		   currentPixelmon.heldItem.getItem().getItemDisplayName(currentPixelmon.heldItem) == "choicespecs")
 		currentPixelmon.mustUseLastMove = true;
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, canSwitch ? 1 : 0));
 		wait = true;
@@ -207,7 +207,7 @@ public class PlayerParticipant extends BattleParticipant {
 	public void updateOpponentHealth(EntityPixelmon pixelmon) {
 		PixelmonDataPacket p = new PixelmonDataPacket(pixelmon, EnumPackets.SetOpponent);
 		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
-		if (this.opponent.currentPokemon().isDead || this.opponent.currentPokemon().isFainted || this.opponent.currentPokemon().func_110143_aJ() <= 0) {
+		if (this.opponent.currentPokemon().isDead || this.opponent.currentPokemon().isFainted || this.opponent.currentPokemon().getHealth() <= 0) {
 			GivePlayerExp();
 		}
 	}

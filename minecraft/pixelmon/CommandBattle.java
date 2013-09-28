@@ -55,21 +55,21 @@ public class CommandBattle extends CommandBase {
     {
         if (par2ArrayOfStr.length != 2)
         {
-        	par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Arguments."));
-			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d(this.getCommandUsage(par1ICommandSender)));
+        	par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Invalid Arguments."));
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(this.getCommandUsage(par1ICommandSender)));
 			return;
         }
 
         notifyAdmins(par1ICommandSender, 1, "Battle between " + par2ArrayOfStr[0] + " and " + par2ArrayOfStr[1] + " attempted...", new Object[] {par2ArrayOfStr[0], par2ArrayOfStr[1]});
 
-        EntityPlayerMP entityplayermp1 = func_82359_c(par1ICommandSender, par2ArrayOfStr[0]);
+        EntityPlayerMP entityplayermp1 = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
 
         if (entityplayermp1 == null)
         {
         	throw new PlayerNotFoundException();
         }
            
-        EntityPlayerMP entityplayermp2 = func_82359_c(par1ICommandSender, par2ArrayOfStr[1]);
+        EntityPlayerMP entityplayermp2 = getPlayer(par1ICommandSender, par2ArrayOfStr[1]);
 
         if (entityplayermp2 == null)
         {
@@ -83,12 +83,12 @@ public class CommandBattle extends CommandBase {
         }
 
 		if (BattleRegistry.getBattle(entityplayermp1) != null) {
-			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Cannot challenge " + par2ArrayOfStr[0] + " while they are in battle!"));
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Cannot challenge " + par2ArrayOfStr[0] + " while they are in battle!"));
 			return;
 		}
 
 		if (BattleRegistry.getBattle(entityplayermp2) != null) {
-			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Cannot challenge " + par2ArrayOfStr[1] + " while they are in battle!"));
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Cannot challenge " + par2ArrayOfStr[1] + " while they are in battle!"));
 			return;
 		}        	
         

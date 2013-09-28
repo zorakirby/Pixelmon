@@ -54,12 +54,12 @@ public abstract class Entity4Textures extends Entity3HasStats {
 			if (resourcePack ==null) resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
 			if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1 && !checkedForRoastedTexture || hasRoastedTexture) {
 				if (!checkedForRoastedTexture) {
-					if (resourcePack.func_110589_b(new ResourceLocation("pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png")))
+					if (resourcePack.resourceExists(new ResourceLocation("pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png")))
 						hasRoastedTexture = true;
 					checkedForRoastedTexture = true;
 				}
 			}
-			if (getIsShiny() && resourcePack.func_110589_b(new ResourceLocation("pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png")))
+			if (getIsShiny() && resourcePack.resourceExists(new ResourceLocation("pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png")))
 				return "pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
 			else if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1 && hasRoastedTexture) {
 				return "pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";

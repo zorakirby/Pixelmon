@@ -84,7 +84,7 @@ public class GuiRenameButtons extends GuiButton
         if (this.drawButton)
         {
             FontRenderer var4 = par1Minecraft.fontRenderer;
-            par1Minecraft.renderEngine.func_110577_a(GuiResources.rename);
+            par1Minecraft.renderEngine.bindTexture(GuiResources.rename);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
             int var5 = this.getHoverState(this.field_82253_i);

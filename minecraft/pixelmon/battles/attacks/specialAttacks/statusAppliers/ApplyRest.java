@@ -13,7 +13,7 @@ public class ApplyRest extends StatusApplierBase {
 
 	@Override
 	public void ApplyEffect(Attack attack, double crit, EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
-		if (user.func_110143_aJ() == user.getMaxHealth())
+		if (user.getHealth() == user.getMaxHealth())
 		{
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The move failed");
 			return;

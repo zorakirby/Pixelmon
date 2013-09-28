@@ -3,6 +3,6 @@ Pixelmon
 
 The full repository for pixelmon.
 
-Minecraft 1.6.2
+Minecraft 1.6.4
 
-Currently using Forge v9.10.0.842
+Currently using Forge v9.11.0.898

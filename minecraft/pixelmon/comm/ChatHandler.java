@@ -9,14 +9,14 @@ public class ChatHandler {
 
 	public static void sendChat(Entity entityLiving, String string) {
 		if (entityLiving != null)
-			((EntityPlayerMP) entityLiving).sendChatToPlayer(ChatMessageComponent.func_111066_d(string));
+			((EntityPlayerMP) entityLiving).sendChatToPlayer(ChatMessageComponent.createFromText(string));
 	}
 
 	public static void sendChat(Entity owner, Entity owner2, String string) {
 		if (owner != null)
-			((EntityPlayerMP) owner).sendChatToPlayer(ChatMessageComponent.func_111066_d(string));
+			((EntityPlayerMP) owner).sendChatToPlayer(ChatMessageComponent.createFromText(string));
 		if (owner2 != null)
-			((EntityPlayerMP) owner2).sendChatToPlayer(ChatMessageComponent.func_111066_d(string));
+			((EntityPlayerMP) owner2).sendChatToPlayer(ChatMessageComponent.createFromText(string));
 
 	}
 

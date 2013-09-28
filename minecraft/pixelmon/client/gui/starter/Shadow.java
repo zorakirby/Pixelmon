@@ -58,7 +58,7 @@ public class Shadow {
 	}
 
 	public void draw(Minecraft mc, int screenWidth, int screenHeight) {
-		mc.renderEngine.func_110577_a(shadow);
+		mc.renderEngine.bindTexture(shadow);
 		float totWidth = screenWidth + shadowType.width * 2;
 		float x = totWidth * position - shadowType.width;
 		float totHeight = screenHeight - 50;

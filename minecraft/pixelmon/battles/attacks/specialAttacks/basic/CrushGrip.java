@@ -15,7 +15,7 @@ public class CrushGrip extends SpecialAttackBase{
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		// TODO Auto-generated method stub
-		float variable =  120 * (target.func_110143_aJ() / target.getMaxHealth());
-		a.movePower = (int) (120 * (target.func_110143_aJ()/target.getMaxHealth()));
+		float variable =  120 * (target.getHealth() / target.getMaxHealth());
+		a.movePower = (int) (120 * (target.getHealth()/target.getMaxHealth()));
 		return false;}
 }

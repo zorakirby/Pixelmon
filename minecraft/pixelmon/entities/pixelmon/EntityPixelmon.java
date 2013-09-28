@@ -87,7 +87,7 @@ public class EntityPixelmon extends Entity9HasSounds {
 			super.onDeath(damagesource);
 			if (getOwner() != null) {
 				isFainted = true;
-				setEntityHealth(0);
+				setHealth(0);
 				catchInPokeball();
 			} else {
 				this.setDead();
@@ -272,9 +272,9 @@ public class EntityPixelmon extends Entity9HasSounds {
 				setDead();
 				return;
 			}
-		float h = func_110143_aJ();
+		float h = getHealth();
 		level.readFromNBT(nbt);
-		setEntityHealth(h);
+		setHealth(h);
 
 		if (nbt.hasKey("pixelmonType"))
 			pokemonLocation = SpawnLocation.getFromIndex(nbt.getInteger("pixelmonType"));

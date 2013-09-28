@@ -18,7 +18,7 @@ public class BellyDrum extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-			if (user.func_110143_aJ() > user.getMaxHealth()/2)
+			if (user.getHealth() > user.getMaxHealth()/2)
 			{
 			user.doBattleDamage(user, user.getMaxHealth()/2);
 			while (user.battleStats.getAttackModifier() < 6)

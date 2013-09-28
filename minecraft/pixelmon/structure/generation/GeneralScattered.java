@@ -77,4 +77,16 @@ public class GeneralScattered extends StructureScattered {
 		return addComponentParts(world, random, boundingBox);
 	}
 
+	@Override
+	protected void func_143012_a(NBTTagCompound nbttagcompound) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void func_143011_b(NBTTagCompound nbttagcompound) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

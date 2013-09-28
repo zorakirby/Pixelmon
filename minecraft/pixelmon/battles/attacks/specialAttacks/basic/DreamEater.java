@@ -39,8 +39,8 @@ public class DreamEater extends SpecialAttackBase {
 				restoration = a.doDamageCalc(user, target, crit)/2;
 			}
 		
-			if(restoration >= target.func_110143_aJ()){
-				restoration = target.func_110143_aJ()/2;
+			if(restoration >= target.getHealth()){
+				restoration = target.getHealth()/2;
 			}
 		
 		

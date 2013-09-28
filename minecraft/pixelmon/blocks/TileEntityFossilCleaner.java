@@ -80,7 +80,7 @@ public class TileEntityFossilCleaner extends TileEntity {
 
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		readFromNBT(pkt.customParam1);
+		readFromNBT(pkt.data);
 	}
 
 	public void setItemInCleaner(int itemID) {

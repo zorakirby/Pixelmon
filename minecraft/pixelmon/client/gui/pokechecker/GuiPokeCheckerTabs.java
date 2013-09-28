@@ -94,11 +94,11 @@ public class GuiPokeCheckerTabs extends GuiButton {
 		if (this.drawButton) {
 			FontRenderer fontRenderer = par1Minecraft.fontRenderer;
 			if (this.tabType <= 4 || this.tabType == 7)
-				par1Minecraft.renderEngine.func_110577_a(GuiResources.summarySummary);
+				par1Minecraft.renderEngine.bindTexture(GuiResources.summarySummary);
 			else if (this.tabType == 5)
-				par1Minecraft.renderEngine.func_110577_a(GuiResources.yesNo);
+				par1Minecraft.renderEngine.bindTexture(GuiResources.yesNo);
 			else if (this.tabType == 6)
-				par1Minecraft.renderEngine.func_110577_a(GuiResources.pokecheckerPopup);
+				par1Minecraft.renderEngine.bindTexture(GuiResources.pokecheckerPopup);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
 			int var5 = this.getHoverState(this.field_82253_i);

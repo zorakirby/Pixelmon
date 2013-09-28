@@ -42,7 +42,7 @@ public class RenderTileEntityHealer extends TileEntitySpecialRenderer {
 			j = 270;
 		}
 
-		func_110628_a(RenderResources.healer); // texture
+		bindTexture(RenderResources.healer); // texture
 		GL11.glPushMatrix(); // start
 		GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F); // size
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F); // rotate based on metadata
@@ -93,13 +93,13 @@ public class RenderTileEntityHealer extends TileEntitySpecialRenderer {
 	
 		if (tile.allPlaced) {
 			if (tile.flashTimer < 10 || tile.stayDark)
-				func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getCaptureTexture()));
+				bindTexture(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getCaptureTexture()));
 			else
-				func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getTexture()));
+				bindTexture(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getTexture()));
 			if (tile.flashTimer >= 20)
 				tile.flashTimer = 0;
 		} else {
-			func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getTexture()));
+			bindTexture(new ResourceLocation("pixelmon:textures/pokeballs/" + tile.pokeballType[k].getTexture()));
 		}
 		RenderHelper.enableStandardItemLighting();
 		GL11.glScalef(0.8F, 0.8F, 0.8F);

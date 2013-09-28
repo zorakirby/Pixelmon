@@ -41,7 +41,7 @@ public class ItemStatusAilmentHealer extends PixelmonItem {
 			userPokemon.removeStatus(s);
 		}
 		if (this.type.healsHP()) {
-			userPokemon.setEntityHealth(userPokemon.stats.HP);
+			userPokemon.setHealth(userPokemon.stats.HP);
 		}
 	}
 

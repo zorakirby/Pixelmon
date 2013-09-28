@@ -65,15 +65,15 @@ public class CommandHeal extends CommandBase {
 				return;
 			} else {
 				EntityPlayer entityplayer;
-				entityplayer = func_82359_c(par1ICommandSender, par2ArrayOfStr[0]);
+				entityplayer = getPlayer(par1ICommandSender, par2ArrayOfStr[0]);
 
 				if (!(entityplayer instanceof EntityPlayer)) {
-					par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d(par2ArrayOfStr[0] + " is not a valid playername"));
+					par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText(par2ArrayOfStr[0] + " is not a valid playername"));
 					return;
 				}
 
 				if (BattleRegistry.getBattle(entityplayer) != null) {
-					par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Cannot heal " + par2ArrayOfStr[0]
+					par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Cannot heal " + par2ArrayOfStr[0]
 							+ "'s Pokemon while they are in battle!"));
 					return;
 				}
@@ -84,17 +84,17 @@ public class CommandHeal extends CommandBase {
 						new Object[] { par2ArrayOfStr[0] });
 
 				if (par2ArrayOfStr[0].contains("@")) {
-					par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Pokemon successfully healed!"));
+					par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Pokemon successfully healed!"));
 				} else {
-					par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Successfully healed " + par2ArrayOfStr[0] + "'s Pokemon!"));
+					par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Successfully healed " + par2ArrayOfStr[0] + "'s Pokemon!"));
 				}
 				return;
 			}
 		} catch (PlayerNotFoundException e) {
 			// Catches the case where in cracked clients player's name defaults is "ASH"
-			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Name! Try again."));
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Invalid Name! Try again."));
 		} catch (Exception e) {
-			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.func_111066_d("Invalid Name! Try again."));
+			par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Invalid Name! Try again."));
 		}
 	}
 

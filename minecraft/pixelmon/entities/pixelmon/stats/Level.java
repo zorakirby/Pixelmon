@@ -63,17 +63,17 @@ public class Level {
 		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwLevel, (short) i);
 		setScale();
 		expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
-		if (pixelmon.func_110143_aJ() == pixelmon.stats.HP) {
+		if (pixelmon.getHealth() == pixelmon.stats.HP) {
 			updateStats();
-			pixelmon.setEntityHealth(pixelmon.stats.HP);
+			pixelmon.setHealth(pixelmon.stats.HP);
 		} else {
 			float oldHp = pixelmon.stats.HP;
-			float oldHealth = pixelmon.func_110143_aJ();
+			float oldHealth = pixelmon.getHealth();
 			updateStats();
 			float newHealth = pixelmon.stats.HP;
 			if (oldHp != 0)
 				newHealth = oldHealth / oldHp * pixelmon.stats.HP;
-			pixelmon.setEntityHealth((int) Math.ceil(newHealth));
+			pixelmon.setHealth((int) Math.ceil(newHealth));
 		}
 	}
 
@@ -125,8 +125,8 @@ public class Level {
 		float oldHp = pixelmon.stats.HP;
 		updateStats();
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
-		float newHealth = pixelmon.func_110143_aJ() * percentGain;
-		pixelmon.setEntityHealth((int) Math.ceil(newHealth));
+		float newHealth = pixelmon.getHealth() * percentGain;
+		pixelmon.setHealth((int) Math.ceil(newHealth));
 		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP) {
 			PixelmonStatsPacket stats2 = PixelmonStatsPacket.createPacket(pixelmon);
 			PixelmonLevelUpPacket p = new PixelmonLevelUpPacket(pixelmon, getLevel(), stats, stats2, EnumPackets.LevelUp);
@@ -234,7 +234,7 @@ public class Level {
 		percent = 0.8f + 0.4f * (getLevel()) / (100);
 		if (percent > pixelmon.maxScale)
 			percent = pixelmon.maxScale;
-		pixelmon.setScale(percent);
+		pixelmon.setPixelmonScale(percent);
 	}
 
 	public void recalculateXP() {
