@@ -45,8 +45,10 @@ public class RenderPixelmon extends RenderLiving {
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
 		if (!pixelmon.isInitialised)
 			pixelmon.init(pixelmon.getName());
-		if (pixelmon.getModel() != null)
+		if (pixelmon.getModel() != null){
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
+			this.func_110827_b(pixelmon, d, d1, d2, f, f1);
+		}
 		if (pixelmon.evolving != 0)
 			return;
 		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
@@ -134,7 +136,7 @@ public class RenderPixelmon extends RenderLiving {
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 			GL11.glScalef(-1.0F, -1.0F, 1.0F);
 			this.preRenderCallback(pixelmon, par9);
-			GL11.glTranslatef(0.0F, -24.0F * f5 - 0.0078125F, 0.0F);
+            GL11.glTranslatef(0.0F, -24.0F * f6 - 0.0078125F, 0.0F);
 			float f7 = pixelmon.prevLimbSwingAmount + (pixelmon.limbSwingAmount - pixelmon.prevLimbSwingAmount) * par9;
 			float f8 = pixelmon.limbSwing - pixelmon.limbSwingAmount * (1.0F - par9);
 
