@@ -26,7 +26,7 @@ public class ModelPidgey extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, -2.5F, 0);
+		Body.setRotationPoint(0, 22.5F, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/Body.obj")));
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
