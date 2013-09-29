@@ -42,6 +42,8 @@ public enum EnumPokemon {
 	Dragonair("Dragonair"),
 	Dragonite("Dragonite"),
 	Dratini("Dratini"),
+	Drifblim("Drifblim"),
+	Drifloon("Drifloon"),
 	Drowzee("Drowzee"),
 	Dugtrio("Dugtrio"),
 	Eevee("Eevee"),

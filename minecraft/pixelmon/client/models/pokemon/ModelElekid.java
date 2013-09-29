@@ -18,25 +18,35 @@ import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
-public class ModelPidgey extends PixelmonModelBase {
+public class ModelElekid extends PixelmonModelBase {
 
-	PixelmonModelRenderer Body, Lleg, RLeg;
+	PixelmonModelRenderer Body, Larm, Rarm, Lleg, RLeg, tail;
 
-	public ModelPidgey() {
+	public ModelElekid() {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 22.5F, 0);
-		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/Body.obj")));
+		Body.setRotationPoint(0, 24, 0);
+		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/elekid/Body.obj")));
+
+		Larm = new PixelmonModelRenderer(this, 0, 0);
+		Larm.setRotationPoint(1.2F, 2.319F, 0.05F);
+		Larm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/elekid/LeftArm.obj")));
+
+		Rarm = new PixelmonModelRenderer(this, 0, 0);
+		Rarm.setRotationPoint(-0.87F, 2.319F, 0.05F);
+		Rarm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/elekid/RightArm.obj")));
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
-		Lleg.setRotationPoint(0.75F, -0.8F, 1F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/LeftLeg.obj")));
+		Lleg.setRotationPoint(0.613F, 1.07F, 0);
+		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/elekid/LeftLeg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
-		RLeg.setRotationPoint(-0.75F, -0.8F, 1F);
-		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/RightLeg.obj")));
+		RLeg.setRotationPoint(-0.299F, 1.07F, 0);
+		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/elekid/RightLeg.obj")));
 
+		Body.addChild(Larm);
+		Body.addChild(Rarm);
 		Body.addChild(Lleg);
 		Body.addChild(RLeg);
 
@@ -47,10 +57,12 @@ public class ModelPidgey extends PixelmonModelBase {
 		float legspeed = 0.5F;
 		float legRotationLimit = 0.8F;
 
+		ModuleArm leftArm = new ModuleArm(Larm, EnumArm.Left, 0.3F, 0.8F, legspeed);
+		ModuleArm rightArm = new ModuleArm(Rarm, EnumArm.Right, 0.3F, 0.8F, legspeed);
 		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
 
-		skeleton = new SkeletonBiped(Body, null, null, null, leftLeg, rightLeg, null);
+		skeleton = new SkeletonBiped(Body, null, leftArm, rightArm, leftLeg, rightLeg, null);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
