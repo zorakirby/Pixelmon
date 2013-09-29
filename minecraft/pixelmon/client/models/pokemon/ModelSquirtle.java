@@ -32,7 +32,7 @@ public class ModelSquirtle extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 24, 0);
+		Body.setRotationPoint(0, 0, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/squirtle/Body.obj")));
 		
 		head = new PixelmonModelRenderer(this, 0, 0);

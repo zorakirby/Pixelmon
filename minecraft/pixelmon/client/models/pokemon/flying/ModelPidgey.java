@@ -1,7 +1,8 @@
-package pixelmon.client.models.pokemon;
+package pixelmon.client.models.pokemon.flying;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import pixelmon.client.models.ModelOBJWrapper;
@@ -17,28 +18,31 @@ import pixelmon.client.models.animations.ModuleTail;
 import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
+import pixelmon.client.models.animations.bird.EnumWing;
+import pixelmon.client.models.animations.bird.ModuleWing;
+import pixelmon.client.models.animations.bird.SkeletonBird;
 
 public class ModelPidgey extends PixelmonModelBase {
 
-	PixelmonModelRenderer Body, Lleg, RLeg;
+	PixelmonModelRenderer Body, LWing, RWing;
 
 	public ModelPidgey() {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, -2.5F, 0);
-		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/Body.obj")));
+		Body.setRotationPoint(0, -4, 0);
+		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/flying/Body.obj")));
 
-		Lleg = new PixelmonModelRenderer(this, 0, 0);
-		Lleg.setRotationPoint(0.75F, -0.8F, 1F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/LeftLeg.obj")));
+		LWing = new PixelmonModelRenderer(this, 0, 0);
+		LWing.setRotationPoint(0.05F, 0.4F, 0.5F);
+		LWing.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/flying/LeftWing.obj")));
 
-		RLeg = new PixelmonModelRenderer(this, 0, 0);
-		RLeg.setRotationPoint(-0.75F, -0.8F, 1F);
-		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/RightLeg.obj")));
+		RWing = new PixelmonModelRenderer(this, 0, 0);
+		RWing.setRotationPoint(-.05F, 0.4F, 0.5F);
+		RWing.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pidgey/flying/RightWing.obj")));
 
-		Body.addChild(Lleg);
-		Body.addChild(RLeg);
+		Body.addChild(LWing);
+		Body.addChild(RWing);
 
 		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
@@ -47,14 +51,15 @@ public class ModelPidgey extends PixelmonModelBase {
 		float legspeed = 0.5F;
 		float legRotationLimit = 0.8F;
 
-		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legspeed);
-		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleWing leftWingModule = new ModuleWing(LWing, EnumWing.Left, 35, 0.25F, 1.0F);
+		ModuleWing rightWingModule = new ModuleWing(RWing, EnumWing.Right, 35, 0.25F, 1.0F);
 
-		skeleton = new SkeletonBiped(Body, null, null, null, leftLeg, rightLeg, null);
+		skeleton = new SkeletonBird(Body, null, leftWingModule, rightWingModule, null, null);
+
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		super.render(entity, f, f1, f2, f3, f4, f5);
+	//	super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
@@ -66,5 +71,8 @@ public class ModelPidgey extends PixelmonModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
+    	LWing.rotateAngleY = MathHelper.cos(f2 + 3.14159F) * .8F - 37F;
+		RWing.rotateAngleY = MathHelper.cos(f2) * .8F + 37F;
+
 	}
 }

@@ -32,7 +32,7 @@ public class ModelWartortle extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 24, 0);
+		Body.setRotationPoint(0, 0, 0);
 		Body.addOBJModel(new ModelOBJWrapper(
 				AdvancedModelLoader
 						.loadModel("/pixelmon/client/models/objFiles/wartortle/Body.obj")));
