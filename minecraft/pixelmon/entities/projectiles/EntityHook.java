@@ -527,8 +527,8 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
 		if (spawns != null)
 			for (SpawnData pixelmon : spawns) {
 				if (spawns != null) {
-					if (pixelmon.rarity >= rarityThreshold) {
-						pixelmonRarity.put(pixelmon.name, pixelmon.rarity);
+					if (pixelmon.rarity.day >= rarityThreshold) {
+						pixelmonRarity.put(pixelmon.name, pixelmon.rarity.day);
 					}
 				}
 			}

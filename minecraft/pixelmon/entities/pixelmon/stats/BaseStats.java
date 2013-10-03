@@ -1,6 +1,7 @@
 package pixelmon.entities.pixelmon.stats;
 
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.biome.BiomeGenBase;
 import pixelmon.database.ExperienceGroup;
 import pixelmon.database.SpawnConditions;
 import pixelmon.database.SpawnLocation;
@@ -20,7 +21,7 @@ public class BaseStats {
 	public int evolveLevel, catchRate, malePercent, nationalPokedexNumber;
 	public int spawnLevel, spawnLevelRange;
 	public int baseExp, baseFriendship;
-	public int rarity;
+	public Rarity rarity;
 
 	public EnumType type1;
 
@@ -40,17 +41,22 @@ public class BaseStats {
 	public String droppedItem;
 
 	public SwimmingParameters swimmingParameters;
+
 	public SpawnConditions[] spawnConditions;
+	public SpawnLocation[] spawnLocations;
+	public BiomeGenBase[] biomes;
 
 	public EVsStore evGain;
 	public boolean canSurf;
 	public boolean canSurfSet;
-	public float ridingOffsetX = 0, ridingOffsetY = 0, ridingOffsetZ = 0;
+	public RidingOffsets ridingOffsets;
+	
 	public int maxGroupSize;
-	public SpawnLocation[] spawnLocations;
 	public int minGroupSize;
 	public float hoverHeight = 0;
 	public boolean doesHover = false;
+	public int id;
+	public float weight;
 
 	public int get(StatsType stat) {
 		if (stat == StatsType.Attack)

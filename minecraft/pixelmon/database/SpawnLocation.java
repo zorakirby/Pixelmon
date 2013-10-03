@@ -1,5 +1,7 @@
 package pixelmon.database;
 
+import java.util.ArrayList;
+
 public enum SpawnLocation {
 	Land(0), Water(1), OnWater(2), UnderGround(3), Air(4), AirPersistent(5);
 
@@ -9,11 +11,10 @@ public enum SpawnLocation {
 		this.index = index;
 	}
 
-	public static SpawnLocation[] getSpawnLocations(String string) {
-		String[] splits = string.split(";");
-		SpawnLocation[] locations = new SpawnLocation[splits.length];
+	public static SpawnLocation[] getSpawnLocations(ArrayList<String> list) {
+		SpawnLocation[] locations = new SpawnLocation[list.size()];
 		int i = 0;
-		for (String s : splits) {
+		for (String s : list) {
 			for (SpawnLocation sp : values()) {
 				if (sp.toString().equalsIgnoreCase(s))
 					locations[i++] = sp;

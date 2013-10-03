@@ -1,6 +1,11 @@
 package pixelmon.enums;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import pixelmon.config.PixelmonEntityList.ClassType;
+import pixelmon.database.DatabaseHelper;
 
 public enum EnumPokemon {
 	Abra("Abra"),
@@ -196,19 +201,38 @@ public enum EnumPokemon {
 	Zapdos("Zapdos"),
 	Zubat("Zubat");
 
-	private EnumPokemon(String name){
+	private EnumPokemon(String name) {
 		this.name = name;
 	}
+
 	public String name;
+
 	public static boolean hasPokemon(String evolveTo) {
-		for (EnumPokemon e: values()){
-			if (e.name.equalsIgnoreCase(evolveTo)) return true;
+		for (EnumPokemon e : values()) {
+			if (e.name.equalsIgnoreCase(evolveTo))
+				return true;
 		}
 		return false;
 	}
+
 	public static EnumPokemon get(String name) {
-		for (EnumPokemon e: values()){
-			if (e.name.equalsIgnoreCase(name)) return e;
+		for (EnumPokemon e : values()) {
+			if (e.name.equalsIgnoreCase(name))
+				return e;
+		}
+		return null;
+	}
+
+	public static EnumPokemon getFromDBID(int id) {
+		Connection con = DatabaseHelper.getConnection();
+		try {
+			Statement stat = con.createStatement();
+			ResultSet rs = stat.executeQuery("select * from PIXELMON where PIXELMONID=" + id);
+			while (rs.next()) {
+				return EnumPokemon.get(rs.getString("PIXELMONFULLNAME"));
+			}
+		} catch (Exception e) {
+
 		}
 		return null;
 	}

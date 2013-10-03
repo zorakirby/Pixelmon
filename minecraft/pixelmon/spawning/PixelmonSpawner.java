@@ -43,7 +43,7 @@ public class PixelmonSpawner implements ITickHandler {
 		spawners.add(new SpawnerLand());
 		spawners.add(new SpawnerUnderground());
 		spawners.add(new SpawnerUnderWater());
-		spawners.add(new SpawnerAir());
+		//spawners.add(new SpawnerAir());
 	}
 
 	/**

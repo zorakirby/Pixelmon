@@ -1,11 +1,14 @@
 package pixelmon.database;
 
 import java.io.File;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.jdotsoft.jarloader.JarClassLoader;
 
 import pixelmon.config.PixelmonConfig;
 import cpw.mods.fml.common.Loader;
@@ -76,6 +79,9 @@ public class DatabaseHelper {
 		}
 	}
 
+	static Connection con;
+	static boolean madeConnection = false;
+
 	/**
 	 * Gets the connection to the path
 	 * 
@@ -83,7 +89,18 @@ public class DatabaseHelper {
 	 */
 	public static Connection getConnection() {
 		try {
-			Class.forName("org.sqlite.JDBC");
+			if (madeConnection && !con.isClosed())
+				return con;
+			// JarClassLoader jcl = new JarClassLoader();
+			// Thread.currentThread().setContextClassLoader(jcl);
+			Class.forName("org.h2.Driver");
+			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
+				URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
+				con = DriverManager.getConnection("jdbc:h2:" + url.toString().substring(0, url.toString().length() - 6));
+				madeConnection = true;
+				return con;
+			}
+			// Class.forName("org.sqlite.JDBC");
 			Connection con = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
 			con.setReadOnly(true);
 			return con;
