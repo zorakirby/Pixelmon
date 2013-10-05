@@ -20,65 +20,6 @@ import cpw.mods.fml.common.ModClassLoader;
  * @author Grethen
  */
 public class DatabaseHelper {
-	/**
-	 * A check to make sure the user has the SQLite Jar, currently ignores the
-	 * <code>SQLExcpetion</code> that has to do with drivers because it seems to
-	 * always throw that
-	 * 
-	 * @return True if they do, otherwise false
-	 */
-	public static String databaseURL = "http://pixelmonmod.com/db.info";
-	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
-
-	public static boolean checkForDatabaseUpdates = true;
-
-	public static boolean has(boolean checkForUpdates) {
-		try {
-			checkForDatabaseUpdates = checkForUpdates;
-			File databaseDir = new File(DownloadHelper.getDir(), "database");
-			if (!databaseDir.exists()) {
-				databaseDir.mkdir();
-				DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
-				DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
-			} else {
-				File databaseFile = new File(databaseDir, "Pixelmon.db");
-				if (!databaseFile.exists()) {
-					DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
-				} else {
-					if (checkForDatabaseUpdates)
-						checkVersion();
-				}
-				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
-				if (!sqlitejar.exists())
-					DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
-				if (!sqlitejar.exists())
-					System.out.println("SQLite Jar still not found at " + sqlitejar.getAbsolutePath());
-				if (!databaseFile.exists())
-					System.out.println("Database still not found at " + databaseFile.getAbsolutePath());
-				((ModClassLoader) Loader.instance().getModClassLoader()).addFile(sqlitejar);
-			}
-
-			Class.forName("org.sqlite.JDBC");
-			Connection c = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
-			if (c == null) {
-				return false;
-			}
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	public static void checkVersion() {
-		DLInfo dlInfo = DownloadHelper.getDatabasePath();
-		if (dlInfo == null)
-			return;
-		if (!DownloadHelper.compareVersion("database/Pixelmon.db", dlInfo.checksum)) {
-			DownloadHelper.downloadFile("database/Pixelmon.db", dlInfo.url);
-		}
-	}
-
 	static Connection con;
 	static boolean madeConnection = false;
 

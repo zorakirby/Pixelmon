@@ -1,6 +1,5 @@
 package pixelmon.storage;
 
-import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -12,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import pixelmon.Pixelmon;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.EnumUpdateType;
@@ -20,7 +19,6 @@ import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonUpdatePacket;
 import pixelmon.config.PixelmonEntityList;
-import pixelmon.database.DownloadHelper;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBossMode;
@@ -46,9 +44,9 @@ public class PlayerStorage {
 		this.player = player;
 		this.userName = player.username;
 		if (MinecraftServer.getServer() instanceof DedicatedServer)
-			this.saveFile = DownloadHelper.getDir() + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
+			this.saveFile = Pixelmon.modDirectory + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
 		else
-			this.saveFile = DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
+			this.saveFile = Pixelmon.modDirectory + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
 		pokedex = new Pokedex(player);
 	}
 
