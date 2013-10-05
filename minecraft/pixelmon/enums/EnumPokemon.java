@@ -177,6 +177,7 @@ public enum EnumPokemon {
 	Totodile("Totodile"),
 	Trapinch("Trapinch"),
 	Treecko("Treecko"),
+	Turtwig("Turtwig"),
 	Umbreon("Umbreon"),
 	Venomoth("Venomoth"),
 	Venonat("Venonat"),
