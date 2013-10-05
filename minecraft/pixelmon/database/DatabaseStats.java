@@ -10,6 +10,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.EvolutionInfo.InfoMode;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.stats.Aggression;
 import pixelmon.entities.pixelmon.stats.BaseStats;
 import pixelmon.entities.pixelmon.stats.EVsStore;
@@ -34,7 +35,8 @@ public class DatabaseStats {
 
 			String error = "";
 			boolean hasError = false;
-			while (rs.next()) {
+			if (rs.next()) {
+				store.pokemon = EnumPokemon.get(name);
 				store.id = rs.getInt("PIXELMONID");
 				store.hp = rs.getInt("BASEHP");
 				if (rs.wasNull()) {
@@ -161,9 +163,12 @@ public class DatabaseStats {
 				getPixelmonEvolutions(store, stat, name);
 				getPixelmonSpawnConditions(store, stat);
 				getPixelmonSpawnLocations(store, stat);
+				getPixelmonSpawnBiomes(store, stat);
 				getPixelmonSwimmingParameters(store, stat);
 				getPixelmonRidingOffsets(store, stat);
 			}
+			rs.close();
+			System.out.println("[PIXELMON] Loaded " + name);
 			return store;
 		} catch (Exception e) {
 			System.out.println("Error retrieving stats for Pokemon : " + name);
@@ -186,7 +191,7 @@ public class DatabaseStats {
 				store.ridingOffsets.setStandingOffsets(rs.getDouble("MOVINGOFFSETX"), rs.getDouble("MOVINGOFFSETY"), rs.getDouble("MOVINGOFFSETZ"));
 			}
 		}
-
+		rs.close();
 	}
 
 	private static void getPixelmonSwimmingParameters(BaseStats store, Statement stat) throws SQLException {
@@ -195,6 +200,7 @@ public class DatabaseStats {
 			store.swimmingParameters = new SwimmingParameters(rs.getInt("SWIMDEPTHMIN"), rs.getInt("SWIMDEPTHMAX"), rs.getDouble("SWIMSPEED"),
 					rs.getDouble("SWIMSPEEDDECAY"), rs.getInt("SWIMREFRESHRATE"));
 		}
+		rs.close();
 	}
 
 	private static void getPixelmonSpawnLocations(BaseStats store, Statement stat) throws SQLException {
@@ -203,7 +209,9 @@ public class DatabaseStats {
 		while (rs.next()) {
 			list.add(rs.getString("LOCATION"));
 		}
+		rs.close();
 		store.spawnLocations = SpawnLocation.getSpawnLocations(list);
+		list.clear();
 	}
 
 	private static void getPixelmonSpawnConditions(BaseStats store, Statement stat) throws SQLException {
@@ -212,7 +220,9 @@ public class DatabaseStats {
 		while (rs.next()) {
 			list.add(rs.getString("SPAWNRULE"));
 		}
+		rs.close();
 		store.spawnConditions = SpawnConditions.ParseSpawnConditions(list);
+		list.clear();
 	}
 
 	private static void getPixelmonDrops(BaseStats store, Statement stat) throws SQLException {
@@ -220,10 +230,11 @@ public class DatabaseStats {
 		if (rs.next()) {
 			store.droppedItem = rs.getString("DROPITEM");
 		}
+		rs.close();
 	}
 
 	private static void getPixelmonEvolutions(BaseStats store, Statement stat, String name) throws SQLException {
-		ResultSet evrs = stat.executeQuery("select * from PIXELMONEVOLUTIONS where PIXELMONFROMID='" + store.id + "'");
+		ResultSet evrs = stat.executeQuery("select * from PIXELMONEVOLUTIONS where PIXELMONFROMID='" + store.id + "' AND EVOLVELEVEL IS NOT NULL");
 		if (evrs.next()) {
 			store.evolveLevel = evrs.getInt("EVOLVELEVEL");
 			if (evrs.wasNull())
@@ -231,11 +242,57 @@ public class DatabaseStats {
 					System.out.println("Error in EvolveLevel" + " For Pokemon : " + name);
 			store.evolveInto = EnumPokemon.getFromDBID(evrs.getInt("PIXELMONTOID"));
 		}
+		evrs.close();
+		ArrayList<String> list = new ArrayList<String>();
+		String p;
+		while ((p = getPreEvolution(name, stat)) != null) {
+			list.add(p);
+			name = p;
+		}
+		store.preEvolutions = new EnumPokemon[list.size()];
+		int i = 0;
+		for (String poke : list) {
+			store.preEvolutions[i++] = EnumPokemon.get(poke);
+		}
+		list.clear();
+	}
+
+	private static String getPreEvolution(String name, Statement stat) throws SQLException {
+		int id = getPokemonDBIDFromName(name, stat);
+		ResultSet rs = stat.executeQuery("select PIXELMONFROMID from PIXELMONEVOLUTIONS where PIXELMONTOID='" + id + "'");
+		while (rs.next()) {
+			int fromId = rs.getInt("PIXELMONFROMID");
+			if (id == fromId)
+				return null;
+			rs.close();
+			return getPokemonNameFromDBID(fromId, stat);
+		}
+		return null;
+	}
+
+	private static int getPokemonDBIDFromName(String name, Statement stat) throws SQLException {
+		ResultSet rs = stat.executeQuery("select PIXELMONID from PIXELMON where PIXELMONFULLNAME='" + name + "'");
+		if (rs.next()) {
+			int id = rs.getInt("PIXELMONID");
+			rs.close();
+			return id;
+		}
+		return -1;
+	}
+
+	private static String getPokemonNameFromDBID(int id, Statement stat) throws SQLException {
+		ResultSet rs = stat.executeQuery("select PIXELMONFULLNAME from PIXELMON where PIXELMONID='" + id + "'");
+		if (rs.next()) {
+			String name = rs.getString("PIXELMONFULLNAME");
+			rs.close();
+			return name;
+		}
+		return null;
 	}
 
 	static BiomeGenBase[] biomeMasterList;
 
-	private static void GetSpawnBiomes(BaseStats store, Statement stat) throws SQLException {
+	private static void getPixelmonSpawnBiomes(BaseStats store, Statement stat) throws SQLException {
 		if (biomeMasterList == null) {
 			fillBiomeMasterList(stat);
 		}
@@ -244,6 +301,7 @@ public class DatabaseStats {
 		while (rs.next()) {
 			biomeIds.add(rs.getInt("BIOMEID"));
 		}
+		rs.close();
 		if (biomeIds.size() > 0) {
 			BiomeGenBase[] biomes = new BiomeGenBase[biomeIds.size()];
 			int i = 0;
@@ -279,21 +337,21 @@ public class DatabaseStats {
 			b.id = rs.getInt("BIOMEID");
 			list.add(b);
 		}
+		rs.close();
 		biomeMasterList = new BiomeGenBase[list.size()];
 		for (BiomeID b : list)
 			biomeMasterList[b.id] = b.biome;
 	}
 
-	public static ArrayList<EvolutionInfo> getEvolveList(String pixelmonName) {
+	public static ArrayList<EvolutionInfo> getEvolveList(int id) {
 		ArrayList<EvolutionInfo> list = new ArrayList<EvolutionInfo>();
 		Connection conn = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
 			conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select EvolveStone from Pixelmon where Name='" + pixelmonName + "'");
+			ResultSet rs = stat.executeQuery("select * from PIXELMONEVOLUTIONS where PIXELMONFROMID='" + id + " AND EVOLVECODITION IS NOT NULL'");
 			while (rs.next()) {
-				String type = rs.getString("EvolveStone");
+				String type = rs.getString("EVOLVECONDITION");
 				String[] strList = type.split(";");
 				for (String s : strList) {
 					String[] sSplit = s.split(":");
@@ -322,70 +380,24 @@ public class DatabaseStats {
 					list.add(i);
 				}
 			}
+			rs.close();
 		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+
 		}
 		return list;
 	}
 
-	public static Object getStat(String pixelmonName, String string) {
-		Connection conn = null;
-		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DatabaseHelper.getConnection();
-			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select " + string + " from Pixelmon where Name='" + pixelmonName + "'");
-			while (rs.next()) {
-				return rs.getObject(string);
-			}
-		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-		}
-		System.out.println("Error in " + string + " For Pokemon : " + pixelmonName);
-		return null;
-	}
-
 	public static String getDescription(String name) {
-		return (String) getStat(name, "Description");
-	}
-
-	public static ArrayList<String> getPreEvolutions(String name) {
-		ArrayList<String> preEvolutions = new ArrayList<String>();
-		String newEvolution;
-		while ((newEvolution = getPreEvolution(name)) != null) {
-			preEvolutions.add(newEvolution);
-			name = newEvolution;
-		}
-		return preEvolutions;
-	}
-
-	private static String getPreEvolution(String name) {
-		Connection conn = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DatabaseHelper.getConnection();
-			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select Name from Pixelmon where EvolveInto='" + name + "'");
-			while (rs.next()) {
-				return rs.getString("Name");
+			Connection con = DatabaseHelper.getConnection();
+			Statement stat = con.createStatement();
+			ResultSet rs = stat.executeQuery("select POKEDEXDESCRIPTION from PIXELMON where PIXELMONFULLNAME='" + name + "'");
+			if (rs.next()) {
+				String description = rs.getString("POKEDEXDESCRIPTION");
+				rs.close();
+				return description;
 			}
 		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
 		}
 		return null;
 	}

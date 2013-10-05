@@ -19,6 +19,7 @@ import pixelmon.comm.packetHandlers.PC.PCData;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.database.EvolutionInfo.InfoMode;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPokemon;
@@ -173,7 +174,7 @@ public class TileEntityTradeMachine extends TileEntity {
 			player2.closeScreen();
 			playerCount = 0;
 
-			ArrayList<EvolutionInfo> evolve1 = DatabaseStats.getEvolveList(pokemon2.getString("Name"));
+			ArrayList<EvolutionInfo> evolve1 = DatabaseStats.getEvolveList(Entity3HasStats.getBaseStats(pokemon2.getString("Name")).id);
 			for (EvolutionInfo e : evolve1) {
 				if (e.mode == InfoMode.trade) {
 					if (EnumPokemon.hasPokemon(e.extraParam)) {
@@ -183,7 +184,7 @@ public class TileEntityTradeMachine extends TileEntity {
 					}
 				}
 			}
-			ArrayList<EvolutionInfo> evolve2 = DatabaseStats.getEvolveList(pokemon1.getString("Name"));
+			ArrayList<EvolutionInfo> evolve2 = DatabaseStats.getEvolveList(Entity3HasStats.getBaseStats(pokemon1.getString("Name")).id);
 			for (EvolutionInfo e : evolve2) {
 				if (e.mode == InfoMode.trade) {
 					if (EnumPokemon.hasPokemon(e.extraParam)) {

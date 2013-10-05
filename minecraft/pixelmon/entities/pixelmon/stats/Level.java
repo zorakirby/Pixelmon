@@ -167,7 +167,7 @@ public class Level {
 				if (pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
 					pixelmon.startEvolution(pixelmon.baseStats.evolveInto.name, true);
 				}
-				for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
+				for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.baseStats.id)) {
 					if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
 						evolves = true;
 						if (e.extraParam != null) {
@@ -205,8 +205,8 @@ public class Level {
 				}
 			}
 			String name = pixelmon.getName();
-			if (!evolves && pixelmon.evolving == 0 && DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
-				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
+			if (!evolves && pixelmon.evolving == 0 && DatabaseMoves.LearnsAttackAtLevel(pixelmon.baseStats.id, getLevel())) {
+				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(pixelmon.baseStats.id, getLevel());
 				for (Attack a : newAttacks) {
 					if (pixelmon.getMoveset().size() >= 4) {
 						ReplaceMove.tmID = -1;

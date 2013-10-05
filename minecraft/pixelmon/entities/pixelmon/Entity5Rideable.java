@@ -121,7 +121,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 		if (riddenByEntity != null && baseStats != null && (baseStats.canSurf || !baseStats.canSurfSet) && this.inWater) {
 			if (!baseStats.canSurfSet) {
-				baseStats.canSurf = DatabaseMoves.CanLearnAttack(getName(), "Surf");
+				baseStats.canSurf = DatabaseMoves.CanLearnAttack(baseStats.id, "Surf");
 				baseStats.canSurfSet = true;
 			}
 			if (baseStats.canSurf) {

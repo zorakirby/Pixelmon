@@ -33,6 +33,7 @@ public class BaseStats {
 	public boolean canFly, isRideable;
 
 	public EnumPokemon evolveInto;
+	public EnumPokemon[] preEvolutions;
 
 	public ExperienceGroup experienceGroup;
 
@@ -57,7 +58,8 @@ public class BaseStats {
 	public boolean doesHover = false;
 	public int id;
 	public float weight;
-
+	public EnumPokemon pokemon;
+	
 	public int get(StatsType stat) {
 		if (stat == StatsType.Attack)
 			return attack;

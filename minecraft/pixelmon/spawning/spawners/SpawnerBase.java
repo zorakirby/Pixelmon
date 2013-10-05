@@ -66,7 +66,7 @@ public abstract class SpawnerBase {
 				rarity = spawnList.get(i).rarity.night;
 			else if (state == worldState.dawn || state == worldState.dusk)
 				rarity = spawnList.get(i).rarity.dawndusk;
-			if (num < sum + rarity)
+			if (num <= sum + rarity)
 				return spawnList.get(i).name;
 			sum += rarity;
 		}

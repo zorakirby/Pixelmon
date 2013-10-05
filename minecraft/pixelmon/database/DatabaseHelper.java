@@ -91,20 +91,23 @@ public class DatabaseHelper {
 		try {
 			if (madeConnection && !con.isClosed())
 				return con;
-			// JarClassLoader jcl = new JarClassLoader();
-			// Thread.currentThread().setContextClassLoader(jcl);
+			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") <= 0) {
+				JarClassLoader jcl = new JarClassLoader();
+				Thread.currentThread().setContextClassLoader(jcl);
+			}
 			Class.forName("org.h2.Driver");
 			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
 				URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
 				con = DriverManager.getConnection("jdbc:h2:" + url.toString().substring(0, url.toString().length() - 6));
 				madeConnection = true;
 				return con;
+			} else {
+				URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
+				System.out.println(url.toString());
+				con = DriverManager.getConnection("jdbc:h2:" + url.toString().substring(0, url.toString().length() - 6));
+				madeConnection = true;
+				return con;
 			}
-			// Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
-			con.setReadOnly(true);
-			return con;
-
 		} catch (Exception e) {
 			System.out.println("Could not get a connection to pixelmon.db");
 			return null;

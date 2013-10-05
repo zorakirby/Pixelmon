@@ -40,16 +40,14 @@ public class PixelmonDataPacket extends PixelmonPacket {
 
 	public EnumType getType1() {
 		if (type1 == null) {
-			Object ret = DatabaseStats.getStat(name, "Type1");
-			type1 = EnumType.parseType((String) ret);
+			type1 = Entity3HasStats.getBaseStats(name).type1;
 		}
 		return type1;
 	}
 
 	public EnumType getType2() {
 		if (type2 == null) {
-			Object ret = DatabaseStats.getStat(name, "Type2");
-			type2 = EnumType.parseType((String) ret);
+			type2 = Entity3HasStats.getBaseStats(name).type2;
 		}
 		return type2;
 	}

@@ -24,6 +24,7 @@ import pixelmon.entities.npcs.EntityNPC;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBossMode;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.spawning.spawners.*;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
@@ -43,7 +44,7 @@ public class PixelmonSpawner implements ITickHandler {
 		spawners.add(new SpawnerLand());
 		spawners.add(new SpawnerUnderground());
 		spawners.add(new SpawnerUnderWater());
-		//spawners.add(new SpawnerAir());
+		// spawners.add(new SpawnerAir());
 	}
 
 	/**
@@ -143,7 +144,8 @@ public class PixelmonSpawner implements ITickHandler {
 		int numInChunk = 0;
 		int count = 0;
 		boolean isBoss = false;
-		ArrayList<String> preEvolutions = null;
+		EnumPokemon[] preEvolutions = null;
+		String lastPokemon = "";
 
 		while (count < 3) {
 			int cpXtmp = cpX;
@@ -181,8 +183,13 @@ public class PixelmonSpawner implements ITickHandler {
 										}
 									}
 
-									if (isBoss)
-										pokemonName = preEvolutions.get(rand.nextInt(preEvolutions.size()));
+									if (isBoss) {
+										int ind = (rand.nextInt(preEvolutions.length + 1));
+										if (ind > preEvolutions.length - 1)
+											pokemonName = lastPokemon;
+										else
+											pokemonName = preEvolutions[ind].name;
+									}
 									EntityLiving pokemon;
 
 									try {
@@ -205,7 +212,7 @@ public class PixelmonSpawner implements ITickHandler {
 											if (world.rand.nextInt(250) == 0 && pokemon instanceof EntityPixelmon) {
 												EntityPixelmon pixelmon = (EntityPixelmon) pokemon;
 												preEvolutions = pixelmon.getPreEvolutions();
-												preEvolutions.add(pokemonName);
+												lastPokemon = pokemonName;
 												pixelmon.setBoss(EnumBossMode.getRandomMode());
 												isBoss = true;
 											}
