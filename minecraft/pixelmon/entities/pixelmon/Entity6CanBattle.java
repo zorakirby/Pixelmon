@@ -47,14 +47,14 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	}
 
 	public void loadMoveset() {
-		moveset = DatabaseMoves.GetInitialMoves(getName(), getLvl().getLevel());
+		moveset = DatabaseMoves.GetInitialMoves(this, getLvl().getLevel());
 	}
-	
-	public Moveset getMoveset(){
-		if (hasStatus(StatusType.Transformed)){
-			for (int i =0; i < status.size(); i++){
+
+	public Moveset getMoveset() {
+		if (hasStatus(StatusType.Transformed)) {
+			for (int i = 0; i < status.size(); i++) {
 				if (status.get(i) instanceof Transformed)
-					return ((Transformed)status.get(i)).getMoveset();
+					return ((Transformed) status.get(i)).getMoveset();
 			}
 		}
 		return moveset;
@@ -79,7 +79,6 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (p2.currentPokemon().getMoveset().size() == 0)
 			p2.currentPokemon().loadMoveset();
 
-		
 		// pixelmon.isSwimming = false;
 	}
 
@@ -87,7 +86,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		// pixelmon.isSwimming = true;
 		this.wipeLastMoveUsed();
 		battleController = null;
-		
+
 	}
 
 	public void setTrainer(EntityTrainer trainer) {
@@ -110,9 +109,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 			if (par1DamageSource.damageType == "player" || par1DamageSource == DamageSource.cactus || par1DamageSource.damageType == "arrow")
 				return false;
 			if (battleController != null) {
-				if (par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.fall 
-						|| par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall
-						|| par1DamageSource == DamageSource.lava || par1DamageSource == DamageSource.onFire)
+				if (par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.fall
+						|| par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall || par1DamageSource == DamageSource.lava
+						|| par1DamageSource == DamageSource.onFire)
 					return false;
 			}
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
@@ -142,16 +141,17 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (moveset.size() >= 4) {
 			ArrayList<Attack> attacks = getAttacksAtLevel(getLvl().getLevel());
 			for (int i = 0; i < attacks.size(); i++)
-				((EntityPlayerMP) getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, getPokemonId(), attacks.get(i).baseAttack.attackIndex, 0);
+				((EntityPlayerMP) getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, getPokemonId(),
+						attacks.get(i).baseAttack.attackIndex, 0);
 		}
 	}
 
 	public ArrayList<Attack> getAttacksAtLevel(int level) {
-		return DatabaseMoves.getAttacksAtLevel(getName(), level);
+		return DatabaseMoves.getAttacksAtLevel(baseStats.id, level);
 	}
 
 	public boolean LearnsAttackAtLevel(int level) {
-		return DatabaseMoves.LearnsAttackAtLevel(getName(), level);
+		return DatabaseMoves.LearnsAttackAtLevel(baseStats.id, level);
 	}
 
 	protected boolean isValidTarget(Entity entity) {
@@ -178,15 +178,12 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		}
 		return false;
 	}
+
 	public boolean hasPrimaryStatus() {
-		if(hasStatus(StatusType.Poison )
-			|| hasStatus(StatusType.Burn)
-			|| hasStatus(StatusType.PoisonBadly)
-			|| hasStatus(StatusType.Freeze)
-			|| hasStatus(StatusType.Sleep)
-			|| hasStatus(StatusType.Paralysis)){
-					return true;
-				}
+		if (hasStatus(StatusType.Poison) || hasStatus(StatusType.Burn) || hasStatus(StatusType.PoisonBadly) || hasStatus(StatusType.Freeze)
+				|| hasStatus(StatusType.Sleep) || hasStatus(StatusType.Paralysis)) {
+			return true;
+		}
 		return false;
 	}
 
@@ -216,12 +213,13 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 			status.add(s.restoreFromNBT(nbt));
 		}
 	}
-	public Attack getLastMoveUsed(){
+
+	public Attack getLastMoveUsed() {
 
 		return lastMoveUsed;
 	}
-	
-	public void wipeLastMoveUsed(){
+
+	public void wipeLastMoveUsed() {
 		lastMoveUsed = null;
 	}
 }

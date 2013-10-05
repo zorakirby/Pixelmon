@@ -10,16 +10,14 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
-import pixelmon.config.PixelmonConfig;
-import pixelmon.database.DownloadHelper;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
+import pixelmon.Pixelmon;
+import pixelmon.config.PixelmonConfig;
 
 public class ComputerManager {
 	private File workingDir;
@@ -122,7 +120,7 @@ public class ComputerManager {
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
-		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/";
+		return Pixelmon.modDirectory + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/";
 	}
 
 	@ForgeSubscribe

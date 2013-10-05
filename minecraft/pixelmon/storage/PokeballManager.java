@@ -10,20 +10,16 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
-import pixelmon.Pixelmon;
-import pixelmon.comm.EnumUpdateType;
-import pixelmon.comm.StarterListPacket;
-import pixelmon.config.PixelmonConfig;
-import pixelmon.config.StarterList;
-import pixelmon.database.DownloadHelper;
-import pixelmon.enums.EnumGui;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
+import pixelmon.Pixelmon;
+import pixelmon.comm.StarterListPacket;
+import pixelmon.config.PixelmonConfig;
+import pixelmon.config.StarterList;
 import cpw.mods.fml.common.network.Player;
 
 public class PokeballManager {
@@ -141,7 +137,7 @@ public class PokeballManager {
 	}
 
 	private String getSaveFolder(EntityPlayer player) {
-		return DownloadHelper.getDir() + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/";
+		return Pixelmon.modDirectory + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/";
 	}
 
 	@ForgeSubscribe

@@ -34,6 +34,7 @@ import pixelmon.database.SpawnLocation;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 import pixelmon.entities.pixelmon.helpers.EvolutionQuery;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemHeld;
@@ -302,8 +303,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 		return null;
 	}
 
-	public ArrayList<String> getPreEvolutions() {
-		return DatabaseStats.getPreEvolutions(getName());
+	public EnumPokemon[] getPreEvolutions() {
+		return baseStats.preEvolutions;
 	}
 	
 	// To disable Leashing

@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import pixelmon.battles.status.StatusType;
 import pixelmon.database.DatabaseStats;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumNature;
@@ -31,7 +32,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 
 	public int getNationalPokedexNumber() {
 		if (nationalPokedexNumber == -1)
-			nationalPokedexNumber = DatabaseStats.getNationalPokedexNumber(name);
+			nationalPokedexNumber = Entity3HasStats.getBaseStats(name).nationalPokedexNumber;
 		return nationalPokedexNumber;
 	}
 
@@ -39,16 +40,14 @@ public class PixelmonDataPacket extends PixelmonPacket {
 
 	public EnumType getType1() {
 		if (type1 == null) {
-			Object ret = DatabaseStats.getStat(name, "Type1");
-			type1 = EnumType.parseType((String) ret);
+			type1 = Entity3HasStats.getBaseStats(name).type1;
 		}
 		return type1;
 	}
 
 	public EnumType getType2() {
 		if (type2 == null) {
-			Object ret = DatabaseStats.getStat(name, "Type2");
-			type2 = EnumType.parseType((String) ret);
+			type2 = Entity3HasStats.getBaseStats(name).type2;
 		}
 		return type2;
 	}

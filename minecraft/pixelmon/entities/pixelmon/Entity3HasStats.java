@@ -124,6 +124,14 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		}
 		return null;
 	}
+	
+	public static BaseStats getBaseStatsFromDBID(int id) {
+		for (BaseStats b : baseStatsStore) {
+			if (b != null && b.id == id)
+				return b;
+		}
+		return null;		
+	}
 
 	public static BaseStats getBaseStats(String name) {
 		BaseStats baseStats = getBaseStatsFromStore(name);
@@ -311,5 +319,4 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public int getMaxSpawnedInChunk() {
 		return rand.nextInt(baseStats.maxGroupSize - baseStats.minGroupSize + 1) + baseStats.minGroupSize;
 	}
-
 }

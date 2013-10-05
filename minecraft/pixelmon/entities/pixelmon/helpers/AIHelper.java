@@ -24,9 +24,9 @@ public class AIHelper {
 				&& !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
 			initGroundAI(Name, entity, tasks);
 		} else if (entity.baseStats.canFly) {
-			if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.AirPersistent)
-				initFlyingPersistentAI(Name, entity, tasks);
-			else
+//			if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.AirPersistent)
+//				initFlyingPersistentAI(Name, entity, tasks);
+//			else
 				initFlyingAI(Name, entity, tasks);
 		} else if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.Water) {
 			initSwimmingAI(Name, entity, tasks);

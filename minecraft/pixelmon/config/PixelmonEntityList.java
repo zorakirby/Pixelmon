@@ -41,11 +41,11 @@ public class PixelmonEntityList {
 			} else if (EnumTrainers.has(par0Str)) {
 				var2 = new EntityTrainer(par1World);
 				((EntityTrainer) var2).init(par0Str);
-			}else {
+			} else {
 				NPCType npcType = NPCType.get(par0Str);
 				if (npcType == NPCType.Doctor)
 					var2 = new EntityDoctor(par1World);
-				((EntityNPC)var2).init(par0Str);
+				((EntityNPC) var2).init(par0Str);
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();
@@ -92,10 +92,7 @@ public class PixelmonEntityList {
 
 		for (EnumPokemon pokemon : EnumPokemon.values()) {
 			String name = pokemon.name;
-			int rarity = DatabaseStats.GetRarity(name);
 			SpawnRegistry.getGenerationInfo(hashmap, pokemon.name);
-		//	if (rarity > 0)
-			//	SpawnRegistry.addSpawn(name, rarity, ClassType.Pixelmon);
 		}
 
 		for (EnumTrainers trainer : EnumTrainers.values()) {
@@ -105,7 +102,7 @@ public class PixelmonEntityList {
 			rardbl *= ((double) PixelmonConfig.trainerRarityModifier) / 100.0;
 			rarity = (int) rardbl;
 			if (rarity > 0)
-				SpawnRegistry.addSpawn(name, rarity, ClassType.Trainer);
+				SpawnRegistry.addNPCSpawn(name, rarity, ClassType.Trainer);
 		}
 	}
 

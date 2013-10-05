@@ -27,6 +27,7 @@ import pixelmon.comm.EnumPackets;
 import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.database.AttackCategory;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumType;
@@ -46,9 +47,9 @@ public class Attack {
 	public AttackBase baseAttack;
 	public int pp;
 	public int ppBase;
-	public boolean STAB;
 	public int movePower;
 	public int moveAccuracy;
+
 	public Attack(int attackIndex, String moveName, ResultSet rs) throws SQLException {
 		if (fullAttackList[attackIndex] == null) {
 			AttackBase a = new AttackBase(attackIndex, moveName, rs);
@@ -118,34 +119,10 @@ public class Attack {
 		if (cantMiss || RandomHelper.getRandomNumberBetween(0, 100) <= accuracy) {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(),
 					user.getNickname() + " used " + baseAttack.attackName + " on " + target.getNickname() + "!");
-			if(EnumType.getTotalEffectiveness(target.type, baseAttack.attackType) != EFFECTIVE_NONE)
-			{
-			for (int j = 0; j < baseAttack.effects.size(); j++) {
-				EffectBase e = baseAttack.effects.get(j);
-				if (e instanceof StatsEffect) {
-					try {
-						e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
-					} catch (Exception exc) {
-						if (PixelmonConfig.printErrors) {
-							System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-							System.out.println(exc.getStackTrace());
-						}
-					}
-				} else if (e instanceof StatusApplierBase) {
-					if (target.status.size() > 0) {
-						for (int i = 0; i < target.status.size(); i++) {
-							StatusBase et = target.status.get(i);
-							try {
-								if (!et.stopsStatusChange(this))
-									e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
-							} catch (Exception exc) {
-								if (PixelmonConfig.printErrors) {
-									System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
-									System.out.println(exc.getStackTrace());
-								}
-							}
-						}
-					} else {
+			if (EnumType.getTotalEffectiveness(target.type, baseAttack.attackType) != EFFECTIVE_NONE) {
+				for (int j = 0; j < baseAttack.effects.size(); j++) {
+					EffectBase e = baseAttack.effects.get(j);
+					if (e instanceof StatsEffect) {
 						try {
 							e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
 						} catch (Exception exc) {
@@ -154,20 +131,41 @@ public class Attack {
 								System.out.println(exc.getStackTrace());
 							}
 						}
+					} else if (e instanceof StatusApplierBase) {
+						if (target.status.size() > 0) {
+							for (int i = 0; i < target.status.size(); i++) {
+								StatusBase et = target.status.get(i);
+								try {
+									if (!et.stopsStatusChange(this))
+										e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
+								} catch (Exception exc) {
+									if (PixelmonConfig.printErrors) {
+										System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+										System.out.println(exc.getStackTrace());
+									}
+								}
+							}
+						} else {
+							try {
+								e.ApplyEffect(this, crit, user, target, attackList, targetAttackList);
+							} catch (Exception exc) {
+								if (PixelmonConfig.printErrors) {
+									System.out.println("Error in applyEffect for " + e.getClass().toString() + " for attack " + baseAttack.attackName);
+									System.out.println(exc.getStackTrace());
+								}
+							}
+						}
 					}
+					// if (e.effectType == EffectType.AttackModifier) {
+					// }
+					;
 				}
-				// if (e.effectType == EffectType.AttackModifier) {
-				// }
-				;
-			}
-			
-			}
-			else 
-			{
-				ChatHandler.sendBattleMessage(user.getOwner(),  target.getOwner(), "It had no effect!");
+
+			} else {
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It had no effect!");
 				return;
 			}
-		
+
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
@@ -190,10 +188,9 @@ public class Attack {
 				}
 			}
 			if (user.battleController != null)
-			for (int i = 0; i < user.battleController.globalStatusController.getGlobalStatusSize(); i++)
-			{
-				user.battleController.globalStatusController.getGlobalStatus(i).applyInMoveEffect(user, target, this);
-			}
+				for (int i = 0; i < user.battleController.globalStatusController.getGlobalStatusSize(); i++) {
+					user.battleController.globalStatusController.getGlobalStatus(i).applyInMoveEffect(user, target, this);
+				}
 
 			if (!attackHandled) {
 				int power = doDamageCalc(user, target, crit);
@@ -201,12 +198,11 @@ public class Attack {
 					power = 0;
 				else {
 					target.doBattleDamage(user, power);
-					if (target.battleController != null && user.battleController != null)
-					{
-					if (target.battleController.participants.get(0).currentPokemon() == target)
-						target.battleController.participants.get(0).damageTakenThisTurn += power;
-					else 
-						target.battleController.participants.get(1).damageTakenThisTurn += power;
+					if (target.battleController != null && user.battleController != null) {
+						if (target.battleController.participants.get(0).currentPokemon() == target)
+							target.battleController.participants.get(0).damageTakenThisTurn += power;
+						else
+							target.battleController.participants.get(1).damageTakenThisTurn += power;
 					}
 				}
 
@@ -248,7 +244,7 @@ public class Attack {
 		} else {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " tried to use " + baseAttack.attackName
 					+ ", but it missed!");
-			attackList.set(attackList.size()-1, null);
+			attackList.set(attackList.size() - 1, null);
 			for (int i = 0; i < baseAttack.effects.size(); i++) {
 				EffectBase e = baseAttack.effects.get(i);
 				try {
@@ -268,8 +264,9 @@ public class Attack {
 		if (user.getTrainer() != null)
 			user.getTrainer().pokemonStorage.update(user, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });
 		if (target.getTrainer() != null)
-			target.getTrainer().pokemonStorage.update(target, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });;
-		user.lastMoveUsed = DatabaseMoves.getAttack(this.baseAttack.attackName);	
+			target.getTrainer().pokemonStorage.update(target, new EnumUpdateType[] { EnumUpdateType.Moveset, EnumUpdateType.HP });
+		;
+		user.lastMoveUsed = DatabaseMoves.getAttack(this.baseAttack.attackName);
 		pp--;
 		ItemHeld.useBattleItems(user, target);
 		return;
@@ -282,7 +279,7 @@ public class Attack {
 
 	public int doDamageCalc(EntityPixelmon user, EntityPixelmon target, double crit) {
 		double stab = 1;
-		if (STAB)
+		if (hasSTAB(user))
 			stab = 1.5;
 		double type = EnumType.getTotalEffectiveness(target.type, baseAttack.attackType);
 		double critical = crit;
@@ -327,6 +324,10 @@ public class Attack {
 			}
 		}
 		return (int) (Damage);
+	}
+
+	public boolean hasSTAB(EntityPixelmon user) {
+		return (user.baseStats.type1 == this.baseAttack.attackType || user.baseStats.type2 == this.baseAttack.attackType);
 	}
 
 	public void setDisabled(boolean value, EntityPixelmon pixelmon) {
@@ -409,11 +410,18 @@ public class Attack {
 		}
 	}
 
-	public void setSTAB(boolean STAB) {
-		this.STAB = STAB;
-	}
+	static AttackCategory[] categories;
 
-	public static int getAttackCategory(String categoryString) {
+	public static int getAttackCategory(int categoryID) {
+		if (categories == null) {
+			categories = DatabaseMoves.getAttackCategories();
+		}
+		String categoryString = "";
+		for (int i = 0; i < categories.length; i++) {
+			if (categories[i].index == categoryID)
+				categoryString = categories[i].category;
+		}
+
 		if (categoryString.equalsIgnoreCase("Special"))
 			return ATTACK_SPECIAL;
 		else if (categoryString.equalsIgnoreCase("Physical"))
