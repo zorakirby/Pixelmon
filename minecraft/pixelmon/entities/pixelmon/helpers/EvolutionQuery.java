@@ -84,8 +84,8 @@ public class EvolutionQuery {
 		if (fromLevelUp) {
 			String name = pixelmon.getName();
 			for (int i = level; i <= pixelmon.getLvl().getLevel(); i++) {
-				if (DatabaseMoves.LearnsAttackAtLevel(name, i)) {
-					ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, i);
+				if (DatabaseMoves.LearnsAttackAtLevel(pixelmon.baseStats.id, i)) {
+					ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(pixelmon.baseStats.id, i);
 					for (Attack a : newAttacks) {
 						if (pixelmon.getMoveset().size() >= 4) {
 							ReplaceMove.tmID = -1;

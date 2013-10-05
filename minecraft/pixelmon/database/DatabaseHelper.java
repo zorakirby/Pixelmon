@@ -1,11 +1,14 @@
 package pixelmon.database;
 
 import java.io.File;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import com.jdotsoft.jarloader.JarClassLoader;
 
 import pixelmon.config.PixelmonConfig;
 import cpw.mods.fml.common.Loader;
@@ -17,64 +20,8 @@ import cpw.mods.fml.common.ModClassLoader;
  * @author Grethen
  */
 public class DatabaseHelper {
-	/**
-	 * A check to make sure the user has the SQLite Jar, currently ignores the
-	 * <code>SQLExcpetion</code> that has to do with drivers because it seems to
-	 * always throw that
-	 * 
-	 * @return True if they do, otherwise false
-	 */
-	public static String databaseURL = "http://pixelmonmod.com/db.info";
-	public static String sqliteURL = "http://www.mediafire.com/download.php?um6vgovuapow8d3";
-
-	public static boolean checkForDatabaseUpdates = true;
-
-	public static boolean has(boolean checkForUpdates) {
-		try {
-			checkForDatabaseUpdates = checkForUpdates;
-			File databaseDir = new File(DownloadHelper.getDir(), "database");
-			if (!databaseDir.exists()) {
-				databaseDir.mkdir();
-				DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
-				DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
-			} else {
-				File databaseFile = new File(databaseDir, "Pixelmon.db");
-				if (!databaseFile.exists()) {
-					DownloadHelper.downloadFile("database/Pixelmon.db", databaseURL);
-				} else {
-					if (checkForDatabaseUpdates)
-						checkVersion();
-				}
-				File sqlitejar = new File(databaseDir, "sqlite-jdbc-3.7.2.jar");
-				if (!sqlitejar.exists())
-					DownloadHelper.downloadFile("database/sqlite-jdbc-3.7.2.jar", sqliteURL);
-				if (!sqlitejar.exists())
-					System.out.println("SQLite Jar still not found at " + sqlitejar.getAbsolutePath());
-				if (!databaseFile.exists())
-					System.out.println("Database still not found at " + databaseFile.getAbsolutePath());
-				((ModClassLoader) Loader.instance().getModClassLoader()).addFile(sqlitejar);
-			}
-
-			Class.forName("org.sqlite.JDBC");
-			Connection c = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
-			if (c == null) {
-				return false;
-			}
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	public static void checkVersion() {
-		DLInfo dlInfo = DownloadHelper.getDatabasePath();
-		if (dlInfo == null)
-			return;
-		if (!DownloadHelper.compareVersion("database/Pixelmon.db", dlInfo.checksum)) {
-			DownloadHelper.downloadFile("database/Pixelmon.db", dlInfo.url);
-		}
-	}
+	static Connection con;
+	static boolean madeConnection = false;
 
 	/**
 	 * Gets the connection to the path
@@ -83,11 +30,25 @@ public class DatabaseHelper {
 	 */
 	public static Connection getConnection() {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:" + DownloadHelper.getDir() + "/database/Pixelmon.db");
-			con.setReadOnly(true);
-			return con;
-
+			if (madeConnection && !con.isClosed())
+				return con;
+			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") <= 0) {
+				JarClassLoader jcl = new JarClassLoader();
+				Thread.currentThread().setContextClassLoader(jcl);
+			}
+			Class.forName("org.h2.Driver");
+			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
+				URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
+				con = DriverManager.getConnection("jdbc:h2:" + url.toString().substring(0, url.toString().length() - 6));
+				madeConnection = true;
+				return con;
+			} else {
+				URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
+				System.out.println(url.toString());
+				con = DriverManager.getConnection("jdbc:h2:" + url.toString().substring(0, url.toString().length() - 6));
+				madeConnection = true;
+				return con;
+			}
 		} catch (Exception e) {
 			System.out.println("Could not get a connection to pixelmon.db");
 			return null;

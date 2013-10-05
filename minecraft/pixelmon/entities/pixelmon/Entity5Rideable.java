@@ -121,7 +121,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 		if (riddenByEntity != null && baseStats != null && (baseStats.canSurf || !baseStats.canSurfSet) && this.inWater) {
 			if (!baseStats.canSurfSet) {
-				baseStats.canSurf = DatabaseMoves.CanLearnAttack(getName(), "Surf");
+				baseStats.canSurf = DatabaseMoves.CanLearnAttack(baseStats.id, "Surf");
 				baseStats.canSurfSet = true;
 			}
 			if (baseStats.canSurf) {
@@ -312,8 +312,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		debugOffsetZ = 0f;
 		if (this.riddenByEntity != null) {
 			try {
-				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsetX) * getPixelmonScale() * getScaleFactor(), 0,
-						(debugOffsetZ + baseStats.ridingOffsetZ) * getPixelmonScale() * getScaleFactor());
+				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsets.standing.x) * getPixelmonScale() * getScaleFactor(), 0,
+						(debugOffsetZ + baseStats.ridingOffsets.standing.z) * getPixelmonScale() * getScaleFactor());
 				vec.rotateAroundY(-(this.renderYawOffset) * (float) Math.PI / 180.0f);
 				// System.out.println(rotationYaw +" " + renderYawOffset);
 				double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
@@ -321,8 +321,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				if (ep == null)
 					ep = EnumPokemon.get(getName());
 				this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY
-						+ (this.getMountedYOffset() + baseStats.ridingOffsetY + height + debugOffsetY) * getPixelmonScale() * getScaleFactor(), this.posZ + var3
-						+ vec.zCoord);
+						+ (this.getMountedYOffset() + baseStats.ridingOffsets.standing.y + height + debugOffsetY) * getPixelmonScale() * getScaleFactor(),
+						this.posZ + var3 + vec.zCoord);
 			} catch (Exception e) {
 				riddenByEntity.mountEntity(this);
 			}

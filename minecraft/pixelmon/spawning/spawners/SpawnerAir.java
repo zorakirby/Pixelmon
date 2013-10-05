@@ -30,7 +30,7 @@ public class SpawnerAir extends SpawnerBase {
 	public String getRandomPokemon(WorldProvider worldProvider, Random rand, int par2, int par3, int par4) {
 		BiomeGenBase b = worldProvider.worldObj.getBiomeGenForCoords(par2, par4);
 		List<SpawnData> spawnData = SpawnRegistry.getAirSpawnsForBiome(b);
-		return spawnData != null && !spawnData.isEmpty() ? ((SpawnData) WeightedRandom.getRandomItem(rand, spawnData)).name : null;
+		return spawnData != null && !spawnData.isEmpty() ? getPokemonFromList(spawnData, worldProvider.worldObj) : null;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package pixelmon.entities.pokeballs.captures;
 
 import net.minecraft.entity.player.EntityPlayer;
 import pixelmon.database.DatabaseStats;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall.Mode;
 import pixelmon.enums.EnumPokeballs;
@@ -19,7 +20,7 @@ public class CaptureHeavyBall extends CaptureBase {
 
 	@Override
 	public int modifyCaptureRate(String pokemonName, int captureRate) {
-		float weight = DatabaseStats.getWeight(pokemonName);
+		float weight = Entity3HasStats.getBaseStats(pokemonName).weight;
 		if (weight < 205) {
 			captureRate -= 20;
 		} else if (weight < 307) {

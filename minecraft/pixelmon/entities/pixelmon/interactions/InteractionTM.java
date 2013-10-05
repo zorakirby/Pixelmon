@@ -24,13 +24,12 @@ public class InteractionTM implements IInteraction {
 			if (itemstack.getItem() instanceof ItemTM) {
 				if (player != entityPixelmon.getOwner())
 					return true;
-				if (DatabaseMoves.CanLearnAttack(entityPixelmon.getName(), ((ItemTM) itemstack.getItem()).attackName)) {
+				if (DatabaseMoves.CanLearnAttack(entityPixelmon.baseStats.id, ((ItemTM) itemstack.getItem()).attackName)) {
 					Attack a = DatabaseMoves.getAttack(((ItemTM) itemstack.getItem()).attackName);
 					if (a == null) {
 						ChatHandler.sendChat(entityPixelmon.getOwner(), ((ItemTM) itemstack.getItem()).attackName + " is corrupted");
 						return true;
 					}
-					a.STAB = DatabaseMoves.hasSTAB(entityPixelmon.getName(), ((ItemTM) itemstack.getItem()).attackName);
 					if (entityPixelmon.getMoveset().size() >= 4) {
 						ReplaceMove.tmID = itemstack.itemID;
 						((EntityPlayerMP) entityPixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
