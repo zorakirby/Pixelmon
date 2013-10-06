@@ -15,6 +15,7 @@ import pixelmon.blocks.BlockFossilCleaner;
 import pixelmon.blocks.BlockFossilMachine;
 import pixelmon.blocks.BlockHealer;
 import pixelmon.blocks.BlockPC;
+import pixelmon.blocks.BlockShrine;
 //import pixelmon.blocks.BlockPotionMaking;
 import pixelmon.blocks.BlockTradeMachine;
 import pixelmon.blocks.TileEntityAnvil;
@@ -23,10 +24,12 @@ import pixelmon.blocks.TileEntityFossilCleaner;
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.blocks.TileEntityShrine;
 //import pixelmon.blocks.TileEntityPotionMaking;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.enums.EnumEvolutionRock;
 import pixelmon.enums.EnumEvolutionStone;
+import pixelmon.enums.EnumShrine;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.PixelmonItemBlock;
 import cpw.mods.fml.common.Mod;
@@ -51,6 +54,9 @@ public class PixelmonBlocks {
 	public static int icyRockId;
 	public static int potionMakerId;
 
+	public static int shrineUnoID;
+	public static int shrineDosID;
+	public static int shrineTresID;
 
 	@Mod.Block(name = "Thunderstone Ore")
 	public static Block thunderStoneOre;
@@ -80,9 +86,13 @@ public class PixelmonBlocks {
 	public static Block mossyRock;
 	@Mod.Block(name = "Icy Rock", itemTypeClass = ItemBlock.class)
 	public static Block icyRock;
-	//@Mod.Block(name = "Potion Maker", itemTypeClass = ItemBlock.class)
-	//public static Block potionMaker;
-	
+
+	@Mod.Block(name = "Articuno Shrine", itemTypeClass = ItemBlock.class)
+	public static Block shrineUno;
+	@Mod.Block(name = "Zapdos Shrine", itemTypeClass = ItemBlock.class)
+	public static Block shrineDos;
+	@Mod.Block(name = "Moltres Shrine", itemTypeClass = ItemBlock.class)
+	public static Block shrineTres;
 
 	public static void load(Configuration configuration) {
 		pokemonHealerActiveId = configuration.getBlock("PokemonHealerActive", 300).getInt(300);
@@ -98,13 +108,15 @@ public class PixelmonBlocks {
 		fossilId = configuration.getBlock("Fossil", 225).getInt(225);
 		tradeMachineId = configuration.getBlock("Trade Machine", 311).getInt(311);
 		fossilCleanerId = configuration.getBlock("Fossil Cleaner", 312).getInt(312);
-		
+
 		PixelmonBlocksApricornTrees.load(configuration);
 
 		mossyRockId = configuration.getBlock("Mossy Rock", 318).getInt(318);
 		icyRockId = configuration.getBlock("Icy Rock", 319).getInt(319);
-		potionMakerId = configuration.getBlock("Potion Maker", 320).getInt(320);
-
+		potionMakerId = configuration.getBlock("Potion Maker", 321).getInt(321);
+		shrineUnoID = configuration.getBlock("Articuno Shrine", 322).getInt(322);
+		shrineDosID = configuration.getBlock("Zapdos Shrine", 323).getInt(323);
+		shrineTresID = configuration.getBlock("Moltres Shrine", 324).getInt(324);
 
 		healer = new BlockHealer(pokemonHealerIdleId);
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f, "Thunder Stone Ore");
@@ -118,10 +130,13 @@ public class PixelmonBlocks {
 		fossil = new BlockFossil(fossilId).setHardness(5f);
 		tradeMachine = new BlockTradeMachine(tradeMachineId);
 		fossilCleaner = new BlockFossilCleaner(fossilCleanerId);
-		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
+		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setHardness(5f)
+				.setCreativeTab(PixelmonCreativeTabs.natural);
 		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
-		//potionMaker = new BlockPotionMaking(potionMakerId, Material.rock).setCreativeTab(PixelmonCreativeTabs.natural);
 
+		shrineUno = new BlockShrine(shrineUnoID, Material.rock, EnumShrine.Articuno).setBlockUnbreakable().setUnlocalizedName("Articuno");
+		shrineDos = new BlockShrine(shrineDosID, Material.rock, EnumShrine.Zapdos).setBlockUnbreakable().setUnlocalizedName("Zapdos");
+		shrineTres = new BlockShrine(shrineTresID, Material.rock, EnumShrine.Moltres).setBlockUnbreakable().setUnlocalizedName("Moltres");
 	}
 
 	public static void registerBlocks() {
@@ -137,7 +152,9 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(fossil, "Fossil");
 		GameRegistry.registerBlock(tradeMachine, "Trading Machine");
 		GameRegistry.registerBlock(fossilCleaner, "Fossil Cleaner");
-		//GameRegistry.registerBlock(potionMaker, "Potion Maker");
+		GameRegistry.registerBlock(shrineUno, "Articuno Shrine");
+		GameRegistry.registerBlock(shrineDos, "Zapdos Shrine");
+		GameRegistry.registerBlock(shrineTres, "Moltres Shrine");
 
 
 		MinecraftForge.setBlockHarvestLevel(bauxite, "pickaxe", 2);
@@ -149,9 +166,8 @@ public class PixelmonBlocks {
 		GameRegistry.registerTileEntity(TileEntityTradeMachine.class, "Trade Machine");
 		GameRegistry.registerTileEntity(TileEntityFossilCleaner.class, "Fossil Cleaner");
 		GameRegistry.registerTileEntity(TileEntityEvolutionRock.class, "Evolution Rock");
-		//GameRegistry.registerTileEntity(TileEntityPotionMaking.class, "Potion Maker");
+		GameRegistry.registerTileEntity(TileEntityShrine.class, "Bird Shrine");
 
-		
 		PixelmonBlocksApricornTrees.registerBlocks();
 	}
 
