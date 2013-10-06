@@ -19,6 +19,7 @@ import pixelmon.blocks.TileEntityFossilCleaner;
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.blocks.TileEntityShrine;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
 import pixelmon.client.gui.GuiDoctor;
@@ -46,6 +47,7 @@ import pixelmon.client.render.RenderHook;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
 import pixelmon.client.render.RenderTrainer;
+import pixelmon.client.render.tileEntities.RenderTileEntityShrine;
 import pixelmon.client.render.tileEntities.RenderTileEntityAnvil;
 import pixelmon.client.render.tileEntities.RenderTileEntityApricornTrees;
 import pixelmon.client.render.tileEntities.RenderTileEntityEvolutionRock;
@@ -82,6 +84,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShrine.class, new RenderTileEntityShrine());
 
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());

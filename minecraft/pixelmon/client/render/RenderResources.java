@@ -13,4 +13,9 @@ public class RenderResources {
 	public static ResourceLocation fossilMachine = new ResourceLocation("pixelmon:textures/blocks/fossilmachine.png");
 	public static ResourceLocation mossrocktex = new ResourceLocation("pixelmon:textures/blocks/mossrocktex.png");
 	public static ResourceLocation icyrocktex = new ResourceLocation("pixelmon:textures/blocks/icyrocktex.png");
+	
+	public static ResourceLocation uno = new ResourceLocation("pixelmon:textures/blocks/shrines/articuno.png");
+	public static ResourceLocation dos = new ResourceLocation("pixelmon:textures/blocks/shrines/zapdos.png");
+	public static ResourceLocation tres = new ResourceLocation("pixelmon:textures/blocks/shrines/moltres.png");
+
 }
