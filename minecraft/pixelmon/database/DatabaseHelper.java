@@ -35,6 +35,7 @@ public class DatabaseHelper {
 			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") <= 0) {
 				JarClassLoader jcl = new JarClassLoader();
 				Thread.currentThread().setContextClassLoader(jcl);
+				System.out.println("Initiated JarClassLoader");
 			}
 			Class.forName("org.h2.Driver");
 			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {

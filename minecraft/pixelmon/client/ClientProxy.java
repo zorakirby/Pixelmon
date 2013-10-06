@@ -2,7 +2,6 @@ package pixelmon.client;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -43,7 +42,6 @@ import pixelmon.client.keybindings.PreviousPokemonKey;
 import pixelmon.client.keybindings.RidingBindings;
 import pixelmon.client.keybindings.SendPokemonKey;
 import pixelmon.client.models.fossils.ModelFossil;
-import pixelmon.client.render.RenderDoctor;
 import pixelmon.client.render.RenderHook;
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
@@ -57,7 +55,6 @@ import pixelmon.client.render.tileEntities.RenderTileEntityTradingMachine;
 import pixelmon.client.render.tileEntities.RenderTileFossilCleaner;
 import pixelmon.client.render.tileEntities.RenderTileFossilMachine;
 import pixelmon.config.PixelmonConfig;
-import pixelmon.entities.npcs.EntityDoctor;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -109,6 +106,7 @@ public class ClientProxy extends CommonProxy {
 
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
+		System.out.println("Binding Renderer");
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCamera.class, new RenderInvisible());
 		// RenderingRegistry.registerEntityRenderingHandler(EntityDoctor.class,
