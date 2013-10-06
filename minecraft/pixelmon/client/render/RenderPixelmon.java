@@ -64,8 +64,8 @@ public class RenderPixelmon extends RenderLiving {
 
 	}
 
-	private float func_77034_a(float par1, float par2, float par3) {
-		float var4;
+	private double func_110828_a(double par1, double par2, double par3) {
+		double var4;
 
 		for (var4 = par2 - par1; var4 < -180.0F; var4 += 360.0F) {
 			;
