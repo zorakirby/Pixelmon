@@ -1,6 +1,9 @@
 package pixelmon.database;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,11 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.jdotsoft.jarloader.JarClassLoader;
-
-import pixelmon.config.PixelmonConfig;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModClassLoader;
+
+import pixelmon.Pixelmon;
 
 /**
  * A simple little helper to handle errors and get info from SQLite
@@ -22,6 +24,7 @@ import cpw.mods.fml.common.ModClassLoader;
 public class DatabaseHelper {
 	static Connection con;
 	static boolean madeConnection = false;
+	static String databasePath = null;
 
 	/**
 	 * Gets the connection to the path
@@ -32,26 +35,62 @@ public class DatabaseHelper {
 		try {
 			if (madeConnection && !con.isClosed())
 				return con;
-			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") <= 0) {
-				JarClassLoader jcl = new JarClassLoader();
-				Thread.currentThread().setContextClassLoader(jcl);
+			if (databasePath == null)
+				databasePath = Pixelmon.modDirectory + "/database/";
+			File databaseDir = new File(Pixelmon.modDirectory + "/database");
+			if (!databaseDir.isDirectory()) {
+				System.out.println("Creating database directory");
+				databaseDir.mkdir();
 			}
+			File databaseFile = new File(databasePath + "Pixelmon2.h2.db");
+			if (!databaseFile.exists())
+				copyFilesFromJar();
+			((ModClassLoader) Loader.instance().getModClassLoader()).addFile(new File(databasePath + "h2-1.3.173.jar"));
+			System.out.println("Loading Database Driver");
 			Class.forName("org.h2.Driver");
-			if (java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0) {
-				URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
-				con = DriverManager.getConnection("jdbc:h2:" + url.toString().substring(0, url.toString().length() - 6));
-				madeConnection = true;
-				return con;
-			} else {
-				URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
-				System.out.println(url.toString());
-				con = DriverManager.getConnection("jdbc:h2:" + url.toString().substring(0, url.toString().length() - 6));
-				madeConnection = true;
-				return con;
-			}
+			System.out.println("Establishing Connection");
+			URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
+			con = DriverManager.getConnection("jdbc:h2:file:" + databasePath + "Pixelmon2");
+			madeConnection = true;
+			return con;
 		} catch (Exception e) {
-			System.out.println("Could not get a connection to pixelmon.db");
+			System.out.println("Could not get a connection to database");
 			return null;
+		}
+	}
+
+	private static void copyFilesFromJar() {
+		try {
+			System.out.println("Extracting database");
+			InputStream iStream = DatabaseHelper.class.getResourceAsStream("/pixelmon/database/Pixelmon2.h2.db");
+			FileOutputStream fos = null;
+			fos = new FileOutputStream(databasePath + "Pixelmon2.h2.db");
+			byte[] buf = new byte[2048];
+			int r = iStream.read(buf);
+			while (r != -1) {
+				fos.write(buf, 0, r);
+				r = iStream.read(buf);
+			}
+			if (fos != null)
+				fos.close();
+		} catch (Exception e) {
+			System.out.println("Failed to extract database");
+		}
+		try {
+			System.out.println("Extracting driver");
+			InputStream iStream2 = DatabaseHelper.class.getResourceAsStream("/pixelmon/database/h2-1.3.173.jar");
+			FileOutputStream fos2 = null;
+			fos2 = new FileOutputStream(databasePath + "h2-1.3.173.jar");
+			byte[] buf = new byte[2048];
+			int r = iStream2.read(buf);
+			while (r != -1) {
+				fos2.write(buf, 0, r);
+				r = iStream2.read(buf);
+			}
+			if (fos2 != null)
+				fos2.close();
+		} catch (Exception e) {
+			System.out.println("Failed to extract driver");
 		}
 	}
 

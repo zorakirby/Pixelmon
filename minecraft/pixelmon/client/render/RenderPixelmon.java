@@ -47,7 +47,7 @@ public class RenderPixelmon extends RenderLiving {
 			pixelmon.init(pixelmon.getName());
 		if (pixelmon.getModel() != null){
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
-			this.func_110827_b(pixelmon, d, d1, d2, f, f1);
+//			this.func_110827_b(pixelmon, d, d1, d2, f, f1);
 		}
 		if (pixelmon.evolving != 0)
 			return;

@@ -168,7 +168,6 @@ public class DatabaseStats {
 				getPixelmonRidingOffsets(store, stat);
 			}
 			rs.close();
-			System.out.println("[PIXELMON] Loaded " + name);
 			return store;
 		} catch (Exception e) {
 			System.out.println("Error retrieving stats for Pokemon : " + name);
