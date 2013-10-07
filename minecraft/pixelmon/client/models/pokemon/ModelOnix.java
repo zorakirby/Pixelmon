@@ -25,6 +25,11 @@ public class ModelOnix extends PixelmonModelBase {
 		Body.setRotationPoint(0, 10, -47);
 		// Body.setRotationPoint(0, -47, -47);
 
+		int degrees = 180;
+		float radians = (float) Math.toRadians(degrees);
+
+		setRotation(Body, radians, 0, 0);
+		
 		PixelmonModelRenderer Head = new PixelmonModelRenderer(this, "Head");
 		Head.setRotationPoint(0, 0, 0);
 		PixelmonModelRenderer CheekRight = new PixelmonModelRenderer(this, 443,
