@@ -13,6 +13,7 @@ import pixelmon.battles.status.StatusType;
 import pixelmon.database.DatabaseStats;
 import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumNature;
 import pixelmon.enums.EnumPokeballs;
@@ -118,6 +119,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i = 0; i < effectCount; i++) {
 			status.add(StatusType.getEffect(p.getInteger("Effect" + i)));
 		}
+		isBoss = EnumBossMode.getMode(p.getShort("BossMode")) != EnumBossMode.Normal;
 	}
 
 	public PixelmonDataPacket(EntityPixelmon p, EnumPackets packetType) {
@@ -165,6 +167,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i = 0; i < effectCount; i++) {
 			status.add(p.status.get(i).type);
 		}
+		isBoss = p.getBossMode() != EnumBossMode.Normal;
 	}
 
 	@Override
@@ -201,6 +204,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeBoolean(isShiny);
 		data.writeShort(nature.index);
 		data.writeShort(growth.index);
+		data.writeBoolean(isBoss);
 		if (pokeball != null)
 			data.writeShort(pokeball.getIndex());
 		else
@@ -242,6 +246,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = data.readBoolean();
 		nature = EnumNature.getNatureFromIndex(data.readShort());
 		growth = EnumGrowth.getGrowthFromIndex(data.readShort());
+		isBoss = data.readBoolean();
 		pokeball = EnumPokeballs.getFromIndex(data.readShort());
 		doesLevel = data.readBoolean();
 		heldItemId = data.readInt();
@@ -252,6 +257,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 
 	private String description;
 	public boolean outside;
+	public boolean isBoss;
 
 	public String getDescription() {
 		if (description == null)

@@ -40,8 +40,6 @@ public class WildPixelmonParticipant extends BattleParticipant {
 		super.StartBattle(bc, opponent);
 		if (opponent.getType() == ParticipantType.Player && pixelmon.getBossMode() != EnumBossMode.Normal) {
 			int lvl = ((PlayerParticipant) opponent).getHighestLevel() + pixelmon.getBossMode().extraLevels;
-			if (lvl > 100)
-				lvl = 100;
 			pixelmon.getLvl().setLevel(lvl);
 			pixelmon.loadMoveset();
 			return;

@@ -43,8 +43,11 @@ public class DatabaseHelper {
 				databaseDir.mkdir();
 			}
 			File databaseFile = new File(databasePath + "Pixelmon2.h2.db");
-			if (!databaseFile.exists())
-				copyFilesFromJar();
+			if (databaseFile.exists())
+				databaseFile.delete();
+			copyDatabaseFromJar();
+			if (!new File(databasePath + "h2-1.3.173.jar").exists())
+				copyDriverFromJar();
 			((ModClassLoader) Loader.instance().getModClassLoader()).addFile(new File(databasePath + "h2-1.3.173.jar"));
 			System.out.println("Loading Database Driver");
 			Class.forName("org.h2.Driver");
@@ -59,7 +62,7 @@ public class DatabaseHelper {
 		}
 	}
 
-	private static void copyFilesFromJar() {
+	private static void copyDatabaseFromJar() {
 		try {
 			System.out.println("Extracting database");
 			InputStream iStream = DatabaseHelper.class.getResourceAsStream("/pixelmon/database/Pixelmon2.h2.db");
@@ -76,6 +79,9 @@ public class DatabaseHelper {
 		} catch (Exception e) {
 			System.out.println("Failed to extract database");
 		}
+	}
+
+	private static void copyDriverFromJar() {
 		try {
 			System.out.println("Extracting driver");
 			InputStream iStream2 = DatabaseHelper.class.getResourceAsStream("/pixelmon/database/h2-1.3.173.jar");

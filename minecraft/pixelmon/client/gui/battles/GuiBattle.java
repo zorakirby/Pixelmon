@@ -146,7 +146,7 @@ public class GuiBattle extends GuiContainer {
 				wasGuiHidden = true;
 			first = false;
 			if (camera != null)
-			setCameraToPlayer();
+				setCameraToPlayer();
 		}
 
 		if (!ClientBattleManager.hasMoreMessages() && battleEnded && !ClientBattleManager.hasLevelUps() && !ClientBattleManager.hasNewAttacks()) {
@@ -301,7 +301,7 @@ public class GuiBattle extends GuiContainer {
 
 	private void drawLevelUp(int mouseX, int mouseY) {
 		if (camera != null)
-		setCameraToPlayer();
+			setCameraToPlayer();
 		mc.renderEngine.bindTexture(GuiResources.levelUpPopup);
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -758,7 +758,7 @@ public class GuiBattle extends GuiContainer {
 		GL11.glDisable(GL11.GL_COLOR_MATERIAL);
 	}
 
-	private void drawChooseAttack(int mouseX, int mouseY) {	
+	private void drawChooseAttack(int mouseX, int mouseY) {
 		mc.renderEngine.bindTexture(GuiResources.battleGui2);
 		setCameraToPlayer();
 
@@ -860,7 +860,7 @@ public class GuiBattle extends GuiContainer {
 					if (!ClientBattleManager.canSwitch)
 						ClientBattleManager.addMessage(ClientBattleManager.getUserPokemon().getNickname() + " is trapped! You cannot flee!");
 					else
-					ClientBattleManager.addMessage("You can't run from a trainer battle!");
+						ClientBattleManager.addMessage("You can't run from a trainer battle!");
 				}
 			}
 			return;
@@ -1104,7 +1104,7 @@ public class GuiBattle extends GuiContainer {
 			bagSection = BagSection.BattleItems;
 
 		else if (mouseX > x2 && mouseX < x2 + buttonWidth && mouseY > y1 && mouseY < y1 + buttonHeight) {
-			if (ClientBattleManager.opponentType == ParticipantType.WildPokemon)
+			if (ClientBattleManager.opponentType == ParticipantType.WildPokemon && !ClientBattleManager.opponent.isBoss)
 				bagSection = BagSection.Pokeballs;
 			else {
 				ClientBattleManager.addMessage("You can't use Poke Balls in this battle!");

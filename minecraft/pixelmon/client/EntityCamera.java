@@ -92,7 +92,6 @@ public class EntityCamera extends EntityLiving {
 	public void onUpdate() {
 		super.onUpdate();
 		if (Minecraft.getMinecraft().renderViewEntity == this && target != null && !target.isDead) {
-			System.out.println("Camera Hooked");
 			double vecX = target.posX - posX;
 			double vecY = target.posY - 0.5f - posY;
 			double vecZ = target.posZ - posZ;

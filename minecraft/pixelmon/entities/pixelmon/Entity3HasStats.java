@@ -47,7 +47,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public int getCatchRate() {
 		float c = baseStats.catchRate;
-		c *= getBossMode().catchRateModifier;
 		return (int) c;
 	}
 

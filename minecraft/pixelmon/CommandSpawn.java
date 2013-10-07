@@ -56,6 +56,7 @@ public class CommandSpawn extends CommandBase {
 							if (s.endsWith("1")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Uncommon);
 							else if (s.endsWith("2")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Rare);
 							else if (s.endsWith("3")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Legendary);
+							else if (s.endsWith("4")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Ultimate);
 						}
 					}
 				world.spawnEntityInWorld(var6);

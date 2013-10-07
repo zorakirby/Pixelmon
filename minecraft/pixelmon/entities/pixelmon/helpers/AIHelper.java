@@ -79,7 +79,7 @@ public class AIHelper {
 			tasks.addTask(i++, new AIWander(entity));
 			tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
 			tasks.addTask(i++, new EntityAILookIdle(entity));
-			tasks.addTask(i++, new AITargetEnvironment(entity));
+			//tasks.addTask(i++, new AITargetEnvironment(entity));
 		}
 	}
 

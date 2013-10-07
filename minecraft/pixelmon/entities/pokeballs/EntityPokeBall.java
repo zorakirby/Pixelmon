@@ -28,6 +28,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
@@ -277,6 +278,12 @@ public class EntityPokeBall extends EntityThrowable {
 						setDead();
 						return;
 
+					}
+
+					if (p.getBossMode() != EnumBossMode.Normal) {
+						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch boss pokemon!");
+						setDead();
+						return;
 					}
 
 					if (p.hasOwner() || p.getTrainer() != null) {
