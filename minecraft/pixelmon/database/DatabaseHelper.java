@@ -38,7 +38,7 @@ public class DatabaseHelper {
 			if (databasePath == null)
 				databasePath = Pixelmon.modDirectory + "/database/";
 			File databaseDir = new File(Pixelmon.modDirectory + "/database");
-			if (!databaseDir.isDirectory()){
+			if (!databaseDir.isDirectory()) {
 				System.out.println("Creating database directory");
 				databaseDir.mkdir();
 			}
@@ -50,7 +50,7 @@ public class DatabaseHelper {
 			Class.forName("org.h2.Driver");
 			System.out.println("Establishing Connection");
 			URL url = DatabaseHelper.class.getResource("/pixelmon/database/Pixelmon2.h2.db");
-			con = DriverManager.getConnection("jdbc:h2:" + url.toString().substring(0, url.toString().length() - 6));
+			con = DriverManager.getConnection("jdbc:h2:file:" + databasePath + "Pixelmon2");
 			madeConnection = true;
 			return con;
 		} catch (Exception e) {
@@ -59,31 +59,39 @@ public class DatabaseHelper {
 		}
 	}
 
-	private static void copyFilesFromJar() throws IOException {
-		System.out.println("Extracting database");
-		InputStream iStream = DatabaseHelper.class.getResourceAsStream("/pixelmon/database/Pixelmon2.h2.db");
-		FileOutputStream fos = null;
-		fos = new FileOutputStream(databasePath + "Pixelmon2.h2.db");
-		byte[] buf = new byte[2048];
-		int r = iStream.read(buf);
-		while (r != -1) {
-			fos.write(buf, 0, r);
-			r = iStream.read(buf);
+	private static void copyFilesFromJar() {
+		try {
+			System.out.println("Extracting database");
+			InputStream iStream = DatabaseHelper.class.getResourceAsStream("/pixelmon/database/Pixelmon2.h2.db");
+			FileOutputStream fos = null;
+			fos = new FileOutputStream(databasePath + "Pixelmon2.h2.db");
+			byte[] buf = new byte[2048];
+			int r = iStream.read(buf);
+			while (r != -1) {
+				fos.write(buf, 0, r);
+				r = iStream.read(buf);
+			}
+			if (fos != null)
+				fos.close();
+		} catch (Exception e) {
+			System.out.println("Failed to extract database");
 		}
-		if (fos != null)
-			fos.close();
-
-		System.out.println("Extracting driver");
-		InputStream iStream2 = DatabaseHelper.class.getResourceAsStream("/pixelmon/database/h2-1.3.173.jar");
-		FileOutputStream fos2 = null;
-		fos2 = new FileOutputStream(databasePath + "h2-1.3.173.jar");
-		r = iStream.read(buf);
-		while (r != -1) {
-			fos2.write(buf, 0, r);
-			r = iStream2.read(buf);
+		try {
+			System.out.println("Extracting driver");
+			InputStream iStream2 = DatabaseHelper.class.getResourceAsStream("/pixelmon/database/h2-1.3.173.jar");
+			FileOutputStream fos2 = null;
+			fos2 = new FileOutputStream(databasePath + "h2-1.3.173.jar");
+			byte[] buf = new byte[2048];
+			int r = iStream2.read(buf);
+			while (r != -1) {
+				fos2.write(buf, 0, r);
+				r = iStream2.read(buf);
+			}
+			if (fos2 != null)
+				fos2.close();
+		} catch (Exception e) {
+			System.out.println("Failed to extract driver");
 		}
-		if (fos2 != null)
-			fos2.close();
 	}
 
 	/**
