@@ -13,31 +13,40 @@ import pixelmon.entities.pixelmon.stats.Moveset;
 
 public class DatabaseMoves {
 	public static Moveset GetInitialMoves(Entity6CanBattle pixelmon, int level) {
-		Moveset attacks = new Moveset();
+		ArrayList<Attack> attackList = new ArrayList<Attack>();
 		try {
 			Connection conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery("select * from PIXELMONLEVELSKILLS where PIXELMONID='" + pixelmon.baseStats.id + "'");
-			ArrayList<Move> moves = new ArrayList<Move>();
 			while (rs.next()) {
 				int learnLevel = rs.getInt("LEARNLEVEL");
 				int moveID = rs.getInt("MOVEID");
-				attacks.add(getAttack(moveID));
+				attackList.add(getAttack(moveID));
 			}
 			rs.close();
 
-			while (attacks.size() > 4) {
-				int ind = (int) RandomHelper.getRandomNumberBetween(0, attacks.size() - 1);
-				attacks.remove(ind);
+			for (int i = 0; i < attackList.size(); i++) {
+				for (int j = i + 1; j < attackList.size(); j++) {
+					if (attackList.get(i).baseAttack.attackIndex == attackList.get(j).baseAttack.attackIndex) {
+						attackList.remove(j);
+						j--;
+					}
+				}
+			}
+			while (attackList.size() > 4) {
+				int ind = (int) RandomHelper.getRandomNumberBetween(0, attackList.size() - 1);
+				attackList.remove(ind);
 			}
 
-			if (attacks.size() == 0)
-				attacks.add(getAttack("Tackle"));
+			if (attackList.size() == 0)
+				attackList.add(getAttack("Tackle"));
 
 		} catch (Exception e) {
 			System.out.println(pixelmon.getName() + " has corrupted moves at level " + level);
 		}
-
+		Moveset attacks = new Moveset();
+		for (Attack a: attackList)
+			attacks.add(a);
 		return attacks;
 	}
 
