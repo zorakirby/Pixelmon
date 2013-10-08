@@ -1,4 +1,4 @@
-package pixelmon;
+package pixelmon.commands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,25 +41,33 @@ public class CommandSpawn extends CommandBase {
 		try {
 			ChunkCoordinates cc = par1ICommandSender.getPlayerCoordinates();
 			WorldServer world = MinecraftServer.getServer().worldServerForDimension(0);
-			String name = par2ArrayOfStr[0].substring(0,1).toUpperCase() + par2ArrayOfStr[0].substring(1);
+			String name = par2ArrayOfStr[0].substring(0, 1).toUpperCase() + par2ArrayOfStr[0].substring(1);
 			if (EnumPokemon.hasPokemon(name)) {
-				if(name.equalsIgnoreCase("mrmime"))
+				if (name.equalsIgnoreCase("mrmime"))
 					name = "MrMime";
-				Entity var6 = PixelmonEntityList.createEntityByName(name, world);
-				var6.setPosition(cc.posX, cc.posY + 1, cc.posZ);
-				((EntityPixelmon)var6).pokemonLocation = SpawnLocation.AirPersistent;  
+				EntityPixelmon pokemon = (EntityPixelmon) PixelmonEntityList.createEntityByName(name, world);
+				pokemon.setPosition(cc.posX, cc.posY + 1, cc.posZ);
 				if (par2ArrayOfStr.length > 1)
 					for (String s : par2ArrayOfStr) {
 						if (s.equalsIgnoreCase("s"))
-							((EntityPixelmon) var6).setIsShiny(true);
+							pokemon.setIsShiny(true);
 						else if (s.startsWith("boss")) {
-							if (s.endsWith("1")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Uncommon);
-							else if (s.endsWith("2")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Rare);
-							else if (s.endsWith("3")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Legendary);
-							else if (s.endsWith("4")) ((EntityPixelmon) var6).setBoss(EnumBossMode.Ultimate);
+							if (s.endsWith("1"))
+								pokemon.setBoss(EnumBossMode.Uncommon);
+							else if (s.endsWith("2"))
+								pokemon.setBoss(EnumBossMode.Rare);
+							else if (s.endsWith("3"))
+								pokemon.setBoss(EnumBossMode.Legendary);
+							else if (s.endsWith("4"))
+								pokemon.setBoss(EnumBossMode.Ultimate);
+						} else if (s.startsWith("lvl")) {
+							String lvlString = s.substring(3);
+							if (Integer.getInteger(s) != null) {
+								pokemon.getLvl().setLevel(Integer.getInteger(s));
+							}
 						}
 					}
-				world.spawnEntityInWorld(var6);
+				world.spawnEntityInWorld(pokemon);
 				par1ICommandSender.sendChatToPlayer(ChatMessageComponent.createFromText("Successfully spawned a " + name));
 				notifyAdmins(par1ICommandSender, 1, par1ICommandSender.getCommandSenderName() + " successfully spawned " + name, new Object[] { name });
 			} else if (EnumTrainers.has(name)) {

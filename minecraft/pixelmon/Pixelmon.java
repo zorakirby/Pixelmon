@@ -16,6 +16,12 @@ import pixelmon.client.ClientPacketHandler;
 import pixelmon.client.ClientProxy;
 import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
+import pixelmon.commands.CommandBattle;
+import pixelmon.commands.CommandFreeze;
+import pixelmon.commands.CommandHeal;
+import pixelmon.commands.CommandPokegive;
+import pixelmon.commands.CommandSpawn;
+import pixelmon.commands.CommandStruc;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
@@ -152,6 +158,7 @@ public class Pixelmon {
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandFreeze());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandHeal());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandBattle());
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandPokegive());
 		}
 	}
 

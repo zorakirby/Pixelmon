@@ -1,4 +1,4 @@
-package pixelmon;
+package pixelmon.commands;
 
 import java.util.Random;
 
