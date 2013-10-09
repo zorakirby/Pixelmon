@@ -66,6 +66,10 @@ public class CommandPokegive extends CommandBase {
 								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Cheater!"));
 								return;
 							}
+							if (lvl <=0){
+								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in lvl"));
+								return;
+							}
 							pokemon.getLvl().setLevel(lvl);
 						} catch (Exception e) {
 							sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in lvl"));
