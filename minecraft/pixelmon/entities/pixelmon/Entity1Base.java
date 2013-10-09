@@ -108,7 +108,7 @@ public abstract class Entity1Base extends EntityTameable {
 	 */
 	@Override
 	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
-		return par1Entity.boundingBox;
+		return null;
 	}
 
 	/**
