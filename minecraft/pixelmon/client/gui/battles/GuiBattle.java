@@ -11,12 +11,15 @@ import java.util.TimerTask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
@@ -26,6 +29,7 @@ import pixelmon.Pixelmon;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.client.EntityCamera;
+import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.gui.GuiHelper;
 import pixelmon.client.gui.GuiPixelmonOverlay;
@@ -68,7 +72,7 @@ public class GuiBattle extends GuiContainer {
 	int limitFrameRate = 0;
 
 	public GuiBattle(int battleControllerIndex) {
-		super(new ContainerEmpty());
+		super(Minecraft.getMinecraft().thePlayer.inventoryContainer);
 		this.battleControllerIndex = battleControllerIndex;
 		mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
@@ -81,9 +85,9 @@ public class GuiBattle extends GuiContainer {
 		Minecraft.getMinecraft().theWorld.spawnEntityInWorld(camera);
 		limitFrameRate = Minecraft.getMinecraft().gameSettings.limitFramerate;
 	}
-
+	
 	public GuiBattle() {
-		super(new ContainerEmpty());
+		super(Minecraft.getMinecraft().thePlayer.inventoryContainer);
 		this.mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
@@ -134,7 +138,8 @@ public class GuiBattle extends GuiContainer {
 			int pokemonID = evolveList.get(0);
 			evolveList.remove(0);
 			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
-		}
+		} else if (PixelmonServerStore.bossDrops != null)
+			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ItemDrops.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 	}
 
 	@Override
@@ -876,7 +881,6 @@ public class GuiBattle extends GuiContainer {
 		} else if (mode == BattleMode.UseBag) {
 			UseBagClick(mouseX, mouseY);
 		}
-		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
 	private void LevelUpClick(int mouseX, int mouseY) {
@@ -1177,4 +1181,27 @@ public class GuiBattle extends GuiContainer {
 			ClientBattleManager.bagStore.add(new ItemData(itemID, count));
 
 	}
+	
+	 /**
+     * Draws the screen and all the components in it.
+     */
+	@Override
+    public void drawScreen(int par1, int par2, float par3)
+    {
+        this.drawDefaultBackground();
+        int k = this.guiLeft;
+        int l = this.guiTop;
+        this.drawGuiContainerBackgroundLayer(par3, par1, par2);
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        RenderHelper.disableStandardItemLighting();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+       
+        //Forge: Force lighting to be disabled as there are some issue where lighting would
+        //incorrectly be applied based on items that are in the inventory.
+        GL11.glDisable(GL11.GL_LIGHTING);
+        this.drawGuiContainerForegroundLayer(par1, par2);
+        GL11.glEnable(GL11.GL_LIGHTING);
+    }
+
 }

@@ -90,11 +90,13 @@ public class DropItemHelper {
 		int[] drops = new int[numDrops];
 		for (int i = 0; i < numDrops; i++) {
 			Item item = bossDropItems.get(player.getRNG().nextInt(bossDropItems.size()));
-			if (!player.inventory.addItemStackToInventory(new ItemStack(item)))
+			if (!player.inventory.addItemStackToInventory(new ItemStack(item, 1, 0)))
 				player.dropItem(item.itemID, 1);
+			else
+				player.sendContainerToPlayer(player.inventoryContainer);
 			drops[i] = item.itemID;
 		}
-		BossDropPacket p = new BossDropPacket(drops); 
+		BossDropPacket p = new BossDropPacket(drops);
 		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 	}
 }

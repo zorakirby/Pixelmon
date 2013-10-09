@@ -25,6 +25,7 @@ import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
 import pixelmon.client.gui.GuiDoctor;
 import pixelmon.client.gui.GuiEvolve;
 import pixelmon.client.gui.GuiHealer;
+import pixelmon.client.gui.GuiItemDrops;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.GuiTrading;
 import pixelmon.client.gui.battles.GuiAcceptDeny;
@@ -241,6 +242,8 @@ public class ClientProxy extends CommonProxy {
 			return new GuiAcceptDeny(x);
 		else if (ID == EnumGui.Evolution.getIndex())
 			return new GuiEvolve(x);
+		else if (ID == EnumGui.ItemDrops.getIndex())
+			return new GuiItemDrops();
 		return null;
 	}
 

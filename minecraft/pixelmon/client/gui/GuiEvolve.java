@@ -3,10 +3,12 @@ package pixelmon.client.gui;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -37,12 +39,8 @@ public class GuiEvolve extends GuiContainer {
 	EntityCamera camera;
 	String oldNickname;
 
-	public GuiEvolve(EntityPixelmon start, EntityPixelmon end) {
-		super(new ContainerEmpty());
-	}
-
 	public GuiEvolve(int pokemonID) {
-		super(new ContainerEmpty());
+		super(Minecraft.getMinecraft().thePlayer.inventoryContainer);
 		newPokemon = PixelmonServerStore.evolutionTarget;
 
 		currentPokemon = getEntity(pokemonID);
@@ -198,15 +196,16 @@ public class GuiEvolve extends GuiContainer {
 
 	@Override
 	protected void mouseClicked(int par1, int par2, int par3) {
-		if (stage == 3){
+		if (stage == 3) {
 			Minecraft.getMinecraft().thePlayer.closeScreen();
 			if (GuiBattle.evolveList.size() > 0) {
 				int pokemonID = GuiBattle.evolveList.get(0);
 				GuiBattle.evolveList.remove(0);
 				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
-			}
-			else if (ClientBattleManager.newAttackList.size()>0)
-					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+			} else if (PixelmonServerStore.bossDrops != null)
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ItemDrops.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+			else if (ClientBattleManager.newAttackList.size() > 0)
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 			Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
 		}
 	}
@@ -214,7 +213,30 @@ public class GuiEvolve extends GuiContainer {
 	@Override
 	public void onGuiClosed() {
 		currentPokemon.setDead();
-		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon, ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
+		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon,
+				ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
 		super.onGuiClosed();
 	}
+	
+	 /**
+     * Draws the screen and all the components in it.
+     */
+	@Override
+    public void drawScreen(int par1, int par2, float par3)
+    {
+        this.drawDefaultBackground();
+        int k = this.guiLeft;
+        int l = this.guiTop;
+        this.drawGuiContainerBackgroundLayer(par3, par1, par2);
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        RenderHelper.disableStandardItemLighting();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+       
+        //Forge: Force lighting to be disabled as there are some issue where lighting would
+        //incorrectly be applied based on items that are in the inventory.
+        GL11.glDisable(GL11.GL_LIGHTING);
+        this.drawGuiContainerForegroundLayer(par1, par2);
+        GL11.glEnable(GL11.GL_LIGHTING);
+    }
 }

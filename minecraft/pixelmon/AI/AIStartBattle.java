@@ -36,6 +36,8 @@ public class AIStartBattle extends EntityAIBase {
 				if (BattleRegistry.getBattle((EntityPlayer) theEntity.getAttackTarget()) != null)
 					return false;
 				EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
+				if (player.openContainer != player.inventoryContainer)
+					return false;
 				if (((EntityPixelmon) theEntity).belongsTo(player))
 					return false;
 				try {
