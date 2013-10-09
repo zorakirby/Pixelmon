@@ -126,9 +126,9 @@ public class AIFlying extends EntityAIBase {
 			d0 = (double) this.currentFlightTarget.posX + 0.5D - pixelmon.posX;
 			d1 = (double) this.currentFlightTarget.posY + 0.1D - pixelmon.posY;
 			d2 = (double) this.currentFlightTarget.posZ + 0.5D - pixelmon.posZ;
-			pixelmon.motionX += (Math.signum(d0) * 0.5D - pixelmon.motionX) * 0.10000000149011612D;
+			pixelmon.motionX += (Math.signum(d0) * 1D - pixelmon.motionX) * 0.10000000149011612D;
 			pixelmon.motionY += (Math.signum(d1) * 0.699999988079071D - pixelmon.motionY) * 0.10000000149011612D;
-			pixelmon.motionZ += (Math.signum(d2) * 0.5D - pixelmon.motionZ) * 0.10000000149011612D;
+			pixelmon.motionZ += (Math.signum(d2) * 1D - pixelmon.motionZ) * 0.10000000149011612D;
 			float f = (float) (Math.atan2(pixelmon.motionZ, pixelmon.motionX) * 180.0D / Math.PI) - 90.0F;
 			float f1 = MathHelper.wrapAngleTo180_float(f - pixelmon.rotationYaw);
 			pixelmon.setMoveForward(0.5F);
