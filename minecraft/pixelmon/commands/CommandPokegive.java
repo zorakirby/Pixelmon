@@ -38,6 +38,11 @@ public class CommandPokegive extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
+		if(args.length < 2) {
+			sender.sendChatToPlayer(ChatMessageComponent.createFromText("Incorrect usage. " + getCommandUsage(sender)));
+			return;
+		}
+		
 		ChunkCoordinates cc = sender.getPlayerCoordinates();
 		WorldServer world = MinecraftServer.getServer().worldServerForDimension(0);
 		String playerName = args[0];
@@ -46,7 +51,7 @@ public class CommandPokegive extends CommandBase {
 			sender.sendChatToPlayer(ChatMessageComponent.createFromText(playerName + " does not exist."));
 			return;
 		}
-
+		
 		String name = args[1].substring(0, 1).toUpperCase() + args[1].substring(1);
 		if (EnumPokemon.hasPokemon(name)) {
 			if (name.equalsIgnoreCase("mrmime"))
@@ -67,12 +72,12 @@ public class CommandPokegive extends CommandBase {
 								return;
 							}
 							if (lvl <=0){
-								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in lvl"));
+								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in level."));
 								return;
 							}
 							pokemon.getLvl().setLevel(lvl);
 						} catch (Exception e) {
-							sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in lvl"));
+							sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in level."));
 							return;
 						}
 					}
@@ -84,7 +89,7 @@ public class CommandPokegive extends CommandBase {
 				e.printStackTrace();
 			}
 			sender.sendChatToPlayer(ChatMessageComponent.createFromText("Successfully gave " + playerName + " a " + name));
-			notifyAdmins(sender, 1, sender.getCommandSenderName() + " successfully gave");
+			notifyAdmins(sender, 1, sender.getCommandSenderName() + " gave "  + playerName + " a " + name +"!");
 		}
 	}
 
