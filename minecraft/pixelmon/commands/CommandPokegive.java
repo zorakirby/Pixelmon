@@ -43,36 +43,29 @@ public class CommandPokegive extends CommandBase {
 			return;
 		}
 		
-		ChunkCoordinates cc = sender.getPlayerCoordinates();
-		WorldServer world = MinecraftServer.getServer().worldServerForDimension(0);
-		String playerName = args[0];
-		EntityPlayer player = world.getPlayerEntityByName(playerName);
+		EntityPlayer player = getPlayer(sender, args[0]);
 		if (player == null) {
-			sender.sendChatToPlayer(ChatMessageComponent.createFromText(playerName + " does not exist."));
+			sender.sendChatToPlayer(ChatMessageComponent.createFromText(args[0] + " does not exist."));
 			return;
 		}
 		
 		String name = args[1].substring(0, 1).toUpperCase() + args[1].substring(1);
+		
 		if (EnumPokemon.hasPokemon(name)) {
 			if (name.equalsIgnoreCase("mrmime"))
 				name = "MrMime";
-			EntityPixelmon pokemon = (EntityPixelmon) PixelmonEntityList.createEntityByName(name, world);
-			pokemon.setPosition(cc.posX, cc.posY + 1, cc.posZ);
+			EntityPixelmon pokemon = (EntityPixelmon) PixelmonEntityList.createEntityByName(name, player.worldObj);
+
 			if (args.length > 2) {
 				for (int i = 2; i < args.length; i++) {
 					String s = args[i];
 					if (s.equalsIgnoreCase("s"))
 						pokemon.setIsShiny(true);
 					else if (s.startsWith("lvl")) {
-						String lvlString = s.substring(3);
 						try {
-							int lvl = Integer.parseInt(lvlString);
-							if (lvl > 100) {
+							int lvl = Integer.parseInt(s.replaceAll("[^0-9]", ""));;
+							if (lvl <= 0 || lvl > 100) {
 								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Cheater!"));
-								return;
-							}
-							if (lvl <=0){
-								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in level."));
 								return;
 							}
 							pokemon.getLvl().setLevel(lvl);
@@ -88,9 +81,10 @@ public class CommandPokegive extends CommandBase {
 			} catch (PlayerNotLoadedException e) {
 				e.printStackTrace();
 			}
-			sender.sendChatToPlayer(ChatMessageComponent.createFromText("Successfully gave " + playerName + " a " + name));
-			notifyAdmins(sender, 1, sender.getCommandSenderName() + " gave "  + playerName + " a " + name +"!");
-		}
+			sender.sendChatToPlayer(ChatMessageComponent.createFromText("Successfully gave " + player.username + " a " + name + "!"));
+			notifyAdmins(sender, 1, sender.getCommandSenderName() + " gave " + player.username + " a " + name +"!");
+		} else 
+			sender.sendChatToPlayer(ChatMessageComponent.createFromText(name + " is not in the game!"));
 	}
 
 	@Override
