@@ -52,29 +52,20 @@ public class CommandSpawn extends CommandBase {
 						if (s.equalsIgnoreCase("s"))
 							pokemon.setIsShiny(true);
 						else if (s.startsWith("boss")) {
-							if (s.endsWith("1"))
-								pokemon.setBoss(EnumBossMode.Uncommon);
-							else if (s.endsWith("2"))
-								pokemon.setBoss(EnumBossMode.Rare);
-							else if (s.endsWith("3"))
-								pokemon.setBoss(EnumBossMode.Legendary);
-							else if (s.endsWith("4"))
-								pokemon.setBoss(EnumBossMode.Ultimate);
+							int bosslvl = Integer.parseInt(s.replaceAll("[^0-9]", ""));
+							if(bosslvl > 0 && bosslvl < 5)
+								pokemon.setBoss(EnumBossMode.values()[bosslvl]);
 						} else if (s.startsWith("lvl")) {
 							String lvlString = s.substring(3);
 							try {
 								int lvl = Integer.parseInt(lvlString);
-								if (lvl > 100) {
+								if (lvl <= 0 || lvl > 100) {
 									sender.sendChatToPlayer(ChatMessageComponent.createFromText("Cheater!"));
-									return;
-								}
-								if (lvl <=0){
-									sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in lvl"));
 									return;
 								}
 								pokemon.getLvl().setLevel(lvl);
 							} catch (Exception e) {
-								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in lvl"));
+								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Error in level."));
 								return;
 							}
 						}
@@ -99,14 +90,6 @@ public class CommandSpawn extends CommandBase {
 			}
 		} catch (Exception e) {
 			sender.sendChatToPlayer(ChatMessageComponent.createFromText("Invalid Name!"));
-		}
-	}
-
-	public boolean isStringBoolean(String var1) {
-		if (var1.equals("true") || var1.equals("false")) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 
