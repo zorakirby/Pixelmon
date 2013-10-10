@@ -20,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiItemDrops extends GuiContainer {
 	static ResourceLocation background = new ResourceLocation("pixelmon:gui/drops/Drops1.png");
 	static ResourceLocation itemSlot = new ResourceLocation("pixelmon:gui/drops/Drops2.png");
+	static ResourceLocation itemSlotOver = new ResourceLocation("pixelmon:gui/drops/Drops2Over.png");
 
 	BossDropPacket drops;
 
@@ -63,20 +64,49 @@ public class GuiItemDrops extends GuiContainer {
 		fontRenderer.drawString("You beat a boss " + ClientBattleManager.getOpponent().name + "!", (width - 280) / 2 + 10, (height - 182) / 2 + 25, 0xffffff);
 		int x = 0;
 		int y = 0;
+		int mouseOverIndex = -1;
 		for (int d = 0; d < drops.itemIds.length; d++) {
-			mc.renderEngine.bindTexture(itemSlot);
-			GuiHelper.drawImageQuad((width - 280) / 2 + 15 + x * itemSpacingX, (height - 182) / 2 + 50 + y * itemSpacingY, itemWidth, itemWidth, 0, 0, 1, 1, zLevel);
-			itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(drops.itemIds[d], 1, 0), (width - 280) / 2
-					+ 19 + x * itemSpacingX, (height - 182) / 2 + 53 + y * itemSpacingY);
-			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(drops.itemIds[d], 1, 0), (width - 280) / 2 + 19
-					+ x * itemSpacingX, (height - 182) / 2 + 53 + y * itemSpacingY, null);
-
+			int xPos = (width - 280) / 2 + 15 + x * itemSpacingX;
+			int yPos = (height - 182) / 2 + 50 + y * itemSpacingY;
+			if (i >= xPos && i <= xPos + itemWidth && j >= yPos && j <= yPos + itemWidth) {
+				mc.renderEngine.bindTexture(itemSlotOver);
+				mouseOverIndex = d;
+			} else
+				mc.renderEngine.bindTexture(itemSlot);
+			GuiHelper.drawImageQuad(xPos, (height - 182) / 2 + 50 + y * itemSpacingY, itemWidth, itemWidth, 0, 0, 1, 1, zLevel);
 			x++;
 			if (x > 3) {
 				x = 0;
 				y++;
 			}
 		}
+		if (mouseOverIndex != -1) {
+			String itemName = (new ItemStack(drops.itemIds[mouseOverIndex], 1, 0)).getDisplayName();
+			int itemXPos = (width - 280) / 2 + 228 - fontRenderer.getStringWidth(itemName) / 2;
+			int itemYPos = (height - 182) / 2 + 160;
+			fontRenderer.drawString(itemName, itemXPos, itemYPos, 0xffffff);
+			itemXPos = (width - 280) / 2 + 19;
+			itemYPos = (height - 182) / 2 + 12;
+			GL11.glScalef(3f, 3, 3);
+			itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(drops.itemIds[mouseOverIndex], 1, 0), itemXPos, itemYPos);
+			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(drops.itemIds[mouseOverIndex], 1, 0), itemXPos, itemYPos,
+					null);
+			GL11.glScalef(1f/3f, 1f/3f, 1f/3f);
+		}
+		x = y = 0;
+		for (int d = 0; d < drops.itemIds.length; d++) {
+			int xPos = (width - 280) / 2 + 15 + x * itemSpacingX;
+			int yPos = (height - 182) / 2 + 50 + y * itemSpacingY;
+			itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(drops.itemIds[d], 1, 0), xPos + 4, yPos + 3);
+			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(drops.itemIds[d], 1, 0), xPos + 4, yPos + 3,
+					null);
+			x++;
+			if (x > 3) {
+				x = 0;
+				y++;
+			}
+		}
+
 	}
 
 	/**
