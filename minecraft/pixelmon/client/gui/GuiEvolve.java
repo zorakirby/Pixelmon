@@ -32,7 +32,9 @@ import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 
 public class GuiEvolve extends GuiContainer {
-	public static ResourceLocation evo = new ResourceLocation("pixelmon:gui/EvolutionPopup.png");
+	public static ResourceLocation evo = new ResourceLocation("pixelmon:gui/evolution/Evolution.png");
+	public static ResourceLocation button = new ResourceLocation("pixelmon:gui/evolution/Button.png");
+	public static ResourceLocation buttonOver = new ResourceLocation("pixelmon:gui/evolution/ButtonOver.png");
 
 	public EntityPixelmon currentPokemon;
 	String newPokemon;
@@ -152,6 +154,10 @@ public class GuiEvolve extends GuiContainer {
 			if (ticks == 200)
 				stage = 3;
 		}
+		if (stage == 4) {
+			currentPokemon.evolvingVal = 0;
+			currentPokemon.evolving = 0;
+		}
 		super.updateScreen();
 	}
 
@@ -174,29 +180,48 @@ public class GuiEvolve extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+	protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
 		mc.renderEngine.bindTexture(evo);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if (stage != 2)
-			GuiHelper.drawImageQuad(width / 2 - 100, height / 4 - 40, 200, 40, 0, 0, 1, 1, zLevel);
+			GuiHelper.drawImageQuad(width / 2 - 120, height / 4 - 40, 240, 40, 0, 0, 1, 1, zLevel);
 		String s;
 		if (stage == 0) {
 			s = "Huh?";
-			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4, 0xFFFFFF);
+			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4 - 30, 0xFFFFFF);
 		}
 		if (stage == 1) {
 			s = "What? " + currentPokemon.getNickname() + " is evolving!";
-			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4, 0xFFFFFF);
+			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4 - 30, 0xFFFFFF);
+			int xPos = width / 2 - 30;
+			int yPos = height / 4 - 15;
+			if (mouseX >= xPos && mouseX <= xPos + 60 && mouseY >= yPos && mouseY <= yPos + 17)
+				mc.renderEngine.bindTexture(buttonOver);
+			else
+				mc.renderEngine.bindTexture(button);
+			GuiHelper.drawImageQuad(xPos, yPos, 60, 17, 0, 0, 1, 1, zLevel);
+			s = "Cancel";
+			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4 - 11, 0xFFFFFF);
 		}
 		if (stage == 3) {
 			s = "Your " + oldNickname + " evolved into a " + currentPokemon.getName() + "!";
-			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4, 0xFFFFFF);
+			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4 - 30, 0xFFFFFF);
+		}
+		if (stage == 4) {
+			s = "Evolution cancelled!";
+			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4 - 30, 0xFFFFFF);
 		}
 	}
 
 	@Override
-	protected void mouseClicked(int par1, int par2, int par3) {
-		if (stage == 3) {
+	protected void mouseClicked(int mouseX, int mouseY, int par3) {
+		if (stage == 1) {
+			int xPos = width / 2 - 30;
+			int yPos = height / 4 - 15;
+			if (mouseX >= xPos && mouseX <= xPos + 60 && mouseY >= yPos && mouseY <= yPos + 17) {
+				stage = 4;
+			}
+		} else if (stage == 3 || stage == 4) {
 			Minecraft.getMinecraft().thePlayer.closeScreen();
 			if (GuiBattle.evolveList.size() > 0) {
 				int pokemonID = GuiBattle.evolveList.get(0);
@@ -217,26 +242,26 @@ public class GuiEvolve extends GuiContainer {
 				ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
 		super.onGuiClosed();
 	}
-	
-	 /**
-     * Draws the screen and all the components in it.
-     */
+
+	/**
+	 * Draws the screen and all the components in it.
+	 */
 	@Override
-    public void drawScreen(int par1, int par2, float par3)
-    {
-        this.drawDefaultBackground();
-        int k = this.guiLeft;
-        int l = this.guiTop;
-        this.drawGuiContainerBackgroundLayer(par3, par1, par2);
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        RenderHelper.disableStandardItemLighting();
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-       
-        //Forge: Force lighting to be disabled as there are some issue where lighting would
-        //incorrectly be applied based on items that are in the inventory.
-        GL11.glDisable(GL11.GL_LIGHTING);
-        this.drawGuiContainerForegroundLayer(par1, par2);
-        GL11.glEnable(GL11.GL_LIGHTING);
-    }
+	public void drawScreen(int par1, int par2, float par3) {
+		this.drawDefaultBackground();
+		int k = this.guiLeft;
+		int l = this.guiTop;
+		this.drawGuiContainerBackgroundLayer(par3, par1, par2);
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		RenderHelper.disableStandardItemLighting();
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+		// Forge: Force lighting to be disabled as there are some issue where
+		// lighting would
+		// incorrectly be applied based on items that are in the inventory.
+		GL11.glDisable(GL11.GL_LIGHTING);
+		this.drawGuiContainerForegroundLayer(par1, par2);
+		GL11.glEnable(GL11.GL_LIGHTING);
+	}
 }

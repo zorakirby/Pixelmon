@@ -348,7 +348,7 @@ public class DatabaseStats {
 		try {
 			conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from PIXELMONEVOLUTIONS where PIXELMONFROMID='" + id + " AND EVOLVECODITION IS NOT NULL'");
+			ResultSet rs = stat.executeQuery("select * from PIXELMONEVOLUTIONS where PIXELMONFROMID='" + id + "' AND EVOLVECONDITION IS NOT NULL");
 			while (rs.next()) {
 				String type = rs.getString("EVOLVECONDITION");
 				String[] strList = type.split(";");
@@ -381,7 +381,7 @@ public class DatabaseStats {
 			}
 			rs.close();
 		} catch (Exception e) {
-
+			System.out.println("Error in evolution conditions for " + id);
 		}
 		return list;
 	}

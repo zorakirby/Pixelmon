@@ -102,8 +102,8 @@ public class GuiItemDrops extends GuiContainer {
 			int itemXPos = (width - 280) / 2 + 228 - fontRenderer.getStringWidth(itemName) / 2;
 			int itemYPos = (height - 182) / 2 + 160;
 			fontRenderer.drawString(itemName, itemXPos, itemYPos, 0xffffff);
-			itemXPos = (width - 280) / 2 + 19;
-			itemYPos = (height - 182) / 2 + 12;
+			itemXPos = (width/3 - 280/3) / 2 + 208/3;
+			itemYPos = (height/3 - 182/3) / 2 + 93/3;
 			GL11.glScalef(3f, 3, 3);
 			itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(drops.itemIds[mouseOverIndex], 1, 0),
 					itemXPos, itemYPos);
