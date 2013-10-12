@@ -22,6 +22,7 @@ import pixelmon.blocks.TileEntityPC;
 import pixelmon.blocks.TileEntityShrine;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
+import pixelmon.client.camera.EntityCamera;
 import pixelmon.client.gui.GuiDoctor;
 import pixelmon.client.gui.GuiEvolve;
 import pixelmon.client.gui.GuiHealer;
