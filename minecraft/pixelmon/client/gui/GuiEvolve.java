@@ -15,9 +15,10 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.RotationHelper;
 import pixelmon.Pixelmon;
-import pixelmon.client.EntityCamera;
 import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.camera.CameraTargetEntity;
+import pixelmon.client.camera.GuiCamera;
 import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.render.GraphicsHelper;
@@ -31,14 +32,13 @@ import pixelmon.entities.pixelmon.stats.BaseStats;
 import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 
-public class GuiEvolve extends GuiContainer {
+public class GuiEvolve extends GuiCamera {
 	public static ResourceLocation evo = new ResourceLocation("pixelmon:gui/evolution/Evolution.png");
 	public static ResourceLocation button = new ResourceLocation("pixelmon:gui/evolution/Button.png");
 	public static ResourceLocation buttonOver = new ResourceLocation("pixelmon:gui/evolution/ButtonOver.png");
 
 	public EntityPixelmon currentPokemon;
 	String newPokemon;
-	EntityCamera camera;
 	String oldNickname;
 
 	public GuiEvolve(int pokemonID) {
@@ -50,12 +50,7 @@ public class GuiEvolve extends GuiContainer {
 			Minecraft.getMinecraft().thePlayer.closeScreen();
 			return;
 		}
-		camera = new EntityCamera(Minecraft.getMinecraft().theWorld);
-		camera.setLocationAndAngles(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY, Minecraft.getMinecraft().thePlayer.posZ,
-				0.0f, 0.0F);
-		Minecraft.getMinecraft().theWorld.spawnEntityInWorld(camera);
-		Minecraft.getMinecraft().renderViewEntity = camera;
-		camera.target = currentPokemon;
+		camera.setTarget(new CameraTargetEntity(currentPokemon));
 		currentPokemon.evolvingInto = newPokemon;
 		oldNickname = currentPokemon.getNickname();
 		calcSizeDifference();
@@ -108,6 +103,7 @@ public class GuiEvolve extends GuiContainer {
 
 	@Override
 	public void updateScreen() {
+		super.updateScreen();
 		ticks++;
 		int ticks2 = ticks;
 		if (ticks == 40 && stage == 0) {
@@ -158,7 +154,6 @@ public class GuiEvolve extends GuiContainer {
 			currentPokemon.evolvingVal = 0;
 			currentPokemon.evolving = 0;
 		}
-		super.updateScreen();
 	}
 
 	private void spawnEvolution() {
