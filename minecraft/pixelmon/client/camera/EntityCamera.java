@@ -34,7 +34,7 @@ public class EntityCamera extends EntityLiving {
 		/*if (this.newPosRotationIncrements > 0) {
 			double d0 = this.posX + (this.newPosX - this.posX) / (double) this.newPosRotationIncrements;
 			double d1 = this.posY + (this.newPosY - this.posY) / (double) this.newPosRotationIncrements;
-			double d2 = this.posZ + (this.field_110152_bk - this.posZ) / (double) this.newPosRotationIncrements;
+			double d2 = this.posZ + (this.newPosZ - this.posZ) / (double) this.newPosRotationIncrements;
 			double d3 = MathHelper.wrapAngleTo180_double(this.newRotationYaw - (double) this.rotationYaw);
 			this.rotationYaw = (float) ((double) this.rotationYaw + d3 / (double) this.newPosRotationIncrements);
 			this.rotationPitch = (float) ((double) this.rotationPitch + (this.newRotationPitch - (double) this.rotationPitch)
@@ -58,7 +58,7 @@ public class EntityCamera extends EntityLiving {
 		this.moveFlying(par1, par2, 0.02F);
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
-		this.prevLimbYaw = this.limbYaw;
+		this.prevLimbSwingAmount = this.limbSwingAmount;
 		d0 = this.posX - this.prevPosX;
 		double d1 = this.posZ - this.prevPosZ;
 		float f6 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
@@ -67,8 +67,8 @@ public class EntityCamera extends EntityLiving {
 			f6 = 1.0F;
 		}
 
-		this.limbYaw += (f6 - this.limbYaw) * 0.4F;
-		this.limbSwing += this.limbYaw;*/
+		this.limbSwingAmount += (f6 - this.limbSwingAmount) * 0.4F;
+		this.limbSwing += this.limbSwingAmount;*/
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class EntityCamera extends EntityLiving {
 		}
 	}*/
 
-	public float updateRotation(float par1, float par2, float par3) {
+	private float updateRotation(float par1, float par2, float par3) {
 		float f3 = MathHelper.wrapAngleTo180_float(par2 - par1);
 
 		if (f3 > par3) {
