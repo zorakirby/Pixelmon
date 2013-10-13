@@ -11,6 +11,7 @@ import pixelmon.enums.EnumEthers;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPotions;
 import pixelmon.enums.EnumRodType;
+import pixelmon.enums.EnumShrine;
 import pixelmon.enums.EnumStatusAilmentHealers;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEther;
@@ -416,9 +417,9 @@ public class PixelmonItems {
 		LtradeHolderLeft = new PixelmonItem(LtradeHolderLeftID, "tradingmachinepieces/tradingHolderL", "Trade Holder Left");
 		tradePanel = new PixelmonItem(tradePanelID, "tradingmachinepieces/tradingPanel", "Trade Panel");
 
-		unoOrb = new ItemShrineOrb(unoOrbID, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
-		dosOrb = new ItemShrineOrb(dosOrbID, "dosorb", "Dos Orb").setUnlocalizedName("Dos Orb");
-		tresOrb = new ItemShrineOrb(tresOrbID, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
+		unoOrb = new ItemShrineOrb(unoOrbID, EnumShrine.Articuno, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
+		dosOrb = new ItemShrineOrb(dosOrbID, EnumShrine.Zapdos, "dosorb", "Dos Orb").setUnlocalizedName("Dos Orb");
+		tresOrb = new ItemShrineOrb(tresOrbID, EnumShrine.Moltres, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
 
 		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "mossyrock", "Mossy Rock");
 		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
