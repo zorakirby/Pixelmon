@@ -20,6 +20,7 @@ import org.lwjgl.opengl.GL12;
 
 import pixelmon.RandomHelper;
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBossMode;
@@ -45,9 +46,9 @@ public class RenderPixelmon extends RenderLiving {
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0.1f);
 		if (!pixelmon.isInitialised)
 			pixelmon.init(pixelmon.getName());
-		if (pixelmon.getModel() != null){
+		if (pixelmon.getModel() != null) {
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
-//			this.func_110827_b(pixelmon, d, d1, d2, f, f1);
+			// this.func_110827_b(pixelmon, d, d1, d2, f, f1);
 		}
 		if (pixelmon.evolving != 0)
 			return;
@@ -102,41 +103,37 @@ public class RenderPixelmon extends RenderLiving {
 
 		try {
 			float f2 = this.interpolateRotation(pixelmon.prevRenderYawOffset, pixelmon.renderYawOffset, par9);
-            float f3 = this.interpolateRotation(pixelmon.prevRotationYawHead, pixelmon.rotationYawHead, par9);
-            float f4;
+			float f3 = this.interpolateRotation(pixelmon.prevRotationYawHead, pixelmon.rotationYawHead, par9);
+			float f4;
 
-            if (pixelmon.isRiding() && pixelmon.ridingEntity instanceof EntityLivingBase)
-            {
-                EntityLivingBase entitylivingbase1 = (EntityLivingBase)pixelmon.ridingEntity;
-                f2 = this.interpolateRotation(entitylivingbase1.prevRenderYawOffset, entitylivingbase1.renderYawOffset, par9);
-                f4 = MathHelper.wrapAngleTo180_float(f3 - f2);
+			if (pixelmon.isRiding() && pixelmon.ridingEntity instanceof EntityLivingBase) {
+				EntityLivingBase entitylivingbase1 = (EntityLivingBase) pixelmon.ridingEntity;
+				f2 = this.interpolateRotation(entitylivingbase1.prevRenderYawOffset, entitylivingbase1.renderYawOffset, par9);
+				f4 = MathHelper.wrapAngleTo180_float(f3 - f2);
 
-                if (f4 < -85.0F)
-                {
-                    f4 = -85.0F;
-                }
+				if (f4 < -85.0F) {
+					f4 = -85.0F;
+				}
 
-                if (f4 >= 85.0F)
-                {
-                    f4 = 85.0F;
-                }
+				if (f4 >= 85.0F) {
+					f4 = 85.0F;
+				}
 
-                f2 = f3 - f4;
+				f2 = f3 - f4;
 
-                if (f4 * f4 > 2500.0F)
-                {
-                    f2 += f4 * 0.2F;
-                }
-            }
-            float f5 = pixelmon.prevRotationPitch + (pixelmon.rotationPitch - pixelmon.prevRotationPitch) * par9;
-            this.renderLivingAt(pixelmon, par2, par4, par6);
+				if (f4 * f4 > 2500.0F) {
+					f2 += f4 * 0.2F;
+				}
+			}
+			float f5 = pixelmon.prevRotationPitch + (pixelmon.rotationPitch - pixelmon.prevRotationPitch) * par9;
+			this.renderLivingAt(pixelmon, par2, par4, par6);
 			f4 = this.handleRotationFloat(pixelmon, par9);
 			this.rotateCorpse(pixelmon, f4, f2, par9);
 			float f6 = 0.0625F;
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 			GL11.glScalef(-1.0F, -1.0F, 1.0F);
 			this.preRenderCallback(pixelmon, par9);
-            GL11.glTranslatef(0.0F, -24.0F * f6 - 0.0078125F, 0.0F);
+			GL11.glTranslatef(0.0F, -24.0F * f6 - 0.0078125F, 0.0F);
 			float f7 = pixelmon.prevLimbSwingAmount + (pixelmon.limbSwingAmount - pixelmon.prevLimbSwingAmount) * par9;
 			float f8 = pixelmon.limbSwing - pixelmon.limbSwingAmount * (1.0F - par9);
 
@@ -152,38 +149,38 @@ public class RenderPixelmon extends RenderLiving {
 			this.mainModel.setLivingAnimations(pixelmon, f8, f7, par9);
 			if (pixelmon.getIsRed()) {
 				GL11.glColor4f(0, 0, 0, 1F);
-				this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+				this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 			} else if (pixelmon.transformed) {
 				GL11.glColor4f(RandomHelper.getRandomNumberBetween(0.85f, 1f), RandomHelper.getRandomNumberBetween(0.85f, 1f),
 						RandomHelper.getRandomNumberBetween(0.85f, 1f), 1);
-				this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+				this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 			} else if (pixelmon.getBossMode() != EnumBossMode.Normal) {
 				GL11.glColor4f(pixelmon.getBossMode().r, pixelmon.getBossMode().g, pixelmon.getBossMode().b, 1f);
-				this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+				this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 			} else if (pixelmon.evolving == 1) {
-				this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+				this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 				GL11.glEnable(GL11.GL_BLEND);
 				GL11.glDisable(GL11.GL_TEXTURE_2D);
 				GL11.glColor4f(1, 1, 1, ((float) pixelmon.evolvingVal) / 20f);
-				this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+				this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
 			} else if (pixelmon.evolving == 2) {
 				if (pixelmon.evolvingVal < 180) {
 					GL11.glDisable(GL11.GL_TEXTURE_2D);
 					GL11.glColor4f(1, 1, 1, 1);
-					this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+					this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 					GL11.glEnable(GL11.GL_TEXTURE_2D);
 				} else {
-					this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+					this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 					GL11.glEnable(GL11.GL_BLEND);
 					GL11.glDisable(GL11.GL_TEXTURE_2D);
 					GL11.glColor4f(1, 1, 1, (200f - (float) pixelmon.evolvingVal) / 20f);
-					this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+					this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 					GL11.glEnable(GL11.GL_TEXTURE_2D);
 				}
 			} else {
 				GL11.glColor4f(1f, 1, 1, 1F);
-				this.renderModel(pixelmon, f8, f7, f4, f3- f2, f5, f6);
+				this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 			}
 			float f9;
 			int i;
@@ -221,7 +218,7 @@ public class RenderPixelmon extends RenderLiving {
 							GL11.glTranslatef(0.0F, var23, 0.0F);
 							GL11.glMatrixMode(GL11.GL_MODELVIEW);
 							if (!pixelmon.getIsRed())
-								 this.renderPassModel.render(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
+								this.renderPassModel.render(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 						}
 
 						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -470,9 +467,11 @@ public class RenderPixelmon extends RenderLiving {
 	protected void preRenderScale(EntityPixelmon entity, float f) {
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
 		scaleFactor *= entity.getScaleFactor();
+		if (entity.getModel() instanceof PixelmonModelBase)
+			scaleFactor *= ((PixelmonModelBase) entity.getModel()).scale;
 
-		GL11.glScalef(scaleFactor * entity.getPixelmonScale() * entity.baseStats.giScale, scaleFactor * entity.getPixelmonScale() * entity.baseStats.giScale, scaleFactor
-				* entity.getPixelmonScale() * entity.baseStats.giScale);
+		GL11.glScalef(scaleFactor * entity.getPixelmonScale() * entity.baseStats.giScale, scaleFactor * entity.getPixelmonScale() * entity.baseStats.giScale,
+				scaleFactor * entity.getPixelmonScale() * entity.baseStats.giScale);
 		if (entity.evolving == 2) {
 			float scale = (entity.evolvingVal) / 200f;
 			GL11.glScalef(1 + scale * entity.widthDiff, 1 + scale * entity.heightDiff, 1 + scale * entity.lengthDiff);
@@ -490,26 +489,25 @@ public class RenderPixelmon extends RenderLiving {
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		return new ResourceLocation(((EntityPixelmon) entity).getTexture());
 	}
-	
-	  /**
-     * Returns a rotation angle that is inbetween two other rotation angles. par1 and par2 are the angles between which
-     * to interpolate, par3 is probably a float between 0.0 and 1.0 that tells us where "between" the two angles we are.
-     * Example: par1 = 30, par2 = 50, par3 = 0.5, then return = 40
-     */
-    private float interpolateRotation(float par1, float par2, float par3)
-    {
-        float f3;
 
-        for (f3 = par2 - par1; f3 < -180.0F; f3 += 360.0F)
-        {
-            ;
-        }
+	/**
+	 * Returns a rotation angle that is inbetween two other rotation angles.
+	 * par1 and par2 are the angles between which to interpolate, par3 is
+	 * probably a float between 0.0 and 1.0 that tells us where "between" the
+	 * two angles we are. Example: par1 = 30, par2 = 50, par3 = 0.5, then return
+	 * = 40
+	 */
+	private float interpolateRotation(float par1, float par2, float par3) {
+		float f3;
 
-        while (f3 >= 180.0F)
-        {
-            f3 -= 360.0F;
-        }
+		for (f3 = par2 - par1; f3 < -180.0F; f3 += 360.0F) {
+			;
+		}
 
-        return par1 + par3 * f3;
-    }
+		while (f3 >= 180.0F) {
+			f3 -= 360.0F;
+		}
+
+		return par1 + par3 * f3;
+	}
 }
