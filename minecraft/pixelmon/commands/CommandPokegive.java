@@ -7,6 +7,7 @@ import pixelmon.config.PixelmonEntityList;
 import pixelmon.database.SpawnLocation;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBossMode;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
@@ -63,7 +64,7 @@ public class CommandPokegive extends CommandBase {
 						pokemon.setIsShiny(true);
 					else if (s.startsWith("lvl")) {
 						try {
-							int lvl = Integer.parseInt(s.replaceAll("[^0-9]", ""));;
+							int lvl = Integer.parseInt(s.replaceAll("[^0-9]", ""));
 							if (lvl <= 0 || lvl > 100) {
 								sender.sendChatToPlayer(ChatMessageComponent.createFromText("Cheater!"));
 								return;
@@ -77,6 +78,7 @@ public class CommandPokegive extends CommandBase {
 				}
 			}
 			try {
+				pokemon.caughtBall = EnumPokeballs.PokeBall;
 				PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).addToParty(pokemon);
 			} catch (PlayerNotLoadedException e) {
 				e.printStackTrace();
