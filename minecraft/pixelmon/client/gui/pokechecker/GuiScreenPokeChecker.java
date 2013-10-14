@@ -130,12 +130,16 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		int typeImg;
 		float x = targetPacket.getType1().textureX;
 		float y = targetPacket.getType1().textureY;
-		float x1 = targetPacket.getType2().textureX;
-		float y1 = targetPacket.getType2().textureY;
+		float x1 = 0;
+		float y1 = 0;
+		if(targetPacket.getType2() != null) {
+			x1 = targetPacket.getType2().textureX;
+			y1 = targetPacket.getType2().textureY;
+		}
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(GuiResources.types);
 		drawImageQuad(60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
-		if ((targetPacket.getType2() != EnumType.Mystery))
+		if ((targetPacket.getType2() != EnumType.Mystery) && targetPacket.getType2() != null)
 			drawImageQuad(100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
 
 	}
