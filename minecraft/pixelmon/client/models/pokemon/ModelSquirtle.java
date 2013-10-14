@@ -32,7 +32,7 @@ public class ModelSquirtle extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 24, 0);
+		Body.setRotationPoint(0, 24.1f, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/squirtle/Body.obj")));
 		
 		head = new PixelmonModelRenderer(this, 0, 0);
@@ -81,6 +81,7 @@ public class ModelSquirtle extends PixelmonModelBase {
 		ModuleTailBasic tailmodule = new ModuleTailBasic(tail, .2F, .05F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm, leftLeg, rightLeg, tailmodule);
+		scale=7f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

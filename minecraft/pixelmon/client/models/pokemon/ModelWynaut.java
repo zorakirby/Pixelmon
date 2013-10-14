@@ -34,7 +34,7 @@ public class ModelWynaut extends PixelmonModelBase {
 		Body = new PixelmonModelRenderer(this, "Body");
 		Body.setRotationPoint(0, 24, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/wynaut/Body.obj")));
-		
+
 		head = new PixelmonModelRenderer(this, 0, 0);
 		head.setRotationPoint(0, 5.36F, 0);
 		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/wynaut/Head.obj")));
@@ -69,6 +69,7 @@ public class ModelWynaut extends PixelmonModelBase {
 		ModuleTailBasic tailmodule = new ModuleTailBasic(tail, .2F, .05F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, null, null, leftLeg, rightLeg, tailmodule);
+		scale = 0.9f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

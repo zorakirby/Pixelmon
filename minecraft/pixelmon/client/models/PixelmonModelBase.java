@@ -7,6 +7,7 @@ import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class PixelmonModelBase extends ModelBase {
+	public float scale = 1.0f;
 	protected SkeletonBase skeleton;
 
 	public PixelmonModelBase() {

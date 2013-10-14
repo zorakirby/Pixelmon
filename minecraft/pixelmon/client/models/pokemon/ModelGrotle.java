@@ -24,7 +24,7 @@ public class ModelGrotle extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 0, 0);
+		Body.setRotationPoint(0, 24f, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/grotle/GrotleBody.obj")));
 		footFL = new PixelmonModelRenderer(this, 0, 0);
 		footFL.setRotationPoint(3.439F, 5.736F, -3.187F);
@@ -71,6 +71,7 @@ public class ModelGrotle extends PixelmonModelBase {
 		
 		
 		skeleton = new SkeletonQuadruped(Body, headModule, leftLegModule, rightLegModule, backLeft, backRight, tailModule);
+		scale = 1.3f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

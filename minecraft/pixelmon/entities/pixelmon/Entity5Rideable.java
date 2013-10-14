@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -19,6 +20,7 @@ import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 import pixelmon.entities.pixelmon.helpers.PlayerRiding;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
+import pixelmon.entities.pixelmon.stats.RidingOffsets;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.PixelmonStorage;
 
@@ -410,6 +412,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		debugOffsetZ = 0f;
 		if (this.riddenByEntity != null) {
 			try {
+				if (baseStats.ridingOffsets==null) baseStats.ridingOffsets = new RidingOffsets();
 				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsets.standing.x) * getPixelmonScale() * getScaleFactor(), 0,
 						(debugOffsetZ + baseStats.ridingOffsets.standing.z) * getPixelmonScale() * getScaleFactor());
 				vec.rotateAroundY(-(this.renderYawOffset) * (float) Math.PI / 180.0f);
@@ -431,10 +434,16 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		super.moveEntity(motionX, motionY, motionZ);
 	}
 
+	@Override
+	public boolean shouldDismountInWater(Entity rider) {
+		return false;
+	}
+
 	public void unloadEntity() {
 		if (riddenByEntity != null) {
 			riddenByEntity.mountEntity(this);
 			((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
 		}
 	}
+
 }

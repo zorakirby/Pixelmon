@@ -31,7 +31,7 @@ public class ModelTyphlosion extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 24, 0);
+		Body.setRotationPoint(0, 24.2f, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/typhlosion/Body.obj")));
 
 		head = new PixelmonModelRenderer(this, 0, 0);
@@ -39,11 +39,11 @@ public class ModelTyphlosion extends PixelmonModelBase {
 		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/typhlosion/Head.obj")));
 
 		Larm = new PixelmonModelRenderer(this, 0, 0);
-		Larm.setRotationPoint(0.93F, 4.588F,  0.6F);
+		Larm.setRotationPoint(0.93F, 4.588F, 0.6F);
 		Larm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/typhlosion/LeftArm.obj")));
 
 		Rarm = new PixelmonModelRenderer(this, 0, 0);
-		Rarm.setRotationPoint(-0.83F, 4.588F,  0.486F);
+		Rarm.setRotationPoint(-0.83F, 4.588F, 0.486F);
 		Rarm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/typhlosion/RightArm.obj")));
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
@@ -74,6 +74,7 @@ public class ModelTyphlosion extends PixelmonModelBase {
 		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm, leftLeg, rightLeg, null);
+		scale = 3.8f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

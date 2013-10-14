@@ -75,6 +75,7 @@ public class ModelCharmander extends PixelmonModelBase {
 		ModuleTailBasic tailmodule = new ModuleTailBasic(tail, .2F, .05F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm, leftLeg, rightLeg, tailmodule);
+		scale = 12f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

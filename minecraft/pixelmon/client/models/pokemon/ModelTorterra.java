@@ -24,7 +24,7 @@ public class ModelTorterra extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 0, 0);
+		Body.setRotationPoint(0, 24.1f, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/torterra/TorterraBody.obj")));
 		footFL = new PixelmonModelRenderer(this, 0, 0);
 		footFL.setRotationPoint(10.137F, 9.652F, 12.282F);
@@ -71,6 +71,7 @@ public class ModelTorterra extends PixelmonModelBase {
 		
 		
 		skeleton = new SkeletonQuadruped(Body, headModule, leftLegModule, rightLegModule, backLeft, backRight, tailModule);
+		scale=0.8f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

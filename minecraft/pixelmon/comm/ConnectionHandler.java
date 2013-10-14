@@ -21,12 +21,7 @@ public class ConnectionHandler implements IConnectionHandler {
 
 	@Override
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
-		PixelmonStorage.playerLoggedIn((EntityPlayerMP) player);
-		try {
-			PixelmonStorage.PokeballManager.loadPlayer((EntityPlayerMP) player);
-		} catch (PlayerNotLoadedException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	@Override
@@ -46,21 +41,7 @@ public class ConnectionHandler implements IConnectionHandler {
 	// of TcpConnection
 	@Override
 	public void connectionClosed(INetworkManager manager) {
-		if (manager instanceof TcpConnection) {
-			TcpConnection tcpConnection = (TcpConnection) manager;
-			Field f = tcpConnection.getClass().getDeclaredFields()[13];
-			f.setAccessible(true);
-			NetHandler netHandler = null;
-			try {
-				netHandler = (NetHandler) f.get(tcpConnection);
-				PixelmonStorage.onPlayerDC(netHandler.getPlayer());
-				BattleQuery bq = BattleQuery.getQuery((EntityPlayerMP) netHandler.getPlayer());
-				if (bq != null)
-					bq.declineQuery((EntityPlayerMP) netHandler.getPlayer());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		
 	}
 
 	@Override
