@@ -50,8 +50,11 @@ public class GuiChooseStarter extends GuiContainer {
 			int index = 0;
 			for (int col = 0; col < 4; col++) {
 				for (int row = 0; row < 3; row++) {
-					if (index < PixelmonServerStore.starterListPacket.starterList.length)
+					if (index < PixelmonServerStore.starterListPacket.starterList.length && PixelmonServerStore.starterListPacket.starterList[index] != null)
 						buttonList.add(new StarterButton(index, width / 2 + 90 * (col - 2), height / 6 + 45 + row * 41, index));
+					else if (index < PixelmonServerStore.starterListPacket.starterList.length)
+						buttonList.add(new StarterButton(index, width / 2 + 90 * (col - 2), height / 6 + 45 + row * 41,
+								PixelmonServerStore.starterListPacket.starterListIndex[index]));
 					else
 						buttonList.add(new StarterButton(index, width / 2 + 90 * (col - 2), height / 6 + 45 + row * 41, -1));
 					index++;

@@ -34,7 +34,7 @@ public class StarterButton extends GuiButton {
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			this.field_82253_i = par2 >= this.xPosition && par3 >= this.yPosition && par2 < this.xPosition + this.width && par3 < this.yPosition + this.height;
 			int k = this.getHoverState(this.field_82253_i);
-			if (field_82253_i && starterIndex!=-1)
+			if (field_82253_i && starterIndex >= 0)
 				mc.getTextureManager().bindTexture(mouseOverTexture);
 			else
 				mc.getTextureManager().bindTexture(buttonTexture);
@@ -44,7 +44,7 @@ public class StarterButton extends GuiButton {
 			this.mouseDragged(mc, par2, par3);
 			int l = 0;
 
-			if (starterIndex == -1) {
+			if (starterIndex < 0) {
 				l = 14737632;
 				mc.renderEngine.bindTexture(questionMark);
 				drawImageQuad(this.xPosition + width / 2 - 12, this.yPosition + 5, 24f, 24f, 0f, 0f, 1f, 1f);
@@ -69,10 +69,17 @@ public class StarterButton extends GuiButton {
 			GL11.glScalef(0.8f, 0.8f, 0.8f);
 			if (starterIndex == -1) {
 				name = "Coming Soon...";
-				fontrenderer.drawString(name, (int) ((this.xPosition + this.width / 2 - 25) / 0.8f), (int) ((this.yPosition + (this.height-3) / 2) / 0.8f), l);
+				fontrenderer
+						.drawString(name, (int) ((this.xPosition + this.width / 2 - 25) / 0.8f), (int) ((this.yPosition + (this.height - 3) / 2) / 0.8f), l);
+			} else if (starterIndex == -2) {
+				name = "Disabled";
+				fontrenderer
+						.drawString(name, (int) ((this.xPosition + this.width / 2 - 15) / 0.8f), (int) ((this.yPosition + (this.height - 3) / 2) / 0.8f), l);
+
 			} else {
 				name = PixelmonServerStore.starterListPacket.starterList[starterIndex].name;
-				fontrenderer.drawString(name, (int) ((this.xPosition + this.width / 2 - 15) / 0.8f), (int) ((this.yPosition + (this.height-3) / 2) / 0.8f), l);
+				fontrenderer
+						.drawString(name, (int) ((this.xPosition + this.width / 2 - 15) / 0.8f), (int) ((this.yPosition + (this.height - 3) / 2) / 0.8f), l);
 			}
 			GL11.glScalef(1 / 0.8f, 1 / 0.8f, 1 / 0.8f);
 		}
@@ -80,7 +87,7 @@ public class StarterButton extends GuiButton {
 
 	@Override
 	public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3) {
-		if (starterIndex == -1)
+		if (starterIndex < 0)
 			return false;
 		return super.mousePressed(par1Minecraft, par2, par3);
 	}

@@ -4,7 +4,7 @@ import pixelmon.enums.EnumPokemon;
 
 public class StarterList {
 	public static EnumPokemon[] StarterList = { EnumPokemon.Bulbasaur, EnumPokemon.Squirtle, EnumPokemon.Charmander, EnumPokemon.Chikorita,
-			EnumPokemon.Totodile, EnumPokemon.Cyndaquil, EnumPokemon.Treecko };
+			EnumPokemon.Totodile, EnumPokemon.Cyndaquil, EnumPokemon.Treecko, null, null, EnumPokemon.Turtwig };
 
 	public static void setStarterList(EnumPokemon[] starterList) {
 		StarterList = starterList;
