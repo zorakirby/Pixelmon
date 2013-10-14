@@ -105,7 +105,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		if (!worldObj.isRemote) {
-
+			if (getBossMode() != EnumBossMode.Normal)
+				if (par1DamageSource.damageType != "mob")
+					return false;
 			if (par1DamageSource.damageType == "player" || par1DamageSource == DamageSource.cactus || par1DamageSource.damageType == "arrow")
 				return false;
 			if (battleController != null) {

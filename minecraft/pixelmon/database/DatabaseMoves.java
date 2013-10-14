@@ -21,7 +21,8 @@ public class DatabaseMoves {
 			while (rs.next()) {
 				int learnLevel = rs.getInt("LEARNLEVEL");
 				int moveID = rs.getInt("MOVEID");
-				attackList.add(getAttack(moveID));
+				if (learnLevel <= level)
+					attackList.add(getAttack(moveID));
 			}
 			rs.close();
 
@@ -45,7 +46,7 @@ public class DatabaseMoves {
 			System.out.println(pixelmon.getName() + " has corrupted moves at level " + level);
 		}
 		Moveset attacks = new Moveset();
-		for (Attack a: attackList)
+		for (Attack a : attackList)
 			attacks.add(a);
 		return attacks;
 	}

@@ -174,9 +174,9 @@ public class ClientPacketHandler implements IPacketHandler {
 				try {
 					BossDropPacket p = new BossDropPacket();
 					p.readPacketData(dataStream);
-					for (int i = 0; i < p.itemIds.length; i++) {
-						System.out.println("item " + i + " = " + p.itemIds[i]);
-					}
+					PixelmonServerStore.bossDrops = p;
+					if (GuiBattle.battleEnded)
+						Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ItemDrops.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -194,11 +194,12 @@ public class ClientPacketHandler implements IPacketHandler {
 				String newPokemonName = Packet.readString(dataStream, 64);
 				PixelmonServerStore.evolutionTarget = newPokemonName;
 				if (GuiBattle.battleEnded)
-					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID,
+							0, 0);
 				else {
-					GuiBattle.evolveList.add(pokemonID);
+					if (!GuiBattle.evolveList.contains(pokemonID))
+						GuiBattle.evolveList.add(pokemonID);
 				}
-
 
 			}
 		} catch (IOException e) {

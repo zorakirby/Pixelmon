@@ -11,12 +11,15 @@ import java.util.TimerTask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
@@ -25,8 +28,11 @@ import org.lwjgl.opengl.GL12;
 import pixelmon.Pixelmon;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.participants.ParticipantType;
-import pixelmon.client.EntityCamera;
+import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.camera.CameraTarget;
+import pixelmon.client.camera.CameraTargetEntity;
+import pixelmon.client.camera.GuiCamera;
 import pixelmon.client.gui.GuiHelper;
 import pixelmon.client.gui.GuiPixelmonOverlay;
 import pixelmon.client.gui.GuiResources;
@@ -49,13 +55,11 @@ import pixelmon.items.ItemPotion;
 import pixelmon.items.PixelmonItem;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class GuiBattle extends GuiContainer {
+public class GuiBattle extends GuiCamera {
 
 	public enum BattleMode {
 		Waiting, MainMenu, ChoosePokemon, ChooseBag, UseBag, ChooseAttack, ApplyToPokemon, YesNo, EnforcedSwitch;
 	}
-
-	EntityCamera camera;
 
 	private int battleControllerIndex = -1;
 	public static BattleMode mode;
@@ -63,27 +67,20 @@ public class GuiBattle extends GuiContainer {
 	public static boolean battleEnded = true;
 	private int guiWidth = 300;
 	private int guiHeight = 60;
-	boolean wasThirdPerson = false;
-	boolean wasGuiHidden = false;
 	int limitFrameRate = 0;
 
 	public GuiBattle(int battleControllerIndex) {
-		super(new ContainerEmpty());
+		super(Minecraft.getMinecraft().thePlayer.inventoryContainer);
 		this.battleControllerIndex = battleControllerIndex;
 		mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
 		battleEnded = false;
-		camera = new EntityCamera(Minecraft.getMinecraft().theWorld);
-		camera.setLocationAndAngles(Minecraft.getMinecraft().thePlayer.posX, Minecraft.getMinecraft().thePlayer.posY, Minecraft.getMinecraft().thePlayer.posZ,
-				0.0f, 0.0F);
-		Minecraft.getMinecraft().renderViewEntity = camera;
-		Minecraft.getMinecraft().theWorld.spawnEntityInWorld(camera);
 		limitFrameRate = Minecraft.getMinecraft().gameSettings.limitFramerate;
 	}
-
+	
 	public GuiBattle() {
-		super(new ContainerEmpty());
+		super(Minecraft.getMinecraft().thePlayer.inventoryContainer);
 		this.mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
 		ClientBattleManager.clearMessages();
@@ -98,9 +95,18 @@ public class GuiBattle extends GuiContainer {
 		// mc.gameSettings.thirdPersonView = 0;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = mc.thePlayer;
-		if (camera != null && camera.target != mc.thePlayer) {
-			mc.gameSettings.limitFramerate = 0;
-			camera.pointAt(mc.thePlayer);
+		if (camera != null){
+			CameraTarget tar = camera.getTarget();
+			if(tar != null){
+				if(tar.getTargetData() != mc.thePlayer){
+					if(tar instanceof CameraTargetEntity)
+						tar.setTargetData(mc.thePlayer);
+					else
+						camera.setTarget(new CameraTargetEntity(mc.thePlayer));
+				}
+			}
+			else
+				camera.setTarget(new CameraTargetEntity(mc.thePlayer));
 		}
 	}
 
@@ -109,41 +115,36 @@ public class GuiBattle extends GuiContainer {
 		// mc.gameSettings.thirdPersonView = 1;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = ClientBattleManager.getUserPokemon();
-		if (camera != null && camera.target != ClientBattleManager.getUserPokemon()) {
-			camera.pointAt(ClientBattleManager.getUserPokemon());
+		if (camera != null){
+			CameraTarget tar = camera.getTarget();
+			if(tar != null){
+				if(tar.getTargetData() != ClientBattleManager.getUserPokemon()){
+					if(tar instanceof CameraTargetEntity)
+						tar.setTargetData(ClientBattleManager.getUserPokemon());
+					else
+						camera.setTarget(new CameraTargetEntity(ClientBattleManager.getUserPokemon()));
+				}
+			}
+			else
+				camera.setTarget(new CameraTargetEntity(mc.thePlayer));
 		}
 	}
 
 	protected void restoreSettingsAndClose() {
 		GuiPixelmonOverlay.isVisible = true;
-		if (wasThirdPerson) {
-			mc.gameSettings.thirdPersonView = 1;
-		} else {
-			mc.gameSettings.thirdPersonView = 0;
-		}
-		if (wasGuiHidden) {
-			mc.gameSettings.hideGUI = true;
-		} else {
-			mc.gameSettings.hideGUI = false;
-		}
-		mc.renderViewEntity = mc.thePlayer;
 		mc.gameSettings.limitFramerate = limitFrameRate;
 		mc.thePlayer.closeScreen();
-		mc.setIngameFocus();
 		if (evolveList.size() > 0) {
 			int pokemonID = evolveList.get(0);
 			evolveList.remove(0);
 			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
-		}
+		} else if (PixelmonServerStore.bossDrops != null)
+			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ItemDrops.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float mfloat, int mouseX, int mouseY) {
 		if (first) {
-			if (mc.gameSettings.thirdPersonView == 1)
-				wasThirdPerson = true;
-			if (mc.gameSettings.hideGUI == true)
-				wasGuiHidden = true;
 			first = false;
 			if (camera != null)
 				setCameraToPlayer();
@@ -876,7 +877,6 @@ public class GuiBattle extends GuiContainer {
 		} else if (mode == BattleMode.UseBag) {
 			UseBagClick(mouseX, mouseY);
 		}
-		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
 	private void LevelUpClick(int mouseX, int mouseY) {
@@ -1177,4 +1177,27 @@ public class GuiBattle extends GuiContainer {
 			ClientBattleManager.bagStore.add(new ItemData(itemID, count));
 
 	}
+	
+	 /**
+     * Draws the screen and all the components in it.
+     */
+	@Override
+    public void drawScreen(int par1, int par2, float par3)
+    {
+        this.drawDefaultBackground();
+        int k = this.guiLeft;
+        int l = this.guiTop;
+        this.drawGuiContainerBackgroundLayer(par3, par1, par2);
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        RenderHelper.disableStandardItemLighting();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+       
+        //Forge: Force lighting to be disabled as there are some issue where lighting would
+        //incorrectly be applied based on items that are in the inventory.
+        GL11.glDisable(GL11.GL_LIGHTING);
+        this.drawGuiContainerForegroundLayer(par1, par2);
+        GL11.glEnable(GL11.GL_LIGHTING);
+    }
+
 }

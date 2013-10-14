@@ -104,7 +104,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	 * Moves the entity based on the specified heading. Args: strafe, forward
 	 */
 	@Override
-	public void moveEntityWithHeading(float par1, float par2) {
+	public void moveEntityWithHeading(float strafe, float forward) {
 		boolean movementHandled = false;
 
 		if (riddenByEntity != null && baseStats != null) {
@@ -112,11 +112,11 @@ public abstract class Entity5Rideable extends Entity4Textures {
 													// this.riddenByEntity.rotationYaw;
 			this.rotationPitch = this.riddenByEntity.rotationPitch * 0.5F;
 			this.setRotation(this.rotationYaw, this.rotationPitch);
-			par1 = ((EntityLivingBase) this.riddenByEntity).moveStrafing * 0.5F;
-			rotationYaw -= par1 * 10;
-			par1 = 0;
+			strafe = ((EntityLivingBase) this.riddenByEntity).moveStrafing * 0.5F;
+			rotationYaw -= strafe * 10;
+			strafe = 0;
 			this.rotationYawHead = this.renderYawOffset = this.rotationYaw;
-			par2 = ((EntityLivingBase) this.riddenByEntity).moveForward;
+			forward = ((EntityLivingBase) this.riddenByEntity).moveForward;
 		}
 
 		if (riddenByEntity != null && baseStats != null && (baseStats.canSurf || !baseStats.canSurfSet) && this.inWater) {
@@ -126,7 +126,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			}
 			if (baseStats.canSurf) {
 				double var9 = this.posY;
-				this.moveFlying(par1, par2, jumpMovementFactor);
+				this.moveFlying(strafe, forward, jumpMovementFactor);
 				this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
 				if (this.isCollidedHorizontally
@@ -161,20 +161,17 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 				if (this.onGround) {
 					if (this.isAIEnabled()) {
-						var5 = this.getAIMoveSpeed();
+						var5 = getRideSpeed();
 					} else {
 						var5 = 1;
 					}
 
 					var5 *= var8;
 				} else {
-					if (baseStats.canFly)
-						var5 = 0.1f;
-					else
-						var5 = this.jumpMovementFactor;
+					var5 = getRideSpeed();
 				}
 
-				this.moveFlying(par1, par2, var5);
+				this.moveFlying(strafe, forward, var5);
 				var3 = 0.91F;
 
 				if (this.onGround) {
@@ -198,7 +195,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						this.motionY = 0.0D;
 					}
 				} else {
-					this.motionY -= 0.01D;
+					this.motionY -= 0.02D;
 				}
 
 				this.motionY *= 0.9800000190734863D;
@@ -221,8 +218,109 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			}
 
 		}
-		if (!movementHandled)
-			super.moveEntityWithHeading(par1, par2);
+		if (!movementHandled) {
+			if (riddenByEntity != null && baseStats != null)
+				moveEntityRidden(strafe, forward);
+			super.moveEntityWithHeading(strafe, forward);
+		}
+	}
+
+	private void moveEntityRidden(float strafe, float forward) {
+		double d0;
+
+		if (this.isInWater()) {
+			d0 = this.posY;
+			this.moveFlying(strafe, forward, 0.05F);
+			this.moveEntity(this.motionX, this.motionY, this.motionZ);
+			this.motionX *= 0.800000011920929D;
+			this.motionY *= 0.800000011920929D;
+			this.motionZ *= 0.800000011920929D;
+			this.motionY -= 0.019D;
+
+			if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + d0, this.motionZ)) {
+				this.motionY = 0.30000001192092896D;
+			}
+		} else if (this.handleLavaMovement()) {
+			d0 = this.posY;
+			this.moveFlying(strafe, forward, 0.02F);
+			this.moveEntity(this.motionX, this.motionY, this.motionZ);
+			this.motionX *= 0.6D;
+			this.motionY *= 0.6D;
+			this.motionZ *= 0.6D;
+			this.motionY -= 0.02D;
+
+			if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + d0, this.motionZ)) {
+				this.motionY = 0.30000001192092896D;
+			}
+		} else {
+			float f2 = 0.91F;
+
+			if (this.onGround) {
+				f2 = 0.54600006F;
+				int i = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1,
+						MathHelper.floor_double(this.posZ));
+
+				if (i > 0) {
+					f2 = Block.blocksList[i].slipperiness * 0.91F;
+				}
+			}
+
+			float f3 = 0.16277136F / (f2 * f2 * f2);
+			float f4;
+
+			if (this.onGround) {
+				f4 = getRideSpeed() * f3;
+			} else {
+				f4 = getRideSpeed() * 0.6f;
+			}
+
+			this.moveFlying(strafe, forward, f4);
+			f2 = 0.91F;
+
+			if (this.onGround) {
+				f2 = 0.54600006F;
+				int j = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1,
+						MathHelper.floor_double(this.posZ));
+
+				if (j > 0) {
+					f2 = Block.blocksList[j].slipperiness * 0.91F;
+				}
+			}
+
+			this.moveEntity(this.motionX, this.motionY, this.motionZ);
+
+			if (this.worldObj.isRemote
+					&& (!this.worldObj.blockExists((int) this.posX, 0, (int) this.posZ) || !this.worldObj.getChunkFromBlockCoords((int) this.posX,
+							(int) this.posZ).isChunkLoaded)) {
+				if (this.posY > 0.0D) {
+					this.motionY = -0.1D;
+				} else {
+					this.motionY = 0.0D;
+				}
+			} else {
+				this.motionY -= 0.04D;
+			}
+
+			this.motionY *= 0.9800000190734863D;
+			this.motionX *= (double) f2;
+			this.motionZ *= (double) f2;
+		}
+
+		this.prevLimbSwingAmount = this.limbSwingAmount;
+		d0 = this.posX - this.prevPosX;
+		double d1 = this.posZ - this.prevPosZ;
+		float f6 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
+
+		if (f6 > 1.0F) {
+			f6 = 1.0F;
+		}
+
+		this.limbSwingAmount += (f6 - this.limbSwingAmount) * 0.4F;
+		this.limbSwing += this.limbSwingAmount;
+	}
+
+	private float getRideSpeed() {
+		return 0.08f + 0.05f * stats.Speed / 500f;
 	}
 
 	@Override
@@ -252,10 +350,10 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			if (playerRiding != null) {
 				if (!isInWater() && playerRiding.jump > 0) {
 					if (onGround) {
-						motionY = 0.5f;
 						jump();
+						motionY *= 1f + stats.Speed / 500f;
 					} else if (baseStats.canFly) {
-						motionY += 0.14f;
+						motionY += 0.04f + 0.06f * stats.Speed / 500f;
 						isFlying = true;
 					}
 				} else if (isInWater()) {

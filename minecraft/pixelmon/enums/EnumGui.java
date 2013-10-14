@@ -20,7 +20,8 @@ public enum EnumGui {
 	Doctor(15),
 	PokemonTrade(16),
 	AcceptDeny(17), 
-	Evolution(18);
+	Evolution(18), 
+	ItemDrops(19);
 	
 	private int index;
 	

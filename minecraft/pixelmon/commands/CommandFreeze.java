@@ -1,5 +1,6 @@
-package pixelmon;
+package pixelmon.commands;
 
+import pixelmon.Pixelmon;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

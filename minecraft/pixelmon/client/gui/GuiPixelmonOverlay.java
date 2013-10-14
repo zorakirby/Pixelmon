@@ -38,7 +38,8 @@ public class GuiPixelmonOverlay extends Gui {
 			count = 0;
 			checkEntitysInWorld(Minecraft.getMinecraft().theWorld);
 		}
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null || !isVisible || Minecraft.getMinecraft().gameSettings.hideGUI)
+		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null || !isVisible || Minecraft.getMinecraft().gameSettings.hideGUI
+				|| Minecraft.getMinecraft().currentScreen instanceof GuiItemDrops)
 			return;
 		Minecraft mc = Minecraft.getMinecraft();
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,

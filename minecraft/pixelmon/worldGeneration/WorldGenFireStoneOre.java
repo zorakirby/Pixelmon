@@ -30,7 +30,7 @@ public class WorldGenFireStoneOre extends WorldGenerator implements IWorldGenera
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 30; i++) {
 			int xPos = random.nextInt(16) + chunkX * 16;
 			int zPos = random.nextInt(16) + chunkZ * 16;
 			if (hasLava(world, xPos, zPos))
