@@ -252,7 +252,7 @@ public class PixelmonItems {
 	public static Item tradePanel;
 
 	@Mod.Item(name = "Uno Orb", typeClass = "pixelmon.items.shrineOrbs")
-	public static Item unoOrb;
+	public static ItemShrineOrb unoOrb;
 	@Mod.Item(name = "Dos Orb", typeClass = "pixelmon.items.shrineOrbs")
 	public static Item dosOrb;
 	@Mod.Item(name = "Tres Orb", typeClass = "pixelmon.items.shrineOrbs")
@@ -417,7 +417,7 @@ public class PixelmonItems {
 		LtradeHolderLeft = new PixelmonItem(LtradeHolderLeftID, "tradingmachinepieces/tradingHolderL", "Trade Holder Left");
 		tradePanel = new PixelmonItem(tradePanelID, "tradingmachinepieces/tradingPanel", "Trade Panel");
 
-		unoOrb = new ItemShrineOrb(unoOrbID, EnumShrine.Articuno, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
+		unoOrb = (ItemShrineOrb) new ItemShrineOrb(unoOrbID, EnumShrine.Articuno, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
 		dosOrb = new ItemShrineOrb(dosOrbID, EnumShrine.Zapdos, "dosorb", "Dos Orb").setUnlocalizedName("Dos Orb");
 		tresOrb = new ItemShrineOrb(tresOrbID, EnumShrine.Moltres, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
 
