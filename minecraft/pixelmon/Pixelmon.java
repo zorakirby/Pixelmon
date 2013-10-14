@@ -16,6 +16,7 @@ import pixelmon.client.ClientPacketHandler;
 import pixelmon.client.ClientProxy;
 import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
+import pixelmon.comm.PixelmonPlayerTracker;
 import pixelmon.commands.CommandBattle;
 import pixelmon.commands.CommandFreeze;
 import pixelmon.commands.CommandHeal;
@@ -113,6 +114,8 @@ public class Pixelmon {
 
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
+		GameRegistry.registerPlayerTracker(new PixelmonPlayerTracker());
+		
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
