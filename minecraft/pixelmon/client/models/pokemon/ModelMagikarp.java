@@ -43,6 +43,7 @@ public class ModelMagikarp extends PixelmonModelBase
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5);
         Body.render(f5);
+        Body.setRotationPoint(0, 20, 0);
     }
  
     private void setRotation(PixelmonModelRenderer model, float x, float y, float z)

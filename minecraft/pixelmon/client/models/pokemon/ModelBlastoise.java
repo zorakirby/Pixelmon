@@ -76,6 +76,8 @@ public class ModelBlastoise extends PixelmonModelBase
 		
         skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,
 				leftLegModule, rightLegModule, null);
+        
+        scale = 5;
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)

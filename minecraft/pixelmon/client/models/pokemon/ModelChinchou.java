@@ -31,7 +31,7 @@ public class ModelChinchou extends PixelmonModelBase
         textureWidth = 64;
         textureHeight = 32;
         Body = new PixelmonModelRenderer(this, "Body");
-        Body.setRotationPoint(0, 0, 0);
+        Body.setRotationPoint(0, 24, 0);
         Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/chinchou/ModelChinchouBody.obj")));
         footL = new PixelmonModelRenderer(this, 0, 0);
         footL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/chinchou/ModelChinchouLeftLeg.obj"), 0, 0, 0 ));
@@ -71,6 +71,7 @@ public class ModelChinchou extends PixelmonModelBase
 		
         skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
 				leftLegModule, rightLegModule, null);
+        scale = 4f;
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)

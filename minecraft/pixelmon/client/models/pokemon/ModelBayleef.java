@@ -71,6 +71,7 @@ public class ModelBayleef extends PixelmonModelBase {
 		
 		
 		skeleton = new SkeletonQuadruped(Body, headModule, leftLegModule, rightLegModule, backLeft, backRight, tailModule);
+		scale = 5f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

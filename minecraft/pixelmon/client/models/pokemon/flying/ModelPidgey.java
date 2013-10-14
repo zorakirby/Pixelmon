@@ -52,7 +52,7 @@ public class ModelPidgey extends PixelmonModelBase {
 		float legRotationLimit = 0.8F;
 
 		//skeleton = new SkeletonBird(Body, null, leftWingModule, rightWingModule, null, null);
-
+		scale = 2.5f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

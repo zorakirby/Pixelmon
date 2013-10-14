@@ -26,7 +26,7 @@ public class ModelDrifblim extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 23, 0);
+		Body.setRotationPoint(0, 37.5f, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/drifblim/Body.obj")));
 
 
@@ -34,6 +34,7 @@ public class ModelDrifblim extends PixelmonModelBase {
 		float legRotationLimit = 1.4F;
 
 		skeleton = new SkeletonBase(Body);
+		scale=7f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
