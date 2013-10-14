@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -431,10 +432,16 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		super.moveEntity(motionX, motionY, motionZ);
 	}
 
+	@Override
+	public boolean shouldDismountInWater(Entity rider) {
+		return false;
+	}
+
 	public void unloadEntity() {
 		if (riddenByEntity != null) {
 			riddenByEntity.mountEntity(this);
 			((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
 		}
 	}
+
 }
