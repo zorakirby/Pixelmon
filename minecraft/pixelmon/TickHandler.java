@@ -35,6 +35,9 @@ public class TickHandler implements ITickHandler {
 	boolean checkedForUsername = false;
 	boolean musicCleared = false;
 	boolean foundSounds = false;
+	boolean createdWatcher = false;
+	boolean screenOpen = false;
+	boolean initialised = false;
 
 	private void onPlayerTick(EntityPlayer player) {
 		ItemStack boots = player.getCurrentItemOrArmor(1);
@@ -50,6 +53,18 @@ public class TickHandler implements ITickHandler {
 			}
 		} else {
 			ItemPixelmonBoots.itemHeld = false;
+		}
+
+		if (!(player instanceof EntityPlayerMP)) {
+			if (Minecraft.getMinecraft().currentScreen != null && (!screenOpen || !initialised)) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.GuiOpen));
+				screenOpen = true;
+				initialised = true;
+			} else if (screenOpen && Minecraft.getMinecraft().currentScreen == null || !initialised) {
+				PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.GuiClose));
+				screenOpen = false;
+				initialised = true;
+			}
 		}
 
 	}

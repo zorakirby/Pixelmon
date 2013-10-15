@@ -8,10 +8,12 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.participants.WildPixelmonParticipant;
+import pixelmon.entities.pixelmon.Entity6CanBattle;
 import pixelmon.entities.pixelmon.Entity7HasAI;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumBossMode;
 import pixelmon.storage.PixelmonStorage;
+import pixelmon.storage.PlayerStorage;
 
 public class AIStartBattle extends EntityAIBase {
 	private Entity7HasAI theEntity;
@@ -36,11 +38,11 @@ public class AIStartBattle extends EntityAIBase {
 				if (BattleRegistry.getBattle((EntityPlayer) theEntity.getAttackTarget()) != null)
 					return false;
 				EntityPlayerMP player = (EntityPlayerMP) theEntity.getAttackTarget();
-				if (player.openContainer != player.inventoryContainer)
-					return false;
 				if (((EntityPixelmon) theEntity).belongsTo(player))
 					return false;
 				try {
+					if (PixelmonStorage.PokeballManager.getPlayerStorage(player).guiOpened)
+						return false;
 					if (PixelmonStorage.PokeballManager.getPlayerStorage(player).countAblePokemon() == 0)
 						return false;
 					EntityPixelmon firstPokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).getFirstAblePokemon(player.worldObj);

@@ -27,6 +27,7 @@ public class PacketHandler implements IConnectionHandler, IPacketHandler {
 		handlers.add(new DeleteMove());
 		handlers.add(new Evolution());
 		handlers.add(new Flee());
+		handlers.add(new GuiOpenClose());
 		handlers.add(new HealPokemon());
 		handlers.add(new Movement());
 		handlers.add(new PCClickOnBox());

@@ -3,11 +3,14 @@ package pixelmon.client.gui;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import pixelmon.Pixelmon;
 import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.gui.battles.ClientBattleManager;
+import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.comm.BossDropPacket;
 import pixelmon.config.PixelmonItemsHeld;
+import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 import pixelmon.items.ItemHeld;
 import net.minecraft.client.Minecraft;
@@ -42,6 +45,12 @@ public class GuiItemDrops extends GuiContainer {
 	int ticks = 0;
 
 	@Override
+	public void onGuiClosed() {
+		super.onGuiClosed();
+
+	}
+
+	@Override
 	public void updateScreen() {
 		super.updateScreen();
 		if (ticks > 0)
@@ -49,12 +58,30 @@ public class GuiItemDrops extends GuiContainer {
 	}
 
 	@Override
+	protected void keyTyped(char par1, int par2) {
+		super.keyTyped(par1, par2);
+		if (par2 == 1) {
+			if (GuiBattle.evolveList.size() > 0) {
+				int pokemonID = GuiBattle.evolveList.get(0);
+				GuiBattle.evolveList.remove(0);
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+			}
+		}
+	}
+
+	@Override
 	protected void mouseClicked(int i, int j, int par3) {
 		int xPos = (width - 280) / 2 + 122;
 		int yPos = (height - 182) / 2 + 150;
 		int buttonWidth = 50, buttonHeight = 20;
-		if (i >= xPos && i <= xPos + buttonWidth && j >= yPos && j <= yPos + buttonWidth)
+		if (i >= xPos && i <= xPos + buttonWidth && j >= yPos && j <= yPos + buttonWidth) {
 			mc.thePlayer.closeScreen();
+			if (GuiBattle.evolveList.size() > 0) {
+				int pokemonID = GuiBattle.evolveList.get(0);
+				GuiBattle.evolveList.remove(0);
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+			}
+		}
 	}
 
 	boolean isFirst = true;
@@ -102,8 +129,8 @@ public class GuiItemDrops extends GuiContainer {
 			int itemXPos = (width - 280) / 2 + 228 - fontRenderer.getStringWidth(itemName) / 2;
 			int itemYPos = (height - 182) / 2 + 160;
 			fontRenderer.drawString(itemName, itemXPos, itemYPos, 0xffffff);
-			itemXPos = (width/3 - 280/3) / 2 + 208/3;
-			itemYPos = (height/3 - 182/3) / 2 + 93/3;
+			itemXPos = (width / 3 - 280 / 3) / 2 + 208 / 3;
+			itemYPos = (height / 3 - 182 / 3) / 2 + 93 / 3;
 			GL11.glScalef(3f, 3, 3);
 			itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(drops.itemIds[mouseOverIndex], 1, 0),
 					itemXPos, itemYPos);

@@ -224,4 +224,5 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	public void wipeLastMoveUsed() {
 		lastMoveUsed = null;
 	}
+
 }

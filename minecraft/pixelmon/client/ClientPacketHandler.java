@@ -13,7 +13,9 @@ import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.status.Transformed;
 import pixelmon.client.gui.ClientTradingManager;
 import pixelmon.client.gui.GuiEvolve;
+import pixelmon.client.gui.GuiItemDrops;
 import pixelmon.client.gui.GuiPixelmonOverlay;
+import pixelmon.client.gui.GuiTrading;
 import pixelmon.client.gui.battles.ClientBattleManager;
 import pixelmon.client.gui.battles.GuiAcceptDeny;
 import pixelmon.client.gui.battles.ClientBattleManager.AttackData;
@@ -193,7 +195,8 @@ public class ClientPacketHandler implements IPacketHandler {
 				int pokemonID = dataStream.readInt();
 				String newPokemonName = Packet.readString(dataStream, 64);
 				PixelmonServerStore.evolutionTarget = newPokemonName;
-				if (GuiBattle.battleEnded)
+				if (GuiBattle.battleEnded && !(Minecraft.getMinecraft().currentScreen instanceof GuiTrading)
+						&& !(Minecraft.getMinecraft().currentScreen instanceof GuiItemDrops))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID,
 							0, 0);
 				else {

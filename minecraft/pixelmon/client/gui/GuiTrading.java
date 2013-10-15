@@ -12,10 +12,15 @@ import net.minecraft.entity.EntityLivingBase;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import pixelmon.Pixelmon;
+import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.gui.battles.ClientBattleManager;
+import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
@@ -395,6 +400,11 @@ public class GuiTrading extends GuiContainer {
 		if (drawButtonClose(par1, par2)) {
 			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
 			mc.thePlayer.closeScreen();
+			if (GuiBattle.evolveList.size() > 0) {
+				int pokemonID = GuiBattle.evolveList.get(0);
+				GuiBattle.evolveList.remove(0);
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+			}
 		}
 	}
 

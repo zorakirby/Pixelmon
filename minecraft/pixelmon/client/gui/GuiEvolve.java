@@ -47,6 +47,18 @@ public class GuiEvolve extends GuiCamera {
 
 		currentPokemon = getEntity(pokemonID);
 		if (currentPokemon == null) {
+			Minecraft mc = Minecraft.getMinecraft();
+			PixelmonDataPacket p = ServerStorageDisplay.get(pokemonID);
+			currentPokemon = (EntityPixelmon) PixelmonEntityList.createEntityByName(p.name, mc.theWorld);
+			currentPokemon.setPositionAndRotation(mc.thePlayer.posX + 1, mc.thePlayer.posY + 1, mc.thePlayer.posZ + 1, mc.thePlayer.rotationYaw + 180,
+					mc.thePlayer.rotationPitch);
+			currentPokemon.setPokemonId(p.pokemonID);
+			currentPokemon.setIsShiny(p.isShiny);
+			currentPokemon.setGrowth(p.growth);
+			currentPokemon.isMale = p.isMale;
+			currentPokemon.releaseFromPokeball();
+		}
+		if (currentPokemon == null) {
 			Minecraft.getMinecraft().thePlayer.closeScreen();
 			return;
 		}

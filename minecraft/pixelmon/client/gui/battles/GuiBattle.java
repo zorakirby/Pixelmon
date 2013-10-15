@@ -78,7 +78,7 @@ public class GuiBattle extends GuiCamera {
 		battleEnded = false;
 		limitFrameRate = Minecraft.getMinecraft().gameSettings.limitFramerate;
 	}
-	
+
 	public GuiBattle() {
 		super(Minecraft.getMinecraft().thePlayer.inventoryContainer);
 		this.mode = BattleMode.Waiting;
@@ -95,17 +95,16 @@ public class GuiBattle extends GuiCamera {
 		// mc.gameSettings.thirdPersonView = 0;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = mc.thePlayer;
-		if (camera != null){
+		if (camera != null) {
 			CameraTarget tar = camera.getTarget();
-			if(tar != null){
-				if(tar.getTargetData() != mc.thePlayer){
-					if(tar instanceof CameraTargetEntity)
+			if (tar != null) {
+				if (tar.getTargetData() != mc.thePlayer) {
+					if (tar instanceof CameraTargetEntity)
 						tar.setTargetData(mc.thePlayer);
 					else
 						camera.setTarget(new CameraTargetEntity(mc.thePlayer));
 				}
-			}
-			else
+			} else
 				camera.setTarget(new CameraTargetEntity(mc.thePlayer));
 		}
 	}
@@ -115,17 +114,16 @@ public class GuiBattle extends GuiCamera {
 		// mc.gameSettings.thirdPersonView = 1;
 		// mc.gameSettings.hideGUI = true;
 		// mc.renderViewEntity = ClientBattleManager.getUserPokemon();
-		if (camera != null){
+		if (camera != null) {
 			CameraTarget tar = camera.getTarget();
-			if(tar != null){
-				if(tar.getTargetData() != ClientBattleManager.getUserPokemon()){
-					if(tar instanceof CameraTargetEntity)
+			if (tar != null) {
+				if (tar.getTargetData() != ClientBattleManager.getUserPokemon()) {
+					if (tar instanceof CameraTargetEntity)
 						tar.setTargetData(ClientBattleManager.getUserPokemon());
 					else
 						camera.setTarget(new CameraTargetEntity(ClientBattleManager.getUserPokemon()));
 				}
-			}
-			else
+			} else
 				camera.setTarget(new CameraTargetEntity(mc.thePlayer));
 		}
 	}
@@ -134,12 +132,13 @@ public class GuiBattle extends GuiCamera {
 		GuiPixelmonOverlay.isVisible = true;
 		mc.gameSettings.limitFramerate = limitFrameRate;
 		mc.thePlayer.closeScreen();
-		if (evolveList.size() > 0) {
+		if (PixelmonServerStore.bossDrops != null)
+			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ItemDrops.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+		else if (evolveList.size() > 0) {
 			int pokemonID = evolveList.get(0);
 			evolveList.remove(0);
 			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
-		} else if (PixelmonServerStore.bossDrops != null)
-			Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ItemDrops.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+		}
 	}
 
 	@Override
@@ -1177,27 +1176,27 @@ public class GuiBattle extends GuiCamera {
 			ClientBattleManager.bagStore.add(new ItemData(itemID, count));
 
 	}
-	
-	 /**
-     * Draws the screen and all the components in it.
-     */
+
+	/**
+	 * Draws the screen and all the components in it.
+	 */
 	@Override
-    public void drawScreen(int par1, int par2, float par3)
-    {
-        this.drawDefaultBackground();
-        int k = this.guiLeft;
-        int l = this.guiTop;
-        this.drawGuiContainerBackgroundLayer(par3, par1, par2);
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        RenderHelper.disableStandardItemLighting();
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-       
-        //Forge: Force lighting to be disabled as there are some issue where lighting would
-        //incorrectly be applied based on items that are in the inventory.
-        GL11.glDisable(GL11.GL_LIGHTING);
-        this.drawGuiContainerForegroundLayer(par1, par2);
-        GL11.glEnable(GL11.GL_LIGHTING);
-    }
+	public void drawScreen(int par1, int par2, float par3) {
+		this.drawDefaultBackground();
+		int k = this.guiLeft;
+		int l = this.guiTop;
+		this.drawGuiContainerBackgroundLayer(par3, par1, par2);
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		RenderHelper.disableStandardItemLighting();
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+		// Forge: Force lighting to be disabled as there are some issue where
+		// lighting would
+		// incorrectly be applied based on items that are in the inventory.
+		GL11.glDisable(GL11.GL_LIGHTING);
+		this.drawGuiContainerForegroundLayer(par1, par2);
+		GL11.glEnable(GL11.GL_LIGHTING);
+	}
 
 }

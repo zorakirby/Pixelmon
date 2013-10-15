@@ -46,7 +46,8 @@ public class PlayerStorage {
 		if (MinecraftServer.getServer() instanceof DedicatedServer)
 			this.saveFile = Pixelmon.modDirectory + "/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
 		else
-			this.saveFile = Pixelmon.modDirectory + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username + ".pk";
+			this.saveFile = Pixelmon.modDirectory + "/saves/" + player.worldObj.getSaveHandler().getWorldDirectoryName() + "/pokemon/" + player.username
+					+ ".pk";
 		pokedex = new Pokedex(player);
 	}
 
@@ -537,5 +538,4 @@ public class PlayerStorage {
 		}
 		return -1;
 	}
-
 }
