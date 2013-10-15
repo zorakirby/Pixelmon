@@ -8,6 +8,7 @@ import pixelmon.config.PixelmonBlocks;
 import pixelmon.config.PixelmonCreativeTabs;
 import pixelmon.config.PixelmonItems;
 import pixelmon.enums.EnumShrine;
+import pixelmon.items.ItemShrineOrb;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -84,21 +85,33 @@ public class BlockShrine extends BlockContainer {
 					|| par5EntityPlayer.getHeldItem().getItem().itemID == PixelmonItems.tresOrb.itemID)
 				if (this.rockType == EnumShrine.Articuno) {
 					if (par5EntityPlayer.getHeldItem().getItem().itemID == PixelmonItems.unoOrb.itemID) {
-						uno = true;
-						--par5EntityPlayer.getHeldItem().stackSize;
-						par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+						boolean filled = ItemShrineOrb.isFilled;
+						if (ItemShrineOrb.isFilled = true) {
+							uno = true;
+							--par5EntityPlayer.getHeldItem().stackSize;
+							ItemShrineOrb.orbExp = 0;
+							par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+						}else{
+							
+						}
 					}
 				} else if (this.rockType == EnumShrine.Zapdos) {
 					if (par5EntityPlayer.getHeldItem().getItem().itemID == PixelmonItems.dosOrb.itemID) {
-						dos = true;
-						--par5EntityPlayer.getHeldItem().stackSize;
-						par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+						if (ItemShrineOrb.isFilled = true) {
+							dos = true;
+							ItemShrineOrb.orbExp = 0;
+							--par5EntityPlayer.getHeldItem().stackSize;
+							par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+						}
 					}
 				} else if (this.rockType == EnumShrine.Moltres) {
 					if (par5EntityPlayer.getHeldItem().getItem().itemID == PixelmonItems.tresOrb.itemID) {
-						tres = true;
-						--par5EntityPlayer.getHeldItem().stackSize;
-						par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+						if (ItemShrineOrb.isFilled = true) {
+							tres = true;
+							ItemShrineOrb.orbExp = 0;
+							--par5EntityPlayer.getHeldItem().stackSize;
+							par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+						}
 					} else {
 						return false;
 					}

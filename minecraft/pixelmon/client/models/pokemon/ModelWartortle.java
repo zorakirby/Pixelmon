@@ -108,6 +108,7 @@ public class ModelWartortle extends PixelmonModelBase {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		Body.render(f5);
+		scale = 8.3f;
 	}
 
 	private void setRotation(PixelmonModelRenderer model, float x, float y,

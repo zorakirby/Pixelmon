@@ -1,7 +1,8 @@
-package pixelmon.client.models.pokemon;
+package pixelmon.client.models.pokemon.flying;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import pixelmon.client.models.ModelOBJWrapper;
@@ -20,38 +21,34 @@ import pixelmon.client.models.animations.biped.SkeletonBiped;
 
 public class ModelFlygon extends PixelmonModelBase {
 
-	PixelmonModelRenderer Body, Lleg, RLeg;
+	PixelmonModelRenderer Body, RWing, LWing;
 
 	public ModelFlygon() {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/Body.obj")));
-		Body.setRotationPoint(0, 39, 0);
-		Lleg = new PixelmonModelRenderer(this, 0, 0);
-		Lleg.setRotationPoint(-0.01F, 3.446F, -1.08F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/Leftleg.obj")));
+		Body.setRotationPoint(0, 37, 0);
+		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/flying/Body.obj")));
 
-		RLeg = new PixelmonModelRenderer(this, 0, 0);
-		RLeg.setRotationPoint(-0.01F, 3.446F, 1.08F);
-		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/RightLeg.obj")));
+		LWing = new PixelmonModelRenderer(this, 0, 0);
+		LWing.setRotationPoint(4.0F, 6.943F, 0.056F);
+		LWing.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/flying/LeftWing.obj")));
 
-		Body.addChild(Lleg);
-		Body.addChild(RLeg);
-
+		RWing = new PixelmonModelRenderer(this, 0, 0);
+		RWing.setRotationPoint(4.0F, 6.943F, -0.053F);
+		RWing.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/flying/RightWing.obj")));
+		Body.addChild(LWing);
+		Body.addChild(RWing);
+		
 		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
-
 		setRotation(Body, radians, 0, 0);
 		float legspeed = 0.5F;
 		float legRotationLimit = 0.8F;
+		scale = 3.2F;
 
-		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legspeed);
-		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
-		Body.rotateAngleY = 89.75F;
-		scale = 3.2f;
 
-		skeleton = new SkeletonBiped(Body, null, null, null, leftLeg, rightLeg, null);
+		skeleton = new SkeletonBase(Body);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
@@ -67,5 +64,7 @@ public class ModelFlygon extends PixelmonModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
+		LWing.rotateAngleX = MathHelper.cos((float) Math.toRadians(35)) * 1 * MathHelper.cos(f2);
+		RWing.rotateAngleX = MathHelper.cos((float) Math.toRadians(35)) * -1 * MathHelper.cos(f2);
 	}
 }
