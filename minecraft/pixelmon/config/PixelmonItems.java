@@ -11,6 +11,7 @@ import pixelmon.enums.EnumEthers;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPotions;
 import pixelmon.enums.EnumRodType;
+import pixelmon.enums.EnumShrine;
 import pixelmon.enums.EnumStatusAilmentHealers;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEther;
@@ -241,17 +242,17 @@ public class PixelmonItems {
 	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemFishingRod")
 	public static Item superRod;
 
-	@Mod.Item(name = "Tradeing Machine Monitor", typeClass = "pixelmon.items.ItemTradingMachine")
+	@Mod.Item(name = "Trading Machine Monitor", typeClass = "pixelmon.items.ItemTradingMachine")
 	public static Item tradeMonitor;
-	@Mod.Item(name = "Tradeing Machine Holder Right", typeClass = "pixelmon.items.ItemTradingMachine")
+	@Mod.Item(name = "Trading Machine Holder Right", typeClass = "pixelmon.items.ItemTradingMachine")
 	public static Item tradeHolderRight;
-	@Mod.Item(name = "Tradeing Machine Holder Left", typeClass = "pixelmon.items.ItemTradingMachineL")
+	@Mod.Item(name = "Trading Machine Holder Left", typeClass = "pixelmon.items.ItemTradingMachineL")
 	public static Item LtradeHolderLeft;
-	@Mod.Item(name = "Tradeing Machine Control Panel", typeClass = "pixelmon.items.ItemTradingMachine")
+	@Mod.Item(name = "Trading Machine Control Panel", typeClass = "pixelmon.items.ItemTradingMachine")
 	public static Item tradePanel;
 
 	@Mod.Item(name = "Uno Orb", typeClass = "pixelmon.items.shrineOrbs")
-	public static Item unoOrb;
+	public static ItemShrineOrb unoOrb;
 	@Mod.Item(name = "Dos Orb", typeClass = "pixelmon.items.shrineOrbs")
 	public static Item dosOrb;
 	@Mod.Item(name = "Tres Orb", typeClass = "pixelmon.items.shrineOrbs")
@@ -416,9 +417,9 @@ public class PixelmonItems {
 		LtradeHolderLeft = new PixelmonItem(LtradeHolderLeftID, "tradingmachinepieces/tradingHolderL", "Trade Holder Left");
 		tradePanel = new PixelmonItem(tradePanelID, "tradingmachinepieces/tradingPanel", "Trade Panel");
 
-		unoOrb = new ItemShrineOrb(unoOrbID, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
-		dosOrb = new ItemShrineOrb(dosOrbID, "dosorb", "Dos Orb").setUnlocalizedName("Dos Orb");
-		tresOrb = new ItemShrineOrb(tresOrbID, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
+		unoOrb = (ItemShrineOrb) new ItemShrineOrb(unoOrbID, EnumShrine.Articuno, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
+		dosOrb = new ItemShrineOrb(dosOrbID, EnumShrine.Zapdos, "dosorb", "Dos Orb").setUnlocalizedName("Dos Orb");
+		tresOrb = new ItemShrineOrb(tresOrbID, EnumShrine.Moltres, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
 
 		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "mossyrock", "Mossy Rock");
 		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);

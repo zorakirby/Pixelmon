@@ -1,6 +1,6 @@
 package pixelmon.entities.pixelmon.stats;
 
-import org.lwjgl.util.vector.Vector3f;
+import pixelmon.tools.Vector3f;
 
 public class RidingOffsets {
 	public Vector3f standing;

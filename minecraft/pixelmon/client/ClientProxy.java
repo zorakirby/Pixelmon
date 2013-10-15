@@ -8,6 +8,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
@@ -59,6 +60,7 @@ import pixelmon.client.render.tileEntities.RenderTileEntityTradingMachine;
 import pixelmon.client.render.tileEntities.RenderTileFossilCleaner;
 import pixelmon.client.render.tileEntities.RenderTileFossilMachine;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.config.PixelmonItems;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -66,6 +68,7 @@ import pixelmon.entities.pokeballs.EntityPokeBall;
 import pixelmon.entities.projectiles.EntityHook;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
+import pixelmon.items.ItemRendererExperience;
 import pixelmon.sounds.Sounds;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -87,7 +90,9 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShrine.class, new RenderTileEntityShrine());
-
+		MinecraftForgeClient.registerItemRenderer(PixelmonItems.unoOrb.itemID, new ItemRendererExperience());
+		MinecraftForgeClient.registerItemRenderer(PixelmonItems.dosOrb.itemID, new ItemRendererExperience());
+		MinecraftForgeClient.registerItemRenderer(PixelmonItems.tresOrb.itemID, new ItemRendererExperience());
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 	}
