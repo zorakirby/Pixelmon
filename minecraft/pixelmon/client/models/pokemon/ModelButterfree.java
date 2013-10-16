@@ -59,8 +59,6 @@ public class ModelButterfree extends PixelmonModelBase
         
         ModuleHead headModule = new ModuleHead(Head);
         
-        
-		
         skeleton = new SkeletonBiped(Body, headModule, null, null, null, null, null);
     }
 
@@ -69,6 +67,7 @@ public class ModelButterfree extends PixelmonModelBase
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5);
         Body.render(f5);
+        scale = 3.5F;
     }
 
     private void setRotation(PixelmonModelRenderer model, float x, float y, float z)
