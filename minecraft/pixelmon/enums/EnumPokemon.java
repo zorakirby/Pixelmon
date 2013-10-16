@@ -100,6 +100,7 @@ public enum EnumPokemon {
 	Koffing("Koffing"),
 	Krabby("Krabby"),
 	Krokorok("Krokorok"),
+	Lanturn("Lanturn"),
 	Lapras("Lapras"),
 	Leafeon("Leafeon"),
 	Lickitung("Lickitung"),
