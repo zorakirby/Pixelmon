@@ -74,7 +74,7 @@ public class ModelFeraligatr extends PixelmonModelBase {
 		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
 		ModuleTailBasic tailmodule = new ModuleTailBasic(tail, .2F, .05F, legspeed);
-
+		scale = 7F;
 		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm, leftLeg, rightLeg, tailmodule);
 	}
 

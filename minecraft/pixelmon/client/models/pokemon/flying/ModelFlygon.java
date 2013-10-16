@@ -39,14 +39,14 @@ public class ModelFlygon extends PixelmonModelBase {
 		RWing.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/flying/RightWing.obj")));
 		Body.addChild(LWing);
 		Body.addChild(RWing);
-		
+
 		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
 		setRotation(Body, radians, 0, 0);
 		float legspeed = 0.5F;
 		float legRotationLimit = 0.8F;
-		scale = 3.2F;
-
+		scale = 2.5f;
+		Body.rotateAngleY = 1.5F;
 
 		skeleton = new SkeletonBase(Body);
 	}
