@@ -226,6 +226,8 @@ public class GuiEvolve extends GuiCamera {
 			int xPos = width / 2 - 30;
 			int yPos = height / 4 - 15;
 			if (mouseX >= xPos && mouseX <= xPos + 60 && mouseY >= yPos && mouseY <= yPos + 17) {
+				Packet250CustomPayload packet = PacketCreator.createPacket(EnumPackets.StopEvolution, currentPokemon.getPokemonId());
+				PacketDispatcher.sendPacketToServer(packet);
 				stage = 4;
 			}
 		} else if (stage == 3 || stage == 4) {
