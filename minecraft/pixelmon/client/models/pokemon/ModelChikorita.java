@@ -55,7 +55,7 @@ public class ModelChikorita extends PixelmonModelBase {
 		float legspeed = 0.5F;
 		float legRotationLimit = 1.4F;
 
-		int degrees = 90;
+		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
 
 		setRotation(Body, radians, 0, 0);

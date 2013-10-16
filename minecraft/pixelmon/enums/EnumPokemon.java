@@ -69,6 +69,7 @@ public enum EnumPokemon {
 	Flygon("Flygon"),
 	Gastly("Gastly"),
 	Gengar("Gengar"),
+	Girafarig("Girafarig"),
 	Geodude("Geodude"),
 	Glaceon("Glaceon"),
 	Gloom("Gloom"),
