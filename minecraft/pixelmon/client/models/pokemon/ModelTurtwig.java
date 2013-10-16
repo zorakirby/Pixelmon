@@ -55,7 +55,7 @@ public class ModelTurtwig extends PixelmonModelBase {
 		float legspeed = 0.5F;
 		float legRotationLimit = 1.4F;
 
-		int degrees = 90;
+		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
 
 		setRotation(Body, radians, 0, 0);
@@ -87,6 +87,5 @@ public class ModelTurtwig extends PixelmonModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-		Body.rotateAngleX = 15.6F;
 	}
 }
