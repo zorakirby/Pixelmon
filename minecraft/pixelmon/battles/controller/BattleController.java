@@ -142,7 +142,7 @@ public class BattleController {
 					if (turn == 0)
 						PickingMoves.checkMoveSpeed(this);
 					for (BattleParticipant p : participants)
-						if (!p.currentPokemon().worldObj.loadedEntityList.contains(p.currentPokemon())) {
+						if (!p.currentPokemon().isLoaded()) {
 							p.currentPokemon().releaseFromPokeball();
 							p.currentPokemon().hurtResistantTime = 0;
 						}

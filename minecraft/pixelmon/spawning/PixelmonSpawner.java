@@ -187,7 +187,7 @@ public class PixelmonSpawner implements ITickHandler {
 										int ind = (rand.nextInt(preEvolutions.length + 1));
 										if (ind > preEvolutions.length - 1)
 											pokemonName = lastPokemon;
-										else
+										else if (preEvolutions[ind] != null)
 											pokemonName = preEvolutions[ind].name;
 									}
 									EntityLiving pokemon;

@@ -56,7 +56,7 @@ public class RenderTileFossilCleaner extends TileEntitySpecialRenderer {
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F); // rotate based on metadata
 		GL11.glScalef(1.0F, -1F, -1F);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		bindTexture(RenderResources.fossilCleaningMachine);
 		if (tileEntity.isOn())
 			model.rotateModel(tileEntity);

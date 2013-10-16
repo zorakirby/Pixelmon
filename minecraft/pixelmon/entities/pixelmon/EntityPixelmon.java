@@ -1,5 +1,6 @@
 package pixelmon.entities.pixelmon;
 
+import java.util.List;
 import java.util.ArrayList;
 
 import cpw.mods.fml.relauncher.Side;
@@ -306,9 +307,10 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public EnumPokemon[] getPreEvolutions() {
 		return baseStats.preEvolutions;
 	}
-	
+
 	// To disable Leashing
-	public void func_110162_b(Entity par1Entity, boolean par2) {};
+	public void func_110162_b(Entity par1Entity, boolean par2) {
+	};
 
 	// Client Side for rendering
 	public int evolving = 0;
@@ -322,5 +324,16 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void startEvolution(String evolutionName, boolean fromLevelUp) {
 		new EvolutionQuery(this, evolutionName, fromLevelUp);
-	};
+	}
+
+	public boolean isLoaded() {
+		List entityList = worldObj.loadedEntityList;
+		for (Object entity : entityList) {
+			if (entity instanceof EntityPixelmon) {
+				if (((EntityPixelmon) entity).getPokemonId() == getPokemonId())
+					return true;
+			}
+		}
+		return false;
+	}
 }
