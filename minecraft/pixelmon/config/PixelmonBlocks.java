@@ -6,27 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import pixelmon.blocks.BlockAnvil;
-import pixelmon.blocks.BlockBauxiteOre;
-import pixelmon.blocks.BlockEvolutionRock;
-import pixelmon.blocks.BlockEvolutionStoneOre;
-import pixelmon.blocks.BlockFossil;
-import pixelmon.blocks.BlockFossilCleaner;
-import pixelmon.blocks.BlockFossilMachine;
-import pixelmon.blocks.BlockHealer;
-import pixelmon.blocks.BlockPC;
-import pixelmon.blocks.BlockShrine;
-//import pixelmon.blocks.BlockPotionMaking;
-import pixelmon.blocks.BlockTradeMachine;
-import pixelmon.blocks.TileEntityAnvil;
-import pixelmon.blocks.TileEntityEvolutionRock;
-import pixelmon.blocks.TileEntityFossilCleaner;
-import pixelmon.blocks.TileEntityFossilMachine;
-import pixelmon.blocks.TileEntityHealer;
-import pixelmon.blocks.TileEntityPC;
-import pixelmon.blocks.TileEntityShrine;
-//import pixelmon.blocks.TileEntityPotionMaking;
-import pixelmon.blocks.TileEntityTradeMachine;
+import pixelmon.blocks.*;
+import pixelmon.blocks.*;
 import pixelmon.enums.EnumEvolutionRock;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumShrine;
@@ -120,7 +101,7 @@ public class PixelmonBlocks {
 
 		healer = new BlockHealer(pokemonHealerIdleId);
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f, "Thunder Stone Ore");
-		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f, "Leaf Stone Ore");
+		leafStoneOre = new BlockLeafEvolutionOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f, "Leaf Stone Ore");
 		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, EnumEvolutionStone.Waterstone, 3.0f, "Water Stone Ore");
 		fireStoneOre = new BlockEvolutionStoneOre(fireStoneOreId, EnumEvolutionStone.Firestone, 3.0f, "Fire Stone Ore");
 		pc = new BlockPC(pcId, 0);
@@ -130,8 +111,7 @@ public class PixelmonBlocks {
 		fossil = new BlockFossil(fossilId).setHardness(5f);
 		tradeMachine = new BlockTradeMachine(tradeMachineId);
 		fossilCleaner = new BlockFossilCleaner(fossilCleanerId);
-		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setHardness(5f)
-				.setCreativeTab(PixelmonCreativeTabs.natural);
+		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
 		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
 
 		shrineUno = new BlockShrine(shrineUnoID, Material.rock, EnumShrine.Articuno).setBlockUnbreakable().setUnlocalizedName("Articuno");
@@ -155,7 +135,6 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(shrineUno, "Articuno Shrine");
 		GameRegistry.registerBlock(shrineDos, "Zapdos Shrine");
 		GameRegistry.registerBlock(shrineTres, "Moltres Shrine");
-
 
 		MinecraftForge.setBlockHarvestLevel(bauxite, "pickaxe", 2);
 
