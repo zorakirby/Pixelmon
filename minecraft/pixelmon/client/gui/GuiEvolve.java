@@ -180,6 +180,8 @@ public class GuiEvolve extends GuiCamera {
 		p.lengthDiff = 1f / currentPokemon.lengthDiff;
 		p.setGrowth(currentPokemon.getGrowth());
 		p.setIsShiny(currentPokemon.getIsShiny());
+		if (currentPokemon.getDataWatcher().getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1)
+			p.getDataWatcher().updateObject(EntityPixelmon.dwRoasted, (short) 2);
 		currentPokemon.stopRender = true;
 		currentPokemon.catchInPokeball();
 		currentPokemon = p;
