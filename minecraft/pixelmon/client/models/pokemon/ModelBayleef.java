@@ -87,6 +87,5 @@ public class ModelBayleef extends PixelmonModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-		Body.rotateAngleX = 15.6F;
 	}
 }

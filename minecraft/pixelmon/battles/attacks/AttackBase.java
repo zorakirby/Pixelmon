@@ -36,6 +36,8 @@ public class AttackBase {
 		attackCategory = Attack.getAttackCategory(rs.getInt("MOVECATEGORYID"));
 		basePower = rs.getInt("POWER");
 		accuracy = rs.getInt("ACCURACY");
+		if (rs.wasNull())
+		accuracy = -1;
 		isHM = rs.getInt("HMID") != -1;
 		makesContact = rs.getBoolean("MAKESCONTACT");
 		description = rs.getString("DESCRIPTION");
