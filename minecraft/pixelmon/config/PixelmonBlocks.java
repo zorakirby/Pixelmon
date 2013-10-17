@@ -132,9 +132,9 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(fossil, "Fossil");
 		GameRegistry.registerBlock(tradeMachine, "Trading Machine");
 		GameRegistry.registerBlock(fossilCleaner, "Fossil Cleaner");
-		GameRegistry.registerBlock(shrineUno, "Articuno Shrine");
-		GameRegistry.registerBlock(shrineDos, "Zapdos Shrine");
-		GameRegistry.registerBlock(shrineTres, "Moltres Shrine");
+		//GameRegistry.registerBlock(shrineUno, "Articuno Shrine");
+		//GameRegistry.registerBlock(shrineDos, "Zapdos Shrine");
+		//GameRegistry.registerBlock(shrineTres, "Moltres Shrine");
 
 		MinecraftForge.setBlockHarvestLevel(bauxite, "pickaxe", 2);
 
@@ -145,7 +145,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerTileEntity(TileEntityTradeMachine.class, "Trade Machine");
 		GameRegistry.registerTileEntity(TileEntityFossilCleaner.class, "Fossil Cleaner");
 		GameRegistry.registerTileEntity(TileEntityEvolutionRock.class, "Evolution Rock");
-		GameRegistry.registerTileEntity(TileEntityShrine.class, "Bird Shrine");
+		//GameRegistry.registerTileEntity(TileEntityShrine.class, "Bird Shrine");
 
 		PixelmonBlocksApricornTrees.registerBlocks();
 	}
