@@ -48,7 +48,7 @@ public class ModelTyphlosion extends PixelmonModelBase {
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
 		Lleg.setRotationPoint(1.47F, 2.56F, 0.13F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/typhlosion/Leftleg.obj")));
+		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/typhlosion/LeftLeg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
 		RLeg.setRotationPoint(-1.47F, 2.56F, 0.13F);

@@ -30,7 +30,7 @@ public class ModelFlygon extends PixelmonModelBase {
 		Body.setRotationPoint(0, 40, 0);
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
 		Lleg.setRotationPoint(-0.01F, 3.446F, -1.08F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/Leftleg.obj")));
+		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/LeftLeg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
 		RLeg.setRotationPoint(-0.01F, 3.446F, 1.08F);
