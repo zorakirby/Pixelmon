@@ -121,18 +121,20 @@ public class GuiAcceptDeny extends GuiContainer {
 		// Player2
 		mc.renderEngine.bindTexture(player2Name);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 56 + ticks * 50, (height - 182) / 2 + 103, 145, 17, 0, 0, 1, 1, zLevel);
-		drawEntity(Minecraft.getMinecraft().thePlayer, (width - 280) / 2 + 202 + ticks * 50, (height - 182) / 2 + 76, 20, 0, 0);
+		drawEntity(mc.theWorld.getPlayerEntityByName(opponent.opponentName), (width - 280) / 2 + 202 + ticks * 50, (height - 182) / 2 + 76, 20, 0, 0);
 		mc.renderEngine.bindTexture(player2Frame);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 199 + ticks * 50, (height - 182) / 2 + 74, 65, 65, 0, 0, 1, 1, zLevel);
 		mc.renderEngine.bindTexture(pokeballHolder);
 		GuiHelper.drawImageQuad((width - 280) / 2 + 118 + ticks * 50, (height - 182) / 2 + 121, 80, 17, 0, 0, 1, 1, zLevel);
 		fontRenderer.drawString(opponent.opponentName, (width - 280) / 2 + 188 - fontRenderer.getStringWidth(opponent.opponentName) + ticks * 50,
 				(height - 182) / 2 + 108, 0xffffff);
-		//		fontRenderer.drawString("Francis", (width - 280) / 2 + 188 - fontRenderer.getStringWidth("Francis") + ticks * 50, (height - 182) / 2 + 108, 0xffffff);
+		// fontRenderer.drawString("Francis", (width - 280) / 2 + 188 -
+		// fontRenderer.getStringWidth("Francis") + ticks * 50, (height - 182) /
+		// 2 + 108, 0xffffff);
 
 		pos = 0;
 		for (int pid : opponent.pokeballs) {
-//		for (int pid : pokeballs1) {
+			// for (int pid : pokeballs1) {
 			if (pid != -999) {
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				if (pid < 0) {
@@ -141,8 +143,8 @@ public class GuiAcceptDeny extends GuiContainer {
 					GL11.glColor4f(0.4F, 0.4F, 0.4F, 1.0F);
 				}
 				Item pball = EnumPokeballs.getFromIndex(pid).getItem();
-				itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(pball), (width - 280) / 2 + 120 + pos * 12
-						+ ticks * 50, (height - 182) / 2 + 121);
+				itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(pball), (width - 280) / 2 + 120 + pos
+						* 12 + ticks * 50, (height - 182) / 2 + 121);
 			}
 			pos++;
 		}
