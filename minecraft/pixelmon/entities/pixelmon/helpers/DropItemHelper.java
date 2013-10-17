@@ -21,7 +21,7 @@ public class DropItemHelper {
 	}
 
 	public int getDropItemID() {
-		if (!PixelmonConfig.pokemonDropsEnabled || pixelmon.getOwner() != null || pixelmon.getTrainer() != null)
+		if (!PixelmonConfig.pokemonDropsEnabled || pixelmon.hasOwner() || pixelmon.getTrainer() != null)
 			return 0;
 		if (pixelmon.getBossMode() != EnumBossMode.Normal) {
 			dropBossItems();

@@ -19,7 +19,7 @@ public class HealOther extends SpecialAttackBase {
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 			
-			double restoration = target.getHealth()*(double)(increment/100);
+			double restoration = target.func_110143_aJ()*(double)(increment/100);
 			target.heal((int)Math.ceil(restoration));
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " healed " +
 																			  target.getNickname() + "!");

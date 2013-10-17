@@ -1,0 +1,17 @@
+biomes:ShrineFalls
+hasPokemon:false
+depth:0
+##1 = stone (duh), 67 = cobble stairs, 112 = nether brick, 114 = nether stairs, 31 = tall grass (unused shrub)
+include:Temple.schematic
+include:TemplePump.schematic:<21,-10,23>
+include:TempleMidSect.schematic:<30,0,54>
+include:TempleTower.schematic:<30,0,83>
+swap:1:shrineBlock
+swap:6:-1
+swap:67:shrineStairs
+swap:112:shrineBrick
+swap:114:shrineBrickStairs
+swap:31:fancyPillar
+swap:19:unownBlock2
+swap:25:155
+special:wool=apricorntrees

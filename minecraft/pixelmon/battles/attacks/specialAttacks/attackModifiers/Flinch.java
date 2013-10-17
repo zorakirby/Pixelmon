@@ -15,7 +15,8 @@ public class Flinch extends AttackModifierBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a) throws Exception{
 		if (checkChance()){
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " flinched!");
+			if (user.getOwner() != null)
+			if(target.func_110143_aJ() != 0 && target.battleController.isWaiting())
 			return true;
 		}
 		return false;

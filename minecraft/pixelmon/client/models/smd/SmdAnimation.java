@@ -53,7 +53,7 @@ public class SmdAnimation {
 				}
 			}
 		}catch (IOException e){
-			print("AN ERROR occurred reading from line #" + lineCount);
+			System.out.println("AN ERROR occurred reading from line #" + lineCount);
 			e.printStackTrace();
 		}
 	}
@@ -65,7 +65,7 @@ public class SmdAnimation {
 		int parentID = Integer.parseInt(params[2]);
 		Bone parent = parentID >= 0 ? bones.get(parentID) : null;
 		bones.add(id, new Bone(boneName, id, parent, null));
-		print(boneName);
+		ValveStudioModel.print(boneName);
 	}
 	
 	private void startParsingAnimation(BufferedReader reader, int count) {
@@ -84,7 +84,7 @@ public class SmdAnimation {
 				}
 				else if(currentLine.startsWith("end")){
 					this.totalFrames = frames.size();
-					print("Total number of frames = " + this.totalFrames);
+					ValveStudioModel.print("Total number of frames = " + this.totalFrames);
 					return;
 				}
 				else{
@@ -99,7 +99,7 @@ public class SmdAnimation {
 				}
 			}
 		} catch (Exception e){
-			print("AN ERROR occurred reading from line #" + lineCount);
+			System.out.println("AN ERROR occurred reading from line #" + lineCount);
 			e.printStackTrace();
 		}
 
@@ -179,9 +179,6 @@ public class SmdAnimation {
 	}
 	
 	public void nextFrame(){
-		if(Minecraft.getMinecraft().isGamePaused){
-			return;
-		}
 		if(this.currentFrameIndex == totalFrames-1){
 			this.currentFrameIndex = 0;
 		}
@@ -203,13 +200,6 @@ public class SmdAnimation {
 			this.shouldApplyAnimThisFrame = true;
 		}
 			
-	}
-	
-	/**
-	 *Shorthand for System.out.print(Object)
-	 */
-	public static void print(Object o){
-		System.out.println(o);
 	}
 
 

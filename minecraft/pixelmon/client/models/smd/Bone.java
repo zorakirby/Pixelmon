@@ -49,6 +49,7 @@ public class Bone implements IModulizable{
 	 */
 	public void reform(Matrix4f parentMatrix){
 		this.rest = Matrix4f.mul(parentMatrix, rest, null);
+		if(ValveStudioModel.debugModel)
 		VectorHelper.print(this.rest);
 		reformChildren();
 	}

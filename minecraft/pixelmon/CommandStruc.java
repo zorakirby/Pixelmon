@@ -37,4 +37,9 @@ public class CommandStruc extends CommandBase {
 		if (structure.hasPokemon) {
 		}
 	}
+
+	@Override
+	public String getCommandUsage(ICommandSender icommandsender) {
+		return "/struc";
+	}
 }

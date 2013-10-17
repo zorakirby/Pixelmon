@@ -7,8 +7,8 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonConfig;
+import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.entities.trainers.EntityTrainer;
 
 public class TrainerParticipant extends BattleParticipant {
 
@@ -67,7 +67,7 @@ public class TrainerParticipant extends BattleParticipant {
 	@Override
 	public boolean getIsFaintedOrDead() {
 		return trainer.releasedPokemon == null || trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted
-				|| trainer.releasedPokemon.getHealth() <= 0;
+				|| trainer.releasedPokemon.func_110143_aJ() <= 0;
 	}
 
 	@Override

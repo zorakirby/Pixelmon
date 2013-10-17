@@ -33,7 +33,7 @@ public class SpawnerUnderWater extends SpawnerBase {
 	}
 
 	@Override
-	public boolean canPokemonSpawnHere(World par1World, int par2, int par3, int par4) {
+	public boolean canPokemonSpawnHereImpl(World par1World, int par2, int par3, int par4) {
 		return par1World.getBlockMaterial(par2, par3, par4).isLiquid() && !par1World.isBlockNormalCube(par2, par3 + 1, par4);
 	}
 

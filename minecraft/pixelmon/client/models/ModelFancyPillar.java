@@ -1,15 +1,14 @@
 package pixelmon.client.models;
 
+import net.minecraft.client.Minecraft;
+
 import org.lwjgl.opengl.GL11;
 
 import pixelmon.blocks.decorative.BlockContainerPlus;
 import pixelmon.blocks.decorative.BlockFancyPillar;
 import pixelmon.blocks.decorative.TileEntityDecorativeBase;
+import pixelmon.client.render.RenderResources;
 import pixelmon.enums.EnumCustomModel;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.RenderEngine;
-import net.minecraft.world.World;
 
 public class ModelFancyPillar extends ModelEntityBlock{
 	
@@ -30,7 +29,6 @@ public class ModelFancyPillar extends ModelEntityBlock{
 	@Override
 	public void renderTileEntity(TileEntityDecorativeBase tileEnt, float scale) {
 		BlockFancyPillar theBlock = (BlockFancyPillar) tileEnt.getBlockType();
-		RenderEngine rend = Minecraft.getMinecraft().renderEngine;
 		int x = tileEnt.xCoord;
 		int y = tileEnt.yCoord;
 		int z = tileEnt.zCoord;
@@ -57,7 +55,7 @@ public class ModelFancyPillar extends ModelEntityBlock{
 	}
 	
 	public void renderStandardPillar(int blockMeta, int bitmask, float scale){
-		Minecraft.getMinecraft().renderEngine.bindTexture("/pixelmon/models/blocks/pillar/pillar.png");
+		Minecraft.getMinecraft().renderEngine.func_110577_a(RenderResources.pillar);
 		column.render(scale);
 		boolean flag = (bitmask & 2) == 0;
 		if(flag){
@@ -74,7 +72,7 @@ public class ModelFancyPillar extends ModelEntityBlock{
 	
 	public void renderDamagedPillar(int blockMeta, int bitmask, float scale){
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture("/pixelmon/models/blocks/pillar/pillar_fractured.png");
+		Minecraft.getMinecraft().renderEngine.func_110577_a(RenderResources.pillarDamaged);
 		boolean useBottom = (blockMeta & 7) % 2 != 0;
 		boolean flagbottom = (bitmask & 2) == 0; // true if nothing connectable on bottom side
 		boolean flagtop = (bitmask & 4) == 0; //true if nothing connectable on top side

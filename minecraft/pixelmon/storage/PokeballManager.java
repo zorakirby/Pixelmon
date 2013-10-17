@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import pixelmon.DownloadHelper;
@@ -64,15 +65,15 @@ public class PokeballManager {
 				p.readFromNBT(CompressedStreamTools.read(new DataInputStream(new FileInputStream(playerFile))));
 			} catch (FileNotFoundException e) {
 				if (PixelmonConfig.printErrors)
-				System.out.println("Couldn't read player data file for " + player.username);
+					System.out.println("Couldn't read player data file for " + player.username);
 				throw new PlayerNotLoadedException();
 			} catch (IOException e) {
 				if (PixelmonConfig.printErrors)
-				System.out.println("Couldn't read player data file for " + player.username);
+					System.out.println("Couldn't read player data file for " + player.username);
 				throw new PlayerNotLoadedException();
 			}
 			playerPokemonList.add(p);
-			if (p.count()==0)
+			if (p.count() == 0)
 				((EntityPlayerMP) player).openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), ((EntityPlayerMP) player).worldObj, 0, 0, 0);
 
 		} else {
@@ -93,7 +94,7 @@ public class PokeballManager {
 		try {
 			for (int i = 0; i < playerPokemonList.size(); i++) {
 				String userName = playerPokemonList.get(i).userName;
-				File playerSaveFile = new File(playerPokemonList.get(i).saveFile);
+				File playerSaveFile = new File(playerPokemonList.get(i).saveFile + "temp");
 				FileOutputStream f = new FileOutputStream(playerSaveFile);
 				DataOutputStream s = new DataOutputStream(f);
 				NBTTagCompound nbt = new NBTTagCompound();
@@ -101,9 +102,35 @@ public class PokeballManager {
 				CompressedStreamTools.write(nbt, s);
 				s.close();
 				f.close();
+				if (!p.player.playerNetServerHandler.connectionClosed)
+					replaceSaveFile(playerPokemonList.get(i));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void replaceSaveFile(PlayerStorage playerStorage) throws IOException {
+		File playerSaveTempFile = new File(playerStorage.saveFile + "temp");
+		File playerSaveFile = new File(playerStorage.saveFile);
+		if (!playerSaveFile.exists()) {
+			playerSaveFile.createNewFile();
+		}
+
+		FileChannel source = null;
+		FileChannel destination = null;
+
+		try {
+			source = new FileInputStream(playerSaveTempFile).getChannel();
+			destination = new FileOutputStream(playerSaveFile).getChannel();
+			destination.transferFrom(source, 0, source.size());
+		} finally {
+			if (source != null) {
+				source.close();
+			}
+			if (destination != null) {
+				destination.close();
+			}
 		}
 	}
 

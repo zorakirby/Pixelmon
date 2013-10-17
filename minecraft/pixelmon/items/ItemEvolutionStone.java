@@ -14,6 +14,7 @@ import pixelmon.enums.EnumEvolutionStone;
 public class ItemEvolutionStone extends PixelmonItem {
 
 	private EnumEvolutionStone stoneType;
+	
 
 	public ItemEvolutionStone(int id, EnumEvolutionStone stoneType, String itemName) {
 		super(id, "evolutionstones/" + stoneType.toString().toLowerCase(), itemName);

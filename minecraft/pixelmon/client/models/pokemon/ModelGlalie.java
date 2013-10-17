@@ -6,6 +6,7 @@ import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
+import pixelmon.client.render.RenderResources;
 import pixelmon.client.shading.Cubemap;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumCustomModel;
@@ -15,8 +16,6 @@ public class ModelGlalie extends PixelmonModelBase{
 	PixelmonModelRenderer matte, reflective;
 	
 	public ModelGlalie(){
-		Cubemap.preloadCubeMap(cubemap);
-		Cubemap.preloadCubeMap(shinyCubemap);
 		matte = new PixelmonModelRenderer(this, "matte");
 		matte.addCustomModel(new ModelCustomWrapper(EnumCustomModel.GlalieMatte.theModel));
 		reflective = new PixelmonModelRenderer(this, "reflective");
@@ -32,10 +31,10 @@ public class ModelGlalie extends PixelmonModelBase{
 		doAnimation(var1, f, f1, f2, f3, f4, f5);
 		matte.render(f5);
 		if(isShiny){
-			Cubemap.begin(shinyCubemap);
+			Cubemap.begin(RenderResources.glalieCubemapShiny);
 		}
 		else{
-			Cubemap.begin(cubemap);
+			Cubemap.begin(RenderResources.glalieCubemap);
 		}
 		reflective.render(f5);
 		Cubemap.end();

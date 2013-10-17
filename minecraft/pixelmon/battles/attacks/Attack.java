@@ -64,8 +64,9 @@ public class Attack {
 	public boolean flinched = false;
 
 	public void use(EntityPixelmon user, EntityPixelmon target, ArrayList<String> attackList, ArrayList<String> targetAttackList) {
+		target.hurtTime = 0;
+		user.hurtTime = 0;
 		boolean attackHandled = false, cantMiss = false;
-		flinched = false;
 		user.getLookHelper().setLookPositionWithEntity(target, 0, 0);
 		double accuracy = ((double) baseAttack.accuracy) * ((double) user.battleStats.getAccuracy()) / ((double) target.battleStats.getEvasion());
 		double crit = calcCriticalHit(null);
@@ -312,7 +313,7 @@ public class Attack {
 		return disabled;
 	}
 
-	public double calcCriticalHit(EffectBase e) {
+	public static double calcCriticalHit(EffectBase e) {
 		int critStage = 1;
 		int percent = 6;
 		if (e != null) {
@@ -375,7 +376,6 @@ public class Attack {
 			return DatabaseMoves.getAttack("Struggle");
 		} else {
 			int i1 = 0;
-			Random r = new Random();
 			i1 = RandomHelper.getRandomNumberBetween(0, usableMoves.size() - 1);
 			return usableMoves.get(i1);
 		}

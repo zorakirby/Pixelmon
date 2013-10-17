@@ -5,10 +5,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.resources.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import pixelmon.battles.attacks.Attack;
+import pixelmon.client.gui.GuiResources;
 import pixelmon.client.gui.pc.GuiPC;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
@@ -17,7 +19,6 @@ import pixelmon.database.DatabaseMoves;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
-	protected PixelmonDataPacket targetPacket;
 	GuiButton nameButton;
 	boolean renameButton;
 	static int selectednumber = -1;
@@ -90,7 +91,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawCenteredString(fontRenderer, (targetPacket.moveset[i2]).attackName, 135, -6 + (i2 * 21), 0xcccccc);
 			drawCenteredString(fontRenderer, String.valueOf((targetPacket.moveset[i2]).pp) + "/" + String.valueOf((targetPacket.moveset[i2]).ppBase), 193, -4
 					+ (i2 * 21), 0xcccccc);
-			mc.renderEngine.bindTexture("/pixelmon/gui/types.png");
+			mc.renderEngine.func_110577_a(GuiResources.types);
 			float x = targetPacket.moveset[i2].type.textureX;
 			float y = targetPacket.moveset[i2].type.textureY;
 			drawImageQuad(58, 22 * i2 - 15, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 21f) / 128f);
@@ -160,7 +161,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	public void drawSelection(int i, int i1) {
-		mc.renderEngine.bindTexture("/pixelmon/gui/summaryMoves.png");
+		mc.renderEngine.func_110577_a(GuiResources.summaryMoves);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if (targetPacket.numMoves > 0 && i > width / 2 - 31 && i < width / 2 + 123 && i1 > height / 2 - 100 && i1 < height / 2 - 76 || move1) {
 			drawTexturedModalRect(58, -17, 1, 231, 153, 24);
@@ -186,7 +187,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	protected void drawSelectedRect() {
-		mc.renderEngine.bindTexture("/pixelmon/gui/summaryMoves.png");
+		mc.renderEngine.func_110577_a(GuiResources.summaryMoves);
 		GL11.glColor3f(0.0F, 1.0F, 0.0F);// Gives the selection a light green
 											// color.
 		if (selectednumber == 0)
@@ -201,7 +202,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 	}
 
 	protected void drawSelectedRectBin(int i, int i1) {
-		mc.renderEngine.bindTexture("/pixelmon/gui/summaryMoves.png");
+		mc.renderEngine.func_110577_a(GuiResources.summaryMoves);
 		GL11.glColor3f(1.0F, 0.0F, 0.0F);// Gives the selection a light red
 		// color.
 		if (selectednumber >= targetPacket.numMoves && i > width / 2 + 130 && i < width / 2 + 158 && i1 > height / 2 - 25 && i1 < height / 2 + 9) {
@@ -288,15 +289,15 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 		else
 			numString = "" + targetPacket.getNationalPokedexNumber();
 
-		mc.renderEngine.bindTexture("/pixelmon/gui/summaryMoves.png");
+		mc.renderEngine.func_110577_a(GuiResources.summaryMoves);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 		drawTexturedModalRect((width - xSize) / 2 + 220, (height - ySize) / 2 + 60, 203, 225, 26, 31);
 
 		if (targetPacket.isShiny)
-			mc.renderEngine.bindTexture("/mods/pixelmon/sprites/shinypokemon/" + numString + ".png");
+			mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
 		else
-			mc.renderEngine.bindTexture("/mods/pixelmon/sprites/pokemon/" + numString + ".png");
+			mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
 		drawImageQuad(width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket
@@ -307,6 +308,8 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname), (width - xSize) / 2 + 7, (height - ySize) / 2 + 70,
 					targetPacket.getType1().getColor());
 		}
+		
+		drawArrows(i, i1);
 	}
 
 	public void drawCenteredStringWithoutShadow(FontRenderer par1FontRenderer, String par2Str, int par3, int par4, int par5) {

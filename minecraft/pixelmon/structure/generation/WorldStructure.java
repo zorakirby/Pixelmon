@@ -23,23 +23,23 @@ public class WorldStructure {
 		posY = var3;
 		posZ = var4;
 		worldObj = var5;
-		WorldStructureHelper.addStructure(this);
+	//	WorldStructureHelper.addStructure(this);
 	}
 	
 	public WorldStructure(int[] loc){
 		posX = loc[0];
 		posY = loc[1];
 		posZ = loc[2];
-		WorldStructureHelper.addStructure(this);
+	//	WorldStructureHelper.addStructure(this);
 	}
 	
 	public WorldStructure(){
-		WorldStructureHelper.addStructure(this);
+	//	WorldStructureHelper.addStructure(this);
 	}
 	
 	public WorldStructure(World var1){
 		worldObj = var1;
-		WorldStructureHelper.addStructure(this);
+	//	WorldStructureHelper.addStructure(this);
 	}
 	
 

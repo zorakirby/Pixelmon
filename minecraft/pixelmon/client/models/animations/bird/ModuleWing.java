@@ -60,7 +60,22 @@ public class ModuleWing extends Module {
 	@Override
 	public void fly(EntityPixelmon entity, float f, float f1, float f2,
 			float f3, float f4) {
+		float angY = MathHelper.cos((float) Math
+				.toRadians(WingOrientation))
+				* WingDirection
+				* MathHelper.cos(f2 * WingSpeed)
+				* (float) Math.PI
+				* WingRotationLimit;
+		
+		float angZ = MathHelper.sin((float) Math
+				.toRadians(WingOrientation))
+				* WingDirection
+				* MathHelper.cos(f2 * WingSpeed)
+				* (float) Math.PI
+				* WingRotationLimit;
 
+		wing.setValue(angY, EnumGeomData.yrot);
+		wing.setValue(angZ, EnumGeomData.zrot);
 	}
 
 }

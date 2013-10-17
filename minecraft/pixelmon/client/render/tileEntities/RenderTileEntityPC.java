@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import pixelmon.blocks.TileEntityPC;
 import pixelmon.client.models.ModelPC;
+import pixelmon.client.render.RenderResources;
 import pixelmon.config.PixelmonBlocks;
 
 public class RenderTileEntityPC extends TileEntitySpecialRenderer {
@@ -41,7 +42,7 @@ public class RenderTileEntityPC extends TileEntitySpecialRenderer {
 			return;
 		if (Minecraft.getMinecraft().theWorld.getBlockId(tile.xCoord, tile.yCoord-1, tile.zCoord) == PixelmonBlocks.pc.blockID) return;
 
-		bindTextureByName("/pixelmon/texture/blocks/pc.png"); // texture
+		func_110628_a(RenderResources.pc); // texture
 		GL11.glPushMatrix(); // start
 		GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F); // size
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F); // rotate based on metadata
@@ -58,6 +59,7 @@ public class RenderTileEntityPC extends TileEntitySpecialRenderer {
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double d, double d1, double d2, float f) {
+		System.out.println(this.tileEntityRenderer.renderEngine.getClass());
 		renderAModelAt((TileEntityPC) tileentity, d, d1, d2, f); // where to
 																	// render
 	}

@@ -2,17 +2,22 @@ package pixelmon.structure.generation;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockTrapDoor;
 import pixelmon.blocks.decorative.BlockContainerPlus;
 
 public class BlockRotation {
 
 	public static int setBlockRotation(int coordBaseMode, int par1, int par2) {
+
 		Block theBlock = Block.blocksList[par1];
 		if (theBlock instanceof BlockStairs)
 			return rotateStairs(coordBaseMode, par1, par2);
-		if (par1 == Block.pistonBase.blockID || par1 == Block.pistonStickyBase.blockID || par1 == Block.lever.blockID || par1 == Block.dispenser.blockID) {
-			return rotatePistonLeverDispenser(coordBaseMode, par1, par2);
+		if (par1 == Block.lever.blockID) {
+			return rotateLever(coordBaseMode, par1, par2);
+		}
+		if (par1 == Block.pistonBase.blockID || par1 == Block.pistonStickyBase.blockID) {
+			return rotatePiston(coordBaseMode, par1, par2);
 		}
 		if (par1 == Block.trapdoor.blockID)
 			return rotateTrapDoor(coordBaseMode, par1, par2);
@@ -127,7 +132,7 @@ public class BlockRotation {
 		return par2;
 	}
 
-	private static int rotatePistonLeverDispenser(int coordBaseMode, int par1, int par2) {
+	private static int rotateLever(int coordBaseMode, int par1, int par2) {
 		int othermeta = par2 & 8;
 		int side = par2 & 7;
 		if (coordBaseMode == 1) {
@@ -177,6 +182,61 @@ public class BlockRotation {
 
 			if (side == 3) {
 				return 4 + othermeta;
+			}
+		}
+		return par2;
+	}
+
+	private static int rotatePiston(int coordBaseMode, int par1, int par2) {
+		int extended = BlockPistonBase.isExtended(par2) ? 1 : 0;
+		int side = BlockPistonBase.getOrientation(par2);
+		if (coordBaseMode == 1) {
+			if (side == 5) {
+				return 2 + extended;
+			}
+
+			if (side == 4) {
+				return 4 + extended;
+			}
+
+			if (side == 3) {
+				return 2 + extended;
+			}
+
+			if (side == 2) {
+				return 5 + extended;
+			}
+		} else if (coordBaseMode == 3) {
+			if (side == 5) {
+				return 3 + extended;
+			}
+
+			if (side == 2) {
+				return 5 + extended;
+			}
+
+			if (side == 4) {
+				return 2 + extended;
+			}
+
+			if (side == 3) {
+				return 4 + extended;
+			}
+		} else if (coordBaseMode == 2) {
+			if (side == 2) {
+				return 3 + extended;
+			}
+
+			if (side == 3) {
+				return 2 + extended;
+			}
+
+			if (side == 5) {
+				return 4 + extended;
+			}
+
+			if (side == 4) {
+				return 3 + extended;
 			}
 		}
 		return par2;
@@ -279,6 +339,56 @@ public class BlockRotation {
 			}
 		}
 		return par2;
+	}
+
+	private static int rotatePixelmonBlock(int coordBaseMode, int par1, int par2) {
+		if (coordBaseMode == 2) {
+			if (par2 == 2) {
+				return 0;
+			}
+
+			if (par2 == 0) {
+				return 2;
+			}
+		} else if (coordBaseMode == 1) {
+			if (par2 == 0) {
+				return 3;
+			}
+
+			if (par2 == 1) {
+				return 0;
+			}
+
+			if (par2 == 2) {
+				return 1;
+			}
+
+			if (par2 == 3) {
+				return 2;
+			}
+		} else if (coordBaseMode == 3) // ---FIXED
+		{
+			if (par2 == 2) {
+				return 3;
+			}
+
+			if (par2 == 1) {
+				return 0;
+			}
+
+			if (par2 == 0) {
+				return 1;
+			}
+
+			if (par2 == 3) {
+				return 2;
+			}
+		}
+		return par2;
+	}
+
+	public static int setPixelmonBlockRotation(int coordBaseMode, int par1, int par2) {
+		return rotatePixelmonBlock(coordBaseMode, par1, par2);
 	}
 
 }

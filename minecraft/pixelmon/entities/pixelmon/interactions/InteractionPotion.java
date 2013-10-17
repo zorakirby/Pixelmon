@@ -14,7 +14,7 @@ public class InteractionPotion implements IInteraction {
 		if (player instanceof EntityPlayerMP) {
 			ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 			if (itemstack.getItem() instanceof ItemPotion) {
-				if (entityPixelmon.getHealth() < entityPixelmon.stats.HP) {
+				if (entityPixelmon.func_110143_aJ() < entityPixelmon.stats.HP) {
 					((ItemPotion) itemstack.getItem()).healPokemon(entityPixelmon);
 					if (!player.capabilities.isCreativeMode)
 						player.inventory.consumeInventoryItem(itemstack.itemID);

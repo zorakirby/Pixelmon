@@ -18,6 +18,7 @@ public class ValveStudioModel implements IModelCustom{
 	public HashMap<String, SmdAnimation> anims;
 	public SmdAnimation currentAnimation;
 	public String fileName;
+	public static boolean debugModel = false;
 //	public float rotation;
 	
 
@@ -142,6 +143,14 @@ public class ValveStudioModel implements IModelCustom{
 	public void renderPart(String partName) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 *Shorthand for System.out.println(Object). DOES NOT PRINT IF <code>ValveStudioModel.debugModel</code> is <code>false</code>
+	 */
+	public static void print(Object o){
+		if(ValveStudioModel.debugModel)
+		System.out.println(o);
 	}
 	
 

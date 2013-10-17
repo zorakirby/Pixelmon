@@ -30,15 +30,7 @@ public class Movement extends PacketHandlerBase {
 			for (int i = 0; i < rl.size(); i++) {
 				if (rl.get(i).player == (EntityPlayer) player) {
 					for (int j = 0; j < numMovements; j++) {
-						if (movement[j] == EnumMovement.Accelerate)
-							rl.get(i).acceleration++;
-						else if (movement[j] == EnumMovement.Decelerate)
-							rl.get(i).acceleration--;
-						else if (movement[j] == EnumMovement.Left)
-							rl.get(i).rotation--;
-						else if (movement[j] == EnumMovement.Right)
-							rl.get(i).rotation++;
-						else if (movement[j] == EnumMovement.Jump)
+						if (movement[j] == EnumMovement.Jump)
 							rl.get(i).jump++;
 						else if (movement[j] == EnumMovement.Crouch)
 							rl.get(i).jump--;

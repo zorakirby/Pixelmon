@@ -9,6 +9,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityNote;
@@ -36,7 +37,7 @@ public class BlockFancyPillar extends BlockContainerPlus{
      * Called when the block is placed in the world.
      */
 	@Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving living, ItemStack stack){
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase living, ItemStack stack){
 		int baseMeta = world.getBlockMetadata(x, y, z) | stack.getItemDamage();
     		world.setBlockMetadataWithNotify(x, y, z, baseMeta, 2);
     }

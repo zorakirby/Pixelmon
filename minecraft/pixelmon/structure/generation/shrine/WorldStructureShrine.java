@@ -19,7 +19,6 @@ import pixelmon.structure.SchematicImporter;
 import pixelmon.structure.generation.ComplexScattered;
 import pixelmon.structure.generation.WorldStructure;
 import pixelmon.structure.generation.WorldStructureHelper;
-import pixelmon.worldGeneration.GenHelperEllipse;
 
 
 public class WorldStructureShrine extends WorldStructure{

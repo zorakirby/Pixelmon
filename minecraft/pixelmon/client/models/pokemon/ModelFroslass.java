@@ -20,7 +20,6 @@ public class ModelFroslass extends PixelmonModelSmd{
 		ValveStudioModel model = (ValveStudioModel) EnumCustomModel.Froslass.theModel;
 		body.addCustomModel(new ModelCustomWrapper(model));
 		this.theModel = model;
-		//ModuleHead headModule = new ModuleHead(body);
 		skeleton = new SkeletonBiped(body, new ModuleHead(theModel.body.getBoneByName("Head")), null, null,
                 null, null, null);
 	}

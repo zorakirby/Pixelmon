@@ -18,7 +18,7 @@ public class Memento extends SpecialAttackBase {
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target,
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-			user.attackEntityFrom(DamageSource.causeMobDamage(user), user.getHealth());
+			user.attackEntityFrom(DamageSource.causeMobDamage(user), user.func_110143_aJ());
 			target.battleStats.DecreaseAttack(2);
 			target.battleStats.DecreaseSpecialAttack(2);
 		

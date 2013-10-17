@@ -362,53 +362,89 @@ public class PixelmonItemsPokeballs {
 		return null;
 	}
 
-	public static Item getItemFromEnum(EnumPokeballs type) {
-
-		try {
-			for (Field field : PixelmonItemsPokeballs.class.getFields()) {
-				if (field.isAnnotationPresent(Mod.Item.class)) {
-					Item item = (Item) field.get(null);
-					if (item instanceof ItemPokeBall)
-						if (((ItemPokeBall) item).type == type)
-							return item;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static ItemPokeBall getItemFromEnum(EnumPokeballs type) {
+		//there, now it's a bajillion(as in, perhaps, 10?) times more efficient!
+		Item result = null;
+		switch(type){
+		case DiveBall: result = diveBall;break;
+		case DuskBall: result =  duskBall;break;
+		case FastBall: result = fastBall;break;
+		case FriendBall: result =  friendBall;break;
+		case GreatBall: result =  greatBall;break;
+		case HealBall: result =  healBall;break;
+		case HeavyBall: result =  heavyBall;break;
+		case LevelBall: result =  levelBall;break;
+		case LoveBall: result =  loveBall;break;
+		case LuxuryBall: result =  luxuryBall;break;
+		case MasterBall: result =  masterBall;break;
+		case MoonBall: result =  moonBall;break;
+		case NestBall: result =  nestBall;break;
+		case NetBall: result = netBall;break;
+		case PokeBall: result = pokeBall;break;
+		case PremierBall: result = premierBall;break;
+		case RepeatBall: result = repeatBall;break;
+		case SafariBall: result = safariBall;break;
+		case TimerBall: result = timerBall;break;
+		case UltraBall: result = ultraBall;break;
+		default:break;
 		}
-		return null;
+		return (ItemPokeBall) result;
 	}
 
-	public static Item getLidFromEnum(EnumPokeballs type) {
-		try {
-			for (Field field : PixelmonItemsPokeballs.class.getFields()) {
-				if (field.isAnnotationPresent(Mod.Item.class)) {
-					Item item = (Item) field.get(null);
-					if (item instanceof ItemPokeballLid)
-						if (((ItemPokeballLid) item).pokeball == type)
-							return item;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static ItemPokeballLid getLidFromEnum(EnumPokeballs type) {
+		Item result = null;
+		switch(type){
+		case DiveBall: result = diveBallLid;break;
+		case DuskBall: result =  duskBallLid;break;
+		case FastBall: result = fastBallLid;break;
+		case FriendBall: result =  friendBallLid;break;
+		case GreatBall: result =  greatBallLid;break;
+		case HealBall: result =  healBallLid;break;
+		case HeavyBall: result =  heavyBallLid;break;
+		case LevelBall: result =  levelBallLid;break;
+		case LoveBall: result =  loveBallLid;break;
+		case LuxuryBall: result =  luxuryBallLid;break;
+		case MasterBall: break;
+		case MoonBall: result =  moonBallLid;break;
+		case NestBall: result =  nestBallLid;break;
+		case NetBall: result = netBallLid;break;
+		case PokeBall: result = pokeBallLid;break;
+		case PremierBall: result = premierBallLid;break;
+		case RepeatBall: result = repeatBallLid;break;
+		case SafariBall: result = safariBallLid;break;
+		case TimerBall: result = timerBallLid;break;
+		case UltraBall: result = ultraBallLid;break;
+		default:break;
 		}
-		return null;
+		return (ItemPokeballLid) result;
 	}
 
-	public static Item getDiscFromEnum(EnumPokeballs type) {
-		try {
-			for (Field field : PixelmonItemsPokeballs.class.getFields()) {
-				if (field.isAnnotationPresent(Mod.Item.class)) {
-					Item item = (Item) field.get(null);
-					if (item instanceof ItemPokeballDisc)
-						if (((ItemPokeballDisc) item).pokeball == type)
-							return item;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public static ItemPokeballDisc getDiscFromEnum(EnumPokeballs type) {
+		Item result = null;
+		switch(type){
+		case DiveBall: result = diveBallDisc;break;
+		case DuskBall: result =  duskBallDisc;break;
+		case FastBall: result = fastBallDisc;break;
+		case FriendBall: result =  friendBallDisc;break;
+		case GreatBall: result =  greatBallDisc;break;
+		case HealBall: result =  healBallDisc;break;
+		case HeavyBall: result =  heavyBallDisc;break;
+		case LevelBall: result =  levelBallDisc;break;
+		case LoveBall: result =  loveBallDisc;break;
+		case LuxuryBall: result =  luxuryBallDisc;break;
+		case MasterBall: break;
+		case MoonBall: result =  moonBallDisc;break;
+		case NestBall: result =  nestBallDisc;break;
+		case NetBall: result = netBallDisc;break;
+		case PokeBall: result = pokeBallDisc;break;
+		case PremierBall: result = premierBallDisc;break;
+		case RepeatBall: result = repeatBallDisc;break;
+		case SafariBall: result = safariBallDisc;break;
+		case TimerBall: result = timerBallDisc;break;
+		case UltraBall: result = ultraBallDisc;break;
+		default:break;
 		}
-		return null;
+		return (ItemPokeballDisc) result;
 	}
 
 }

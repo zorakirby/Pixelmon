@@ -1,6 +1,8 @@
 package pixelmon.comm;
 
+import java.io.DataInput;
 import java.io.DataInputStream;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -39,7 +41,7 @@ public class PixelmonMovesetDataPacket {
 		return p;
 	}
 
-	public void writeData(DataOutputStream data) throws IOException {
+	public void writeData(DataOutput data) throws IOException {
 		Packet.writeString(attackName, data);
 		data.writeShort(type.getIndex());
 		data.writeShort(pp);
@@ -47,7 +49,7 @@ public class PixelmonMovesetDataPacket {
 		data.writeBoolean(disabled);
 	}
 	
-	public void readData(DataInputStream data) throws IOException {
+	public void readData(DataInput data) throws IOException {
 		attackName = Packet.readString(data, 64);
 		type = EnumType.parseType(data.readShort());
 		pp = data.readShort();

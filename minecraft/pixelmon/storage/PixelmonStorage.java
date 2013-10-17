@@ -2,6 +2,7 @@ package pixelmon.storage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import pixelmon.battles.BattleRegistry;
 
 public class PixelmonStorage {
 	public static PokeballManager PokeballManager = new PokeballManager();
@@ -12,6 +13,9 @@ public class PixelmonStorage {
 			return;
 		PokeballManager.onPlayerDC(player);
 		ComputerManager.onPlayerDC(player);
+		if(BattleRegistry.getBattle(player) != null) 
+			BattleRegistry.getBattle(player).endBattleWithoutXP();
+			
 	}
 
 	public static void playerLoggedIn(EntityPlayerMP player) {
@@ -19,4 +23,3 @@ public class PixelmonStorage {
 		ComputerManager.playerLoggedIn(player);
 	}
 }
-

@@ -12,6 +12,7 @@ public class StructureData {
 	public boolean hasPokemon = false;
 	public BiomeGenBase[] biomes;
 	public int depth = 0;
+	public BlockSwitch[] blockSwitches;
 	public HashMap<Integer, Integer> filter;
 
 	public int[] doFilter(int[] idAndMeta){

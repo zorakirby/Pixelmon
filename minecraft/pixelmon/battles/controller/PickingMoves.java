@@ -57,13 +57,16 @@ public class PickingMoves {
 					}
 				}
 			}
+			if (p.willTryFlee)
+				p.priority = 6;
 		}
 
 		Object[] array = bc.participants.toArray();
 		for (int i = 1; i < array.length; i++) {
 			BattleParticipant p = (BattleParticipant) array[i];
 			int holePos = i;
-			while (holePos > 0 && (((BattleParticipant) array[holePos - 1]).priority < p.priority || doesGoFirst(p, (BattleParticipant) array[holePos - 1]))) {
+			while (holePos > 0 && (((BattleParticipant) array[holePos - 1]).priority < p.priority || 
+					(((BattleParticipant) array[holePos - 1]).priority == p.priority && doesGoFirst(p, (BattleParticipant) array[holePos - 1])))) {
 				array[holePos] = array[holePos - 1];
 				holePos--;
 			}
@@ -71,15 +74,17 @@ public class PickingMoves {
 		}
 
 		for (Object p : array)
-			sortedParticipants.add((BattleParticipant)p);
+			sortedParticipants.add((BattleParticipant) p);
 
 		bc.participants = sortedParticipants;
 	}
 
 	private static boolean doesGoFirst(BattleParticipant p, BattleParticipant foe) {
-		if (p.currentPokemon().stats.Speed * p.currentPokemon().battleStats.getSpeedModifier() > foe.currentPokemon().stats.Speed * foe.currentPokemon().battleStats.getSpeedModifier())
+		if (p.currentPokemon().stats.Speed * p.currentPokemon().battleStats.getSpeedModifier() > foe.currentPokemon().stats.Speed
+				* foe.currentPokemon().battleStats.getSpeedModifier())
 			return true;
-		else if (foe.currentPokemon().stats.Speed * foe.currentPokemon().battleStats.getSpeedModifier() > p.currentPokemon().stats.Speed * p.currentPokemon().battleStats.getSpeedModifier())
+		else if (foe.currentPokemon().stats.Speed * foe.currentPokemon().battleStats.getSpeedModifier() > p.currentPokemon().stats.Speed
+				* p.currentPokemon().battleStats.getSpeedModifier())
 			return false;
 
 		if (RandomHelper.getRandomNumberBetween(0, 2) >= 1)

@@ -22,9 +22,9 @@ public class Drain extends SpecialAttackBase {
 			ArrayList<String> targetAttackList) throws Exception {
 			double restoration;
 			int damage = a.doDamageCalc(user, target, crit);
-			if(damage >= target.getHealth())
+			if(damage >= target.func_110143_aJ())
 			{
-				restoration = (double)target.getHealth()*((double)(double)drainPercent/100);
+				restoration = (double)target.func_110143_aJ()*((double)(double)drainPercent/100);
 			}
 			else
 				restoration = (double)(damage*((double)(double)drainPercent/100));

@@ -28,7 +28,7 @@ public class StructureRegistry {
 	public static void loadStructures(Side side) {
 		File f = null;
 		if (side == Side.CLIENT)
-			f = new File(Minecraft.getMinecraftDir() + "/resources/pixelmon/structures/standAlone");
+			f = new File(Minecraft.getMinecraft().mcDataDir + "/resources/pixelmon/structures/standAlone");
 		else if (side == Side.SERVER)
 			f = new File(MinecraftServer.getServer().getFolderName() + "/resources/pixelmon/structures/standAlone");
 		if (f != null && !f.isDirectory()) {

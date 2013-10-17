@@ -13,6 +13,7 @@ import pixelmon.client.models.smd.ValveStudioModelLoader;
  */
 public enum EnumCustomModel{
 	//pokemon
+	Haunter ("/assets/pixelmon/models/haunter/haunter.obj"),
 	Froslass("/pixelmon/models/froslass/froslass.pqc"),
 	GlalieMatte("/pixelmon/models/glalie/glalie_matte.obj"),
 	GlalieReflective("/pixelmon/models/glalie/glalie_reflective.obj"),
@@ -39,7 +40,12 @@ public enum EnumCustomModel{
 		AdvancedModelLoader.registerModelHandler(ValveStudioModelLoader.instance);
 		
 		for(EnumCustomModel cm : EnumCustomModel.values()){
+			try{
 			cm.theModel = AdvancedModelLoader.loadModel(cm.fileName);
+			}catch(Exception e){
+				System.out.println("Could not load the model: " + cm.fileName);
+				e.printStackTrace();
+			}
 		}
 	}
 

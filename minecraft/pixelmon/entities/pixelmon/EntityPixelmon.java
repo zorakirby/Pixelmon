@@ -2,6 +2,9 @@ package pixelmon.entities.pixelmon;
 
 import java.util.ArrayList;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -28,8 +31,8 @@ import pixelmon.database.DatabaseMoves;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.SpawnConditions;
 import pixelmon.database.SpawnLocation;
+import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
-import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
 import pixelmon.items.ItemHeld;
@@ -44,7 +47,23 @@ import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
 
 public class EntityPixelmon extends Entity9HasSounds {
-
+	public static final int dwName = 2;
+	public static final int dwNickname = 3;
+	public static final int dwPokemonID = 4;
+	public static final int dwLevel = 27;
+	public static final int dwExp = 14;
+	public static final int dwTrainerName = 15;
+	public static final int dwRed = 18;
+	public static final int dwScale = 19;
+	public static final int dwMaxHP = 20;
+	public static final int dwBossMode = 21;
+	public static final int dwNature = 22;
+	public static final int dwGrowth = 23;
+	public static final int dwNumInteractions = 24;
+	public static final int dwShiny = 25;
+	public static final int dwRoasted = 26;
+	
+	
 	public SpawnLocation pokemonLocation;
 	public boolean playerOwned = false;
 
@@ -57,7 +76,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void init(String name) {
 		super.init(name);
-		moveSpeed = getMoveSpeed();
+		
+		//moveSpeed = getMoveSpeed();
 	}
 
 	public void onDeath(DamageSource damagesource) {
@@ -146,8 +166,13 @@ public class EntityPixelmon extends Entity9HasSounds {
 		int lightLevel = this.worldObj.getFullBlockLightValue(var1, var2, var3);
 		boolean[] conds = { true, true };
 		BiomeGenBase biome = worldObj.getBiomeGenForCoords(var1, var3);
+		if (baseStats == null || baseStats.spawnConditions == null)
+			return false;
 		if (baseStats.spawnConditions.length == 0)
-			if (blockId != Block.grass.blockID || (biome == BiomeGenBase.jungle || biome == BiomeGenBase.jungleHills)
+			if (biome == BiomeGenBase.desert || biome == BiomeGenBase.desertHills) {
+				if (blockId != Block.sand.blockID)
+					return false;
+			} else if (blockId != Block.grass.blockID || (biome == BiomeGenBase.jungle || biome == BiomeGenBase.jungleHills)
 					&& worldObj.getBlockMaterial(var1, var2, var3) != Material.leaves)
 				return false;
 		for (SpawnConditions s : baseStats.spawnConditions) {
@@ -215,8 +240,13 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		if (nbt.hasKey("pixelmonOwner"))
-			super.setOwner(nbt.getString("pixelmonOwner"));
-		int h = health;
+			try {
+				super.setOwner(nbt.getString("pixelmonOwner"));
+			} catch (Exception e) {
+				setDead();
+				return;
+			}
+		float h = func_110143_aJ();
 		level.readFromNBT(nbt);
 		setEntityHealth(h);
 
@@ -249,5 +279,4 @@ public class EntityPixelmon extends Entity9HasSounds {
 	public ArrayList<String> getPreEvolutions() {
 		return DatabaseStats.getPreEvolutions(getName());
 	}
-
 }

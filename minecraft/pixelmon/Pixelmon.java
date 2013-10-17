@@ -2,14 +2,17 @@ package pixelmon;
 
 import java.io.File;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
 import pixelmon.battles.BattleTickHandler;
 import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.client.ClientPacketHandler;
@@ -20,14 +23,22 @@ import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.EntitySpawning;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.entities.projectiles.EntityGoodHook;
+import pixelmon.entities.projectiles.EntityOldHook;
+import pixelmon.entities.projectiles.EntitySuperHook;
+import pixelmon.items.ArmorToolLibrary;
 import pixelmon.migration.Migration;
 import pixelmon.migration.MigrationLoader;
 import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.structure.StructureRegistry;
 import pixelmon.structure.generation.ComplexScattered;
-import pixelmon.structure.generation.WorldStructureHelper;
 import pixelmon.structure.worldGen.WorldGenScatteredFeature;
+import pixelmon.structure.StructureRegistry;
+import pixelmon.structure.worldGen.WorldGenScatteredFeature;
+import pixelmon.util.InfiltratorGenLayer;
+import pixelmon.util.geom.Fractal;
+import pixelmon.worldGeneration.MapGenDenialWrapper;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenEvolutionRock;
@@ -37,8 +48,10 @@ import pixelmon.worldGeneration.WorldGenLeafStoneOre;
 import pixelmon.worldGeneration.WorldGenThunderStoneOre;
 import pixelmon.worldGeneration.WorldGenWaterStoneOre;
 import pixelmon.worldGeneration.biome.BiomeGenMysteryValley;
+import pixelmon.worldGeneration.mysteryDungeon.DungeonExtraTreasure;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
@@ -57,27 +70,36 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "Pixelmon", name = "Pixelmon", version = "2.2")
+@Mod(modid = "pixelmon", name = "Pixelmon", version = "2.2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
 	public static EnumToolMaterial ALUMINIUM = EnumHelper.addToolMaterial("ALUMINUM", 2, 200, 6.5F, 2, 14);
 	public static EnumArmorMaterial ALUMINIUMARMOR = EnumHelper.addArmorMaterial("ALUMINUM", 15, new int[] { 2, 6, 5, 2 }, 8);
+	public static EnumArmorMaterial RUNNINGARMOR = EnumHelper.addArmorMaterial("RUNNING", 66, new int[] { 3, 8, 6, 3 }, 22);
+	public static EnumArmorMaterial OLDRUNNINGARMOR = EnumHelper.addArmorMaterial("OLDRUNNING", 999999, new int[] { 2, 6, 5, 1 }, 13);
 
-	@Instance("Pixelmon")
+	@Instance("pixelmon")
 	public static Pixelmon instance;
 	public static Migration migration;
 
+	public static StringTranslate stringtranslate = new StringTranslate();
+	
 	@SidedProxy(clientSide = "pixelmon.client.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
 
 	public static boolean freeze = false;
+	private static boolean preInit = false, init = false, postInit = false;
 
 	public static File modDirectory;
 
-	@PreInit
+	Configuration config;
+	
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+		instance = this;
+		//Minecraft.getMinecraft().func_110442_L().
+		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		boolean checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
 		modDirectory = new File(event.getModConfigurationDirectory().getParent());
@@ -90,20 +112,26 @@ public class Pixelmon {
 		event.getModMetadata().version = "2.2";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
-
-		PixelmonConfig.loadConfig(config);
+		preInit = true;
 	}
 
-	@Init
+
+	@EventHandler
 	public void load(FMLInitializationEvent event) {
+		PixelmonConfig.loadConfig(config);
+		Fractal.preloadFractals();
+
 		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
-		proxy.preloadTextures();
 		proxy.registerInteractions();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityOldHook.class, "Old Hook", 214, this, 74, 1, true);
+		EntityRegistry.registerModEntity(EntityGoodHook.class, "Good Hook", 218, this, 75, 1, true);
+		EntityRegistry.registerModEntity(EntitySuperHook.class, "Super Hook", 218, this, 75, 1, true);
 
+		
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
@@ -116,20 +144,20 @@ public class Pixelmon {
 		GameRegistry.registerWorldGenerator(new WorldGenEvolutionRock());
 
 		
-		GameRegistry.addBiome(BiomeGenMysteryValley.instance);
-		BiomeDictionary.registerBiomeType(BiomeGenMysteryValley.instance, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.WATER, BiomeDictionary.Type.MAGICAL );
 		
-		ComplexScattered.registerStructures();
-		/*StructureRegistry.loadStructures(event.getSide());
+		/*ComplexScattered.registerStructures();
+		StructureRegistry.loadStructures(event.getSide());
 		
 		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		*/
 
-		 MinecraftForge.EVENT_BUS.register(new MigrationLoader());*/
-		
+
+		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
-		MinecraftForge.EVENT_BUS.register(WorldStructureHelper.instance);
+		MinecraftForge.TERRAIN_GEN_BUS.register(InfiltratorGenLayer.INSTANCE);
+		//MinecraftForge.TERRAIN_GEN_BUS.register(MapGenDenialWrapper.SUBSCRIBER);
 
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
 		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
@@ -137,21 +165,42 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
 		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
 		proxy.registerTickHandlers();
+		init = true;
 	}
 
-	@PostInit
+	@EventHandler
 	public void modsLoaded(FMLPostInitializationEvent event) {
 		PixelmonConfig.removeSpawns();
+		ArmorToolLibrary.init();
+		DungeonExtraTreasure.initRareItems();
 		proxy.registerSounds();
+		postInit = true;
 	}
 
-	@ServerStarting
+	@EventHandler
 	public void onServerStart(FMLServerStartingEvent event) {
 		if (MinecraftServer.getServer().getCommandManager() instanceof ServerCommandManager) {
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandSpawn());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandStruc());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandFreeze());
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandHeal());
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandBattle());
 		}
 	}
+	
+	/**
+	 * whether or not Pixelmon has finished the {@link #preInit(FMLPreInitializationEvent) preInit} phase.
+	 */
+	public static boolean preInitialized(){return preInit;}
+	
+	/**
+	 * whether or not Pixelmon has finished the {@link #load(FMLInitializationEvent) load} phase.
+	 */
+	public static boolean initialized(){return init;}
+	
+	/**
+	 * whether or not Pixelmon has finished the {@link #modsLoaded(FMLPostInitializationEvent) modsLoaded} phase.
+	 */
+	public static boolean postInitialized(){return postInit;}
 
 }

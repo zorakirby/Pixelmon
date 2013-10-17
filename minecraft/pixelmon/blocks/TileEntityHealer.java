@@ -109,7 +109,7 @@ public class TileEntityHealer extends TileEntity {
 		super.writeToNBT(nbt);
 		for (int i = 0; i < pokeballType.length; i++) {
 			if (pokeballType[i] != null)
-				nbt.setShort("PokeballType" + i, (short) pokeballType[i].getIndex());
+				nbt.setShort("PokeballType" + i, (short) pokeballType[i].ordinal());
 		}
 	}
 

@@ -2,6 +2,7 @@ package pixelmon.blocks.apricornTrees;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -27,11 +28,12 @@ public class BlockApricornTree extends BlockContainer {
 		super(id, Material.wood);
 		this.tree = tree;
 		setTickRandomly(true);
+		setHardness(2.0F);
 	}
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return PixelmonItemsApricorns.getApricorn(tree.apricorn).itemID;
+		return Block.wood.blockID;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -63,18 +65,22 @@ public class BlockApricornTree extends BlockContainer {
 	 * Returns a bounding box from the pool of bounding boxes (this means this
 	 * box can change after the pool has been cleared to be reused)
 	 */
-	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World,
+			int par2, int par3, int par4) {
 		this.setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
-		return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
+		return super.getCollisionBoundingBoxFromPool(par1World, par2, par3,
+				par4);
 	}
 
 	@SideOnly(Side.CLIENT)
 	/**
 	 * Returns the bounding box of the wired rectangular prism to render.
 	 */
-	public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World, int par2, int par3, int par4) {
+	public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World,
+			int par2, int par3, int par4) {
 		this.setBlockBounds(par1World.getBlockMetadata(par2, par3, par4));
-		return super.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
+		return super
+				.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
 	}
 
 	/**
@@ -105,13 +111,16 @@ public class BlockApricornTree extends BlockContainer {
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
+	public boolean onBlockActivated(World world, int x, int y, int z,
+			EntityPlayer par5EntityPlayer, int par6, float par7, float par8,
+			float par9) {
 		if (world.isRemote)
 			return false;
 		if (world.getBlockMetadata(x, y, z) == numStages - 1) {
 			Item item = PixelmonItemsApricorns.getApricorn(tree.apricorn);
 
-			EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
+			EntityItem var3 = new EntityItem(world, x, y + maxY, z,
+					new ItemStack(item));
 			var3.delayBeforeCanPickup = 10;
 
 			world.spawnEntityInWorld(var3);
@@ -135,7 +144,8 @@ public class BlockApricornTree extends BlockContainer {
 
 				if (par5Random.nextInt(3) == 0) {
 					world.setBlockMetadataWithNotify(x, y, z, stage + 1, 2);
-					((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+					((WorldServer) world).getPlayerManager()
+							.flagChunkForUpdate(x, y, z);
 				}
 			}
 		}

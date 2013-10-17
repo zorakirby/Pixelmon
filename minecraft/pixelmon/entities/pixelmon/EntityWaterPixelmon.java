@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import net.minecraft.world.World;
 import pixelmon.WorldHelper;
+import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
-import pixelmon.entities.trainers.EntityTrainer;
 import pixelmon.enums.EnumType;
 
 public abstract class EntityWaterPixelmon extends EntityPixelmon{

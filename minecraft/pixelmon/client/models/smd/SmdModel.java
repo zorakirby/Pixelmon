@@ -33,7 +33,7 @@ public class SmdModel{
 		loadSmdModel(fileURL);
 		setBoneChildren();
 		reformBones();
-		System.out.println("Number of vertices = " + verts.size());
+		ValveStudioModel.print("Number of vertices = " + verts.size());
 	}
 
 	
@@ -59,7 +59,7 @@ public class SmdModel{
                 		lineCount++;
                 		parseBone(currentLine, lineCount);
                 	}
-                	print("Number of model bones = " + this.bones.size());
+                	ValveStudioModel.print("Number of model bones = " + this.bones.size());
                 }
                 else if (currentLine.startsWith("skeleton")){
                 	lineCount++;
@@ -88,7 +88,7 @@ public class SmdModel{
         }catch(Exception e){
         	e.printStackTrace();
         }
-        print("Number of faces = " + faces.size());
+        ValveStudioModel.print("Number of faces = " + faces.size());
 	}
 	
 	private void parseBone(String line, int lineCount){
@@ -100,7 +100,7 @@ public class SmdModel{
 		Bone theBone = new Bone(boneName, id, parent, this);
 		bones.add(id, theBone);
 		nameToBoneMapping.put(boneName, theBone);
-		print(boneName);
+		ValveStudioModel.print(boneName);
 	}
 	
 
@@ -140,7 +140,7 @@ public class SmdModel{
 			face.textureCoordinates = uvs;
 			faces.add(face);
 		}catch(Exception e){
-			print("AN ERROR occurred reading from line #" + lineCount);
+			System.out.println("AN ERROR occurred reading from line #" + lineCount);
 			e.printStackTrace();
 		}
 	}
@@ -237,12 +237,6 @@ public class SmdModel{
         GL11.glPopMatrix();
     }
     
-	/**
-	 *Shorthand for System.out.println(Object).
-	 */
-	public static void print(Object o){
-		System.out.println(o);
-	}
 
 	
 

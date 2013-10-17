@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,11 +19,9 @@ import pixelmon.entities.pixelmon.stats.FriendShip;
 import pixelmon.entities.pixelmon.stats.IVStore;
 import pixelmon.entities.pixelmon.stats.Level;
 import pixelmon.entities.pixelmon.stats.Stats;
-import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumType;
 import pixelmon.pokedex.Pokedex;
 import pixelmon.pokedex.Pokedex.DexRegisterStatus;
-import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
 
 public abstract class Entity3HasStats extends Entity2HasModel {
@@ -38,12 +37,11 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public Entity3HasStats(World par1World) {
 		super(par1World);
-		dataWatcher.addObject(14, (short) 1000); // scale
+		dataWatcher.addObject(EntityPixelmon.dwScale, (short) 1000); // scale
 		stats = new Stats();
 		level = new Level((EntityPixelmon) this);
 		friendship = new FriendShip((EntityPixelmon) this);
-		dataWatcher.addObject(20, (short) 10); // MaxHP
-		dataWatcher.addObject(7, (short) health);
+		dataWatcher.addObject(EntityPixelmon.dwMaxHP, (short) 10); // MaxHP
 	}
 
 	public int getCatchRate() {
@@ -75,7 +73,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	protected void init(String name) {
 		super.init(name);
 		getBaseStats(name);
-		if (baseStats == null){
+		if (baseStats == null) {
 			setDead();
 			return;
 		}
@@ -97,6 +95,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 				level.setLevel(spawnLevel);
 			else
 				level.setLevel(spawnLevel + rand.nextInt(spawnLevelRange));
+			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
+			this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.2 + (1-(200f-stats.Speed)/200f)*0.3);
 			setEntityHealth(stats.HP);
 		}
 	}
@@ -129,13 +129,13 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void onDeath(DamageSource par1DamageSource) {
 		if (getOwner() != null) {
 			friendship.onFaint();
-			PixelmonEventHandler.fireEvent(EventType.PokemonFaint, (EntityPlayer)getOwner());
+			PixelmonEventHandler.fireEvent(EventType.PokemonFaint, (EntityPlayer) getOwner());
 		}
 		super.onDeath(par1DamageSource);
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
+	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		if (par1DamageSource.getSourceOfDamage() == getOwner())
 			friendship.hurtByOwner();
 		return super.attackEntityFrom(par1DamageSource, par2);
@@ -206,44 +206,38 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public int getMaxHealth() {
 		if (isInitialised)
-			return dataWatcher.getWatchableObjectShort(20);
+			return dataWatcher.getWatchableObjectShort(EntityPixelmon.dwMaxHP);
 		else
 			return 10;
 	}
 
 	@Override
-	public void setEntityHealth(int par1) {
+	public void setEntityHealth(float par1) {
 		super.setEntityHealth(par1);
 		updateHealth();
 	}
 
+	public void healEntityBy(int i) {
+		setEntityHealth(func_110143_aJ() + i);
+	}
+
 	public void updateHealth() {
-		if (health > stats.HP)
-			health = stats.HP;
-		if (health < 0)
-			health = 0;
-		dataWatcher.updateObject(7, (short) health);
-		if (getOwner() != null && worldObj.isRemote)
+		if (stats != null) {
+			if (func_110143_aJ() > this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e())
+				setEntityHealth((float)this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e());
+		}
+		if (func_110143_aJ() < 0)
+			setEntityHealth(0);
+		if (getOwner() != null && !worldObj.isRemote)
 			updateNBT();
 	}
 
 	public void setScale(float scale) {
-		dataWatcher.updateObject(14, (short) (scale * 1000));
+		dataWatcher.updateObject(EntityPixelmon.dwScale, (short) (scale * 1000));
 	}
 
 	public float getScale() {
-		return ((float) dataWatcher.getWatchableObjectShort(14)) / 1000.0f;
-	}
-
-	public float getMoveSpeed() {
-		return 0.3f;
-	}
-
-	@Override
-	public int getHealth() {
-		if (dataWatcher.getWatchableObjectShort(7) != health)
-			health = dataWatcher.getWatchableObjectShort(7);
-		return super.getHealth();
+		return ((float) dataWatcher.getWatchableObjectShort(EntityPixelmon.dwScale)) / 1000.0f;
 	}
 
 	@Override
@@ -268,7 +262,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public void updateStats() {
 		stats.setLevelStats(getNature(), baseStats, level.getLevel());
-		dataWatcher.updateObject(20, (short) stats.HP);
+		dataWatcher.updateObject(EntityPixelmon.dwMaxHP, (short) stats.HP);
+		this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
 		updateHealth();
 	}
 
@@ -280,6 +275,8 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void onUpdate() {
 		if (getOwner() != null)
 			friendship.tick();
+		if (hasOwner() && getOwner() == null)
+			setDead();
 		super.onUpdate();
 	}
 

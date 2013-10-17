@@ -18,6 +18,12 @@ public abstract class VectorHelper {
 	public static Vec3 add(Vec3 one, Vec3 other){
 		return one.addVector(other.xCoord, other.yCoord, other.zCoord);
 	}
+	
+	public static Vector3f createOrNull(Float x, Float y, Float z){
+		if(x == null || y == null || z == null)
+			return null;
+		return new Vector3f(x, y, z);
+	}
 
 	/**
 	 * @param me  - the vector to be rotated

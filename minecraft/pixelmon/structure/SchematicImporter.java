@@ -7,6 +7,7 @@ import java.util.HashMap;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
+import net.minecraft.nbt.NBTTagList;
 
 public class SchematicImporter {
 	private String filename;
@@ -21,7 +22,7 @@ public class SchematicImporter {
 	/**
 	 * Paintings, Containers, etc
 	 */
-	int[][][] tileEntities;
+	public NBTTagList tileEntities;
 	/**
 	 * The Bounding Box of the Schematic
 	 */
@@ -45,7 +46,7 @@ public class SchematicImporter {
 		this.offsetZ = z;
 	}
 
-	public void readHeader(){
+	public void readHeader() {
 		NBTTagCompound n = getNBTTag();
 		if (n == null)
 			return;
@@ -55,7 +56,8 @@ public class SchematicImporter {
 		length = n.getShort("Length");
 	}
 
-	public void readSchematic(){
+
+	public void readSchematic() {
 		NBTTagCompound n = getNBTTag();
 		if (n == null)
 			return;
@@ -66,10 +68,9 @@ public class SchematicImporter {
 
 		blocks = new int[width][height][length];
 		blockData = new int[width][height][length];
-		tileEntities = new int[width][height][length];
 		byte[] blockArray = n.getByteArray("Blocks");
 		byte[] blockDataArray = n.getByteArray("Data");
-		// NBTTagCompound tileEntitiesArray = n.getCompoundTag("TileEntities");
+		tileEntities = n.getTagList("TileEntities");
 		int i = 0;
 		for (int y = 0; y < height; y++) {
 			for (int z = 0; z < length; z++) {

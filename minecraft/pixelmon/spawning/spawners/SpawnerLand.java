@@ -37,7 +37,7 @@ public class SpawnerLand extends SpawnerBase {
 	}
 
 	@Override
-	public boolean canPokemonSpawnHere(World par1World, int par2, int par3, int par4) {
+	public boolean canPokemonSpawnHereImpl(World par1World, int par2, int par3, int par4) {
 		if (!par1World.doesBlockHaveSolidTopSurface(par2, par3 - 1, par4)) {
 			return false;
 		} else {

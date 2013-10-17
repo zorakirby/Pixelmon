@@ -2,8 +2,10 @@ package pixelmon.enums;
 
 import net.minecraft.item.Item;
 import pixelmon.config.PixelmonItems;
+import pixelmon.items.IEnumItem;
+import pixelmon.items.ItemPotion;
 
-public enum EnumPotions {
+public enum EnumPotions implements IEnumItem{
 	Potion(2, 20, 0, "potion"), SuperPotion(18, 50, 0, "superpotion"),
 	HyperPotion(34, 200, 0, "hyperpotion"), MaxPotion(50, 0, 100, "maxpotion");
 
@@ -30,17 +32,20 @@ public enum EnumPotions {
 	public int getIndex() {
 		return index;
 	}
+	
+	public ItemPotion getItem(int useless){
+		return getItem();
+	}
 
-	public Item getItem() {
-		if (index == 2)
-			return PixelmonItems.potion;
-		if (index == 18)
-			return PixelmonItems.superPotion;
-		if (index == 34)
-			return PixelmonItems.hyperPotion;
-		if (index == 50)
-			return PixelmonItems.maxPotion;
-		return PixelmonItems.potion;
+	public ItemPotion getItem() {
+		Item result = null;
+		switch(this){
+		case HyperPotion: result = PixelmonItems.hyperPotion;break;
+		case MaxPotion: result = PixelmonItems.maxPotion; break;
+		case Potion: result = PixelmonItems.potion; break;
+		case SuperPotion: result = PixelmonItems.superPotion; break;
+		}
+		return (ItemPotion) result;
 	}
 
 	public String getTexture() {
@@ -58,5 +63,10 @@ public enum EnumPotions {
 			return EnumPotions.MaxPotion;
 		else
 			return EnumPotions.Potion;
+	}
+
+	@Override
+	public int numTypes() {
+		return 1;
 	}
 }

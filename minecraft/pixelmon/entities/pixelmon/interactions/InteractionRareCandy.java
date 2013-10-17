@@ -15,7 +15,7 @@ public class InteractionRareCandy implements IInteraction {
 			if (entityPixelmon.getOwner() == player) {
 				ItemStack itemstack = ((EntityPlayer) player).getCurrentEquippedItem();
 				if (itemstack.itemID == PixelmonItems.rareCandy.itemID) {
-					entityPixelmon.getLvl().awardEXP(entityPixelmon.getLvl().getExpToNextLevel() - entityPixelmon.getLvl().getExp());
+					entityPixelmon.getLvl().awardEXP(entityPixelmon.getLvl().expToNextLevel - entityPixelmon.getLvl().getExp());
 					if (!player.capabilities.isCreativeMode)
 						player.inventory.consumeInventoryItem(itemstack.itemID);
 					return true;

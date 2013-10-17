@@ -2,21 +2,18 @@ package pixelmon.blocks.decorative;
 
 import java.util.List;
 
-import pixelmon.config.PixelmonBlocks;
-
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import pixelmon.config.PixelmonBlocks;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 
 public class BlockUnown extends Block{
@@ -62,7 +59,7 @@ public class BlockUnown extends Block{
 
 	
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entity, ItemStack stack){
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack){
     	world.setBlockMetadataWithNotify(x, y, z, stack.getItemDamage(), 2);
     }
     @SideOnly(Side.CLIENT)

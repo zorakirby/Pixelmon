@@ -12,24 +12,31 @@ import pixelmon.battles.attacks.specialAttacks.attackModifiers.Priority;
 import pixelmon.battles.attacks.specialAttacks.attackModifiers.Recoil;
 import pixelmon.battles.attacks.specialAttacks.basic.Acrobatics;
 import pixelmon.battles.attacks.specialAttacks.basic.Acupressure;
+import pixelmon.battles.attacks.specialAttacks.basic.BatonPass;
+import pixelmon.battles.attacks.specialAttacks.basic.BeatUp;
 import pixelmon.battles.attacks.specialAttacks.basic.Curse;
 import pixelmon.battles.attacks.specialAttacks.basic.DoSetDamage;
 import pixelmon.battles.attacks.specialAttacks.basic.Drain;
 import pixelmon.battles.attacks.specialAttacks.basic.DreamEater;
 import pixelmon.battles.attacks.specialAttacks.basic.EchoedVoice;
+import pixelmon.battles.attacks.specialAttacks.basic.ElectroBall;
+import pixelmon.battles.attacks.specialAttacks.basic.Endeavor;
 import pixelmon.battles.attacks.specialAttacks.basic.Eruption;
 import pixelmon.battles.attacks.specialAttacks.basic.FalseSwipe;
 import pixelmon.battles.attacks.specialAttacks.basic.Flail;
 import pixelmon.battles.attacks.specialAttacks.basic.Frustration;
 import pixelmon.battles.attacks.specialAttacks.basic.GyroBall;
+import pixelmon.battles.attacks.specialAttacks.basic.Haze;
 import pixelmon.battles.attacks.specialAttacks.basic.Heal;
 import pixelmon.battles.attacks.specialAttacks.basic.HealOther;
 import pixelmon.battles.attacks.specialAttacks.basic.HeavySlam;
 import pixelmon.battles.attacks.specialAttacks.basic.Hex;
 import pixelmon.battles.attacks.specialAttacks.basic.HiddenPower;
 import pixelmon.battles.attacks.specialAttacks.basic.JumpKick;
+import pixelmon.battles.attacks.specialAttacks.basic.LowKick;
 import pixelmon.battles.attacks.specialAttacks.basic.Magnitude;
 import pixelmon.battles.attacks.specialAttacks.basic.Memento;
+import pixelmon.battles.attacks.specialAttacks.basic.Metronome;
 import pixelmon.battles.attacks.specialAttacks.basic.NightShade;
 import pixelmon.battles.attacks.specialAttacks.basic.OHKO;
 import pixelmon.battles.attacks.specialAttacks.basic.PainSplit;
@@ -44,12 +51,16 @@ import pixelmon.battles.attacks.specialAttacks.basic.SeismicToss;
 import pixelmon.battles.attacks.specialAttacks.basic.SmackDown;
 import pixelmon.battles.attacks.specialAttacks.basic.Struggle;
 import pixelmon.battles.attacks.specialAttacks.basic.Suicide;
+import pixelmon.battles.attacks.specialAttacks.basic.Teleport;
 import pixelmon.battles.attacks.specialAttacks.basic.Venoshock;
+import pixelmon.battles.attacks.specialAttacks.basic.WakeUpSlap;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Bide;
+import pixelmon.battles.attacks.specialAttacks.multiTurn.Dig;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.Fly;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.PetalDance;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.RazorWind;
 import pixelmon.battles.attacks.specialAttacks.multiTurn.SolarBeam;
+import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyAquaRing;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyBurn;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyConfusion;
 import pixelmon.battles.attacks.specialAttacks.statusAppliers.ApplyDisable;
@@ -79,6 +90,7 @@ public class EffectRegistry {
 
 	static {
 		// Status Appliers
+		effectMap.put("aquaring", ApplyAquaRing.class);
 		effectMap.put("burn", ApplyBurn.class);
 		effectMap.put("confusion", ApplyConfusion.class);
 		effectMap.put("disable", ApplyDisable.class);
@@ -94,6 +106,7 @@ public class EffectRegistry {
 		effectMap.put("perish", ApplyPerish.class);
 		effectMap.put("poison", ApplyPoison.class);
 		effectMap.put("poisonbadly", ApplyPoisonBadly.class);
+//		effectMap.put("pp", Spite.class);
 		effectMap.put("protect", ApplyProtect.class);
 		effectMap.put("rest", ApplyRest.class);
 		effectMap.put("recharge", ApplyRecharge.class);
@@ -115,25 +128,32 @@ public class EffectRegistry {
 		// Basic Attacks
 		effectMap.put("acrobatics", Acrobatics.class);
 		effectMap.put("acupressure", Acupressure.class);
+		effectMap.put("batonpass", BatonPass.class);
+		effectMap.put("beatup", BeatUp.class);
 		effectMap.put("curse", Curse.class);
 		effectMap.put("dosetdamage", DoSetDamage.class);
 		effectMap.put("drain", Drain.class);
 		effectMap.put("dreameater", DreamEater.class);
 		effectMap.put("echoedvoice", EchoedVoice.class);
+		effectMap.put("electroball", ElectroBall.class);
+		effectMap.put("endeavor", Endeavor.class);
 		effectMap.put("eruption", Eruption.class);
 		effectMap.put("facade", Acrobatics.class);
 		effectMap.put("falseswipe", FalseSwipe.class);
 		effectMap.put("flail", Flail.class);
 		effectMap.put("frustration", Frustration.class);
 		effectMap.put("gyroball", GyroBall.class);
+		effectMap.put("haze", Haze.class);
 		effectMap.put("heal", Heal.class);
 		effectMap.put("healother", HealOther.class);
 		effectMap.put("heavyslam", HeavySlam.class);
 		effectMap.put("hex", Hex.class);
 		effectMap.put("hiddenpower", HiddenPower.class);
 		effectMap.put("jumpkick", JumpKick.class);
+		effectMap.put("lowkick", LowKick.class);
 		effectMap.put("magnitude", Magnitude.class);
 		effectMap.put("memento", Memento.class);
+		effectMap.put("metronome", Metronome.class);
 		effectMap.put("nightshade", NightShade.class);
 		effectMap.put("ohko", OHKO.class);
 		effectMap.put("painsplit", PainSplit.class);
@@ -148,14 +168,20 @@ public class EffectRegistry {
 		effectMap.put("smackdown", SmackDown.class);
 		effectMap.put("struggle", Struggle.class);
 		effectMap.put("suicide", Suicide.class);
+		effectMap.put("teleport", Teleport.class);
 		effectMap.put("venoshock", Venoshock.class);
+		effectMap.put("wakeupslap", WakeUpSlap.class);
 
 		// Multi-Turn Attacks
 		effectMap.put("bide", Bide.class);
+//		effectMap.put("charge", Charge.class);
+		effectMap.put("dig", Dig.class);
 		effectMap.put("fly", Fly.class);
 		effectMap.put("petaldance", PetalDance.class);
 		effectMap.put("razorwind", RazorWind.class);
 		effectMap.put("solarbeam", SolarBeam.class);
+		
+		// Global statuses
 	}
 
 	public static EffectBase getEffect(String effectTypeString, Value[] values) {

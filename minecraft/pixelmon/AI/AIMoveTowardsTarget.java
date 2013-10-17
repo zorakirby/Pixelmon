@@ -1,6 +1,8 @@
 package pixelmon.AI;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.Vec3;
@@ -8,16 +10,14 @@ import pixelmon.entities.pixelmon.Entity7HasAI;
 
 public class AIMoveTowardsTarget extends EntityAIBase {
 	private Entity7HasAI theEntity;
-	private EntityLiving targetEntity;
+	private EntityLivingBase targetEntity;
 	private double movePosX;
 	private double movePosY;
 	private double movePosZ;
-	private float field_75425_f;
 	private float field_75426_g;
 
-	public AIMoveTowardsTarget(Entity7HasAI par1EntityCreature, float par2, float par3) {
+	public AIMoveTowardsTarget(Entity7HasAI par1EntityCreature, float par3) {
 		this.theEntity = par1EntityCreature;
-		this.field_75425_f = par2;
 		this.field_75426_g = par3;
 		this.setMutexBits(3);
 	}
@@ -26,6 +26,8 @@ public class AIMoveTowardsTarget extends EntityAIBase {
 	 * Returns whether the EntityAIBase should begin execution.
 	 */
 	public boolean shouldExecute() {
+		if (theEntity.aggressionTimer > 0)
+			return false;
 		if (theEntity.battleController != null)
 			return false;
 		this.targetEntity = theEntity.getAttackTarget();
@@ -69,6 +71,6 @@ public class AIMoveTowardsTarget extends EntityAIBase {
 	 * Execute a one shot task or start executing a continuous task
 	 */
 	public void startExecuting() {
-		theEntity.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, this.field_75425_f);
+		theEntity.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, (float)theEntity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e());
 	}
 }
