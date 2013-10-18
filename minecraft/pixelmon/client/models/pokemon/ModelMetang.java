@@ -10,17 +10,15 @@ import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
 
-
 public class ModelMetang extends PixelmonModelBase {
-	
+
 	PixelmonModelRenderer Body, LeftArm, LeftHand, RightArm, RightHand;
-	
-	
+
 	public ModelMetang() {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 0F, 0);
+		Body.setRotationPoint(0, 20F, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/Metang/Body.obj")));
 		LeftArm = new PixelmonModelRenderer(this, 0, 0);
 		LeftArm.setRotationPoint(2.734F, 3.658F, 1.274F);
@@ -38,18 +36,16 @@ public class ModelMetang extends PixelmonModelBase {
 		Body.addChild(RightArm);
 		Body.addChild(LeftHand);
 		Body.addChild(RightHand);
-		
-		
+
 		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
-		
-		setRotation(Body, radians, 0, 0);
-		
-		
-		skeleton = new SkeletonQuadruped(Body, null, null, null, null, null, null);
 
+		setRotation(Body, radians, 0, 0);
+
+		skeleton = new SkeletonQuadruped(Body, null, null, null, null, null, null);
+		scale=2f;
 	}
-	
+
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
@@ -64,5 +60,5 @@ public class ModelMetang extends PixelmonModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
 	}
-		
+
 }
