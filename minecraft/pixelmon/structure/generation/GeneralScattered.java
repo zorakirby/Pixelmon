@@ -34,6 +34,7 @@ public class GeneralScattered extends StructureScattered {
 			for (int x = 0; x < s.width; x++)
 				for (int z = 0; z < s.length; z++)
 					for (int y = 0; y < s.height; y++) {
+						this.placeBlockAtCurrentPosition(world, 0, 0, x, y, z, bb);
 						int blockId = s.blocks[x][y][z];
 						try {
 							if (blockId < 0)
@@ -75,6 +76,18 @@ public class GeneralScattered extends StructureScattered {
 
 	public boolean generate(World world, Random random) {
 		return addComponentParts(world, random, boundingBox);
+	}
+
+	@Override
+	protected void func_143012_a(NBTTagCompound nbttagcompound) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void func_143011_b(NBTTagCompound nbttagcompound) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

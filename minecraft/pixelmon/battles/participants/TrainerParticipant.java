@@ -67,7 +67,7 @@ public class TrainerParticipant extends BattleParticipant {
 	@Override
 	public boolean getIsFaintedOrDead() {
 		return trainer.releasedPokemon == null || trainer.releasedPokemon.isDead || trainer.releasedPokemon.isFainted
-				|| trainer.releasedPokemon.func_110143_aJ() <= 0;
+				|| trainer.releasedPokemon.getHealth() <= 0;
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class TrainerParticipant extends BattleParticipant {
 
 	@Override
 	public Attack getMove() {
-		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.moveset, opponent.currentPokemon().type, trainer.releasedPokemon, opponent.currentPokemon());
+		return Attack.getWhichMoveIsBest(trainer.releasedPokemon.getMoveset(), opponent.currentPokemon().type, trainer.releasedPokemon, opponent.currentPokemon());
 	}
 
 	@Override

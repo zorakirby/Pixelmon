@@ -22,13 +22,13 @@ public class Pokedex {
 
 	static {
 		try {
-			ResultSet r = DatabaseHelper.getResultSet("select * from Pixelmon");
+			ResultSet r = DatabaseHelper.getResultSet("select * from PIXELMON");
 			while (r.next()) {
-				String n = r.getString("Name");
-				int i = r.getInt("NationalPokedexNumber");
-				String d = r.getString("Description");
-				float w = r.getFloat("Weight");
-				float h = r.getFloat("Height");
+				String n = r.getString("PIXELMONFULLNAME");
+				int i = r.getInt("NATIONALPOKEDEXNUMBER");
+				String d = r.getString("POKEDEXDESCRIPTION");
+				float w = r.getFloat("POKEDEXWEIGHT");
+				float h = r.getFloat("POKEDEXHEIGHT");
 				fullPokedex.put(i, new PokedexEntry(i, n, d, w, h));
 				nameToID.put(n, i);
 			}

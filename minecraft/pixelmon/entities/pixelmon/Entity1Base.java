@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumNature;
@@ -23,7 +24,7 @@ public abstract class Entity1Base extends EntityTameable {
 	public boolean isMale;
 	public boolean isInBall = false;
 	public boolean isFainted = false;
-	protected boolean isInitialised = false;
+	public boolean isInitialised = false;
 
 	public Entity1Base(World par1World) {
 		super(par1World);
@@ -108,7 +109,7 @@ public abstract class Entity1Base extends EntityTameable {
 	 */
 	@Override
 	public AxisAlignedBB getCollisionBox(Entity par1Entity) {
-		return par1Entity.boundingBox;
+		return null;
 	}
 
 	/**
@@ -180,7 +181,7 @@ public abstract class Entity1Base extends EntityTameable {
 	public EntityAnimal spawnBabyAnimal(EntityAnimal entityanimal) {
 		return null;
 	}
-	
+
 	public boolean belongsTo(EntityPlayer player) {
 		if (getOwner() == player)
 			return true;
@@ -188,18 +189,18 @@ public abstract class Entity1Base extends EntityTameable {
 		return false;
 	}
 
-	public void updateNBT() {
+	public void update(EnumUpdateType... types) {
 		try {
-			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).updateNBT((EntityPixelmon)this);
+			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner()).update((EntityPixelmon) this, types);
 		} catch (PlayerNotLoadedException e) {
 
 		}
 	}
-	
-	public PlayerStorage getStorage() throws PlayerNotLoadedException{
+
+	public PlayerStorage getStorage() throws PlayerNotLoadedException {
 		return PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) getOwner());
 	}
-	
+
 	public boolean hasOwner() {
 		if (getOwnerName().equals(""))
 			return false;

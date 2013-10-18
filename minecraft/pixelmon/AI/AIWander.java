@@ -1,5 +1,6 @@
 package pixelmon.AI;
 
+import pixelmon.entities.pixelmon.EntityPixelmon;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -25,7 +26,9 @@ public class AIWander extends EntityAIBase {
 			return false;
 		} else if (this.entity.getRNG().nextInt(120) != 0) {
 			return false;
-		} else {
+		}else if (entity instanceof EntityPixelmon && !((EntityPixelmon)entity).canMove)
+			return false;
+		else {
 			Vec3 vec3 = RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
 
 			if (vec3 == null) {
@@ -50,6 +53,7 @@ public class AIWander extends EntityAIBase {
 	 * Execute a one shot task or start executing a continuous task
 	 */
 	public void startExecuting() {
-		this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition, entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e());
+		this.entity.getNavigator().tryMoveToXYZ(this.xPosition, this.yPosition, this.zPosition,
+				entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
 	}
 }

@@ -1,9 +1,9 @@
 package pixelmon.client.render.tileEntities;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -69,7 +69,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 		if (i < 0)
 			return;
 
-		func_110628_a(RenderResources.anvil); // texture
+		bindTexture(RenderResources.anvil); // texture
 		GL11.glPushMatrix(); // start
 		GL11.glTranslatef((float) d + 0.5F, (float) d1 + 1.5F, (float) d2 + 0.5F); // size
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F); // rotate based on metadata
@@ -81,7 +81,7 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 			GL11.glTranslatef((float) 0, (float) 0.03F, (float) 0); // size
 			Item itemToRender = PixelmonItemsPokeballs.getItemFromID(tile.itemOnAnvil);
 			if (tile.itemOnAnvil == PixelmonItems.aluminiumIngot.itemID) {
-				func_110628_a(RenderResources.aluminiumIngot);
+				bindTexture(RenderResources.aluminiumIngot);
 				if (tile.state == 0)
 					modelPlateIngot.renderModel(0.0625f);
 				else if (tile.state == 1)
@@ -89,14 +89,14 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 				else if (tile.state == 2)
 					modelPlateStage3.renderModel(0.0625f);
 			} else if (tile.itemOnAnvil == PixelmonItems.aluminiumPlate.itemID) {
-				func_110628_a(RenderResources.aluminiumIngot);
+				bindTexture(RenderResources.aluminiumIngot);
 				modelPlate.renderModel(0.0625f);
 			}
 			if (itemToRender instanceof ItemPokeballDisc || itemToRender == PixelmonItemsPokeballs.ironDisc) {
 				if (itemToRender == PixelmonItemsPokeballs.ironDisc)
-					func_110628_a(RenderResources.ironDisc);
+					bindTexture(RenderResources.ironDisc);
 				else
-					func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture()));
+					bindTexture(new ResourceLocation("pixelmon:textures/pokeballs/" + ((ItemPokeballDisc) itemToRender).pokeball.getTexture()));
 				if (tile.state == 0)
 					modelDiscFlat.renderModel(0.0625f);
 				else if (tile.state == 1)
@@ -105,9 +105,9 @@ public class RenderTileEntityAnvil extends TileEntitySpecialRenderer {
 					modelDiscStage2.renderModel(0.0625f);
 			} else if (itemToRender instanceof ItemPokeballLid || itemToRender == PixelmonItemsPokeballs.ironBase) {
 				if (itemToRender == PixelmonItemsPokeballs.ironBase)
-					func_110628_a(RenderResources.ironDisc);
+					bindTexture(RenderResources.ironDisc);
 				else
-					func_110628_a(new ResourceLocation("pixelmon:textures/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture()));
+					bindTexture(new ResourceLocation("pixelmon:textures/pokeballs/" + ((ItemPokeballLid) itemToRender).pokeball.getTexture()));
 				modelDiscHemiSphere.renderModel(0.0625f);
 			}
 		}

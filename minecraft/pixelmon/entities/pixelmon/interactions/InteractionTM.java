@@ -7,6 +7,7 @@ import pixelmon.api.interactions.IInteraction;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.packetHandlers.ReplaceMove;
 import pixelmon.database.DatabaseMoves;
@@ -23,24 +24,23 @@ public class InteractionTM implements IInteraction {
 			if (itemstack.getItem() instanceof ItemTM) {
 				if (player != entityPixelmon.getOwner())
 					return true;
-				if (DatabaseMoves.CanLearnAttack(entityPixelmon.getName(), ((ItemTM) itemstack.getItem()).attackName)) {
+				if (DatabaseMoves.CanLearnAttack(entityPixelmon.baseStats.id, ((ItemTM) itemstack.getItem()).attackName)) {
 					Attack a = DatabaseMoves.getAttack(((ItemTM) itemstack.getItem()).attackName);
 					if (a == null) {
 						ChatHandler.sendChat(entityPixelmon.getOwner(), ((ItemTM) itemstack.getItem()).attackName + " is corrupted");
 						return true;
 					}
-					a.STAB = DatabaseMoves.hasSTAB(entityPixelmon.getName(), ((ItemTM) itemstack.getItem()).attackName);
-					if (entityPixelmon.moveset.size() >= 4) {
+					if (entityPixelmon.getMoveset().size() >= 4) {
 						ReplaceMove.tmID = itemstack.itemID;
 						((EntityPlayerMP) entityPixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
 								EnumPackets.ChooseMoveToReplace, entityPixelmon.getPokemonId(), a.baseAttack.attackIndex, entityPixelmon.getLvl().getLevel()));
 					} else {
-						entityPixelmon.moveset.add(a);
+						entityPixelmon.getMoveset().add(a);
 						ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " just learnt " + a.baseAttack.attackName + "!");
 						if (!player.capabilities.isCreativeMode)
 							player.inventory.consumeInventoryItem(itemstack.itemID);
 					}
-					entityPixelmon.updateNBT();
+					entityPixelmon.update(EnumUpdateType.Moveset);
 				} else {
 					ChatHandler.sendChat(entityPixelmon.getOwner(), entityPixelmon.getName() + " can't learn " + ((ItemTM) itemstack.getItem()).attackName
 							+ "!");

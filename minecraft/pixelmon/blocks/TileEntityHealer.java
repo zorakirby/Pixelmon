@@ -140,7 +140,7 @@ public class TileEntityHealer extends TileEntity {
 
 	@Override
 	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
-		readFromNBT(pkt.customParam1);
+		readFromNBT(pkt.data);
 	}
 
 }

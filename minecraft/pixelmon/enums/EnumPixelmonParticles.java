@@ -9,7 +9,7 @@ import pixelmon.battles.animations.particles.*;
  */
 public enum EnumPixelmonParticles {
 	gastly(EntityGastlyParticle.class), koffing(EntityKoffingParticle.class),
-	flame(EntityFlameParticle.class), smoke(EntitySmokeParticle.class);
+	flame(EntityFlameParticle.class), smoke(EntitySmokeParticle.class), shiny(EntityShinyParticle.class);
 	
 	public Class particleClass;
 	

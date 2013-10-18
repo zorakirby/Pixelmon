@@ -1,6 +1,11 @@
 package pixelmon.enums;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import pixelmon.config.PixelmonEntityList.ClassType;
+import pixelmon.database.DatabaseHelper;
 
 public enum EnumPokemon {
 	Abra("Abra"),
@@ -14,6 +19,7 @@ public enum EnumPokemon {
 	Armaldo("Armaldo"),
 	Articuno("Articuno"),
 	Bastiodon("Bastiodon"),
+	Bayleef("Bayleef"),
 	Beedrill("Beedrill"),
 	Bellsprout("Bellsprout"),
 	Blastoise("Blastoise"),
@@ -26,11 +32,16 @@ public enum EnumPokemon {
 	Charizard("Charizard"),
 	Charmander("Charmander"),
 	Charmeleon("Charmeleon"),
+	Chikorita("Chikorita"),
+	Chinchou("Chinchou"),
 	Clefable("Clefable"),
 	Clefairy("Clefairy"),
 	Cloyster("Cloyster"),
 	Cranidos("Cranidos"),
+	Croconaw("Croconaw"),
 	Cubone("Cubone"),
+	Cyndaquil("Cyndaquil"),
+	Dewgong("Dewgong"),
 	Diglett("Diglett"),
 	Ditto("Ditto"),
 	Dodrio("Dodrio"),
@@ -38,23 +49,28 @@ public enum EnumPokemon {
 	Dragonair("Dragonair"),
 	Dragonite("Dragonite"),
 	Dratini("Dratini"),
+	Drifblim("Drifblim"),
+	Drifloon("Drifloon"),
 	Drowzee("Drowzee"),
 	Dugtrio("Dugtrio"),
 	Eevee("Eevee"),
 	Ekans("Ekans"),
 	Electabuzz("Electabuzz"),
 	Electrode("Electrode"),
+	Elekid("Elekid"),
 	Espeon("Espeon"),
 	Exeggcute("Exeggcute"),
 	Exeggutor("Exeggutor"),
 	Farfetchd("Farfetchd"),
 	Fearow("Fearow"),
+	Feraligatr("Feraligatr"),
 	Flaaffy("Flaaffy"),
 	Flareon("Flareon"),
 	Flygon("Flygon"),
 	Froslass("Froslass"),
 	Gastly("Gastly"),
 	Gengar("Gengar"),
+	Girafarig("Girafarig"),
 	Geodude("Geodude"),
 	Glaceon("Glaceon"),
 	Glalie("Glalie"),
@@ -65,6 +81,8 @@ public enum EnumPokemon {
 	Golem("Golem"),
 	Graveler("Graveler"),
 	Grimer("Grimer"),
+	Grotle("Grotle"),
+	Grovyle("Grovyle"),
 	Growlithe("Growlithe"),
 	Gyarados("Gyarados"),
 	Haunter("Haunter"),
@@ -85,8 +103,10 @@ public enum EnumPokemon {
 	Koffing("Koffing"),
 	Krabby("Krabby"),
 	Krokorok("Krokorok"),
+	Lanturn("Lanturn"),
 	Lapras("Lapras"),
 	Leafeon("Leafeon"),
+	Lickitung("Lickitung"),
 	Lunatone("Lunatone"),
 	Machamp("Machamp"),
 	Machoke("Machoke"),
@@ -98,6 +118,7 @@ public enum EnumPokemon {
 	Mankey("Mankey"),
 	Mareep("Mareep"),
 	Marowak("Marowak"),
+	Meganium("Meganium"),
 	Meowth("Meowth"),
 	Metapod("Metapod"),
 	Mew("Mew"),
@@ -129,20 +150,24 @@ public enum EnumPokemon {
 	Pinsir("Pinsir"),
 	Poliwag("Poliwag"),
 	Poliwhirl("Poliwhirl"),
+	Poliwrath("Poliwrath"),
 	Ponyta("Ponyta"),
 	Porygon("Porygon"),
 	Primeape("Primeape"),
 	Psyduck("Psyduck"),
+	Quilava("Quilava"),
 	Raichu("Raichu"),
 	Rampardos("Rampardos"),
 	Rapidash("Rapidash"),
 	Raticate("Raticate"),
 	Rattata("Rattata"),
+	Rayquaza("Rayquaza"),
 	Rhydon("Rhydon"),
 	Rhyhorn("Rhyhorn"),
 	Sandile("Sandile"),
 	Sandshrew("Sandshrew"),
 	Sandslash("Sandslash"),
+	Sceptile("Sceptile"),
 	Scyther("Scyther"),
 	Seadra("Seadra"),
 	Seaking("Seaking"),
@@ -164,7 +189,12 @@ public enum EnumPokemon {
 	Tentacool("Tentacool"),
 	Tentacruel("Tentacruel"),
 	Tirtouga("Tirtouga"),
+	Torterra("Torterra"),
+	Totodile("Totodile"),
 	Trapinch("Trapinch"),
+	Treecko("Treecko"),
+	Turtwig("Turtwig"),
+	Typhlosion("Typhlosion"),
 	Umbreon("Umbreon"),
 	Venomoth("Venomoth"),
 	Venonat("Venonat"),
@@ -180,22 +210,42 @@ public enum EnumPokemon {
 	Weepinbell("Weepinbell"),
 	Weezing("Weezing"),
 	Wigglytuff("Wigglytuff"),
+	Wynaut("Wynaut"),
 	Zapdos("Zapdos"),
 	Zubat("Zubat");
 
-	private EnumPokemon(String name){
+	private EnumPokemon(String name) {
 		this.name = name;
 	}
+
 	public String name;
+
 	public static boolean hasPokemon(String evolveTo) {
-		for (EnumPokemon e: values()){
-			if (e.name.equalsIgnoreCase(evolveTo)) return true;
+		for (EnumPokemon e : values()) {
+			if (e.name.equalsIgnoreCase(evolveTo))
+				return true;
 		}
 		return false;
 	}
+
 	public static EnumPokemon get(String name) {
-		for (EnumPokemon e: values()){
-			if (e.name.equalsIgnoreCase(name)) return e;
+		for (EnumPokemon e : values()) {
+			if (e.name.equalsIgnoreCase(name))
+				return e;
+		}
+		return null;
+	}
+
+	public static EnumPokemon getFromDBID(int id) {
+		Connection con = DatabaseHelper.getConnection();
+		try {
+			Statement stat = con.createStatement();
+			ResultSet rs = stat.executeQuery("select * from PIXELMON where PIXELMONID=" + id);
+			while (rs.next()) {
+				return EnumPokemon.get(rs.getString("PIXELMONFULLNAME"));
+			}
+		} catch (Exception e) {
+
 		}
 		return null;
 	}

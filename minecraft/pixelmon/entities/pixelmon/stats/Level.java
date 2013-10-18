@@ -10,6 +10,7 @@ import pixelmon.battles.attacks.Attack;
 import pixelmon.blocks.BlockEvolutionRock;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonStatsPacket;
@@ -35,7 +36,7 @@ public class Level {
 	public Level(EntityPixelmon p) {
 		this.pixelmon = p;
 		pixelmon.getDataWatcher().addObject(EntityPixelmon.dwLevel, (short) -1); // Level
-		pixelmon.getDataWatcher().addObject(EntityPixelmon.dwExp, (short) 0); // ExperiencePercent
+		pixelmon.getDataWatcher().addObject(EntityPixelmon.dwExp, (int) 0); // ExperiencePercent
 		setScale();
 	}
 
@@ -62,17 +63,17 @@ public class Level {
 		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwLevel, (short) i);
 		setScale();
 		expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
-		if (pixelmon.func_110143_aJ() == pixelmon.stats.HP) {
+		if (pixelmon.getHealth() == pixelmon.stats.HP) {
 			updateStats();
-			pixelmon.setEntityHealth(pixelmon.stats.HP);
+			pixelmon.setHealth(pixelmon.stats.HP);
 		} else {
 			float oldHp = pixelmon.stats.HP;
-			float oldHealth = pixelmon.func_110143_aJ();
+			float oldHealth = pixelmon.getHealth();
 			updateStats();
 			float newHealth = pixelmon.stats.HP;
 			if (oldHp != 0)
 				newHealth = oldHealth / oldHp * pixelmon.stats.HP;
-			pixelmon.setEntityHealth((int) Math.ceil(newHealth));
+			pixelmon.setHealth((int) Math.ceil(newHealth));
 		}
 	}
 
@@ -109,11 +110,11 @@ public class Level {
 	}
 
 	public int getExp() {
-		return pixelmon.getDataWatcher().getWatchableObjectShort(EntityPixelmon.dwExp);
+		return pixelmon.getDataWatcher().getWatchableObjectInt(EntityPixelmon.dwExp);
 	}
 
 	public void setExp(int i) {
-		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwExp, (short) i);
+		pixelmon.getDataWatcher().updateObject(EntityPixelmon.dwExp, (int) i);
 	}
 
 	public boolean canLevelUp() {
@@ -124,13 +125,13 @@ public class Level {
 		float oldHp = pixelmon.stats.HP;
 		updateStats();
 		float percentGain = ((float) pixelmon.stats.HP) / oldHp;
-		float newHealth = pixelmon.func_110143_aJ() * percentGain;
-		pixelmon.setEntityHealth((int) Math.ceil(newHealth));
+		float newHealth = pixelmon.getHealth() * percentGain;
+		pixelmon.setHealth((int) Math.ceil(newHealth));
 		if (pixelmon.getOwner() != null && pixelmon.getOwner() instanceof EntityPlayerMP) {
 			PixelmonStatsPacket stats2 = PixelmonStatsPacket.createPacket(pixelmon);
 			PixelmonLevelUpPacket p = new PixelmonLevelUpPacket(pixelmon, getLevel(), stats, stats2, EnumPackets.LevelUp);
 			((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(p.getPacket());
-			pixelmon.updateNBT();
+			pixelmon.update(EnumUpdateType.Stats);
 		}
 
 		if (pixelmon.getOwner() != null)
@@ -161,13 +162,14 @@ public class Level {
 			setLevel(getLevel() + 1);
 			onLevelUp(stats);
 			setExp(newExp);
+			boolean evolves = false;
 			if (!ItemHeld.isItemOfType(pixelmon.getHeldItem(), EnumHeldItems.everStone)) {
 				if (pixelmon.baseStats.evolveInto != null && pixelmon.baseStats.evolveLevel != -1 && getLevel() >= pixelmon.baseStats.evolveLevel) {
-					pixelmon.evolve(pixelmon.baseStats.evolveInto.name);
+					pixelmon.startEvolution(pixelmon.baseStats.evolveInto.name, true);
 				}
-				for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
+				for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.baseStats.id)) {
 					if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.friendship && pixelmon.friendship.isFriendshipHighEnoughToEvolve()) {
-						boolean evolves = true;
+						evolves = true;
 						if (e.extraParam != null) {
 							if (e.extraParam.equalsIgnoreCase("day") && !pixelmon.worldObj.isDaytime())
 								evolves = false;
@@ -175,16 +177,16 @@ public class Level {
 								evolves = false;
 						}
 						if (evolves) {
-							pixelmon.evolve(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName, true);
 							break;
 						}
 					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.biome) {
 						if (pixelmon.worldObj.getBiomeGenForCoords((int) pixelmon.posX, (int) pixelmon.posZ) == EnumBiomes.parseBiome(e.extraParam).getBiome()) {
-							pixelmon.evolve(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName, true);
 							break;
 						}
 					} else if (EnumPokemon.hasPokemon(e.pokemonName) && e.mode == InfoMode.evolutionRock) {
-						boolean evolves = false;
+						evolves = false;
 						EntityPlayer player = (EntityPlayer) pixelmon.getOwner();
 						for (int j = 0; j < pixelmon.worldObj.loadedTileEntityList.size(); j++) {
 							TileEntity t = (TileEntity) pixelmon.worldObj.loadedTileEntityList.get(j);
@@ -196,22 +198,23 @@ public class Level {
 							}
 						}
 						if (evolves) {
-							pixelmon.evolve(e.pokemonName);
+							pixelmon.startEvolution(e.pokemonName, true);
 							break;
 						}
 					}
 				}
 			}
 			String name = pixelmon.getName();
-			if (DatabaseMoves.LearnsAttackAtLevel(name, getLevel())) {
-				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(name, getLevel());
+			if (!evolves && pixelmon.evolving == 0 && DatabaseMoves.LearnsAttackAtLevel(pixelmon.baseStats.id, getLevel())) {
+				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(pixelmon.baseStats.id, getLevel());
 				for (Attack a : newAttacks) {
-					if (pixelmon.moveset.size() >= 4) {
+					if (pixelmon.getMoveset().size() >= 4) {
 						ReplaceMove.tmID = -1;
 						((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
 								EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
 					} else {
-						pixelmon.moveset.add(a);
+						pixelmon.getMoveset().add(a);
+						pixelmon.update(EnumUpdateType.Moveset);
 						ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
 					}
 				}
@@ -231,11 +234,21 @@ public class Level {
 		percent = 0.8f + 0.4f * (getLevel()) / (100);
 		if (percent > pixelmon.maxScale)
 			percent = pixelmon.maxScale;
-		pixelmon.setScale(percent);
+		pixelmon.setPixelmonScale(percent);
 	}
 
 	public void recalculateXP() {
 		setExp(0);
 		expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
+	}
+
+	int oldLevel = -1;
+
+	public int getExtForNextLevelClient() {
+		if (oldLevel != getLevel()) {
+			expToNextLevel = getExpForLevel(getLevel() + 1) - getExpForLevel(getLevel());
+			oldLevel = getLevel();
+		}
+		return expToNextLevel;
 	}
 }

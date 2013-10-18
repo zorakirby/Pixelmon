@@ -5,11 +5,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.server.FMLServerHandler;
 
 import pixelmon.RandomHelper;
 import pixelmon.config.PixelmonBlocks;
@@ -18,6 +22,9 @@ import pixelmon.enums.EnumBiomes;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.AbstractResourcePack;
+import net.minecraft.client.resources.ResourceManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -26,18 +33,10 @@ public class StructureRegistry {
 	public static ArrayList<StructureData> scatteredStructures = new ArrayList<StructureData>();
 
 	public static void loadStructures(Side side) {
-		File f = null;
-		if (side == Side.CLIENT)
-			f = new File(Minecraft.getMinecraft().mcDataDir + "/resources/pixelmon/structures/standAlone");
-		else if (side == Side.SERVER)
-			f = new File(MinecraftServer.getServer().getFolderName() + "/resources/pixelmon/structures/standAlone");
-		if (f != null && !f.isDirectory()) {
-			System.out.println("Standalone structures directory is corrupted");
-			return;
-		}
-
-		for (String filename : f.list(filter)) {
-			StructureData data = loadStructureData(filename, f.getAbsolutePath());
+		int i = 1;
+		while (StructureRegistry.class.getResourceAsStream("/pixelmon/structure/standAlone/" + "pokecenter" + i + ".data") != null) {
+			StructureData data = loadStructureData("pokecenter" + i, "/pixelmon/structure/standAlone");
+			i++;
 			if (data != null)
 				scatteredStructures.add(data);
 		}
@@ -45,14 +44,21 @@ public class StructureRegistry {
 
 	public static StructureData loadStructureData(String filename, String path) {
 		StructureData data = new StructureData();
+		if (StructureRegistry.class.getResourceAsStream("/pixelmon/structure/standAlone/" + filename + ".schematic") == null)
+			return null;
+		data.path = path + "/" + filename + ".schematic";
+
 		int schind = filename.indexOf(".data");
 		data.path = path + "/" + filename.substring(0, schind) + ".schematic";
+		InputStream is;
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new FileReader(path + "/" + filename));
+			is = StructureRegistry.class.getResourceAsStream("/pixelmon/structure/standAlone/" + filename + ".data");
+			br = new BufferedReader(new InputStreamReader(is, "utf-8"));
+
 			String line = br.readLine();
 			while (line != null) {
-				if (line.startsWith("biomes:")) {
+				if (line.contains("biomes:")) {
 					String[] biomeList = line.split(":")[1].split(";");
 					data.biomes = new BiomeGenBase[biomeList.length];
 					int i = 0;
@@ -103,15 +109,6 @@ public class StructureRegistry {
 		}
 		
 	}
-
-	static FilenameFilter filter = new FilenameFilter() {
-		@Override
-		public boolean accept(File dir, String name) {
-			if (name.endsWith(".data"))
-				return true;
-			return false;
-		}
-	};
 
 	public static StructureData getScatteredStructureFromBiome(BiomeGenBase biomeGenForCoords) {
 		ArrayList<StructureData> possibleStructures = new ArrayList<StructureData>();

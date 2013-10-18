@@ -1,6 +1,5 @@
 package pixelmon.battles.participants;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,11 +11,14 @@ import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.entities.pixelmon.stats.Stats;
 import pixelmon.enums.EnumGui;
+import pixelmon.items.heldItems.ChoiceItem;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
 import pixelmon.storage.PlayerStorage;
@@ -25,11 +27,13 @@ public class PlayerParticipant extends BattleParticipant {
 	public EntityPlayerMP player;
 	PlayerStorage storage;
 	EntityPixelmon currentPixelmon;
+	int startAir = 0;
 
 	public PlayerParticipant(EntityPlayerMP p, EntityPixelmon firstPixelmon) throws PlayerNotLoadedException {
 		player = p;
 		currentPixelmon = firstPixelmon;
 		storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
+		startAir = p.getAir();
 	}
 
 	@Override
@@ -64,17 +68,18 @@ public class PlayerParticipant extends BattleParticipant {
 		for (EntityPixelmon p : PixelmonMethods.getAllActivePokemon(player)) {
 			p.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
 			for (int i = 0; i < 4; i++) {
-				if (p.moveset.get(i) != null)
-					p.moveset.get(i).setDisabled(false, p);
+				if (p.getMoveset().get(i) != null)
+					p.getMoveset().get(i).setDisabled(false, p);
 			}
 		}
 		try {
-			if (opponent.startedBattle && !(PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(currentPixelmon.getPokemonId(), player.worldObj))) {
-				currentPixelmon.releaseFromPokeball();
+			if (opponent.startedBattle
+					&& !(PixelmonStorage.PokeballManager.getPlayerStorage(player).EntityAlreadyExists(currentPixelmon.getPokemonId(), player.worldObj))) {
 				currentPixelmon.setLocationAndAngles(player.posX, player.posY, player.posZ, player.rotationYaw, 0.0F);
+				currentPixelmon.releaseFromPokeball();
 			}
-		} catch (Exception e){
-			//Do nothing
+		} catch (Exception e) {
+			// Do nothing
 		}
 	}
 
@@ -107,7 +112,7 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.func_110143_aJ() <= 0;
+		return currentPixelmon.isDead || currentPixelmon.isFainted || currentPixelmon.getHealth() <= 0;
 	}
 
 	@Override
@@ -119,7 +124,7 @@ public class PlayerParticipant extends BattleParticipant {
 	public Attack getMove() {
 		if (bc == null)
 			return null;
-		if (currentPixelmon.moveset.size() == 0) {
+		if (currentPixelmon.getMoveset().size() == 0) {
 			bc.endBattle();
 			return null;
 		}
@@ -132,6 +137,11 @@ public class PlayerParticipant extends BattleParticipant {
 				e.printStackTrace();
 			}
 		}
+		if(currentPixelmon.heldItem != null)
+		if(currentPixelmon.heldItem.getItem().getItemDisplayName(currentPixelmon.heldItem) == "choiceband"||
+		   currentPixelmon.heldItem.getItem().getItemDisplayName(currentPixelmon.heldItem) == "choicescarf"||
+		   currentPixelmon.heldItem.getItem().getItemDisplayName(currentPixelmon.heldItem) == "choicespecs")
+		currentPixelmon.mustUseLastMove = true;
 		player.playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.BackToMainMenu, canSwitch ? 1 : 0));
 		wait = true;
 		return null;
@@ -180,7 +190,7 @@ public class PlayerParticipant extends BattleParticipant {
 
 	@Override
 	public void updatePokemon() {
-		storage.updateNBT(currentPixelmon);
+		storage.update(currentPixelmon, EnumUpdateType.HP);
 	}
 
 	@Override
@@ -197,6 +207,9 @@ public class PlayerParticipant extends BattleParticipant {
 	public void updateOpponentHealth(EntityPixelmon pixelmon) {
 		PixelmonDataPacket p = new PixelmonDataPacket(pixelmon, EnumPackets.SetOpponent);
 		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
+		if (this.opponent.currentPokemon().isDead || this.opponent.currentPokemon().isFainted || this.opponent.currentPokemon().getHealth() <= 0) {
+			GivePlayerExp();
+		}
 	}
 
 	@Override
@@ -214,4 +227,30 @@ public class PlayerParticipant extends BattleParticipant {
 		return lvl;
 	}
 
+	@Override
+	public void tick() {
+		player.setAir(startAir);
+	}
+
+	public void GivePlayerExp() {
+		int opponentPixelmonLevel = this.opponent.currentPokemon().getLvl().getLevel();
+		int ExpAmmount = 0;
+		int divisor = 5;
+		if (opponentPixelmonLevel >= 75) {
+			ExpAmmount = opponentPixelmonLevel / (divisor * 5);
+			this.player.addExperience(ExpAmmount);
+		} else if (opponentPixelmonLevel >= 50) {
+			ExpAmmount = opponentPixelmonLevel / (divisor * 4);
+			this.player.addExperience(ExpAmmount);
+		} else if (opponentPixelmonLevel >= 35) {
+			ExpAmmount = opponentPixelmonLevel / (divisor * 2);
+			this.player.addExperience(ExpAmmount);
+		} else if (opponentPixelmonLevel > divisor) {
+			ExpAmmount = opponentPixelmonLevel / divisor;
+			this.player.addExperience(ExpAmmount);
+		} else {
+			this.player.addExperience(1);
+		}
+		//System.out.println(this.player.username + "gained " + ExpAmmount + " ammount of experience");
+	}
 }

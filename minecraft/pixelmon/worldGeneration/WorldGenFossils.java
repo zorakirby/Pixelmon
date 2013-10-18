@@ -22,7 +22,7 @@ public class WorldGenFossils extends WorldGenerator implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 6; i++) {
 			int xPos = random.nextInt(16) + chunkX * 16;
 			int zPos = random.nextInt(16) + chunkZ * 16;
 			int yPos = random.nextInt(30) + 20;

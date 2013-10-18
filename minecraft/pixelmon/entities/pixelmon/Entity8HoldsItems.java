@@ -10,6 +10,7 @@ import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.entities.pixelmon.interactions.custom.PixelmonInteraction;
+import pixelmon.enums.EnumBossMode;
 
 public abstract class Entity8HoldsItems extends Entity7HasAI {
 	public ItemStack heldItem;
@@ -85,14 +86,22 @@ public abstract class Entity8HoldsItems extends Entity7HasAI {
 
 	}
 
+	boolean dropped = false;
+
 	@Override
 	public void onDeath(DamageSource par1DamageSource) {
-		if (!par1DamageSource.damageType.equalsIgnoreCase("mob"))
-			dropItems = false;
+		if (par1DamageSource.getEntity() instanceof EntityPixelmon && getBossMode() != EnumBossMode.Normal && !worldObj.isRemote) {
+			EntityPixelmon pix = (EntityPixelmon) par1DamageSource.getEntity();
+			if (pix.getOwner() != null && !dropped) {
+				dropItemHelper.dropBossItems((EntityPlayerMP) pix.getOwner());
+				dropped = true;
+			}
+		}
 		super.onDeath(par1DamageSource);
 	}
-	
+
 	boolean dropItems = true;
+
 	@Override
 	protected int getDropItemId() {
 		return dropItemHelper.getDropItemID();

@@ -20,7 +20,7 @@ public class Suicide extends SpecialAttackBase {
 			Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
 	
-		user.attackEntityFrom(DamageSource.causeMobDamage(user), user.func_110143_aJ());
+		user.doBattleDamage(user, (int)user.getHealth());
 		ChatHandler.sendBattleMessage(user.getOwner(),target.getOwner(), user.getNickname() + " blew itself up!");
 		
 		return false;

@@ -2,11 +2,12 @@ package pixelmon.battles.participants;
 
 import java.util.ArrayList;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.status.GlobalStatusBase;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonConfig;
@@ -30,6 +31,7 @@ public abstract class BattleParticipant {
 	public boolean wait;
 	public int escapeAttempts = 0;
 	public int willUseItemInStackInfo;
+	public int damageTakenThisTurn = 0;
 
 	public abstract EntityPixelmon currentPokemon();
 
@@ -92,5 +94,10 @@ public abstract class BattleParticipant {
 				}
 			}
 		}
+		damageTakenThisTurn = 0;
+		
+	}
+
+	public void tick() {
 	}
 }

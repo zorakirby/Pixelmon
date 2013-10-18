@@ -11,6 +11,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.SpawnLocation;
@@ -46,7 +47,6 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	public int getCatchRate() {
 		float c = baseStats.catchRate;
-		c *= getBossMode().catchRateModifier;
 		return (int) c;
 	}
 
@@ -72,7 +72,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	@Override
 	protected void init(String name) {
 		super.init(name);
-		getBaseStats(name);
+		baseStats = getBaseStats(name);
 		if (baseStats == null) {
 			setDead();
 			return;
@@ -95,34 +95,55 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 				level.setLevel(spawnLevel);
 			else
 				level.setLevel(spawnLevel + rand.nextInt(spawnLevelRange));
-			this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
-			this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.2 + (1-(200f-stats.Speed)/200f)*0.3);
-			setEntityHealth(stats.HP);
+			getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(stats.HP);
+			getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.65);
+			setHealth(stats.HP);
 		}
 	}
 
-	void getBaseStats(String name) {
-		boolean has = false;
+	float getMoveSpeed() {
+		return 0.3f + (1 - (200f - stats.Speed) / 200f) * 0.3f;
+	}
+
+	public static BaseStats getBaseStatsFromStore(String name) {
 		for (int i = 0; i < baseStatsStore.length; i++) {
 			if (baseStatsStore[i] == null)
 				break;
 			if (baseStatsStore[i].pixelmonName.equals(name)) {
-				has = true;
-				baseStats = baseStatsStore[i];
-				break;
+				return baseStatsStore[i];
 			}
 		}
-		if (!has) {
-			baseStats = loadBaseStats(getName());
-			for (int i = 0; i < baseStatsStore.length; i++)
-				if (baseStatsStore[i] == null)
-					baseStatsStore[i] = (baseStats);
-		}
+		return null;
 	}
 
-	private BaseStats loadBaseStats(String name) {
-		BaseStats store = DatabaseStats.GetBaseStats(name);
-		return store;
+	public static BaseStats getBaseStats(int index) {
+		for (BaseStats b : baseStatsStore) {
+			if (b != null && b.nationalPokedexNumber == index)
+				return b;
+		}
+		return null;
+	}
+	
+	public static BaseStats getBaseStatsFromDBID(int id) {
+		for (BaseStats b : baseStatsStore) {
+			if (b != null && b.id == id)
+				return b;
+		}
+		return null;		
+	}
+
+	public static BaseStats getBaseStats(String name) {
+		BaseStats baseStats = getBaseStatsFromStore(name);
+		if (baseStats != null)
+			return baseStats;
+		baseStats = DatabaseStats.GetBaseStats(name);
+
+		for (int i = 0; i < baseStatsStore.length; i++)
+			if (baseStatsStore[i] == null) {
+				baseStatsStore[i] = baseStats;
+				break;
+			}
+		return baseStats;
 	}
 
 	@Override
@@ -173,7 +194,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		} catch (PlayerNotLoadedException e) {
 		}
 		if (getOwner() != null)
-			updateNBT();
+			update(EnumUpdateType.Name, EnumUpdateType.Stats);
 	}
 
 	@Override
@@ -204,39 +225,32 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		return true;
 	}
 
-	public int getMaxHealth() {
-		if (isInitialised)
-			return dataWatcher.getWatchableObjectShort(EntityPixelmon.dwMaxHP);
-		else
-			return 10;
-	}
-
 	@Override
-	public void setEntityHealth(float par1) {
-		super.setEntityHealth(par1);
+	public void setHealth(float par1) {
+		super.setHealth(par1);
 		updateHealth();
 	}
 
 	public void healEntityBy(int i) {
-		setEntityHealth(func_110143_aJ() + i);
+		setHealth(getHealth() + i);
 	}
 
 	public void updateHealth() {
 		if (stats != null) {
-			if (func_110143_aJ() > this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e())
-				setEntityHealth((float)this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111126_e());
+			if (getHealth() > getMaxHealth())
+				setHealth(getMaxHealth());
 		}
-		if (func_110143_aJ() < 0)
-			setEntityHealth(0);
+		if (getHealth() < 0)
+			setHealth(0);
 		if (getOwner() != null && !worldObj.isRemote)
-			updateNBT();
+			update(EnumUpdateType.HP);
 	}
 
-	public void setScale(float scale) {
+	public void setPixelmonScale(float scale) {
 		dataWatcher.updateObject(EntityPixelmon.dwScale, (short) (scale * 1000));
 	}
 
-	public float getScale() {
+	public float getPixelmonScale() {
 		return ((float) dataWatcher.getWatchableObjectShort(EntityPixelmon.dwScale)) / 1000.0f;
 	}
 
@@ -248,7 +262,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		float scale = 1;
 		float scaleFactor = PixelmonConfig.scaleModelsUp ? 1.3f : 1;
 		if (isInitialised)
-			scale = getScale() * scaleFactor * getScaleFactor();
+			scale = getPixelmonScale() * scaleFactor * getScaleFactor();
 		float halfWidth = this.width * scale / 2.0F;
 		float halfLength = this.length * scale / 2.0F;
 		if (baseStats != null)
@@ -263,7 +277,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 	public void updateStats() {
 		stats.setLevelStats(getNature(), baseStats, level.getLevel());
 		dataWatcher.updateObject(EntityPixelmon.dwMaxHP, (short) stats.HP);
-		this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(stats.HP);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(stats.HP);
 		updateHealth();
 	}
 

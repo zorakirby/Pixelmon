@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import pixelmon.RandomHelper;
+import pixelmon.comm.BossDropPacket;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItems;
 import pixelmon.entities.pixelmon.Entity8HoldsItems;
@@ -24,7 +26,6 @@ public class DropItemHelper {
 		if (!PixelmonConfig.pokemonDropsEnabled || pixelmon.hasOwner() || pixelmon.getTrainer() != null)
 			return 0;
 		if (pixelmon.getBossMode() != EnumBossMode.Normal) {
-			dropBossItems();
 			return 0;
 		}
 		if (pixelmon.baseStats.droppedItem == null)
@@ -49,7 +50,7 @@ public class DropItemHelper {
 		else if (droppedItem.equalsIgnoreCase("Feather"))
 			return Item.feather.itemID;
 		else if (droppedItem.equalsIgnoreCase("Glowstone"))
-			return Item.lightStoneDust.itemID;
+			return Item.glowstone.itemID;
 		else if (droppedItem.equalsIgnoreCase("Gold Nugget"))
 			return Item.goldNugget.itemID;
 		else if (droppedItem.equalsIgnoreCase("Gunpowder"))
@@ -84,11 +85,18 @@ public class DropItemHelper {
 
 	public static ArrayList<Item> bossDropItems = new ArrayList<Item>();
 
-	private void dropBossItems() {
-		Random r = new Random();
-		for (int i = 0; i < pixelmon.getBossMode().numDroppedItems; i++) {
-			Item item = bossDropItems.get(r.nextInt(bossDropItems.size()));
-			pixelmon.dropItem(item.itemID, 1);
+	public void dropBossItems(EntityPlayerMP player) {
+		int numDrops = pixelmon.getBossMode().numDroppedItems + player.getRNG().nextInt(3);
+		int[] drops = new int[numDrops];
+		for (int i = 0; i < numDrops; i++) {
+			Item item = bossDropItems.get(player.getRNG().nextInt(bossDropItems.size()));
+			if (!player.inventory.addItemStackToInventory(new ItemStack(item, 1, 0)))
+				player.dropItem(item.itemID, 1);
+			else
+				player.sendContainerToPlayer(player.inventoryContainer);
+			drops[i] = item.itemID;
 		}
+		BossDropPacket p = new BossDropPacket(drops);
+		player.playerNetServerHandler.sendPacketToPlayer(p.getPacket());
 	}
 }

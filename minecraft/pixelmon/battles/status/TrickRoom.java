@@ -17,7 +17,7 @@ public class TrickRoom extends StatusBase {
 	@Override
 	public void turnTick(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		if (effectTurns == 0) {
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The room returns to normal....  Or is it!!!???");
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "The room returns to normal...");
 			user.status.remove(this);
 		}
 		effectTurns--;
@@ -30,7 +30,7 @@ public class TrickRoom extends StatusBase {
 		else if (target.stats.Speed * target.battleStats.getSpeedModifier() > user.stats.Speed * user.battleStats.getSpeedModifier())
 			return true;
 		else {
-			if (RandomHelper.getRandomNumberBetween(0, 2) >= 1)
+			if (RandomHelper.getRandomNumberBetween(1, 2) > 1)
 				return false;
 			else
 				return true;

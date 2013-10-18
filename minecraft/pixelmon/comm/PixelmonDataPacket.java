@@ -11,9 +11,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import pixelmon.battles.status.StatusType;
 import pixelmon.database.DatabaseStats;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumNature;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.enums.EnumType;
 
 public class PixelmonDataPacket extends PixelmonPacket {
@@ -30,7 +33,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 
 	public int getNationalPokedexNumber() {
 		if (nationalPokedexNumber == -1)
-			nationalPokedexNumber = DatabaseStats.getNationalPokedexNumber(name);
+			nationalPokedexNumber = Entity3HasStats.getBaseStats(name).nationalPokedexNumber;
 		return nationalPokedexNumber;
 	}
 
@@ -38,16 +41,14 @@ public class PixelmonDataPacket extends PixelmonPacket {
 
 	public EnumType getType1() {
 		if (type1 == null) {
-			Object ret = DatabaseStats.getStat(name, "Type1");
-			type1 = EnumType.parseType((String) ret);
+			type1 = Entity3HasStats.getBaseStats(name).type1;
 		}
 		return type1;
 	}
 
 	public EnumType getType2() {
 		if (type2 == null) {
-			Object ret = DatabaseStats.getStat(name, "Type2");
-			type2 = EnumType.parseType((String) ret);
+			type2 = Entity3HasStats.getBaseStats(name).type2;
 		}
 		return type2;
 	}
@@ -67,9 +68,10 @@ public class PixelmonDataPacket extends PixelmonPacket {
 	public boolean doesLevel;
 	public int heldItemId = -1;
 	public int xp;
-	private int effectCount = 0;
+	protected int effectCount = 0;
 	public EnumNature nature;
 	public EnumGrowth growth;
+	public EnumPokeballs pokeball;
 	public ArrayList<StatusType> status = new ArrayList<StatusType>();
 
 	public PixelmonMovesetDataPacket[] moveset = new PixelmonMovesetDataPacket[4];
@@ -94,6 +96,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = p.getBoolean("IsShiny");
 		nature = EnumNature.getNatureFromIndex(p.getShort("Nature"));
 		growth = EnumGrowth.getGrowthFromIndex(p.getShort("Growth"));
+		pokeball = EnumPokeballs.getFromIndex(p.getInteger("CaughtBall"));
 		order = p.getInteger("PixelmonOrder");
 		numMoves = p.getInteger("PixelmonNumberMoves");
 		for (int i = 0; i < numMoves; i++) {
@@ -116,6 +119,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i = 0; i < effectCount; i++) {
 			status.add(StatusType.getEffect(p.getInteger("Effect" + i)));
 		}
+		isBoss = EnumBossMode.getMode(p.getShort("BossMode")) != EnumBossMode.Normal;
 	}
 
 	public PixelmonDataPacket(EntityPixelmon p, EnumPackets packetType) {
@@ -128,12 +132,13 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		xp = p.getLvl().getExp();
 		hp = p.stats.HP;
 		friendship = p.friendship.getFriendship();
-		health = (int)p.func_110143_aJ();
+		health = (int) p.getHealth();
 		isMale = p.isMale;
 		isFainted = p.isFainted;
 		isShiny = p.getIsShiny();
 		nature = p.getNature();
 		growth = p.getGrowth();
+		pokeball = p.caughtBall;
 		if (p.getOwner() != null) {
 			try {
 				order = p.getStorage().getPosition(pokemonID);
@@ -142,11 +147,11 @@ public class PixelmonDataPacket extends PixelmonPacket {
 			}
 		} else
 			order = 0;
-		if (p.moveset.size() == 0)
+		if (p.getMoveset().size() == 0)
 			p.loadMoveset();
-		numMoves = p.moveset.size();
+		numMoves = p.getMoveset().size();
 		for (int i = 0; i < numMoves; i++) {
-			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.moveset, i);
+			moveset[i] = PixelmonMovesetDataPacket.createPacket(p.getMoveset(), i);
 		}
 		HP = p.stats.HP;
 		Speed = p.stats.Speed;
@@ -162,6 +167,7 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		for (int i = 0; i < effectCount; i++) {
 			status.add(p.status.get(i).type);
 		}
+		isBoss = p.getBossMode() != EnumBossMode.Normal;
 	}
 
 	@Override
@@ -198,6 +204,11 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		data.writeBoolean(isShiny);
 		data.writeShort(nature.index);
 		data.writeShort(growth.index);
+		data.writeBoolean(isBoss);
+		if (pokeball != null)
+			data.writeShort(pokeball.getIndex());
+		else
+			data.writeShort(0);
 		data.writeBoolean(doesLevel);
 		data.writeInt(heldItemId);
 		data.writeShort(effectCount);
@@ -235,6 +246,8 @@ public class PixelmonDataPacket extends PixelmonPacket {
 		isShiny = data.readBoolean();
 		nature = EnumNature.getNatureFromIndex(data.readShort());
 		growth = EnumGrowth.getGrowthFromIndex(data.readShort());
+		isBoss = data.readBoolean();
+		pokeball = EnumPokeballs.getFromIndex(data.readShort());
 		doesLevel = data.readBoolean();
 		heldItemId = data.readInt();
 		effectCount = data.readShort();
@@ -244,10 +257,60 @@ public class PixelmonDataPacket extends PixelmonPacket {
 
 	private String description;
 	public boolean outside;
+	public boolean isBoss;
 
 	public String getDescription() {
 		if (description == null)
 			description = DatabaseStats.getDescription(name);
 		return description;
+	}
+
+	public void update(PixelmonUpdatePacket p) {
+		for (EnumUpdateType type : p.updateTypes) {
+			switch (type) {
+			case HP:
+				hp = p.hp;
+				health = p.health;
+				isFainted = p.isFainted;
+				break;
+			case Stats:
+				lvl = p.lvl;
+				nextLvlXP = p.nextLvlXP;
+				xp = p.xp;
+				HP = p.HP;
+				Speed = p.Speed;
+				Attack = p.Attack;
+				Defence = p.Defence;
+				SpecialAttack = p.SpecialAttack;
+				SpecialDefence = p.SpecialDefence;
+				break;
+			case Nickname:
+				nickname = p.nickname;
+				break;
+			case Name:
+				name = p.name;
+				nationalPokedexNumber = -1;
+				break;
+			case Friendship:
+				friendship = p.friendship;
+				break;
+			case Moveset:
+				numMoves = p.numMoves;
+				moveset = p.moveset;
+				break;
+			case HeldItem:
+				heldItemId = p.heldItemId;
+				break;
+			case Status:
+				effectCount = p.effectCount;
+				status = p.status;
+				break;
+			case CanLevel:
+				doesLevel = p.doesLevel;
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }

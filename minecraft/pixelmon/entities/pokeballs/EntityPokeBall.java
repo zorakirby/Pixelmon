@@ -18,6 +18,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import pixelmon.api.events.EventType;
 import pixelmon.api.events.PixelmonEventHandler;
+import pixelmon.battles.BattleQuery;
 import pixelmon.battles.controller.BattleController;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.PlayerParticipant;
@@ -27,6 +28,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.config.PixelmonItemsPokeballs;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumBossMode;
 import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
@@ -230,17 +232,17 @@ public class EntityPokeBall extends EntityThrowable {
 								setDead();
 								return;
 							}
-							BattleParticipant part;
 							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner()
 									&& ((EntityPixelmon) movingobjectposition.entityHit).getOwner() == null)
 								return;
 							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner())
-								part = new PlayerParticipant((EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
+								new BattleQuery((EntityPlayerMP) thrower, pixelmon,
+										(EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
 										(EntityPixelmon) movingobjectposition.entityHit);
-							else
-								part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
-
-							pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
+							else {
+								BattleParticipant part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
+								pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
+							}
 
 						} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
 							if (((EntityTrainer) movingobjectposition.entityHit).releasedPokemon != null
@@ -276,6 +278,12 @@ public class EntityPokeBall extends EntityThrowable {
 						setDead();
 						return;
 
+					}
+
+					if (p.getBossMode() != EnumBossMode.Normal) {
+						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch boss pokemon!");
+						setDead();
+						return;
 					}
 
 					if (p.hasOwner() || p.getTrainer() != null) {
@@ -328,34 +336,37 @@ public class EntityPokeBall extends EntityThrowable {
 
 	@Override
 	public void onEntityUpdate() {
+		if (this.posY < 1) {
+			this.setDead();
+		}
 		if (!worldObj.isRemote && getIsWaiting()) {
 			if (!isUnloaded) {
 				if (waitTime == 0) {
 					p.setIsRed(true);
 					setIsOpen(true);
-					initialScale = p.getScale();
+					initialScale = p.getPixelmonScale();
 					initPos = Vec3.createVectorHelper(p.posX, p.posY, p.posZ);
 					Vec3 current = Vec3.createVectorHelper(posX, posY, posZ);
 					current.xCoord -= initPos.xCoord;
 					current.yCoord -= initPos.yCoord;
 					current.zCoord -= initPos.zCoord;
 					diff = current;
-					p.setScale(initialScale / 1.1f);
+					p.setPixelmonScale(initialScale / 1.1f);
 				}
 				if (waitTime == 10) {
-					p.setScale(initialScale / 1.3f);
+					p.setPixelmonScale(initialScale / 1.3f);
 					moveCloser();
 				}
 				if (waitTime == 14) {
-					p.setScale(initialScale / 1.7f);
+					p.setPixelmonScale(initialScale / 1.7f);
 					moveCloser();
 				}
 				if (waitTime == 18) {
-					p.setScale(initialScale / 2.2f);
+					p.setPixelmonScale(initialScale / 2.2f);
 					moveCloser();
 				}
 				if (waitTime == 22) {
-					p.setScale(initialScale / 3);
+					p.setPixelmonScale(initialScale / 3);
 					moveCloser();
 					p.unloadEntity();
 					isUnloaded = true;
@@ -457,7 +468,7 @@ public class EntityPokeBall extends EntityThrowable {
 			}
 		} else {
 			if (waitTime >= initialDelay && waitTime < initialDelay + wobbleTime) {
-				p.setScale(initialScale);
+				p.setPixelmonScale(initialScale);
 				if (numShakes == 0)
 					catchPokemon();
 				this.rotationPitch = ((float) (waitTime - initialDelay)) / wobbleTime * (float) 35;
@@ -536,8 +547,8 @@ public class EntityPokeBall extends EntityThrowable {
 		int pokemonRate = p2.getCatchRate();
 		pokemonRate = PokeballTypeHelper.modifyCaptureRate(getType(), p2.getName(), pokemonRate);
 		if (pokemonRate > 0) {
-			int hpMax = p2.getMaxHealth();
-			float hpCurrent = p2.func_110143_aJ();
+			float hpMax = p2.getMaxHealth();
+			float hpCurrent = p2.getHealth();
 			int bonusStatus = 1;
 			double ballBonus = PokeballTypeHelper.getBallBonus(getType(), thrower, p2, mode);
 			double a, b, p;

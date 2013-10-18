@@ -31,22 +31,24 @@ public class AttackBase {
 		this.attackIndex = attackIndex;
 
 		attackName = moveName;
-		ppMax = rs.getInt("PPMax");
-		attackType = EnumType.parseType(rs.getString("Type"));
-		attackCategory = Attack.getAttackCategory(rs.getString("Category"));
-		basePower = rs.getInt("Power");
-		accuracy = rs.getInt("Accuracy");
-		isHM = rs.getInt("HMIndex") != -1;
-		makesContact = rs.getInt("MakesContact") == 1;
-		description = rs.getString("Description");
+		ppMax = rs.getInt("PPMAX");
+		attackType = EnumType.parseTypeFromDBID(rs.getInt("TYPEID"));
+		attackCategory = Attack.getAttackCategory(rs.getInt("MOVECATEGORYID"));
+		basePower = rs.getInt("POWER");
+		accuracy = rs.getInt("ACCURACY");
+		if (rs.wasNull())
+		accuracy = -1;
+		isHM = rs.getInt("HMID") != -1;
+		makesContact = rs.getBoolean("MAKESCONTACT");
+		description = rs.getString("DESCRIPTION");
 
-		String[] splits = rs.getString("Effect").split(";");
+		String[] splits = rs.getString("EFFECT").split(";");
 		for (String e : splits) {
 			EffectBase etmp = EffectBase.getEffect(e);
 			if (etmp != null)
 				effects.add(etmp);
 		}
-		String animationString = rs.getString("AttackAnimations");
+		String animationString = rs.getString("ATTACKANIMATIONS");
 		if (animationString == null) {
 			animations = new ArrayList<IAttackAnimation>();
 			animations.add(new AttackAnimationLeapForward());

@@ -8,23 +8,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import pixelmon.blocks.BlockAnvil;
-import pixelmon.blocks.BlockBauxiteOre;
-import pixelmon.blocks.BlockEvolutionRock;
-import pixelmon.blocks.BlockEvolutionStoneOre;
-import pixelmon.blocks.BlockFossil;
-import pixelmon.blocks.BlockFossilCleaner;
-import pixelmon.blocks.BlockFossilMachine;
-import pixelmon.blocks.BlockHealer;
-import pixelmon.blocks.BlockPC;
-import pixelmon.blocks.BlockTradeMachine;
-import pixelmon.blocks.TileEntityAnvil;
-import pixelmon.blocks.TileEntityEvolutionRock;
-import pixelmon.blocks.TileEntityFossilCleaner;
-import pixelmon.blocks.TileEntityFossilMachine;
-import pixelmon.blocks.TileEntityHealer;
-import pixelmon.blocks.TileEntityPC;
-import pixelmon.blocks.TileEntityTradeMachine;
+import pixelmon.blocks.*;
+import pixelmon.blocks.*;
 import pixelmon.blocks.decorative.BlockContainerPlus;
 import pixelmon.blocks.decorative.BlockFancyPillar;
 import pixelmon.blocks.decorative.BlockPlus;
@@ -33,6 +18,7 @@ import pixelmon.blocks.decorative.BlockUnown;
 import pixelmon.blocks.decorative.TileEntityDecorativeBase;
 import pixelmon.enums.EnumEvolutionRock;
 import pixelmon.enums.EnumEvolutionStone;
+import pixelmon.enums.EnumShrine;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.PixelmonItemBlock;
 import cpw.mods.fml.common.Mod;
@@ -55,8 +41,10 @@ public class PixelmonBlocks {
 	public static int fossilCleanerId;
 	public static int mossyRockId;
 	public static int icyRockId;
+	public static int potionMakerId;
 	public static int fancyPillarId;
 	public static int dawnStoneOreId;
+
 	//The following Id's (and their respective blocks, later on in this file) are the 'temple-themed' blocks. The Biome & Structure(s) that use these are not yet complete, so may not be a good idea to have these in-game until they are ready.
 	public static int unownBlockId;
 	public static int unownBlockId2;
@@ -64,6 +52,10 @@ public class PixelmonBlocks {
 	public static int templeBrickId;
 	public static int templeStairsId;
 	public static int templeBrickStairsId;
+
+	public static int shrineUnoID;
+	public static int shrineDosID;
+	public static int shrineTresID;
 
 	@Mod.Block(name = "Thunderstone Ore")
 	public static Block thunderStoneOre;
@@ -111,6 +103,13 @@ public class PixelmonBlocks {
 	public static Block templeBrickStairs;
 	
 
+	@Mod.Block(name = "Articuno Shrine", itemTypeClass = ItemBlock.class)
+	public static Block shrineUno;
+	@Mod.Block(name = "Zapdos Shrine", itemTypeClass = ItemBlock.class)
+	public static Block shrineDos;
+	@Mod.Block(name = "Moltres Shrine", itemTypeClass = ItemBlock.class)
+	public static Block shrineTres;
+
 	public static void load(Configuration configuration) {
 		pokemonHealerActiveId = configuration.getBlock("PokemonHealerActive", 300).getInt(300);
 		pokemonHealerIdleId = configuration.getBlock("PokemonHealerIdle", 301).getInt(301);
@@ -125,12 +124,14 @@ public class PixelmonBlocks {
 		fossilId = configuration.getBlock("Fossil", 225).getInt(225);
 		tradeMachineId = configuration.getBlock("Trade Machine", 311).getInt(311);
 		fossilCleanerId = configuration.getBlock("Fossil Cleaner", 312).getInt(312);
-
-		
 		PixelmonBlocksApricornTrees.load(configuration);
 
 		mossyRockId = configuration.getBlock("Mossy Rock", 318).getInt(318);
 		icyRockId = configuration.getBlock("Icy Rock", 319).getInt(319);
+		potionMakerId = configuration.getBlock("Potion Maker", 321).getInt(321);
+		shrineUnoID = configuration.getBlock("Articuno Shrine", 322).getInt(322);
+		shrineDosID = configuration.getBlock("Zapdos Shrine", 323).getInt(323);
+		shrineTresID = configuration.getBlock("Moltres Shrine", 324).getInt(324);
 		dawnStoneOreId = configuration.getBlock("Dawn Stone", 320).getInt(320);
 		fancyPillarId = configuration.getBlock("Ancient Pillar", 320).getInt(320);
 		unownBlockId2 = configuration.getBlock("Unown Block (P-?)", 323).getInt(323); //THIS MUST COME BEFORE UNOWN BLOCK A-O, SO THE LETTERS COME AFTER EACH OTHER CORRECTLY, CUZ IT'S WEIRD
@@ -142,7 +143,7 @@ public class PixelmonBlocks {
 		
 		healer = new BlockHealer(pokemonHealerIdleId);
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f, "Thunder Stone Ore");
-		leafStoneOre = new BlockEvolutionStoneOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f, "Leaf Stone Ore");
+		leafStoneOre = new BlockLeafEvolutionOre(leafStoneOreId, EnumEvolutionStone.Leafstone, 3.0f, "Leaf Stone Ore");
 		waterStoneOre = new BlockEvolutionStoneOre(waterStoneOreId, EnumEvolutionStone.Waterstone, 3.0f, "Water Stone Ore");
 		fireStoneOre = new BlockEvolutionStoneOre(fireStoneOreId, EnumEvolutionStone.Firestone, 3.0f, "Fire Stone Ore");
 		dawnStoneOre = new BlockEvolutionStoneOre(dawnStoneOreId, EnumEvolutionStone.Dawnstone, 3.0f, "Dawn Stone Ore");
@@ -162,6 +163,10 @@ public class PixelmonBlocks {
 		templeBlock = new BlockPlus(templeBrickId, Material.rock).setIconName("pixelmon:templebrick").setUnlocalizedName("templebrick").setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
 		templeStairs = new BlockStairsPublic(templeStairsId, templeBlock, 0).setUnlocalizedName("shrinestairs");
 		templeBrickStairs = new BlockStairsPublic(templeBrickStairsId, templeBrick, 0).setUnlocalizedName("shrinebrickstairs");
+
+		shrineUno = new BlockShrine(shrineUnoID, Material.rock, EnumShrine.Articuno).setBlockUnbreakable().setUnlocalizedName("Articuno");
+		shrineDos = new BlockShrine(shrineDosID, Material.rock, EnumShrine.Zapdos).setBlockUnbreakable().setUnlocalizedName("Zapdos");
+		shrineTres = new BlockShrine(shrineTresID, Material.rock, EnumShrine.Moltres).setBlockUnbreakable().setUnlocalizedName("Moltres");
 	}
 
 	public static void registerBlocks() {
@@ -180,7 +185,9 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(mossyRock, "Mossy Rock");
 		GameRegistry.registerBlock(icyRock, "Icy Rock");
 		GameRegistry.registerBlock(fossilCleaner, "Fossil Cleaner");
-		
+		//GameRegistry.registerBlock(shrineUno, "Articuno Shrine");
+		//GameRegistry.registerBlock(shrineDos, "Zapdos Shrine");
+		//GameRegistry.registerBlock(shrineTres, "Moltres Shrine");
 		GameRegistry.registerBlock(fancyPillar, "Ancient Pillar");
 		GameRegistry.registerBlock(unownBlock, "UnownBlock");
 		GameRegistry.registerBlock(unownBlock2, "UnownBlock2");
@@ -198,6 +205,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerTileEntity(TileEntityTradeMachine.class, "Trade Machine");
 		GameRegistry.registerTileEntity(TileEntityFossilCleaner.class, "Fossil Cleaner");
 		GameRegistry.registerTileEntity(TileEntityEvolutionRock.class, "Evolution Rock");
+		//GameRegistry.registerTileEntity(TileEntityShrine.class, "Bird Shrine");
 		GameRegistry.registerTileEntity(TileEntityDecorativeBase.class, "Decorative Tileent");
 
 		PixelmonBlocksApricornTrees.registerBlocks();

@@ -339,7 +339,8 @@ public class PixelmonItemsPokeballs {
 				if (field.isAnnotationPresent(Mod.Item.class)) {
 					Item item = (Item) field.get(null);
 					LanguageRegistry.addName(item, field.getAnnotation(Mod.Item.class).name());
-					Pixelmon.proxy.registerBossDropItem(item);
+					if (item instanceof ItemPokeBall)
+						Pixelmon.proxy.registerBossDropItem(item);
 				}
 			}
 		} catch (Exception e) {

@@ -3,6 +3,7 @@ package pixelmon.entities.pixelmon.particleEffects;
 import net.minecraft.util.MathHelper;
 import pixelmon.client.ClientProxy;
 import pixelmon.entities.pixelmon.Entity4Textures;
+import pixelmon.enums.EnumGrowth;
 import pixelmon.enums.EnumPixelmonParticles;
 
 public class GastlyParticles extends ParticleEffects {
@@ -24,10 +25,33 @@ public class GastlyParticles extends ParticleEffects {
 		float var72 = MathHelper.cos(var42) * var2 * .5F * var52;
 		float var8 = rand.nextFloat() * var2 * 1.2F;
 		float var82 = rand.nextFloat() * var2 * 1.2F;
-		for (int i = 0; i < 20; i++)
-			ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var6, pixelmon.posY + 1.2F + var8, pixelmon.posZ + (double) var7 , pixelmon.getIsShiny());
-		for (int i = 0; i < 20; i++)
-			ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var62, pixelmon.posY + 1.2F + var82, pixelmon.posZ + (double) var72 , pixelmon.getIsShiny());
+
+		if (pixelmon.getGrowth() == EnumGrowth.Enormous) {
+			for (int i = 0; i < 20; i++)
+				ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var6 + .2F, pixelmon.posY + 2F + var8,
+						pixelmon.posZ + (double) var7 + .4F, pixelmon.getIsShiny());
+			for (int i = 0; i < 20; i++)
+				ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var62 + .2F, pixelmon.posY + 2F + var82,
+						pixelmon.posZ + (double) var72 - .6F, pixelmon.getIsShiny());
+		} else if (pixelmon.getGrowth() == EnumGrowth.Huge) {
+			for (int i = 0; i < 20; i++)
+				ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var6 + .2F, pixelmon.posY + 1.5F + var8,
+						pixelmon.posZ + (double) var7 + .4F, pixelmon.getIsShiny());
+			for (int i = 0; i < 20; i++)
+				ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var62 + .2F, pixelmon.posY + 1.5F + var82,
+						pixelmon.posZ + (double) var72 - .6F, pixelmon.getIsShiny());
+		} else if (pixelmon.getGrowth() == EnumGrowth.Pygmy) {
+			for (int i = 0; i < 20; i++)
+				ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var6 + .2F, pixelmon.posY + var8 + .6,
+						pixelmon.posZ + (double) var7 + .4F, pixelmon.getIsShiny());
+		} else {
+			for (int i = 0; i < 20; i++)
+				ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var6 + .2F, pixelmon.posY + 1.2F + var8,
+						pixelmon.posZ + (double) var7 + .4F, pixelmon.getIsShiny());
+			for (int i = 0; i < 20; i++)
+				ClientProxy.spawnParticle(EnumPixelmonParticles.gastly, pixelmon.worldObj, pixelmon.posX + (double) var62 + .2F, pixelmon.posY + 1.2F + var82,
+						pixelmon.posZ + (double) var72 - .6F, pixelmon.getIsShiny());
+		}
 	}
 
 }

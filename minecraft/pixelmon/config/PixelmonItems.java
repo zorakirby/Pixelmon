@@ -5,39 +5,28 @@ import java.lang.reflect.Field;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.Configuration;
 import pixelmon.Pixelmon;
-import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.enums.EnumEthers;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumPotions;
+import pixelmon.enums.EnumRodType;
+import pixelmon.enums.EnumShrine;
 import pixelmon.enums.EnumStatusAilmentHealers;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.ItemEther;
 import pixelmon.items.ItemEvolutionStone;
-import pixelmon.items.ItemGoodRod;
+import pixelmon.items.ItemFishingRod;
+import pixelmon.items.ItemFossil;
 import pixelmon.items.ItemHammer;
-import pixelmon.items.ItemHeld;
-import pixelmon.items.ItemOldRod;
 import pixelmon.items.ItemPixelmonArmor;
 import pixelmon.items.ItemPixelmonBoots;
 import pixelmon.items.ItemPokedex;
-import pixelmon.items.ItemFossil;
 import pixelmon.items.ItemPotion;
+import pixelmon.items.ItemShrineOrb;
 import pixelmon.items.ItemStatusAilmentHealer;
-import pixelmon.items.ItemSuperRod;
 import pixelmon.items.ItemWailmerPail;
 import pixelmon.items.PixelmonItem;
-import pixelmon.items.heldItems.ItemBerryLeppa;
-import pixelmon.items.heldItems.ItemBerryOran;
-import pixelmon.items.heldItems.ItemBerryRawst;
-import pixelmon.items.heldItems.ItemExpShare;
-import pixelmon.items.heldItems.ItemLuckyEgg;
 import pixelmon.items.weapons.PixelmonItemAxe;
 import pixelmon.items.weapons.PixelmonItemHoe;
 import pixelmon.items.weapons.PixelmonItemPickAxe;
@@ -105,6 +94,11 @@ public class PixelmonItems {
 	public static int newRunningShoesID;
 	public static int oldRunningShoesID;
 
+	public static int tradeMonitorID;
+	public static int tradeHolderRightID;
+	public static int LtradeHolderLeftID;
+	public static int tradePanelID;
+
 	public static int aluminiumIngotID;
 	public static int aluminiumPlateID;
 
@@ -115,8 +109,15 @@ public class PixelmonItems {
 	public static int oldRodID;
 	public static int goodRodID;
 	public static int superRodID;
-	
-	
+
+	public static int unoOrbID;
+	public static int dosOrbID;
+	public static int tresOrbID;
+
+	public static int unoShrineID;
+	public static int dosShrineID;
+	public static int tresShrineID;
+
 	@Mod.Item(name = "Pokedex", typeClass = "pixelmon.items.ItemPokedex")
 	public static Item pokeDex;
 
@@ -229,17 +230,36 @@ public class PixelmonItems {
 
 	@Mod.Item(name = "Wailmer Pail", typeClass = "pixelmon.items.ItemWailmerPail")
 	public static Item wailmerPail;
-	
-	@Mod.Item(name = "Old Rod", typeClass = "pixelmon.items.ItemOldRod")
+
+	@Mod.Item(name = "Old Rod", typeClass = "pixelmon.items.ItemFishingRod")
 	public static Item oldRod;
-	@Mod.Item(name = "Good Rod", typeClass = "pixelmon.items.ItemGoodRod")
+	@Mod.Item(name = "Good Rod", typeClass = "pixelmon.items.ItemFishingRod")
 	public static Item goodRod;
-	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemSuperRod")
+	@Mod.Item(name = "Super Rod", typeClass = "pixelmon.items.ItemFishingRod")
 	public static Item superRod;
-	
 
-	
+	@Mod.Item(name = "Trading Machine Monitor", typeClass = "pixelmon.items.ItemTradingMachine")
+	public static Item tradeMonitor;
+	@Mod.Item(name = "Trading Machine Holder Right", typeClass = "pixelmon.items.ItemTradingMachine")
+	public static Item tradeHolderRight;
+	@Mod.Item(name = "Trading Machine Holder Left", typeClass = "pixelmon.items.ItemTradingMachineL")
+	public static Item LtradeHolderLeft;
+	@Mod.Item(name = "Trading Machine Control Panel", typeClass = "pixelmon.items.ItemTradingMachine")
+	public static Item tradePanel;
 
+	@Mod.Item(name = "Uno Orb", typeClass = "pixelmon.items.shrineOrbs")
+	public static ItemShrineOrb unoOrb;
+	@Mod.Item(name = "Dos Orb", typeClass = "pixelmon.items.shrineOrbs")
+	public static Item dosOrb;
+	@Mod.Item(name = "Tres Orb", typeClass = "pixelmon.items.shrineOrbs")
+	public static Item tresOrb;
+
+	@Mod.Item(name = "Uno Shrine", typeClass = "pixelmon.items.ItemBlock")
+	public static Item unoShrine;
+	@Mod.Item(name = "Dos Shrine", typeClass = "pixelmon.items.ItemBlock")
+	public static Item dosShrine;
+	@Mod.Item(name = "Tres Shrine", typeClass = "pixelmon.items.ItemBlock")
+	public static Item tresShrine;
 
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
@@ -312,9 +332,18 @@ public class PixelmonItems {
 		goodRodID = cfg.get("item", "Good Rod", 10138).getInt();
 		superRodID = cfg.get("item", "Super Rod", 10139).getInt();
 
+		tradeMonitorID = cfg.get("item", "Trade Monitor", 10140).getInt();
+		tradeHolderRightID = cfg.get("item", "Trade Holder Right", 10141).getInt();
+		LtradeHolderLeftID = cfg.get("item", "Trade Holder Left", 10143).getInt();
+		tradePanelID = cfg.get("item", "Trade Panel", 10144).getInt();
+		unoOrbID = cfg.get("item", "Uno Orb", 10145).getInt();
+		dosOrbID = cfg.get("item", "Dos Orb", 10146).getInt();
+		tresOrbID = cfg.get("item", "Tres Orb", 10147).getInt();
 
+		unoShrineID = cfg.get("item", "Uno Shrine", 10148).getInt();
+		dosShrineID = cfg.get("item", "Dos Shrine", 10149).getInt();
+		tresShrineID = cfg.get("item", "Tres Shrine", 10150).getInt();
 
-		
 		pokeDex = new ItemPokedex(pokeDexID).setMaxStackSize(1);
 		rareCandy = new PixelmonItem(rareCandyID, "healingitems/rarecandy", "Rare Candy").setCreativeTab(PixelmonCreativeTabs.restoration);
 		potion = new ItemPotion(potionID, EnumPotions.Potion, "Potion");
@@ -374,10 +403,29 @@ public class PixelmonItems {
 		newRunningShoes = new ItemPixelmonBoots(newRunningShoesID, 6, Pixelmon.RUNNINGARMOR, 0, 3, "pixelmon:runningboots", "New Running Boots");
 		oldRunningShoes = new ItemPixelmonBoots(oldRunningShoesID, 6, Pixelmon.OLDRUNNINGARMOR, 0, 3, "pixelmon:oldrunningboots", "Old Running Boots");
 		wailmerPail = new ItemWailmerPail(wailmerPailID, "pixelmon:wailmerpail", "Wailmer Pail");
-		
-		oldRod = new ItemOldRod(oldRodID);
-		goodRod = new ItemGoodRod(goodRodID);
-		superRod = new ItemSuperRod(superRodID);
+
+		oldRod = new ItemFishingRod(oldRodID, EnumRodType.OldRod, "Old Rod");
+		goodRod = new ItemFishingRod(goodRodID, EnumRodType.GoodRod, "Good Rod");
+		superRod = new ItemFishingRod(superRodID, EnumRodType.SuperRod, "Super Rod");
+
+		tradeMonitor = new PixelmonItem(tradeMonitorID, "tradingmachinepieces/tradingMonitor", "Trade Monitor");
+		tradeHolderRight = new PixelmonItem(tradeHolderRightID, "tradingmachinepieces/tradingHolderR", "Trade Holder Right");
+		LtradeHolderLeft = new PixelmonItem(LtradeHolderLeftID, "tradingmachinepieces/tradingHolderL", "Trade Holder Left");
+		tradePanel = new PixelmonItem(tradePanelID, "tradingmachinepieces/tradingPanel", "Trade Panel");
+
+		//unoOrb = (ItemShrineOrb) new ItemShrineOrb(unoOrbID, EnumShrine.Articuno, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
+		//dosOrb = new ItemShrineOrb(dosOrbID, EnumShrine.Zapdos, "dosorb", "Dos Orb").setUnlocalizedName("Dos Orb");
+		//tresOrb = new ItemShrineOrb(tresOrbID, EnumShrine.Moltres, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
+
+		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "mossyrock", "Mossy Rock");
+		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
+		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "icyrock", "Icy Rock");
+		icyRock.setCreativeTab(PixelmonCreativeTabs.natural);
+
+		//unoShrine = new ItemBlock(unoShrineID, PixelmonBlocks.shrineUno, "unoShrine", "Uno Shrine");
+		//dosShrine = new ItemBlock(dosShrineID, PixelmonBlocks.shrineDos, "dosShrine", "Dos Shrine");
+		//tresShrine = new ItemBlock(tresShrineID, PixelmonBlocks.shrineTres, "tresShrine", "Tres Shrine");
+
 	}
 
 	public static void addNames() {

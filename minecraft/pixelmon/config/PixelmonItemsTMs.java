@@ -23,10 +23,10 @@ public class PixelmonItemsTMs {
 		try {
 			Connection conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Moves where TMIndex!=-1 ORDER BY TMIndex");
+			ResultSet rs = stat.executeQuery("select * from MOVES where TMID IS NOT NULL ORDER BY TMID");
 			while (rs.next()) {
 				try {
-					ItemTM item = new ItemTM(startId++, rs.getString("Name"), rs.getInt("TMIndex"), EnumType.parseType(rs.getString("Type")), false);
+					ItemTM item = new ItemTM(startId++, rs.getString("NAME"), rs.getInt("TMID"), EnumType.parseTypeFromDBID(rs.getInt("TYPEID")), false);
 					Pixelmon.proxy.registerBossDropItem(item);
 					TMs.add(item);
 				} catch (Exception e) {
@@ -34,7 +34,6 @@ public class PixelmonItemsTMs {
 				}
 			}
 
-			conn.close();
 		} catch (Exception e) {
 
 		}

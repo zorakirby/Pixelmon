@@ -1,8 +1,8 @@
 package pixelmon.client;
 
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 
 public class RenderInvisible extends Render {
 
@@ -12,7 +12,7 @@ public class RenderInvisible extends Render {
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
+	protected ResourceLocation getEntityTexture(Entity entity) {
 		return null;
 	}
 

@@ -15,6 +15,6 @@ public class Cursed extends StatusBase {
 	@Override
 	public void applyRepeatedEffect(EntityPixelmon user, EntityPixelmon target) throws Exception {
 		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " is afflicted by the curse!");
-		user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 4));
+		user.doBattleDamage(user, (int) (((float) user.getMaxHealth()) / 4));
 	}
 }

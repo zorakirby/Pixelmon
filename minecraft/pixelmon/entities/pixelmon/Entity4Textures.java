@@ -1,11 +1,14 @@
 package pixelmon.entities.pixelmon;
 
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.client.resources.AbstractResourcePack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import pixelmon.Pixelmon;
 import pixelmon.entities.pixelmon.particleEffects.ParticleEffects;
+import pixelmon.enums.EnumPokemon;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -45,20 +48,37 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	boolean hasRoastedTexture = false;
 	boolean checkedForRoastedTexture = false;
 
+	boolean hasZombieTexture = false;
+	boolean checkedForZombieTexture = false;
+
+	AbstractResourcePack resourcePack;
+
 	@SideOnly(Side.CLIENT)
 	public String getTexture() {
 		try {
+			if (resourcePack == null)
+				resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
 			if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1 && !checkedForRoastedTexture || hasRoastedTexture) {
 				if (!checkedForRoastedTexture) {
-					if (Pixelmon.class.getResourceAsStream("pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png") != null)
+					if (resourcePack
+							.resourceExists(new ResourceLocation("pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png")))
 						hasRoastedTexture = true;
 					checkedForRoastedTexture = true;
 				}
 			}
-			if (getIsShiny() && Pixelmon.class.getResourceAsStream("pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png") != null)
+
+			if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 2 && !checkedForZombieTexture || hasZombieTexture) {
+				if (resourcePack.resourceExists(new ResourceLocation("pixelmon:textures/pokemon/pokemon-zombie/zombie" + getName().toLowerCase() + ".png")))
+					hasZombieTexture = true;
+				checkedForZombieTexture = true;
+			}
+			if (getIsShiny()
+					&& resourcePack.resourceExists(new ResourceLocation("pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png")))
 				return "pixelmon:textures/pokemon/pokemon-shiny/shiny" + getName().toLowerCase() + ".png";
 			else if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1 && hasRoastedTexture) {
 				return "pixelmon:textures/pokemon/pokemon-roasted/roasted" + getName().toLowerCase() + ".png";
+			} else if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 2 && hasZombieTexture) {
+				return "pixelmon:textures/pokemon/pokemon-zombie/zombie" + getName().toLowerCase() + ".png";
 			} else
 				return "pixelmon:textures/pokemon/" + getName().toLowerCase() + ".png";
 		} catch (Exception e) {
@@ -89,6 +109,13 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	}
 
 	@Override
+	public void evolve(String evolveTo) {
+		super.evolve(evolveTo);
+		if (dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1)
+			dataWatcher.updateObject(EntityPixelmon.dwRoasted, (short) 2);
+	}
+
+	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if (worldObj.isRemote)
@@ -100,14 +127,14 @@ public abstract class Entity4Textures extends Entity3HasStats {
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		nbt.setBoolean("IsShiny", dataWatcher.getWatchableObjectShort(EntityPixelmon.dwShiny) == (short) 1);
-		nbt.setBoolean("IsRoasted", dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1);
+		nbt.setShort("specialTexture", dataWatcher.getWatchableObjectShort(EntityPixelmon.dwRoasted));
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		dataWatcher.updateObject(EntityPixelmon.dwShiny, nbt.getBoolean("IsShiny") ? (short) 1 : (short) 0);
-		dataWatcher.updateObject(EntityPixelmon.dwRoasted, nbt.getBoolean("IsRoasted") ? (short) 1 : (short) 0);
+		dataWatcher.updateObject(EntityPixelmon.dwRoasted, nbt.getShort("specialTexture"));
 		alreadyInitialised = true;
 	}
 }

@@ -1,14 +1,13 @@
 package pixelmon.client.render;
 
-import java.lang.Math;
-import pixelmon.entities.npcs.EntityDoctor;
-import pixelmon.entities.npcs.EntityTrainer;
-import pixelmon.config.PixelmonConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.ResourceLocation;
+import pixelmon.config.PixelmonConfig;
+import pixelmon.entities.npcs.EntityDoctor;
+import pixelmon.entities.npcs.EntityTrainer;
 
 public class RenderDoctor extends RenderLiving {
 
@@ -41,7 +40,7 @@ public class RenderDoctor extends RenderLiving {
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
+	protected ResourceLocation getEntityTexture(Entity entity) {
 		return new ResourceLocation(((EntityDoctor)entity).getTexture());
 	}
 }

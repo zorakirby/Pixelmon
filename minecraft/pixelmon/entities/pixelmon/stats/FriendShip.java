@@ -5,6 +5,9 @@ import java.util.Random;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 import net.minecraft.nbt.NBTTagCompound;
+import pixelmon.comm.ChatHandler;
+import pixelmon.config.PixelmonItems;
+import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public class FriendShip {
@@ -24,9 +27,14 @@ public class FriendShip {
 	}
 
 	public void increaseFriendship(int amount) {
-		friendship += amount;
+		if (pixelmon.getHeldItem() != null){
+			if (pixelmon.getHeldItem().itemID == PixelmonItemsHeld.sootheBell.itemID)
+				friendship += amount * 1.5;
+		}else
+				friendship += amount;
 		if (friendship > maxFriendship)
 			friendship = maxFriendship;
+
 	}
 
 	public void decreaseFriendship(int amount) {
@@ -74,9 +82,16 @@ public class FriendShip {
 	public void tick() {
 		tickCounter++;
 		if (tickCounter == 1000) {
+			if (pixelmon.getHeldItem() != null) {
+				if (pixelmon.getHeldItem().itemID == PixelmonItemsHeld.sootheBell.itemID) {
+					friendship = friendship + 2;
+					tickCounter = 0;
+				}
+			}
 			friendship++;
 			friendship += luxuryBonus();
 			tickCounter = 0;
+
 		}
 	}
 

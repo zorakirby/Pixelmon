@@ -17,7 +17,9 @@ import pixelmon.battles.participants.PlayerParticipant;
 import pixelmon.battles.status.StatusBase;
 import pixelmon.battles.status.StatusPersist;
 import pixelmon.battles.status.StatusType;
+import pixelmon.battles.status.Transformed;
 import pixelmon.comm.ChatHandler;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.pixelmon.helpers.BattleVariables;
@@ -30,13 +32,13 @@ import pixelmon.storage.PixelmonStorage;
 public abstract class Entity6CanBattle extends Entity5Rideable {
 	public BattleStats battleStats = new BattleStats(this);
 	public ArrayList<StatusBase> status = new ArrayList<StatusBase>();
-	public Moveset moveset = new Moveset();
+	private Moveset moveset = new Moveset();
 	public BattleController battleController;
 	protected EntityTrainer trainer;
 	public boolean isLockedInBattle = false;
 	public Attack lastMoveUsed;
 	public Attack disabledMove;
-
+	public boolean mustUseLastMove = false;
 	public BattleVariables battleVariables = new BattleVariables();
 
 	public Entity6CanBattle(World par1World) {
@@ -45,7 +47,17 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 	}
 
 	public void loadMoveset() {
-		moveset = DatabaseMoves.GetInitialMoves(getName(), getLvl().getLevel());
+		moveset = DatabaseMoves.GetInitialMoves(this, getLvl().getLevel());
+	}
+
+	public Moveset getMoveset() {
+		if (hasStatus(StatusType.Transformed)) {
+			for (int i = 0; i < status.size(); i++) {
+				if (status.get(i) instanceof Transformed)
+					return ((Transformed) status.get(i)).getMoveset();
+			}
+		}
+		return moveset;
 	}
 
 	@Override
@@ -64,10 +76,9 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 			return;
 		}
 		p2.currentPokemon().battleController = battleController;
-		if (p2.currentPokemon().moveset.size() == 0)
+		if (p2.currentPokemon().getMoveset().size() == 0)
 			p2.currentPokemon().loadMoveset();
 
-		
 		// pixelmon.isSwimming = false;
 	}
 
@@ -75,7 +86,7 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		// pixelmon.isSwimming = true;
 		this.wipeLastMoveUsed();
 		battleController = null;
-		
+
 	}
 
 	public void setTrainer(EntityTrainer trainer) {
@@ -91,14 +102,18 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		return dataWatcher.getWatchableObjectString(EntityPixelmon.dwTrainerName);
 	}
 
-	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
+	@Override
+	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		if (!worldObj.isRemote) {
+			if (getBossMode() != EnumBossMode.Normal)
+				if (par1DamageSource.damageType != "mob")
+					return false;
 			if (par1DamageSource.damageType == "player" || par1DamageSource == DamageSource.cactus || par1DamageSource.damageType == "arrow")
 				return false;
 			if (battleController != null) {
-				if (par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.fall 
-						|| par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall
-						|| par1DamageSource == DamageSource.lava || par1DamageSource == DamageSource.onFire)
+				if (par1DamageSource == DamageSource.cactus || par1DamageSource == DamageSource.drown || par1DamageSource == DamageSource.fall
+						|| par1DamageSource == DamageSource.inFire || par1DamageSource == DamageSource.inWall || par1DamageSource == DamageSource.lava
+						|| par1DamageSource == DamageSource.onFire)
 					return false;
 			}
 			boolean flag = super.attackEntityFrom(par1DamageSource, par2);
@@ -108,13 +123,13 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 					if (p instanceof PlayerParticipant && p.currentPokemon() != this)
 						((PlayerParticipant) p).updateOpponentHealth((EntityPixelmon) this);
 			}
-			if (func_110143_aJ() <= 0) {
+			if (getHealth() <= 0) {
 				this.onDeath(par1DamageSource);
 			}
 
 			Entity entity = par1DamageSource.getEntity();
 			if (getOwner() != null)
-				updateNBT();
+				update(EnumUpdateType.HP);
 			if (isValidTarget(entity)) {
 				setAttackTarget((EntityLiving) entity);
 				setTarget(entity);
@@ -128,16 +143,17 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		if (moveset.size() >= 4) {
 			ArrayList<Attack> attacks = getAttacksAtLevel(getLvl().getLevel());
 			for (int i = 0; i < attacks.size(); i++)
-				((EntityPlayerMP) getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, getPokemonId(), attacks.get(i).baseAttack.attackIndex, 0);
+				((EntityPlayerMP) getOwner()).openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), worldObj, getPokemonId(),
+						attacks.get(i).baseAttack.attackIndex, 0);
 		}
 	}
 
 	public ArrayList<Attack> getAttacksAtLevel(int level) {
-		return DatabaseMoves.getAttacksAtLevel(getName(), level);
+		return DatabaseMoves.getAttacksAtLevel(baseStats.id, level);
 	}
 
 	public boolean LearnsAttackAtLevel(int level) {
-		return DatabaseMoves.LearnsAttackAtLevel(getName(), level);
+		return DatabaseMoves.LearnsAttackAtLevel(baseStats.id, level);
 	}
 
 	protected boolean isValidTarget(Entity entity) {
@@ -164,15 +180,12 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		}
 		return false;
 	}
+
 	public boolean hasPrimaryStatus() {
-		if(hasStatus(StatusType.Poison )
-			|| hasStatus(StatusType.Burn)
-			|| hasStatus(StatusType.PoisonBadly)
-			|| hasStatus(StatusType.Freeze)
-			|| hasStatus(StatusType.Sleep)
-			|| hasStatus(StatusType.Paralysis)){
-					return true;
-				}
+		if (hasStatus(StatusType.Poison) || hasStatus(StatusType.Burn) || hasStatus(StatusType.PoisonBadly) || hasStatus(StatusType.Freeze)
+				|| hasStatus(StatusType.Sleep) || hasStatus(StatusType.Paralysis)) {
+			return true;
+		}
 		return false;
 	}
 
@@ -183,12 +196,12 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		for (int i = 0; i < status.size(); i++) {
 			try {
 				if (status.get(i) instanceof StatusPersist)
-					((StatusPersist) status.get(i)).writeToNBT(status.get(i).type.index, nbt);
+					((StatusPersist) status.get(i)).writeToNBT(i, nbt);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		nbt.setShort("EffectCount", (short) status.size());
+		nbt.setShort("StatusCount", (short) status.size());
 	}
 
 	@Override
@@ -196,18 +209,20 @@ public abstract class Entity6CanBattle extends Entity5Rideable {
 		super.readEntityFromNBT(nbt);
 		moveset.readFromNBT(nbt);
 		int statusCount = 0;
-		statusCount = nbt.getShort("EffectCount");
+		statusCount = nbt.getShort("StatusCount");
 		for (int i = 0; i < statusCount; i++) {
-			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Effect" + i));
+			StatusPersist s = StatusType.getEffectInstance(nbt.getInteger("Status" + i));
 			status.add(s.restoreFromNBT(nbt));
 		}
 	}
-	public Attack getLastMoveUsed(){
+
+	public Attack getLastMoveUsed() {
 
 		return lastMoveUsed;
 	}
-	
-	public void wipeLastMoveUsed(){
+
+	public void wipeLastMoveUsed() {
 		lastMoveUsed = null;
 	}
+
 }

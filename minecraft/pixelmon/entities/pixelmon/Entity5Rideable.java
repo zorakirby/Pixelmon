@@ -3,10 +3,13 @@ package pixelmon.entities.pixelmon;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -17,6 +20,7 @@ import pixelmon.database.DatabaseMoves;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 import pixelmon.entities.pixelmon.helpers.PlayerRiding;
 import pixelmon.entities.pixelmon.helpers.RidingHelper;
+import pixelmon.entities.pixelmon.stats.RidingOffsets;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.PixelmonStorage;
 
@@ -102,35 +106,39 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	 * Moves the entity based on the specified heading. Args: strafe, forward
 	 */
 	@Override
-	public void moveEntityWithHeading(float par1, float par2) {
+	public void moveEntityWithHeading(float strafe, float forward) {
 		boolean movementHandled = false;
-		
-		if (riddenByEntity!=null && baseStats!=null){
-            this.prevRotationYaw = this.rotationYaw;// = this.riddenByEntity.rotationYaw;
-            this.rotationPitch = this.riddenByEntity.rotationPitch * 0.5F;
-            this.setRotation(this.rotationYaw, this.rotationPitch);
-            par1 = ((EntityLivingBase)this.riddenByEntity).moveStrafing * 0.5F;
-            rotationYaw -= par1*10;
-            par1 = 0;
-            this.rotationYawHead = this.renderYawOffset = this.rotationYaw;
-            par2 = ((EntityLivingBase)this.riddenByEntity).moveForward;
+
+		if (riddenByEntity != null && baseStats != null) {
+			this.prevRotationYaw = this.rotationYaw;// =
+													// this.riddenByEntity.rotationYaw;
+			this.rotationPitch = this.riddenByEntity.rotationPitch * 0.5F;
+			this.setRotation(this.rotationYaw, this.rotationPitch);
+			strafe = ((EntityLivingBase) this.riddenByEntity).moveStrafing * 0.5F;
+			rotationYaw -= strafe * 10;
+			strafe = 0;
+			this.rotationYawHead = this.renderYawOffset = this.rotationYaw;
+			forward = ((EntityLivingBase) this.riddenByEntity).moveForward;
 		}
-		
+
 		if (riddenByEntity != null && baseStats != null && (baseStats.canSurf || !baseStats.canSurfSet) && this.inWater) {
 			if (!baseStats.canSurfSet) {
-				baseStats.canSurf = DatabaseMoves.CanLearnAttack(getName(), "Surf");
+				baseStats.canSurf = DatabaseMoves.CanLearnAttack(baseStats.id, "Surf");
 				baseStats.canSurfSet = true;
 			}
 			if (baseStats.canSurf) {
 				double var9 = this.posY;
-				//this.moveFlying(par1, par2, jumpMovementFactor);
-				this.moveEntityWithHeading(par1, par2);
-				// this.motionY -= 0.02D;
+				this.moveFlying(strafe, forward, jumpMovementFactor);
+				this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
 				if (this.isCollidedHorizontally
 						&& this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + var9, this.motionZ)) {
 					this.motionY = 0.30000001192092896D;
 				}
+
+				this.motionY *= 0.9800000190734863D;
+				this.motionX *= (double) 0.96f;
+				this.motionZ *= (double) 0.96f;
 
 				movementHandled = true;
 			}
@@ -155,20 +163,17 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 				if (this.onGround) {
 					if (this.isAIEnabled()) {
-						var5 = this.getAIMoveSpeed();
+						var5 = getRideSpeed();
 					} else {
 						var5 = 1;
 					}
 
 					var5 *= var8;
 				} else {
-					if (baseStats.canFly)
-						var5 = 0.1f;
-					else
-						var5 = this.jumpMovementFactor;
+					var5 = getRideSpeed();
 				}
 
-				this.moveFlying(par1, par2, var5);
+				this.moveFlying(strafe, forward, var5);
 				var3 = 0.91F;
 
 				if (this.onGround) {
@@ -192,14 +197,14 @@ public abstract class Entity5Rideable extends Entity4Textures {
 						this.motionY = 0.0D;
 					}
 				} else {
-					this.motionY -= 0.01D;
+					this.motionY -= 0.02D;
 				}
 
 				this.motionY *= 0.9800000190734863D;
 				this.motionX *= (double) var3;
 				this.motionZ *= (double) var3;
 
-				this.prevLimbYaw = this.limbYaw;
+				this.prevLimbSwingAmount = this.limbSwingAmount;
 				var9 = this.posX - this.prevPosX;
 				double var12 = this.posZ - this.prevPosZ;
 				float var11 = MathHelper.sqrt_double(var9 * var9 + var12 * var12) * 4.0F;
@@ -208,15 +213,116 @@ public abstract class Entity5Rideable extends Entity4Textures {
 					var11 = 1.0F;
 				}
 
-				this.limbYaw += (var11 - this.limbYaw) * 0.4F;
-				this.limbSwing += this.limbYaw;
+				this.limbSwingAmount += (var11 - this.limbSwingAmount) * 0.4F;
+				this.limbSwing += this.limbSwingAmount;
 				movementHandled = true;
 
 			}
 
 		}
-		if (!movementHandled)
-			super.moveEntityWithHeading(par1, par2);
+		if (!movementHandled) {
+			if (riddenByEntity != null && baseStats != null)
+				moveEntityRidden(strafe, forward);
+			super.moveEntityWithHeading(strafe, forward);
+		}
+	}
+
+	private void moveEntityRidden(float strafe, float forward) {
+		double d0;
+
+		if (this.isInWater()) {
+			d0 = this.posY;
+			this.moveFlying(strafe, forward, 0.05F);
+			this.moveEntity(this.motionX, this.motionY, this.motionZ);
+			this.motionX *= 0.800000011920929D;
+			this.motionY *= 0.800000011920929D;
+			this.motionZ *= 0.800000011920929D;
+			this.motionY -= 0.019D;
+
+			if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + d0, this.motionZ)) {
+				this.motionY = 0.30000001192092896D;
+			}
+		} else if (this.handleLavaMovement()) {
+			d0 = this.posY;
+			this.moveFlying(strafe, forward, 0.02F);
+			this.moveEntity(this.motionX, this.motionY, this.motionZ);
+			this.motionX *= 0.6D;
+			this.motionY *= 0.6D;
+			this.motionZ *= 0.6D;
+			this.motionY -= 0.02D;
+
+			if (this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6000000238418579D - this.posY + d0, this.motionZ)) {
+				this.motionY = 0.30000001192092896D;
+			}
+		} else {
+			float f2 = 0.91F;
+
+			if (this.onGround) {
+				f2 = 0.54600006F;
+				int i = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1,
+						MathHelper.floor_double(this.posZ));
+
+				if (i > 0) {
+					f2 = Block.blocksList[i].slipperiness * 0.91F;
+				}
+			}
+
+			float f3 = 0.16277136F / (f2 * f2 * f2);
+			float f4;
+
+			if (this.onGround) {
+				f4 = getRideSpeed() * f3;
+			} else {
+				f4 = getRideSpeed() * 0.6f;
+			}
+
+			this.moveFlying(strafe, forward, f4);
+			f2 = 0.91F;
+
+			if (this.onGround) {
+				f2 = 0.54600006F;
+				int j = this.worldObj.getBlockId(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY) - 1,
+						MathHelper.floor_double(this.posZ));
+
+				if (j > 0) {
+					f2 = Block.blocksList[j].slipperiness * 0.91F;
+				}
+			}
+
+			this.moveEntity(this.motionX, this.motionY, this.motionZ);
+
+			if (this.worldObj.isRemote
+					&& (!this.worldObj.blockExists((int) this.posX, 0, (int) this.posZ) || !this.worldObj.getChunkFromBlockCoords((int) this.posX,
+							(int) this.posZ).isChunkLoaded)) {
+				if (this.posY > 0.0D) {
+					this.motionY = -0.1D;
+				} else {
+					this.motionY = 0.0D;
+				}
+			} else {
+				this.motionY -= 0.04D;
+			}
+
+			this.motionY *= 0.9800000190734863D;
+			this.motionX *= (double) f2;
+			this.motionZ *= (double) f2;
+		}
+
+		this.prevLimbSwingAmount = this.limbSwingAmount;
+		d0 = this.posX - this.prevPosX;
+		double d1 = this.posZ - this.prevPosZ;
+		float f6 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
+
+		if (f6 > 1.0F) {
+			f6 = 1.0F;
+		}
+
+		this.limbSwingAmount += (f6 - this.limbSwingAmount) * 0.4F;
+		this.limbSwing += this.limbSwingAmount;
+	}
+
+	private float getRideSpeed() {
+		return 0.08f + 0.05f * stats.Speed / 500f;
 	}
 
 	@Override
@@ -227,8 +333,12 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				super.onLivingUpdate();
 				return;
 			}
-			if (baseStats.canSurf)
+			if (baseStats.canSurf) {
+				if (riddenByEntity.isInWater() && riddenByEntity instanceof EntityPlayer) {
+					((EntityPlayer) riddenByEntity).addPotionEffect((new PotionEffect(Potion.nightVision.getId(), 10, 0)));
+				}
 				riddenByEntity.setAir(initAir);
+			}
 			ridingHelper.onLivingUpdate();
 			moveForward *= 0.4f;
 			if (moveForward > -0.1 && moveForward < 0.1)
@@ -242,10 +352,10 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			if (playerRiding != null) {
 				if (!isInWater() && playerRiding.jump > 0) {
 					if (onGround) {
-						motionY = 0.5f;
 						jump();
+						motionY *= 1f + stats.Speed / 500f;
 					} else if (baseStats.canFly) {
-						motionY += 0.02f;
+						motionY += 0.04f + 0.06f * stats.Speed / 500f;
 						isFlying = true;
 					}
 				} else if (isInWater()) {
@@ -302,8 +412,9 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		debugOffsetZ = 0f;
 		if (this.riddenByEntity != null) {
 			try {
-				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsetX) * getScale() * getScaleFactor(), 0,
-						(debugOffsetZ + baseStats.ridingOffsetZ) * getScale() * getScaleFactor());
+				if (baseStats.ridingOffsets==null) baseStats.ridingOffsets = new RidingOffsets();
+				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsets.standing.x) * getPixelmonScale() * getScaleFactor(), 0,
+						(debugOffsetZ + baseStats.ridingOffsets.standing.z) * getPixelmonScale() * getScaleFactor());
 				vec.rotateAroundY(-(this.renderYawOffset) * (float) Math.PI / 180.0f);
 				// System.out.println(rotationYaw +" " + renderYawOffset);
 				double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
@@ -311,8 +422,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				if (ep == null)
 					ep = EnumPokemon.get(getName());
 				this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY
-						+ (this.getMountedYOffset() + baseStats.ridingOffsetY + height + debugOffsetY) * getScale() * getScaleFactor(), this.posZ + var3
-						+ vec.zCoord);
+						+ (this.getMountedYOffset() + baseStats.ridingOffsets.standing.y + height + debugOffsetY) * getPixelmonScale() * getScaleFactor(),
+						this.posZ + var3 + vec.zCoord);
 			} catch (Exception e) {
 				riddenByEntity.mountEntity(this);
 			}
@@ -323,10 +434,16 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		super.moveEntity(motionX, motionY, motionZ);
 	}
 
+	@Override
+	public boolean shouldDismountInWater(Entity rider) {
+		return false;
+	}
+
 	public void unloadEntity() {
 		if (riddenByEntity != null) {
 			riddenByEntity.mountEntity(this);
 			((EntityPixelmon) this).aiHelper = new AIHelper(getName(), (EntityPixelmon) this, tasks);
 		}
 	}
+
 }

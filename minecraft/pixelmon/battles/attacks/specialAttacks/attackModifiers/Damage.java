@@ -23,7 +23,7 @@ public class Damage extends AttackModifierBase {
 			dmg = ((double) target.getMaxHealth()) * ((double) value) / 100;
 		else
 			dmg = value;
-		target.attackEntityFrom(DamageSource.causeMobDamage(user), (int) dmg);
+		target.doBattleDamage(user, (int) dmg);
 		a.doMove(user, target);
 		return true;
 	}

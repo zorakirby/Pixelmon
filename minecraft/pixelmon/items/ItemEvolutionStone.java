@@ -8,6 +8,7 @@ import pixelmon.config.PixelmonConfig;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.database.EvolutionInfo.InfoMode;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumEvolutionStone;
 
@@ -28,7 +29,7 @@ public class ItemEvolutionStone extends PixelmonItem {
 
 	public boolean useOnEntity(ItemStack itemstack, EntityPixelmon pixelmon, EntityPlayer player) {
 		ItemEvolutionStone i = (ItemEvolutionStone) itemstack.getItem();
-		for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.getName())) {
+		for (EvolutionInfo e : DatabaseStats.getEvolveList(pixelmon.baseStats.id)) {
 			if (e.mode == InfoMode.stone) {
 				if (e.evolutionStone == i.getType()) {
 					String evolveTo = e.pokemonName;
@@ -37,7 +38,7 @@ public class ItemEvolutionStone extends PixelmonItem {
 							System.out.println(e.pokemonName + " isn't coded yet");
 						return false;
 					}
-					pixelmon.evolve(evolveTo);
+					pixelmon.startEvolution(evolveTo, false);
 					itemstack.stackSize--;
 					return true;
 				}

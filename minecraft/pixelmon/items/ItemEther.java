@@ -17,7 +17,7 @@ public class ItemEther extends PixelmonItem {
 	}
 
 	private void restorePP(EntityPixelmon userPokemon, int moveIndex) {
-		Attack m = userPokemon.moveset.get(moveIndex);
+		Attack m = userPokemon.getMoveset().get(moveIndex);
 		if (this.type.restoresAllPP()) {
 			m.pp = m.ppBase;
 		} else {
@@ -28,7 +28,7 @@ public class ItemEther extends PixelmonItem {
 	}
 
 	public void restoreAllMoves(EntityPixelmon pxm) {
-		for (int a = 0; a < pxm.moveset.size(); a++) {
+		for (int a = 0; a < pxm.getMoveset().size(); a++) {
 			 restorePP(pxm, a);
 		}
 	}

@@ -2,7 +2,6 @@ package pixelmon;
 
 import java.io.File;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
@@ -12,20 +11,28 @@ import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import pixelmon.battles.BattleTickHandler;
 import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.client.ClientPacketHandler;
+import pixelmon.client.ClientProxy;
 import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
+import pixelmon.comm.PixelmonPlayerTracker;
+import pixelmon.commands.CommandBattle;
+import pixelmon.commands.CommandFreeze;
+import pixelmon.commands.CommandHeal;
+import pixelmon.commands.CommandPokegive;
+import pixelmon.commands.CommandSpawn;
+import pixelmon.commands.CommandStruc;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonRecipes;
 import pixelmon.database.DatabaseHelper;
 import pixelmon.entities.EntitySpawning;
+import pixelmon.entities.EntityDeath;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.entities.projectiles.EntityGoodHook;
-import pixelmon.entities.projectiles.EntityOldHook;
-import pixelmon.entities.projectiles.EntitySuperHook;
+import pixelmon.entities.projectiles.EntityHook;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.items.ArmorToolLibrary;
 import pixelmon.migration.Migration;
 import pixelmon.migration.MigrationLoader;
@@ -52,11 +59,7 @@ import pixelmon.worldGeneration.mysteryDungeon.DungeonExtraTreasure;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -70,7 +73,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "pixelmon", name = "Pixelmon", version = "2.2")
+@Mod(modid = "pixelmon", name = "Pixelmon", version = "2.5.0")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
@@ -84,7 +87,7 @@ public class Pixelmon {
 	public static Migration migration;
 
 	public static StringTranslate stringtranslate = new StringTranslate();
-	
+
 	@SidedProxy(clientSide = "pixelmon.client.ClientProxy", serverSide = "pixelmon.CommonProxy")
 	public static CommonProxy proxy;
 
@@ -94,22 +97,16 @@ public class Pixelmon {
 	public static File modDirectory;
 
 	Configuration config;
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		instance = this;
-		//Minecraft.getMinecraft().func_110442_L().
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
-		boolean checkForDatabaseUpdates = config.get("general", "Check for database updates", true).getBoolean(true);
 		modDirectory = new File(event.getModConfigurationDirectory().getParent());
-		if (!DatabaseHelper.has(checkForDatabaseUpdates)) {
-			throw new RuntimeException("Can not start Pixelmon without SQLite jar or database!!! Please reinstall!!");
-		}
+
 		if (Loader.isModLoaded("Pokemobs"))
 			System.exit(1);
-
-		event.getModMetadata().version = "2.2";
 
 		MinecraftForge.EVENT_BUS.register(new ApricornBonemealEvent());
 		preInit = true;
@@ -127,13 +124,12 @@ public class Pixelmon {
 		proxy.registerInteractions();
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityOldHook.class, "Old Hook", 214, this, 74, 1, true);
-		EntityRegistry.registerModEntity(EntityGoodHook.class, "Good Hook", 218, this, 75, 1, true);
-		EntityRegistry.registerModEntity(EntitySuperHook.class, "Super Hook", 218, this, 75, 1, true);
+		EntityRegistry.registerModEntity(EntityHook.class, "Hook", 216, this, 75, 1, true);
 
-		
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
 
+		GameRegistry.registerPlayerTracker(new PixelmonPlayerTracker());
+		
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
 		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
@@ -148,7 +144,8 @@ public class Pixelmon {
 		/*ComplexScattered.registerStructures();
 		StructureRegistry.loadStructures(event.getSide());
 		
-		GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
+		if(PixelmonConfig.spawnStructures)
+			GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
 		*/
 
 
@@ -156,6 +153,7 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
+		MinecraftForge.EVENT_BUS.register(new EntityDeath());
 		MinecraftForge.TERRAIN_GEN_BUS.register(InfiltratorGenLayer.INSTANCE);
 		//MinecraftForge.TERRAIN_GEN_BUS.register(MapGenDenialWrapper.SUBSCRIBER);
 
@@ -164,7 +162,11 @@ public class Pixelmon {
 		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
 		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
+		
 		proxy.registerTickHandlers();
+		for(EnumPokemon pokemon: EnumPokemon.values()){
+			Entity3HasStats.getBaseStats(pokemon.name);
+		}
 		init = true;
 	}
 
@@ -185,6 +187,7 @@ public class Pixelmon {
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandFreeze());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandHeal());
 			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandBattle());
+			((ServerCommandManager) MinecraftServer.getServer().getCommandManager()).registerCommand(new CommandPokegive());
 		}
 	}
 	

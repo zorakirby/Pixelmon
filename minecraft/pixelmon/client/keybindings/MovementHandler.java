@@ -12,7 +12,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class MovementHandler implements ITickHandler {
 
-	private int jump = 0;
+	public static int jump = 0;
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
@@ -41,12 +41,12 @@ public class MovementHandler implements ITickHandler {
 
 	@Override
 	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-
+		
 	}
 
 	@Override
 	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.WORLD);
+		return EnumSet.of(TickType.CLIENT);
 	}
 
 	@Override

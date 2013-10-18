@@ -3,9 +3,10 @@ package pixelmon.battles.attacks.specialAttacks.basic;
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.util.DamageSource;
 import pixelmon.battles.attacks.Attack;
-import pixelmon.battles.attacks.Value;
+import pixelmon.battles.status.StatusBase;
+import pixelmon.battles.status.StatusType;
+import pixelmon.battles.status.Substitute;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -17,7 +18,18 @@ public class OHKO extends SpecialAttackBase {
 	
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
-		
+		if (a.baseAttack.attackName.equals("Fissure") && target.hasStatus(StatusType.UnderGround))
+		{
+			if (!target.hasStatus(StatusType.Substitute)) {
+			target.doBattleDamage(user, (int)target.getHealth());
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
+			}
+			else
+				for (StatusBase e : target.status)
+					if (e instanceof Substitute)
+						((Substitute)e).attackSubstitute(((Substitute)e).health, user);
+		}
+			
 		int chance;
 		if (target.getLvl().getLevel() > user.getLvl().getLevel())
 			chance = 0;
@@ -28,9 +40,16 @@ public class OHKO extends SpecialAttackBase {
 		Random rand = new Random();
 		int x = rand.nextInt(100)+1;
 		
-		if(x < chance){
-		target.attackEntityFrom(DamageSource.causeMobDamage(user), target.func_110143_aJ());
-		ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
+		if(x < chance)
+		{
+			if (!target.hasStatus(StatusType.Substitute)) {
+				target.doBattleDamage(user, (int)target.getHealth());
+				ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "It's a one-hit-KO!");
+			}
+			else
+				for (StatusBase e : target.status)
+					if (e instanceof Substitute)
+						((Substitute)e).attackSubstitute(((Substitute)e).health, user);
 		}
 		
 		else if (x > chance)

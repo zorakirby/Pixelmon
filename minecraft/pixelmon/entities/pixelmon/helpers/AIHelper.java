@@ -20,13 +20,23 @@ public class AIHelper {
 		if (tasks.taskEntries.size() != 0)
 			tasks.taskEntries.clear();
 		initBaseAI(entity, tasks);
-		if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.Land && !entity.baseStats.canFly && !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
+		if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.Land && !entity.baseStats.canFly
+				&& !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
 			initGroundAI(Name, entity, tasks);
 		} else if (entity.baseStats.canFly) {
-			initFlyingAI(Name, entity, tasks);
+//			if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.AirPersistent)
+//				initFlyingPersistentAI(Name, entity, tasks);
+//			else
+				initFlyingAI(Name, entity, tasks);
 		} else if (((EntityPixelmon) entity).pokemonLocation == SpawnLocation.Water) {
 			initSwimmingAI(Name, entity, tasks);
 		}
+	}
+
+	private void initFlyingPersistentAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
+		tasks.addTask(i++, new EntityAISwimming(entity));
+		tasks.addTask(i++, new AITempt(entity, PixelmonItems.rareCandy.itemID, false));
+		tasks.addTask(i++, new AIFlyingPersistent((EntityPixelmon)entity));
 	}
 
 	private void initSwimmingAI(String name, Entity7HasAI entity, EntityAITasks tasks) {
@@ -38,13 +48,14 @@ public class AIHelper {
 		tasks.addTask(i++, new EntityAISwimming(entity));
 		tasks.addTask(i++, new AITempt(entity, PixelmonItems.rareCandy.itemID, false));
 		tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
-		tasks.addTask(i++, new EntityAIWander(entity, entity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e()));
+		tasks.addTask(i++, new EntityAIWander(entity, entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue()));
 		tasks.addTask(i++, new AIFlying(entity));
 	}
 
 	private void initBaseAI(Entity7HasAI entity, EntityAITasks tasks) {
 		tasks.addTask(i++, new AIIsInBattle(entity));
-		if (((EntityPixelmon) entity).pokemonLocation != SpawnLocation.Water && !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
+		if (((EntityPixelmon) entity).pokemonLocation != SpawnLocation.Water
+				&& !(entity.baseStats.isRideable && (entity.baseStats.type1 == EnumType.Water || entity.baseStats.type2 == EnumType.Water))) {
 			if (entity.aggression == Aggression.aggressive) {
 				tasks.addTask(i++, new AIStartBattle(entity));
 				tasks.addTask(i++, new AIMoveTowardsTarget(entity, 10));
@@ -56,6 +67,9 @@ public class AIHelper {
 	}
 
 	private void initGroundAI(String Name, Entity7HasAI entity, EntityAITasks tasks) {
+		if (entity.baseStats.type1 != EnumType.Fire && entity.baseStats.type2 != EnumType.Fire)
+			entity.getNavigator().setCanSwim(true);
+
 		if (Name.equalsIgnoreCase("Abra")) {
 			tasks.addTask(i++, new AITeleportAway(entity));
 		} else {
@@ -65,6 +79,7 @@ public class AIHelper {
 			tasks.addTask(i++, new AIWander(entity));
 			tasks.addTask(i++, new EntityAIWatchClosest(entity, pixelmon.entities.pixelmon.EntityPixelmon.class, 8F));
 			tasks.addTask(i++, new EntityAILookIdle(entity));
+			//tasks.addTask(i++, new AITargetEnvironment(entity));
 		}
 	}
 
