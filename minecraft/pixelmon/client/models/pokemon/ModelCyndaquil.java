@@ -48,7 +48,7 @@ public class ModelCyndaquil extends PixelmonModelBase {
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
 		Lleg.setRotationPoint(0.294F, 0.926F, -0.7F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/cyndaquil/Leftleg.obj")));
+		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/cyndaquil/LeftLeg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
 		RLeg.setRotationPoint(-0.294F, 0.926F, -0.7F);

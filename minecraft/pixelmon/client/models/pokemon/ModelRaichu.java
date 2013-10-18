@@ -49,7 +49,7 @@ public class ModelRaichu extends PixelmonModelBase {
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
 		Lleg.setRotationPoint(0.84F, 2.728F, -1.347F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/raichu/Leftleg.obj")));
+		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/raichu/LeftLeg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
 		RLeg.setRotationPoint(-0.790F, 2.644F, -1.196F);
