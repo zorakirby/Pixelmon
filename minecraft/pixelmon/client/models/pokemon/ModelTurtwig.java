@@ -34,7 +34,7 @@ public class ModelTurtwig extends PixelmonModelBase {
 		footFR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/turtwig/TurtwigFrontRightLeg.obj")));
 		footBL = new PixelmonModelRenderer(this, 0, 0);
 		footBL.setRotationPoint(1.148F, 1.494F, -1.840F);
-		footBL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/turtwig/TurtwigBackLeftLeg.obj")));
+		footBL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/turtwig/TurtwigBackleftLeg.obj")));
 		footBR = new PixelmonModelRenderer(this, 0, 0);
 		footBR.setRotationPoint(-1.148F, 1.494F, -1.840F);
 		footBR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/turtwig/TurtwigBackRightLeg.obj")));
@@ -87,6 +87,5 @@ public class ModelTurtwig extends PixelmonModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-		Body.rotateAngleX = 15.6F;
 	}
 }
