@@ -45,6 +45,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private int waitTime;
 	private boolean canCatch = false;
 	private EntityPixelmon pixelmon;
+	private int pokemonId;
 	private float endRotationYaw = 0;
 	public boolean dropItem;
 	private int breakChance = rand.nextInt(30);
@@ -150,11 +151,11 @@ public class EntityPokeBall extends EntityThrowable {
 		this.motionY = (double) (-MathHelper.sin(0)) * 0.8;
 	}
 
-	public EntityPokeBall(World world, EntityLivingBase entityliving, EntityPixelmon e, EnumPokeballs type) {
+	public EntityPokeBall(World world, EntityLivingBase entityliving, int pokemonId, EnumPokeballs type) {
 		super(world, entityliving);
 		thrower = entityliving;
 		endRotationYaw = entityliving.rotationYawHead;
-		pixelmon = e;
+		this.pokemonId = pokemonId;
 		dataWatcher.addObject(10, type.getIndex());
 		mode = Mode.full;
 		float speed = 0.3f;
@@ -198,6 +199,11 @@ public class EntityPokeBall extends EntityThrowable {
 			// }
 		} else if (mode == Mode.full) {
 			if (movingobjectposition != null && !worldObj.isRemote) {
+				try {
+					pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).sendOut(pokemonId, thrower.worldObj);
+				} catch (PlayerNotLoadedException e) {
+					e.printStackTrace();
+				}
 				if (pixelmon != null) {
 					if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
 						if (movingobjectposition.sideHit == 0)// Bottom
