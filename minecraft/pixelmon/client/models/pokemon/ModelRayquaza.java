@@ -2,6 +2,7 @@ package pixelmon.client.models.pokemon;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import pixelmon.client.models.ModelOBJWrapper;
@@ -158,18 +159,20 @@ public class ModelRayquaza extends PixelmonModelBase {
 		ModelRenderer[] bodyArgs = { RayBody, RayBody2, RayBody3, RayBody4, Ray1, Ray2, Ray3, Ray4, Ray5, Ray6, Ray7, Ray8, Ray9, Ray10, Ray11, Ray12, Ray13, Ray14, Ray15, Ray16,
 				Ray17, Ray18, Ray19, Ray20, Ray21, RayTail };
 		
-		float animationAngle = 0;
-		float topAngle = (float) (Math.PI/4);
-		float dampeningFactor = (float) -1/25;
-		float animationSpeed = (float) 1/2;
+		float animationAngle = 90;
+		float topAngle = (float) (Math.PI/15);
+		float dampeningFactor = (float) -0.001;
+		float animationSpeed = (float) 1/3;
+		float phaseoffset = (float) -0.3;		
 		
-		skeleton = new SkeletonSerpent(Body, headModule, animationAngle, topAngle, dampeningFactor, animationSpeed, bodyArgs);
+		skeleton = new SkeletonSerpent(Body, headModule, animationAngle, topAngle, dampeningFactor, animationSpeed,phaseoffset, bodyArgs);
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		Body.render(f5);
+		Body.setRotationPoint(0F, -5*MathHelper.cos(f*1/3F), 0F);
 	}
 
 	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
