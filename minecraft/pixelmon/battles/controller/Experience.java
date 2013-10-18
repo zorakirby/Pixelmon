@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.battles.participants.BattleParticipant;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.participants.PlayerParticipant;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.config.PixelmonConfig;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.entities.pixelmon.EntityPixelmon;
@@ -174,19 +175,17 @@ public final class Experience {
 			// Begin EXP award to the currently battling pokemon.
 			battlingPokemon.getLvl().awardEXP((int) exp);
 			EVsStore evStore = faintedPokemon.baseStats.evGain.cloneEVs();
-			if (battlingPokemon.getLvl().canLevelUp()) {
-				if (ItemHeld.isItemOfType(battlingPokemon.getHeldItem(), EnumHeldItems.evAdjusting)) {
-					EVAdjusting item = (EVAdjusting) battlingPokemon.getHeldItem().getItem();
-					if (item.type.statAffected == StatsType.None) {
-						evStore.doubleValues();
-					} else {
-						evStore.addEVs(4, item.type.statAffected);
-					}
+			if (ItemHeld.isItemOfType(battlingPokemon.getHeldItem(), EnumHeldItems.evAdjusting)) {
+				EVAdjusting item = (EVAdjusting) battlingPokemon.getHeldItem().getItem();
+				if (item.type.statAffected == StatsType.None) {
+					evStore.doubleValues();
+				} else {
+					evStore.addEVs(4, item.type.statAffected);
 				}
 			}
 			battlingPokemon.stats.EVs.gainEV(evStore);
 			battlingPokemon.updateStats();
-			storage.updateNBT(battlingPokemon);
+			storage.update(battlingPokemon, EnumUpdateType.Stats);
 		} else {
 			// Begin EXP award to a stored party pokemon.
 			EntityPixelmon partyPokemon;

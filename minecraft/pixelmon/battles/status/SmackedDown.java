@@ -16,7 +16,7 @@ public class SmackedDown extends StatusBase {
 	@Override
 	public double adjustDamage(Attack a, double damage, EntityPixelmon user, EntityPixelmon target, double crit) throws Exception {
 		double stab = 1;
-		if (a.STAB)
+		if (a.hasSTAB(user))
 			stab = 1.5;
 		double type = EnumType.getTotalEffectiveness(user.type, a.baseAttack.attackType);
 		if (a.baseAttack.attackType == EnumType.Ground && user.type.contains(EnumType.Flying))

@@ -103,7 +103,6 @@ public class Moveset extends AbstractList<Attack> implements List<Attack>, Rando
 		for (int i = 0; i < size(); i++) {
 			var1.setString("PixelmonMoveName" + i, get(i).baseAttack.attackName);
 			var1.setInteger("PixelmonMoveType" + i, get(i).baseAttack.attackType.getIndex());
-			var1.setBoolean("PixelmonMoveSTAB" + i, get(i).STAB);
 			var1.setInteger("PixelmonMovePP" + i, get(i).pp);
 			var1.setInteger("PixelmonMovePPBase" + i, get(i).ppBase);
 			var1.setInteger("PixelmonMovePPMax" + i, get(i).baseAttack.ppMax);
@@ -116,8 +115,6 @@ public class Moveset extends AbstractList<Attack> implements List<Attack>, Rando
 		for (int i = 0; i < numMoves; i++) {
 			Attack a = DatabaseMoves.getAttack(var1.getString("PixelmonMoveName" + i));
 			if (a != null) {
-				if (var1.hasKey("PixelmonMoveSTAB" + i))
-					a.STAB = var1.getBoolean("PixelmonMoveSTAB" + i);
 				if (var1.hasKey("PixelmonMovePP" + i))
 					a.pp = var1.getInteger("PixelmonMovePP" + i);
 				if (var1.hasKey("PixelmonMovePPBase" + i))

@@ -30,7 +30,7 @@ public class BlockTradeMachine extends BlockContainer {
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return -1;
+		return PixelmonItems.tradeMachineItem.itemID;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -42,12 +42,12 @@ public class BlockTradeMachine extends BlockContainer {
 
 	@Override
 	public int quantityDropped(Random random) {
-		return 0;
+		return 1;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
+		blockIcon = par1IconRegister.registerIcon("quartz_block_bottom");
 	}
 	
 	@Override

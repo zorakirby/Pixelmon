@@ -1,39 +1,30 @@
 package pixelmon.battles.status;
 
+import java.util.ArrayList;
+
+import pixelmon.battles.attacks.Attack;
+import pixelmon.battles.controller.BattleController;
+import pixelmon.battles.controller.GlobalStatusController;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
 public abstract class GlobalStatusBase {
-	
-	public boolean hasEndOfMoveEffect;
-	public boolean hasInMoveEffect;
-	private int turnTick;
-	
-	public GlobalStatusBase(boolean hasEndOfMoveEffect, boolean hasInMoveEffect)
+	private String name;
+	public GlobalStatusBase(String name)
 	{
-		this.hasEndOfMoveEffect = hasEndOfMoveEffect;
+		this.name = name;
 	}
-	
-	public boolean hasEndOfMoveEffect()
+	public String endOfTurnMessage(BattleController bc)
 	{
-		return hasEndOfMoveEffect;
+		return "";
 	}
-	
-	public boolean hasInMoveEffect()
-	{
-		return hasInMoveEffect;
-	}
-	
-	public String endOfTurnMessage()
-	{
-		return null;
-	}
-	
-	public int getTurnTick()
-	{
-		return turnTick;
-	}
-	
-	
-	public void applyInMoveEffect(GlobalStatusBase[] global, EntityPixelmon user, EntityPixelmon target)
+	public void applyInMoveEffect(EntityPixelmon user, EntityPixelmon target, Attack a)
 	{}
+	
+	public void applyRepeatedEffect(GlobalStatusController globalStatusController, EntityPixelmon user, EntityPixelmon target)
+	{}
+	
+	public String getName()
+	{
+		return name;
+	}
 }

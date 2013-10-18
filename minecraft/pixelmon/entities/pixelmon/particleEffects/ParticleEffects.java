@@ -25,11 +25,13 @@ public abstract class ParticleEffects {
 		else if (pixelmon.getName().equalsIgnoreCase("Gastly"))
 			return new GastlyParticles(pixelmon);
 		else if (pixelmon.getName().equalsIgnoreCase("Charmander"))
-			return new FlameParticles(pixelmon, 0.55F, 0.52F, 2);
+			return new FlameParticles(pixelmon, 0.7F, 0.45F, 3);
 		else if (pixelmon.getName().equalsIgnoreCase("Charmeleon"))
-			return new FlameParticles(pixelmon, 0.95F, 1.2F, 4);
+			return new FlameParticles(pixelmon, 1.2F, .7F, 5);
 		else if (pixelmon.getName().equalsIgnoreCase("Charizard"))
-			return new FlameParticles(pixelmon, 2.35F, 3F, 7);
+			return new FlameParticles(pixelmon, 2.2F, 1F, 7);
+		else if(pixelmon.getIsShiny() == true)
+			return new ShinyParticles(pixelmon);
 		return null;
 	}
 }

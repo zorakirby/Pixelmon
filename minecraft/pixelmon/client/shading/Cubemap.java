@@ -23,7 +23,6 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureObject;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.Resource;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 import org.lwjgl.BufferUtils;

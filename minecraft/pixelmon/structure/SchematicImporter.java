@@ -4,10 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
 
+import cpw.mods.fml.client.FMLClientHandler;
+
+import net.minecraft.client.resources.AbstractResourcePack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
 
 public class SchematicImporter {
 	private String filename;
@@ -89,8 +93,7 @@ public class SchematicImporter {
 
 	NBTTagCompound getNBTTag() {
 		try {
-			File file = new File(filename);
-			return CompressedStreamTools.readCompressed(new FileInputStream(file));
+			return CompressedStreamTools.readCompressed(StructureRegistry.class.getResourceAsStream(filename));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

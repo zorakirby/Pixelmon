@@ -25,27 +25,20 @@ public abstract class Entity2HasModel extends Entity1Base {
 	
 	public static Random animStarter = new Random();
 	
-	@SideOnly(Side.CLIENT)
 	ModelBase model; //ModelBase Disguised as an Object to prevent server crashing
 	
-	@SideOnly(Side.CLIENT)
+	ModelBase flyingModel;
 	public float animationNum1;
 	
-	@SideOnly(Side.CLIENT)
 	public int animationCounter; //counter increases every "Entity-update" tick.
 	
-	@SideOnly(Side.CLIENT)
 	public int animationIncrement;
 	
-	@SideOnly(Side.CLIENT)
 	public int animationLimit;
 	
-	@SideOnly(Side.CLIENT)
 	public int animationCounter2;
-	@SideOnly(Side.CLIENT)
 	public int animationIncrement2;
 	//animationLimit2 has been removed, because it is currently only used in SMD animations. If this variable was reset to 0 after reaching 360, the animation would suddenly jump
-	@SideOnly(Side.CLIENT)
 	public boolean transformed;
 	@SideOnly(Side.CLIENT)
 	String transformedModel;
@@ -81,8 +74,12 @@ public abstract class Entity2HasModel extends Entity1Base {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public ModelBase getModel(){
-		if (model ==null) loadModel();
+	public ModelBase getModel() {
+		if (model == null)
+			loadModel();
+		if (flyingModel != null)
+			if(!onGround && !inWater)
+				return flyingModel;
 		return (ModelBase)model;
 	}
 
@@ -95,14 +92,18 @@ public abstract class Entity2HasModel extends Entity1Base {
 			Object mod = Pixelmon.proxy.getModels()[n];
 			if (mod instanceof ModelBase)
 				model = (ModelBase) mod;
+			flyingModel = (ModelBase)Pixelmon.proxy.getFlyingModels()[n];
 		} else {
 			ModelBase m = Pixelmon.proxy.loadModel(getName());
 			Pixelmon.proxy.getModels()[n] = m;
 			model = m;
+			m = Pixelmon.proxy.loadFlyingModel(getName());
+			if (m != null)
+				Pixelmon.proxy.getFlyingModels()[n] = m;
+			flyingModel = m;
 		}
 	}
 
-	
 	@SideOnly(Side.CLIENT)
 	public void transform(String transformedModel) {
 		transformed = true;

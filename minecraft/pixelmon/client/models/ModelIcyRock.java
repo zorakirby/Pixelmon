@@ -15,13 +15,13 @@ public class ModelIcyRock extends ModelEntityBlock{
 	}
 	@Override
 	public void renderInvBlock(BlockContainerPlus block, int meta, float scale) {
-		Minecraft.getMinecraft().renderEngine.func_110577_a(RenderResources.icyrocktex);
+		Minecraft.getMinecraft().renderEngine.bindTexture(RenderResources.icyrocktex);
 		rock.render(scale);
 	}
 
 	@Override
 	public void renderTileEntity(TileEntityDecorativeBase tileEnt, float scale) {
-		Minecraft.getMinecraft().renderEngine.func_110577_a(RenderResources.icyrocktex);
+		Minecraft.getMinecraft().renderEngine.bindTexture(RenderResources.icyrocktex);
 		rock.render(0.0625F);
 	}
 

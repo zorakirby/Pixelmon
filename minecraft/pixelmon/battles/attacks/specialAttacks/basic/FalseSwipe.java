@@ -18,12 +18,12 @@ public class FalseSwipe extends SpecialAttackBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
 		int check = a.doDamageCalc(user, target, a.calcCriticalHit(getEffect("FalseSwipe")));
-		if(check >= target.func_110143_aJ())
+		if(check >= target.getHealth())
 		{
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), (target.func_110143_aJ()-1));
+			target.doBattleDamage(user, (int)(target.getHealth()-1));
 		}
 		else
-			target.attackEntityFrom(DamageSource.causeMobDamage(user), check);	
+			target.doBattleDamage(user, check);	
 		return true;
 	}
 

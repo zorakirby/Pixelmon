@@ -89,7 +89,7 @@ public class HiddenPower extends SpecialAttackBase {
 		if (tmp == 2 || tmp == 3)
 			z = 1;
 
-		attack.baseAttack.basePower = (int) Math.floor(((double) (u + 2 * v + 4 * w + 8 * x + 16 * y + 32 * z)) * 40 / 63 + 30);
+		attack.movePower = (int) Math.floor(((double) (u + 2 * v + 4 * w + 8 * x + 16 * y + 32 * z)) * 40 / 63 + 30);
 		return false;
 	}
 }

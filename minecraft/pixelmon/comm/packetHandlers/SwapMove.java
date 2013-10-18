@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerComputerStorage;
@@ -33,12 +34,12 @@ public class SwapMove extends PacketHandlerBase {
 					p = storage.getAlreadyExists(pokemonID, player.worldObj);
 				else
 					p = storage.sendOut(pokemonID, player.worldObj);
-				p.moveset.swap(selected, clicked);
-				storage.updateNBT(p);
+				p.getMoveset().swap(selected, clicked);
+				storage.update(p, EnumUpdateType.Moveset);
 			} else if (PixelmonStorage.ComputerManager.getPlayerStorage(player).contains(pokemonID)) {
 				PlayerComputerStorage compStore = PixelmonStorage.ComputerManager.getPlayerStorage(player);
 				EntityPixelmon p = compStore.getPokemonEntity(pokemonID);
-				p.moveset.swap(selected, clicked);
+				p.getMoveset().swap(selected, clicked);
 				compStore.updatePokemonEntry(p);
 			}
 		} catch (PlayerNotLoadedException e) {

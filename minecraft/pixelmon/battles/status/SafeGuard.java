@@ -1,7 +1,6 @@
 package pixelmon.battles.status;
 
-import java.util.ArrayList;
-
+import pixelmon.battles.attacks.Attack;
 import pixelmon.comm.ChatHandler;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -14,7 +13,7 @@ public class SafeGuard extends StatusBase {
 	}
 
 	@Override
-	public boolean stopsStatusChange() {
+	public boolean stopsStatusChange(Attack a) {
 		return true;
 	}
 

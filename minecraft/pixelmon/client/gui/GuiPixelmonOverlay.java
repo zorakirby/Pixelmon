@@ -9,7 +9,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -40,7 +39,8 @@ public class GuiPixelmonOverlay extends Gui {
 			count = 0;
 			checkEntitysInWorld(Minecraft.getMinecraft().theWorld);
 		}
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null || !isVisible || Minecraft.getMinecraft().gameSettings.hideGUI)
+		if (Minecraft.getMinecraft().currentScreen instanceof GuiInventory && event != null || !isVisible || Minecraft.getMinecraft().gameSettings.hideGUI
+				|| Minecraft.getMinecraft().currentScreen instanceof GuiItemDrops)
 			return;
 		Minecraft mc = Minecraft.getMinecraft();
 		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
@@ -97,12 +97,12 @@ public class GuiPixelmonOverlay extends Gui {
 					drawTexturedModalRect(2, var7 / 6 + i * 30 + 3 + offset, 75, 209, 28, 28);
 				}
 				if (p.isShiny)
-					mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
+					mc.renderEngine.bindTexture(GuiResources.shinySprite(numString));
 				else
-					mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
+					mc.renderEngine.bindTexture(GuiResources.sprite(numString));
 				drawImageQuad(3, var7 / 6 + i * 30 + 3 + offset, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItemId != -1) {
-					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
+					Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.heldItem);
 					drawImageQuad(18, var7 / 6 + i * 30 + 19 + offset, 6, 6, 0f, 0f, 1f, 1f);
 				}
 				if (!isGuiMinimized) {
@@ -133,9 +133,9 @@ public class GuiPixelmonOverlay extends Gui {
 
 	private void bindOverlayTexture() {
 		if (isGuiMinimized)
-			Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.overlaySimple);
+			Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.overlaySimple);
 		else
-			Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.overlayExtended);
+			Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.overlayExtended);
 	}
 
 	public boolean checkEntitysInWorld(World world) {

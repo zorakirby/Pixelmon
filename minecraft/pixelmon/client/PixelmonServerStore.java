@@ -4,13 +4,19 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import pixelmon.comm.BossDropPacket;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.comm.StarterListPacket;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.ComputerBox;
 import pixelmon.storage.PlayerComputerStorage;
 
 public class PixelmonServerStore {
 	private static PixelmonDataPacket[][] store = new PixelmonDataPacket[PlayerComputerStorage.boxCount][ComputerBox.boxLimit];
 	private static PixelmonDataPacket mousePokemon;
+	public static StarterListPacket starterListPacket;
+	public static String evolutionTarget;
+	public static BossDropPacket bossDrops;
 
 	public static void addToList(DataInputStream dataStream) {
 		PixelmonDataPacket p = new PixelmonDataPacket();

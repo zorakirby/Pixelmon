@@ -17,7 +17,7 @@ public class Teleport extends SpecialAttackBase {
 	@Override
 	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList,
 			ArrayList<String> targetAttackList) throws Exception {
-		if ((user.getOwner() != null || user.getTrainer() != null) && (target.getOwner() != null || target.getTrainer() != null)) {
+		if ((user.playerOwned != false || user.getTrainer() != null) && (target.playerOwned != false || target.getTrainer() != null)) {
 			ChatHandler.sendBattleMessage(user.getOwner(), "Can't teleport from a trainer battle!");
 			return true;
 		}

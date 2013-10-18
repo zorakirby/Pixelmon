@@ -1,9 +1,13 @@
 package pixelmon.config;
 
+import java.util.HashMap;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import pixelmon.Pixelmon;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.DatabaseTrainers;
@@ -14,6 +18,7 @@ import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumPokemon;
 import pixelmon.enums.EnumTrainers;
+import pixelmon.spawning.SpawnData;
 import pixelmon.spawning.SpawnRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
@@ -36,11 +41,11 @@ public class PixelmonEntityList {
 			} else if (EnumTrainers.has(par0Str)) {
 				var2 = new EntityTrainer(par1World);
 				((EntityTrainer) var2).init(par0Str);
-			}else {
+			} else {
 				NPCType npcType = NPCType.get(par0Str);
 				if (npcType == NPCType.Doctor)
 					var2 = new EntityDoctor(par1World);
-				((EntityNPC)var2).init(par0Str);
+				((EntityNPC) var2).init(par0Str);
 			}
 		} catch (Exception var4) {
 			var4.printStackTrace();
@@ -77,18 +82,17 @@ public class PixelmonEntityList {
 	}
 
 	public static void registerEntities() {
-		EntityRegistry.registerModEntity(EntityNPC.class, "NPC", PixelmonConfig.idTrainers, Pixelmon.instance, 100, 1, true);
+		EntityRegistry.registerModEntity(EntityTrainer.class, "Trainer", PixelmonConfig.idTrainers, Pixelmon.instance, 100, 1, true);
 		EntityRegistry.registerModEntity(EntityPixelmon.class, "Pixelmon", PixelmonConfig.idPixelmon, Pixelmon.instance, 100, 1, true);
 	}
 
 	public static void addSpawns() {
+		HashMap<String, String> hashmap = new HashMap<String, String>();
 		System.out.println("[PIXELMON] Registering entity spawns");
 
 		for (EnumPokemon pokemon : EnumPokemon.values()) {
 			String name = pokemon.name;
-			int rarity = DatabaseStats.GetRarity(name);
-			if (rarity > 0)
-				SpawnRegistry.addSpawn(name, rarity, ClassType.Pixelmon);
+			SpawnRegistry.getGenerationInfo(hashmap, pokemon.name);
 		}
 
 		for (EnumTrainers trainer : EnumTrainers.values()) {
@@ -98,7 +102,7 @@ public class PixelmonEntityList {
 			rardbl *= ((double) PixelmonConfig.trainerRarityModifier) / 100.0;
 			rarity = (int) rardbl;
 			if (rarity > 0)
-				SpawnRegistry.addSpawn(name, rarity, ClassType.Trainer);
+				SpawnRegistry.addNPCSpawn(name, rarity, ClassType.Trainer);
 		}
 	}
 

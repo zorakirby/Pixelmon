@@ -18,8 +18,17 @@ import pixelmon.blocks.TileEntityFossilCleaner;
 import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.blocks.TileEntityHealer;
 import pixelmon.blocks.TileEntityPC;
+import pixelmon.blocks.TileEntityShrine;
 import pixelmon.blocks.TileEntityTradeMachine;
 import pixelmon.blocks.apricornTrees.TileEntityApricornTree;
+import pixelmon.client.camera.EntityCamera;
+import pixelmon.client.gui.GuiDoctor;
+import pixelmon.client.gui.GuiEvolve;
+import pixelmon.client.gui.GuiHealer;
+import pixelmon.client.gui.GuiItemDrops;
+import pixelmon.client.gui.GuiPixelmonOverlay;
+import pixelmon.client.gui.GuiTrading;
+import pixelmon.client.gui.battles.GuiAcceptDeny;
 import pixelmon.blocks.decorative.BlockContainerPlus;
 import pixelmon.blocks.decorative.BlockUnown;
 import pixelmon.blocks.decorative.TileEntityDecorativeBase;
@@ -27,10 +36,31 @@ import pixelmon.client.gui.*;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.inventoryExtended.InventoryDetectionTickHandler;
 import pixelmon.client.gui.pc.GuiPC;
-import pixelmon.client.gui.pokechecker.*;
+import pixelmon.client.gui.pokechecker.GuiScreenPokeChecker;
+import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerMoves;
+import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerStats;
 import pixelmon.client.gui.pokedex.GuiPokedex;
-import pixelmon.client.keybindings.*;
+import pixelmon.client.gui.starter.GuiChooseStarter;
+import pixelmon.client.keybindings.MinimizeMaximizeOverlayKey;
+import pixelmon.client.keybindings.MovementHandler;
+import pixelmon.client.keybindings.NextPokemonKey;
+import pixelmon.client.keybindings.PreviousPokemonKey;
+import pixelmon.client.keybindings.RidingBindings;
+import pixelmon.client.keybindings.SendPokemonKey;
 import pixelmon.client.models.fossils.ModelFossil;
+import pixelmon.client.render.RenderHook;
+import pixelmon.client.render.RenderPixelmon;
+import pixelmon.client.render.RenderPokeball;
+import pixelmon.client.render.RenderTrainer;
+import pixelmon.client.render.tileEntities.RenderTileEntityShrine;
+import pixelmon.client.render.tileEntities.RenderTileEntityAnvil;
+import pixelmon.client.render.tileEntities.RenderTileEntityApricornTrees;
+import pixelmon.client.render.tileEntities.RenderTileEntityEvolutionRock;
+import pixelmon.client.render.tileEntities.RenderTileEntityHealer;
+import pixelmon.client.render.tileEntities.RenderTileEntityPC;
+import pixelmon.client.render.tileEntities.RenderTileEntityTradingMachine;
+import pixelmon.client.render.tileEntities.RenderTileFossilCleaner;
+import pixelmon.client.render.tileEntities.RenderTileFossilMachine;
 
 import pixelmon.client.render.RenderPixelmon;
 import pixelmon.client.render.RenderPokeball;
@@ -47,15 +77,16 @@ import pixelmon.client.render.*;
 import pixelmon.client.render.tileEntities.*;
 import pixelmon.client.shading.Cubemap;
 import pixelmon.config.PixelmonConfig;
-import pixelmon.entities.npcs.EntityDoctor;
+import pixelmon.config.PixelmonItems;
 import pixelmon.entities.npcs.EntityTrainer;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
-import pixelmon.entities.projectiles.*;
+import pixelmon.entities.projectiles.EntityHook;
 import pixelmon.enums.EnumCustomModel;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPixelmonParticles;
+import pixelmon.items.ItemRendererExperience;
 import pixelmon.sounds.Sounds;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
@@ -69,6 +100,7 @@ public class ClientProxy extends CommonProxy {
 		EnumCustomModel.preloadModels();
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityPokeBall.class, new RenderPokeball());
+		RenderingRegistry.registerEntityRenderingHandler(EntityHook.class, new RenderHook());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHealer.class, new RenderTileEntityHealer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPC.class, new RenderTileEntityPC());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityApricornTree.class, new RenderTileEntityApricornTrees());
@@ -77,11 +109,11 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFossilCleaner.class, new RenderTileFossilCleaner());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShrine.class, new RenderTileEntityShrine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDecorativeBase.class, new RenderTileEntityDecorativeBase());
-
-		RenderingRegistry.registerEntityRenderingHandler(EntityOldHook.class, new RenderOldHook());
-		RenderingRegistry.registerEntityRenderingHandler(EntityGoodHook.class, new RenderGoodHook());
-		RenderingRegistry.registerEntityRenderingHandler(EntitySuperHook.class, new RenderSuperHook());		
+		//MinecraftForgeClient.registerItemRenderer(PixelmonItems.unoOrb.itemID, new ItemRendererExperience());
+		//MinecraftForgeClient.registerItemRenderer(PixelmonItems.dosOrb.itemID, new ItemRendererExperience());
+		//MinecraftForgeClient.registerItemRenderer(PixelmonItems.tresOrb.itemID, new ItemRendererExperience());
 		addPokemonRenderers();
 		MinecraftForge.EVENT_BUS.register(new GuiPixelmonOverlay());
 		RenderingRegistry.registerBlockHandler(BlockContainerPlus.renderingID, RenderTileEntityDecorativeBase.INSTANCE);
@@ -92,7 +124,7 @@ public class ClientProxy extends CommonProxy {
 	public World GetClientWorld() {
 		return Minecraft.getMinecraft().theWorld;
 	}
-	
+
 	@Override
 	public void registerKeyBindings() {
 		MinecraftForge.EVENT_BUS.register(this);
@@ -101,13 +133,17 @@ public class ClientProxy extends CommonProxy {
 		KeyBindingRegistry.registerKeyBinding(new NextPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new PreviousPokemonKey());
 		KeyBindingRegistry.registerKeyBinding(new MinimizeMaximizeOverlayKey());
+		KeyBindingRegistry.registerKeyBinding(new RidingBindings());
 		TickRegistry.registerTickHandler(new MovementHandler(), Side.CLIENT);
 	}
 
 	private void addPokemonRenderers() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrainer.class, new RenderTrainer(0.5f));
+		System.out.println("Binding Renderer");
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixelmon.class, new RenderPixelmon(0.5f));
-		RenderingRegistry.registerEntityRenderingHandler(EntityDoctor.class, new RenderDoctor(0.5f));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCamera.class, new RenderInvisible());
+		// RenderingRegistry.registerEntityRenderingHandler(EntityDoctor.class,
+		// new RenderDoctor(0.5f));
 	}
 
 	public static ArrayList<String> modelPaths = new ArrayList<String>();
@@ -142,6 +178,26 @@ public class ClientProxy extends CommonProxy {
 		if (model == null)
 			if (PixelmonConfig.printErrors)
 				System.out.println("Can't find model for " + name);
+		return model;
+	}
+
+	@Override
+	public ModelBase loadFlyingModel(String name) {
+		ModelBase model = null;
+		for (String path : modelPaths) {
+			try {
+				Class<?> var3 = (Class<?>) Class.forName(path + ".flying" + ".Model" + name);
+				try {
+					if (var3 != null) {
+						model = (ModelBase) var3.getConstructor(new Class[] {}).newInstance(new Object[] {});
+						break;
+					}
+				} catch (Exception e) {
+				}
+			} catch (Exception e) {
+			}
+		}
+
 		return model;
 	}
 
@@ -212,8 +268,12 @@ public class ClientProxy extends CommonProxy {
 			return new GuiTrading(x);
 		else if (ID == EnumGui.Doctor.getIndex())
 			return new GuiDoctor();
-
-
+		else if (ID == EnumGui.AcceptDeny.getIndex())
+			return new GuiAcceptDeny(x);
+		else if (ID == EnumGui.Evolution.getIndex())
+			return new GuiEvolve(x);
+		else if (ID == EnumGui.ItemDrops.getIndex())
+			return new GuiItemDrops();
 		return null;
 	}
 
@@ -252,9 +312,15 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public Object[] models = new Object[650];
+	public Object[] flyingModels = new Object[650];
 
 	@Override
 	public Object[] getModels() {
 		return models;
+	}
+
+	@Override
+	public Object[] getFlyingModels() {
+		return flyingModels;
 	}
 }

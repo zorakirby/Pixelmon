@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
@@ -93,5 +94,19 @@ public class ComplexScattered extends StructureScattered{
 	protected void fixAllLighting(World world){
 		for(StructureBoundingBox bb : components.keySet())
 			fixLighting(world, bb);
+	}
+
+
+	@Override
+	protected void func_143012_a(NBTTagCompound nbttagcompound) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected void func_143011_b(NBTTagCompound nbttagcompound) {
+		// TODO Auto-generated method stub
+		
 	}
 }

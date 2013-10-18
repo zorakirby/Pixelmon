@@ -6,6 +6,7 @@ import java.io.IOException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import pixelmon.comm.EnumPackets;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.comm.packetHandlers.PC.PCData;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.storage.PixelmonStorage;
@@ -29,10 +30,10 @@ public class StopStartLevelling extends PacketHandlerBase {
 				PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
 				EntityPixelmon pixelmon = storage.getAlreadyExists(id, player.worldObj);
 				pixelmon.doesLevel = !pixelmon.doesLevel;
-				storage.updateNBT(pixelmon);
-				PixelmonStorage.PokeballManager.savePlayer(storage);
+				storage.update(pixelmon, EnumUpdateType.CanLevel);
 			} else if (PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(id) != null) {
-				NBTTagCompound nbt = PixelmonStorage.PokeballManager.getPlayerStorage(player).getNBT(id);
+				PlayerStorage storage = PixelmonStorage.PokeballManager.getPlayerStorage(player);
+				NBTTagCompound nbt = storage.getNBT(id);
 				if (nbt != null) {
 					if (nbt.hasKey("DoesLevel")) {
 						if (nbt.getBoolean("DoesLevel"))
@@ -42,7 +43,7 @@ public class StopStartLevelling extends PacketHandlerBase {
 					} else
 						nbt.setBoolean("DoesLevel", true);
 				}
-				PixelmonStorage.PokeballManager.savePlayer(PixelmonStorage.PokeballManager.getPlayerStorage(player));
+				storage.update(nbt, EnumUpdateType.CanLevel);
 			} else if (PixelmonStorage.ComputerManager.getPlayerStorage(player).contains(id)) {
 				PlayerComputerStorage comp = PixelmonStorage.ComputerManager.getPlayerStorage(player);
 				if (!comp.contains(id))

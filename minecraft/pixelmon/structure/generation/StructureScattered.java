@@ -73,7 +73,6 @@ public abstract class StructureScattered extends StructureComponent {
 			return false;
 
 		boundingBox.offset(0, (minHeight - structureData.depth) - boundingBox.minY + 1, 0);
-		System.out.println("Structure level = " + minHeight);
 		return true;
 	}
 

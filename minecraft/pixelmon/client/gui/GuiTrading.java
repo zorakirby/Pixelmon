@@ -7,24 +7,22 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.ResourceLocation;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-
-import pixelmon.blocks.TileEntityTradeMachine;
-import pixelmon.blocks.TradingRegistry;
+import pixelmon.Pixelmon;
+import pixelmon.client.PixelmonServerStore;
 import pixelmon.client.ServerStorageDisplay;
+import pixelmon.client.gui.battles.ClientBattleManager;
+import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiTrading extends GuiContainer {
 
@@ -81,7 +79,7 @@ public class GuiTrading extends GuiContainer {
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 
-		mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+		mc.renderEngine.bindTexture(GuiResources.tradeGui);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect((width - 256) / 2, (height - 206) / 2, 0, 0, 256, 204);
 
@@ -102,12 +100,12 @@ public class GuiTrading extends GuiContainer {
 					numString = "" + p.getNationalPokedexNumber();
 
 				if (p.isShiny)
-					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
+					Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.shinySprite(numString));
 				else
-					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
+					Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.sprite(numString));
 				drawImageQuad(width / 2 - 93 + 25 * i, height / 2 + 68, 24f, 24f, 0f, 0f, 1f, 1f);
 				if (p.heldItemId != -1) {
-					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
+					Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.heldItem);
 					drawImageQuad(width / 2 - 97 + 25 * i + 18, height / 2 + 68 + 18, 6, 6, 0f, 0f, 1f, 1f);
 				}
 			}
@@ -119,7 +117,7 @@ public class GuiTrading extends GuiContainer {
 			drawEntity(Minecraft.getMinecraft().thePlayer, (width - 210) / 2, (height - 82) / 2, 20, 0, 0);
 		else {
 			GL11.glPushMatrix();
-			mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+			mc.renderEngine.bindTexture(GuiResources.tradeGui);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			GL11.glScalef(1.5f, 1.5f, 0f);
 			drawTexturedModalRect((width - 75), (height - 265), 227, 242, 10, 14);
@@ -131,7 +129,7 @@ public class GuiTrading extends GuiContainer {
 			GL11.glPushMatrix();
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			GL11.glScalef(1.5f, 1.5f, 0f);
-			mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+			mc.renderEngine.bindTexture(GuiResources.tradeGui);
 			drawTexturedModalRect(width / 3 + 15, height / 3 - 46, 227, 242, 10, 14);
 			GL11.glPopMatrix();
 		}
@@ -191,12 +189,12 @@ public class GuiTrading extends GuiContainer {
 			else
 				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
-				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
+				Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.shinySprite(numString));
 			else
-				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
+				Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.sprite(numString));
 			drawImageQuad(width / 2 - 117, height / 2 - 33, 24f, 24f, 0f, 0f, 1f, 1f);
 			if (p.heldItemId != -1) {
-				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
+				Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.heldItem);
 				drawImageQuad(width / 2 - 117 + 18, height / 2 - 33 + 18, 6, 6, 0f, 0f, 1f, 1f);
 			}
 			GL11.glPushMatrix();
@@ -208,7 +206,7 @@ public class GuiTrading extends GuiContainer {
 			GL11.glPushMatrix();
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			GL11.glScalef(1.5f, 1.5f, 0f);
-			mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+			mc.renderEngine.bindTexture(GuiResources.tradeGui);
 			drawTexturedModalRect(width / 3 - 75, height / 3 - 20, 227, 242, 10, 14);
 			GL11.glPopMatrix();
 		}
@@ -227,12 +225,12 @@ public class GuiTrading extends GuiContainer {
 			else
 				numString = "" + p.getNationalPokedexNumber();
 			if (p.isShiny)
-				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.shinySprite(numString));
+				Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.shinySprite(numString));
 			else
-				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.sprite(numString));
+				Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.sprite(numString));
 			drawImageQuad(width / 2 + 18, height / 2 - 33, 24f, 24f, 0f, 0f, 1f, 1f);
 			if (p.heldItemId != -1) {
-				Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
+				Minecraft.getMinecraft().renderEngine.bindTexture(GuiResources.heldItem);
 				drawImageQuad(width / 2 + 18 + 18, height / 2 - 33 + 18, 6, 6, 0f, 0f, 1f, 1f);
 			}
 			GL11.glPushMatrix();
@@ -244,7 +242,7 @@ public class GuiTrading extends GuiContainer {
 			GL11.glPushMatrix();
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			GL11.glScalef(1.5f, 1.5f, 0f);
-			mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+			mc.renderEngine.bindTexture(GuiResources.tradeGui);
 			drawTexturedModalRect(width / 3 + 15, height / 3 - 20, 227, 242, 10, 14);
 			GL11.glPopMatrix();
 		}
@@ -272,7 +270,7 @@ public class GuiTrading extends GuiContainer {
 		GL11.glPopMatrix();
 
 		GL11.glPushMatrix();
-		mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+		mc.renderEngine.bindTexture(GuiResources.tradeGui);
 		if (ClientTradingManager.tradePartner != null && !ClientTradingManager.player2Ready) {
 			GL11.glColor3f(1f, 0f, 0f);
 			drawTexturedModalRect((width + 45) / 2, (height + 85) / 2, 61, 242, 90, 14);
@@ -296,7 +294,7 @@ public class GuiTrading extends GuiContainer {
 		if (selected != -1) {
 			GL11.glPushMatrix();
 			GL11.glColor3f(0f, 1.0f, 0f);
-			mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+			mc.renderEngine.bindTexture(GuiResources.tradeGui);
 			drawTexturedModalRect((width - 190 + selected * 50) / 2, (height + 140) / 2, 1, 206, 26, 24);
 			GL11.glPopMatrix();
 		}
@@ -313,7 +311,7 @@ public class GuiTrading extends GuiContainer {
 
 	public int drawPokemonSelection(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+		mc.renderEngine.bindTexture(GuiResources.tradeGui);
 		if (par1 >= (width - 190) / 2 && par1 <= (width - 140) / 2 && par2 >= (height + 140) / 2 && par2 <= (height + 190) / 2 && p[0] != null) {
 			drawTexturedModalRect((width - 190) / 2, (height + 140) / 2, 1, 206, 26, 24);
 			return 0;
@@ -344,7 +342,7 @@ public class GuiTrading extends GuiContainer {
 
 	public boolean drawButtonTrade(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+		mc.renderEngine.bindTexture(GuiResources.tradeGui);
 
 		if (par1 >= (width - 72) / 2 && par1 <= (width + 70) / 2 && par2 >= (height + 26) / 2 && par2 <= (height + 62) / 2) {
 			drawTexturedModalRect((width - 72) / 2, (height + 26) / 2, 28, 205, 72, 19);
@@ -357,7 +355,7 @@ public class GuiTrading extends GuiContainer {
 
 	public boolean drawButtonClose(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+		mc.renderEngine.bindTexture(GuiResources.tradeGui);
 
 		if (par1 >= (width + 213) / 2 && par1 <= (width + 248) / 2 && par2 <= (height + 199) / 2 && par2 >= (height + 170) / 2) {// Highlight
 			drawTexturedModalRect((width + 214) / 2, (height + 170) / 2, 67, 225, 17, 15);
@@ -369,7 +367,7 @@ public class GuiTrading extends GuiContainer {
 
 	public boolean drawButtonReady(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.func_110577_a(GuiResources.tradeGui);
+		mc.renderEngine.bindTexture(GuiResources.tradeGui);
 		if (par1 >= (width + 123) / 2 && par1 <= (width + 197) / 2 && par2 <= (height + 179) / 2 && par2 >= (height + 148) / 2) {// Highlight
 			drawTexturedModalRect((width + 122) / 2, (height + 148) / 2, 28, 225, 38, 16);
 			drawString(fontRenderer, "Ready", (width + 130) / 2, (height + 157) / 2, 16777120);
@@ -402,6 +400,11 @@ public class GuiTrading extends GuiContainer {
 		if (drawButtonClose(par1, par2)) {
 			this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
 			mc.thePlayer.closeScreen();
+			if (GuiBattle.evolveList.size() > 0) {
+				int pokemonID = GuiBattle.evolveList.get(0);
+				GuiBattle.evolveList.remove(0);
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID, 0, 0);
+			}
 		}
 	}
 

@@ -8,12 +8,10 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import net.minecraft.util.StatCollector;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -29,11 +27,9 @@ import pixelmon.client.gui.pokechecker.GuiScreenPokeCheckerMoves;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
-import pixelmon.config.PixelmonItems;
 import pixelmon.config.PixelmonItemsHeld;
 import pixelmon.enums.EnumGui;
 import pixelmon.items.ItemHeld;
-import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class GuiInventoryPixelmonExtended extends GuiInventory {
@@ -60,8 +56,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 	@Override
 	public void initGui() {
 		super.initGui();
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
 		int width = var5.getScaledWidth();
 		int height = var5.getScaledHeight();
 		for (int i = 0; i < pixelmonSlots.length; i++) {
@@ -91,22 +86,21 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 
 	public void drawButtonContainer() {
 		if (pixelmonMenuOpen) {
-			mc.renderEngine.func_110577_a(GuiResources.pokecheckerPopup);
+			mc.renderEngine.bindTexture(GuiResources.pokecheckerPopup);
 			this.drawTexturedModalRect(menuX - 73, menuY - 10, 0, 0, 67, 76);
 		}
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
-		this.mc.renderEngine.func_110577_a(GuiResources.mcInventory);
+		this.mc.renderEngine.bindTexture(GuiResources.mcInventory);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		this.mc.renderEngine.func_110577_a(GuiResources.pixelmonOverlayExtended2);
+		this.mc.renderEngine.bindTexture(GuiResources.pixelmonOverlayExtended2);
 		this.drawTexturedModalRect(width / 2 - 130, height / 2 - 83, 0, 0, 46, 167);
 
-		ScaledResolution var5 = new ScaledResolution(Minecraft.getMinecraft().gameSettings, Minecraft.getMinecraft().displayWidth,
-				Minecraft.getMinecraft().displayHeight);
+		ScaledResolution var5 = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
 		int var6 = var5.getScaledWidth();
 		int var7 = var5.getScaledHeight();
 		int textureIndex;
@@ -114,11 +108,13 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDisable(GL11.GL_FOG);
 		Tessellator var2 = Tessellator.instance;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		Minecraft.getMinecraft().entityRenderer.setupOverlayRendering();
+		mc.entityRenderer.setupOverlayRendering();
 
 		fontRenderer.setUnicodeFlag(true);
 
 		for (SlotInventoryPixelmon slot : pixelmonSlots) {
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
 			if (slot == null) {
 				continue;
 			}
@@ -134,20 +130,20 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 					numString = "" + p.getNationalPokedexNumber();
 
 				if (p.isShiny)
-					mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
+					mc.renderEngine.bindTexture(GuiResources.shinySprite(numString));
 				else
-					mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
+					mc.renderEngine.bindTexture(GuiResources.sprite(numString));
+				GL11.glDisable(GL11.GL_LIGHTING);
 				drawImageQuad(slot.x, slot.y, 16f, 16f, 0f, 0f, 1f, 1f);
 
 				if (p.heldItemId != -1) {
 					ItemHeld heldItem = (ItemHeld) PixelmonItemsHeld.getHeldItem(p.heldItemId);
 					if (heldItem != null) {
-						Icon icon = heldItem.getIconIndex(new ItemStack(heldItem));
-						mc.renderEngine.func_110577_a(GuiResources.mcItems);
-						drawIcon(slot.heldItemX, slot.heldItemY, icon, 16, 16);
+			            itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(heldItem), slot.heldItemX, slot.heldItemY);
+			            itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.getTextureManager(), new ItemStack(heldItem), slot.heldItemX, slot.heldItemY, null);
 					}
 				} else {
-					Minecraft.getMinecraft().renderEngine.func_110577_a(GuiResources.heldItem);
+					mc.renderEngine.bindTexture(GuiResources.heldItem);
 					drawImageQuad(slot.heldItemX + 3, slot.heldItemY + 3, 10f, 10f, 0f, 0f, 1f, 1f);
 				}
 			}
@@ -163,7 +159,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 						drawPokemonInfo(mouseX, mouseY, s);
 					}
 					if (s.getHeldItemBounds().contains(mouseX, mouseY) && heldItemQualifies(s)) {
-						this.mc.renderEngine.func_110577_a(GuiResources.pixelmonOverlayExtended2);
+						this.mc.renderEngine.bindTexture(GuiResources.pixelmonOverlayExtended2);
 						drawImageQuad(s.heldItemX - 2, s.heldItemY - 2, 20, 20, 58f / 256f, 185f / 256f, 78f / 256f, 205f / 256f);
 					}
 				}
@@ -177,8 +173,9 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-
-		//drawPlayerOnGui(this.mc, guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - this.xSize_lo, (float) (guiTop + 75 - 50) - this.ySize_lo);
+		
+		//Draws Player in Inventory
+		func_110423_a(guiLeft + 51, guiTop + 75, 30, (float)(guiLeft + 51) - this.xSize_lo, (float)(guiTop + 75 - 50) - this.ySize_lo, this.mc.thePlayer);
 	}
 
 	public void drawIcon(int x, int y, Icon par3Icon, int width, int height) {
@@ -215,7 +212,7 @@ public class GuiInventoryPixelmonExtended extends GuiInventory {
 		if (!p.nickname.equals(""))
 			displayName = p.nickname;
 		fontRenderer.drawString(displayName, s.x - 82, s.y, 0xFFFFFF);
-		mc.renderEngine.func_110577_a(GuiResources.pixelmonOverlay);
+		mc.renderEngine.bindTexture(GuiResources.pixelmonOverlay);
 		if (p.isMale)
 			this.drawTexturedModalRect(fontRenderer.getStringWidth(displayName) + s.x - 81, s.y, 33, 208, 5, 9);
 		else

@@ -1,7 +1,5 @@
 package pixelmon.battles.status;
 
-import java.util.ArrayList;
-
 import pixelmon.battles.attacks.Attack;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 
@@ -17,17 +15,21 @@ public class UnderGround extends StatusBase {
 
 	@Override
 	public boolean stopsIncomingAttack(EntityPixelmon user, EntityPixelmon target, Attack a) {
-		System.out.println("Runs shit");
-		if(a.baseAttack.attackName != "Earthquake" && a.baseAttack.attackName != "Magnitude" 
-				&& a.baseAttack.attackName != "Fissure")
+		if (a.baseAttack.attackName == "Earthquake" || a.baseAttack.attackName == "Magnitude")
+		{
+			a.movePower *=2;
+			return false;
+		}
+		if (a.baseAttack.attackName == "Fissure")
+		{
+			a.cantMiss(user);
+			return false;
+		}
 		return true;
-		
-		//target.battleController.participants.get(target.battleController.).attack.baseAttack.basePower *=2;
-		return false;
 	}
 
 	@Override
-	public boolean stopsStatusChange() {
+	public boolean stopsStatusChange(Attack a) {
 		return true;
 	}
 }

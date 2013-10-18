@@ -1,9 +1,13 @@
 package pixelmon.enums;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import pixelmon.battles.attacks.Effectiveness;
+import pixelmon.database.DatabaseHelper;
 
 public enum EnumType {
 	Normal(0, "Normal", 0xDDDDDD, 2, 6), Fire(1, "Fire", 0xFF8800, 2, 30), Water(2, "Water", 0x5765FF, 2, 54), Electric(3, "Electric", 0xF5F24C, 2, 78), Grass(
@@ -32,6 +36,20 @@ public enum EnumType {
 
 	public String getName() {
 		return name;
+	}
+
+	public static EnumType parseTypeFromDBID(int id) {
+		Connection con = DatabaseHelper.getConnection();
+		try {
+			Statement stat = con.createStatement();
+			ResultSet rs = stat.executeQuery("select * from TYPES where TYPEID=" + id);
+			while (rs.next()) {
+				return EnumType.parseType(rs.getString("NAME"));
+			}
+		} catch (Exception e) {
+
+		}
+		return EnumType.Mystery;
 	}
 
 	public static EnumType parseType(int i) {
@@ -296,7 +314,7 @@ public enum EnumType {
 				e = Effectiveness.Super.value;
 			}
 			if (t1 == Steel) {
-				e = Effectiveness.Not.value;
+				e = Effectiveness.Super.value;
 			}
 
 		}

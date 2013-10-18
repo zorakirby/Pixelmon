@@ -3,7 +3,7 @@ package pixelmon.client.gui.pc;
 import java.awt.Rectangle;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import pixelmon.comm.PixelmonDataPacket;
 
 public class SlotPC {
@@ -28,7 +28,7 @@ public class SlotPC {
 			pokeNum = "0" + pokemonData.getNationalPokedexNumber();
 		else
 			pokeNum = "" + pokemonData.getNationalPokedexNumber();
-		Minecraft.getMinecraft().renderEngine.func_110577_a(new ResourceLocation("/pixelmon/sprites/" + pokeNum));
+		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("/pixelmon/sprites/" + pokeNum));
 	}
 
 	public void clearPokemon() {

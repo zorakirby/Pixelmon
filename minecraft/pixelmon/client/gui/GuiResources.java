@@ -1,15 +1,13 @@
 package pixelmon.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 
 public class GuiResources {
 	public static ResourceLocation tradeGui = new ResourceLocation("pixelmon:gui/tradeGui.png");
 	public static ResourceLocation heldItem = new ResourceLocation("pixelmon:helditem.png");
 	public static ResourceLocation overlaySimple = new ResourceLocation("pixelmon:gui/pixelmonOverlaySimple.png");
 	public static ResourceLocation overlayExtended = new ResourceLocation("pixelmon:gui/pixelmonOverlay.png");
-	
+
 	public static ResourceLocation pokemonInfoP1 = new ResourceLocation("pixelmon:gui/pokemonInfoP1.png");
 	public static ResourceLocation pokemonInfoP2 = new ResourceLocation("pixelmon:gui/pokemonInforP2.png");
 	public static ResourceLocation levelUpPopup = new ResourceLocation("pixelmon:gui/levelUpPopUp.png");
@@ -27,9 +25,9 @@ public class GuiResources {
 	public static ResourceLocation pixelmonCreativeInventory = new ResourceLocation("pixelmon:gui/PixelmonCreativeInventory.png");
 	public static ResourceLocation pixelmonOverlay = new ResourceLocation("pixelmon:gui/pixelmonOverlay.png");
 	public static ResourceLocation pixelmonOverlayExtended2 = new ResourceLocation("pixelmon:gui/pixelmonOverlayExtended2.png");
-	public static ResourceLocation mcInventory = new ResourceLocation("gui/inventory.png");
+	public static ResourceLocation mcInventory = new ResourceLocation("minecraft:textures/gui/container/inventory.png");
 	public static ResourceLocation mcItems = new ResourceLocation("gui/items.png");
-	
+
 	public static ResourceLocation pcPartyBox = new ResourceLocation("pixelmon:gui/pcPartyBox.png");
 	public static ResourceLocation pcBox = new ResourceLocation("pixelmon:gui/pcBox.png");
 	public static ResourceLocation pokechecker = new ResourceLocation("pixelmon:pokechecker.png");
@@ -40,10 +38,11 @@ public class GuiResources {
 	public static ResourceLocation summaryStats = new ResourceLocation("pixelmon:gui/summaryStats.png");
 
 	public static ResourceLocation pokedex = new ResourceLocation("pixelmon:gui/pokedex.png");
-	
+
 	public static ResourceLocation items = new ResourceLocation("pixelmon:gui/items.png");
 	public static ResourceLocation types = new ResourceLocation("pixelmon:gui/types.png");
-	
+	public static ResourceLocation shiny = new ResourceLocation("pixelmon:sprites/shinypokemon/star.png");
+
 	public static ResourceLocation shinySprite(String numString) {
 		return new ResourceLocation("pixelmon:sprites/shinypokemon/" + numString + ".png");
 	}
@@ -51,4 +50,8 @@ public class GuiResources {
 	public static ResourceLocation sprite(String numString) {
 		return new ResourceLocation("pixelmon:sprites/pokemon/" + numString + ".png");
 	}
+
+	public static ResourceLocation starterBackground = new ResourceLocation("pixelmon:gui/starter/Background.jpg");
+	public static ResourceLocation starterBorders = new ResourceLocation("pixelmon:gui/starter/borders.png");
+	public static ResourceLocation cwPanel = new ResourceLocation("pixelmon:gui/starter/cwpanel.png");
 }

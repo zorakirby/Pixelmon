@@ -2,9 +2,14 @@ package pixelmon.entities.pixelmon;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import pixelmon.RandomHelper;
 import pixelmon.battles.participants.BattleParticipant;
+import pixelmon.battles.status.StatusBase;
+import pixelmon.battles.status.StatusType;
+import pixelmon.battles.status.Substitute;
+import pixelmon.database.SpawnLocation;
 import pixelmon.entities.pixelmon.helpers.AIHelper;
 
 public abstract class Entity7HasAI extends Entity6CanBattle {
@@ -83,6 +88,13 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 			aggressionTimer--;
 	}
 
+	@Override
+	public void moveEntityWithHeading(float par1, float par2) {
+		super.moveEntityWithHeading(par1, par2);
+		if (((EntityPixelmon) this).pokemonLocation == SpawnLocation.AirPersistent)
+			motionY = 0;
+	}
+
 	public void setIdleSpot(ChunkCoordinates coords) {
 		idleSpot = coords;
 	}
@@ -131,5 +143,19 @@ public abstract class Entity7HasAI extends Entity6CanBattle {
 		if (aggression == Aggression.aggressive) {
 			aggressionTimer = RandomHelper.getRandomNumberBetween(500, 2000);
 		}
+	}
+	
+	public void doBattleDamage(EntityPixelmon source, float damage)
+	{
+		if (((EntityPixelmon)this).hasStatus(StatusType.Substitute))
+			if(source != (EntityPixelmon)this)
+			for (StatusBase e : ((EntityPixelmon)this).status)
+				if (e instanceof Substitute)
+				{
+					((Substitute)e).attackSubstitute(damage, source);
+					return;
+				}
+
+		this.attackEntityFrom(DamageSource.causeMobDamage(source), damage);
 	}
 }

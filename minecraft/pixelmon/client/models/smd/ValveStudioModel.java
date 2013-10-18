@@ -152,6 +152,22 @@ public class ValveStudioModel implements IModelCustom{
 		if(ValveStudioModel.debugModel)
 		System.out.println(o);
 	}
+
+
+
+	@Override
+	public void renderOnly(String... groupNames) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void renderAllExcept(String... excludedGroupNames) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 

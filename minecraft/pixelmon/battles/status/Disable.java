@@ -21,8 +21,8 @@ public class Disable extends StatusBase {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + "'s " + 
 			disabledMove.baseAttack.attackName + " is no longer disabled!");
 			for(int i = 0; i < 4; i++){
-				if (target.moveset.get(i) == disabledMove){
-					target.moveset.get(i).setDisabled(false, target);
+				if (target.getMoveset().get(i) == disabledMove){
+					target.getMoveset().get(i).setDisabled(false, target);
 				}
 			}						
 			

@@ -12,17 +12,26 @@ import pixelmon.Pixelmon;
 import pixelmon.battles.participants.ParticipantType;
 import pixelmon.battles.status.Transformed;
 import pixelmon.client.gui.ClientTradingManager;
+import pixelmon.client.gui.GuiEvolve;
+import pixelmon.client.gui.GuiItemDrops;
+import pixelmon.client.gui.GuiPixelmonOverlay;
+import pixelmon.client.gui.GuiTrading;
 import pixelmon.client.gui.battles.ClientBattleManager;
+import pixelmon.client.gui.battles.GuiAcceptDeny;
 import pixelmon.client.gui.battles.ClientBattleManager.AttackData;
 import pixelmon.client.gui.battles.GuiBattle;
 import pixelmon.client.gui.battles.GuiBattle.BattleMode;
 import pixelmon.client.gui.pokedex.ClientPokedexManager;
+import pixelmon.comm.BattleQueryPacket;
+import pixelmon.comm.BossDropPacket;
 import pixelmon.comm.EnumPackets;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.comm.PixelmonLevelUpPacket;
 import pixelmon.comm.PixelmonPokedexPacket;
 import pixelmon.comm.PixelmonStatsPacket;
 import pixelmon.comm.PixelmonTransformPacket;
+import pixelmon.comm.PixelmonUpdatePacket;
+import pixelmon.comm.StarterListPacket;
 import pixelmon.database.DatabaseMoves;
 import pixelmon.enums.EnumGui;
 import cpw.mods.fml.common.network.IPacketHandler;
@@ -42,6 +51,14 @@ public class ClientPacketHandler implements IPacketHandler {
 				ServerStorageDisplay.remove(dataStream.readInt());
 			} else if (packetID == EnumPackets.UpdateStorage.getIndex()) {
 				ServerStorageDisplay.update(dataStream);
+			} else if (packetID == EnumPackets.UpdatePokemon.getIndex()) {
+				PixelmonUpdatePacket p = new PixelmonUpdatePacket();
+				try {
+					p.readPacketData(dataStream);
+					ServerStorageDisplay.update(p);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			} else if (packetID == EnumPackets.AddToTempStore.getIndex()) {
 				PixelmonServerStore.addToList(dataStream);
 			} else if (packetID == EnumPackets.RemoveFromTempStore.getIndex()) {
@@ -81,7 +98,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				int newAttackId = dataStream.readInt();
 				int level = dataStream.readInt();
 				ClientBattleManager.newAttackList.add(new AttackData(pokemonID, DatabaseMoves.getAttack(newAttackId), level));
-				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle))
+				if (!(Minecraft.getMinecraft().currentScreen instanceof GuiBattle) && !(Minecraft.getMinecraft().currentScreen instanceof GuiEvolve))
 					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.LearnMove.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
 			} else if (packetID == EnumPackets.LevelUp.getIndex()) {
 				PixelmonLevelUpPacket p = new PixelmonLevelUpPacket();
@@ -135,10 +152,61 @@ public class ClientPacketHandler implements IPacketHandler {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			} else if (packetID == EnumPackets.SwitchCamera.getIndex()) {
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+				// Minecraft.getMinecraft().renderViewEntity =
+				// Minecraft.getMinecraft().thePlayer;
+			} else if (packetID == EnumPackets.PlayerDeath.getIndex()) {
+				GuiPixelmonOverlay.isVisible = true;
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+				Minecraft.getMinecraft().gameSettings.hideGUI = false;
+				Minecraft.getMinecraft().renderViewEntity = Minecraft.getMinecraft().thePlayer;
+				Minecraft.getMinecraft().currentScreen = null;
+			} else if (packetID == EnumPackets.BattleQuery.getIndex()) {
+				BattleQueryPacket p = new BattleQueryPacket();
+				try {
+					p.readPacketData(dataStream);
+					GuiAcceptDeny.opponent = p;
+					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.AcceptDeny.getIndex(), Minecraft.getMinecraft().theWorld,
+							p.queryIndex, 0, 0);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else if (packetID == EnumPackets.BossDrop.getIndex()) {
+				try {
+					BossDropPacket p = new BossDropPacket();
+					p.readPacketData(dataStream);
+					PixelmonServerStore.bossDrops = p;
+					if (GuiBattle.battleEnded)
+						Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ItemDrops.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else if (packetID == EnumPackets.StarterList.getIndex()) {
+				StarterListPacket p = new StarterListPacket();
+				try {
+					p.readPacketData(dataStream);
+					PixelmonServerStore.starterListPacket = p;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.ChooseStarter.getIndex(), Minecraft.getMinecraft().theWorld, 0, 0, 0);
+			} else if (packetID == EnumPackets.Evolution.getIndex()) {
+				int pokemonID = dataStream.readInt();
+				String newPokemonName = Packet.readString(dataStream, 64);
+				PixelmonServerStore.evolutionTarget = newPokemonName;
+				if (GuiBattle.battleEnded && !(Minecraft.getMinecraft().currentScreen instanceof GuiTrading)
+						&& !(Minecraft.getMinecraft().currentScreen instanceof GuiItemDrops))
+					Minecraft.getMinecraft().thePlayer.openGui(Pixelmon.instance, EnumGui.Evolution.getIndex(), Minecraft.getMinecraft().theWorld, pokemonID,
+							0, 0);
+				else {
+					if (!GuiBattle.evolveList.contains(pokemonID))
+						GuiBattle.evolveList.add(pokemonID);
+				}
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

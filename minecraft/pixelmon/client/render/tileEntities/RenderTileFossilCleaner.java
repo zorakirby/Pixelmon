@@ -4,16 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
 import pixelmon.blocks.TileEntityFossilCleaner;
-import pixelmon.blocks.TileEntityFossilMachine;
 import pixelmon.client.models.ModelFossilCleaner;
 import pixelmon.client.render.RenderResources;
 import pixelmon.config.PixelmonBlocks;
@@ -58,8 +56,8 @@ public class RenderTileFossilCleaner extends TileEntitySpecialRenderer {
 		GL11.glRotatef(j, 0.0F, 1.0F, 0.0F); // rotate based on metadata
 		GL11.glScalef(1.0F, -1F, -1F);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
-		func_110628_a(RenderResources.fossilCleaningMachine);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		bindTexture(RenderResources.fossilCleaningMachine);
 		if (tileEntity.isOn())
 			model.rotateModel(tileEntity);
 		else
@@ -67,7 +65,7 @@ public class RenderTileFossilCleaner extends TileEntitySpecialRenderer {
 		model.renderModel(tileEntity, 0.0625F);
 		GL11.glTranslatef(0, -1.3F, 0);
 		renderModel(tileEntity, 0.0625f);
-		func_110628_a(RenderResources.fossilCleaningMachine);
+		bindTexture(RenderResources.fossilCleaningMachine);
 		GL11.glPopMatrix(); // end
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_BLEND);
@@ -92,7 +90,7 @@ public class RenderTileFossilCleaner extends TileEntitySpecialRenderer {
 	public void renderModel(TileEntityFossilCleaner tile, float f) {
 		if (tile.itemInCleaner != -1)
 			if (PixelmonItemsFossils.getFossilFromIndex(tile.itemInCleaner) != null) {
-				func_110628_a(new ResourceLocation("/pixelmon/texture/fossils/" + fossilTexture(tile) + ".png"));
+				bindTexture(new ResourceLocation("pixelmon:textures/fossils/" + fossilTexture(tile) + ".png"));
 				GL11.glTranslatef(0, 2.23F, 0);
 				if (PixelmonItemsFossils.getFossilFromIndex(tile.itemInCleaner).getModel() != null)
 					PixelmonItemsFossils.getFossilFromIndex(tile.itemInCleaner).getModel().renderModel(f);

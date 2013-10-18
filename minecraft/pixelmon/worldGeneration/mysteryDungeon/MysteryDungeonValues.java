@@ -9,7 +9,7 @@ public class MysteryDungeonValues {
 	public final int wallID, floorID, ceilingID, shaftID;
 	public final int wallMeta, floorMeta, ceilingMeta, shaftMeta;
 	
-	public static final MysteryDungeonValues simpleBrick = new MysteryDungeonValues(new int[]{Block.field_111039_cA.blockID, 12}, Block.brick, Block.stoneBrick, Block.stoneDoubleSlab);
+	public static final MysteryDungeonValues simpleBrick = new MysteryDungeonValues(new int[]{Block.hardenedClay.blockID, 12}, Block.brick, Block.stoneBrick, Block.stoneDoubleSlab);
 	
 	/**
 	 * @param blocks - 4 objects representing the Ids and Metadata of blocks to use 

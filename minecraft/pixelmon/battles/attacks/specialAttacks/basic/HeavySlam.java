@@ -14,20 +14,21 @@ public class HeavySlam extends SpecialAttackBase {
 	}
 
 	@Override
-	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList, ArrayList<String> targetAttackList) throws Exception {
+	public boolean ApplyEffect(EntityPixelmon user, EntityPixelmon target, Attack a, double crit, ArrayList<String> attackList,
+			ArrayList<String> targetAttackList) throws Exception {
 
-		int i = (int) (DatabaseStats.getWeight(target.getNickname()) / DatabaseStats.getWeight(user.getNickname()));
+		int i = (int) (target.baseStats.weight / user.baseStats.weight);
 
 		if (i <= 20)
-			a.baseAttack.basePower = 120;
+			a.movePower = 120;
 		else if (i > 20 && i <= 25)
-			a.baseAttack.basePower = 100;
+			a.movePower = 100;
 		else if (i > 25 && i <= (100 / 3))
-			a.baseAttack.basePower = 80;
+			a.movePower = 80;
 		else if (i > (100 / 3) && i >= 50)
-			a.baseAttack.basePower = 60;
+			a.movePower = 60;
 		else if (i > 50)
-			a.baseAttack.basePower = 40;
+			a.movePower = 40;
 
 		return false;
 	}

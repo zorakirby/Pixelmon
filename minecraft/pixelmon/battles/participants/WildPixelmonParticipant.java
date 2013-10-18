@@ -40,16 +40,14 @@ public class WildPixelmonParticipant extends BattleParticipant {
 		super.StartBattle(bc, opponent);
 		if (opponent.getType() == ParticipantType.Player && pixelmon.getBossMode() != EnumBossMode.Normal) {
 			int lvl = ((PlayerParticipant) opponent).getHighestLevel() + pixelmon.getBossMode().extraLevels;
-			if (lvl > 100)
-				lvl = 100;
 			pixelmon.getLvl().setLevel(lvl);
 			pixelmon.loadMoveset();
 			return;
 		}
 
 		for (int i = 0; i < 4; i++) {
-			if (pixelmon.moveset.attacks[i] != null)
-				pixelmon.moveset.attacks[i].setDisabled(false, pixelmon);
+			if (pixelmon.getMoveset().attacks[i] != null)
+				pixelmon.getMoveset().attacks[i].setDisabled(false, pixelmon);
 		}
 	}
 
@@ -61,7 +59,7 @@ public class WildPixelmonParticipant extends BattleParticipant {
 		else {
 			pixelmon.battleStats.clearBattleStats();
 			pixelmon.status.clear();
-			pixelmon.setEntityHealth(pixelmon.stats.HP);
+			pixelmon.setHealth(pixelmon.stats.HP);
 		}
 	}
 
@@ -72,7 +70,7 @@ public class WildPixelmonParticipant extends BattleParticipant {
 
 	@Override
 	public boolean getIsFaintedOrDead() {
-		return pixelmon.isDead || pixelmon.isFainted || pixelmon.func_110143_aJ() <= 0;
+		return pixelmon.isDead || pixelmon.isFainted || pixelmon.getHealth() <= 0;
 	}
 
 	@Override
@@ -82,8 +80,8 @@ public class WildPixelmonParticipant extends BattleParticipant {
 
 	@Override
 	public Attack getMove() {
-		if (pixelmon.moveset.size() > 0 && opponent != null)
-			return Attack.getWhichMoveIsBest(pixelmon.moveset, opponent.currentPokemon().type, pixelmon, opponent.currentPokemon());
+		if (pixelmon.getMoveset().size() > 0 && opponent != null)
+			return Attack.getWhichMoveIsBest(pixelmon.getMoveset(), opponent.currentPokemon().type, pixelmon, opponent.currentPokemon());
 		if (bc == null)
 			return null;
 		bc.setFlee(pixelmon);
@@ -97,9 +95,9 @@ public class WildPixelmonParticipant extends BattleParticipant {
 
 	@Override
 	public boolean checkPokemon() {
-		if (pixelmon.moveset.size() == 0) {
+		if (pixelmon.getMoveset().size() == 0) {
 			pixelmon.loadMoveset();
-			if (pixelmon.moveset.size() == 0) {
+			if (pixelmon.getMoveset().size() == 0) {
 				if (PixelmonConfig.printErrors)
 					System.out.println("Couldn't load " + pixelmon.getName() + "'s moves");
 				return false;

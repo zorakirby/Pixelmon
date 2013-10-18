@@ -15,6 +15,7 @@ public class AITeleportAway extends EntityAIBase {
 
 	public AITeleportAway(Entity7HasAI entity) {
 		pixelmon = entity;
+		rand = entity.getRNG();
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class AITeleportAway extends EntityAIBase {
 		teleportRandomly(pixelmon, rand);
 	}
 
-	Random rand = new Random();
+	Random rand;
 
 	public static boolean teleportRandomly(Entity7HasAI pixelmon, Random rand) {
 		double d = pixelmon.posX + (rand.nextDouble() - 0.5D) * 64D;

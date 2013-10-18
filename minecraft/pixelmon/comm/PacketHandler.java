@@ -20,11 +20,14 @@ import cpw.mods.fml.common.network.Player;
 public class PacketHandler implements IConnectionHandler, IPacketHandler {
 	private static ArrayList<PacketHandlerBase> handlers = new ArrayList<PacketHandlerBase>();
 	static {
+		handlers.add(new AcceptDeclineBattle());
 		handlers.add(new BagPacket());
 		handlers.add(new ChooseAttack());
 		handlers.add(new ChooseStarter());
 		handlers.add(new DeleteMove());
+		handlers.add(new Evolution());
 		handlers.add(new Flee());
+		handlers.add(new GuiOpenClose());
 		handlers.add(new HealPokemon());
 		handlers.add(new Movement());
 		handlers.add(new PCClickOnBox());

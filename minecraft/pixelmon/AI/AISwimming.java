@@ -30,7 +30,7 @@ public class AISwimming extends EntityAIBase {
 		depthRangeStart = entity.baseStats.swimmingParameters.depthRangeStart;
 		depthRangeEnd = entity.baseStats.swimmingParameters.depthRangeEnd;
 		this.pixelmon = entity;
-		this.rand = new Random();
+		this.rand = entity.getRNG();
 	}
 
 	@Override

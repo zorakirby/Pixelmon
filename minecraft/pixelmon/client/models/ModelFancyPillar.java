@@ -55,7 +55,7 @@ public class ModelFancyPillar extends ModelEntityBlock{
 	}
 	
 	public void renderStandardPillar(int blockMeta, int bitmask, float scale){
-		Minecraft.getMinecraft().renderEngine.func_110577_a(RenderResources.pillar);
+		Minecraft.getMinecraft().renderEngine.bindTexture(RenderResources.pillar);
 		column.render(scale);
 		boolean flag = (bitmask & 2) == 0;
 		if(flag){
@@ -72,7 +72,7 @@ public class ModelFancyPillar extends ModelEntityBlock{
 	
 	public void renderDamagedPillar(int blockMeta, int bitmask, float scale){
 		
-		Minecraft.getMinecraft().renderEngine.func_110577_a(RenderResources.pillarDamaged);
+		Minecraft.getMinecraft().renderEngine.bindTexture(RenderResources.pillarDamaged);
 		boolean useBottom = (blockMeta & 7) % 2 != 0;
 		boolean flagbottom = (bitmask & 2) == 0; // true if nothing connectable on bottom side
 		boolean flagtop = (bitmask & 4) == 0; //true if nothing connectable on top side

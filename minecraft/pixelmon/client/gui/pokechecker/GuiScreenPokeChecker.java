@@ -6,18 +6,13 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.resources.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.gui.GuiResources;
 import pixelmon.client.gui.pc.GuiPC;
-import pixelmon.comm.EnumPackets;
-import pixelmon.comm.PacketCreator;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
@@ -118,29 +113,33 @@ public class GuiScreenPokeChecker extends GuiContainer {
 
 	public void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glNormal3f(0.0F, -1.0F, 0.0F);
-		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xcccccc);
+		drawString(fontRenderer, "Lvl: " + targetPacket.lvl, 15, -14, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.getNationalPokedexNumber()), -30, -14, 0xffffff);
 		drawCenteredString(fontRenderer, targetPacket.health + "/" + targetPacket.hp, 185, 10, 0xdddddd);
-		drawString(fontRenderer, "Status", -10, 100, 0xcccccc);
+		drawString(fontRenderer, "Status", -10, 100, 0xffffff);
 		if (targetPacket.isFainted)
-			drawString(fontRenderer, "*FAINTED*", 117, -11, 0xcccccc);
-		drawString(fontRenderer, "Total Experience", 95, 40, 0xcccccc);
-		drawCenteredString(fontRenderer, String.valueOf(targetPacket.xp), 135, 55, 0xcccccc);
-		drawString(fontRenderer, "Level Up", 82, 94, 0xcccccc);
-		drawString(fontRenderer, String.valueOf(targetPacket.nextLvlXP), 152, 98, 0xcccccc);
-		drawString(fontRenderer, "TO", 127, 119, 0xcccccc);
-		drawString(fontRenderer, "Lvl: " + (targetPacket.lvl + 1), 152, 123, 0xcccccc);
-		drawString(fontRenderer, "Summary", -15, 166, -6250336);
+			drawString(fontRenderer, "*FAINTED*", 117, -11, 0xffffff);
+		drawString(fontRenderer, "Total Experience", 95, 40, 0xffffff);
+		drawCenteredString(fontRenderer, String.valueOf(targetPacket.xp), 135, 55, 0xffffff);
+		drawString(fontRenderer, "Level Up", 82, 94, 0xffffff);
+		drawString(fontRenderer, String.valueOf(targetPacket.nextLvlXP), 152, 98, 0xffffff);
+		drawString(fontRenderer, "TO", 127, 119, 0xffffff);
+		drawString(fontRenderer, "Lvl: " + (targetPacket.lvl + 1), 152, 123, 0xffffff);
+		drawString(fontRenderer, "Summary", -15, 166, 0xffffff);
 
 		int typeImg;
 		float x = targetPacket.getType1().textureX;
 		float y = targetPacket.getType1().textureY;
-		float x1 = targetPacket.getType2().textureX;
-		float y1 = targetPacket.getType2().textureY;
+		float x1 = 0;
+		float y1 = 0;
+		if(targetPacket.getType2() != null) {
+			x1 = targetPacket.getType2().textureX;
+			y1 = targetPacket.getType2().textureY;
+		}
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.func_110577_a(GuiResources.types);
+		mc.renderEngine.bindTexture(GuiResources.types);
 		drawImageQuad(60, 1, 38, 21, x / 256f, y / 128f, (x + 38f) / 256f, (y + 23f) / 128f);
-		if ((targetPacket.getType2() != EnumType.Mystery))
+		if ((targetPacket.getType2() != EnumType.Mystery) && targetPacket.getType2() != null)
 			drawImageQuad(100, 1, 38, 21, x1 / 256f, y1 / 128f, (x1 + 38f) / 256f, (y1 + 23f) / 128f);
 
 	}
@@ -158,7 +157,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		else
 			numString = "" + targetPacket.getNationalPokedexNumber();
 
-		mc.renderEngine.func_110577_a(GuiResources.summarySummary);
+		mc.renderEngine.bindTexture(GuiResources.summarySummary);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		drawTexturedModalRect((width - xSize) / 2 - 40, (height - ySize) / 2 - 25, 0, 0, 256, 204);
 		drawTexturedModalRect((width - xSize) / 2 - 15, (height - ySize) / 2 + 120, 23, 225, 44, 28);
@@ -168,9 +167,9 @@ public class GuiScreenPokeChecker extends GuiContainer {
 		drawTexturedModalRect((width - xSize) / 2 + 59, (height - ySize) / 2 + 145, 104, 239, 150, 16);
 
 		if (targetPacket.isShiny)
-			mc.renderEngine.func_110577_a(GuiResources.shinySprite(numString));
+			mc.renderEngine.bindTexture(GuiResources.shinySprite(numString));
 		else
-			mc.renderEngine.func_110577_a(GuiResources.sprite(numString));
+			mc.renderEngine.bindTexture(GuiResources.sprite(numString));
 		drawImageQuad(width / 2 - 123, height / 2 - 100, 84f, 84f, 0f, 0f, 1f, 1f);
 		if (targetPacket.nickname.length() < 1)
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.name), (width - xSize) / 2 + 7, (height - ySize) / 2 + 75, targetPacket
@@ -217,7 +216,7 @@ public class GuiScreenPokeChecker extends GuiContainer {
 	public void drawArrows(int mouseX, int mouseY) {
 		if (isPC) return;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.func_110577_a(GuiResources.summaryMoves);
+		mc.renderEngine.bindTexture(GuiResources.summaryMoves);
 		int l1 = (width - xSize) / 2 + 220;
 		int l2 = (width - xSize) / 2 - 62;
 		int w = 16;

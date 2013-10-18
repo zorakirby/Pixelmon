@@ -21,6 +21,7 @@ public class PixelmonConfig {
 
 	public static boolean allowNonPixelmonMobs;
 	public static boolean allowCapturingOutsideBattle = true;
+	public static boolean spawnStructures = true;
 
 	public static int maxNumLandPokemon;
 	public static int maxNumWaterPokemon;
@@ -47,11 +48,18 @@ public class PixelmonConfig {
 	public static boolean printErrors = false;
 
 	public static boolean allowRareCandyCrafting = false;
+	
+	public static boolean Gen1 = true;
+	public static boolean Gen2 = true;
+	public static boolean Gen3 = true;
+	public static boolean Gen4 = true;
+	public static boolean Gen5 = true;
 
 	public static void loadConfig(Configuration configuration) {
 		config = configuration;
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
+		spawnStructures = config.get("general", "Allow Structures to Spawn", true).getBoolean(true);
 		PixelmonGen.load(config);
 		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs",
 				false).getBoolean(false);
@@ -92,6 +100,12 @@ public class PixelmonConfig {
 		idPixelmon = config.get("IDs", "Pixelmon ID", 200).getInt(200);
 		idPokeball = config.get("IDs", "Pokeball ID", 201).getInt(201);
 		idCamera = config.get("IDs", "Camera ID", 202).getInt(202);
+		Gen1 = config.get("Spawning", "Gen1", true).getBoolean(true);
+		Gen2 = config.get("Spawning", "Gen2", true).getBoolean(true);
+		Gen3 = config.get("Spawning", "Gen3", true).getBoolean(true);
+		Gen4 = config.get("Spawning", "Gen4", true).getBoolean(true);
+		Gen5 = config.get("Spawning", "Gen5", true).getBoolean(true);
+		
 		config.save();
 
 		PixelmonItems.addNames();

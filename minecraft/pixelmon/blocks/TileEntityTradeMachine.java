@@ -19,6 +19,7 @@ import pixelmon.comm.packetHandlers.PC.PCData;
 import pixelmon.database.DatabaseStats;
 import pixelmon.database.EvolutionInfo;
 import pixelmon.database.EvolutionInfo.InfoMode;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumGui;
 import pixelmon.enums.EnumPokemon;
@@ -46,6 +47,8 @@ public class TileEntityTradeMachine extends TileEntity {
 	public void registerPlayer(EntityPlayer player) {
 		try {
 			PlayerStorage s = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player);
+			if (playerCount == 1 && player == player1)
+				return;
 			playerCount++;
 			if (playerCount == 1)
 				player1 = player;
@@ -71,19 +74,18 @@ public class TileEntityTradeMachine extends TileEntity {
 	}
 
 	public boolean ready(EntityPlayer player, boolean ready) {
-		if (player1 != null)
+		if (player1 != null && player2 != null) {
 			if (player.username == player1.username) {
 				ready1 = ready;
 				((EntityPlayerMP) player2).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetTradingReadyClient, ready ? 1
 						: 0));
 			}
-		if (player2 != null)
 			if (player.username == player2.username) {
 				ready2 = ready;
 				((EntityPlayerMP) player1).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(EnumPackets.SetTradingReadyClient, ready ? 1
 						: 0));
 			}
-
+		}
 		tradePushed = false;
 		return false;
 	}
@@ -172,22 +174,22 @@ public class TileEntityTradeMachine extends TileEntity {
 			player2.closeScreen();
 			playerCount = 0;
 
-			ArrayList<EvolutionInfo> evolve1 = DatabaseStats.getEvolveList(pokemon2.getString("Name"));
+			ArrayList<EvolutionInfo> evolve1 = DatabaseStats.getEvolveList(Entity3HasStats.getBaseStats(pokemon2.getString("Name")).id);
 			for (EvolutionInfo e : evolve1) {
 				if (e.mode == InfoMode.trade) {
 					if (EnumPokemon.hasPokemon(e.extraParam)) {
 						EntityPixelmon pixelmon = storage1.sendOut(pokemon2.getInteger("pixelmonID"), worldObj);
-						pixelmon.evolve(e.extraParam);
+						pixelmon.startEvolution(e.extraParam, false);
 						storage1.retrieve(pixelmon);
 					}
 				}
 			}
-			ArrayList<EvolutionInfo> evolve2 = DatabaseStats.getEvolveList(pokemon1.getString("Name"));
+			ArrayList<EvolutionInfo> evolve2 = DatabaseStats.getEvolveList(Entity3HasStats.getBaseStats(pokemon1.getString("Name")).id);
 			for (EvolutionInfo e : evolve2) {
 				if (e.mode == InfoMode.trade) {
 					if (EnumPokemon.hasPokemon(e.extraParam)) {
 						EntityPixelmon pixelmon = storage2.sendOut(pokemon1.getInteger("pixelmonID"), worldObj);
-						pixelmon.evolve(e.extraParam);
+						pixelmon.startEvolution(e.extraParam, false);
 						storage2.retrieve(pixelmon);
 					}
 				}

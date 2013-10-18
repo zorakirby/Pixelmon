@@ -41,7 +41,7 @@ public class BlockPC extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
+		blockIcon = par1IconRegister.registerIcon("quartz_block_bottom");
 	}
 	
 	@SideOnly(Side.CLIENT)

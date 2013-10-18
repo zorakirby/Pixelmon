@@ -27,8 +27,8 @@ public class Curse extends SpecialAttackBase {
 					ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), target.getNickname() + " is already cursed!");
 				}
 			}
-			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " cut its own HP and laid a curse on the  " + target.getNickname() + "!");
-			user.attackEntityFrom(DamageSource.causeMobDamage(user), (int) (((float) user.getMaxHealth()) / 2));
+			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), user.getNickname() + " cut its own HP and laid a curse on " + target.getNickname() + "!");
+			user.doBattleDamage(user, (int) (((float) user.getMaxHealth()) / 2));
 			target.status.add(new Cursed());
 		} else {
 			user.battleStats.DecreaseSpeed(1);
@@ -39,7 +39,7 @@ public class Curse extends SpecialAttackBase {
 			ChatHandler.sendBattleMessage(user.getOwner(), target.getOwner(), "Defense was raised!");
 
 		}
-		return false;
+		return true;
 
 	}
 }

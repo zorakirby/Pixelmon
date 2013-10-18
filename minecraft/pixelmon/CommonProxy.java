@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import pixelmon.api.PixelmonApi;
 import pixelmon.client.models.fossils.ModelFossil;
-import pixelmon.client.render.RenderOldHook;
 import pixelmon.entities.npcs.NPCType;
 import pixelmon.entities.pixelmon.helpers.DropItemHelper;
 import pixelmon.entities.pixelmon.interactions.InteractionEther;
@@ -17,7 +16,6 @@ import pixelmon.entities.pixelmon.interactions.InteractionPotion;
 import pixelmon.entities.pixelmon.interactions.InteractionRareCandy;
 import pixelmon.entities.pixelmon.interactions.InteractionStatusAilment;
 import pixelmon.entities.pixelmon.interactions.InteractionTM;
-import pixelmon.entities.projectiles.EntityOldHook;
 import pixelmon.gui.GuiHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -55,6 +53,11 @@ public class CommonProxy implements IGuiHandler {
 	public ModelBase loadModel(String name) {
 		return null;
 	}
+	
+	public ModelBase loadFlyingModel(String name) {
+		return null;
+	}
+
 
 	public ModelBase getNPCModel(NPCType type, String model) {
 		return null;
@@ -70,6 +73,9 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public Object[] getModels() {
+		return null;
+	}
+	public Object[] getFlyingModels() {
 		return null;
 	}
 

@@ -71,6 +71,6 @@ public class AIMoveTowardsTarget extends EntityAIBase {
 	 * Execute a one shot task or start executing a continuous task
 	 */
 	public void startExecuting() {
-		theEntity.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, (float)theEntity.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111126_e());
+		theEntity.getNavigator().tryMoveToXYZ(this.movePosX, this.movePosY, this.movePosZ, (float)theEntity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
 	}
 }

@@ -13,13 +13,13 @@ public class ModelMossyRock extends ModelIcyRock{
 	}
 	@Override
 	public void renderInvBlock(BlockContainerPlus block, int meta, float scale) {
-		Minecraft.getMinecraft().renderEngine.func_110577_a(RenderResources.mossrocktex);
+		Minecraft.getMinecraft().renderEngine.bindTexture(RenderResources.mossrocktex);
 		rock.render(scale);
 	}
 
 	@Override
 	public void renderTileEntity(TileEntityDecorativeBase tileEnt, float scale) {
-		Minecraft.getMinecraft().renderEngine.func_110577_a(RenderResources.mossrocktex);
+		Minecraft.getMinecraft().renderEngine.bindTexture(RenderResources.mossrocktex);
 		rock.render(0.0625F);
 	}
 

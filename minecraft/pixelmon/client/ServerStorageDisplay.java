@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.comm.PixelmonUpdatePacket;
 
 public class ServerStorageDisplay {
 	public static PixelmonDataPacket[] pokemon = new PixelmonDataPacket[6];
@@ -87,5 +88,12 @@ public class ServerStorageDisplay {
 				pos = 5;
 		}
 		return pokemon[pos];
+	}
+
+	public static void update(PixelmonUpdatePacket p) {
+		for (int i = 0; i < pokemon.length; i++)
+			if (pokemon[i] != null)
+				if (pokemon[i].pokemonID == p.pokemonID)
+					pokemon[i].update(p);
 	}
 }

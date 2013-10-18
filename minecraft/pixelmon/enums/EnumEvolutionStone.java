@@ -39,7 +39,7 @@ public enum EnumEvolutionStone implements IEnumItem{
 		Item result = null;
 		switch(this){
 		case Dawnstone: break; //TODO : Dawn Stone.
-		case Duskstone: break; //TODO : Dawn Stone.
+		case Duskstone: break; //TODO : Dusk Stone.
 		case Firestone: result = PixelmonItems.fireStone; break;
 		case Leafstone: result = PixelmonItems.leafStone; break;
 		case Moonstone: result = PixelmonItems.moonStone; break;

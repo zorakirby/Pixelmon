@@ -58,7 +58,7 @@ public class BlockFossilCleaner extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		 blockIcon = par1IconRegister.registerIcon("quartzblock_bottom");
+		 blockIcon = par1IconRegister.registerIcon("quartz_block_bottom");
 	}
 	
 	@Override
@@ -103,12 +103,12 @@ public class BlockFossilCleaner extends BlockContainer {
 
 				world.spawnEntityInWorld(var3);
 				((TileEntityFossilCleaner) world.getBlockTileEntity(x, y, z)).itemInCleaner = -1;
-				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+				((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 			}
 			if (player.getCurrentEquippedItem() != null && (player.getCurrentEquippedItem().getItem() instanceof ItemCoveredFossil)) {
 				((TileEntityFossilCleaner) world.getBlockTileEntity(x, y, z)).setItemInCleaner(player.getCurrentEquippedItem().itemID);
 				player.getCurrentEquippedItem().stackSize--;
-				((WorldServer) world).getPlayerManager().flagChunkForUpdate(x, y, z);
+				((WorldServer) world).getPlayerManager().markBlockForUpdate(x, y, z);
 				return true;
 			}
 			return true;

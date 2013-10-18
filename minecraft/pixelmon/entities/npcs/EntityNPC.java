@@ -15,7 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityNPC extends EntityCreature {
+public abstract class EntityNPC extends EntityCreature {
 	private ModelBase model = null;
 	public SpawnLocation npcLocation;
 
@@ -34,12 +34,12 @@ public class EntityNPC extends EntityCreature {
 
 	public void init(String name) {
 		setName(name);
-		setEntityHealth(100);
+		setHealth(100);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public String getTexture() {
-		return "/pixelmon/texture/" + getNPCType().textureDirectory + "/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
+		return "pixelmon:textures/" + getNPCType().textureDirectory + "/" + dataWatcher.getWatchableObjectString(4).toLowerCase() + ".png";
 	}
 
 	public ModelBase getModel() {
@@ -78,7 +78,7 @@ public class EntityNPC extends EntityCreature {
 	}
 
 	@Override
-    public void setEntityHealth(float par1)
+    public void setHealth(float par1)
     {
         this.dataWatcher.updateObject(6, Float.valueOf(MathHelper.clamp_float(par1, 0.0F, 100)));
     }
