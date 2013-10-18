@@ -40,7 +40,7 @@ public class ItemRendererExperience implements IItemRenderer {
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack itemStack, Object... data) {
-		float height = percent * 16;
+		/**float height = percent * 16;
 		mc.renderEngine.bindTexture(back);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(0, 0, 16, 16, 0, 0, 1, 1, 1);
@@ -62,5 +62,7 @@ public class ItemRendererExperience implements IItemRenderer {
 		mc.renderEngine.bindTexture(front);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(0, 0, 16, 16, 0, 0, 1, 1, 1);
+		*/
 	}
+	
 }

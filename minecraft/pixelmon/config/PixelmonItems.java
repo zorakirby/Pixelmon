@@ -250,7 +250,7 @@ public class PixelmonItems {
 	public static Item LtradeHolderLeft;
 	@Mod.Item(name = "Trading Machine Control Panel", typeClass = "pixelmon.items.ItemTradingMachine")
 	public static Item tradePanel;
-
+/**
 	@Mod.Item(name = "Uno Orb", typeClass = "pixelmon.items.shrineOrbs")
 	public static ItemShrineOrb unoOrb;
 	@Mod.Item(name = "Dos Orb", typeClass = "pixelmon.items.shrineOrbs")
@@ -264,6 +264,7 @@ public class PixelmonItems {
 	public static Item dosShrine;
 	@Mod.Item(name = "Tres Shrine", typeClass = "pixelmon.items.ItemBlock")
 	public static Item tresShrine;
+	**/
 
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
