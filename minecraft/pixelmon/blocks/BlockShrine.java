@@ -76,7 +76,7 @@ public class BlockShrine extends BlockContainer {
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityShrine();
 	}
-
+/**
 	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
 		if (par5EntityPlayer.getHeldItem() != null)
@@ -118,7 +118,7 @@ public class BlockShrine extends BlockContainer {
 				}
 		return false;
 	}
-
+**/
 	@Override
 	/**
 	 * Ticks the block if it's been scheduled
