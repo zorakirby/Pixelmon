@@ -70,7 +70,7 @@ public class GuiBattle extends GuiCamera {
 	int limitFrameRate = 0;
 
 	public GuiBattle(int battleControllerIndex) {
-		super(Minecraft.getMinecraft().thePlayer.inventoryContainer);
+		super(new ContainerEmpty());
 		this.battleControllerIndex = battleControllerIndex;
 		mode = BattleMode.Waiting;
 		GuiPixelmonOverlay.isVisible = false;
@@ -764,6 +764,8 @@ public class GuiBattle extends GuiCamera {
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GuiHelper.drawImageQuad(width / 2 - guiWidth / 2, height - guiHeight, guiWidth, guiHeight, 0, 0, 1, 146f / 480f, zLevel);
+		if (ClientBattleManager.getUserPokemonPacket() == null)
+			return;
 		PixelmonMovesetDataPacket[] moveset = ClientBattleManager.getUserPokemonPacket().moveset;
 		int numMoves = ClientBattleManager.getUserPokemonPacket().numMoves;
 		if (numMoves > 0) {
