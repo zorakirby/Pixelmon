@@ -59,7 +59,7 @@ public class ModelWartortle extends PixelmonModelBase {
 		Lleg.setRotationPoint(0.48F, 1.2F, -0.1F);
 		Lleg.addOBJModel(new ModelOBJWrapper(
 				AdvancedModelLoader
-						.loadModel("/pixelmon/client/models/objFiles/wartortle/Leftleg.obj")));
+						.loadModel("/pixelmon/client/models/objFiles/wartortle/LeftLeg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
 		RLeg.setRotationPoint(-0.54F, 1.2F, -0.1F);

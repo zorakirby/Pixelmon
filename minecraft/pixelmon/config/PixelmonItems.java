@@ -250,7 +250,7 @@ public class PixelmonItems {
 	public static Item LtradeHolderLeft;
 	@Mod.Item(name = "Trading Machine Control Panel", typeClass = "pixelmon.items.ItemTradingMachine")
 	public static Item tradePanel;
-
+/**
 	@Mod.Item(name = "Uno Orb", typeClass = "pixelmon.items.shrineOrbs")
 	public static ItemShrineOrb unoOrb;
 	@Mod.Item(name = "Dos Orb", typeClass = "pixelmon.items.shrineOrbs")
@@ -264,6 +264,7 @@ public class PixelmonItems {
 	public static Item dosShrine;
 	@Mod.Item(name = "Tres Shrine", typeClass = "pixelmon.items.ItemBlock")
 	public static Item tresShrine;
+	**/
 
 	public static void load(Configuration cfg) {
 		PixelmonItemsPokeballs.load(cfg);
@@ -417,18 +418,18 @@ public class PixelmonItems {
 		LtradeHolderLeft = new PixelmonItem(LtradeHolderLeftID, "tradingmachinepieces/tradingHolderL", "Trade Holder Left");
 		tradePanel = new PixelmonItem(tradePanelID, "tradingmachinepieces/tradingPanel", "Trade Panel");
 
-		unoOrb = (ItemShrineOrb) new ItemShrineOrb(unoOrbID, EnumShrine.Articuno, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
-		dosOrb = new ItemShrineOrb(dosOrbID, EnumShrine.Zapdos, "dosorb", "Dos Orb").setUnlocalizedName("Dos Orb");
-		tresOrb = new ItemShrineOrb(tresOrbID, EnumShrine.Moltres, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
+		//unoOrb = (ItemShrineOrb) new ItemShrineOrb(unoOrbID, EnumShrine.Articuno, "unoorb", "Uno Orb").setUnlocalizedName("Uno Orb");
+		//dosOrb = new ItemShrineOrb(dosOrbID, EnumShrine.Zapdos, "dosorb", "Dos Orb").setUnlocalizedName("Dos Orb");
+		//tresOrb = new ItemShrineOrb(tresOrbID, EnumShrine.Moltres, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
 
 		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "mossyrock", "Mossy Rock");
 		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
 		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "icyrock", "Icy Rock");
 		icyRock.setCreativeTab(PixelmonCreativeTabs.natural);
 
-		unoShrine = new ItemBlock(unoShrineID, PixelmonBlocks.shrineUno, "unoShrine", "Uno Shrine");
-		dosShrine = new ItemBlock(dosShrineID, PixelmonBlocks.shrineDos, "dosShrine", "Dos Shrine");
-		tresShrine = new ItemBlock(tresShrineID, PixelmonBlocks.shrineTres, "tresShrine", "Tres Shrine");
+		//unoShrine = new ItemBlock(unoShrineID, PixelmonBlocks.shrineUno, "unoShrine", "Uno Shrine");
+		//dosShrine = new ItemBlock(dosShrineID, PixelmonBlocks.shrineDos, "dosShrine", "Dos Shrine");
+		//tresShrine = new ItemBlock(tresShrineID, PixelmonBlocks.shrineTres, "tresShrine", "Tres Shrine");
 
 	}
 
