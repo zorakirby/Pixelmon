@@ -20,26 +20,26 @@ public class BlockHealer extends BlockContainer {
 	public BlockHealer(int par1) {
 		super(par1, Material.rock);
 		setHardness(3.5f);
-		setStepSound(Block.soundStoneFootstep);		
+		setStepSound(Block.soundStoneFootstep);
 	}
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return PixelmonItems.healerItem.itemID;
+		return PixelmonItems.aluminiumPlate.itemID;
 	}
 
 	@SideOnly(Side.CLIENT)
-    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
-    public int idPicked(World par1World, int par2, int par3, int par4)
-    {
-        return PixelmonItems.healerItem.itemID;
-    }
+	// only called by clickMiddleMouseButton , and passed to
+	// inventory.setCurrentItem (along with isCreative)
+	public int idPicked(World par1World, int par2, int par3, int par4) {
+		return PixelmonItems.healerItem.itemID;
+	}
 
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		blockIcon = par1IconRegister.registerIcon("quartz_block_bottom");
 	}
-	
+
 	@Override
 	public int quantityDropped(Random random) {
 		return 2;
