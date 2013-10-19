@@ -80,8 +80,6 @@ public class EntityPixelmon extends Entity9HasSounds {
 
 	public void init(String name) {
 		super.init(name);
-
-		// moveSpeed = getMoveSpeed();
 	}
 
 	public void onDeath(DamageSource damagesource) {
@@ -311,6 +309,8 @@ public class EntityPixelmon extends Entity9HasSounds {
 	// To disable Leashing
 	public void func_110162_b(Entity par1Entity, boolean par2) {
 	};
+	
+	
 
 	// Client Side for rendering
 	public int evolving = 0;

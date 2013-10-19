@@ -25,7 +25,7 @@ public class BlockHealer extends BlockContainer {
 
 	@Override
 	public int idDropped(int par1, Random par2Random, int par3) {
-		return PixelmonItems.aluminiumPlate.itemID;
+		return PixelmonItems.healerItem.itemID;
 	}
 
 	@SideOnly(Side.CLIENT)

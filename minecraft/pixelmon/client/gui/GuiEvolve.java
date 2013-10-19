@@ -33,9 +33,7 @@ import pixelmon.enums.EnumGui;
 import pixelmon.gui.ContainerEmpty;
 
 public class GuiEvolve extends GuiCamera {
-	public static ResourceLocation evo = new ResourceLocation("pixelmon:gui/evolution/Evolution.png");
-	public static ResourceLocation button = new ResourceLocation("pixelmon:gui/evolution/Button.png");
-	public static ResourceLocation buttonOver = new ResourceLocation("pixelmon:gui/evolution/ButtonOver.png");
+
 
 	public EntityPixelmon currentPokemon;
 	String newPokemon;
@@ -190,7 +188,7 @@ public class GuiEvolve extends GuiCamera {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
-		mc.renderEngine.bindTexture(evo);
+		mc.renderEngine.bindTexture(GuiResources.evo);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		if (stage != 2)
 			GuiHelper.drawImageQuad(width / 2 - 120, height / 4 - 40, 240, 40, 0, 0, 1, 1, zLevel);
@@ -205,9 +203,9 @@ public class GuiEvolve extends GuiCamera {
 			int xPos = width / 2 - 30;
 			int yPos = height / 4 - 15;
 			if (mouseX >= xPos && mouseX <= xPos + 60 && mouseY >= yPos && mouseY <= yPos + 17)
-				mc.renderEngine.bindTexture(buttonOver);
+				mc.renderEngine.bindTexture(GuiResources.buttonOver);
 			else
-				mc.renderEngine.bindTexture(button);
+				mc.renderEngine.bindTexture(GuiResources.button);
 			GuiHelper.drawImageQuad(xPos, yPos, 60, 17, 0, 0, 1, 1, zLevel);
 			s = "Cancel";
 			fontRenderer.drawString(s, width / 2 - fontRenderer.getStringWidth(s) / 2, height / 4 - 11, 0xFFFFFF);
