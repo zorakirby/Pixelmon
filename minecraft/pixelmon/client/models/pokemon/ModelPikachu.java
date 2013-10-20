@@ -15,6 +15,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -33,23 +34,30 @@ public class ModelPikachu extends PixelmonModelBase {
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
 		Body.setRotationPoint(0, 24.1f, 0);
-		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pikachu/Body.obj")));
+		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader
+				.loadModel("/pixelmon/client/models/objFiles/pikachu/Body.obj")));
 
 		head = new PixelmonModelRenderer(this, 0, 0);
 		head.setRotationPoint(0, 1.609F, 0);
-		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pikachu/Head.obj")));
+		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader
+				.loadModel("/pixelmon/client/models/objFiles/pikachu/Head.obj")));
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
 		Lleg.setRotationPoint(0.18F, 0.979F, -0.524F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pikachu/Leftleg.obj")));
+		Lleg.addOBJModel(new ModelOBJWrapper(
+				AdvancedModelLoader
+						.loadModel("/pixelmon/client/models/objFiles/pikachu/Leftleg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
 		RLeg.setRotationPoint(-0.10F, 0.979F, -0.414F);
-		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pikachu/RightLeg.obj")));
+		RLeg.addOBJModel(new ModelOBJWrapper(
+				AdvancedModelLoader
+						.loadModel("/pixelmon/client/models/objFiles/pikachu/RightLeg.obj")));
 
 		tail = new PixelmonModelRenderer(this, 0, 0);
 		tail.setRotationPoint(-0.04F, 0.8F, -1.1638F);
-		tail.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/pikachu/Tail.obj")));
+		tail.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader
+				.loadModel("/pixelmon/client/models/objFiles/pikachu/Tail.obj")));
 
 		Body.addChild(head);
 		Body.addChild(Lleg);
@@ -64,26 +72,33 @@ public class ModelPikachu extends PixelmonModelBase {
 		float legRotationLimit = 0.8F;
 
 		ModuleHead headModule = new ModuleHead(head);
-		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legspeed);
-		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
-		ModuleTailBasic tailmodule = new ModuleTailBasic(tail, .2F, .05F, legspeed);
+		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft,
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
+		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight,
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
+		ModuleTailBasic tailmodule = new ModuleTailBasic(tail, .2F, .05F,
+				legspeed);
 
-		skeleton = new SkeletonBiped(Body, headModule, null, null, leftLeg, rightLeg, tailmodule);
+		skeleton = new SkeletonBiped(Body, headModule, null, null, leftLeg,
+				rightLeg, tailmodule);
 		scale = 7f;
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
+	public void setRotationAngles(float f, float f1, float f2, float f3,
+			float f4, float f5) {
 	}
 }

@@ -5,6 +5,7 @@ import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
@@ -269,9 +270,9 @@ public class ModelBellsprout extends PixelmonModelBase {
 		float legRotationLimit = 1.4F;
 
 		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
-				EnumPhase.InPhase, legRotationLimit, legspeed);
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
-				EnumPhase.InPhase, legRotationLimit, legspeed);
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 		
 		skeleton = new SkeletonBiped(Body, headModule, null, null, leftLegModule, rightLegModule, null);
 	}

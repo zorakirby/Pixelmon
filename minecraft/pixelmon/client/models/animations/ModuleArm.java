@@ -14,45 +14,49 @@ public class ModuleArm extends Module {
 
 	float ArmRotationLimit;
 	float ArmSpeed;
+	float ArmInitX;
 	float ArmInitY;
 	float ArmInitZ;
 	float ArmDirection;
-	float ArmAxisRotation; //either 0 or 90
 	EnumArm ArmVariable;
+	EnumRotation rotationAxis;
 
-	public ModuleArm(ModelRenderer arm, EnumArm ArmVariable, float ArmAxisRotation, float ArmRotationLimit, float ArmSpeed) {
+	public ModuleArm(ModelRenderer arm, EnumArm ArmVariable,
+			EnumRotation rotationAxis, float ArmRotationLimit, float ArmSpeed) {
 		this.arm = arm;
 		this.ArmSpeed = ArmSpeed;
 		this.ArmRotationLimit = ArmRotationLimit;
 		ArmInitY = arm.rotateAngleY;
 		ArmInitZ = arm.rotateAngleZ;
-		this.ArmAxisRotation = ArmAxisRotation;
+		ArmInitX = arm.rotateAngleX;
 		this.ArmVariable = ArmVariable;
+		this.rotationAxis = rotationAxis;
 		if (ArmVariable == EnumArm.Right) {
 			ArmDirection = 1;
 		} else {
 			ArmDirection = -1;
 		}
-		
+
 	}
 
 	@Override
 	public void walk(EntityPixelmon entity, float f, float f1, float f2,
 			float f3, float f4) {
-		
-		if (ArmAxisRotation == 90) {
-			arm.rotateAngleY = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
-					* ArmRotationLimit
-					* f1;
-		} else {
-			arm.rotateAngleX = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
-					* ArmRotationLimit
-					* f1 * ArmDirection;
+
+		if (rotationAxis == EnumRotation.x) {
+			arm.rotateAngleX = MathHelper.cos(f * ArmSpeed + (float) Math.PI)
+					* ArmRotationLimit * f1 * ArmDirection + ArmInitX;
 		}
 
-		
-		// TODO Auto-generated method stub
+		if (rotationAxis == EnumRotation.y) {
+			arm.rotateAngleY = MathHelper.cos(f * ArmSpeed + (float) Math.PI)
+					* ArmRotationLimit * f1 * ArmDirection + ArmInitY;
+		}
 
+		if (rotationAxis == EnumRotation.z) {
+			arm.rotateAngleZ = MathHelper.cos(f * ArmSpeed + (float) Math.PI)
+					* ArmRotationLimit * f1 * ArmDirection + ArmInitZ;
+		}
 	}
 
 	@Override

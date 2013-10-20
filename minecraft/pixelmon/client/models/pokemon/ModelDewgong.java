@@ -6,6 +6,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -1018,8 +1019,8 @@ public class ModelDewgong extends PixelmonModelBase {
 		
 		
 		
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 1, 0.5F);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 1, 0.5F);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, EnumRotation.x, 1, 0.5F);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, EnumRotation.x, 1, 0.5F);
 
 		//ModuleHead headModule = new ModuleHead(Head);
 		

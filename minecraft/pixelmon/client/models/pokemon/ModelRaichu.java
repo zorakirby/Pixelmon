@@ -15,6 +15,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -33,27 +34,37 @@ public class ModelRaichu extends PixelmonModelBase {
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
 		Body.setRotationPoint(0, 24.1f, 0);
-		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/raichu/Body.obj")));
+		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader
+				.loadModel("/pixelmon/client/models/objFiles/raichu/Body.obj")));
 
 		head = new PixelmonModelRenderer(this, 0, 0);
 		head.setRotationPoint(0.02F, 3.72F, -0.105F);
-		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/raichu/Head.obj")));
+		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader
+				.loadModel("/pixelmon/client/models/objFiles/raichu/Head.obj")));
 
 		Larm = new PixelmonModelRenderer(this, 0, 0);
 		Larm.setRotationPoint(0.775F, 4.19F, -0.528F);
-		Larm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/raichu/LeftArm.obj")));
+		Larm.addOBJModel(new ModelOBJWrapper(
+				AdvancedModelLoader
+						.loadModel("/pixelmon/client/models/objFiles/raichu/LeftArm.obj")));
 
 		Rarm = new PixelmonModelRenderer(this, 0, 0);
 		Rarm.setRotationPoint(-0.751F, 4.193F, -0.528F);
-		Rarm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/raichu/RightArm.obj")));
+		Rarm.addOBJModel(new ModelOBJWrapper(
+				AdvancedModelLoader
+						.loadModel("/pixelmon/client/models/objFiles/raichu/RightArm.obj")));
 
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
 		Lleg.setRotationPoint(0.84F, 2.728F, -1.347F);
-		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/raichu/Leftleg.obj")));
+		Lleg.addOBJModel(new ModelOBJWrapper(
+				AdvancedModelLoader
+						.loadModel("/pixelmon/client/models/objFiles/raichu/Leftleg.obj")));
 
 		RLeg = new PixelmonModelRenderer(this, 0, 0);
 		RLeg.setRotationPoint(-0.790F, 2.644F, -1.196F);
-		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/raichu/RightLeg.obj")));
+		RLeg.addOBJModel(new ModelOBJWrapper(
+				AdvancedModelLoader
+						.loadModel("/pixelmon/client/models/objFiles/raichu/RightLeg.obj")));
 
 		Body.addChild(head);
 		Body.addChild(Larm);
@@ -69,28 +80,36 @@ public class ModelRaichu extends PixelmonModelBase {
 		float legRotationLimit = 0.8F;
 
 		ModuleHead headModule = new ModuleHead(head);
-		ModuleArm leftArm = new ModuleArm(Larm, EnumArm.Left, 0.2F, 0.3F, legspeed);
-		ModuleArm rightArm = new ModuleArm(Rarm, EnumArm.Right, 0.2F, 0.3F, legspeed);
-		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legspeed);
-		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleArm leftArm = new ModuleArm(Larm, EnumArm.Left, EnumRotation.x, 0.3F,
+				legspeed);
+		ModuleArm rightArm = new ModuleArm(Rarm, EnumArm.Right,EnumRotation.x, 0.3F,
+				legspeed);
+		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft,
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
+		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight,
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 
 		scale = 3.4f;
 
-		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm, leftLeg, rightLeg, null);
+		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm,
+				leftLeg, rightLeg, null);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
 	}
 
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
+	public void setRotationAngles(float f, float f1, float f2, float f3,
+			float f4, float f5) {
 	}
 }

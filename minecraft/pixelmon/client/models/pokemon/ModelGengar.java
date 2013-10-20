@@ -12,6 +12,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
@@ -4019,16 +4020,16 @@ public class ModelGengar extends PixelmonModelBase {
 		LeftArm.addChild(ArmLeftFingerBack);
 		Body.addChild(LeftArm);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, 0, 0);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, EnumRotation.x, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, EnumRotation.x, 0, 0);
 
 		float legspeed = 0.65F;
 		float legRotationLimit = 1.4F;
 
 		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
-				EnumPhase.InPhase, legRotationLimit, legspeed);
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
-				EnumPhase.InPhase, legRotationLimit, legspeed);
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
 				leftLegModule, rightLegModule, null);

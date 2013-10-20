@@ -14,6 +14,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -66,12 +67,12 @@ public class ModelBlastoise extends PixelmonModelBase
         ModuleHead headModule = new ModuleHead(Head);
         
         ModuleLeg leftLegModule = new ModuleLeg(footL, EnumLeg.FrontLeft,
-                EnumPhase.InPhase, legRotationLimit, legspeed);
+                EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
         ModuleLeg rightLegModule = new ModuleLeg(footR, EnumLeg.FrontRight,
-                EnumPhase.InPhase, legRotationLimit, legspeed);
+                EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
         
-        ModuleArm leftArmModule = new ModuleArm(ArmL, EnumArm.Left, 0, 1F, legspeed);
-		ModuleArm rightArmModule = new ModuleArm(ArmR, EnumArm.Right, 0, 1F, legspeed);
+        ModuleArm leftArmModule = new ModuleArm(ArmL, EnumArm.Left, EnumRotation.x, 1F, legspeed);
+		ModuleArm rightArmModule = new ModuleArm(ArmR, EnumArm.Right, EnumRotation.x, 1F, legspeed);
 		
 		
         skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,
