@@ -143,6 +143,7 @@ public enum EnumPokemon {
 	Paras("Paras"),
 	Parasect("Parasect"),
 	Persian("Persian"),
+	Pichu("Pichu"),
 	Pidgey("Pidgey"),
 	Pikachu("Pikachu"),
 	Pidgeotto("Pidgeotto"),
