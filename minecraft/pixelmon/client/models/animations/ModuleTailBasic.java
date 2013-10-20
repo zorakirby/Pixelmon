@@ -24,7 +24,7 @@ public class ModuleTailBasic extends Module {
 		this.TailRotationLimitY = TailRotationLimitY;
 		this.TailRotationLimitZ = TailRotationLimitZ;
 		TailInitY = tail.rotateAngleY;
-		TailInitZ = tail.rotateAngleX;
+		TailInitZ = tail.rotateAngleZ;
 
 
 	}

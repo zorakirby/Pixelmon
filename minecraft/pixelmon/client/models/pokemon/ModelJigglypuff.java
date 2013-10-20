@@ -5,110 +5,127 @@
 // - ZeuX
 package pixelmon.client.models.pokemon;
 
+import pixelmon.client.models.PixelmonModelBase;
+import pixelmon.client.models.PixelmonModelRenderer;
+import pixelmon.client.models.animations.EnumArm;
+import pixelmon.client.models.animations.EnumLeg;
+import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
+import pixelmon.client.models.animations.ModuleArm;
+import pixelmon.client.models.animations.ModuleHead;
+import pixelmon.client.models.animations.ModuleLeg;
+import pixelmon.client.models.animations.ModuleTailBasic;
+import pixelmon.client.models.animations.biped.SkeletonBiped;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelJigglypuff extends ModelBase {
-	// fields
-	ModelRenderer Shape1;
-	ModelRenderer EarR;
-	ModelRenderer Body;
-	ModelRenderer FatWide;
-	ModelRenderer FatTall;
-	ModelRenderer FatButt;
-	ModelRenderer ArmR;
-	ModelRenderer ArmL;
-	ModelRenderer FootL;
-	ModelRenderer FootR;
-	ModelRenderer EarR2;
+public class ModelJigglypuff extends PixelmonModelBase {
+
+	PixelmonModelRenderer Body;
 
 	public ModelJigglypuff() {
 		textureWidth = 64;
 		textureHeight = 32;
 
-		Shape1 = new ModelRenderer(this, 1, 24);
+		Body = new PixelmonModelRenderer(this, "Body");
+		Body.setRotationPoint(0F, 20F, 0F);
+		setRotation(Body, 0F, 0F, 0F);
+		Body.mirror = true;
+		PixelmonModelRenderer Shape1 = new PixelmonModelRenderer(this, 1, 24);
 		Shape1.addBox(0F, -1.5F, -2F, 0, 2, 2);
-		Shape1.setRotationPoint(-0.1F, 18.5F, -1.3F);
+		Shape1.setRotationPoint(-0.1F, -1.5F, -1.3F);
 		Shape1.setTextureSize(64, 32);
 		Shape1.mirror = true;
 		setRotation(Shape1, -0.3490659F, 0F, 0.122173F);
-		EarR = new ModelRenderer(this, 23, 4);
+		PixelmonModelRenderer EarR = new PixelmonModelRenderer(this, 25, 4);
 		EarR.addBox(-2F, -2F, -0.5F, 2, 2, 1);
-		EarR.setRotationPoint(-2F, 18.9F, 0F);
+		EarR.setRotationPoint(-2F, -1.1F, 0F);
 		EarR.setTextureSize(64, 32);
 		EarR.mirror = true;
 		setRotation(EarR, 0F, 0.6981317F, 0.5759587F);
-		Body = new ModelRenderer(this, 0, 0);
-		Body.addBox(-2.5F, -2.5F, -2.5F, 5, 5, 5);
-		Body.setRotationPoint(0F, 20F, 0F);
-		Body.setTextureSize(64, 32);
-		Body.mirror = true;
-		setRotation(Body, 0F, 0F, 0F);
-		FatWide = new ModelRenderer(this, 0, 11);
+		PixelmonModelRenderer body = new PixelmonModelRenderer(this, 0, 0);
+		body.addBox(-2.5F, -2.5F, -2.5F, 5, 5, 5);
+		body.setRotationPoint(0F, 0F, 0F);
+		body.setTextureSize(64, 32);
+		body.mirror = true;
+		setRotation(body, 0F, 0F, 0F);
+		PixelmonModelRenderer FatWide = new PixelmonModelRenderer(this, 0, 11);
 		FatWide.addBox(-3F, -2F, -2F, 6, 4, 4);
-		FatWide.setRotationPoint(0F, 20F, 0F);
+		FatWide.setRotationPoint(0F, 0F, 0F);
 		FatWide.setTextureSize(64, 32);
 		FatWide.mirror = true;
 		setRotation(FatWide, 0F, 0F, 0F);
-		FatTall = new ModelRenderer(this, 21, 9);
+		PixelmonModelRenderer FatTall = new PixelmonModelRenderer(this, 21, 9);
 		FatTall.addBox(-2F, -3F, -2F, 4, 6, 4);
-		FatTall.setRotationPoint(0F, 20F, 0F);
+		FatTall.setRotationPoint(0F, 0F, 0F);
 		FatTall.setTextureSize(64, 32);
 		FatTall.mirror = true;
 		setRotation(FatTall, 0F, 0F, 0F);
-		FatButt = new ModelRenderer(this, 32, 0);
+		PixelmonModelRenderer FatButt = new PixelmonModelRenderer(this, 32, 0);
 		FatButt.addBox(-2F, -2F, -2F, 4, 4, 4);
-		FatButt.setRotationPoint(0F, 20F, 1F);
+		FatButt.setRotationPoint(0F, 0F, 1F);
 		FatButt.setTextureSize(64, 32);
 		FatButt.mirror = true;
 		setRotation(FatButt, 0F, 0F, 0F);
-		ArmR = new ModelRenderer(this, 0, 20);
+		PixelmonModelRenderer ArmR = new PixelmonModelRenderer(this, 0, 20);
 		ArmR.addBox(-2F, -0.5F, -0.5F, 2, 1, 1);
-		ArmR.setRotationPoint(-2F, 20.5F, -1.5F);
+		ArmR.setRotationPoint(-2F, 0.5F, -1.5F);
 		ArmR.setTextureSize(64, 32);
 		ArmR.mirror = true;
 		setRotation(ArmR, 0F, -0.9599311F, -0.5235988F);
-		ArmL = new ModelRenderer(this, 0, 20);
+		PixelmonModelRenderer ArmL = new PixelmonModelRenderer(this, 0, 20);
 		ArmL.addBox(-2F, -0.5F, -0.5F, 2, 1, 1);
-		ArmL.setRotationPoint(2F, 20.5F, -1.5F);
+		ArmL.setRotationPoint(2F, 0.5F, -1.5F);
 		ArmL.setTextureSize(64, 32);
 		ArmL.mirror = true;
 		setRotation(ArmL, 0F, -2.181662F, -0.5235988F);
-		FootL = new ModelRenderer(this, 21, 0);
+		PixelmonModelRenderer FootL = new PixelmonModelRenderer(this, 21, 0);
 		FootL.addBox(-2F, -0.5F, -1.5F, 3, 1, 2);
-		FootL.setRotationPoint(1F, 23F, -0.5F);
+		FootL.setRotationPoint(1F, 3F, -0.5F);
 		FootL.setTextureSize(64, 32);
 		FootL.mirror = true;
 		setRotation(FootL, 0F, -2.094395F, -0.2617994F);
-		FootR = new ModelRenderer(this, 21, 0);
+		PixelmonModelRenderer FootR = new PixelmonModelRenderer(this, 21, 0);
 		FootR.addBox(-2F, -0.5F, -0.5F, 3, 1, 2);
-		FootR.setRotationPoint(-1F, 23F, -0.5F);
+		FootR.setRotationPoint(-1F, 3F, -0.5F);
 		FootR.setTextureSize(64, 32);
 		FootR.mirror = true;
 		setRotation(FootR, 0F, -0.9599311F, -0.2617994F);
-		EarR2 = new ModelRenderer(this, 23, 4);
+		PixelmonModelRenderer EarR2 = new PixelmonModelRenderer(this, 25, 4);
 		EarR2.addBox(0F, -2F, -0.5F, 2, 2, 1);
-		EarR2.setRotationPoint(2F, 18.9F, 0F);
+		EarR2.setRotationPoint(2F, -1.1F, 0F);
 		EarR2.setTextureSize(64, 32);
 		EarR2.mirror = true;
 		setRotation(EarR2, 0F, -0.6981317F, -0.5759587F);
+		
+		Body.addChild(Shape1);
+		Body.addChild(EarR);
+		Body.addChild(body);
+		Body.addChild(FatWide);
+		Body.addChild(FatTall);
+		Body.addChild(FatButt);
+		Body.addChild(ArmR);
+		Body.addChild(ArmL);
+		Body.addChild(FootL);
+		Body.addChild(FootR);
+		Body.addChild(EarR2);
+		
+		 ModuleArm leftArmModule = new ModuleArm(ArmL, EnumArm.Left, EnumRotation.z, 0.5F, 0.3F);
+		 ModuleArm rightArmModule = new ModuleArm(ArmR, EnumArm.Right, EnumRotation.z, 0.5F, 0.3F);
+		 
+		 ModuleLeg leftLegModule = new ModuleLeg(FootL, EnumLeg.FrontLeft, EnumPhase.InPhase, EnumRotation.z, 0.8F, 0.5F);
+		 ModuleLeg rightLegModule = new ModuleLeg(FootR, EnumLeg.FrontRight, EnumPhase.InPhase, EnumRotation.z, 0.8F, 0.5F);
+		 
+		 skeleton = new SkeletonBiped(Body, null, leftArmModule,
+				 rightArmModule, leftLegModule, rightLegModule, null);
+		
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		Shape1.render(f5);
-		EarR.render(f5);
 		Body.render(f5);
-		FatWide.render(f5);
-		FatTall.render(f5);
-		FatButt.render(f5);
-		ArmR.render(f5);
-		ArmL.render(f5);
-		FootL.render(f5);
-		FootR.render(f5);
-		EarR2.render(f5);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
@@ -119,5 +136,4 @@ public class ModelJigglypuff extends ModelBase {
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 	}
-
 }

@@ -13,18 +13,24 @@ public class ModuleLeg extends Module {
 	float WalkOffset;
 	float LegRotationLimit;
 	float LegInitX;
+	float LegInitY;
+	float LegInitZ;
 	float legSpeed;
+	EnumRotation rotationAxis;
 	EnumPhase phaseVariable;
 	EnumLeg legVariable;
 
 	public ModuleLeg(ModelRenderer leg, EnumLeg legVariable,
-			EnumPhase phaseVariable, float LegRotationLimit, float legSpeed) {
+			EnumPhase phaseVariable, EnumRotation rotationAxis, float LegRotationLimit, float legSpeed) {
 		this.leg = leg;
 		this.LegRotationLimit = LegRotationLimit;
 		this.legSpeed = legSpeed;
 		this.phaseVariable = phaseVariable;
 		this.legVariable = legVariable;
+		this.rotationAxis = rotationAxis;
 		LegInitX = leg.rotateAngleX;
+		LegInitY = leg.rotateAngleY;
+		LegInitZ = leg.rotateAngleZ;
 
 		if (phaseVariable == EnumPhase.InPhase) {
 
@@ -66,10 +72,18 @@ public class ModuleLeg extends Module {
 	@Override
 	public void walk(EntityPixelmon entity, float f, float f1, float f2,
 			float f3, float f4) {
-
-		leg.rotateAngleX = MathHelper.cos(f * legSpeed + WalkOffset)
-				* LegRotationLimit * f1 + LegInitX;
-
+		if (rotationAxis == EnumRotation.x) {
+			leg.rotateAngleX = MathHelper.cos(f * legSpeed + WalkOffset)
+					* LegRotationLimit * f1 + LegInitX;
+		}
+		if (rotationAxis == EnumRotation.y) {
+			leg.rotateAngleY = MathHelper.cos(f * legSpeed + WalkOffset)
+					* LegRotationLimit * f1 + LegInitY;
+		}
+		if (rotationAxis == EnumRotation.z) {
+			leg.rotateAngleZ = MathHelper.cos(f * legSpeed + WalkOffset)
+					* LegRotationLimit * f1 + LegInitZ;
+		}
 	}
 
 	@Override
