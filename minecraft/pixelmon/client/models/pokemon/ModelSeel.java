@@ -16,6 +16,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -348,8 +349,8 @@ public class ModelSeel extends PixelmonModelBase
       RightArm.addChild(Fin_Tip_Back_Right);
       Body.addChild(RightArm);
       
-      ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArmModule = new ModuleArm(RightArm,EnumArm.Right, 0, 0, 0);
+      ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, EnumRotation.x, 0, 0);
+		ModuleArm rightArmModule = new ModuleArm(RightArm,EnumArm.Right, EnumRotation.x, 0, 0);
 
 		ModuleHead headModule = new ModuleHead(Head);
 		

@@ -6,6 +6,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -27,7 +28,8 @@ public class ModelLickitung extends PixelmonModelBase {
 		addHead(Head);
 		Body.addChild(Head);
 
-		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this, "LeftLeg");
+		PixelmonModelRenderer LeftLeg = new PixelmonModelRenderer(this,
+				"LeftLeg");
 		LeftLeg.setRotationPoint(4, 8, -2);
 		addLeftLeg(LeftLeg);
 		Body.addChild(LeftLeg);
@@ -36,104 +38,122 @@ public class ModelLickitung extends PixelmonModelBase {
 		addTail(Tail);
 		Body.addChild(Tail);
 
-		PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this, "RightArm");
+		PixelmonModelRenderer RightArm = new PixelmonModelRenderer(this,
+				"RightArm");
 		RightArm.setRotationPoint(-6, -2.5f, -2.9f);
 		addRightArm(RightArm);
 		Body.addChild(RightArm);
 
-		PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this, "LeftArm");
+		PixelmonModelRenderer LeftArm = new PixelmonModelRenderer(this,
+				"LeftArm");
 		LeftArm.setRotationPoint(6, -2.5f, -2.9f);
 		addLeftArm(LeftArm);
 		Body.addChild(LeftArm);
 
-		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this, "RightLeg");
+		PixelmonModelRenderer RightLeg = new PixelmonModelRenderer(this,
+				"RightLeg");
 		RightLeg.setRotationPoint(-4F, 8F, -2F);
 		addRightLeg(RightLeg);
 		Body.addChild(RightLeg);
 
 		ModuleHead head = new ModuleHead(Head);
-		ModuleArm leftArm = new ModuleArm(LeftArm, EnumArm.Left, 0, 0, 0);
-		ModuleArm rightArm = new ModuleArm(RightArm, EnumArm.Left, 0, 0, 0);
+		ModuleArm leftArm = new ModuleArm(LeftArm, EnumArm.Left, EnumRotation.x, 0, 0);
+		ModuleArm rightArm = new ModuleArm(RightArm, EnumArm.Left, EnumRotation.x, 0, 0);
 
 		float legSpeed = 0.5F;
 		float legRotationLimit = 1.4F;
 
-		ModuleLeg leftLeg = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legSpeed);
-		ModuleLeg rightLeg = new ModuleLeg(RightLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legSpeed);
+		ModuleLeg leftLeg = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legSpeed);
+		ModuleLeg rightLeg = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legSpeed);
 
 		ModuleTailBasic tail = new ModuleTailBasic(Tail, 0.15f, 0.05f, legSpeed);
-		skeleton = new SkeletonBiped(Body, head, leftArm, rightArm, leftLeg, rightLeg, tail);
+		skeleton = new SkeletonBiped(Body, head, leftArm, rightArm, leftLeg,
+				rightLeg, tail);
 	}
 
 	private void addRightLeg(PixelmonModelRenderer RightLeg) {
-		PixelmonModelRenderer RightLeg1 = new PixelmonModelRenderer(this, 28, 54);
+		PixelmonModelRenderer RightLeg1 = new PixelmonModelRenderer(this, 28,
+				54);
 		RightLeg1.addBox(-5.3F, 0.2F, -4.4F, 5, 4, 6);
 		// RightLeg1.setRotationPoint(-4F, 17F, -2F);
 		RightLeg1.setTextureSize(128, 64);
 		RightLeg1.mirror = true;
 		setRotation(RightLeg1, 0.0872665F, 0.2617994F, 0F);
 		RightLeg.addChild(RightLeg1);
-		PixelmonModelRenderer RightLeg2 = new PixelmonModelRenderer(this, 32, 46);
+		PixelmonModelRenderer RightLeg2 = new PixelmonModelRenderer(this, 32,
+				46);
 		RightLeg2.addBox(-4.5F, -0.7F, -3.9F, 4, 3, 5);
 		RightLeg2.setTextureSize(128, 64);
 		RightLeg2.mirror = true;
 		setRotation(RightLeg2, -0.3490659F, 0.3490659F, 0.3490659F);
 		RightLeg.addChild(RightLeg2);
-		PixelmonModelRenderer RightLeg3 = new PixelmonModelRenderer(this, 32, 37);
+		PixelmonModelRenderer RightLeg3 = new PixelmonModelRenderer(this, 32,
+				37);
 		RightLeg3.addBox(-3F, 3.4F, -4.9F, 4, 2, 5);
 		RightLeg3.setTextureSize(128, 64);
 		RightLeg3.mirror = true;
 		setRotation(RightLeg3, 0.2268928F, 0.3490659F, 0.2792527F);
 		RightLeg.addChild(RightLeg3);
-		PixelmonModelRenderer RightLeg3_1 = new PixelmonModelRenderer(this, 30, 25);
+		PixelmonModelRenderer RightLeg3_1 = new PixelmonModelRenderer(this, 30,
+				25);
 		RightLeg3_1.addBox(-4.6F, 3.7F, -3.1F, 4, 3, 5);
 		RightLeg3_1.setTextureSize(128, 64);
 		RightLeg3_1.mirror = true;
 		setRotation(RightLeg3_1, -0.1047198F, 0.3490659F, 0F);
 		RightLeg.addChild(RightLeg3_1);
-		PixelmonModelRenderer RightLeg4 = new PixelmonModelRenderer(this, 32, 35);
+		PixelmonModelRenderer RightLeg4 = new PixelmonModelRenderer(this, 32,
+				35);
 		RightLeg4.addBox(-3.6F, 6F, -4.3F, 2, 1, 1);
 		RightLeg4.setTextureSize(128, 64);
 		RightLeg4.mirror = true;
 		setRotation(RightLeg4, 0F, 0.3490659F, 0F);
 		RightLeg.addChild(RightLeg4);
-		PixelmonModelRenderer RightLeg4_1 = new PixelmonModelRenderer(this, 32, 35);
+		PixelmonModelRenderer RightLeg4_1 = new PixelmonModelRenderer(this, 32,
+				35);
 		RightLeg4_1.addBox(0.4F, 6F, -5.4F, 1, 1, 1);
 		RightLeg4_1.setTextureSize(128, 64);
 		RightLeg4_1.mirror = true;
 		setRotation(RightLeg4_1, 0F, 1.308997F, 0F);
 		RightLeg.addChild(RightLeg4_1);
-		PixelmonModelRenderer RightLeg4_2 = new PixelmonModelRenderer(this, 32, 35);
+		PixelmonModelRenderer RightLeg4_2 = new PixelmonModelRenderer(this, 32,
+				35);
 		RightLeg4_2.addBox(-4.5F, 6F, -0.4F, 1, 1, 1);
 		RightLeg4_2.setTextureSize(128, 64);
 		RightLeg4_2.mirror = true;
 		setRotation(RightLeg4_2, 0F, -0.7853982F, 0F);
 		RightLeg.addChild(RightLeg4_2);
-		PixelmonModelRenderer RightLeg5 = new PixelmonModelRenderer(this, 38, 31);
+		PixelmonModelRenderer RightLeg5 = new PixelmonModelRenderer(this, 38,
+				31);
 		RightLeg5.addBox(-3.4F, -2.5F, -4.4F, 3, 3, 3);
 		RightLeg5.setTextureSize(128, 64);
 		RightLeg5.mirror = true;
 		setRotation(RightLeg5, -0.6806784F, 0.5235988F, 0.1570796F);
 		RightLeg.addChild(RightLeg5);
-		PixelmonModelRenderer RightLeg6 = new PixelmonModelRenderer(this, 32, 46);
+		PixelmonModelRenderer RightLeg6 = new PixelmonModelRenderer(this, 32,
+				46);
 		RightLeg6.addBox(-4.9F, -0.2F, -4F, 4, 2, 4);
 		RightLeg6.setTextureSize(128, 64);
 		RightLeg6.mirror = true;
 		setRotation(RightLeg6, -0.1745329F, 0.2617994F, -0.0349066F);
 		RightLeg.addChild(RightLeg6);
-		PixelmonModelRenderer RightLeg7 = new PixelmonModelRenderer(this, 32, 37);
+		PixelmonModelRenderer RightLeg7 = new PixelmonModelRenderer(this, 32,
+				37);
 		RightLeg7.addBox(-6.2F, 2.7F, -4F, 2, 2, 5);
 		RightLeg7.setTextureSize(128, 64);
 		RightLeg7.mirror = true;
 		setRotation(RightLeg7, 0.122173F, 0.2617994F, -0.2443461F);
 		RightLeg.addChild(RightLeg7);
-		PixelmonModelRenderer RightLeg7_1 = new PixelmonModelRenderer(this, 32, 37);
+		PixelmonModelRenderer RightLeg7_1 = new PixelmonModelRenderer(this, 32,
+				37);
 		RightLeg7_1.addBox(-6.2F, 3.2F, -4F, 2, 2, 5);
 		RightLeg7_1.setTextureSize(128, 64);
 		RightLeg7_1.mirror = true;
 		setRotation(RightLeg7_1, 0.122173F, 0.2617994F, -0.2443461F);
 		RightLeg.addChild(RightLeg7_1);
-		PixelmonModelRenderer RightLeg8 = new PixelmonModelRenderer(this, 32, 15);
+		PixelmonModelRenderer RightLeg8 = new PixelmonModelRenderer(this, 32,
+				15);
 		RightLeg8.addBox(-4.6F, 4F, -3.9F, 4, 3, 5);
 		RightLeg8.setTextureSize(128, 64);
 		RightLeg8.mirror = true;
@@ -149,19 +169,22 @@ public class ModelLickitung extends PixelmonModelBase {
 		LeftArm1.mirror = true;
 		setRotation(LeftArm1, 0F, 0F, 0.0349066F);
 		LeftArm.addChild(LeftArm1);
-		PixelmonModelRenderer LeftArm1_1 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer LeftArm1_1 = new PixelmonModelRenderer(this, 66,
+				27);
 		LeftArm1_1.addBox(0F, -1.9F, -1.766667F, 4, 3, 3);
 		LeftArm1_1.setTextureSize(128, 64);
 		LeftArm1_1.mirror = true;
 		setRotation(LeftArm1_1, 0F, 0F, -0.0872665F);
 		LeftArm.addChild(LeftArm1_1);
-		PixelmonModelRenderer LeftArm1_2 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer LeftArm1_2 = new PixelmonModelRenderer(this, 66,
+				27);
 		LeftArm1_2.addBox(0F, -1.7F, -1.6F, 4, 3, 3);
 		LeftArm1_2.setTextureSize(128, 64);
 		LeftArm1_2.mirror = true;
 		setRotation(LeftArm1_2, 0.0698132F, 0.1745329F, 0F);
 		LeftArm.addChild(LeftArm1_2);
-		PixelmonModelRenderer LeftArm1_3 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer LeftArm1_3 = new PixelmonModelRenderer(this, 66,
+				27);
 		LeftArm1_3.addBox(0F, -1.7F, -1.6F, 4, 3, 3);
 		LeftArm1_3.setTextureSize(128, 64);
 		LeftArm1_3.mirror = true;
@@ -179,19 +202,22 @@ public class ModelLickitung extends PixelmonModelBase {
 		LeftArm3.mirror = true;
 		setRotation(LeftArm3, 0.0698132F, 0.3665191F, 0.4537856F);
 		LeftArm.addChild(LeftArm3);
-		PixelmonModelRenderer LeftArm3_1 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer LeftArm3_1 = new PixelmonModelRenderer(this, 66,
+				27);
 		LeftArm3_1.addBox(5.5F, 3.665F, -0.6F, 1, 1, 3);
 		LeftArm3_1.setTextureSize(128, 64);
 		LeftArm3_1.mirror = true;
 		setRotation(LeftArm3_1, 0.0698132F, 0.418879F, -0.4537856F);
 		LeftArm.addChild(LeftArm3_1);
-		PixelmonModelRenderer LeftArm3_2 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer LeftArm3_2 = new PixelmonModelRenderer(this, 66,
+				27);
 		LeftArm3_2.addBox(5.7F, -1.7F, -4.25F, 1, 3, 1);
 		LeftArm3_2.setTextureSize(128, 64);
 		LeftArm3_2.mirror = true;
 		setRotation(LeftArm3_2, 0.0698132F, -0.1047198F, -0.0349066F);
 		LeftArm.addChild(LeftArm3_2);
-		PixelmonModelRenderer LeftArm3_3 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer LeftArm3_3 = new PixelmonModelRenderer(this, 66,
+				27);
 		LeftArm3_3.addBox(4.7F, -1.6F, 5F, 1, 3, 1);
 		LeftArm3_3.setTextureSize(128, 64);
 		LeftArm3_3.mirror = true;
@@ -203,7 +229,8 @@ public class ModelLickitung extends PixelmonModelBase {
 		LeftArm4.mirror = true;
 		setRotation(LeftArm4, 0.0698132F, 0.4014257F, 0F);
 		LeftArm.addChild(LeftArm4);
-		PixelmonModelRenderer LeftArmClaw = new PixelmonModelRenderer(this, 32, 35);
+		PixelmonModelRenderer LeftArmClaw = new PixelmonModelRenderer(this, 32,
+				35);
 		LeftArmClaw.addBox(6F, 0.2F, -2.2F, 1, 1, 1);
 		LeftArmClaw.setTextureSize(128, 64);
 		LeftArmClaw.mirror = true;
@@ -212,68 +239,79 @@ public class ModelLickitung extends PixelmonModelBase {
 	}
 
 	private void addRightArm(PixelmonModelRenderer RightArm) {
-		PixelmonModelRenderer RightArm1 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RightArm1 = new PixelmonModelRenderer(this, 66,
+				27);
 		RightArm1.addBox(-4F, -1.5F, -1.8F, 4, 3, 3);
 		// RightArm1.setRotationPoint(-6F, 6.5F, -2.9F);
 		RightArm1.setTextureSize(128, 64);
 		RightArm1.mirror = true;
 		setRotation(RightArm1, 0F, 0F, -0.0349066F);
 		RightArm.addChild(RightArm1);
-		PixelmonModelRenderer RightArm1_1 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RightArm1_1 = new PixelmonModelRenderer(this, 66,
+				27);
 		RightArm1_1.addBox(-4F, -1.9F, -1.766667F, 4, 3, 3);
 		RightArm1_1.setTextureSize(128, 64);
 		RightArm1_1.mirror = true;
 		setRotation(RightArm1_1, 0F, 0F, 0.0872665F);
 		RightArm.addChild(RightArm1_1);
-		PixelmonModelRenderer RightArm1_2 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RightArm1_2 = new PixelmonModelRenderer(this, 66,
+				27);
 		RightArm1_2.addBox(-3F, -1.7F, -1.6F, 4, 3, 3);
 		RightArm1_2.setTextureSize(128, 64);
 		RightArm1_2.mirror = true;
 		setRotation(RightArm1_2, 0.0698132F, -0.1745329F, 0F);
 		RightArm.addChild(RightArm1_2);
-		PixelmonModelRenderer RIghtArm1_3 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RIghtArm1_3 = new PixelmonModelRenderer(this, 66,
+				27);
 		RIghtArm1_3.addBox(-4F, -1.7F, -1.6F, 4, 3, 3);
 		RIghtArm1_3.setTextureSize(128, 64);
 		RIghtArm1_3.mirror = true;
 		setRotation(RIghtArm1_3, 0.0698132F, 0.0523599F, 0F);
 		RightArm.addChild(RIghtArm1_3);
-		PixelmonModelRenderer RightArm2 = new PixelmonModelRenderer(this, 50, 56);
+		PixelmonModelRenderer RightArm2 = new PixelmonModelRenderer(this, 50,
+				56);
 		RightArm2.addBox(-7F, -2.2F, -1F, 4, 4, 4);
 		RightArm2.setTextureSize(128, 64);
 		RightArm2.mirror = true;
 		setRotation(RightArm2, 0.0698132F, -0.4014257F, 0F);
 		RightArm.addChild(RightArm2);
-		PixelmonModelRenderer RightArm3 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RightArm3 = new PixelmonModelRenderer(this, 66,
+				27);
 		RightArm3.addBox(-6.4F, -5F, -0.55F, 1, 1, 3);
 		RightArm3.setTextureSize(128, 64);
 		RightArm3.mirror = true;
 		setRotation(RightArm3, 0.0698132F, -0.3665191F, -0.4537856F);
 		RightArm.addChild(RightArm3);
-		PixelmonModelRenderer RightArm3_1 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RightArm3_1 = new PixelmonModelRenderer(this, 66,
+				27);
 		RightArm3_1.addBox(-6.5F, 3.665F, -0.6F, 1, 1, 3);
 		RightArm3_1.setTextureSize(128, 64);
 		RightArm3_1.mirror = true;
 		setRotation(RightArm3_1, 0.0698132F, -0.418879F, 0.4537856F);
 		RightArm.addChild(RightArm3_1);
-		PixelmonModelRenderer RightArm3_2 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RightArm3_2 = new PixelmonModelRenderer(this, 66,
+				27);
 		RightArm3_2.addBox(-6.7F, -1.7F, -4.25F, 1, 3, 1);
 		RightArm3_2.setTextureSize(128, 64);
 		RightArm3_2.mirror = true;
 		setRotation(RightArm3_2, 0.0698132F, 0.1047198F, 0.0349066F);
 		RightArm.addChild(RightArm3_2);
-		PixelmonModelRenderer RightArm3_3 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RightArm3_3 = new PixelmonModelRenderer(this, 66,
+				27);
 		RightArm3_3.addBox(-5.7F, -1.6F, 5F, 1, 3, 1);
 		RightArm3_3.setTextureSize(128, 64);
 		RightArm3_3.mirror = true;
 		setRotation(RightArm3_3, 0.0698132F, -0.9075712F, -0.0349066F);
 		RightArm.addChild(RightArm3_3);
-		PixelmonModelRenderer RightArm4 = new PixelmonModelRenderer(this, 66, 27);
+		PixelmonModelRenderer RightArm4 = new PixelmonModelRenderer(this, 66,
+				27);
 		RightArm4.addBox(-7.9F, -1.65F, -0.5F, 3, 3, 3);
 		RightArm4.setTextureSize(128, 64);
 		RightArm4.mirror = true;
 		setRotation(RightArm4, 0.0698132F, -0.4014257F, 0F);
 		RightArm.addChild(RightArm4);
-		PixelmonModelRenderer RightArmClaw = new PixelmonModelRenderer(this, 32, 35);
+		PixelmonModelRenderer RightArmClaw = new PixelmonModelRenderer(this,
+				32, 35);
 		RightArmClaw.addBox(-7F, 0.2F, -2.2F, 1, 1, 1);
 		RightArmClaw.setTextureSize(128, 64);
 		RightArmClaw.mirror = true;
@@ -430,7 +468,8 @@ public class ModelLickitung extends PixelmonModelBase {
 		LeftLeg3.mirror = true;
 		setRotation(LeftLeg3, 0.2268928F, -0.3490659F, -0.2792527F);
 		LeftLeg.addChild(LeftLeg3);
-		PixelmonModelRenderer LeftLeg3_1 = new PixelmonModelRenderer(this, 30, 25);
+		PixelmonModelRenderer LeftLeg3_1 = new PixelmonModelRenderer(this, 30,
+				25);
 		LeftLeg3_1.addBox(0.6F, 3.7F, -3.1F, 4, 3, 5);
 		LeftLeg3_1.setTextureSize(128, 64);
 		LeftLeg3_1.mirror = true;
@@ -442,13 +481,15 @@ public class ModelLickitung extends PixelmonModelBase {
 		LeftLeg4.mirror = true;
 		setRotation(LeftLeg4, 0F, -0.3490659F, 0F);
 		LeftLeg.addChild(LeftLeg4);
-		PixelmonModelRenderer LeftLeg4_1 = new PixelmonModelRenderer(this, 32, 35);
+		PixelmonModelRenderer LeftLeg4_1 = new PixelmonModelRenderer(this, 32,
+				35);
 		LeftLeg4_1.addBox(-1.4F, 6F, -5.4F, 1, 1, 1);
 		LeftLeg4_1.setTextureSize(128, 64);
 		LeftLeg4_1.mirror = true;
 		setRotation(LeftLeg4_1, 0F, -1.308997F, 0F);
 		LeftLeg.addChild(LeftLeg4_1);
-		PixelmonModelRenderer LeftLeg4_2 = new PixelmonModelRenderer(this, 32, 35);
+		PixelmonModelRenderer LeftLeg4_2 = new PixelmonModelRenderer(this, 32,
+				35);
 		LeftLeg4_2.addBox(3.5F, 6F, -0.4F, 1, 1, 1);
 		LeftLeg4_2.setTextureSize(128, 64);
 		LeftLeg4_2.mirror = true;
@@ -472,7 +513,8 @@ public class ModelLickitung extends PixelmonModelBase {
 		LeftLeg7.mirror = true;
 		setRotation(LeftLeg7, 0.122173F, -0.2617994F, 0.2443461F);
 		LeftLeg.addChild(LeftLeg7);
-		PixelmonModelRenderer LeftLeg7_1 = new PixelmonModelRenderer(this, 32, 37);
+		PixelmonModelRenderer LeftLeg7_1 = new PixelmonModelRenderer(this, 32,
+				37);
 		LeftLeg7_1.addBox(4.2F, 3.2F, -4F, 2, 2, 5);
 		LeftLeg7_1.setTextureSize(128, 64);
 		LeftLeg7_1.mirror = true;
@@ -1117,25 +1159,29 @@ public class ModelLickitung extends PixelmonModelBase {
 		Tongue9.mirror = true;
 		setRotation(Tongue9, 1.396263F, 0F, 0F);
 		Tongue.addChild(Tongue9);
-		PixelmonModelRenderer Tongue9_1 = new PixelmonModelRenderer(this, 68, 50);
+		PixelmonModelRenderer Tongue9_1 = new PixelmonModelRenderer(this, 68,
+				50);
 		Tongue9_1.addBox(-12.65F, -7.55F, -14.6F, 1, 1, 1);
 		Tongue9_1.setTextureSize(128, 64);
 		Tongue9_1.mirror = true;
 		setRotation(Tongue9_1, 1.32645F, -0.1745329F, -0.7853982F);
 		Tongue.addChild(Tongue9_1);
-		PixelmonModelRenderer Tongue9_2 = new PixelmonModelRenderer(this, 68, 50);
+		PixelmonModelRenderer Tongue9_2 = new PixelmonModelRenderer(this, 68,
+				50);
 		Tongue9_2.addBox(11.3F, -7.55F, -14.6F, 1, 1, 1);
 		Tongue9_2.setTextureSize(128, 64);
 		Tongue9_2.mirror = true;
 		setRotation(Tongue9_2, 1.32645F, 0.1745329F, 0.7853982F);
 		Tongue.addChild(Tongue9_2);
-		PixelmonModelRenderer Tongue9_3 = new PixelmonModelRenderer(this, 68, 50);
+		PixelmonModelRenderer Tongue9_3 = new PixelmonModelRenderer(this, 68,
+				50);
 		Tongue9_3.addBox(-12.25F, -7.55F, -14.6F, 1, 1, 1);
 		Tongue9_3.setTextureSize(128, 64);
 		Tongue9_3.mirror = true;
 		setRotation(Tongue9_3, 1.32645F, -0.1745329F, -0.7853982F);
 		Tongue.addChild(Tongue9_3);
-		PixelmonModelRenderer Tongue9_4 = new PixelmonModelRenderer(this, 68, 50);
+		PixelmonModelRenderer Tongue9_4 = new PixelmonModelRenderer(this, 68,
+				50);
 		Tongue9_4.addBox(11.65F, -7.55F, -14.6F, 1, 1, 1);
 		Tongue9_4.setTextureSize(128, 64);
 		Tongue9_4.mirror = true;
@@ -1382,12 +1428,14 @@ public class ModelLickitung extends PixelmonModelBase {
 		Body.addChild(Body1);
 	}
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+	public void render(Entity entity, float f, float f1, float f2, float f3,
+			float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		Body.render(f5);
 	}
 
-	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
+	private void setRotation(PixelmonModelRenderer model, float x, float y,
+			float z) {
 		model.rotateAngleX = x;
 		model.rotateAngleY = y;
 		model.rotateAngleZ = z;
