@@ -12,6 +12,7 @@ import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
@@ -247,12 +248,12 @@ public class ModelClefable extends PixelmonModelBase {
 		float legRotationLimit = 1.4F;
 
 		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
-				EnumPhase.InPhase, legRotationLimit, legspeed);
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
-				EnumPhase.InPhase, legRotationLimit, legspeed);
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 
-		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 90, .5F, legspeed);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 90, .5F, legspeed);
+		ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, EnumRotation.y, .5F, legspeed);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, EnumRotation.y, .5F, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArmModule, rightArmModule,
 				leftLegModule, rightLegModule, null);
