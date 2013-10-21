@@ -21,6 +21,7 @@ public class PixelmonConfig {
 
 	public static boolean allowNonPixelmonMobs;
 	public static boolean allowCapturingOutsideBattle = true;
+	public static boolean allowNicknames = true;
 	public static boolean spawnStructures = true;
 
 	public static int maxNumLandPokemon;
@@ -60,6 +61,8 @@ public class PixelmonConfig {
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
 		spawnStructures = config.get("general", "Allow Structures to Spawn", true).getBoolean(true);
+		
+		allowNicknames = config.get("general", "Allow pokemon nicknames", true).getBoolean(true);
 		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs",
 				false).getBoolean(false);
 		allowCapturingOutsideBattle = config.get("general",
