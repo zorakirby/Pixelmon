@@ -19,6 +19,9 @@ import pixelmon.client.models.animations.ModuleTail;
 import pixelmon.client.models.animations.ModuleTailBasic;
 import pixelmon.client.models.animations.SkeletonBase;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
+import pixelmon.client.models.animations.bird.EnumWing;
+import pixelmon.client.models.animations.bird.ModuleWingSegmented;
+import pixelmon.client.models.animations.bird.SkeletonBird;
 
 public class ModelCharizard extends PixelmonModelBase {
 
@@ -71,15 +74,24 @@ public class ModelCharizard extends PixelmonModelBase {
 		RWing1.addChild(RWing2);
 		RWing2.addChild(RWing3);
 		RWing3.addChild(RWing4);
-
+		
+		float initialRotation = 40;
+				
+		ModelRenderer[] LwingArgs = { LWing1, LWing2, LWing3, LWing4 };
+		ModelRenderer[] RwingArgs = { RWing1, RWing2, RWing3, RWing4 };
+		
+		ModuleWingSegmented LWingModule = new ModuleWingSegmented(Body,
+				EnumWing.Left, 65, 2F, initialRotation, 1.4F, .15F, 2.5F, LwingArgs);
+		ModuleWingSegmented RWingModule = new ModuleWingSegmented(Body,
+				EnumWing.Right, 65, 2F, initialRotation, 1.4F, .15F, 2.5F, RwingArgs);
 		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
 
 		setRotation(Body, radians, 0, 0);
-		float legspeed = 0.5F;
-		float legRotationLimit = 0.8F;
+//		float legspeed = 0.5F;
+//		float legRotationLimit = 0.8F;
 
-		skeleton = new SkeletonBase(Body);
+		skeleton = new SkeletonBird(Body, null, LWingModule, RWingModule, null, null);
 		scale = 5;
 	}
 
@@ -96,10 +108,5 @@ public class ModelCharizard extends PixelmonModelBase {
 	}
 
 	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) {
-        RWing1.rotateAngleY = MathHelper.cos((float) Math.toRadians(35)) * 1 * MathHelper.cos(f2 * .2F) * (float) Math.PI * .25F;
-        RWing1.rotateAngleZ = MathHelper.sin((float) Math.toRadians(35)) * 1 * MathHelper.cos(f2 * .2F) * (float) Math.PI * .25F;
-        LWing1.rotateAngleY = MathHelper.cos((float) Math.toRadians(35)) * -1 * MathHelper.cos(f2 * .2F) * (float) Math.PI * .25F;
-        LWing1.rotateAngleZ = MathHelper.sin((float) Math.toRadians(35)) * -1 * MathHelper.cos(f2 * .2F) * (float) Math.PI * .25F;
-
 	}
 }
