@@ -81,9 +81,9 @@ public class ModelCharizard extends PixelmonModelBase {
 		ModelRenderer[] RwingArgs = { RWing1, RWing2, RWing3, RWing4 };
 		
 		ModuleWingSegmented LWingModule = new ModuleWingSegmented(Body,
-				EnumWing.Left, 65, 1.6F, initialRotation, 1.4F, .15F, 2.5F, LwingArgs);
+				EnumWing.Left, 65, 2F, initialRotation, 1.4F, .15F, 2.5F, LwingArgs);
 		ModuleWingSegmented RWingModule = new ModuleWingSegmented(Body,
-				EnumWing.Right, 65, 1.6F, initialRotation, 1.4F, .15F, 2.5F, RwingArgs);
+				EnumWing.Right, 65, 2F, initialRotation, 1.4F, .15F, 2.5F, RwingArgs);
 		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
 
