@@ -30,7 +30,6 @@ public class List {
 				check();
 				getNames();
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -54,9 +53,7 @@ public class List {
 				string = input;
 			in.close();
 		}  catch (MalformedURLException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 		return string;
