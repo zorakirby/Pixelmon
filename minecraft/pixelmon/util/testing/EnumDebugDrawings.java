@@ -8,13 +8,18 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
+import java.util.TreeMap;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.util.AbstractList2D;
 import pixelmon.util.FunctionHelper;
 import pixelmon.util.MappedList2D;
@@ -25,6 +30,7 @@ import pixelmon.worldGeneration.WorldGenMysteryDungeon;
 import pixelmon.worldGeneration.mysteryDungeon.DungeonEntranceStandard;
 import pixelmon.worldGeneration.mysteryDungeon.MysteryDungeonFloor;
 import pixelmon.worldGeneration.mysteryDungeon.RoomMarker;
+import static pixelmon.util.testing.AbstractDrawable.*;
 
 public enum EnumDebugDrawings {
 	
@@ -33,17 +39,32 @@ public enum EnumDebugDrawings {
 	Dragon("Dragon Fractal"){public void makeDrawing(){FS.dragon();}},
 	Gold_Dragon_Lines ("Line-based Golden Dragon Fractal"){public void makeDrawing(){FS.goldDragonLines();}},
 	Gold_Dragon_Points("Point-based Golden Dragon Fractal"){public void makeDrawing(){FS.goldDragonPoints();}},
+	Dragon_Lines("Point-based Dragon Fractal (Non-LSystem)"){public void makeDrawing(){FS.dragonLines();}},
 	Warbled_Circle("Warbled Circle"){public void makeDrawing(){FS.warbledCircle();}},
-	Warbled_Window("Warbled Circle Window"){public void makeDrawing(){FS.crazehWarbledCircleWindow();}},
+	Warbled_Window("Warbled Circle Window (No 'Close' Button!)"){public void makeDrawing(){FS.crazehWarbledCircleWindow();}},
 	Mystery_Dungeon_Floor("Single Mystery Dungeon Floor"){public void makeDrawing(){FS.mysteryDungeonFloor();}},
 	Complete_Mystery_Dungeon("Complete 10-Floor Mystery Dungeon"){public void makeDrawing(){FS.mysteryDungeonFull();}},
-	Room_Edge_Tester("Mystery Dungeon Room-Edge Test"){public void makeDrawing(){FS.roomEdge();}}
+	Room_Edge_Tester("Mystery Dungeon Room-Edge Test"){public void makeDrawing(){FS.roomEdge();}},
+	File_Drawing("Drawing from file"){public void makeDrawing(){FS.fileDrawing();}},
+	List_Drawing("List Writer"){public void makeDrawing(){FS.listDrawing();}},
 	;
 	
-	public final String name;
+	public final String displayName;
 	
 	EnumDebugDrawings(String name){
-		this.name = name;
+		this.displayName = name;
+	}
+	
+	/**
+	 * @return All the values of {@code EnumDebugDrawings} sorted by {@code displayName}
+	 */
+	public static EnumDebugDrawings[] valuesByString(){
+		EnumDebugDrawings[] result = values();
+		TreeMap<String, EnumDebugDrawings> temp = new TreeMap();
+		for(EnumDebugDrawings type : result){
+			temp.put(type.displayName, type);
+		}
+		return temp.values().toArray(result);
 	}
 	
 	
@@ -51,7 +72,7 @@ public enum EnumDebugDrawings {
 	
 	@Override
 	public String toString(){
-		return this.name;
+		return this.displayName;
 	}
 	
 	protected static class FS{
@@ -156,7 +177,7 @@ public enum EnumDebugDrawings {
 		public static void dragon(){
 			TestingCanvas canvas = TestingCanvas.createSimpleScreen("Dragon");
 			Testomatic.showConcurrentDialog("Just so you know...", "This may take a couple of seconds", 500L);
-			AbstractList2D<Float> dragon = Fractal.dragon(18, true);
+			AbstractList2D<Float> dragon = Fractal.dragonLSystem(18, true);
 			canvas.setDrawables(new AbstractDrawable.FloatDrawing(dragon));
 		}
 		
@@ -173,17 +194,62 @@ public enum EnumDebugDrawings {
 			canvas.setDrawables(new AbstractDrawable.LineDrawing(lines));
 		}
 		
+		public static void dragonLines(){
+			TestingCanvas canvas = TestingCanvas.createSimpleScreen(1000, 700, "Non-LSystem Dragon");
+			StopWatch dragonTimer = new StopWatch("Dragon Timer");
+			dragonTimer.start();
+			Collection<Line2D.Float> lines = Fractal.dragonLines(300, 15).getAll();
+			dragonTimer.stop();
+			System.out.println(dragonTimer.describe());
+			canvas.setTranslation(350, 500);
+			canvas.setScale(.5, .5);
+			canvas.setDrawables(new AbstractDrawable.LineDrawing(lines));
+		}
+		
 		public static void goldDragonPoints(){
 			TestingCanvas canvas = TestingCanvas.createSimpleScreen(1000, 700, "Golden Dragon 2");
-			canvas.setTranslation(300, 700);
+			canvas.setTranslation(300, 350);
 			
-			AbstractList2D<Float> points = Fractal.goldDragon(400, 15, true);
+			AbstractList2D<Float> points = Fractal.goldDragon(350, 15, true);
 			canvas.setDrawables(new AbstractDrawable.FloatDrawing(points));
 		}
 
 		public static void MBrot(){
 			Canvas canvas = TestingCanvas.createSimpleScreen(1000, 700, "FractalTest");
 			Fractal.MBrot(canvas, 700);
+		}
+		
+		public static void fileDrawing(){
+			JFileChooser chooser = new JFileChooser(Testomatic.MCPFolder());
+			int choice = chooser.showOpenDialog(null);
+			if(choice == JFileChooser.APPROVE_OPTION){
+				File l2dFile = chooser.getSelectedFile();
+				try{
+					AbstractList2D values = new MappedList2D();
+					values.loadFill(new FileInputStream(l2dFile));
+					Object avalue = values.getOneValue();
+					AbstractDrawable drawable;
+					if(avalue instanceof Integer)
+						drawable = new IntegerDrawing(values);
+					else if (avalue instanceof Float)
+						drawable = new FloatDrawing(values);
+					else
+						drawable = new NonNullDrawing(values);
+					TestingCanvas canvas = TestingCanvas.createSimpleScreen("AbstractList2D from file: \"" + l2dFile.getName() + "\" , number of values = " + values.size());
+					canvas.setDrawables(drawable);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		public static void listDrawing(){
+			TestingCanvas canvas = TestingCanvas.createSimpleScreen("List Drawing");
+			ArrayList list = new ArrayList();
+			for(Object o : Testomatic.valuesByName(EnumPokeballs.class)){
+				list.add(o);
+			}
+			canvas.setDrawables(new Lister(list));
 		}
 	}
 

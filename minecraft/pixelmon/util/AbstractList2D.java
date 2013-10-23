@@ -2,6 +2,14 @@ package pixelmon.util;
 
 import java.awt.Shape;
 import java.awt.geom.Line2D;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -18,6 +26,7 @@ import java.util.TreeSet;
 import com.google.common.collect.TreeMultimap;
 
 import pixelmon.util.FunctionHelper.FunctionType;
+import pixelmon.util.testing.Testomatic;
 
 /**
  * A fantastic, wonderful class that functions as though it were a 2-dimensional array of values, except that
@@ -66,6 +75,7 @@ import pixelmon.util.FunctionHelper.FunctionType;
  * -<b>creation/modifying with {@link Line2D Line(s)}!!!</b><br>
  * -combine/intersect with other {@code AbstractList2D}<br>
  * -shifting all values to bottom-left aligned with {@code (0,0)}<br>
+ * -saving/loading values to/from a file!!!<br>
  * 
  * 
  * @author Jack
@@ -73,19 +83,16 @@ import pixelmon.util.FunctionHelper.FunctionType;
  * @param <T> The type of values being stored
  */
 public abstract class AbstractList2D<T> implements IList2D<T>{
-	
 
-
-	
 	protected int elements = 0;
 	protected Integer minX = null, minZ = null, maxX = null, maxZ = null;
 	protected Double minVal = null, maxVal = null;
-	
-	protected Class valuesClass;
-	
-	protected TreeMultimap<Integer, Integer> xToZ = TreeMultimap.create(), zToX = TreeMultimap.create();
 
-	
+	protected Class valuesClass;
+
+	protected TreeMultimap<Integer, Integer> xToZ = TreeMultimap.create(), zToX = TreeMultimap.create();
+	protected ArrayList<T> valuesList = new ArrayList();
+
 	public abstract AbstractList2D createNew();
 	public abstract T get(int x, int z);
 	/**
@@ -97,13 +104,13 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 	 */
 	protected abstract T removeImpl(int x, int z);
 	protected abstract void putValue(int x, int z, T value);
-	
-	
+
+
 	public abstract AbstractList2D modifyWithShape(Shape shape, T fill);
 	public abstract Set<T> toSet();
 	public abstract List<T> toList();
-	
-	
+
+
 	public void addValue(int x, int z, T value){
 		if(minX == null || x < minX)
 			minX = x;
@@ -120,16 +127,23 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 			if(maxVal == null || numValue > maxVal)
 				maxVal = numValue;
 		}
-		if(!this.containsValue(x, z))
+		if(!this.contains(x, z))
 			elements++;
+		else{
+			this.valuesList.remove(get(x, z));
+		}
 		xToZ.put(x, z);
 		zToX.put(z, x);
+
+		this.valuesList.add(value);
 		putValue(x, z, value);
 	}
-	
+
 	public T remove(int x, int z){
-		if(this.containsValue(x, z))
+		if(this.contains(x, z)){
 			elements--;
+			this.valuesList.remove(get(x,z));
+		}
 		xToZ.remove(x, z);
 		zToX.remove(z, x);
 		if(xToZ.get(x).isEmpty())
@@ -151,39 +165,45 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 	public TreeSet<Integer> zList(int x){
 		return new TreeSet(xToZ.get(x));
 	}
-	
+
 	public Integer minX(){
 		return minX;
 	}
-	
+
 	public Integer maxX(){
 		return maxX;
 	}
-	
+
 	public Integer minZ(){
 		return minZ;
 	}
-	
+
 	public Integer maxZ(){
 		return maxZ;
 	}
-	
+
 	public Integer rangeX(){
 		return (minX == null || maxX == null) ? null : maxX - minX;
 	}
-	
+
 	public Integer rangeZ(){
 		return (minZ == null || maxZ == null) ? null : maxZ - minZ;
 	}
-	
+
 	public Double minVal(){
 		return minVal;
 	}
-	
+
 	public Double maxVal(){
 		return maxVal;
 	}
-	
+
+
+	public int size(){
+		//return xToZ.size();
+		return elements;
+	}
+
 	/**
 	 * @return The smallest possible 'Rectangle values' that can fit around 
 	 * <code>lists</code> in the order (minX, minZ, maxX, maxZ).
@@ -202,13 +222,17 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return new int[]{xMin, zMin, xMax, zMax};
 	}
-	
-	public boolean containsValue(int x, int z){
-		return this.xToZ.containsKey(x) && this.zToX.containsKey(z);
+
+	public boolean contains(int x, int z){
+		return this.xToZ.containsEntry(x, z);
 	}
-	
+
+	public boolean contains(T value){
+		return valuesList.contains(value);
+	}
+
 	/**
-	 * Nearly the same as {@link #containsValue(int, int)} except that if there IS a value at
+	 * Nearly the same as {@link #contains(int, int)} except that if there IS a value at
 	 * {@code (x, z)}, it will only return true if said value is not {@code null}
 	 * @param x
 	 * @param z
@@ -217,44 +241,44 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 	public boolean isntNull(int x, int z){
 		return this.get(x, z)!= null;
 	}
-	
+
 	public boolean containsX(int x){
 		return xToZ.containsKey(x);
 	}
-	
+
 	public boolean containsZ(int z){
 		return zToX.containsKey(z);
 	}
 	public boolean isEmpty(){
 		return elements == 0;
 	}
-	
+
 	public boolean overlaps(AbstractList2D another){
 		for(int i : this.xList()){
 			for(int j : this.zList(i)){
-				if(another.containsValue(i, j))
+				if(another.contains(i, j))
 					return true;
 			}
 		}
 		return false;
 	}
 
-	
 
-	
 
-	
+
+
+
 	public void addRect(int x, int z, int width, int length, T value, boolean overwrite){
 		int dx = Integer.signum(width);
 		int dz = Integer.signum(length);
 		for(int i = 0; i!= width; i+=dx){
 			for(int j = 0; j!= length; j+= dz){
-				if(overwrite || !this.containsValue(i, j))
+				if(overwrite || !this.contains(i, j))
 					this.addValue(x+i, z+j, value);
 			}
 		}
 	}
-	
+
 	public void addRectButSkip(int x, int z, int width, int length, T value, T noOverwrite){
 		int dx = Integer.signum(width);
 		int dz = Integer.signum(length);
@@ -265,14 +289,14 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 			}
 		}
 	}
-	
+
 	public void addCheckerBoard(int x, int z, int width, int length, T value){
 		for(int i = 0; i < width; i++)
 			for(int j = 0; j < length; j++)
 				if(((i+j)&1)==0)
 					this.addValue(x+i, z+j, value);
 	}
-	
+
 	public AbstractList2D<T> copy(){
 		AbstractList2D<T> result = this.createNew();
 		for(int i : xList()){
@@ -282,7 +306,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
+
 	public static <T extends Number> AbstractList2D<T> sumCheckerBoard(AbstractList2D<T> values, T addend){
 		AbstractList2D<T> addendCheckers = values.createNew();
 		int[] bounds = getBounds(values);
@@ -290,7 +314,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		add(values, addendCheckers);
 		return values;
 	}
-	
+
 	public int[] randomPoint(Random random){
 		Integer[] xa = xList().toArray(new Integer[0]);
 		int x = xa[random.nextInt(xa.length)];
@@ -298,20 +322,34 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		int z = za[random.nextInt(za.length)];
 		return new int[]{x, z};
 	}
-	
+
+	/**
+	 * @return The first value (smallest row index in the smallest column index) in this {@code AbstractList2D}
+	 * or {@code null} if there isn't one.
+	 */
+	public T getOneValue(){
+		T result = null;
+		for(int i : xList()){
+			for(int j : zList(i)){
+				result = get(i, j);
+				if(result != null)
+					return result;
+			}
+		}
+		return null;
+	}
+
 	public AbstractList2D<T> fillEvens(T fill){
 		for(int i : xList()){
 			if((i&1) == 0){
 				for(int j : zList(i)){
 					if((j&1) == 0)
-					addValue(i, j, fill);
+						addValue(i, j, fill);
 				}
 			}
 		}
 		return this;
 	}
-	
-	
 	
 	public AbstractList2D<T> checkerboard(T fill){
 		for(int i : xList()){
@@ -322,12 +360,12 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return this;
 	}
-	
+
 	public int[] getNthIntersection(AbstractList2D other, int n){
 		int hits = 0;
 		for(Integer i : xList()){
 			for(Integer j : zList(i)){
-				if(other.containsValue(i, j))
+				if(other.contains(i, j))
 					hits++;
 				if(hits == n)
 					return new int[]{i,j};
@@ -335,7 +373,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return null;
 	}
-	
+
 	/** replaces all values in this {@code AbstractList2D} with {@code value}
 	 * @param value
 	 * @return
@@ -346,7 +384,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 				this.addValue(i, j, value);
 		return this;
 	}
-	
+
 	public <F> AbstractList2D<F> convert(F fillValue){
 		AbstractList2D<F> result = this.createNew();
 		for(int i : xList())
@@ -354,7 +392,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 				result.addValue(i, j, fillValue);
 		return result;
 	}
-	
+
 	public AbstractList2D<T> recreateWithMinAtZero(){
 		AbstractList2D<T> result = this.createNew();
 		for(Integer i : this.xList()){
@@ -364,7 +402,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
+
 	/**
 	 * @return This newly-expanded AbstractList2D
 	 */
@@ -374,7 +412,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 			for(int z : zList(x)){
 				for(int i = -radius; i <= radius; i++){
 					for(int j = -radius; j <= radius; j++){
-						if(!this.containsValue(x+i, z+j))
+						if(!this.contains(x+i, z+j))
 							temp.addValue(x+i, z+j, value);
 					}
 				}
@@ -382,7 +420,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return this.combine(temp, false);
 	}
-	
+
 	public static <T> AbstractList2D<T> fromArray(Class<? extends AbstractList2D> list2Dclass, int x, int z, int width, int length, T[] values){
 		AbstractList2D result = null;
 		try{
@@ -397,7 +435,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
+
 	public static  AbstractList2D<Integer> fromArray(Class<? extends AbstractList2D> list2Dclass, int x, int z, int width, int length, int[] values){
 		AbstractList2D result = null;
 		try{
@@ -412,7 +450,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
+
 	public static  AbstractList2D<Float> fromArray(Class<? extends AbstractList2D> list2Dclass, int x, int z, int width, int length, float[] values){
 		AbstractList2D result = null;
 		try{
@@ -427,14 +465,12 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
+
 	public static AbstractList2D<Float> modify(AbstractList2D<Float> values, AbstractList2D<Float> result, FunctionHelper.FunctionType type, double... args){
 		if(result == null)
 			result = values.createNew();
 		for(Integer i : values.xList()){
-			Collection<Integer> column = values.zList(i);
-			for(Integer j : column){
-				
+			for(Integer j : values.zList(i)){
 				Float newValue; 
 				if(type == FunctionType.PERFECTSIN){
 					newValue = (float) FunctionHelper.perfectSin(values.get(i, j), args[0], values.minVal, values.maxVal);
@@ -447,7 +483,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
+
 	public static <T> AbstractList2D<T> copyWithOnly(AbstractList2D<T> values, T value){
 		AbstractList2D<T> result = values.createNew();
 		for(Integer x : values.xList()){
@@ -460,8 +496,8 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
-	
+
+
 	public static <T> AbstractList2D<T> copyWithout(AbstractList2D<T> values, T value){
 		AbstractList2D<T> result = values.createNew();
 		for(Integer x : values.xList()){
@@ -474,21 +510,21 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
+
 	public static <E, T extends Comparable<E>> AbstractList2D<T> filter(AbstractList2D<T> values, E value, BooleanOp op){
 		AbstractList2D<T> result = values.createNew();
 		for(Integer x : values.xList()){
 			Collection<Integer> column = values.zList(x);
 			for(Integer z : column){
 				T t =  values.get(x, z);
-				if(compare(t, value, op)){
+				if(op.op(t, value)){
 					result.addValue(x, z, t);
 				}
 			}
 		}
 		return result;
 	}
-	
+
 	public  <E> AbstractList2D<E> filterConversion(T match, AbstractList2D<E> dest, E value){
 		for(Integer x : this.xList()){
 			Collection<Integer> column = this.zList(x);
@@ -500,7 +536,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return dest;
 	}
-	
+
 	public static AbstractList2D<Float> invert(AbstractList2D<Float> source, AbstractList2D<Float> dest){
 		if(dest == null)
 			dest = source.createNew();
@@ -512,7 +548,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return dest;
 	}
-	
+
 	public static AbstractList2D<Integer> add(AbstractList2D<Integer> source, AbstractList2D<Integer> dest, int addend){
 		if(dest == null)
 			dest = source.createNew();
@@ -524,7 +560,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return dest;
 	}
-	
+
 	public static <T extends Number> void add(AbstractList2D<T> left, AbstractList2D<? extends Number> right){
 		for(int i : right.xList())
 			for(int j : right.zList(i)){
@@ -555,7 +591,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 				}
 			}
 	}
-	
+
 	public static AbstractList2D<Float> add(AbstractList2D<Float> source, AbstractList2D<Float> dest, float addend){
 		if(dest == null)
 			dest = source.createNew();
@@ -567,7 +603,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return dest;
 	}
-	
+
 	public static AbstractList2D<Float> mul(AbstractList2D<Float> source, AbstractList2D<Float> dest, float factor){
 		if(dest == null)
 			dest = source.createNew();
@@ -579,7 +615,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return dest;
 	}
-	
+
 	public static AbstractList2D<Float> fromLines(Class<? extends AbstractList2D> list2DClass, Collection<? extends Line2D> lines){
 		AbstractList2D result = null;
 		try {
@@ -592,7 +628,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
+
 	public AbstractList2D<T> combine(AbstractList2D<? extends T> other, boolean overwrite){
 		for(Integer i : other.xList()){
 			Collection<Integer> column = other.zList(i);
@@ -604,7 +640,7 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return this;
 	}
-	
+
 	/**
 	 * @return This AbstractList2D, now intersected with <code>other</code>
 	 */
@@ -613,13 +649,13 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		for(int i : xList){
 			Collection<Integer> zList = new TreeSet(zList(i));
 			for(int j : zList){
-				if(!other.containsValue(i, j))
+				if(!other.contains(i, j))
 					remove(i, j);
 			}
 		}
 		return this;
 	}
-	
+
 	public static <T> AbstractList2D<T> common(AbstractList2D<T> derive, AbstractList2D... rest){
 		AbstractList2D<T> result = derive.copy();
 		for(int i = 0; i < rest.length; i++){
@@ -627,8 +663,8 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return result;
 	}
-	
-	
+
+
 	public static boolean isPointSurrounded(AbstractList2D values, int x, int z){
 		for(int i = -1; i < 2; i++){
 			for(int j = -1; j < 2; j++){
@@ -638,11 +674,11 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 		}
 		return true;
 	}
-	
+
 	public boolean isInBounds(int x, int z){
 		return (x >= minX() && x <= maxX() && z >= minZ() && z <= maxZ());
 	}
-	
+
 	public static AbstractList2D<Float> fromLine(Class<? extends AbstractList2D> list2DClass, Line2D line){
 		AbstractList2D<Float> result = null;
 		try {
@@ -651,50 +687,47 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 			e.printStackTrace();
 		}
 		double x0 = line.getX1(), y0 = line.getY1(), x1 = line.getX2(), y1 = line.getY2();
-	     boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
-	     if (steep){
-	         double temp = x0;
-	         x0 = y0;
-	         y0 = temp;
-	         temp = x1;
-	         x1 = y1;
-	         y1 = temp;
-	     }
-	     if (x0 > x1){
-	         double temp = x0;
-	         x0 = x1;
-	         x1 = temp;
-	         temp = y0;
-	         y0 = y1;
-	         y1 = temp;
-	     }
-	     int deltax = (int) (x1 - x0);
-	     int deltay = (int) Math.abs(y1 - y0);
-	     int error = deltax / 2;
-	     int ystep;
-	     int y = (int) y0;
-	     ystep = y0 < y1 ? 1 : -1;
-	     for(int x = (int) x0; x <= x1; x++){
-	         if(steep)
-	        	 result.addValue(y, x, 1F);
-	         else result.addValue(x, y, 1F);
-	         error -= deltay;
-	         if(error < 0){
-	             y += ystep;
-	             error += deltax;
-	         }
-	     }
-	     return result;
+		boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
+		if (steep){
+			double temp = x0;
+			x0 = y0;
+			y0 = temp;
+			temp = x1;
+			x1 = y1;
+			y1 = temp;
+		}
+		if (x0 > x1){
+			double temp = x0;
+			x0 = x1;
+			x1 = temp;
+			temp = y0;
+			y0 = y1;
+			y1 = temp;
+		}
+		int deltax = (int) (x1 - x0);
+		int deltay = (int) Math.abs(y1 - y0);
+		int error = deltax / 2;
+		int ystep;
+		int y = (int) y0;
+		ystep = y0 < y1 ? 1 : -1;
+		for(int x = (int) x0; x <= x1; x++){
+			if(steep)
+				result.addValue(y, x, 1F);
+			else result.addValue(x, y, 1F);
+			error -= deltay;
+			if(error < 0){
+				y += ystep;
+				error += deltax;
+			}
+		}
+		return result;
 	}
-	
+
 	public String listIndices(){
 		return this.xToZ.toString();
 	}
-	
-	public static <E, T extends Comparable<E>> boolean compare(T left, E right, BooleanOp op){
-		return op.op(left, right);
-	}
-	
+
+
 	/**
 	 * @return A new, boring, MinimalList2D containing all the values this has,
 	 * but since it's a {@code MinimalList2D}, it doesn't have any of the 
@@ -706,5 +739,81 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 			for(int j : zList(i))
 				result.addValue(i, j, get(i, j));
 		return result;
+	}
+
+
+	/**
+	 * Loads values from a file created via {@link #save(OutputStream)} and fills this
+	 * {@code AbstractList2D} with them.
+	 * @param stream - The {@link InputStream} associated with the file from which this
+	 * {@code AbstractList2D} is loading.
+	 * @throws IOException Any of the usual Input/Output related exceptions.
+	 * @throws ClassCastException The values loaded from the {@code OutputStream} are 
+	 * incompatible with this {@code AbstractList2D} 
+	 * (for example, an <code>{@literal AbstractList2D<Integer>}</code> is loading from a 
+	 * file created by an <code>{@literal AbstractList2D<Boolean>}</code>
+	 * @throws ClassNotFoundException Class of a serialized object cannot be found.
+	 * @throws java.io.InvalidObjectException Any value in the file is of {@link Enum} type 
+	 * (because Enum defines its own {@link Enum#readObject(ObjectInputStream) readObject}
+	 * method that always throws an error). May also be thrown for any of the obvious problems
+	 * that can occur from deserialization (i.e., somebody moving the entire class to a 
+	 * different package will completely screw it over)
+	 */
+
+	public void loadFill(InputStream stream)throws IOException, ClassCastException, ClassNotFoundException{
+		ObjectInputStream in = new ObjectInputStream(stream);
+		Object[][] deserial = (Object[][]) in.readObject();
+		for(Object[] xzv : deserial){
+			Integer i = (Integer) xzv[0];
+			Integer j = (Integer) xzv[1];
+			Object value = xzv[2];
+			this.addValue(i, j, (T) value);
+		}
+	}
+
+
+	/**
+	 * Writes all the values in this AbstractList2D to a file. There is no guarantee that the
+	 * AbstractList2D will be restorable if the class of any of the values is updated/moved.
+	 * For this reason, it may be a good idea to use (or first convert the AbstractList2D
+	 * into an AbstractList2D of) primitive types and/or Strings to symbolize
+	 * different values, or, use {@link java.io.Serializable}, because even changing the order of
+	 * a few lines in a method can break deserializing older serialized versions of an object.
+	 * <br>
+	 * <br>
+	 * <b>IMPORTANT</b>: {@link pixelmon.util.testing.Testomatic} contains
+	 * {@link pixelmon.util.testing.Testomatic#save(AbstractList2D, String) a method} that simplifies
+	 * the saving process, automatically saving the files into
+	 * <code>{@literal <MCP folder>}/src/minecraft/pixelmon/util/L2D/</code>. Ideally, a simple, 
+	 * temporary method should be written in Testomatic that saves the specific lists using 
+	 * that method.<br>
+	 * <b>WARNING</b>: {@link Enum} defines its own {@link Enum#readObject(ObjectInputStream) readObject}
+	 * method that always throws an error. Do not attempt to serialize Enum values, or they
+	 * will cause the resulting file to be un-deserializable. Instead, use primitive types
+	 * or Strings to symbolize different Enum values, as is described above.
+	 * @param stream
+	 */
+	public void save(OutputStream stream){
+		ObjectOutputStream out = null;
+		try{
+			out	= new ObjectOutputStream(stream);
+			ArrayList<Object[]> tempList = new ArrayList(elements);
+			for(int x : xList()){
+				for(int z : zList(x)){
+					Object[] xzv = new Object[]{x, z, get(x, z)};
+					tempList.add(xzv);
+				}
+			}
+			Object[][] serial = tempList.toArray(new Object[0][0]);
+			out.writeObject(serial);
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{ //My first-ever 'finally-block'
+			try {
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

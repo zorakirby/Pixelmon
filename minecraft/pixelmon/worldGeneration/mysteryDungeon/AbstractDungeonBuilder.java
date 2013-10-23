@@ -23,9 +23,6 @@ public abstract class AbstractDungeonBuilder {
 			int y0 = y + (dungeon.up ? i*(dungeon.floorHeight+2) : -(i+1)*(dungeon.floorHeight-2));
 			genFloor(world, floors[i], random, x, y0, z, i);
 			dungeon.entrance.build(world, dungeon, floors[i], random, x, y0, z, i);
-			if(dungeon.extras!=null)
-				for(AbstractDungeonExtra extra : dungeon.extras)
-					extra.genFloor(world, floors[i], random, x, y0+1, z, i);
 		}
 		genOthers(world, random, x, y, z);
 	}

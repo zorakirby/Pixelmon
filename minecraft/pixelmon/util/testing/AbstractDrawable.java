@@ -1,9 +1,11 @@
 package pixelmon.util.testing;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -213,6 +215,31 @@ public abstract class AbstractDrawable{
 					g2d.setColor(Color.WHITE);
 					g2d.drawRect(i, j, 0, 0);
 				}
+			}
+		}
+	}
+	
+	public static class Lister extends AbstractDrawable{
+		
+		protected Collection col;
+		protected static final int extension = 3;
+		public Lister(Collection col){
+			this.col = col;
+		}
+
+		@Override
+		public void draw(Graphics2D g2d) {
+			FontMetrics metrics = g2d.getFontMetrics();
+			int y = 0;
+			for(Object item : col){
+				String describe = item.toString();
+				g2d.setColor(Color.CYAN);
+				Rectangle2D bounds = metrics.getStringBounds(describe, g2d);
+				g2d.fillRoundRect(0, y, (int) bounds.getWidth(), (int) bounds.getHeight()+extension, 10, 10);
+				y+=bounds.getHeight();
+				g2d.setColor(Color.BLACK);
+				g2d.drawString(describe, 0, y);
+				y+=extension+2;
 			}
 		}
 	}

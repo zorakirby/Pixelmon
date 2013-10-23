@@ -59,7 +59,7 @@ public class MinimalList2D<T> implements IList2D<T>{
 	}
 
 	@Override
-	public boolean containsValue(int x, int z) {
+	public boolean contains(int x, int z) {
 		return this.values.containsKey(x) && this.values.get(x) != null && this.values.get(x).containsKey(z);
 	}
 
@@ -80,7 +80,7 @@ public class MinimalList2D<T> implements IList2D<T>{
 			if(maxVal == null || numValue > maxVal)
 				maxVal = numValue;
 		}*/
-		if(!this.containsValue(x, z))
+		if(!this.contains(x, z))
 			elements++;
 		if(values.get(x) == null)
 			values.put(x, new HashMap());

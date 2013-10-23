@@ -8,9 +8,11 @@ import java.util.TreeMap;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.InitMapGenEvent.EventType;
 import pixelmon.spawning.spawners.SpawnerBase;
 import pixelmon.util.ChancedWrapper;
+import pixelmon.util.InfiltratorGenLayer;
 import pixelmon.util.WeightedWrapper;
 import pixelmon.worldGeneration.MapGenDenialWrapper;
 import pixelmon.worldGeneration.biome.BiomeGenMysteryValley;
@@ -23,30 +25,36 @@ public class PixelmonGen {
 	
 	public static int mysteryValleyId;
 	
-	public static BiomeGenBase mysteryValley = new BiomeGenMysteryValley(58).setBiomeName("Mystery Valley").setTemperatureRainfall(0.95F, 1.0F).setMinMaxHeight(-.9F, .1F);
+	public static boolean mysteryValleyTryout = false;
+	
+	public static BiomeGenBase mysteryValley;//= new BiomeGenMysteryValley(58).setBiomeName("Mystery Valley").setTemperatureRainfall(0.95F, 1.0F).setMinMaxHeight(-.9F, .1F);
 	
 	
 	/**
 	 * load biome IDs from config file and initialize them.<br>
 	 */
 	public static void load(Configuration configuration) {
-		
+		if(!mysteryValleyTryout)
+			return;
 		//IDs
 		mysteryValleyId = loadBiomeID(configuration, "Mystery Valley", 23);
 		
 		//Biomes
-		//mysteryValley = new BiomeGenMysteryValley(mysteryValleyId).setBiomeName("Mystery Valley").setTemperatureRainfall(0.95F, 1.0F).setMinMaxHeight(.3F, .36F);
-
+		mysteryValley = new BiomeGenMysteryValley(mysteryValleyId).setBiomeName("Mystery Valley").setTemperatureRainfall(0.95F, 1.0F).setMinMaxHeight(-.9F, .1F);
+		register();
 	}
 	
 	public static void register(){
+		
 		//Dictionary
-		BiomeDictionary.registerBiomeType(mysteryValley, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.WATER, BiomeDictionary.Type.MAGICAL );
+		BiomeDictionary.registerBiomeType(mysteryValley, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.MAGICAL );
 		
 		//Registration
 		registerRareBiome(mysteryValley, 0.5F, forest, swampland);
 		//registerBiomeForDenial(mysteryValley, CAVE, MINESHAFT, RAVINE);
 		SpawnerBase.register(mysteryValley);
+		
+		MinecraftForge.TERRAIN_GEN_BUS.register(InfiltratorGenLayer.INSTANCE);
 	}
 	
 	private static int loadBiomeID(Configuration configuration, String key, int defaultValue){

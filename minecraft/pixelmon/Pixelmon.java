@@ -15,6 +15,8 @@ import pixelmon.battles.BattleTickHandler;
 import pixelmon.blocks.apricornTrees.ApricornBonemealEvent;
 import pixelmon.client.ClientPacketHandler;
 import pixelmon.client.ClientProxy;
+import pixelmon.client.materials.Cubemap;
+import pixelmon.client.render.RenderResources;
 import pixelmon.comm.ConnectionHandler;
 import pixelmon.comm.PacketHandler;
 import pixelmon.comm.PixelmonPlayerTracker;
@@ -154,7 +156,6 @@ public class Pixelmon {
 		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
 		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
 		MinecraftForge.EVENT_BUS.register(new EntityDeath());
-		MinecraftForge.TERRAIN_GEN_BUS.register(InfiltratorGenLayer.INSTANCE);
 		//MinecraftForge.TERRAIN_GEN_BUS.register(MapGenDenialWrapper.SUBSCRIBER);
 
 		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);

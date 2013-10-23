@@ -711,7 +711,7 @@ public class MysteryDungeonFloor {
 	}
 	
 	public static boolean isDangerBlock(int x, int z){
-		return antiCheatRing.containsValue(x, z);
+		return antiCheatRing.contains(x, z);
 	}
 	
 	public static boolean func_jkl(Set<RoomMarker> asdf){

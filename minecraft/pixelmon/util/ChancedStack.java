@@ -52,5 +52,15 @@ public class ChancedStack extends ChancedWrapper<ItemStack>{
 		int size = RandomHelper.useRandomForNumberBetween(random, minItems, maxItems);
 		return size == 0 ? null : this.object.splitStack(size);
 	}
+	
+	@Override
+	public String toString(){
+		return this.getClass().getSimpleName() + "(chance:" + (maxChance-minChance) + " item:" + object.getDisplayName() + " minItems:" + minItems + " maxItems:" + maxItems + ")";
+	}
+	
+	@Override
+	public String describeObject(){
+		return object.getDisplayName();
+	}
 
 }

@@ -60,7 +60,6 @@ public class PixelmonConfig {
 		PixelmonBlocks.load(config);
 		PixelmonItems.load(config);
 		spawnStructures = config.get("general", "Allow Structures to Spawn", true).getBoolean(true);
-		PixelmonGen.load(config);
 		allowNonPixelmonMobs = config.get("general", "Allow vanilla mobs",
 				false).getBoolean(false);
 		allowCapturingOutsideBattle = config.get("general",
@@ -111,7 +110,8 @@ public class PixelmonConfig {
 		PixelmonItems.addNames();
 		PixelmonBlocks.addNames();
 		PixelmonBlocks.registerBlocks();
-		PixelmonGen.register();
+		PixelmonGen.load(config);
+		//PixelmonGen.register();
 		PixelmonEntityList.registerEntities();
 		PixelmonEntityList.addSpawns();
 	}

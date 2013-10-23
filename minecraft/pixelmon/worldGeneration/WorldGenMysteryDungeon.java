@@ -104,6 +104,8 @@ public class WorldGenMysteryDungeon extends WorldGenSpecificBiome{
 		MysteryDungeonFloor[] floors = new MysteryDungeonFloor[numFloors];
 		floorMaps(width, length, floors, random, ladderShaftOverwrite);
 		this.builder.build(world, this, floors, random, x, y, z);
+		for(AbstractDungeonExtra extra : extras)
+			extra.build(world, this, floors, random, x, y, z);
 		this.generating = false;
 		return true;
 		

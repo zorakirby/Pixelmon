@@ -29,6 +29,9 @@ public class StopWatch extends org.apache.commons.lang3.time.StopWatch{
 		} catch (Exception cannotHappen) {
 		}
 	}
+	/**
+	 * Constructs a new {@code StopWatch} with the name being {@link PixelmonDebug#prevMethod() the method calling this constructor}
+	 */
 	public StopWatch(){
 			this.timerName = PixelmonDebug.prevMethod();
 	}

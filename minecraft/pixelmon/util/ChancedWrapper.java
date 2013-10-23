@@ -8,10 +8,11 @@ import net.minecraft.util.MathHelper;
 
 import pixelmon.RandomHelper;
 
-public class ChancedWrapper<T>{
+public class ChancedWrapper<T> implements Comparable<ChancedWrapper>{
 	
 	public T object;
 	public float minChance, maxChance;
+	
 	private static final String illegalChance = "The ChancedWrapper from %s wrapping %s must be initialized with a chance value between 0.0f and 1.0f. The value in this case, however, was %s";
 	
 	/**
@@ -134,6 +135,51 @@ public class ChancedWrapper<T>{
 		T result =  preliminary.size() == 0 ? null : preliminary.get(random.getNextInt(preliminary.size()));
 		return result;
 	}
+	
+	public float chance(){
+		return this.maxChance-this.minChance;
+	}
+	
+	
+	@Override
+	public String toString(){
+		return this.getClass().getSimpleName() + "(chance = " + (maxChance-minChance) + "object = " + object + ")";
+	}
+	
+	public String describeObject(){
+		return this.object.toString();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Sorts by Class, then chance, then:<br>
+	 * -If both {@code ChancedWrapper}s' objects are of type {@link Comparable}, by comparing the two<br>
+	 * -Otherwise, by {@link #describeObject() object description}.<br><br>
+	 * If, at this point, the two{@code ChancedWrapper}s have still not been differentiated, compares 
+	 * this {@code ChancedWrapper}'s hashCode to the other's.
+	 */
+	@Override
+	public int compareTo(ChancedWrapper o) {
+		int classCompare = this.getClass().getSimpleName().compareTo(o.getClass().getSimpleName());
+		if(classCompare!=0)
+			return classCompare;
+		int chanceCompare = (int) Math.signum(this.chance() - o.chance());
+		if(chanceCompare!=0)
+			return chanceCompare;
+		if(this.object instanceof Comparable && o.object instanceof Comparable){
+			Comparable c0 = (Comparable) this.object;
+			Comparable c1 = (Comparable) o.object;
+			try{
+			return c0.compareTo(c1);
+			}catch(Exception e){}
+		}
+		int objectCompare = this.describeObject().compareTo(o.describeObject());
+		if(objectCompare!=0)
+			return objectCompare;
+		return(this.hashCode() - o.hashCode());
+	}
+	
+	
 
 
 

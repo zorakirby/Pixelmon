@@ -62,7 +62,7 @@ public class WorldGenDragonHills extends WorldGenSpecificBiome{
 	
 	public static AbstractList2D<Float> chooseDragon(Random random){
 		int iterations = RandomHelper.useRandomForNumberBetween(random, 12, 18);
-		return Fractal.dragon(iterations, true);
+		return Fractal.dragonLSystem(iterations, true);
 	}
 	
 	

@@ -110,7 +110,7 @@ public class WorldGenFogboundLake extends WorldGenSpecificBiome{
 	protected void placeBase(World world, int x, int y, int z, AbstractList2D<Float> base, AbstractList2D link){
 		for(int xi : base.xList()){
 			for(int zi : base.zList(xi)){
-				int heightLevel = (int) (link.containsValue(xi, zi) ? base.maxVal() * HEIGHT+LINK_HEIGHT : base.get(xi, zi)*HEIGHT);
+				int heightLevel = (int) (link.contains(xi, zi) ? base.maxVal() * HEIGHT+LINK_HEIGHT : base.get(xi, zi)*HEIGHT);
 				for(int yi = 0; yi < heightLevel; yi++){
 					if(yi > this.maxBase)
 						this.maxBase = yi;
@@ -192,7 +192,7 @@ public class WorldGenFogboundLake extends WorldGenSpecificBiome{
 				for(int zi : lineAsPoints.zList(xi)){
 					int y0 = y+maxBase+lakeSurfaceY-3;
 					int blockID = world.getBlockId(x+xi, y0, z+zi);
-					if(lakeDirtEdge.containsValue(xi, zi) || blockID == 0){
+					if(lakeDirtEdge.contains(xi, zi) || blockID == 0){
 						world.setBlock(x+xi, y0, z+zi, Block.waterMoving.blockID, 0, 2);
 						if(isAirBelow(world, x+xi, y0, z+zi)){
 							y0--;
@@ -227,7 +227,7 @@ public class WorldGenFogboundLake extends WorldGenSpecificBiome{
 	protected boolean isLakePointSurrounded(AbstractList2D<Float> lake, int x, int y, int z, int radius){
 		for(int i = -radius; i <= radius; i++){
 			for(int j = -radius; j <= radius; j++){
-				if(!lake.containsValue(x+i, z+j))
+				if(!lake.contains(x+i, z+j))
 					return false;
 				int compareValue = (int) (lake.get(x+i, z+j)*HEIGHT);
 				if (compareValue > y-radius)

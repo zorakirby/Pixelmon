@@ -12,4 +12,5 @@ public enum BooleanOp{
 		return op0(left.compareTo(right));
 	}
 	protected abstract boolean op0(int compare);
+	
 }

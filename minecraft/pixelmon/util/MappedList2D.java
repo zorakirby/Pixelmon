@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.Map;
 
 
 /**
  * {@link TreeMap}-based implementation of {@link AbstractList2D}. This handles 2D
- * indices as a {@code TreeMap} of {@code TreeMaps}. <br>
+ * indices as a {@code TreeMap} of {@code TreeMap}s. <br>
  * <br>
  * Since {@code TreeMap} keeps its keys in order from least to greatest, and the keys 
  * being used here are all integers, the values are also all stored (programmatically)
@@ -27,7 +28,7 @@ import java.util.TreeMap;
  *
  * @param <T> The type of values being stored
  */
-public class MappedList2D<T> extends AbstractList2D<T>{
+public class MappedList2D<T> extends AbstractList2D<T> {
 	
 	protected TreeMap<Integer, TreeMap<Integer, T>> values = new TreeMap();
 
@@ -99,5 +100,4 @@ public class MappedList2D<T> extends AbstractList2D<T>{
 		return result;
 	}
 
-	
 }

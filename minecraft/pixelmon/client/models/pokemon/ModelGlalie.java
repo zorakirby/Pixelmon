@@ -1,13 +1,13 @@
 package pixelmon.client.models.pokemon;
 
 import net.minecraft.entity.Entity;
+import pixelmon.client.materials.Cubemap;
 import pixelmon.client.models.ModelCustomWrapper;
 import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 import pixelmon.client.render.RenderResources;
-import pixelmon.client.shading.Cubemap;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.enums.EnumCustomModel;
 
@@ -31,10 +31,10 @@ public class ModelGlalie extends PixelmonModelBase{
 		doAnimation(var1, f, f1, f2, f3, f4, f5);
 		matte.render(f5);
 		if(isShiny){
-			Cubemap.begin(RenderResources.glalieCubemapShiny);
+			//Cubemap.begin(RenderResources.glalieCubemapShiny);
 		}
 		else{
-			Cubemap.begin(RenderResources.glalieCubemap);
+			//Cubemap.begin(RenderResources.glalieCubemap);
 		}
 		reflective.render(f5);
 		Cubemap.end();

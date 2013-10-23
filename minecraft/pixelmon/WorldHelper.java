@@ -295,7 +295,7 @@ public class WorldHelper {
 		for(ForgeDirection dir : NWSE){
 			int trueX = chunkX + dir.offsetX;
 			int trueZ = chunkZ + dir.offsetZ;
-			if(!map.containsValue(trueX, trueZ) && world.getBiomeGenForCoords(trueX*16, trueZ*16) == biome){
+			if(!map.contains(trueX, trueZ) && world.getBiomeGenForCoords(trueX*16, trueZ*16) == biome){
 				map.addValue(trueX, trueZ, 1F);
 				fillMapWithContinuousBiome(biome, world, map, trueX, trueZ);
 			}

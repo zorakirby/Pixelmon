@@ -40,9 +40,6 @@ public class DungeonBuilderStandard extends AbstractDungeonBuilder{
 
 	@Override
 	protected void genOthers(World world, Random random, int x, int y, int z) {
-		if(this.dungeon.extras!= null)
-			for(AbstractDungeonExtra extra : this.dungeon.extras)
-				extra.genOthers(world, random, x, y, z);
 		genRoofAndFoundation(world, x, y, z);
 	}
 	

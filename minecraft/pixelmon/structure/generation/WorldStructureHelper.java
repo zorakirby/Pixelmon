@@ -14,13 +14,10 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.ChunkDataEvent;
-import pixelmon.worldGeneration.GenHelperEllipse;
 
 public class WorldStructureHelper {
 
 	public final static ArrayList<WorldStructure> worldStructures = new ArrayList<WorldStructure>();
-	public final static WorldStructureHelper instance = new WorldStructureHelper();
-	static final HashMap<int[], GenHelperEllipse> dimensionsToEllipseMqp = new HashMap();
 	
 	
 	public static void addStructure(WorldStructure struct){
@@ -34,13 +31,6 @@ public class WorldStructureHelper {
 		return new int[]{xl, yl, zl};
 	}
 	
-	public static void placeEllipseAt(World world, Random rand, int x, int y, int z, int width, int length, int blockID){
-		placeEllipseAt(world, rand, x, y, z, getEllipse(rand, new int[]{width, length}), blockID);
-	}
-	
-	public static void placeEllipseAt(World world, Random rand, int x, int y, int z, GenHelperEllipse ellipse, int blockID){
-		ellipse.placeHorizontallyAt(world, rand, x, y, z, blockID);
-	}
 	
 	/**
 	 * @param overlaps - Whether or not to include allow <code>WorldStructures</code> literally overlapping the <code>(x, y, z)</code> location to be picked.
@@ -80,13 +70,6 @@ public class WorldStructureHelper {
 		}
 		System.out.println("Chunk List length = " + result.size());
 		return result;
-	}
-	
-	public static GenHelperEllipse getEllipse(Random rand, int[] dims){
-		if(!dimensionsToEllipseMqp.containsKey(dims)){
-			dimensionsToEllipseMqp.put(dims, new GenHelperEllipse(dims));
-		}
-		return dimensionsToEllipseMqp.get(dims);
 	}
 	
 /*	@ForgeSubscribe

@@ -1,6 +1,6 @@
 package pixelmon.client.render;
 
-import pixelmon.client.shading.Cubemap.CubemapTexture;
+import pixelmon.client.materials.Cubemap.CubemapTexture;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderResources {
@@ -23,7 +23,7 @@ public class RenderResources {
 	public static ResourceLocation pillarDamaged = new ResourceLocation("pixelmon:models/pillar/pillar_fractured.png");
 	
 	@CubemapTexture
-	public static String glalieCubemap = "pixelmon/textures/pokemon/Glalie_Cubemap.png";
+	public static ResourceLocation glalieCubemap = new ResourceLocation("pixelmon:textures/pokemon/Glalie_Cubemap.png");
 	@CubemapTexture
-	public static String glalieCubemapShiny = "pixelmon/textures/pokemon/pokemon-shiny/shinyglalie_cubemap.png";
+	public static ResourceLocation glalieCubemapShiny = new ResourceLocation("pixelmon:textures/pokemon/pokemon-shiny/shinyglalie_cubemap.png");
 }

@@ -37,7 +37,7 @@ public class BiomeGenMysteryValley extends BiomeGenNeedsDraining{
 	public static volatile boolean stuff = true;
 	
 	
-	public static boolean done = false;
+	public static boolean done = false, generating = false;
 	
 	protected static int colorSine= 0;
 	protected static final int SINE_LENGTH = 120;
@@ -106,18 +106,21 @@ public class BiomeGenMysteryValley extends BiomeGenNeedsDraining{
         
         //fogbound(world, rand, x, z);
         //doDragon(world, rand, x, z);
-    	//mysteryDungeon(world, rand, x, z);
     	System.out.println("!");
     }
     
     
     protected void mysteryDungeon(World world, Random rand, int x, int z){
+    	if(generating)
+    		return;
+    	generating = true;
     	if(!done){
         	int i = x + rand.nextInt(16);
             int j = z + rand.nextInt(16);
             int y = world.getTopSolidOrLiquidBlock(i, j);
             done = dungeonGen.generate(world, rand, i, y, j);
         	}
+    	generating = false;
     }
     
     

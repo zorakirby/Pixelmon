@@ -77,7 +77,7 @@ public class WorldGenFloodDrain extends WorldGenerator{
 	public boolean generate(World world, Random random, int x, int y, int z) {
 		this.xLoc = x>>4;
 		this.zLoc = z>>4;
-		if(drainedChunks.containsValue(xLoc, zLoc))
+		if(drainedChunks.contains(xLoc, zLoc))
 			return false;
 		if(!checkForFlood || WorldHelper.isChunkFloodedOrFrozen(xLoc, zLoc, world, 2)){
 			int[][] shape = detectLocalShape(world, x, z);
@@ -113,14 +113,14 @@ public class WorldGenFloodDrain extends WorldGenerator{
 					int worldX = this.xLoc*16 + localTestCoords[0];
 					int worldZ = this.zLoc*16 + localTestCoords[1];
 					world.getBiomeGenForCoords(worldX, worldZ);
-					if(!drainedChunks.containsValue(worldX>>4, worldZ>>4)){
+					if(!drainedChunks.contains(worldX>>4, worldZ>>4)){
 						new WorldGenFloodDrain(this.user, this.damBlock, false, true).generate(world, null, worldX, -1, worldZ);
 					}
 					//if the chunk was ALREADY drained, then the above check to see if the coordinate was 
 						//ice or water SHOULD HAVE equated to false.
 					//Since it didn't, that means the chunk's biome layout is positioned weird and needs 
 						//to be redrained.
-					else if(drainedChunks.containsValue(worldX>>4, worldZ>>4)){
+					else if(drainedChunks.contains(worldX>>4, worldZ>>4)){
 						drainedChunks.remove(worldX>>4, worldZ>>4);
 						new WorldGenFloodDrain(this.user, this.damBlock, false, true).generate(world, null, worldX, -1, worldZ);
 					}
@@ -227,7 +227,7 @@ public class WorldGenFloodDrain extends WorldGenerator{
 	 * places a dam column at this X/Z coordinate
 	 */
 	private void damHere(World world, int x, int z){
-		if(drainedBlocks.containsValue(x, z))
+		if(drainedBlocks.contains(x, z))
 			return;
 		drainedBlocks.addValue(x, z, 1);
 		if(WorldHelper.isWaterOrIce(world, x, 62, z)){
@@ -246,7 +246,7 @@ public class WorldGenFloodDrain extends WorldGenerator{
 	 * the last water/ice block to the appropriate {@link BiomeGenBase#topBlock top block}
 	 */
 	private void drainHere(World world, int x, int z){
-		if(drainedBlocks.containsValue(x, z))
+		if(drainedBlocks.contains(x, z))
 		return;
 		drainedBlocks.addValue(x, z, 1);
 		if(WorldHelper.isWaterOrIce(world, x, 62, z)){
