@@ -16,6 +16,7 @@ import pixelmon.spawning.PixelmonSpawner;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.structure.StructureRegistry;
 import pixelmon.structure.worldGen.WorldGenScatteredFeature;
+import pixelmon.tools.List;
 import pixelmon.worldGeneration.WorldGenApricornTrees;
 import pixelmon.worldGeneration.WorldGenBauxiteOre;
 import pixelmon.worldGeneration.WorldGenEvolutionRock;
@@ -35,7 +36,7 @@ public class RegistryHelper {
 
 	public static void init(FMLInitializationEvent event, Pixelmon pixelmon){
 		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
-
+		new List();
 		GameRegistry.registerPlayerTracker(new PixelmonPlayerTracker());
 		
 		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
@@ -46,7 +47,7 @@ public class RegistryHelper {
 		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
 		GameRegistry.registerWorldGenerator(new WorldGenFossils());
 		GameRegistry.registerWorldGenerator(new WorldGenEvolutionRock());
-
+		
 		PixelmonRecipes.addRecipes();
 		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntityHook.class, "Hook", 216, pixelmon, 75, 1, true);

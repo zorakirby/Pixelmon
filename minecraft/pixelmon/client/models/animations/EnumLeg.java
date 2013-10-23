@@ -5,7 +5,3 @@ public enum EnumLeg {
 	FrontLeft, FrontRight, BackLeft, BackRight;
 	
 }
-  
-
-	
-

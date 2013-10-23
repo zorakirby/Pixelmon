@@ -11,6 +11,7 @@ import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
@@ -1594,13 +1595,13 @@ public class ModelRhyhorn extends PixelmonModelBase
 		float legRotationLimit = 1.1F;
 
 		ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft,
-				EnumPhase.OutPhase, legRotationLimit, legspeed);
+				EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight,
-				EnumPhase.OutPhase, legRotationLimit, legspeed);
+				EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft,
-				EnumPhase.OutPhase, legRotationLimit, legspeed);
+				EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight,
-				EnumPhase.OutPhase, legRotationLimit, legspeed);
+				EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonQuadruped(Body, headModule, frontlegLModule,
 				frontlegRModule, backlegLModule, backlegRModule, null);

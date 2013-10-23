@@ -55,10 +55,9 @@ public class DropItemHelper {
 			return Item.goldNugget.itemID;
 		else if (droppedItem.equalsIgnoreCase("Gunpowder"))
 			return Item.gunpowder.itemID;
-		else if (droppedItem.equalsIgnoreCase("Ink sac")) {
-			pixelmon.entityDropItem(new ItemStack(Item.dyePowder, 1, 0), 0.0F);
-			return 0;
-		} else if (droppedItem.equalsIgnoreCase("Iron Ingot"))
+		else if (droppedItem.equalsIgnoreCase("Ink sac"))
+			return Item.dyePowder.itemID;
+		else if (droppedItem.equalsIgnoreCase("Iron Ingot"))
 			return Item.ingotIron.itemID;
 		else if (droppedItem.equalsIgnoreCase("Leather"))
 			return Item.leather.itemID;

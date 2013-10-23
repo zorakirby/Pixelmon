@@ -10,6 +10,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -47,8 +48,8 @@ public class ModelFlygon extends PixelmonModelBase {
 		setRotation(Body, radians, 0, 0);
 		Body.rotateAngleY = 1.5F;
 
-		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legspeed);
-		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
+		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 		scale = 2.5f;
 
 		skeleton = new SkeletonBiped(Body, null, null, null, leftLeg, rightLeg, null);
