@@ -164,7 +164,7 @@ public class RenderPixelmon extends RenderLiving {
 				GL11.glColor4f(1, 1, 1, ((float) pixelmon.evolvingVal) / 20f);
 				this.renderModel(pixelmon, f8, f7, f4, f3 - f2, f5, f6);
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
-			} else if (pixelmon.evolving == 2) {
+			} else if (pixelmon.evolving == 2 || pixelmon.evolving == -2) {
 				if (pixelmon.evolvingVal < 180) {
 					GL11.glDisable(GL11.GL_TEXTURE_2D);
 					GL11.glColor4f(1, 1, 1, 1);
@@ -474,7 +474,17 @@ public class RenderPixelmon extends RenderLiving {
 				scaleFactor * entity.getPixelmonScale() * entity.baseStats.giScale);
 		if (entity.evolving == 2) {
 			float scale = (entity.evolvingVal) / 200f;
-			GL11.glScalef(1 + scale * entity.widthDiff, 1 + scale * entity.heightDiff, 1 + scale * entity.lengthDiff);
+			float wScale = scale * (((float) (entity.widthDiff)) / entity.baseStats.width);
+			float hScale = scale * (((float) (entity.heightDiff)) / entity.baseStats.height);
+			float lScale = scale * (((float) (entity.lengthDiff)) / entity.baseStats.length);
+			GL11.glScalef(1 + wScale, 1 + hScale, 1 + lScale);
+		}
+		if (entity.evolving == -2) {
+			float scale = 1 - (entity.evolvingVal) / 200f;
+			float wScale = scale * (((float) (entity.widthDiff)) / entity.baseStats.width);
+			float hScale = scale * (((float) (entity.heightDiff)) / entity.baseStats.height);
+			float lScale = scale * (((float) (entity.lengthDiff)) / entity.baseStats.length);
+			GL11.glScalef(1 + wScale, 1 + hScale, 1 + lScale);
 		}
 		if (entity.baseStats.doesHover) {
 			GL11.glTranslatef(0, -1 * entity.baseStats.hoverHeight, 0);
