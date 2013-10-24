@@ -27,15 +27,15 @@ public class ModelMetang extends PixelmonModelBase {
 		RightArm.setRotationPoint(-2.734F, 3.658F, 1.274F);
 		RightArm.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/Metang/RightArm.obj")));
 		LeftHand = new PixelmonModelRenderer(this, 0, 0);
-		LeftHand.setRotationPoint(4.415F, 4.040F, 1.346F);
 		LeftHand.setRotationPoint(4.415F, 3.750F, 1.346F);
 		LeftHand.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/Metang/LeftHand.obj")));
 		RightHand = new PixelmonModelRenderer(this, 0, 0);
-		RightHand.setRotationPoint(-4.415f, 4.040f, 1.346f);
 		RightHand.setRotationPoint(-4.415f, 3.750f, 1.346f);
 		RightHand.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/Metang/RightHand.obj")));
 		Body.addChild(LeftArm);
 		Body.addChild(RightArm);
+		Body.addChild(LeftHand);
+		Body.addChild(RightHand);
 		
 		int degrees = 180;
 		     float radians = (float) Math.toRadians(degrees);
