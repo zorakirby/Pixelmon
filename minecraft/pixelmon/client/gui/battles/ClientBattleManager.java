@@ -13,6 +13,7 @@ import pixelmon.items.ItemData;
 
 public class ClientBattleManager {
 	public boolean mustUseLastMove = false;
+
 	public static class AttackData {
 		public int pokemonID;
 		public Attack attack;
@@ -68,26 +69,17 @@ public class ClientBattleManager {
 		return null;
 	}
 
-	static int oldId = -1;
-	static EntityPixelmon oldPixelmon;
-
 	public static boolean isTM = false;
 
 	public static boolean canSwitch = true;
 
 	public static EntityPixelmon getUserPokemon() {
-		if (pokemonId != -1) {
-			if (oldId == pokemonId)
-				return oldPixelmon;
-			for (Object e : Minecraft.getMinecraft().theWorld.loadedEntityList) {
-				if (e instanceof EntityPixelmon) {
-					if (((EntityPixelmon) e).getPokemonId() == pokemonId) {
-						oldPixelmon = (EntityPixelmon) e;
-						return (EntityPixelmon) e;
-					}
+		for (Object e : Minecraft.getMinecraft().theWorld.loadedEntityList) {
+			if (e instanceof EntityPixelmon) {
+				if (((EntityPixelmon) e).getPokemonId() == pokemonId) {
+					return (EntityPixelmon) e;
 				}
 			}
-			oldId = pokemonId;
 		}
 		return null;
 	}
@@ -103,7 +95,7 @@ public class ClientBattleManager {
 	public static boolean hasNewAttacks() {
 		return newAttackList.size() > 0;
 	}
-	
+
 	public void setMustUseLastMove() {
 		mustUseLastMove = true;
 	}
