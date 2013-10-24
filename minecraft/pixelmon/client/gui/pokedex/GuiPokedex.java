@@ -89,6 +89,8 @@ public class GuiPokedex extends GuiContainer {
 		s = "";
 		if (b) {
 			s = selectedEntry.description;
+			if (s == null)
+				s = "";
 			fontRenderer.drawSplitString(s, left + 104, top + 141 - 3, 97, 0x575757);
 		}
 		s = "Height: ";
