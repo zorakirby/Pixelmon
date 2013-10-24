@@ -123,4 +123,13 @@ public class Moveset extends AbstractList<Attack> implements List<Attack>, Rando
 			}
 		}
 	}
+
+	public boolean hasAttack(Attack a) {
+		for (int i = 0; i < attacks.length; i++) {
+			if (attacks[i] != null)
+				if (attacks[i].baseAttack.attackIndex == a.baseAttack.attackIndex)
+					return true;
+		}
+		return false;
+	}
 }
