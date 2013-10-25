@@ -27,7 +27,7 @@ public class ModelVenusaur extends PixelmonModelBase {
 		textureHeight = 64;
 
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 0, 0);
+		Body.setRotationPoint(0, 6, 0);
 		PixelmonModelRenderer Bud_Centre = new PixelmonModelRenderer(this, 42,
 				24);
 		Bud_Centre.addBox(0F, 0F, 0F, 2, 2, 2);

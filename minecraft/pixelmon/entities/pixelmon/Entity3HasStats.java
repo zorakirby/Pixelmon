@@ -123,13 +123,13 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 		}
 		return null;
 	}
-	
+
 	public static BaseStats getBaseStatsFromDBID(int id) {
 		for (BaseStats b : baseStatsStore) {
 			if (b != null && b.id == id)
 				return b;
 		}
-		return null;		
+		return null;
 	}
 
 	public static BaseStats getBaseStats(String name) {
@@ -287,7 +287,7 @@ public abstract class Entity3HasStats extends Entity2HasModel {
 
 	@Override
 	public void onUpdate() {
-		if (getOwner() != null)
+		if (getOwner() != null && !worldObj.isRemote)
 			friendship.tick();
 		if (hasOwner() && getOwner() == null)
 			setDead();
