@@ -10,6 +10,7 @@ import pixelmon.database.DatabaseHelper;
 public enum EnumPokemon {
 	Abra("Abra"),
 	Aerodactyl("Aerodactyl"),
+	Aggron("Aggron"),
 	Alakazam("Alakazam"),
 	Anorith("Anorith"),
 	Arbok("Arbok"),
@@ -103,6 +104,7 @@ public enum EnumPokemon {
 	Koffing("Koffing"),
 	Krabby("Krabby"),
 	Krokorok("Krokorok"),
+	Lairon("Lairon"),
 	Lanturn("Lanturn"),
 	Lapras("Lapras"),
 	Leafeon("Leafeon"),
