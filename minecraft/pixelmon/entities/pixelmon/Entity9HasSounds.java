@@ -14,12 +14,15 @@ public abstract class Entity9HasSounds extends Entity8HoldsItems {
 	@Override
 	protected String getLivingSound() {
 		String name = getName().toLowerCase();
-		if (baseStats.hasMaleFemaleSound)
+		int numSounds = baseStats.numSounds;
+		if (baseStats.hasMaleFemaleSound) {
 			name += isMale ? "M" : "F";
-		if (baseStats.numSounds == 1)
+			numSounds = isMale ? baseStats.numMSounds : baseStats.numFSounds;
+		}
+		if (numSounds == 1)
 			return ("pixelmon:pixelmon." + name);
-		if (baseStats.numSounds > 1) {
-			int ind = getRNG().nextInt(baseStats.numSounds);
+		if (numSounds > 1) {
+			int ind = getRNG().nextInt(numSounds);
 			if (ind == 0) {
 				return ("pixelmon:pixelmon." + name);
 			} else {

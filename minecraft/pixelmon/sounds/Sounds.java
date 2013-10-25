@@ -44,13 +44,17 @@ public class Sounds {
 			}
 		} else {
 			baseStats.hasMaleFemaleSound = true;
+			baseStats.numMSounds = 1;
+			baseStats.numFSounds = 1;
 			addPokemonSound(p, p.name.toLowerCase() + "M", resourcePack, baseStats);
 			addPokemonSound(p, p.name.toLowerCase() + "F", resourcePack, baseStats);
 			int i = 2;
 			while (addPokemonSound(p, p.name.toLowerCase() + "M" + i++, resourcePack, baseStats)) {
+				baseStats.numMSounds++;
 			}
 			i = 2;
 			while (addPokemonSound(p, p.name.toLowerCase() + "F" + i++, resourcePack, baseStats)) {
+				baseStats.numFSounds++;
 			}
 		}
 	}
