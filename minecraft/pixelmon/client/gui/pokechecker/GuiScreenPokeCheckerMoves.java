@@ -146,12 +146,12 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			bpextra = fontRenderer.getCharWidth('0');
 		if (attack.baseAttack.accuracy >= 100)
 			acextra = fontRenderer.getCharWidth('0');
-		if (attack.baseAttack.basePower != -1)
+		if (attack.baseAttack.basePower > 0)
 			drawString(fontRenderer, "" + attack.baseAttack.basePower, 30 - bpextra, 118, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "--", 30 - bpextra, 118, 0xFFFFFF);
 
-		if (attack.baseAttack.accuracy == -1)
+		if (attack.baseAttack.accuracy <= 0)
 			drawString(fontRenderer, "--", 30 - acextra, 148, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "" + attack.baseAttack.accuracy, 30 - acextra, 148, 0xFFFFFF);
@@ -307,7 +307,7 @@ public class GuiScreenPokeCheckerMoves extends GuiScreenPokeChecker {
 			drawCenteredStringWithoutShadow(fontRenderer, String.valueOf(targetPacket.nickname), (width - xSize) / 2 + 7, (height - ySize) / 2 + 70,
 					targetPacket.getType1().getColor());
 		}
-		
+
 		drawArrows(i, i1);
 	}
 
