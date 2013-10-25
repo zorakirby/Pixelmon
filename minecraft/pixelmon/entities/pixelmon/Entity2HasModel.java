@@ -28,7 +28,10 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public int animationCounter2 = 0;
 	public int animationIncrement2 = 3;
 	public int animationLimit2 = 360;
-
+	public int flyingDelayCounter = 0;
+	public int flyingDelayIncrement = 1;
+	public int flyingDelayLimit = 30;
+	
 	public Entity2HasModel(World par1World) {
 		super(par1World);
 	}
@@ -48,9 +51,9 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public ModelBase getModel() {
 		if (model == null)
 			loadModel();
-		if (flyingModel != null)
-			if(!onGround && !inWater)
-				return flyingModel;
+		if(flyingModel != null)
+		if(flyingDelayCounter >= flyingDelayLimit)
+				return flyingModel;	
 		return model;
 	}
 
@@ -110,6 +113,12 @@ public abstract class Entity2HasModel extends Entity1Base {
 			animationCounter2 = animationCounter2 + animationIncrement2;
 			if (animationCounter2 >= animationLimit2)
 				animationCounter2 = 0;
+			if (!onGround && !inWater) {
+				if (flyingDelayCounter < flyingDelayLimit)
+					flyingDelayCounter = flyingDelayCounter
+							+ flyingDelayIncrement;
+			} else
+			flyingDelayCounter = 0;	
 		}
 
 	}
