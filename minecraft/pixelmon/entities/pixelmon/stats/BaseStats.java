@@ -11,6 +11,9 @@ import pixelmon.enums.EnumType;
 public class BaseStats {
 	public boolean hasMaleFemaleSound = false;
 	public int numSounds = 0;
+	public int numMSounds = 0;
+	public int numFSounds = 0;
+
 	public String pixelmonName;
 
 	public BaseStats(String name) {
@@ -51,7 +54,7 @@ public class BaseStats {
 	public boolean canSurf;
 	public boolean canSurfSet;
 	public RidingOffsets ridingOffsets;
-	
+
 	public int maxGroupSize;
 	public int minGroupSize;
 	public float hoverHeight = 0;
@@ -59,7 +62,7 @@ public class BaseStats {
 	public int id;
 	public float weight;
 	public EnumPokemon pokemon;
-	
+
 	public int get(StatsType stat) {
 		if (stat == StatsType.Attack)
 			return attack;
