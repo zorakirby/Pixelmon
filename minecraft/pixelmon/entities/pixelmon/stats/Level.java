@@ -216,7 +216,10 @@ public class Level {
 						} else {
 							pixelmon.getMoveset().add(a);
 							pixelmon.update(EnumUpdateType.Moveset);
-							ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
+							if (pixelmon.battleController != null)
+								ChatHandler.sendBattleMessage(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
+							else
+								ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
 						}
 					}
 				}
