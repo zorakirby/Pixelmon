@@ -271,9 +271,9 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			float f4;
 
 			if (this.onGround) {
-				f4 = getRideSpeed() * f3 * 0.6f;
+				f4 = getRideSpeed() * f3 * 3.5f;
 			} else {
-				f4 = getRideSpeed() * 0.6f;
+				f4 = getRideSpeed();
 			}
 
 			this.moveFlying(strafe, forward, f4);
