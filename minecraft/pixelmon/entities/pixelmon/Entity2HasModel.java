@@ -29,7 +29,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public int animationIncrement2 = 3;
 	public int animationLimit2 = 360;
 	int flyingDelayCounter = 0;
-	static int flyingDelayLimit = 30;
+	static int flyingDelayLimit = 10;
 
 	public Entity2HasModel(World par1World) {
 		super(par1World);
@@ -114,7 +114,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 				animationCounter2 = 0;
 			if (!onGround && !inWater) {
 				if (flyingDelayCounter < flyingDelayLimit)
-					flyingDelayCounter = flyingDelayCounter++;
+					flyingDelayCounter++;
 			} else
 				flyingDelayCounter = 0;
 		}
