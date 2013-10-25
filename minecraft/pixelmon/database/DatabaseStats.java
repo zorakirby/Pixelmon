@@ -289,7 +289,7 @@ public class DatabaseStats {
 		return null;
 	}
 
-	static BiomeGenBase[] biomeMasterList;
+	public static BiomeGenBase[] biomeMasterList;
 
 	private static void getPixelmonSpawnBiomes(BaseStats store, Statement stat) throws SQLException {
 		if (biomeMasterList == null) {

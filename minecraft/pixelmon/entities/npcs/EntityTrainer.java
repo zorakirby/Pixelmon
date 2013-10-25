@@ -29,6 +29,7 @@ import pixelmon.database.DatabaseTrainers;
 import pixelmon.database.SpawnLocation;
 import pixelmon.database.TrainerInfo;
 import pixelmon.entities.pixelmon.EntityPixelmon;
+import pixelmon.enums.EnumPokemon;
 import pixelmon.storage.PlayerStorage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -39,7 +40,6 @@ public class EntityTrainer extends EntityNPC {
 	public EntityPixelmon releasedPokemon;
 	public TrainerInfo info;
 	BattleParticipant opponent;
-
 
 	public EntityTrainer(World par1World) {
 		super(par1World, NPCType.Trainer);
@@ -94,8 +94,8 @@ public class EntityTrainer extends EntityNPC {
 	}
 
 	public void loadPokemon() {
-		for (String pokemonName : info.partypokemon) {
-			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(pokemonName, worldObj);
+		for (EnumPokemon pokemon : info.partypokemon) {
+			EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(pokemon.name, worldObj);
 			if (p != null) {
 				p.getLvl().setLevel((new Random()).nextInt(3) - 1 + info.level);
 				p.setHealth(p.stats.HP);
