@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.blocks.BlockEvolutionRock;
 import pixelmon.comm.ChatHandler;
@@ -216,10 +217,10 @@ public class Level {
 						} else {
 							pixelmon.getMoveset().add(a);
 							pixelmon.update(EnumUpdateType.Moveset);
-							if (pixelmon.battleController != null)
+							if (BattleRegistry.getBattle((EntityPlayer) pixelmon.getOwner()) != null)
 								ChatHandler.sendBattleMessage(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
-							else
-								ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
+
+							ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
 						}
 					}
 				}
