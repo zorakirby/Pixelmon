@@ -28,19 +28,19 @@ public class ModelAron extends PixelmonModelBase {
 		Body.setRotationPoint(0, 24, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/aron/AronBody.obj")));
 		footFL = new PixelmonModelRenderer(this, 0, 0);
-		footFL.setRotationPoint(0.8F, 1.5F, -0.6F);
+		footFL.setRotationPoint(1.5F, 1.5F, 1.6F);
 		footFL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/aron/AronFrontLeftLeg.obj")));
 		footFR = new PixelmonModelRenderer(this, 0, 0);
-		footFR.setRotationPoint(-0.57F, 1.5F, -0.6F);
+		footFR.setRotationPoint(-1.5F, 1.5F, 1.6F);
 		footFR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/aron/AronFrontRightLeg.obj")));
 		footBL = new PixelmonModelRenderer(this, 0, 0);
-		footBL.setRotationPoint(0.56F, 1.5F, 0.86F);
+		footBL.setRotationPoint(1.5F, 1.5F, -1.86F);
 		footBL.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/aron/AronBackLeftLeg.obj")));
 		footBR = new PixelmonModelRenderer(this, 0, 0);
-		footBR.setRotationPoint(-0.5F, 1.5F, 0.834F);
+		footBR.setRotationPoint(-1.5F, 1.5F, -1.834F);
 		footBR.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/aron/AronBackRightLeg.obj")));
 		head = new PixelmonModelRenderer(this, 0, 0);
-		head.setRotationPoint(0.1F, 3.7F, 0.93F);
+		head.setRotationPoint(0F, 4.2F, 2.43F);
 		head.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/aron/AronHead.obj")));
 		Body.addChild(head);
 		Body.addChild(footFL);
@@ -49,8 +49,8 @@ public class ModelAron extends PixelmonModelBase {
 		Body.addChild(footBR);
 
 
-		float legspeed = 0.5F;
-		float legRotationLimit = 1.4F;
+		float legspeed = 2F;
+		float legRotationLimit = 0.8F;
 
 		int degrees = 180;
 		float radians = (float) Math.toRadians(degrees);
