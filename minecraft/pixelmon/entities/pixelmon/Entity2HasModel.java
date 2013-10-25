@@ -28,10 +28,9 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public int animationCounter2 = 0;
 	public int animationIncrement2 = 3;
 	public int animationLimit2 = 360;
-	public int flyingDelayCounter = 0;
-	public int flyingDelayIncrement = 1;
-	public int flyingDelayLimit = 30;
-	
+	int flyingDelayCounter = 0;
+	static int flyingDelayLimit = 30;
+
 	public Entity2HasModel(World par1World) {
 		super(par1World);
 	}
@@ -51,9 +50,9 @@ public abstract class Entity2HasModel extends Entity1Base {
 	public ModelBase getModel() {
 		if (model == null)
 			loadModel();
-		if(flyingModel != null)
-		if(flyingDelayCounter >= flyingDelayLimit)
-				return flyingModel;	
+		if (flyingModel != null)
+			if (flyingDelayCounter >= flyingDelayLimit)
+				return flyingModel;
 		return model;
 	}
 
@@ -66,7 +65,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 			Object mod = Pixelmon.proxy.getModels()[n];
 			if (mod instanceof ModelBase)
 				model = (ModelBase) mod;
-			flyingModel = (ModelBase)Pixelmon.proxy.getFlyingModels()[n];
+			flyingModel = (ModelBase) Pixelmon.proxy.getFlyingModels()[n];
 		} else {
 			ModelBase m = Pixelmon.proxy.loadModel(getName());
 			Pixelmon.proxy.getModels()[n] = m;
@@ -115,10 +114,9 @@ public abstract class Entity2HasModel extends Entity1Base {
 				animationCounter2 = 0;
 			if (!onGround && !inWater) {
 				if (flyingDelayCounter < flyingDelayLimit)
-					flyingDelayCounter = flyingDelayCounter
-							+ flyingDelayIncrement;
+					flyingDelayCounter = flyingDelayCounter++;
 			} else
-			flyingDelayCounter = 0;	
+				flyingDelayCounter = 0;
 		}
 
 	}
