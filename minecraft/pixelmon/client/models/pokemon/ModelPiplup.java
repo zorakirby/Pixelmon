@@ -34,7 +34,7 @@ public class ModelPiplup extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 22.5f, 0);
+		Body.setRotationPoint(0, 23.5f, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/piplup/Body.obj")));
 		
 		head = new PixelmonModelRenderer(this, 0, 0);
@@ -77,13 +77,13 @@ public class ModelPiplup extends PixelmonModelBase {
 		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm, leftLeg, rightLeg, null);
-		scale=2f;
+		scale=1.2f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
-		scale=1.45f;
+
 		Body.render(f5);
 	}
 
