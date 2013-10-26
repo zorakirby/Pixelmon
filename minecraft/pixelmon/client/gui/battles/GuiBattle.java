@@ -461,12 +461,12 @@ public class GuiBattle extends GuiCamera {
 			bpextra = fontRenderer.getCharWidth('0');
 		if (attack.baseAttack.accuracy >= 100)
 			acextra = fontRenderer.getCharWidth('0');
-		if (attack.baseAttack.basePower != -1)
+		if (attack.baseAttack.basePower > 0)
 			drawString(fontRenderer, "" + attack.baseAttack.basePower, width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "--", width / 2 - 55 - bpextra, height / 2 + 58, 0xFFFFFF);
 
-		if (attack.baseAttack.accuracy == -1)
+		if (attack.baseAttack.accuracy <= 0)
 			drawString(fontRenderer, "--", width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);
 		else
 			drawString(fontRenderer, "" + attack.baseAttack.accuracy, width / 2 - 55 - acextra, height / 2 + 78, 0xFFFFFF);

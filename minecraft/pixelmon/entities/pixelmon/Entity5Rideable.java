@@ -163,14 +163,14 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 				if (this.onGround) {
 					if (this.isAIEnabled()) {
-						var5 = getRideSpeed();
+						var5 = getRideSpeed() * 0.6f;
 					} else {
-						var5 = 1;
+						var5 = getRideSpeed() * 0.6f;
 					}
 
 					var5 *= var8;
 				} else {
-					var5 = getRideSpeed();
+					var5 = getRideSpeed() * 0.6f;
 				}
 
 				this.moveFlying(strafe, forward, var5);
@@ -271,9 +271,9 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			float f4;
 
 			if (this.onGround) {
-				f4 = getRideSpeed() * f3;
+				f4 = getRideSpeed() * f3 * 3.5f;
 			} else {
-				f4 = getRideSpeed() * 0.6f;
+				f4 = getRideSpeed();
 			}
 
 			this.moveFlying(strafe, forward, f4);
@@ -322,7 +322,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 	}
 
 	private float getRideSpeed() {
-		return 0.08f + 0.05f * stats.Speed / 500f;
+		return 0.07f + 0.05f * stats.Speed / 500f;
 	}
 
 	@Override
@@ -412,7 +412,8 @@ public abstract class Entity5Rideable extends Entity4Textures {
 		debugOffsetZ = 0f;
 		if (this.riddenByEntity != null) {
 			try {
-				if (baseStats.ridingOffsets==null) baseStats.ridingOffsets = new RidingOffsets();
+				if (baseStats.ridingOffsets == null)
+					baseStats.ridingOffsets = new RidingOffsets();
 				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + baseStats.ridingOffsets.standing.x) * getPixelmonScale() * getScaleFactor(), 0,
 						(debugOffsetZ + baseStats.ridingOffsets.standing.z) * getPixelmonScale() * getScaleFactor());
 				vec.rotateAroundY(-(this.renderYawOffset) * (float) Math.PI / 180.0f);
