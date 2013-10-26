@@ -85,7 +85,7 @@ public class BlockLeafEvolutionOre extends Block {
     
     @Override
     public void registerIcons(IconRegister icon) {
-    	blockIcon = icon.registerIcon("pixelmon:" + type);
+    	blockIcon = icon.registerIcon("pixelmon:" + type.toString().toLowerCase());
     }
 	
     /* @SideOnly(Side.CLIENT)
