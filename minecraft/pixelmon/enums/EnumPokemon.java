@@ -124,6 +124,7 @@ public enum EnumPokemon {
 	Marshtomp("Marshtomp"),
 	Meganium("Meganium"),
 	Meowth("Meowth"),
+	Metagross("Metagross"),
 	Metang("Metang"),
 	Metapod("Metapod"),
 	Mew("Mew"),
