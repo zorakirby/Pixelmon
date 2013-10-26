@@ -18,12 +18,13 @@ public class WorldGenLeafStoneOre extends WorldGenerator implements IWorldGenera
 			return false;
 		}
 		world.setBlock(x, y, z, PixelmonBlocks.leafStoneOre.blockID, 0, 0);
+		System.out.println("" + x + " " + y + " " + z);
 		return true;
 	}
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 13; i++) {
 			int xPos = random.nextInt(16) + chunkX * 16;
 			int zPos = random.nextInt(16) + chunkZ * 16;
 			int yPos = random.nextInt(100) + 28;
