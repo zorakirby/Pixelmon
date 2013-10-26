@@ -28,7 +28,7 @@ public class ModelFlygon extends PixelmonModelBase {
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/Body.obj")));
-		Body.setRotationPoint(0, 40, 0);
+		Body.setRotationPoint(0, 24.0f, 0);
 		Lleg = new PixelmonModelRenderer(this, 0, 0);
 		Lleg.setRotationPoint(-0.01F, 3.446F, -1.08F);
 		Lleg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/LeftLeg.obj")));
@@ -50,7 +50,7 @@ public class ModelFlygon extends PixelmonModelBase {
 
 		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
-		scale = 2.5f;
+		scale=2.9f;
 
 		skeleton = new SkeletonBiped(Body, null, null, null, leftLeg, rightLeg, null);
 	}

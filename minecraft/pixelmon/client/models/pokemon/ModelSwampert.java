@@ -33,7 +33,7 @@ public class ModelSwampert extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 21.75f, 0);
+		Body.setRotationPoint(0, 22.0f, 2);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/swampert/Body.obj")));
 		
 		head = new PixelmonModelRenderer(this, 0, 0);
@@ -63,7 +63,7 @@ public class ModelSwampert extends PixelmonModelBase {
 		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, null, null, leftLeg, rightLeg, null);
-		scale=4f;
+		scale=4.6f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {

@@ -23,7 +23,7 @@ public class ModelMetagross extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 20F, 0);
+		Body.setRotationPoint(0, 23.9F, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/metagross/Body.obj")));
 		FLLeg = new PixelmonModelRenderer(this, 0, 0);
 		FLLeg.setRotationPoint(4.825F, 6.882F, 3.231F);
@@ -41,26 +41,21 @@ public class ModelMetagross extends PixelmonModelBase {
 		Body.addChild(FRLeg);
 		Body.addChild(BLLeg);
 		Body.addChild(BRLeg);
-		
-		int degrees = 180;
-		     float radians = (float) Math.toRadians(degrees);
-		     setRotation(Body, radians, 0, 0);
-		     
-		     float legspeed = 0.8F;
-				float legRotationLimit = 1.1F;
 
-				ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft,
-						EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
-				ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight,
-						EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
-				ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft,
-						EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
-				ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight,
-						EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
-				
-				
+		int degrees = 180;
+		float radians = (float) Math.toRadians(degrees);
+		setRotation(Body, radians, 0, 0);
+
+		float legspeed = 0.8F;
+		float legRotationLimit = 1.1F;
+
+		ModuleLeg frontlegLModule = new ModuleLeg(FLLeg, EnumLeg.FrontLeft, EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
+		ModuleLeg frontlegRModule = new ModuleLeg(FRLeg, EnumLeg.FrontRight, EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
+		ModuleLeg backlegLModule = new ModuleLeg(BLLeg, EnumLeg.BackLeft, EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
+		ModuleLeg backlegRModule = new ModuleLeg(BRLeg, EnumLeg.BackRight, EnumPhase.OutPhase, EnumRotation.x, legRotationLimit, legspeed);
+
 		skeleton = new SkeletonQuadruped(Body, null, frontlegLModule, frontlegRModule, backlegLModule, backlegRModule, null);
-		scale=3f;
+		scale=2.8f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
