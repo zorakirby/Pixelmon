@@ -96,7 +96,7 @@ public class ModelSceptile extends PixelmonModelBase {
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm,
 				leftLeg, rightLeg, tailmodule);
-		scale = 1.15f;
+		scale = 1.02f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3,

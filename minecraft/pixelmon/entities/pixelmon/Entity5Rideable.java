@@ -170,7 +170,7 @@ public abstract class Entity5Rideable extends Entity4Textures {
 
 					var5 *= var8;
 				} else {
-					var5 = getRideSpeed() * 0.6f;
+					var5 = getRideSpeed() * 0.8f;
 				}
 
 				this.moveFlying(strafe, forward, var5);
