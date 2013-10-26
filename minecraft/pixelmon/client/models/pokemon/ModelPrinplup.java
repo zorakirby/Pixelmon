@@ -70,7 +70,7 @@ public class ModelPrinplup extends PixelmonModelBase {
 		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArm, rightArm, leftLeg, rightLeg, null);
-		scale=2.4f;
+		scale=1.9f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
