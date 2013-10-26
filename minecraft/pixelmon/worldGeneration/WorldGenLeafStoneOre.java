@@ -18,7 +18,6 @@ public class WorldGenLeafStoneOre extends WorldGenerator implements IWorldGenera
 			return false;
 		}
 		world.setBlock(x, y, z, PixelmonBlocks.leafStoneOre.blockID, 0, 0);
-		System.out.println("" + x + " " + y + " " + z);
 		return true;
 	}
 
