@@ -50,7 +50,7 @@ public class RenderPixelmon extends RenderLiving {
 			renderPixelmon(pixelmon, d, d1, d2, f, f1);
 			// this.func_110827_b(pixelmon, d, d1, d2, f, f1);
 		}
-		if (pixelmon.evolving != 0)
+		if (pixelmon.evolving != 0 || pixelmon.riddenByEntity == Minecraft.getMinecraft().thePlayer)
 			return;
 		boolean owned = ServerStorageDisplay.contains(pixelmon.getPokemonId());
 
