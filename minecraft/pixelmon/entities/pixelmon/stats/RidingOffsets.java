@@ -17,7 +17,7 @@ public class RidingOffsets {
 		standing.z = (float)z;
 	}
 
-	public void setMovingOffsets(float x, float y, float z) {
+	public void setMovingOffsets(double x, double y, double z) {
 		moving.x = (float)x;
 		moving.y = (float)y;
 		moving.z = (float)z;

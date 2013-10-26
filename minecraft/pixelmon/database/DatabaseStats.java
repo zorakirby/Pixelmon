@@ -187,7 +187,7 @@ public class DatabaseStats {
 			if (!rs.wasNull()) {
 				if (store.ridingOffsets == null)
 					store.ridingOffsets = new RidingOffsets();
-				store.ridingOffsets.setStandingOffsets(rs.getDouble("MOVINGOFFSETX"), rs.getDouble("MOVINGOFFSETY"), rs.getDouble("MOVINGOFFSETZ"));
+				store.ridingOffsets.setMovingOffsets(rs.getDouble("MOVINGOFFSETX"), rs.getDouble("MOVINGOFFSETY"), rs.getDouble("MOVINGOFFSETZ"));
 			}
 		}
 		rs.close();

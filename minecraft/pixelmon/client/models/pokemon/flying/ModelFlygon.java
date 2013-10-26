@@ -27,7 +27,7 @@ public class ModelFlygon extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 37, 0);
+		Body.setRotationPoint(0, 24, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/flygon/flying/Body.obj")));
 
 		LWing = new PixelmonModelRenderer(this, 0, 0);
@@ -55,6 +55,7 @@ public class ModelFlygon extends PixelmonModelBase {
 		super.render(entity, f, f1, f2, f3, f4, f5);
 		setRotationAngles(f, f1, f2, f3, f4, f5);
 		Body.render(f5);
+		Body.setRotationPoint(0, 24, 0);
 	}
 
 	private void setRotation(PixelmonModelRenderer model, float x, float y, float z) {
