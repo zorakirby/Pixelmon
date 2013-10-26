@@ -33,7 +33,7 @@ public class ModelEmpoleon extends PixelmonModelBase {
 		textureWidth = 64;
 		textureHeight = 32;
 		Body = new PixelmonModelRenderer(this, "Body");
-		Body.setRotationPoint(0, 22.5f, 0);
+		Body.setRotationPoint(0, 23.5f, 0);
 		Body.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/empoleon/Body.obj")));
 		
 		head = new PixelmonModelRenderer(this, 0, 0);
@@ -76,7 +76,7 @@ public class ModelEmpoleon extends PixelmonModelBase {
 		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, headModule, leftArm, rightArm, leftLeg, rightLeg, null);
-		scale=1.75f;
+		scale=1.65f;
 	}
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
