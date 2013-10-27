@@ -51,7 +51,7 @@ public class ModelMiltank extends PixelmonModelBase {
 		RLeg.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/miltank/RightLeg.obj")));
 
 		tail = new PixelmonModelRenderer(this, 0, 0);
-		tail.setRotationPoint(0F, 4.596F, 4.542F);
+		tail.setRotationPoint(0F, 4.596F, -4.542F);
 		tail.addOBJModel(new ModelOBJWrapper(AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/miltank/Tail.obj")));
 
 		Body.addChild(head);
