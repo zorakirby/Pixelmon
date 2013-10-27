@@ -112,12 +112,12 @@ public abstract class Entity2HasModel extends Entity1Base {
 			animationCounter2 = animationCounter2 + animationIncrement2;
 			if (animationCounter2 >= animationLimit2)
 				animationCounter2 = 0;
-			if (!onGround && !inWater) {
-				if (flyingDelayCounter < flyingDelayLimit)
-					flyingDelayCounter++;
-			} else
-				flyingDelayCounter = 0;
 		}
+		if (!onGround && !inWater) {
+			if (flyingDelayCounter < flyingDelayLimit)
+				flyingDelayCounter++;
+		} else
+			flyingDelayCounter = 0;
 
 	}
 }

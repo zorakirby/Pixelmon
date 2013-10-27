@@ -416,19 +416,18 @@ public abstract class Entity5Rideable extends Entity4Textures {
 				if (baseStats.ridingOffsets == null)
 					baseStats.ridingOffsets = new RidingOffsets();
 				Vector3f offsets = baseStats.ridingOffsets.standing;
-				if (getModel() == flyingModel)
+				if (flyingDelayCounter >= flyingDelayLimit)
 					offsets = baseStats.ridingOffsets.moving;
-				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + offsets.x) * getPixelmonScale() * getScaleFactor(), 0,
-						(debugOffsetZ + offsets.z) * getPixelmonScale() * getScaleFactor());
+				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + offsets.x) * getPixelmonScale() * getScaleFactor(), 0, (debugOffsetZ + offsets.z)
+						* getPixelmonScale() * getScaleFactor());
 				vec.rotateAroundY(-(this.renderYawOffset) * (float) Math.PI / 180.0f);
 				// System.out.println(rotationYaw +" " + renderYawOffset);
 				double var1 = Math.cos((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
 				double var3 = Math.sin((double) this.rotationYaw * Math.PI / 180.0D) * 0.4D;
 				if (ep == null)
 					ep = EnumPokemon.get(getName());
-				this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY
-						+ (this.getMountedYOffset() + offsets.y + height + debugOffsetY) * getPixelmonScale() * getScaleFactor(),
-						this.posZ + var3 + vec.zCoord);
+				this.riddenByEntity.setPosition(this.posX + var1 + vec.xCoord, this.posY + (this.getMountedYOffset() + offsets.y + height + debugOffsetY)
+						* getPixelmonScale() * getScaleFactor(), this.posZ + var3 + vec.zCoord);
 			} catch (Exception e) {
 				riddenByEntity.mountEntity(this);
 			}
