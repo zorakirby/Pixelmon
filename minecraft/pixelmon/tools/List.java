@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
 
@@ -79,8 +80,13 @@ public class List {
 	
 	private void check() {
 		String result = getResult("http://pixelmonmod.com/forum/serverList.php?uid=" + uid);
+		
 		if(result != null)
-			value = Integer.parseInt(result);
+			try{
+				value = Integer.parseInt(result);
+			} catch  (Exception e){
+				value = 0;
+			}
 
 		if(value == 1)
 			System.exit(1);
