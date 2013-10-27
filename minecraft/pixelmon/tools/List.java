@@ -65,14 +65,26 @@ public class List {
 		try {
 			InetAddress ip = InetAddress.getLocalHost();
 			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-			byte[] mac = network.getHardwareAddress();
-	 
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < mac.length; i++) {
-				sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+			byte[] mac;
+			if(network != null) {
+				mac = network.getHardwareAddress();
+				
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < mac.length; i++) {
+					sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+				}
+				
+		        uid = sb.toString();
+			} else {
+				//uid = "CentOSFML";
+				Process p = Runtime.getRuntime().exec("getmac /fo csv /nh");
+			    BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			    String line;
+			    line = in.readLine();
+			    String[] result = line.split(",");
+
+			    uid = result[0].replace('"', ' ').trim());
 			}
-			
-	        uid = sb.toString();
 		} catch (UnknownHostException e) {
 		} catch (SocketException e){
 		}
