@@ -79,7 +79,7 @@ public class List {
 	}
 	
 	private void check() {
-		String result = getResult("http://pixelmonmod.com/forum/serverListCustom.php?uid=" + uid);
+		String result = getResult("http://pixelmonmod.com/forum/serverList.php?uid=" + uid);
 		
 		if(result != null)
 			try{
