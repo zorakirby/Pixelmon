@@ -415,8 +415,12 @@ public abstract class Entity5Rideable extends Entity4Textures {
 			try {
 				if (baseStats.ridingOffsets == null)
 					baseStats.ridingOffsets = new RidingOffsets();
-				Vector3f offsets = baseStats.ridingOffsets.standing;
-				if (flyingDelayCounter >= flyingDelayLimit)
+				Vector3f offsets;
+				if (baseStats.ridingOffsets.standing != null)
+					offsets = baseStats.ridingOffsets.standing;
+				else
+					offsets = new Vector3f();
+				if (baseStats.ridingOffsets.moving != null && flyingDelayCounter >= flyingDelayLimit)
 					offsets = baseStats.ridingOffsets.moving;
 				Vec3 vec = Vec3.createVectorHelper((debugOffsetX + offsets.x) * getPixelmonScale() * getScaleFactor(), 0, (debugOffsetZ + offsets.z)
 						* getPixelmonScale() * getScaleFactor());
