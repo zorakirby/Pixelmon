@@ -48,8 +48,6 @@ public class List {
 
 		try {
 			URL link = new URL(url);
-			link.setConnectTimeout(5000);
-			link.setReadTimeout(5000);
 			BufferedReader in = new BufferedReader(new InputStreamReader(link.openStream()));
 			String input;
 			while ((input = in.readLine()) != null)
