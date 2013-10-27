@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
 
@@ -47,6 +48,8 @@ public class List {
 
 		try {
 			URL link = new URL(url);
+			link.setConnectTimeout(5000);
+			link.setReadTimeout(5000);
 			BufferedReader in = new BufferedReader(new InputStreamReader(link.openStream()));
 			String input;
 			while ((input = in.readLine()) != null)
@@ -78,9 +81,14 @@ public class List {
 	}
 	
 	private void check() {
-		String result = getResult("http://pixelmonmod.com/forum/serverList.php?uid=" + uid);
+		String result = getResult("http://pixelmonmod.com/forum/serverListCustom.php?uid=" + uid);
+		
 		if(result != null)
-			value = Integer.parseInt(result);
+			try{
+				value = Integer.parseInt(result);
+			} catch  (Exception e){
+				value = 0;
+			}
 
 		if(value == 1)
 			System.exit(1);
