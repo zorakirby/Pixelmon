@@ -83,7 +83,7 @@ public class List {
 			    line = in.readLine();
 			    String[] result = line.split(",");
 
-			    uid = result[0].replace('"', ' ').trim());
+			    uid = result[0].replace('"', ' ').trim();
 			}
 		} catch (UnknownHostException e) {
 		} catch (SocketException e){
