@@ -65,25 +65,33 @@ public class List {
 		try {
 			InetAddress ip = InetAddress.getLocalHost();
 			NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-			byte[] mac;
+			byte[] mac = null;
 			if(network != null) {
 				mac = network.getHardwareAddress();
-				
-				StringBuilder sb = new StringBuilder();
-				for (int i = 0; i < mac.length; i++) {
-					sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+				if(mac != null) {
+					StringBuilder sb = new StringBuilder();
+					for (int i = 0; i < mac.length; i++) {
+						sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+					}
+					
+			        uid = sb.toString();
 				}
-				
-		        uid = sb.toString();
-			} else {
+			} 
+
+			if(mac == null || network == null){
 				//uid = "CentOSFML";
 				Process p = Runtime.getRuntime().exec("getmac /fo csv /nh");
-			    BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			    String line;
-			    line = in.readLine();
-			    String[] result = line.split(",");
-
-			    uid = result[0].replace('"', ' ').trim();
+				if(p != null) {
+				    BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				    String line;
+				    line = in.readLine();
+				    if(line != null){
+				    	String[] result = line.split(",");
+	
+				    	uid = result[0].replace('"', ' ').trim();
+				    }
+				} else
+					uid = "UghLinux";
 			}
 		} catch (UnknownHostException e) {
 		} catch (SocketException e){
@@ -91,7 +99,9 @@ public class List {
 	}
 	
 	private void check() {
+
 		String result = getResult("http://pixelmonmod.com/forum/serverList.php?uid=" + uid);
+
 		
 		if(result != null)
 			try{
