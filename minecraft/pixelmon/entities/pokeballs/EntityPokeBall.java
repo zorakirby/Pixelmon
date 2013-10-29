@@ -241,11 +241,13 @@ public class EntityPokeBall extends EntityThrowable {
 							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner()
 									&& ((EntityPixelmon) movingobjectposition.entityHit).getOwner() == null)
 								return;
-							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner())
+							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner()) {
+								if (((EntityPixelmon) movingobjectposition.entityHit).getStorage().guiOpened)
+									return;
 								new BattleQuery((EntityPlayerMP) thrower, pixelmon,
 										(EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
 										(EntityPixelmon) movingobjectposition.entityHit);
-							else {
+							} else {
 								BattleParticipant part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
 								pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
 							}
