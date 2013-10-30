@@ -21,7 +21,6 @@ public class Sounds {
 
 	private static final String[] MusicList = { "A Simple Moment By the Sea", "Across the Desert", "Distant Shores", "Pixelmon Waltz", "Nightfall" };
 
-	@SideOnly(Side.CLIENT)
 	public static void installSounds() {
 		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
 		for (EnumPokemon p : EnumPokemon.values()) {
@@ -38,28 +37,70 @@ public class Sounds {
 			hasMaleFemale = true;
 		}
 		if (!hasMaleFemale) {
-			addPokemonSound(p, p.name.toLowerCase(), resourcePack, baseStats);
+			addPokemonSound(p.name.toLowerCase(), resourcePack, baseStats);
 			int i = 2;
-			while (addPokemonSound(p, p.name.toLowerCase() + i++, resourcePack, baseStats)) {
+			while (addPokemonSound(p.name.toLowerCase() + i++, resourcePack, baseStats)) {
 			}
 		} else {
 			baseStats.hasMaleFemaleSound = true;
 			baseStats.numMSounds = 1;
 			baseStats.numFSounds = 1;
-			addPokemonSound(p, p.name.toLowerCase() + "M", resourcePack, baseStats);
-			addPokemonSound(p, p.name.toLowerCase() + "F", resourcePack, baseStats);
+			addPokemonSound(p.name.toLowerCase() + "M", resourcePack, baseStats);
+			addPokemonSound(p.name.toLowerCase() + "F", resourcePack, baseStats);
 			int i = 2;
-			while (addPokemonSound(p, p.name.toLowerCase() + "M" + i++, resourcePack, baseStats)) {
+			while (addPokemonSound(p.name.toLowerCase() + "M" + i++, resourcePack, baseStats)) {
 				baseStats.numMSounds++;
 			}
 			i = 2;
-			while (addPokemonSound(p, p.name.toLowerCase() + "F" + i++, resourcePack, baseStats)) {
+			while (addPokemonSound(p.name.toLowerCase() + "F" + i++, resourcePack, baseStats)) {
 				baseStats.numFSounds++;
 			}
 		}
 	}
 
-	private static boolean addPokemonSound(EnumPokemon p, String nameString, AbstractResourcePack resourcePack, BaseStats baseStats) {
+	public static void detectServerSounds() {
+		for (EnumPokemon p : EnumPokemon.values()) {
+			detectPokemonSounds(p);
+		}
+
+	}
+
+	private static void detectPokemonSounds(EnumPokemon p) {
+		boolean hasMaleFemale = false;
+		BaseStats baseStats = Entity3HasStats.getBaseStats(p.name);
+		if (Sounds.class.getResourceAsStream("/assets/pixelmon/sound/pixelmon/" + p.name.toLowerCase() + "M" + ".ogg") != null)
+			hasMaleFemale = true;
+		if (!hasMaleFemale) {
+			detectSound(p.name.toLowerCase(), baseStats);
+			int i = 2;
+			while (detectSound(p.name.toLowerCase() + i++, baseStats)) {
+			}
+		} else {
+			baseStats.hasMaleFemaleSound = true;
+			baseStats.numMSounds = 1;
+			baseStats.numFSounds = 1;
+			detectSound(p.name.toLowerCase() + "M", baseStats);
+			detectSound(p.name.toLowerCase() + "F", baseStats);
+			int i = 2;
+			while (detectSound(p.name.toLowerCase() + "M" + i++, baseStats)) {
+				baseStats.numMSounds++;
+			}
+			i = 2;
+			while (detectSound(p.name.toLowerCase() + "F" + i++, baseStats)) {
+				baseStats.numFSounds++;
+			}
+		}
+	}
+
+	private static boolean detectSound(String nameString, BaseStats baseStats){
+		if (Sounds.class.getResourceAsStream("/assets/pixelmon/sound/pixelmon/" + nameString + ".ogg")!=null){
+			baseStats.numSounds++;
+			return true;
+		}
+		return false;
+	}
+
+	private static boolean addPokemonSound(String nameString, AbstractResourcePack resourcePack, BaseStats baseStats) {
 		if (resourcePack.resourceExists(new ResourceLocation("pixelmon:sound/pixelmon/" + nameString + ".ogg"))) {
 			Minecraft.getMinecraft().sndManager.addSound("pixelmon:pixelmon/" + nameString + ".ogg");
 			baseStats.numSounds++;
@@ -68,7 +109,6 @@ public class Sounds {
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
 	public static boolean installMusic() {
 		AbstractResourcePack resourcePack = (AbstractResourcePack) FMLClientHandler.instance().getResourcePackFor("pixelmon");
 		for (String songName : MusicList) {
@@ -77,7 +117,6 @@ public class Sounds {
 		return true;
 	}
 
-	@SideOnly(Side.CLIENT)
 	private static void installSound(String path, String name, String newPath) {
 		if (new File(path + name + ".ogg").exists())
 			Minecraft.getMinecraft().sndManager.addSound("pixelmon:pixelmon/" + name + ".ogg");
