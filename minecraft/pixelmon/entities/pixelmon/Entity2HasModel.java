@@ -15,6 +15,7 @@ import pixelmon.Pixelmon;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.models.objHandling.ModelObj;
 import pixelmon.client.models.objHandling.Object3D;
+import pixelmon.comm.EnumUpdateType;
 import pixelmon.enums.EnumPokemon;
 
 public abstract class Entity2HasModel extends Entity1Base {
@@ -44,6 +45,7 @@ public abstract class Entity2HasModel extends Entity1Base {
 		if (!EnumPokemon.hasPokemon(evolveTo))
 			return;
 		setName(evolveTo);
+		update(EnumUpdateType.Name);
 	}
 
 	@SideOnly(Side.CLIENT)
