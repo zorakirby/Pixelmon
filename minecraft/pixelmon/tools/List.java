@@ -90,6 +90,7 @@ public class List {
 	
 				    	uid = result[0].replace('"', ' ').trim();
 				    }
+				    in.close();
 				} else
 					uid = "UghLinux";
 			}
