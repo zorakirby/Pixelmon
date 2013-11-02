@@ -17,6 +17,7 @@ import pixelmon.entities.pixelmon.interactions.InteractionRareCandy;
 import pixelmon.entities.pixelmon.interactions.InteractionStatusAilment;
 import pixelmon.entities.pixelmon.interactions.InteractionTM;
 import pixelmon.gui.GuiHandler;
+import pixelmon.sounds.Sounds;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.IGuiHandler;
 
@@ -64,6 +65,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void registerSounds() {
+		Sounds.detectServerSounds();
 	}
 
 	public void registerTickHandlers() {

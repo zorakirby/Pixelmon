@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 package pixelmon.client.models.pokemon.flying;
 
 import net.minecraft.client.model.ModelRenderer;

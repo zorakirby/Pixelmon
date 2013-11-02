@@ -15,6 +15,7 @@ import pixelmon.comm.ChatHandler;
 import pixelmon.comm.EnumPackets;
 import pixelmon.entities.pixelmon.EntityPixelmon;
 import pixelmon.entities.pokeballs.EntityPokeBall;
+import pixelmon.enums.EnumPokeballs;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
 import cpw.mods.fml.common.network.Player;
@@ -39,15 +40,16 @@ public class SendPixelmon extends PacketHandlerBase {
 
 				if (playerPokeballs.get(player) != null && !playerPokeballs.get(player).isDead)
 					return;
-				
-				EntityPixelmon pokemon = PixelmonStorage.PokeballManager.getPlayerStorage(player).sendOut(pokemonId, player.worldObj);
-				EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, pokemon, pokemon.caughtBall);
+
+				EnumPokeballs caughtBall = EnumPokeballs.getFromIndex(nbt.getInteger("CaughtBall"));
+
+				EntityPokeBall pokeball = new EntityPokeBall(player.worldObj, player, pokemonId, caughtBall);
 				playerPokeballs.put(player, pokeball);
 
 				boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
 				ChatHandler.sendChat(player, "You sent out " + (flag ? nbt.getString("Name") : nbt.getString("Nickname")) + "!");
 
-				player.worldObj.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (pokemon.worldObj.rand.nextFloat() * 0.4F + 0.8F));
+				player.worldObj.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (player.worldObj.rand.nextFloat() * 0.4F + 0.8F));
 				player.worldObj.spawnEntityInWorld(pokeball);
 			} else if (PixelmonStorage.PokeballManager.getPlayerStorage(player).isFainted(pokemonId)) {
 				boolean flag = nbt.getString("NickName") == null || nbt.getString("Nickname").isEmpty();
@@ -65,9 +67,9 @@ public class SendPixelmon extends PacketHandlerBase {
 					return;
 				}
 
-				if (pixelmon.riddenByEntity == player) 
+				if (pixelmon.riddenByEntity == player)
 					player.mountEntity(null);
-				
+
 				if (pixelmon.getOwner() == null)
 					pixelmon.unloadEntity();
 				else if (pixelmon.getOwner() == player) {

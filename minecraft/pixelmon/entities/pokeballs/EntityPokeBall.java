@@ -45,6 +45,7 @@ public class EntityPokeBall extends EntityThrowable {
 	private int waitTime;
 	private boolean canCatch = false;
 	private EntityPixelmon pixelmon;
+	private int pokemonId;
 	private float endRotationYaw = 0;
 	public boolean dropItem;
 	private int breakChance = rand.nextInt(30);
@@ -58,7 +59,7 @@ public class EntityPokeBall extends EntityThrowable {
 	public EntityPokeBall(World world) {
 		super(world);
 		this.mode = null;
-		dataWatcher.addObject(10, EnumPokeballs.PokeBall.ordinal());
+		dataWatcher.addObject(10, EnumPokeballs.PokeBall.getIndex());
 		dataWatcher.addObject(11, (short) 0);// IsCaptured
 		dataWatcher.addObject(12, (short) 0);// IsWaiting
 		dataWatcher.addObject(13, (short) 0);// IsOnGround
@@ -70,7 +71,7 @@ public class EntityPokeBall extends EntityThrowable {
 		super(world, entityliving);
 		thrower = entityliving;
 		this.mode = Mode.empty;
-		dataWatcher.addObject(10, type.ordinal());
+		dataWatcher.addObject(10, type.getIndex());
 		dataWatcher.addObject(11, (short) 0);// IsCaptured
 		dataWatcher.addObject(12, (short) 0);// IsWaiting
 		dataWatcher.addObject(13, (short) 0);// IsOnGround
@@ -127,7 +128,7 @@ public class EntityPokeBall extends EntityThrowable {
 		dropItem = false;
 		endRotationYaw = thrower.rotationYawHead;
 		pixelmon = target;
-		dataWatcher.addObject(10, type.ordinal());
+		dataWatcher.addObject(10, type.getIndex());
 		dataWatcher.addObject(11, (short) 0);// IsCaptured
 		dataWatcher.addObject(12, (short) 0);// IsWaiting
 		dataWatcher.addObject(13, (short) 0);// IsOnGround
@@ -150,12 +151,12 @@ public class EntityPokeBall extends EntityThrowable {
 		this.motionY = (double) (-MathHelper.sin(0)) * 0.8;
 	}
 
-	public EntityPokeBall(World world, EntityLivingBase entityliving, EntityPixelmon e, EnumPokeballs type) {
+	public EntityPokeBall(World world, EntityLivingBase entityliving, int pokemonId, EnumPokeballs type) {
 		super(world, entityliving);
 		thrower = entityliving;
 		endRotationYaw = entityliving.rotationYawHead;
-		pixelmon = e;
-		dataWatcher.addObject(10, type.ordinal());
+		this.pokemonId = pokemonId;
+		dataWatcher.addObject(10, type.getIndex());
 		mode = Mode.full;
 		float speed = 0.3f;
 		this.setLocationAndAngles(entityliving.posX, entityliving.posY + (double) entityliving.getEyeHeight(), entityliving.posZ, entityliving.rotationYaw,
@@ -174,154 +175,161 @@ public class EntityPokeBall extends EntityThrowable {
 	}
 
 	@Override
-	protected void onImpact(MovingObjectPosition movingobjectposition) {
-		if (getIsWaiting()) {
-			return;
-		}
+    protected void onImpact(MovingObjectPosition movingobjectposition) {
+            if (getIsWaiting()) {
+                    return;
+            }
 
-		if (dropItem && breakChance == 1 && EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10)) != EnumPokeballs.MasterBall) {
-			worldObj.playSoundAtEntity(this, "random.break", 0.8F, 0.8F + this.worldObj.rand.nextFloat() * 0.4F);
-			entityDropItem(new ItemStack(Block.stoneButton), 0.0F);
-			entityDropItem(new ItemStack(PixelmonItemsPokeballs.ironBase), 0.0F);
-			entityDropItem(new ItemStack(breakBall()), 0.0F);
-			setDead();
-			return;
-		}
+            if (dropItem && breakChance == 1 && EnumPokeballs.getFromIndex(dataWatcher.getWatchableObjectInt(10)) != EnumPokeballs.MasterBall) {
+                    worldObj.playSoundAtEntity(this, "random.break", 0.8F, 0.8F + this.worldObj.rand.nextFloat() * 0.4F);
+                    entityDropItem(new ItemStack(Block.stoneButton), 0.0F);
+                    entityDropItem(new ItemStack(PixelmonItemsPokeballs.ironBase), 0.0F);
+                    entityDropItem(new ItemStack(breakBall()), 0.0F);
+                    setDead();
+                    return;
+            }
 
-		if (isBattleThrown && !worldObj.isRemote) {
-			p = pixelmon;
-			p.hitByPokeball = true;
-			doCaptureCalc(p);
-			setIsWaiting(true);
-			motionX = motionZ = 0;
-			motionY = 0;
-			// }
-		} else if (mode == Mode.full) {
-			if (movingobjectposition != null && !worldObj.isRemote) {
-				if (pixelmon != null) {
-					if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
-						if (movingobjectposition.sideHit == 0)// Bottom
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY - 1,
-									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
-						if (movingobjectposition.sideHit == 1)// Top
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY + 1,
-									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
-						if (movingobjectposition.sideHit == 2)// East
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY,
-									movingobjectposition.blockZ + 0.5 - 1, rotationYaw, 0.0F);
-						if (movingobjectposition.sideHit == 3)// West
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY,
-									movingobjectposition.blockZ + 0.5 + 1, rotationYaw, 0.0F);
-						if (movingobjectposition.sideHit == 4)// North
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 - 1, movingobjectposition.blockY,
-									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
-						if (movingobjectposition.sideHit == 5)// South
-							pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 + 1, movingobjectposition.blockY,
-									movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
-					} else {
-						pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
-					}
-					pixelmon.motionX = pixelmon.motionY = pixelmon.motionZ = 0;
-					pixelmon.releaseFromPokeball();
-					try {
-						if (movingobjectposition.entityHit != null
-								&& (movingobjectposition.entityHit instanceof EntityPixelmon)
-								&& !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn(
-										(EntityPixelmon) movingobjectposition.entityHit)) {
-							if (((EntityPixelmon) movingobjectposition.entityHit).battleController != null) {
-								setDead();
-								return;
-							}
-							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner()
-									&& ((EntityPixelmon) movingobjectposition.entityHit).getOwner() == null)
-								return;
-							if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner())
-								new BattleQuery((EntityPlayerMP) thrower, pixelmon,
-										(EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
-										(EntityPixelmon) movingobjectposition.entityHit);
-							else {
-								BattleParticipant part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
-								pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
-							}
+            if (isBattleThrown && !worldObj.isRemote) {
+                    p = pixelmon;
+                    p.hitByPokeball = true;
+                    doCaptureCalc(p);
+                    setIsWaiting(true);
+                    motionX = motionZ = 0;
+                    motionY = 0;
+                    // }
+            } else if (mode == Mode.full) {
+                    if (movingobjectposition != null && !worldObj.isRemote) {
+                            try {
+                                    pixelmon = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) thrower).sendOut(pokemonId, thrower.worldObj);
+                            } catch (PlayerNotLoadedException e) {
+                                    e.printStackTrace();
+                            }
+                            if (pixelmon != null) {
+                                    if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
+                                            if (movingobjectposition.sideHit == 0)// Bottom
+                                                    pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY - 1,
+                                                                    movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+                                            if (movingobjectposition.sideHit == 1)// Top
+                                                    pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY + 1,
+                                                                    movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+                                            if (movingobjectposition.sideHit == 2)// East
+                                                    pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY,
+                                                                    movingobjectposition.blockZ + 0.5 - 1, rotationYaw, 0.0F);
+                                            if (movingobjectposition.sideHit == 3)// West
+                                                    pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5, movingobjectposition.blockY,
+                                                                    movingobjectposition.blockZ + 0.5 + 1, rotationYaw, 0.0F);
+                                            if (movingobjectposition.sideHit == 4)// North
+                                                    pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 - 1, movingobjectposition.blockY,
+                                                                    movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+                                            if (movingobjectposition.sideHit == 5)// South
+                                                    pixelmon.setLocationAndAngles(movingobjectposition.blockX + 0.5 + 1, movingobjectposition.blockY,
+                                                                    movingobjectposition.blockZ + 0.5, rotationYaw, 0.0F);
+                                    } else {
+                                            pixelmon.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0.0F);
+                                    }
+                                    pixelmon.motionX = pixelmon.motionY = pixelmon.motionZ = 0;
+                                    pixelmon.releaseFromPokeball();
+                                    try {
+                                            if (movingobjectposition.entityHit != null
+                                                            && (movingobjectposition.entityHit instanceof EntityPixelmon)
+                                                            && !PixelmonStorage.PokeballManager.getPlayerStorage(((EntityPlayerMP) thrower)).isIn(
+                                                                            (EntityPixelmon) movingobjectposition.entityHit)) {
+                                                    if (((EntityPixelmon) movingobjectposition.entityHit).battleController != null) {
+                                                            setDead();
+                                                            return;
+                                                    }
+                                                    if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner()
+                                                                    && ((EntityPixelmon) movingobjectposition.entityHit).getOwner() == null)
+                                                            return;
+                                                    if (((EntityPixelmon) movingobjectposition.entityHit).hasOwner()) {
+                                                            if (((EntityPixelmon) movingobjectposition.entityHit).getStorage().guiOpened)
+                                                                    return;
+                                                            new BattleQuery((EntityPlayerMP) thrower, pixelmon,
+                                                                            (EntityPlayerMP) ((EntityPixelmon) movingobjectposition.entityHit).getOwner(),
+                                                                            (EntityPixelmon) movingobjectposition.entityHit);
+                                                    } else {
+                                                            BattleParticipant part = new WildPixelmonParticipant((EntityPixelmon) movingobjectposition.entityHit);
+                                                            pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), part);
+                                                    }
 
-						} else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
-							if (((EntityTrainer) movingobjectposition.entityHit).releasedPokemon != null
-									&& ((EntityTrainer) movingobjectposition.entityHit).releasedPokemon.battleController != null) {
-								setDead();
-								return;
-							}
+                                            } else if (movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityTrainer) {
+                                                    if (((EntityTrainer) movingobjectposition.entityHit).releasedPokemon != null
+                                                                    && ((EntityTrainer) movingobjectposition.entityHit).releasedPokemon.battleController != null) {
+                                                            setDead();
+                                                            return;
+                                                    }
 
-							TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
-							pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), trainer);
-						} else
-							pixelmon.clearAttackTarget();
-						if (thrower instanceof EntityPlayer) {
+                                                    TrainerParticipant trainer = new TrainerParticipant((EntityTrainer) movingobjectposition.entityHit, (EntityPlayer) thrower);
+                                                    pixelmon.StartBattle(new PlayerParticipant((EntityPlayerMP) thrower, pixelmon), trainer);
+                                            } else
+                                                    pixelmon.clearAttackTarget();
+                                            if (thrower instanceof EntityPlayer) {
 
-						}
-					} catch (PlayerNotLoadedException e) {
-					}
-					// spawnCaptureParticles();
-				}
-				setDead();
-			}
-		} else {
-			if (movingobjectposition != null) {
-				if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)) {
-					EntityPixelmon entitypixelmon = (EntityPixelmon) movingobjectposition.entityHit;
-					p = entitypixelmon;
+                                            }
+                                    } catch (PlayerNotLoadedException e) {
+                                    }
+                                    // spawnCaptureParticles();
+                            }
+                            setDead();
+                    }
+            } else {
+                    if (movingobjectposition != null) {
+                            if (movingobjectposition.entityHit != null && (movingobjectposition.entityHit instanceof EntityPixelmon)) {
+                                    EntityPixelmon entitypixelmon = (EntityPixelmon) movingobjectposition.entityHit;
+                                    p = entitypixelmon;
 
-					if (p.battleController != null) {
-						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch pokemon who are battling in another battle!");
-						if (dropItem) {
-							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
-						}
-						setDead();
-						return;
+                                    if (p.battleController != null) {
+                                            ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch pokemon who are battling in another battle!");
+                                            if (dropItem) {
+                                                    entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+                                            }
+                                            setDead();
+                                            return;
 
-					}
+                                    }
 
-					if (p.getBossMode() != EnumBossMode.Normal) {
-						ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch boss pokemon!");
-						setDead();
-						return;
-					}
+                                    if (p.getBossMode() != EnumBossMode.Normal) {
+                                            ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch boss pokemon!");
+                                            setDead();
+                                            return;
+                                    }
 
-					if (p.hasOwner() || p.getTrainer() != null) {
-						if (p.getOwner() == thrower)
-							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch Pokemon you already own!");
-						else
-							ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
-						if (dropItem) {
-							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
-						}
-						setDead();
-						return;
-					}
+                                    if (p.hasOwner() || p.getTrainer() != null) {
+                                            if (p.getOwner() == thrower)
+                                                    ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch Pokemon you already own!");
+                                            else
+                                                    ChatHandler.sendChat((EntityPlayer) thrower, "You can't catch other people's Pokemon!");
+                                            if (dropItem) {
+                                                    entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+                                            }
+                                            setDead();
+                                            return;
+                                    }
 
-					if (p.hitByPokeball) {
-						if (dropItem) {
-							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
-						}
-						setDead();
-						return;
-					}
-					p.hitByPokeball = true;
-					doCaptureCalc(p);
-					setIsWaiting(true);
-					motionX = motionZ = 0;
-					motionY = -0.1;
-				} else {
-					Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
-					if (!getIsWaiting() && mat != null && mat.isSolid()) {
-						if (dropItem) {
-							entityDropItem(new ItemStack(getType().getItem()), 0.0F);
-						}
-						setDead();
-					}
-				}
-			}
-		}
-	}
+                                    if (p.hitByPokeball) {
+                                            if (dropItem) {
+                                                    entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+                                            }
+                                            setDead();
+                                            return;
+                                    }
+                                    p.hitByPokeball = true;
+                                    doCaptureCalc(p);
+                                    setIsWaiting(true);
+                                    motionX = motionZ = 0;
+                                    motionY = -0.1;
+                            } else {
+                                    Material mat = worldObj.getBlockMaterial(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
+                                    if (!getIsWaiting() && mat != null && mat.isSolid()) {
+                                            if (dropItem) {
+                                                    entityDropItem(new ItemStack(getType().getItem()), 0.0F);
+                                            }
+                                            setDead();
+                                    }
+                            }
+                    }
+            }
+    }
 
 	public Item breakBall() {
 		return PixelmonItemsPokeballs.getLidFromEnum(getType());

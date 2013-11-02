@@ -21,6 +21,8 @@ public class GuiOpenClose extends PacketHandlerBase {
 	public void handlePacket(int index, Player player, DataInputStream dataStream) throws IOException {
 		try {
 			PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player).guiOpened = (index == EnumPackets.GuiOpen.getIndex());
+			if (index == EnumPackets.GuiClose.getIndex()){
+					}
 		} catch (Exception e) {
 		}
 	}

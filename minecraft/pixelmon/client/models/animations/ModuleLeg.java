@@ -22,8 +22,8 @@ public class ModuleLeg extends Module {
 	EnumLeg legVariable;
 
 	public ModuleLeg(Object leg, EnumLeg legVariable,
-			EnumPhase phaseVariable, EnumRotation rotationAxis, float LegRotationLimit, float legSpeed) {
-		this.leg = this.getModulizableFrom(leg);
+            EnumPhase phaseVariable, EnumRotation rotationAxis, float LegRotationLimit, float legSpeed) {
+		this.leg = this.getModulizableFrom(leg);		
 		this.LegRotationLimit = LegRotationLimit;
 		this.legSpeed = legSpeed;
 		this.phaseVariable = phaseVariable;
@@ -32,6 +32,7 @@ public class ModuleLeg extends Module {
 		LegInitX = this.leg.getValue(EnumGeomData.xrot);
 		LegInitY = this.leg.getValue(EnumGeomData.yrot);
 		LegInitZ = this.leg.getValue(EnumGeomData.zrot);
+
 
 		if (phaseVariable == EnumPhase.InPhase) {
 

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.world.biome.BiomeGenBase;
+import pixelmon.RandomHelper;
+import pixelmon.entities.pixelmon.Entity3HasStats;
 import pixelmon.enums.EnumBiomes;
 import pixelmon.enums.EnumPokemon;
 
@@ -15,102 +17,106 @@ public class DatabaseTrainers {
 	public static TrainerInfo GetTrainerInfo(String trainerName) {
 		Connection conn = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
 			conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Trainers where TrainerType='" + trainerName + "'");
+			ResultSet rs = stat.executeQuery("SELECT * from TRAINER where TRAINERTYPEID=SELECT TRAINERTYPEID FROM TRAINERTYPES WHERE TYPENAME='" + trainerName
+					+ "'");
 
 			TrainerInfo info = new TrainerInfo();
 			Random rand = new Random();
-			while (rs.next()) {
-				String nameListString = rs.getString("NameList");
-				String[] nameListSplits = nameListString.split(";");
-				info.name = nameListSplits[rand.nextInt(nameListSplits.length)];
-				String pokemonListString = rs.getString("UsablePokemon");
-				String[] pokemonListSplits = pokemonListString.split(";");
-				ArrayList<String> newList = new ArrayList<String>();
-				for (String s : pokemonListSplits)
-					if (EnumPokemon.hasPokemon(s))
-						newList.add(s);
+			if (rs.next()) {
+				info.id = rs.getInt("TRAINERTYPEID");
 
-				int numPokemon = rand.nextInt(6) + 1;
-				for (int i = 0; i < numPokemon; i++) {
-					info.partypokemon.add(newList.get(rand.nextInt(newList.size())));
-				}
-				int baseLevel = rs.getInt("BaseLevel");
-				int topLevel = rs.getInt("TopLevel");
-				info.level = baseLevel + rand.nextInt(topLevel + 1 - baseLevel);
-				String greetingListString = rs.getString("Greetings");
-				String[] greetingListSplits = greetingListString.split(";");
-				int ind = rand.nextInt(greetingListSplits.length);
-				info.greeting = greetingListSplits[ind];
-				String winningListString = rs.getString("VictoryMessages");
-				String defeatListString = rs.getString("DefeatMessages");
-				if (winningListString == null)
-					info.winMessage = "NO WINNING MESSAGE!";
-				else {
-					String[] winningListSplits = winningListString.split(";");
-					if (winningListSplits.length < ind - 1)
-						info.winMessage = "NO WINNING MESSAGE!";
-					else
-						info.winMessage = winningListSplits[ind];
-				}
-				if (defeatListString == null)
-					info.loseMessage = "NO DEFEAT MESSAGE!";
-				else {
-					String[] defeatListSplits = defeatListString.split(";");
-					if (defeatListSplits.length < ind - 1)
-						info.loseMessage = "NO DEFEAT MESSAGE!";
-					else
-						info.loseMessage = defeatListSplits[ind];
-				}
-				info.rarity = rs.getInt("Rarity");
-				String modelStrings = rs.getString("Models");
-				String[] modelSplits = modelStrings.split(";");
-				info.model = modelSplits[rand.nextInt(modelSplits.length)];
+				getNameAndModelForID(stat, info);
+				getPartyPokemon(stat, info);
+				getTrainerTypeInfo(stat, info);
+				getMessages(stat, info);
 			}
-			conn.close();
 			return info;
 		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+			System.out.println("Error in database for trainer " + trainerName);
 		}
 		return null;
 	}
 
+	private static void getMessages(Statement stat, TrainerInfo info) throws SQLException {
+		ResultSet rs = stat.executeQuery("SELECT MESSAGE from TRAINERMESSAGES where TRAINERTYPEID=" + info.id + " AND MESSAGETYPE='Greeting'");
+		ArrayList<String> greetings = new ArrayList<String>();
+		if (rs.next()) {
+			greetings.add(rs.getString("MESSAGE"));
+		}
+		rs = stat.executeQuery("SELECT MESSAGE from TRAINERMESSAGES where TRAINERTYPEID=" + info.id + " AND MESSAGETYPE='Victory'");
+		ArrayList<String> victoryMessages = new ArrayList<String>();
+		if (rs.next()) {
+			victoryMessages.add(rs.getString("MESSAGE"));
+		}
+		rs = stat.executeQuery("SELECT MESSAGE from TRAINERMESSAGES where TRAINERTYPEID=" + info.id + " AND MESSAGETYPE='Defeat'");
+		ArrayList<String> defeatMessages = new ArrayList<String>();
+		if (rs.next()) {
+			defeatMessages.add(rs.getString("MESSAGE"));
+		}
+
+		int ind = RandomHelper.getRandomNumberBetween(0, greetings.size() - 1);
+		info.greeting = greetings.get(ind);
+		ind = RandomHelper.getRandomNumberBetween(0, victoryMessages.size() - 1);
+		info.winMessage = victoryMessages.get(ind);
+		ind = RandomHelper.getRandomNumberBetween(0, defeatMessages.size() - 1);
+		info.loseMessage = defeatMessages.get(ind);
+
+	}
+
+	private static void getTrainerTypeInfo(Statement stat, TrainerInfo info) throws SQLException {
+		ResultSet rs = stat.executeQuery("SELECT * from TRAINERTYPES where TRAINERTYPEID=" + info.id);
+		if (rs.next()) {
+			int baseLevel = rs.getInt("MINPARTYLEVEL");
+			int topLevel = rs.getInt("MAXPARTYLEVEL");
+			info.rarity = rs.getInt("RARITY");
+			info.level = RandomHelper.getRandomNumberBetween(baseLevel, topLevel + 1);
+		}
+	}
+
+	private static void getPartyPokemon(Statement stat, TrainerInfo info) throws SQLException {
+		ResultSet rs = stat.executeQuery("SELECT * from TRAINERPIXELMONPOOL where TRAINERTYPEID=" + info.id);
+		ArrayList<EnumPokemon> pokemonList = new ArrayList<EnumPokemon>();
+		while (rs.next()) {
+			pokemonList.add(Entity3HasStats.getBaseStatsFromDBID(rs.getInt("PIXELMONID")).pokemon);
+		}
+		int numPokemon = RandomHelper.getRandomNumberBetween(1, 6);
+		for (int i = 0; i < numPokemon; i++) {
+			info.partypokemon.add(pokemonList.get(RandomHelper.getRandomNumberBetween(0, pokemonList.size() - 1)));
+		}
+
+	}
+
+	private static void getNameAndModelForID(Statement stat, TrainerInfo info) throws SQLException {
+		ResultSet rs = stat.executeQuery("SELECT * from TRAINER where TRAINERTYPEID=" + info.id);
+		String[] result;
+		ArrayList<String[]> nameList = new ArrayList<String[]>();
+		while (rs.next()) {
+			nameList.add(new String[] { rs.getString("TRAINERNAME"), rs.getString("TRAINERMODEL") });
+		}
+		result = nameList.get(RandomHelper.getRandomNumberBetween(0, nameList.size() - 1));
+		info.name = result[0];
+		info.model = result[1];
+	}
+
 	public static BiomeGenBase[] GetSpawnBiomes(String trainerName) {
-		Connection conn = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conn = DatabaseHelper.getConnection();
+			Connection conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Trainers where TrainerType='" + trainerName + "'");
+			ResultSet rs = stat.executeQuery("select BIOMEID from TRAINERBIOMES where TRAINERTYPEID= "
+					+ "SELECT TRAINERTYPEID FROM TRAINERTYPES WHERE TYPENAME='" + trainerName + "'");
+			ArrayList<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();
 			while (rs.next()) {
-				BiomeGenBase[] biomes;
-				String biomeString = rs.getString("SpawnBiome");
-				if (rs.wasNull())
-					return null;
-				String[] biomeList = biomeString.split(";");
-				biomes = new BiomeGenBase[biomeList.length];
-				int i = 0;
-				for (String biomeName : biomeList) {
-					EnumBiomes e = EnumBiomes.parseBiome(biomeName);
-					biomes[i] = e.getBiome();
-					i++;
-				}
-				return biomes;
+				biomes.add(DatabaseStats.biomeMasterList[rs.getInt("BIOMEID")]);
 			}
+			BiomeGenBase[] biomeArray = new BiomeGenBase[biomes.size()];
+			for (int i = 0; i < biomes.size(); i++) {
+				biomeArray[i] = biomes.get(i);
+			}
+			return biomeArray;
 		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+			System.out.println("Error in biomes for trainer " + trainerName);
 		}
 		return null;
 	}
@@ -118,23 +124,15 @@ public class DatabaseTrainers {
 	public static int getRarity(String name) {
 		Connection conn = null;
 		try {
-			Class.forName("org.sqlite.JDBC");
 			conn = DatabaseHelper.getConnection();
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Trainers where TrainerType='" + name + "'");
+			ResultSet rs = stat.executeQuery("select RARITY from TRAINERTYPES WHERE TYPENAME='" + name + "'");
 			int rarity = 0;
 			while (rs.next()) {
-				rarity = rs.getInt("Rarity");
+				return rs.getInt("RARITY");
 			}
-			conn.close();
-			return rarity;
 		} catch (Exception e) {
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+			System.out.println("Error in rarity for trainer " + name);
 		}
 		return 0;
 	}

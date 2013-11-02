@@ -11,22 +11,20 @@ public class ModuleTailBasic extends Module {
 	IModulizable tail;
 
 	float TailRotationLimitY;
-	float TailRotationLimitZ;
+	float TailRotationLimitX;
 	float TailSpeed;
 	float TailInitY;
-	float TailInitZ;
+	float TailInitX;
 	float TailOrientation;
 	float TurningSpeed;
 	float TurningAngle;
 	
-	public ModuleTailBasic(Object tail, float TailRotationLimitY, float TailRotationLimitZ, float TailSpeed) {
-		this.tail = getModulizableFrom(tail);
-		this.TailSpeed = TailSpeed;
+	public ModuleTailBasic(Object tail, float TailRotationLimitY, float TailRotationLimitX, float TailSpeed) {
+		this.tail = getModulizableFrom(tail);		this.TailSpeed = TailSpeed;
 		this.TailRotationLimitY = TailRotationLimitY;
-		this.TailRotationLimitZ = TailRotationLimitZ;
+		this.TailRotationLimitX = TailRotationLimitX;
 		TailInitY = this.tail.getValue(EnumGeomData.yrot);
-		TailInitZ = this.tail.getValue(EnumGeomData.zrot);
-
+		TailInitX = this.tail.getValue(EnumGeomData.xrot);
 
 	}
 
@@ -40,10 +38,7 @@ public class ModuleTailBasic extends Module {
 				* f1
 				* TailRotationLimitY + TurningAngle, EnumGeomData.yrot);
 		
-		tail.setValue(MathHelper.cos(f * TailSpeed * 2)
-				* (float) Math.PI
-				* f1
-				* TailRotationLimitZ, EnumGeomData.zrot);
+		tail.setValue(MathHelper.cos(f * TailSpeed * 2)	* (float) Math.PI * f1 * TailRotationLimitX, EnumGeomData.xrot);
 		
 		
 	}

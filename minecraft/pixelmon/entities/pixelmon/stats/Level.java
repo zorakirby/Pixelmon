@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import pixelmon.battles.BattleRegistry;
 import pixelmon.battles.attacks.Attack;
 import pixelmon.blocks.BlockEvolutionRock;
 import pixelmon.comm.ChatHandler;
@@ -208,14 +209,19 @@ public class Level {
 			if (!evolves && pixelmon.evolving == 0 && DatabaseMoves.LearnsAttackAtLevel(pixelmon.baseStats.id, getLevel())) {
 				ArrayList<Attack> newAttacks = DatabaseMoves.getAttacksAtLevel(pixelmon.baseStats.id, getLevel());
 				for (Attack a : newAttacks) {
-					if (pixelmon.getMoveset().size() >= 4) {
-						ReplaceMove.tmID = -1;
-						((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
-								EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
-					} else {
-						pixelmon.getMoveset().add(a);
-						pixelmon.update(EnumUpdateType.Moveset);
-						ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
+					if (!pixelmon.getMoveset().hasAttack(a)) {
+						if (pixelmon.getMoveset().size() >= 4) {
+							ReplaceMove.tmID = -1;
+							((EntityPlayerMP) pixelmon.getOwner()).playerNetServerHandler.sendPacketToPlayer(PacketCreator.createPacket(
+									EnumPackets.ChooseMoveToReplace, pixelmon.getPokemonId(), a.baseAttack.attackIndex, getLevel()));
+						} else {
+							pixelmon.getMoveset().add(a);
+							pixelmon.update(EnumUpdateType.Moveset);
+							if (BattleRegistry.getBattle((EntityPlayer) pixelmon.getOwner()) != null)
+								ChatHandler.sendBattleMessage(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
+
+							ChatHandler.sendChat(pixelmon.getOwner(), pixelmon.getNickname() + " just learnt " + a.baseAttack.attackName + "!");
+						}
 					}
 				}
 			}

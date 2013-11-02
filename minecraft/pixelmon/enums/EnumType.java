@@ -64,7 +64,7 @@ public enum EnumType {
 		} catch (Exception e) {
 
 		}
-		return EnumType.Mystery;
+		return EnumType.Normal;
 	}
 
 	public static EnumType parseType(int i) {
@@ -75,7 +75,7 @@ public enum EnumType {
 			if (t.index == i)
 				return t;
 		}
-		return Mystery;
+		return Normal;
 	}
 
 	public static EnumType parseType(String s) {
@@ -86,7 +86,7 @@ public enum EnumType {
 			if (t.name.equalsIgnoreCase(s))
 				return t;
 		}
-		return Mystery;
+		return Normal;
 	}
 
 	public static ArrayList<EnumType> getAllTypes() {

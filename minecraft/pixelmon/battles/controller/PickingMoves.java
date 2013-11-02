@@ -51,6 +51,7 @@ public class PickingMoves {
 
 		for (BattleParticipant p : bc.participants) {
 			if (p.attack != null) {
+				p.priority = 0;
 				for (EffectBase e : p.attack.baseAttack.effects) {
 					if (e.applyStage == ApplyStage.Priority) {
 						p.priority = ((Priority) e).value;

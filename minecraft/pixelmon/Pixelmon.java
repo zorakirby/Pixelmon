@@ -75,7 +75,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "pixelmon", name = "Pixelmon", version = "2.5.0")
+@Mod(modid = "pixelmon", name = "Pixelmon", version = "2.5.2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = { "Pixelmon" }, packetHandler = PacketHandler.class))
 public class Pixelmon {
 
@@ -116,63 +116,21 @@ public class Pixelmon {
 
 
 	@EventHandler
-	public void load(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event) {
 		PixelmonConfig.loadConfig(config);
 		Fractal.preloadFractals();
-
-		NetworkRegistry.instance().registerGuiHandler(instance, proxy);
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
 		proxy.registerInteractions();
-		PixelmonRecipes.addRecipes();
-		EntityRegistry.registerModEntity(EntityPokeBall.class, "Pokeball", PixelmonConfig.idPokeball, Pixelmon.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityHook.class, "Hook", 216, this, 75, 1, true);
 
-		NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
-
-		GameRegistry.registerPlayerTracker(new PixelmonPlayerTracker());
-		
-		GameRegistry.registerWorldGenerator(new WorldGenLeafStoneOre());
-		GameRegistry.registerWorldGenerator(new WorldGenWaterStoneOre());
-		GameRegistry.registerWorldGenerator(new WorldGenThunderStoneOre());
-		GameRegistry.registerWorldGenerator(new WorldGenFireStoneOre());
-		GameRegistry.registerWorldGenerator(new WorldGenApricornTrees());
-		GameRegistry.registerWorldGenerator(new WorldGenBauxiteOre());
-		GameRegistry.registerWorldGenerator(new WorldGenFossils());
-		GameRegistry.registerWorldGenerator(new WorldGenEvolutionRock());
-
-		
-		
-		/*ComplexScattered.registerStructures();
-		StructureRegistry.loadStructures(event.getSide());
-		
-		if(PixelmonConfig.spawnStructures)
-			GameRegistry.registerWorldGenerator(new WorldGenScatteredFeature());
-		*/
-
-
-		// MinecraftForge.EVENT_BUS.register(new MigrationLoader());
-		MinecraftForge.EVENT_BUS.register(PixelmonStorage.PokeballManager);
-		MinecraftForge.EVENT_BUS.register(PixelmonStorage.ComputerManager);
-		MinecraftForge.EVENT_BUS.register(new EntitySpawning());
-		MinecraftForge.EVENT_BUS.register(new EntityDeath());
-		//MinecraftForge.TERRAIN_GEN_BUS.register(MapGenDenialWrapper.SUBSCRIBER);
-
-		TickRegistry.registerTickHandler(new TickHandler(), Side.CLIENT);
-		TickRegistry.registerTickHandler(new SleepHandler(), Side.SERVER);
-		TickRegistry.registerTickHandler(new TickHandler(), Side.SERVER);
-		TickRegistry.registerTickHandler(new PixelmonSpawner(), Side.SERVER);
-		TickRegistry.registerTickHandler(new BattleTickHandler(), Side.SERVER);
+		RegistryHelper.init(event, this);
 		
 		proxy.registerTickHandlers();
-		for(EnumPokemon pokemon: EnumPokemon.values()){
-			Entity3HasStats.getBaseStats(pokemon.name);
-		}
 		init = true;
 	}
 
 	@EventHandler
-	public void modsLoaded(FMLPostInitializationEvent event) {
+	public void postInit(FMLPostInitializationEvent event) {
 		PixelmonConfig.removeSpawns();
 		ArmorToolLibrary.init();
 		DungeonExtraTreasure.initRareItems();

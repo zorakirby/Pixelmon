@@ -71,29 +71,32 @@ public class BlockAnvil extends BlockContainer {
 	}
 
 	@SideOnly(Side.CLIENT)
-    //only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
-    public int idPicked(World par1World, int par2, int par3, int par4)
-    {
-        return PixelmonItems.anvilItem.itemID;
-    }
+	// only called by clickMiddleMouseButton , and passed to
+	// inventory.setCurrentItem (along with isCreative)
+	public int idPicked(World par1World, int par2, int par3, int par4) {
+		return PixelmonItems.anvilItem.itemID;
+	}
+
 	@Override
 	public boolean removeBlockByPlayer(World world, EntityPlayer player, int x, int y, int z) {
 		onBlockDestroyed(world, x, y, z);
 		return super.removeBlockByPlayer(world, player, x, y, z);
 	}
-	
+
 	private void onBlockDestroyed(World world, int x, int y, int z) {
 		if (!world.isRemote) {
 			if (((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil != -1) {
 				int itemId = ((TileEntityAnvil) world.getBlockTileEntity(x, y, z)).itemOnAnvil;
 				Item item = PixelmonItemsPokeballs.getItemFromID(itemId);
-				if (item != null) {
-
-					EntityItem var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
+				Item otherItems = PixelmonItems.getItem(itemId);
+				EntityItem var3 = null;
+				if (item != null)
+					var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(item));
+				else if (otherItems != null)
+					var3 = new EntityItem(world, x, y + maxY, z, new ItemStack(otherItems));
 
 					var3.delayBeforeCanPickup = 10;
 					world.spawnEntityInWorld(var3);
-				}
 			}
 		}
 	}

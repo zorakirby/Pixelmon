@@ -10,6 +10,7 @@ import pixelmon.database.DatabaseHelper;
 public enum EnumPokemon {
 	Abra("Abra"),
 	Aerodactyl("Aerodactyl"),
+	Aggron("Aggron"),
 	Alakazam("Alakazam"),
 	Anorith("Anorith"),
 	Arbok("Arbok"),
@@ -17,10 +18,12 @@ public enum EnumPokemon {
 	Archen("Archen"),
 	Archeops("Archeops"),
 	Armaldo("Armaldo"),
+	Aron("Aron"),
 	Articuno("Articuno"),
 	Bastiodon("Bastiodon"),
 	Bayleef("Bayleef"),
 	Beedrill("Beedrill"),
+	Beldum("Beldum"),
 	Bellsprout("Bellsprout"),
 	Blastoise("Blastoise"),
 	Bulbasaur("Bulbasaur"),
@@ -58,6 +61,7 @@ public enum EnumPokemon {
 	Electabuzz("Electabuzz"),
 	Electrode("Electrode"),
 	Elekid("Elekid"),
+	Empoleon("Empoleon"),
 	Espeon("Espeon"),
 	Exeggcute("Exeggcute"),
 	Exeggutor("Exeggutor"),
@@ -103,6 +107,7 @@ public enum EnumPokemon {
 	Koffing("Koffing"),
 	Krabby("Krabby"),
 	Krokorok("Krokorok"),
+	Lairon("Lairon"),
 	Lanturn("Lanturn"),
 	Lapras("Lapras"),
 	Leafeon("Leafeon"),
@@ -118,14 +123,18 @@ public enum EnumPokemon {
 	Mankey("Mankey"),
 	Mareep("Mareep"),
 	Marowak("Marowak"),
+	Marshtomp("Marshtomp"),
 	Meganium("Meganium"),
 	Meowth("Meowth"),
+	Metagross("Metagross"),
+	Metang("Metang"),
 	Metapod("Metapod"),
 	Mew("Mew"),
 	Mewtwo("Mewtwo"),
 	Miltank("Miltank"),
 	Moltres("Moltres"),
 	MrMime("MrMime"),
+	Mudkip("Mudkip"),
 	Muk("Muk"),
 	Nidoking("Nidoking"),
 	Nidoqueen("Nidoqueen"),
@@ -142,18 +151,21 @@ public enum EnumPokemon {
 	Paras("Paras"),
 	Parasect("Parasect"),
 	Persian("Persian"),
+	Pichu("Pichu"),
 	Pidgey("Pidgey"),
 	Pikachu("Pikachu"),
 	Pidgeotto("Pidgeotto"),
 	Pidgeot("Pidgeot"),
 	Piloswine("Piloswine"),
 	Pinsir("Pinsir"),
+	Piplup("Piplup"),
 	Poliwag("Poliwag"),
 	Poliwhirl("Poliwhirl"),
 	Poliwrath("Poliwrath"),
 	Ponyta("Ponyta"),
 	Porygon("Porygon"),
 	Primeape("Primeape"),
+	Prinplup("Prinplup"),
 	Psyduck("Psyduck"),
 	Quilava("Quilava"),
 	Raichu("Raichu"),
@@ -183,6 +195,7 @@ public enum EnumPokemon {
 	Squirtle("Squirtle"),
 	Staryu("Staryu"),
 	Starmie("Starmie"),
+	Swampert("Swampert"),
 	Swinub("Swinub"),
 	Tangela("Tangela"),
 	Tauros("Tauros"),
@@ -249,12 +262,8 @@ public enum EnumPokemon {
 		}
 		return null;
 	}
-	
-	public static String getDisplayName(String name){
-		if(name.equals("Nidoranfemale"))
-			return "Nidoran\u2640";
-		else if(name.equals("Nidoranmale"))
-			return "Nidoran\u2642";
-		else return name;
+
+	public static String getDisplayName(String name2) {
+		return name2;
 	}
 }

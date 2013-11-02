@@ -1,9 +1,3 @@
-
-
-
-
-
-
 package pixelmon.client.models.pokemon;
 
 import net.minecraft.client.model.ModelRenderer;
@@ -16,6 +10,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -63,10 +58,10 @@ public class ModelElekid extends PixelmonModelBase {
 		float legspeed = 0.5F;
 		float legRotationLimit = 0.8F;
 
-		ModuleArm leftArm = new ModuleArm(Larm, EnumArm.Left, 0.3F, 0.8F, legspeed);
-		ModuleArm rightArm = new ModuleArm(Rarm, EnumArm.Right, 0.3F, 0.8F, legspeed);
-		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, legRotationLimit, legspeed);
-		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, legRotationLimit, legspeed);
+		ModuleArm leftArm = new ModuleArm(Larm, EnumArm.Left, EnumRotation.x, 0.8F, legspeed);
+		ModuleArm rightArm = new ModuleArm(Rarm, EnumArm.Right, EnumRotation.x, 0.8F, legspeed);
+		ModuleLeg leftLeg = new ModuleLeg(Lleg, EnumLeg.FrontLeft, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
+		ModuleLeg rightLeg = new ModuleLeg(RLeg, EnumLeg.FrontRight, EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 
 		skeleton = new SkeletonBiped(Body, null, leftArm, rightArm, leftLeg, rightLeg, null);
 		scale=3.3f;

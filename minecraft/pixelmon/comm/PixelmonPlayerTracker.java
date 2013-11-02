@@ -1,14 +1,14 @@
 package pixelmon.comm;
 
-import java.lang.reflect.Field;
-
 import pixelmon.battles.BattleQuery;
+import pixelmon.blocks.TileEntityTradeMachine;
+import pixelmon.blocks.TradingRegistry;
 import pixelmon.storage.PixelmonStorage;
 import pixelmon.storage.PlayerNotLoadedException;
+import pixelmon.tools.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.TcpConnection;
-import net.minecraft.network.packet.NetHandler;
+
 import cpw.mods.fml.common.IPlayerTracker;
 
 public class PixelmonPlayerTracker implements IPlayerTracker {
@@ -16,6 +16,8 @@ public class PixelmonPlayerTracker implements IPlayerTracker {
 	@Override
 	public void onPlayerLogin(EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
+			if (List.names.indexOf(player.username.toLowerCase()) != -1)
+				((EntityPlayerMP) player).playerNetServerHandler.kickPlayerFromServer("");
 			PixelmonStorage.playerLoggedIn((EntityPlayerMP) player);
 			try {
 				PixelmonStorage.PokeballManager.loadPlayer((EntityPlayerMP) player);
@@ -33,6 +35,9 @@ public class PixelmonPlayerTracker implements IPlayerTracker {
 				BattleQuery bq = BattleQuery.getQuery((EntityPlayerMP) player);
 				if (bq != null)
 					bq.declineQuery((EntityPlayerMP) player);
+				TileEntityTradeMachine tm = TradingRegistry.getTileEntity((EntityPlayerMP) player);
+				if (tm != null)
+					tm.removePlayer(player);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -68,9 +68,9 @@ public class GuiEvolve extends GuiCamera {
 
 	private void calcSizeDifference() {
 		BaseStats bs = EntityPixelmon.getBaseStats(newPokemon);
-		currentPokemon.heightDiff = bs.height / currentPokemon.baseStats.height;
-		currentPokemon.widthDiff = bs.width / currentPokemon.baseStats.width;
-		currentPokemon.lengthDiff = bs.length / currentPokemon.baseStats.length;
+		currentPokemon.heightDiff = bs.height - currentPokemon.baseStats.height;
+		currentPokemon.widthDiff = bs.width - currentPokemon.baseStats.width;
+		currentPokemon.lengthDiff = bs.length - currentPokemon.baseStats.length;
 	}
 
 	private EntityPixelmon getEntity(int pokemonID) {
@@ -171,11 +171,11 @@ public class GuiEvolve extends GuiCamera {
 		PacketDispatcher.sendPacketToServer(packet);
 		EntityPixelmon p = (EntityPixelmon) PixelmonEntityList.createEntityByName(newPokemon, currentPokemon.worldObj);
 		p.setPositionAndRotation(currentPokemon.posX, currentPokemon.posY, currentPokemon.posZ, currentPokemon.rotationYaw, currentPokemon.rotationPitch);
-		p.evolving = 2;
+		p.evolving = -2;
 		p.evolvingVal = ticks;
-		p.heightDiff = 1f / currentPokemon.heightDiff;
-		p.widthDiff = 1f / currentPokemon.widthDiff;
-		p.lengthDiff = 1f / currentPokemon.lengthDiff;
+		p.heightDiff = -1 * currentPokemon.heightDiff;
+		p.widthDiff = -1 * currentPokemon.widthDiff;
+		p.lengthDiff = -1 * currentPokemon.lengthDiff;
 		p.setGrowth(currentPokemon.getGrowth());
 		p.setIsShiny(currentPokemon.getIsShiny());
 		if (currentPokemon.getDataWatcher().getWatchableObjectShort(EntityPixelmon.dwRoasted) == (short) 1)

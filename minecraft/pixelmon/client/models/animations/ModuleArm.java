@@ -23,8 +23,8 @@ public class ModuleArm extends Module {
 	EnumRotation rotationAxis;
 
 	public ModuleArm(Object arm, EnumArm ArmVariable,
-			EnumRotation rotationAxis, float ArmRotationLimit, float ArmSpeed) {
-		this.arm = this.getModulizableFrom(arm);
+            EnumRotation rotationAxis, float ArmRotationLimit, float ArmSpeed) {
+		this.arm = this.getModulizableFrom(arm);		
 		this.ArmSpeed = ArmSpeed;
 		this.ArmRotationLimit = ArmRotationLimit;
 		ArmInitY = this.arm.getValue(EnumGeomData.zrot);
@@ -54,9 +54,10 @@ public class ModuleArm extends Module {
 		case z: arm.setValue(MathHelper.cos(f * ArmSpeed + (float) Math.PI)
 				* ArmRotationLimit * f1 * ArmDirection + ArmInitZ, EnumGeomData.zrot);
 			break;
-		
 		}
+		
 	}
+
 
 	@Override
 	public void fly(EntityPixelmon entity, float f, float f1, float f2,
