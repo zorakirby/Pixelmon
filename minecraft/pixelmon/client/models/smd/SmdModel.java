@@ -21,7 +21,7 @@ import net.minecraftforge.client.model.obj.Vertex;
 public class SmdModel{
 	//format = <int|Parent bone> <float|PosX PosY PosZ> <normal|NormX NormY NormZ> <normal|U V> <int|links> <int|Bone ID> <normal|Weight> 
 	public final ValveStudioModel owner;
-	public ArrayList<Face> faces = new ArrayList<Face>();
+	public ArrayList<NormalizedFace> faces = new ArrayList<NormalizedFace>();
 	public ArrayList<DeformVertex> verts = new ArrayList<DeformVertex>();
 	public ArrayList<Bone> bones = new ArrayList<Bone>();
 	public HashMap<String, Bone> nameToBoneMapping = new HashMap<String, Bone>();
@@ -121,7 +121,6 @@ public class SmdModel{
 	private void parseFace(String[] params, int lineCount){
 		try{
 			//<int|Parent bone> <float|PosX PosY PosZ> <normal|NormX NormY NormZ> <normal|U V> <int|links> <int|Bone ID> <normal|Weight> 
-			Face face = new Face();
 			DeformVertex[] faceVerts = new DeformVertex[3];
 			DeformVertex[] normVerts = new DeformVertex[3];
 			TextureCoordinate[] uvs = new TextureCoordinate[3];
@@ -135,8 +134,9 @@ public class SmdModel{
 					doBoneWeights(values, faceVerts[i]);
 				}
 			}
+			NormalizedFace face = new NormalizedFace(faceVerts, normVerts, uvs);
 			face.vertices = faceVerts;
-			face.vertexNormals = normVerts;
+			//face.vertexNormals = normVerts;
 			face.textureCoordinates = uvs;
 			faces.add(face);
 		}catch(Exception e){

@@ -7,6 +7,7 @@ import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.biped.SkeletonBiped;
 
@@ -28,9 +29,9 @@ public class ModelSnorunt extends PixelmonModelBase{
      float legspeed = 0.5F;
      float legRotationLimit = 1.4F;
      ModuleLeg footModuleL = new ModuleLeg(footL, EnumLeg.FrontLeft,
-             EnumPhase.InPhase, legRotationLimit, legspeed);
+             EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
      ModuleLeg footModuleR = new ModuleLeg(footR, EnumLeg.FrontRight,
-             EnumPhase.InPhase, legRotationLimit, legspeed);
+             EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
      skeleton = new SkeletonBiped(body, null, null, null,
                                   footModuleL, footModuleR, null);
 	}

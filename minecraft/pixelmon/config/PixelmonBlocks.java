@@ -16,6 +16,10 @@ import pixelmon.blocks.decorative.BlockPlus;
 import pixelmon.blocks.decorative.BlockStairsPublic;
 import pixelmon.blocks.decorative.BlockUnown;
 import pixelmon.blocks.decorative.TileEntityDecorativeBase;
+import pixelmon.client.models.ModelFancyPillar;
+import pixelmon.client.models.ModelIcyRock;
+import pixelmon.client.models.ModelLolVase;
+import pixelmon.client.models.ModelMossyRock;
 import pixelmon.enums.EnumEvolutionRock;
 import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumShrine;
@@ -52,6 +56,8 @@ public class PixelmonBlocks {
 	public static int templeBrickId;
 	public static int templeStairsId;
 	public static int templeBrickStairsId;
+	
+	public static int lolVaseId;
 
 	public static int shrineUnoID;
 	public static int shrineDosID;
@@ -101,6 +107,8 @@ public class PixelmonBlocks {
 	public static Block templeStairs;
 	@Mod.Block(name = "Temple Brick Stairs")
 	public static Block templeBrickStairs;
+	@Mod.Block(name = "Lol Vase")
+	public static Block lolVase;
 	
 
 	@Mod.Block(name = "Articuno Shrine", itemTypeClass = ItemBlock.class)
@@ -140,6 +148,7 @@ public class PixelmonBlocks {
 		templeBrickId = configuration.getBlock("Temple Brick", 325).getInt(325);
 		templeStairsId = configuration.getBlock("Temple Stairs", 326).getInt(326);
 		templeBrickStairsId = configuration.getBlock("Temple Brick Stairs", 327).getInt(327);
+		lolVaseId = configuration.getBlock("LolVase", 328).getInt(328);
 		
 		healer = new BlockHealer(pokemonHealerIdleId);
 		thunderStoneOre = new BlockEvolutionStoneOre(thunderStoneOreId, EnumEvolutionStone.Thunderstone, 3.0f, "Thunder Stone Ore");
@@ -154,9 +163,9 @@ public class PixelmonBlocks {
 		fossil = new BlockFossil(fossilId).setHardness(5f);
 		tradeMachine = new BlockTradeMachine(tradeMachineId);
 		fossilCleaner = new BlockFossilCleaner(fossilCleanerId);
-		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setModelName("ModelMossyRock").setUnlocalizedName("mossyRock").setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
-		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setModelName("ModelIcyRock").setUnlocalizedName("icyRock").setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
-		fancyPillar = new BlockFancyPillar(fancyPillarId, Material.rock).setDirectionalType(BlockContainerPlus.DirectionType.THREEAXIS).setModelName("ModelFancyPillar").setRenderOptions(-1, false, false).setHardness(6.5F).setCreativeTab(CreativeTabs.tabDecorations);
+		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setModelClass(ModelMossyRock.class).setUnlocalizedName("mossyRock").setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
+		icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setModelClass(ModelIcyRock.class).setUnlocalizedName("icyRock").setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
+		fancyPillar = new BlockFancyPillar(fancyPillarId, Material.rock).setDirectionalType(BlockContainerPlus.DirectionType.THREEAXIS).setModelClass(ModelFancyPillar.class).setRenderOptions(-1, false, false).setUnlocalizedName("fancyPillar").setHardness(6.5F).setCreativeTab(CreativeTabs.tabDecorations);
 		unownBlock = new BlockUnown(unownBlockId, Material.rock).setAlphaFlag(true).setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
 		unownBlock2 = new BlockUnown(unownBlockId2, Material.rock).setAlphaFlag(false).setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
 		templeBrick = new BlockPlus(templeBlockId, Material.rock).setIconName("pixelmon:templeblock").setUnlocalizedName("templeblock").setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
@@ -164,6 +173,8 @@ public class PixelmonBlocks {
 		templeStairs = new BlockStairsPublic(templeStairsId, templeBlock, 0).setUnlocalizedName("shrinestairs");
 		templeBrickStairs = new BlockStairsPublic(templeBrickStairsId, templeBrick, 0).setUnlocalizedName("shrinebrickstairs");
 
+		lolVase = new BlockContainerPlus(lolVaseId, Material.rock).setModelClass(ModelLolVase.class).setUnlocalizedName("lolVase").setHardness(5F).setCreativeTab(CreativeTabs.tabCombat);
+		
 		shrineUno = new BlockShrine(shrineUnoID, Material.rock, EnumShrine.Articuno).setBlockUnbreakable().setUnlocalizedName("Articuno");
 		shrineDos = new BlockShrine(shrineDosID, Material.rock, EnumShrine.Zapdos).setBlockUnbreakable().setUnlocalizedName("Zapdos");
 		shrineTres = new BlockShrine(shrineTresID, Material.rock, EnumShrine.Moltres).setBlockUnbreakable().setUnlocalizedName("Moltres");
@@ -195,7 +206,8 @@ public class PixelmonBlocks {
 		GameRegistry.registerBlock(templeBlock, "ShrineBrick");
 		GameRegistry.registerBlock(templeStairs, "ShrineStairs");
 		GameRegistry.registerBlock(templeBrickStairs, "ShrineBrickStairs");
-
+		GameRegistry.registerBlock(lolVase, "LOLVASE");
+		
 		MinecraftForge.setBlockHarvestLevel(bauxite, "pickaxe", 2);
 
 		GameRegistry.registerTileEntity(TileEntityPC.class, "Pokemon PC");

@@ -110,6 +110,9 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTradeMachine.class, new RenderTileEntityTradingMachine());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEvolutionRock.class, new RenderTileEntityEvolutionRock());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityShrine.class, new RenderTileEntityShrine());
+		//MinecraftForgeClient.registerItemRenderer(PixelmonItems.unoOrb.itemID, new ItemRendererExperience());
+		//MinecraftForgeClient.registerItemRenderer(PixelmonItems.dosOrb.itemID, new ItemRendererExperience());
+		//MinecraftForgeClient.registerItemRenderer(PixelmonItems.tresOrb.itemID, new ItemRendererExperience());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDecorativeBase.class, new RenderTileEntityDecorativeBase());
 		//MinecraftForgeClient.registerItemRenderer(PixelmonItems.unoOrb.itemID, new ItemRendererExperience());
 		//MinecraftForgeClient.registerItemRenderer(PixelmonItems.dosOrb.itemID, new ItemRendererExperience());

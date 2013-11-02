@@ -11,9 +11,15 @@ public class SkeletonBird extends SkeletonBase {
 			ModuleWing leftWing, ModuleWing rightWing, ModelRenderer leftLeg,
 			ModelRenderer rightLeg) {
 		super(body);
-		modules.add(head);
-		modules.add(leftWing);
+		if (head != null) {
+			modules.add(head);
+		}
+		if (leftWing != null) {
+			modules.add(leftWing);
+		}
+		if (rightWing != null) {
 		modules.add(rightWing);
+		}
 	}
 
 }

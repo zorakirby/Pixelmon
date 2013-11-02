@@ -15,47 +15,47 @@ public class ModuleArm extends Module {
 
 	float ArmRotationLimit;
 	float ArmSpeed;
+	float ArmInitX;
 	float ArmInitY;
 	float ArmInitZ;
 	float ArmDirection;
-	float ArmAxisRotation; //either 0 or 90
 	EnumArm ArmVariable;
+	EnumRotation rotationAxis;
 
-	public ModuleArm(Object arm, EnumArm ArmVariable, float ArmAxisRotation, float ArmRotationLimit, float ArmSpeed) {
-		this.arm = getModulizableFrom(arm);
+	public ModuleArm(Object arm, EnumArm ArmVariable,
+			EnumRotation rotationAxis, float ArmRotationLimit, float ArmSpeed) {
+		this.arm = this.getModulizableFrom(arm);
 		this.ArmSpeed = ArmSpeed;
 		this.ArmRotationLimit = ArmRotationLimit;
-		ArmInitY = this.arm.getValue(EnumGeomData.yrot);
+		ArmInitY = this.arm.getValue(EnumGeomData.zrot);
 		ArmInitZ = this.arm.getValue(EnumGeomData.zrot);
-		this.ArmAxisRotation = ArmAxisRotation;
+		ArmInitX = this.arm.getValue(EnumGeomData.xrot);
 		this.ArmVariable = ArmVariable;
+		this.rotationAxis = rotationAxis;
 		if (ArmVariable == EnumArm.Right) {
 			ArmDirection = 1;
 		} else {
 			ArmDirection = -1;
 		}
-		
+
 	}
 
 	@Override
 	public void walk(EntityPixelmon entity, float f, float f1, float f2,
 			float f3, float f4) {
 		
-		if (ArmAxisRotation == 90) {
-			float angleY = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
-					* ArmRotationLimit
-					* f1;
-			arm.setValue(angleY, EnumGeomData.yrot);
-		} else {
-			float angleX = MathHelper.cos(f * ArmSpeed + (float)Math.PI)
-					* ArmRotationLimit
-					* f1 * ArmDirection;
-			arm.setValue(angleX, EnumGeomData.xrot);
-		}
-
+		switch(rotationAxis){
+		case x: arm.setValue(MathHelper.cos(f * ArmSpeed + (float) Math.PI)
+				* ArmRotationLimit * f1 * ArmDirection + ArmInitX, EnumGeomData.xrot);
+			break;
+		case y: arm.setValue(MathHelper.cos(f * ArmSpeed + (float) Math.PI)
+					* ArmRotationLimit * f1 * ArmDirection + ArmInitY, EnumGeomData.yrot);
+			break;
+		case z: arm.setValue(MathHelper.cos(f * ArmSpeed + (float) Math.PI)
+				* ArmRotationLimit * f1 * ArmDirection + ArmInitZ, EnumGeomData.zrot);
+			break;
 		
-		// TODO Auto-generated method stub
-
+		}
 	}
 
 	@Override

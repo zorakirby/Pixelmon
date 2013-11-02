@@ -1,7 +1,9 @@
 package pixelmon.util;
 
+import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -739,6 +741,24 @@ public abstract class AbstractList2D<T> implements IList2D<T>{
 			for(int j : zList(i))
 				result.addValue(i, j, get(i, j));
 		return result;
+	}
+	
+	/**
+	 * @param img
+	 */
+	public void imageFill(AbstractList2D<Float> l2d, BufferedImage img){
+		Color color = null;
+		for(int i = 0; i < img.getWidth(); i++){
+			for(int j = 0; j < img.getHeight(); j++){
+				color = new Color(img.getRGB(i, j));
+				float alpha = color.getAlpha()/255F;
+				if(alpha == 0)
+					continue;
+				float lightness = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null)[2];
+				float value = lightness*alpha;
+				l2d.addValue(i, j, value);
+			}
+		}
 	}
 
 

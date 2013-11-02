@@ -23,11 +23,10 @@ public enum EnumCustomModel{
 	PillarPlatform("/pixelmon/models/pillar/pillar_platform.obj"),
 	PillarColumn("/pixelmon/models/pillar/pillar_column.obj"),
 	PillarColumnFracturedBottom("/pixelmon/models/pillar/pillar_column_fractured_bottom.obj"),
-	PillarColumnFracturedTop("/pixelmon/models/pillar/pillar_column_fractured_top.obj");
+	PillarColumnFracturedTop("/pixelmon/models/pillar/pillar_column_fractured_top.obj"),
+	LolVase("/pixelmon/models/LolVase.pqc");
 	
 	
-	
-	//fields
 	String fileName;
 	public IModelCustom theModel;
 	

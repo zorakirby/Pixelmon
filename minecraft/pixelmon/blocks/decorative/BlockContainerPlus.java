@@ -10,6 +10,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
@@ -21,9 +22,9 @@ public class BlockContainerPlus extends BlockContainer{
 	public static final int renderingID = RenderingRegistry.getNextAvailableRenderId();
 	public DirectionType dir = DirectionType.NONE;
 	protected String iconName = "quartzblock_bottom";
-	public String modelName;
+	public Class<? extends ModelBase> modelClass;
 	protected int renderType, idDropped, amountDropped = 1;
-	protected boolean opaqueCube = true, renderNormalBlock = true;
+	protected boolean opaqueCube = false, renderNormalBlock = false;
 	protected Class<? extends TileEntity> tileClass = TileEntityDecorativeBase.class;
 	public float invScale = 1F;
 	public float[] invOffsets = {0, 0, 0};
@@ -44,8 +45,8 @@ public class BlockContainerPlus extends BlockContainer{
 	 * @param name - Name of the Model Class. The class itself should be located in "pixelmon.client.models", but <i><b>that should not be included</i></b> in the name.
 	 * @return
 	 */
-	public BlockContainerPlus setModelName(String name){
-		this.modelName = name;
+	public BlockContainerPlus setModelClass(Class<? extends ModelBase> modelClass){
+		this.modelClass = modelClass;
 		return this;
 	}
 	public BlockContainerPlus setIdDropped(int id){

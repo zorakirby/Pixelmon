@@ -15,7 +15,7 @@ import net.minecraftforge.client.model.IModelCustom;
 public class ValveStudioModel implements IModelCustom{
 	public SmdModel body;
 	public ArrayList<BodyGroup> bodyGroups = new ArrayList();
-	public HashMap<String, SmdAnimation> anims;
+	public HashMap<String, SmdAnimation> anims = new HashMap();
 	public SmdAnimation currentAnimation;
 	public String fileName;
 	public static boolean debugModel = false;

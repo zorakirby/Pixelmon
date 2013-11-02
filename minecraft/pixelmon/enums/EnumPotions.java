@@ -40,6 +40,7 @@ public enum EnumPotions implements IEnumItem{
 	public ItemPotion getItem() {
 		Item result = null;
 		switch(this){
+		//TODO: Revive
 		case HyperPotion: result = PixelmonItems.hyperPotion;break;
 		case MaxPotion: result = PixelmonItems.maxPotion; break;
 		case Potion: result = PixelmonItems.potion; break;

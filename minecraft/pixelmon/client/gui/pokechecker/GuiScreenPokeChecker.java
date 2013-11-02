@@ -14,6 +14,7 @@ import pixelmon.client.ServerStorageDisplay;
 import pixelmon.client.gui.GuiResources;
 import pixelmon.client.gui.pc.GuiPC;
 import pixelmon.comm.PixelmonDataPacket;
+import pixelmon.config.PixelmonConfig;
 import pixelmon.enums.EnumType;
 import pixelmon.gui.ContainerEmpty;
 
@@ -61,13 +62,17 @@ public class GuiScreenPokeChecker extends GuiContainer {
 			mc.displayGuiScreen(new GuiScreenPokeCheckerStats(targetPacket, isPC));
 			break;
 		case 3:
-			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			if (PixelmonConfig.allowNicknames){
+				mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			}
 			break;
 		case 4:
 			mc.displayGuiScreen(new GuiScreenPokeCheckerWarning(targetPacket, 0));
 			break;
 		case 5:
-			mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			if (PixelmonConfig.allowNicknames){
+				mc.displayGuiScreen(new GuiRenamePokemon(targetPacket, this));
+			}
 			break;
 		}
 

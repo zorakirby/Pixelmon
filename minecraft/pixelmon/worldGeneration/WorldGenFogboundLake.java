@@ -21,6 +21,11 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class WorldGenFogboundLake extends WorldGenSpecificBiome{
+	
+	/**
+	 * 1/10th of a circle rotation
+	 */
+	protected final static AffineTransform rot36Deg = AffineTransform.getRotateInstance(Math.toRadians(36));
 	private final static int HEIGHT = 40, LINK_HEIGHT=12, THICKNESS = 4;
 	protected int maxBase, lakeSurfaceY;
 	protected boolean generating = false;
@@ -154,7 +159,6 @@ public class WorldGenFogboundLake extends WorldGenSpecificBiome{
 					int x0 = x+xi;
 					int z0 = z+zi;
 					//if point is surrounded and isn't one of the bottom 2 points, blockID = water, otherwise, dirt.
-					//FIXME
 					boolean useWater = shouldUseWater(lake, xi, yi, zi);
 					int blockID = useWater ? Block.waterStill.blockID : Block.dirt.blockID;
 					if(yi == lakeSurfaceY && !useWater)
@@ -181,7 +185,6 @@ public class WorldGenFogboundLake extends WorldGenSpecificBiome{
 	}
 	
 	protected void makeWaterfalls(World world, int x, int y, int z, AbstractList2D<Float> lakeDirtEdge, Random rand){
-		AffineTransform rot36Deg = AffineTransform.getRotateInstance(Math.toRadians(36));
 		Point2D point = new Point2D.Float(50, 0);
 		
 		for(int i = 0; i < 10; i++){
@@ -210,6 +213,10 @@ public class WorldGenFogboundLake extends WorldGenSpecificBiome{
 		}
 	}
 	
+	/**
+	 * @return true if the block at {@code (x, y, z)} is air or if it doesn't 
+	 * {@link net.minecraft.block.material.Material#blocksMovement() block movement}, otherwise, false.
+	 */
 	protected boolean shouldReplaceWithWaterfall(World world, int x, int y, int z){
 		int blockID = world.getBlockId(x, y, z);
 		return blockID == 0 ? true : !Block.blocksList[blockID].blockMaterial.blocksMovement();
@@ -217,7 +224,6 @@ public class WorldGenFogboundLake extends WorldGenSpecificBiome{
 	
 	protected boolean isAirBelow(World world, int x, int y, int z){
 		return world.getBlockId(x, y-1, z) == 0;
-		
 	}
 	
 	protected boolean shouldUseWater(AbstractList2D<Float> lake, int x, int y, int z){

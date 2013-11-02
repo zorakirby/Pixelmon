@@ -5,6 +5,7 @@ import pixelmon.client.models.PixelmonModelBase;
 import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
 import pixelmon.client.models.animations.quadruped.SkeletonQuadruped;
@@ -659,16 +660,16 @@ public class ModelCamerupt extends PixelmonModelBase {
 		float legRotationLimit = 1.1F;
 
 		ModuleLeg frontlegLModule = new ModuleLeg(UPPERLEFTLEGPIECE,
-				EnumLeg.FrontLeft, EnumPhase.OutPhase, legRotationLimit,
+				EnumLeg.FrontLeft, EnumPhase.OutPhase, EnumRotation.x, legRotationLimit,
 				legspeed);
 		ModuleLeg frontlegRModule = new ModuleLeg(UPPERRIGHTLEGPIECE,
-				EnumLeg.FrontRight, EnumPhase.OutPhase, legRotationLimit,
+				EnumLeg.FrontRight, EnumPhase.OutPhase, EnumRotation.x, legRotationLimit,
 				legspeed);
 		ModuleLeg backlegLModule = new ModuleLeg(BOTTOMLEFTLEGPIECE,
-				EnumLeg.BackLeft, EnumPhase.OutPhase, legRotationLimit,
+				EnumLeg.BackLeft, EnumPhase.OutPhase, EnumRotation.x, legRotationLimit,
 				legspeed);
 		ModuleLeg backlegRModule = new ModuleLeg(BOTTOMRIGHTLEGPIECE,
-				EnumLeg.BackRight, EnumPhase.OutPhase, legRotationLimit,
+				EnumLeg.BackRight, EnumPhase.OutPhase, EnumRotation.x, legRotationLimit,
 				legspeed);
 
 		skeleton = new SkeletonQuadruped(BODYPIECE, headModule,

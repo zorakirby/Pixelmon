@@ -21,9 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiItemDrops extends GuiContainer {
-	static ResourceLocation background = new ResourceLocation("pixelmon:gui/drops/Drops1.png");
-	static ResourceLocation itemSlot = new ResourceLocation("pixelmon:gui/drops/Drops2.png");
-	static ResourceLocation itemSlotOver = new ResourceLocation("pixelmon:gui/drops/Drops2Over.png");
+
 
 	BossDropPacket drops;
 
@@ -93,7 +91,7 @@ public class GuiItemDrops extends GuiContainer {
 		int itemWidth = 24;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_BLEND);
-		mc.renderEngine.bindTexture(background);
+		mc.renderEngine.bindTexture(GuiResources.background);
 		GuiHelper.drawImageQuad((width - 280) / 2, (height - 182) / 2, 280, 182, 0, 0, 1, 1, zLevel);
 		fontRenderer.drawString("You beat a boss " + ClientBattleManager.getOpponent().name + "!", (width - 280) / 2 + 10, (height - 182) / 2 + 25, 0xffffff);
 
@@ -101,9 +99,9 @@ public class GuiItemDrops extends GuiContainer {
 		int yPos = (height - 182) / 2 + 150;
 		int buttonWidth = 50, buttonHeight = 20;
 		if (i >= xPos && i <= xPos + buttonWidth && j >= yPos && j <= yPos + buttonWidth)
-			mc.renderEngine.bindTexture(itemSlotOver);
+			mc.renderEngine.bindTexture(GuiResources.itemSlotOver);
 		else
-			mc.renderEngine.bindTexture(itemSlot);
+			mc.renderEngine.bindTexture(GuiResources.itemSlot);
 		GuiHelper.drawImageQuad(xPos, yPos, buttonWidth, buttonHeight, 0, 0, 1, 1, zLevel);
 		fontRenderer.drawString("OK", xPos + 20, yPos + 7, 0xffffff);
 		int x = 0;
@@ -113,10 +111,10 @@ public class GuiItemDrops extends GuiContainer {
 			xPos = (width - 280) / 2 + 15 + x * itemSpacingX;
 			yPos = (height - 182) / 2 + 50 + y * itemSpacingY;
 			if (i >= xPos && i <= xPos + itemWidth && j >= yPos && j <= yPos + itemWidth) {
-				mc.renderEngine.bindTexture(itemSlotOver);
+				mc.renderEngine.bindTexture(GuiResources.itemSlotOver);
 				mouseOverIndex = d;
 			} else
-				mc.renderEngine.bindTexture(itemSlot);
+				mc.renderEngine.bindTexture(GuiResources.itemSlot);
 			GuiHelper.drawImageQuad(xPos, (height - 182) / 2 + 50 + y * itemSpacingY, itemWidth, itemWidth, 0, 0, 1, 1, zLevel);
 			x++;
 			if (x > 3) {

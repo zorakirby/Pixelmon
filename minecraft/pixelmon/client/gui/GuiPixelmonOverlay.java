@@ -19,7 +19,6 @@ import org.lwjgl.opengl.GL11;
 import pixelmon.client.ServerStorageDisplay;
 import pixelmon.comm.PixelmonDataPacket;
 import pixelmon.entities.pixelmon.EntityPixelmon;
-import pixelmon.enums.EnumPokemon;
 
 public class GuiPixelmonOverlay extends Gui {
 	public static boolean isGuiMinimized = false;
@@ -71,7 +70,7 @@ public class GuiPixelmonOverlay extends Gui {
 		for (PixelmonDataPacket p : ServerStorageDisplay.pokemon) {
 			int offset = 0;
 			if (p != null) {
-				String displayName = EnumPokemon.getDisplayName(p.name);
+				String displayName = p.name;
 				if (!p.nickname.equals(""))
 					displayName = p.nickname;
 

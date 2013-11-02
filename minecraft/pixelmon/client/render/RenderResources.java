@@ -22,8 +22,11 @@ public class RenderResources {
 	public static ResourceLocation pillar = new ResourceLocation("pixelmon:models/pillar/pillar.png");
 	public static ResourceLocation pillarDamaged = new ResourceLocation("pixelmon:models/pillar/pillar_fractured.png");
 	
+	public static ResourceLocation simpleGradient = new ResourceLocation("pixelmon:textures/simpleGradient.png");
+	
 	@CubemapTexture
-	public static ResourceLocation glalieCubemap = new ResourceLocation("pixelmon:textures/pokemon/Glalie_Cubemap.png");
+	public static String glalieCubemap = "pixelmon/textures/pokemon/Glalie_Cubemap.png";
 	@CubemapTexture
-	public static ResourceLocation glalieCubemapShiny = new ResourceLocation("pixelmon:textures/pokemon/pokemon-shiny/shinyglalie_cubemap.png");
+	public static String glalieCubemapShiny = "pixelmon/textures/pokemon/pokemon-shiny/shinyglalie_cubemap.png";
+
 }

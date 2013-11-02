@@ -11,6 +11,7 @@ import pixelmon.client.models.PixelmonModelRenderer;
 import pixelmon.client.models.animations.EnumArm;
 import pixelmon.client.models.animations.EnumLeg;
 import pixelmon.client.models.animations.EnumPhase;
+import pixelmon.client.models.animations.EnumRotation;
 import pixelmon.client.models.animations.ModuleArm;
 import pixelmon.client.models.animations.ModuleHead;
 import pixelmon.client.models.animations.ModuleLeg;
@@ -759,8 +760,8 @@ public class ModelElectabuzz extends PixelmonModelBase
       Body.addChild(Tail);
       
       
-      ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, 0, 0.8F, .5F);
-		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, 0, .8F, .5F);
+      ModuleArm leftArmModule = new ModuleArm(LeftArm, EnumArm.Left, EnumRotation.x, 0.8F, .5F);
+		ModuleArm rightArmModule = new ModuleArm(RightArm, EnumArm.Right, EnumRotation.x, .8F, .5F);
 
 		ModuleHead headModule = new ModuleHead(Head);
 		
@@ -768,9 +769,9 @@ public class ModelElectabuzz extends PixelmonModelBase
 		float legRotationLimit = 1.0F;
 		
 		ModuleLeg leftLegModule = new ModuleLeg(LeftLeg, EnumLeg.FrontLeft,
-				EnumPhase.InPhase, legRotationLimit, legspeed);
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleLeg rightLegModule = new ModuleLeg(RightLeg, EnumLeg.FrontRight,
-				EnumPhase.InPhase, legRotationLimit, legspeed);
+				EnumPhase.InPhase, EnumRotation.x, legRotationLimit, legspeed);
 		ModuleTailBasic tailModule = new ModuleTailBasic(Tail, .2F, .05F, legspeed);
 		
 		skeleton = new SkeletonBiped(Body, headModule, leftArmModule, rightArmModule,

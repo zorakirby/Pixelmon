@@ -68,7 +68,7 @@ public class RenderTileEntityDecorativeBase extends TileEntitySpecialRenderer im
 	public static ModelEntityBlock addModelFor(BlockContainerPlus block){
 		ModelEntityBlock model = null;
 		try {
-			model = (ModelEntityBlock) Class.forName("pixelmon.client.models." + block.modelName).newInstance();
+			model = (ModelEntityBlock) block.modelClass.newInstance();
 		} catch (Exception e){
 			e.printStackTrace();
 		}

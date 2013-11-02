@@ -178,6 +178,11 @@ public class BiomeGenMysteryValley extends BiomeGenNeedsDraining{
     	return false;//true;
     }
 
+	/**
+	 * Prevents Pixelmon from spawning underground in this biome, since 
+	 * underground in this biome is deemed as actually above-ground, due to this
+	 * biome's below-sea-level status.
+	 */
 	@Subscribe
 	public void onPixelmonSpawnRequest(SpawnRequestEvent event){
 		BiomeGenBase eventBiome = event.world.getBiomeGenForCoords(event.x, event.z);

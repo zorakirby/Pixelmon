@@ -1198,16 +1198,22 @@ public class ModelOnix extends PixelmonModelBase {
 		Seg13.addChild(tailrock6);
 		Seg12.addChild(Seg13);
 
+		//setRotation(Seg1, 0, 0, -2);
+		//setRotation(Seg4, 0, 0, 2);
+
 		ModuleHead headModule = new ModuleHead(Head);
 		ModelRenderer[] bodyArgs = { Seg1, Seg2, Seg3, Seg4, Seg5, Seg6, Seg7,
 				Seg8, Seg9, Seg10, Seg11, Seg12, Seg13 };
 
 		float animationAngle = 0;
-		float topAngle = (float) (Math.PI/4);
-		float dampeningFactor = (float) -1/12;
-		float animationSpeed = (float) 1/2;
-		
-		skeleton = new SkeletonSerpent(Body, headModule, animationAngle, topAngle, dampeningFactor, animationSpeed, bodyArgs);
+		float topAngle = (float) (Math.PI / 5);
+		float dampeningFactor = (float) -1 / 12;
+		float animationSpeed = (float) 1 / 2;
+		float phaseoffset = (float) -1;
+
+		skeleton = new SkeletonSerpent(Body, headModule, animationAngle,
+				topAngle, dampeningFactor, animationSpeed, phaseoffset,
+				bodyArgs);
 
 	}
 
