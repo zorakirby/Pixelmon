@@ -181,6 +181,9 @@ public class GuiEvolve extends GuiCamera {
 			p.getDataWatcher().updateObject(EntityPixelmon.dwRoasted, (short) 2);
 		currentPokemon.stopRender = true;
 		currentPokemon.catchInPokeball();
+		currentPokemon.setDead();
+		currentPokemon.unloadEntity();
+		
 		currentPokemon = p;
 		currentPokemon.releaseFromPokeball();
 	}
@@ -246,8 +249,7 @@ public class GuiEvolve extends GuiCamera {
 	@Override
 	public void onGuiClosed() {
 		currentPokemon.setDead();
-		PacketDispatcher.sendPacketToServer(PacketCreator.createPacket(EnumPackets.SendPokemon,
-				ServerStorageDisplay.pokemon[GuiPixelmonOverlay.selectedPixelmon].pokemonID));
+		currentPokemon.unloadEntity();		
 		super.onGuiClosed();
 	}
 
