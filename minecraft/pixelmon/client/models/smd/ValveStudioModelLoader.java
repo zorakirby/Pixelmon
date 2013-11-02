@@ -37,6 +37,7 @@ import net.minecraftforge.client.model.ModelFormatException;
  * in an SMD model can be accessed via {@link SmdModel#getBoneByName(String)} where the String used
  * should be the name originally assigned to the bone in the 3D modeling software.
  *
+ *@see pixelmon.client.models.pokemon.ModelFroslass
  */
 public class ValveStudioModelLoader implements IModelCustomLoader{
 
@@ -46,7 +47,7 @@ public class ValveStudioModelLoader implements IModelCustomLoader{
 	
 	@Override
 	public String getType() {
-		return "Valve Studio Model Collection";
+		return "Valve Studio Model";
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class ValveStudioModelLoader implements IModelCustomLoader{
 
 	@Override
 	public IModelCustom loadInstance(String resourceName, URL resource)
-			throws ModelFormatException {
+			throws GabeNewellException {
 		return new ValveStudioModel(resourceName, resource);
 	}
 

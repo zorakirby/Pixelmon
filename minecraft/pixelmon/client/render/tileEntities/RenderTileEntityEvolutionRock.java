@@ -14,22 +14,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 
-@Deprecated
 public class RenderTileEntityEvolutionRock extends TileEntitySpecialRenderer {
 
-	IModelCustom rockModel;
-	IModelCustom icyRockModel;
-	IModelCustom mossyRockModel;
+	IModelCustom rockModel = EnumCustomModel.EvoRock.theModel;;
 	
 	public RenderTileEntityEvolutionRock() {
-		rockModel = EnumCustomModel.EvoRock.theModel;
-	//	icyRockModel = AdvancedModelLoader.loadModel("/pixelmon/models/icyrock/icyrock.obj");
-	//	mossyRockModel = AdvancedModelLoader.loadModel("/pixelmon/models/mossyrock/mossyrock.obj");
-		icyRockModel = AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/icyrock/icyrock.obj");
-		mossyRockModel = AdvancedModelLoader.loadModel("/pixelmon/client/models/objFiles/mossyrock/mossyrock.obj");
-
-
-
 	}
 
 	@Override
@@ -40,16 +29,11 @@ public class RenderTileEntityEvolutionRock extends TileEntitySpecialRenderer {
 		GL11.glTranslatef((float) d + 0.5F, (float) d1+0.04f, (float) d2 + 0.5F); // size
 		GL11.glRotatef(180, 1, 0, 0);
 		GL11.glScalef(1.0F, -1F, -1F); // if you read this comment out this line
-		
-		if (block.rockType == EnumEvolutionRock.MossyRock){
-			bindTexture(RenderResources.mossrocktex); 
-			mossyRockModel.renderAll();
-
-		}else if (block.rockType == EnumEvolutionRock.IcyRock){
-			bindTexture(RenderResources.icyrocktex); 
-			icyRockModel.renderAll();
-
+		switch(block.rockType){
+		case MossyRock:bindTexture(RenderResources.mossrocktex); break;
+		case IcyRock:bindTexture(RenderResources.icyrocktex); break;		
 		}
+		rockModel.renderAll();
 		GL11.glPopMatrix(); // end
 
 	}

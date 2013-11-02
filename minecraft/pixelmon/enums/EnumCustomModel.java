@@ -14,17 +14,17 @@ import pixelmon.client.models.smd.ValveStudioModelLoader;
 public enum EnumCustomModel{
 	//pokemon
 	Haunter ("/assets/pixelmon/models/haunter/haunter.obj"),
-	Froslass("/pixelmon/models/froslass/froslass.pqc"),
-	GlalieMatte("/pixelmon/models/glalie/glalie_matte.obj"),
-	GlalieReflective("/pixelmon/models/glalie/glalie_reflective.obj"),
+	Froslass("/pixelmon/client/models/smdFiles/froslass/froslass.pqc"),
+	GlalieMatte("/pixelmon/client/models/objFiles/glalie/glalie_matte.obj"),
+	GlalieReflective("/pixelmon/client/models/objFiles/glalie/glalie_reflective.obj"),
 	
 	//blocks
-	EvoRock("/pixelmon/models/icyrock/icyrock.obj"),
-	PillarPlatform("/pixelmon/models/pillar/pillar_platform.obj"),
-	PillarColumn("/pixelmon/models/pillar/pillar_column.obj"),
-	PillarColumnFracturedBottom("/pixelmon/models/pillar/pillar_column_fractured_bottom.obj"),
-	PillarColumnFracturedTop("/pixelmon/models/pillar/pillar_column_fractured_top.obj"),
-	LolVase("/pixelmon/models/LolVase.pqc");
+	EvoRock("/pixelmon/client/models/objFiles/blocks/evoRock/evoRock.obj"),
+	PillarPlatform("/pixelmon/client/models/objFiles/blocks/pillar/pillar_platform.obj"),
+	PillarColumn("/pixelmon/client/models/objFiles/blocks/pillar/pillar_column.obj"),
+	PillarColumnFracturedBottom("/pixelmon/client/models/objFiles/blocks/pillar/pillar_column_fractured_bottom.obj"),
+	PillarColumnFracturedTop("/pixelmon/client/models/objFiles/blocks/pillar/pillar_column_fractured_top.obj"),
+	;
 	
 	
 	String fileName;

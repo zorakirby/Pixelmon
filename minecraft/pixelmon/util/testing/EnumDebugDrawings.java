@@ -46,7 +46,6 @@ public enum EnumDebugDrawings {
 	Complete_Mystery_Dungeon("Complete 10-Floor Mystery Dungeon"){public void makeDrawing(){FS.mysteryDungeonFull();}},
 	Room_Edge_Tester("Mystery Dungeon Room-Edge Test"){public void makeDrawing(){FS.roomEdge();}},
 	File_Drawing("Drawing from file"){public void makeDrawing(){FS.fileDrawing();}},
-	List_Drawing("List Writer"){public void makeDrawing(){FS.listDrawing();}},
 	;
 	
 	public final String displayName;
@@ -241,15 +240,6 @@ public enum EnumDebugDrawings {
 					e.printStackTrace();
 				}
 			}
-		}
-		
-		public static void listDrawing(){
-			TestingCanvas canvas = TestingCanvas.createSimpleScreen("List Drawing");
-			ArrayList list = new ArrayList();
-			for(Object o : Testomatic.valuesByName(EnumPokeballs.class)){
-				list.add(o);
-			}
-			canvas.setDrawables(new Lister(list));
 		}
 	}
 

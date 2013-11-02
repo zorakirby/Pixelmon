@@ -38,17 +38,28 @@ import org.lwjgl.opengl.GLUConstants;
 import pixelmon.Pixelmon;
 import pixelmon.client.render.RenderResources;
 import pixelmon.util.ImageHelper;
+import pixelmon.util.testing.AbstractDrawable;
+import pixelmon.util.testing.TestingCanvas;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+/**
+ * Cubemaps draw simulated reflections via a texture. The width:height ratio of an
+ * image must be exactly 3:4 to be used as a cubemap. Cubemaps currently override 
+ * standard textures completely: if a model that normally has a regular texture 
+ * applied to it starts a cubemap, the regular texture will not be used.
+ * @see pixelmon.client.models.pokemon.ModelGlalie#render(net.minecraft.entity.Entity, float, float, float, float, float, float)
+ */
 @SideOnly(Side.CLIENT)
 public class Cubemap extends SimpleTexture{
 	
 	public int sqr, width, height;
 	public final ByteBuffer[] buffers = new ByteBuffer[6];
-	
+	private static boolean saidEnough = false;
 	protected static HashMap<ResourceLocation, Cubemap> cubemaps = new HashMap();
+	
+	public final ResourceLocation resourceLoc;
 	
 	private static String dimError = "The Dimensions of %s are invalid! A Cubemap image must have an exact width-to-height ratio of 3:4!";
 	
@@ -68,9 +79,10 @@ public class Cubemap extends SimpleTexture{
 	 */
 	public Cubemap(ResourceLocation resLoc)throws IOException{
 		super(resLoc);
+		this.resourceLoc  = resLoc;
 		BufferedImage fullImg = ImageHelper.getImage(resLoc);
 		initBuffers(fullImg, resLoc.toString());
-		newBinding();
+		//newBinding();
 		cubemaps.put(resLoc, this);
 	}
 	//GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL11.GL_RGBA8, sqr, sqr, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
@@ -92,23 +104,26 @@ public class Cubemap extends SimpleTexture{
 			case 4 : subImg = fullImg.getSubimage(sqr, 2*sqr, sqr, sqr);break; //south
 			case 5 : subImg = ImageHelper.rotateImg(fullImg.getSubimage(sqr, 0, sqr, sqr), 180);break;//north
 			}
+			//TestingCanvas canvas = TestingCanvas.createSimpleScreen("Cubemap " + fileLoc + "_" + i);
+			//canvas.setDrawables(new AbstractDrawable.ImageDrawing(subImg));
 			ByteBuffer buffer = ImageHelper.getBuffer(subImg);
 			buffers[i] = buffer;
+			GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL11.GL_RGBA8, sqr, sqr, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
 		}
 	}
 
 	
 	public static void preloadCubemaps(){
-		System.out.println("preloading Cubemaps");
 		for(Field field : RenderResources.class.getFields()){
 			if(field.isAnnotationPresent(CubemapTexture.class)){
 				ResourceLocation resLoc = null;
 				try {
 					resLoc = (ResourceLocation) field.get(null);
+					new Cubemap(resLoc);
 				} catch (Exception e){
 					e.printStackTrace();
 				}
-				System.out.println("Preloading Cubemap: " + resLoc);
+				
 			}
 		}
 	}
@@ -127,7 +142,12 @@ public class Cubemap extends SimpleTexture{
 		}
 		Cubemap map = cubemaps.get(resLoc);
 		if(map == null){
-			throw new Error(String.format("Cubemap Error! The cubemap with the name %s could not be found!", resLoc));
+			try {
+				map = new Cubemap(resLoc);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		map.start();
 	}
@@ -138,11 +158,14 @@ public class Cubemap extends SimpleTexture{
 			for(int i = 0; i < 6; i++){
 				GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL11.GL_RGBA8, sqr, sqr, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffers[i]);
 			}
-			GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, bindID);
+			//GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, bindID);
 	}
 	
 	protected void start(){
-		GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, getGlTextureId());
+		for(int i = 0; i < 6; i++){
+			GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL11.GL_RGBA8, sqr, sqr, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffers[i]);
+			}
+	    GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
 		GL11.glTexGeni(GL11.GL_S, GL11.GL_TEXTURE_GEN_MODE, GL13.GL_REFLECTION_MAP);
 		GL11.glTexGeni(GL11.GL_T, GL11.GL_TEXTURE_GEN_MODE, GL13.GL_REFLECTION_MAP);
 		GL11.glTexGeni(GL11.GL_R, GL11.GL_TEXTURE_GEN_MODE, GL13.GL_REFLECTION_MAP);
@@ -150,9 +173,6 @@ public class Cubemap extends SimpleTexture{
 	    GL11.glEnable(GL11.GL_TEXTURE_GEN_T);
 	    GL11.glEnable(GL11.GL_TEXTURE_GEN_R);
 	    GL11.glEnable(GL13.GL_TEXTURE_CUBE_MAP);
-	    //GL30.glGenerateMipmap(GL13.GL_TEXTURE_CUBE_MAP);
-
-	    //GL11.glEnable(GL11.GL_AUTO_NORMAL);
 	    GL11.glEnable(GL11.GL_NORMALIZE);
 	}
 	
@@ -191,6 +211,11 @@ public class Cubemap extends SimpleTexture{
 		System.out.println(img);
 		
 		
+	}
+	
+	@Override
+	public String toString(){
+		return "Cubemap(" + sqr + "x" + sqr + ";" + resourceLoc + ")";
 	}
 
 	

@@ -47,7 +47,7 @@ public class PixelmonModelSmd extends PixelmonModelBase{
 	
 	public void increaseAnimCounter2(EntityPixelmon pixelmon){
 		if(!isMinecraftPaused()){
-			pixelmon.animationCounter2 += pixelmon.animationIncrement2;
+			pixelmon.animationCounter2++;
 			if(pixelmon.animationCounter2 < 0)
 			pixelmon.animationCounter2 += Integer.MAX_VALUE;
 		}

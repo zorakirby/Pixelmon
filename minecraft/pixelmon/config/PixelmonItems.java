@@ -330,7 +330,8 @@ public class PixelmonItems {
 		leggingsAluminiumID = cfg.get("item", "Aluminium Leggings", 10130).getInt();
 		bootsAluminiumID = cfg.get("item", "Aluminium Boots", 10131).getInt();
 
-
+		mossyRockID = cfg.get("item", "Mossy Rock", 10132).getInt();
+        icyRockID = cfg.get("item", "Icy Rock", 10133).getInt();
 
 		newRunningShoesID = cfg.get("item", "New Running Boots", 10134).getInt();
 		oldRunningShoesID = cfg.get("item", "Old Running Boots", 10135).getInt();
@@ -426,9 +427,9 @@ public class PixelmonItems {
 		//tresOrb = new ItemShrineOrb(tresOrbID, EnumShrine.Moltres, "tresorb", "Tres Orb").setUnlocalizedName("Tres Orb");
 
 		mossyRock = new ItemBlock(mossyRockID, PixelmonBlocks.mossyRock, "mossyrock", "Mossy Rock");
-		mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
-		icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "icyrock", "Icy Rock");
-		icyRock.setCreativeTab(PixelmonCreativeTabs.natural);
+        mossyRock.setCreativeTab(PixelmonCreativeTabs.natural);
+        icyRock = new ItemBlock(icyRockID, PixelmonBlocks.icyRock, "icyrock", "Icy Rock");
+        icyRock.setCreativeTab(PixelmonCreativeTabs.natural);
 
 		//unoShrine = new ItemBlock(unoShrineID, PixelmonBlocks.shrineUno, "unoShrine", "Uno Shrine");
 		//dosShrine = new ItemBlock(dosShrineID, PixelmonBlocks.shrineDos, "dosShrine", "Dos Shrine");
@@ -481,7 +482,9 @@ public class PixelmonItems {
 	}
 
 	/**
-	 * aren't some of these methods like.... totally unnecessary?
+	 * aren't some of these methods like.... totally unnecessary? Unless I'm missing something:<br>
+	 * &nbsp&nbsp&nbsp&nbsp<code>{@link Item#itemsList}[id]</code><br>
+	 * would do the exact same thing, much more efficiently.
 	 */
 	public static Item getItem(int id) {
 		try {

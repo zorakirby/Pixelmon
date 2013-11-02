@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
 import net.minecraftforge.client.model.IModelCustom;
@@ -23,7 +24,7 @@ public class ValveStudioModel implements IModelCustom{
 	
 
 	
-	public ValveStudioModel(String fileName, URL fileURL){
+	public ValveStudioModel(String fileName, URL fileURL) throws GabeNewellException{
 		this.fileName = fileName;
 		loadQC(fileURL);
 		precalculateAnims();
@@ -31,7 +32,7 @@ public class ValveStudioModel implements IModelCustom{
 
 
 
-	private void loadQC(URL fileURL){
+	private void loadQC(URL fileURL) throws GabeNewellException{
 		BufferedReader reader = null;
         InputStream inputStream = null;
 
@@ -60,8 +61,7 @@ public class ValveStudioModel implements IModelCustom{
         		}
         	}
         }catch(Exception e){
-        	System.out.println("AN ERROR occurred reading the PQC file on line #" + lineCount);
-        	e.printStackTrace();
+        	throw new GabeNewellException("An error occurred reading the PQC file on line #" + lineCount);
         }
 	}
 	
@@ -91,10 +91,7 @@ public class ValveStudioModel implements IModelCustom{
 	
 	@Override
 	public void renderAll() {
-/*		if((this.currentAnimation != null) == false){
-			currentAnimation.doAnimationOld(this.body);
-			currentAnimation.doAnimationOld(this.bodyGroups);
-		}*/
+		GL11.glShadeModel(GL11.GL_SMOOTH);
 		if(this.currentAnimation != null){
 			currentAnimation.doAnimation(this.body);
 		//	currentAnimation.doAnimation(this.bodygroups);
@@ -102,13 +99,7 @@ public class ValveStudioModel implements IModelCustom{
 		if(this.body != null){
 			body.render();
 		}
-		/*if(DEBUG_TOGGLE_FRAME){
-			this.currentAnimation.nextFrameDebugMode();
-		}
-		else{
-			this.currentAnimation.nextFrame();
-		}*/
-
+		GL11.glShadeModel(GL11.GL_FLAT);
 	}
 	
 	public void setAnimation(String animname){

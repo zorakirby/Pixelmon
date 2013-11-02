@@ -25,15 +25,15 @@ public class SmdAnimation {
 		reform();
 	}
 	
-	private void loadSmdAnim(URL fileURL) {
+	private void loadSmdAnim(URL fileURL)throws GabeNewellException{
 		BufferedReader reader = null;
 		InputStream inputStream = null;
-
 		String currentLine = null;
-		int lineCount = 0;
+		int lineCount = -1;
 		try{
 			inputStream = fileURL.openStream();
 			reader = new BufferedReader(new InputStreamReader(inputStream));
+			lineCount++;
 			while ((currentLine = reader.readLine()) != null)
 			{
 				lineCount++;
@@ -49,12 +49,15 @@ public class SmdAnimation {
                 	//print("Number of model bones = " + this.bones.size());
 				}
 				else if (currentLine.startsWith("skeleton")){
-					startParsingAnimation(reader, lineCount);
+					startParsingAnimation(reader, lineCount, fileURL);
 				}
 			}
 		}catch (IOException e){
-			System.out.println("AN ERROR occurred reading from line #" + lineCount);
-			e.printStackTrace();
+			if(lineCount == -1){
+        		throw new GabeNewellException("there was a problem opening the model file : " + fileURL);
+        	}
+        	else
+        		throw new GabeNewellException("an error occurred reading the SMD file \"" + fileURL + "\" on line #" + lineCount);
 		}
 	}
 	
@@ -68,7 +71,7 @@ public class SmdAnimation {
 		ValveStudioModel.print(boneName);
 	}
 	
-	private void startParsingAnimation(BufferedReader reader, int count) {
+	private void startParsingAnimation(BufferedReader reader, int count, URL fileURL)throws GabeNewellException {
 		int lineCount = count;
 		int currentTime = 0;
 		lineCount++;
@@ -99,8 +102,7 @@ public class SmdAnimation {
 				}
 			}
 		} catch (Exception e){
-			System.out.println("AN ERROR occurred reading from line #" + lineCount);
-			e.printStackTrace();
+        		throw new GabeNewellException("an error occurred reading the SMD file \"" + fileURL + "\" on line #" + lineCount);
 		}
 
 		

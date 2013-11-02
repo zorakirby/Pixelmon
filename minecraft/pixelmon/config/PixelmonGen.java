@@ -14,6 +14,7 @@ import pixelmon.spawning.spawners.SpawnerBase;
 import pixelmon.util.ChancedWrapper;
 import pixelmon.util.InfiltratorGenLayer;
 import pixelmon.util.WeightedWrapper;
+import pixelmon.util.geom.Fractal;
 import pixelmon.worldGeneration.MapGenDenialWrapper;
 import pixelmon.worldGeneration.biome.BiomeGenMysteryValley;
 import static net.minecraft.world.biome.BiomeGenBase.*;
@@ -36,6 +37,7 @@ public class PixelmonGen {
 	public static void load(Configuration configuration) {
 		if(!mysteryValleyTryout)
 			return;
+		Fractal.preloadFractals();
 		//IDs
 		mysteryValleyId = loadBiomeID(configuration, "Mystery Valley", 23);
 		

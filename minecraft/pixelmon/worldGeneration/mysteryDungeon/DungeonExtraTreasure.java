@@ -255,8 +255,6 @@ public class DungeonExtraTreasure extends AbstractDungeonExtra{
 			registerRareCategory(modArmors, VERY_RARE.chance);
 		
 		init = true;
-		System.out.println("SIZZEEEE 0 = " + allItems.size());
-		Testomatic.debugRareTreasure();
 	}
 
 	public static ChancedStack registerRareItem(ItemStack stack, EnumTreasureRarity rarity, int minStack, int maxStack){

@@ -118,7 +118,6 @@ public class Pixelmon {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		PixelmonConfig.loadConfig(config);
-		Fractal.preloadFractals();
 		proxy.registerKeyBindings();
 		proxy.registerRenderers();
 		proxy.registerInteractions();

@@ -25,16 +25,15 @@ public class ModelGlalie extends PixelmonModelBase{
                 null, null, null);
 	}
 	
-	@Override //Overriding this because: need to know whether to use normal or shiny cubemap
+	@Override
 	public void render(Entity var1, float f, float f1, float f2, float f3, float f4, float f5) {
-		boolean isShiny = ((EntityPixelmon)var1).getIsShiny();
 		doAnimation(var1, f, f1, f2, f3, f4, f5);
 		matte.render(f5);
-		if(isShiny){
-			//Cubemap.begin(RenderResources.glalieCubemapShiny);
+		if(((EntityPixelmon)var1).getIsShiny()){
+			Cubemap.begin(RenderResources.glalieCubemapShiny);
 		}
 		else{
-			//Cubemap.begin(RenderResources.glalieCubemap);
+			Cubemap.begin(RenderResources.glalieCubemap);
 		}
 		reflective.render(f5);
 		Cubemap.end();

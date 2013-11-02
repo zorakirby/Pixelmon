@@ -1,6 +1,7 @@
 package pixelmon.client.models.smd;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -28,7 +29,7 @@ public class SmdModel{
 	public SmdAnimation currentAnim;
 	public String fileName;
 	
-	public SmdModel(ValveStudioModel owner, URL fileURL){
+	public SmdModel(ValveStudioModel owner, URL fileURL)throws GabeNewellException{
 		this.owner = owner;
 		loadSmdModel(fileURL);
 		setBoneChildren();
@@ -37,15 +38,16 @@ public class SmdModel{
 	}
 
 	
-	private void loadSmdModel(URL fileURL){
+	private void loadSmdModel(URL fileURL)throws GabeNewellException{
 		BufferedReader reader = null;
         InputStream inputStream = null;
 
         String currentLine = null;
-        int lineCount = 0;
+        int lineCount = -1;
         try{
         	inputStream = fileURL.openStream();
         	reader = new BufferedReader(new InputStreamReader(inputStream));
+        	lineCount++;
         	while ((currentLine = reader.readLine()) != null)
             {
                 lineCount++;
@@ -85,8 +87,12 @@ public class SmdModel{
                 	
                 }
             }
-        }catch(Exception e){
-        	e.printStackTrace();
+        }catch(IOException e){
+        	if(lineCount == -1){
+        		throw new GabeNewellException("there was a problem opening the model file : " + fileURL);
+        	}
+        	else
+        		throw new GabeNewellException("an error occurred reading the SMD file \"" + fileURL + "\" on line #" + lineCount);
         }
         ValveStudioModel.print("Number of faces = " + faces.size());
 	}
@@ -119,7 +125,6 @@ public class SmdModel{
 
 	
 	private void parseFace(String[] params, int lineCount){
-		try{
 			//<int|Parent bone> <float|PosX PosY PosZ> <normal|NormX NormY NormZ> <normal|U V> <int|links> <int|Bone ID> <normal|Weight> 
 			DeformVertex[] faceVerts = new DeformVertex[3];
 			DeformVertex[] normVerts = new DeformVertex[3];
@@ -139,10 +144,6 @@ public class SmdModel{
 			//face.vertexNormals = normVerts;
 			face.textureCoordinates = uvs;
 			faces.add(face);
-		}catch(Exception e){
-			System.out.println("AN ERROR occurred reading from line #" + lineCount);
-			e.printStackTrace();
-		}
 	}
 	
 	private void doBoneWeights(String[] values, DeformVertex vert){
