@@ -47,9 +47,6 @@ public class StructureRegistry {
 		if (StructureRegistry.class.getResourceAsStream("/pixelmon/structure/standAlone/" + filename + ".schematic") == null)
 			return null;
 		data.path = path + "/" + filename + ".schematic";
-
-		int schind = filename.indexOf(".data");
-		data.path = path + "/" + filename.substring(0, schind) + ".schematic";
 		InputStream is;
 		BufferedReader br;
 		try {
