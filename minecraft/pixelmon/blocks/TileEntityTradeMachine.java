@@ -137,13 +137,15 @@ public class TileEntityTradeMachine extends TileEntity {
 		}
 	}
 
-	public void removePlayer(Player player) {
-		if (player1 == (EntityPlayer) player) {
+	public void removePlayer(EntityPlayer player) {
+		ready1 = false;
+		ready2 = false;
+		if (player1 == player) {
 			player1 = player2;
 			player2 = null;
 			playerCount--;
 			pos2 = -1;
-		} else if (player2 == (EntityPlayer) player) {
+		} else if (player2 == player) {
 			player2 = null;
 			playerCount--;
 			pos2 = -1;
@@ -156,7 +158,7 @@ public class TileEntityTradeMachine extends TileEntity {
 	}
 
 	public void trade() {
-		if (tradePushed)
+		if (tradePushed || playerCount < 2)
 			return;
 		try {
 			PlayerStorage storage1 = PixelmonStorage.PokeballManager.getPlayerStorage((EntityPlayerMP) player1);

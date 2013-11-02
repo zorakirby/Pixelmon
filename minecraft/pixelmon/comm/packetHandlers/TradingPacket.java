@@ -29,15 +29,15 @@ public class TradingPacket extends PacketHandlerBase {
 			int pos = dataStream.readInt();
 
 			TileEntityTradeMachine te = TradingRegistry.getTileEntity((EntityPlayer) player);
-			if (te.player1 == (EntityPlayer)player) {
+			if (te.player1 == (EntityPlayer) player) {
 				te.setPos1(pos);
-			} else if (te.player2 == (EntityPlayer)player) {
+			} else if (te.player2 == (EntityPlayer) player) {
 				te.setPos2(pos);
 			}
 		} else if (index == EnumPackets.DeRegisterTrader.getIndex()) {
 			TileEntityTradeMachine te = TradingRegistry.getTileEntity((EntityPlayer) player);
 			if (te != null)
-				te.removePlayer(player);
+				te.removePlayer((EntityPlayer) player);
 		} else if (index == EnumPackets.SetTradingReady.getIndex()) {
 			boolean ready = dataStream.readInt() == 1;
 			TileEntityTradeMachine te = TradingRegistry.getTileEntity((EntityPlayer) player);
