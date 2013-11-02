@@ -58,22 +58,6 @@ public class ValveStudioModel implements IModelCustom{
         				this.currentAnimation = anims.get(animName);
         			}
         		}
-/*        		else if(params[0].equalsIgnoreCase("$up")){
-        			String up = params[1].toLowerCase();
-        			if(up.equalsIgnoreCase("z")){
-        				this.rotation = -90;
-        			}
-        			else if(up.equalsIgnoreCase("-z")){
-        				this.rotation = 90;
-        			}
-        			else if(up.equalsIgnoreCase("-y")){
-        				this.rotation =180;
-        			}
-        			else if(up.equalsIgnoreCase("y"));
-        			else{
-        				System.out.println(String.format("THE UP AXIS FOR THE FILE \"%s\" CANNOT BE '%s'! Setting rotation to 0 instead!", new Object[]{fileURL.getFile().substring(fileURL.getFile().lastIndexOf("/") + 1), up}));
-        			}
-        		}*/
         	}
         }catch(Exception e){
         	System.out.println("AN ERROR occurred reading the PQC file on line #" + lineCount);

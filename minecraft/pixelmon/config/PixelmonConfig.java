@@ -114,9 +114,6 @@ public class PixelmonConfig {
 		PixelmonItems.addNames();
 		PixelmonBlocks.addNames();
 		PixelmonBlocks.registerBlocks();
-		PixelmonGen.register();
-		PixelmonGen.load(config);
-		//PixelmonGen.register();
 		PixelmonEntityList.registerEntities();
 		PixelmonEntityList.addSpawns();
 	}
