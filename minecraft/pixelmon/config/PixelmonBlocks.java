@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemMultiTextureTile;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import pixelmon.blocks.BlockAnvil;
@@ -40,6 +41,7 @@ import pixelmon.enums.EnumEvolutionStone;
 import pixelmon.enums.EnumShrine;
 import pixelmon.items.ItemBlock;
 import pixelmon.items.PixelmonItemBlock;
+import pixelmon.util.BlockHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -177,8 +179,8 @@ public class PixelmonBlocks {
 		mossyRock = new BlockEvolutionRock(mossyRockId, Material.rock, EnumEvolutionRock.MossyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
         icyRock = new BlockEvolutionRock(icyRockId, Material.rock, EnumEvolutionRock.IcyRock).setHardness(5f).setCreativeTab(PixelmonCreativeTabs.natural);
 		fancyPillar = new BlockFancyPillar(fancyPillarId, Material.rock).setDirectionalType(BlockContainerPlus.DirectionType.THREEAXIS).setModelClass(ModelFancyPillar.class).setRenderOptions(-1, false, false).setUnlocalizedName("fancyPillar").setHardness(6.5F).setCreativeTab(CreativeTabs.tabDecorations);
-		unownBlock = new BlockUnown(unownBlockId, Material.rock).setAlphaFlag(true).setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
-		unownBlock2 = new BlockUnown(unownBlockId2, Material.rock).setAlphaFlag(false).setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
+		unownBlock = new BlockUnown(unownBlockId, Material.rock, true).setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
+		unownBlock2 = new BlockUnown(unownBlockId2, Material.rock, false).setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
 		templeBrick = new BlockPlus(templeBlockId, Material.rock).setIconName("pixelmon:templeblock").setUnlocalizedName("templeblock").setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
 		templeBlock = new BlockPlus(templeBrickId, Material.rock).setIconName("pixelmon:templebrick").setUnlocalizedName("templebrick").setHardness(5F).setCreativeTab(CreativeTabs.tabDecorations);
 		templeStairs = new BlockStairsPublic(templeStairsId, templeBlock, 0).setUnlocalizedName("shrinestairs");
@@ -207,8 +209,8 @@ public class PixelmonBlocks {
 		//GameRegistry.registerBlock(shrineDos, "Zapdos Shrine");
 		//GameRegistry.registerBlock(shrineTres, "Moltres Shrine");
 		GameRegistry.registerBlock(fancyPillar, "Ancient Pillar");
-		GameRegistry.registerBlock(unownBlock, "UnownBlock");
-		GameRegistry.registerBlock(unownBlock2, "UnownBlock2");
+		BlockHelper.registerMultiNameBlock(unownBlock, "UnownBlock", BlockUnown.alphabet1);
+		BlockHelper.registerMultiNameBlock(unownBlock2, "UnownBlock2", BlockUnown.alphabet2);
 		GameRegistry.registerBlock(templeBrick, "ShrineBlock");
 		GameRegistry.registerBlock(templeBlock, "ShrineBrick");
 		GameRegistry.registerBlock(templeStairs, "ShrineStairs");
@@ -227,6 +229,7 @@ public class PixelmonBlocks {
 		GameRegistry.registerTileEntity(TileEntityDecorativeBase.class, "Decorative Tileent");
 
 		PixelmonBlocksApricornTrees.registerBlocks();
+		BlockUnown.initNaming();
 	}
 
 	public static void addNames() {
@@ -234,13 +237,13 @@ public class PixelmonBlocks {
 			for (Field field : PixelmonBlocks.class.getFields()) {
 				if (field.isAnnotationPresent(Mod.Block.class)) {
 					Block block = (Block) field.get(null);
-					LanguageRegistry.addName(block, field.getAnnotation(Mod.Block.class).name());
+					if(!(block instanceof BlockUnown))
+						LanguageRegistry.addName(block, field.getAnnotation(Mod.Block.class).name());
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//BlockUnown.registerNames();
 		//PixelmonBlocksApricornTrees.addNames();
 	}
 

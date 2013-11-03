@@ -3,32 +3,48 @@ package pixelmon.blocks.decorative;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemMultiTextureTile;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import pixelmon.config.PixelmonBlocks;
+import pixelmon.util.PixelmonDebug;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-
+/*2013-11-02 20:08:12 [INFO] [STDOUT] [Begin stack trace]
+2013-11-02 20:08:12 [INFO] [STDOUT] Thread.getStackTrace(line -1)
+2013-11-02 20:08:12 [INFO] [STDOUT] PixelmonDebug.printStackElements(line 117)
+2013-11-02 20:08:12 [INFO] [STDOUT] BlockUnown.getUnlocalizedName(line 135)
+2013-11-02 20:08:12 [INFO] [STDOUT] ItemBlock.getUnlocalizedName(line 189)
+2013-11-02 20:08:12 [INFO] [STDOUT] Item.getUnlocalizedNameInefficiently(line 469)
+2013-11-02 20:08:12 [INFO] [STDOUT] Item.getItemDisplayName(line 616)
+2013-11-02 20:08:12 [INFO] [STDOUT] ItemStack.getDisplayName(line 559)
+2013-11-02 20:08:12 [INFO] [STDOUT] GuiIngameForge.renderToolHightlight(line 568)
+2013-11-02 20:08:12 [INFO] [STDOUT] GuiIngameForge.renderGameOverlay(line 154)
+2013-11-02 20:08:12 [INFO] [STDOUT] EntityRenderer.updateCameraAndRender(line 1014)
+2013-11-02 20:08:12 [INFO] [STDOUT] Minecraft.runGameLoop(line 945)
+2013-11-02 20:08:12 [INFO] [STDOUT] Minecraft.run(line 837)
+2013-11-02 20:08:12 [INFO] [STDOUT] Main.main(line 93)*/
 public class BlockUnown extends Block{
+	public static final String[] 
+			alphabet1 = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"},
+			alphabet2 = {"Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "!", "?", "_"};
 	public Icon[] learningWithUnown;
 	public boolean first16;
 	
-	public BlockUnown(int id, Material mat) {
+	public BlockUnown(int id, Material mat, boolean first16) {
 		super(id, mat);
-		this.setUnlocalizedName("unownblock");
+		this.setUnlocalizedName("unownblock_"+(first16 ? '1' : '2'));
+		this.first16 = first16;
 	}
-	
-    public BlockUnown setAlphaFlag(boolean flag){
-    	this.first16 = flag;
-    	return this;
-    }
 
 	
 	@SideOnly(Side.CLIENT)
@@ -69,27 +85,34 @@ public class BlockUnown extends Block{
      */
     public Icon getIcon(int par1, int par2)
     {
-		int offset = this.first16 ? 0 : 16;
         return this.learningWithUnown[par2];
     }
 	
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(int id, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubBlocks(int id, CreativeTabs par2CreativeTabs, List list)
     {
-    	int amt = first16 ? 16 : 13;
-        for (int i = 0; i < amt ; i++)
+    	if(!this.first16)
+    		return;
+        for (int i = 0; i < 29; i++)
         {
-            par3List.add(new ItemStack(id, 1, i));
+        	char letter = i == 26 ? '!' : i == 27 ? '?' : i == 28 ? ' ' : (char) ('A'+i);
+        	Integer[] idAndMeta = getBlockIDAndMetaFor(letter);
+        	ItemStack stack = new ItemStack(idAndMeta[0], 1, idAndMeta[1]);
+        	list.add(stack);
+        	LanguageRegistry.addName(stack, "Unown Block '"+letter + "'");
         }
     }
     
-    public static void registerNames(){
-    	String baseName = LanguageRegistry.instance().getStringLocalization("tile.unownblock.name");
-    	for (int i = 0; i < 28; i++){
-    		ItemStack stackForNaming = new ItemStack(PixelmonBlocks.unownBlockId, 1, i);
-    		LanguageRegistry.addName(stackForNaming, baseName + " " + ((char)(i + 65)));
-    	}
+    public static void initNaming(){
+    	for (int i = 0; i < 29; i++)
+        {
+        	char letter = i == 26 ? '!' : i == 27 ? '?' : i == 28 ? ' ' : (char) ('A'+i);
+        	Integer[] idAndMeta = getBlockIDAndMetaFor(letter);
+        	ItemStack stack = new ItemStack(idAndMeta[0], 1, idAndMeta[1]);
+        	String name = letter == ' ' ? "Blank Unown Block" : "Unown Block '"+letter + "'";
+        	LanguageRegistry.addName(stack, name);
+        }
     }
     
     /**
@@ -104,7 +127,7 @@ public class BlockUnown extends Block{
     	char upper = Character.toUpperCase(letter);
     	if(upper >= 65 && upper < 81)
     		return PixelmonBlocks.unownBlockId;
-    	if((upper >= 81 && upper < 91) || upper == '!' || upper == '?' || upper == ' ')
+    	if((upper >= 81 && upper <= 90) || upper == '!' || upper == '?' || upper == ' ')
     		return PixelmonBlocks.unownBlockId2;
     	return null;
     }
@@ -116,12 +139,19 @@ public class BlockUnown extends Block{
     		case ' ' : return 12;
     		default : {
     			char upper = Character.toUpperCase(letter);
-    			if(upper >= 65 && upper < 91)
-    				return upper - 65 < 17 ? upper - 65 : upper - 81;
+    			if(upper >= 'A' && upper <= 90)
+    				return upper  > 80 ? upper - 81 : upper - 65;
     			return null;
     		}
     	}
     }
+    
+/*    @Override
+    public String getUnlocalizedName()
+    {
+    	PixelmonDebug.printStackElements(13);
+    	return super.getUnlocalizedName();
+    }*/
 
 
 }

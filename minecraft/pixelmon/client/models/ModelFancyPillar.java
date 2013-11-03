@@ -50,7 +50,7 @@ public class ModelFancyPillar extends ModelEntityBlock{
 		if(!theBlock.getIsDamaged(meta))
 			renderStandardPillar(0, 0, scale);
 		else
-			renderDamagedPillar(1, 4, scale);
+			renderDamagedPillarInv(scale);
 		GL11.glPopMatrix();
 	}
 	
@@ -68,6 +68,16 @@ public class ModelFancyPillar extends ModelEntityBlock{
 			platform.render(scale);
 		}
 		
+	}
+	
+	public void renderDamagedPillarInv(float scale){
+		Minecraft.getMinecraft().renderEngine.bindTexture(RenderResources.pillarDamaged);
+		platform.setRotationPoint(0, 6.5F, 0);
+		platform.render(scale);
+		platform.setRotationPoint(0, -6.5F, 0);
+		platform.render(scale);
+		fracturedBottom.render(scale);
+		fracturedTop.render(scale);
 	}
 	
 	public void renderDamagedPillar(int blockMeta, int bitmask, float scale){

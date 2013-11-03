@@ -19,8 +19,8 @@ public class RenderResources {
 	public static ResourceLocation dos = new ResourceLocation("pixelmon:textures/blocks/shrines/zapdos.png");
 	public static ResourceLocation tres = new ResourceLocation("pixelmon:textures/blocks/shrines/moltres.png");
 
-	public static ResourceLocation pillar = new ResourceLocation("pixelmon:models/pillar/pillar.png");
-	public static ResourceLocation pillarDamaged = new ResourceLocation("pixelmon:models/pillar/pillar_fractured.png");
+	public static ResourceLocation pillar = new ResourceLocation("pixelmon:textures/blocks/pillar.png");
+	public static ResourceLocation pillarDamaged = new ResourceLocation("pixelmon:textures/blocks/pillar_fractured.png");
 	
 	public static ResourceLocation simpleGradient = new ResourceLocation("pixelmon:textures/simpleGradient.png");
 	

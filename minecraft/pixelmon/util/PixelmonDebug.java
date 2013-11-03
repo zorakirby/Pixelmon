@@ -100,9 +100,26 @@ public class PixelmonDebug {
 			StackTraceElement[] elements = Thread.currentThread().getStackTrace();
 			int i = Math.min(3, elements.length - 1);
 			StackTraceElement stackElement = elements[i];
-			return Class.forName(stackElement.getClassName()).getSimpleName()+"."+stackElement.getMethodName()+"(line " + stackElement.getLineNumber() + ")";
+			return describeStackElement(stackElement);
 		} catch (Exception shouldntHappen) {}
 		return "?";
+	}
+	
+	public static String describeStackElement(StackTraceElement stackElement){
+		try {
+			return Class.forName(stackElement.getClassName()).getSimpleName()+"."+stackElement.getMethodName()+"(line " + stackElement.getLineNumber() + ")";
+		} catch (ClassNotFoundException shouldntHappen) {
+			return null;
+		}
+	}
+	
+	public static void printStackElements(int traceLines){
+		StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+		System.out.println("[Begin stack trace]");
+		for(int i = 1; i <= traceLines && i < elements.length; i++){
+			System.out.println(describeStackElement(elements[i]));
+		}
+		System.out.println("[End stack Trace]");
 	}
 	
 	public static boolean startsWithVowel(String string){
